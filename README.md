@@ -7,3 +7,7 @@ and its supporting documents.
 See the file
 [spec/Muldis_Object_Notation.md](spec/Muldis_Object_Notation.md)
 for that feature document.
+
+See the file
+[spec/MUON_Feature_Comparison.md](spec/MUON_Feature_Comparison.md)
+for that supporting document.
