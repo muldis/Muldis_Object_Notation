@@ -1040,6 +1040,26 @@ Examples:
         name : "Michelle",
         age  : 17,
     )
+
+    `Four leaf attributes in nested multi-level namespace.`
+    (
+        name: "John Glenn",
+        birth_date::year: 1921,
+        comment: "Fly!",
+        birth_date::month: 7,
+        birth_date::day: 18,
+    )
+
+    `Same thing.`
+    (
+        name: "John Glenn",
+        birth_date: (
+            year: 1921,
+            month: 7,
+            day: 18,
+        ),
+        comment: "Fly!",
+    )
 ```
 
 ## Tuple Array

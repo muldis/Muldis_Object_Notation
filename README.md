@@ -11,3 +11,7 @@ for that feature document.
 See the file
 [spec/MUON_Feature_Comparison.md](spec/MUON_Feature_Comparison.md)
 for that supporting document.
+
+See the file
+[tooling/BBEdit/README.md](tooling/BBEdit/README.md)
+for that tree of supporting documents and files.
