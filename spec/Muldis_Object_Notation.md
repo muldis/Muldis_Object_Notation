@@ -43,6 +43,13 @@ It is fairly easy for machines to parse and generate.  MUON is a plain text
 format that is completely language independent but uses conventions that
 are familiar to programmers of many other languages.
 
+The prescribed standard filename extension for files featuring a MUON
+parsing unit is `.muon`, though as per standard UNIX conventions, such MUON
+files can in fact have any filename extension when there is other context
+to interpret them with.  Filename extensions are more for the benefit of
+the operating system or command shell or users than for a MUON parser or
+generator, the latter just cares about the content of the file.
+
 *TODO.*
 
 # GRAMMAR
@@ -79,6 +86,7 @@ Grammar:
         | <Blob>
         | <Text>
         | <Heading>
+        | <Nesting>
         | <Renaming>
 
     <collection> ::=
@@ -89,6 +97,7 @@ Grammar:
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
+        | <Interval>
         | <Capsule>
 
     <sp> ::=
@@ -181,7 +190,7 @@ Grammar:
 
 ```
     <Integer> ::=
-        <nonquoted_int> | <quoted_int>
+        <nonquoted_int> | <quoted_int> | <int_with_radix>
 
     <nonquoted_int> ::=
         ['\\+' <sp>]? <asigned_int>
@@ -194,12 +203,33 @@ Grammar:
 
     <quoted_int> ::=
         '\\+' <sp> '"' <asigned_int> '"' [<sp> '"' <nonsigned_int> '"']*
+
+    <int_with_radix> ::=
+        ['\\+' <sp>]? <asigned_int_with_radix>
+
+    <asigned_int_with_radix> ::=
+        <[+-]>? <nonsigned_int_with_radix>
+
+    <nonsigned_int_with_radix> ::=
+        <ns_int_2> | <ns_int_8> | <ns_int_10> | <ns_int_16>
+
+    <ns_int_2> ::=
+        0b <[ 0..1 _ ]>+
+
+    <ns_int_8> ::=
+        0o <[ 0..7 _ ]>+
+
+    <ns_int_10> ::=
+        0d <[ 0..9 _ ]>+
+
+    <ns_int_16> ::=
+        0x <[ 0..9 A..F _ a..f ]>+
 ```
 
-This grammar supports writing **Integer** literals in numeric base 10 only,
-using conventional syntax.  The literal may optionally contain underscore
-characters (`_`), which exist just to help with visual formatting, such
-as for `10_000_000`.
+This grammar supports writing **Integer** literals in any of the numeric
+bases {2,8,10,16}, using conventional syntax.  The literal may optionally
+contain underscore characters (`_`), which exist just to help with visual
+formatting, such as for `10_000_000`.
 
 A quoted `<Integer>` may optionally be split into 1..N quoted segments
 where each pair of consecutive segments is separated by dividing space;
@@ -208,6 +238,10 @@ numeric literals while still being well formatted (no extra long lines).
 
 This grammar is subject to the additional rule that the total count of
 digit characters (`0..9`) in the `<nonsigned_int>` must be at least 1.
+
+This grammar is subject to the additional rule that the total count of
+numeric position characters (`0..9 A..F a..f`) in the
+`<nonsigned_int_with_radix>` must be at least 1.
 
 Examples:
 
@@ -230,6 +264,14 @@ Examples:
         "66013_06097_14981_90079_90813_93217_26943_53001_43305_40939"
         "44634_59185_54318_33976_56052_12255_96406_61454_55497_72963"
         "11391_48085_80371_21987_99971_66438_12574_02829_11150_57151"
+
+    0d39
+
+    0xDEADBEEF
+
+    0o644
+
+    0b11001001
 ```
 
 ## Big Fraction
@@ -468,15 +510,14 @@ Grammar:
         <codepoint>
 
     <codepoint> ::=
-        <nonsigned_int>
+        <nonsigned_int> | <nonsigned_int_with_radix>
 ```
 
 A `<Text>` may optionally be split into 1..N segments where each pair
 of consecutive segments is separated by dividing space.
 
-This grammar is subject to the additional rule that the non-negative
-integer denoted in base 10 by `<codepoint>` must be in the set
-{0..0xD7FF,0xE000..0x10FFFF}.
+This grammar is subject to the additional rule that the non-negative integer
+denoted by `<codepoint>` must be in the set {0..0xD7FF,0xE000..0x10FFFF}.
 
 The meanings of the simple character escape sequences are:
 
@@ -502,7 +543,7 @@ The meaning of `<nonord_nq_text>` is exactly the same as if it was
 surrounded by quotation marks, a non-empty **Text** of the same characters.
 
 The meaning of `<ord_nq_text>` is different; it denotes a **Text** of
-exactly 1 character whose codepoint number it denotes in base 10.
+exactly 1 character whose codepoint number it denotes.
 
 Given that **Text** values or syntax serve double duty for not only regular
 user data but also for attribute names of tuples or other kinds of
@@ -522,7 +563,7 @@ Examples:
 
     "\This isn't not escaped.\n"
 
-    "\\c<2637>\c<65>"
+    "\\c<0x263A>\c<65>"
 
     \~"Green"
 
@@ -531,6 +572,9 @@ Examples:
 
     `Same Text value.`
     "sales"
+
+    `One attribute name with a space in it.`
+    "First Name"
 
     `One ordered nonquoted Text (or, one ordered attribute).`
     \0
@@ -569,10 +613,28 @@ Grammar:
 Examples:
 
 ```
+    `Zero members.`
     []
-```
 
-*TODO.*
+    `One member.`
+    [ "You got it!" ]
+
+    `Three members.`
+    [
+        "Alphonse",
+        "Edward",
+        "Winry",
+    ]
+
+    `Five members (1 duplicate).`
+    \~[
+        57,
+        45,
+        63,
+        61,
+        63,
+    ]
+```
 
 ## Generic Set
 
@@ -597,10 +659,28 @@ distinguished from every possible `<Bag>`.
 Examples:
 
 ```
+    `Zero members.`
     {}
-```
 
-*TODO.*
+    `One member.`
+    { "I know this one!" }
+
+    `Four members (no duplicates).`
+    {
+        "Canada",
+        "Spain",
+        "Jordan",
+        "Jordan",
+        "Thailand",
+    }
+
+    `Three members.`
+    \?{
+        3,
+        16,
+        85,
+    }
+```
 
 ## Generic Bag / Multiset
 
@@ -632,7 +712,7 @@ Grammar:
         <Any>
 
     <multiplicity> ::=
-        <nonsigned_int>
+        <nonsigned_int> | <nonsigned_int_with_radix>
 ```
 
 A `<Bag>` is subject to the additional rule that, either its
@@ -645,10 +725,29 @@ an empty **Bag** is to have exactly 1 `<multiplied_member>` whose
 Examples:
 
 ```
+    `Zero members.`
     {0:0}
-```
 
-*TODO.*
+    `One member.`
+    { "I hear that!": 1 }
+
+    `1200 members (1197 duplicates).`
+    {
+        "Apple"  : 500,
+        "Orange" : 300,
+        "Banana" : 400,
+    }
+
+    `Six members (2 duplicates).`
+    \+{
+        "Foo",
+        "Quux",
+        "Foo",
+        "Bar",
+        "Baz",
+        "Baz",
+    }
+```
 
 ## Heading / Attribute Name Set
 
@@ -709,7 +808,7 @@ Examples:
     `Same thing.`
     \@("\\c<0>")
 
-    `Three nonordered attributes.`
+    `Three named attributes.`
     \@(region,revenue,qty)
 
     `Three ordered attributes.`
@@ -723,6 +822,34 @@ Examples:
 
     `A non-Latin name.`
     \@("サンプル")
+```
+
+## Nesting Attribute Name List
+
+A **Nesting** value, represented by `<Nesting>`, is an arbitrarily-large
+nonempty ordered collection of attribute names, intended for referencing an
+entity in a multi-level namespace, such as nested **Tuple** may implement.
+
+Grammar:
+
+```
+    <Nesting> ::=
+        '\\@' <sp> <nesting_attr_names>
+
+    <nesting_attr_names> ::=
+        <attr_name> % [<sp> '::' <sp>]
+```
+
+Examples:
+
+```
+    \@person
+
+    \@person::birth_date
+
+    \@person::birth_date::year
+
+    \@the_db::stats::"samples by order"
 ```
 
 ## Attribute Renaming Specification
@@ -866,9 +993,6 @@ Grammar:
 
     <attr_asset> ::=
         <Any>
-
-    <nesting_attr_names> ::=
-        <attr_name> % [<sp> '::' <sp>]
 ```
 
 A `<Tuple>` is subject to the additional rule that, iff its
@@ -880,10 +1004,43 @@ prefix, so that the `<Tuple>` can be distinguished from every possible
 Examples:
 
 ```
+    `Zero attributes.`
     ()
-```
 
-*TODO.*
+    `One named attribute.`
+    ("First Name": "Joy",)
+
+    `One ordered attribute.`
+    (53,)
+
+    `Same thing.`
+    (0: 53,)
+
+    `Same thing.`
+    ("\\c<0>": 53,)
+
+    `Three named attributes.`
+    (
+        login_name : "hartmark",
+        login_pass : "letmein",
+        is_special : True,
+    )
+
+    `Three ordered attributes.`
+    ("hello",26,True)
+
+    `One of each.`
+    ("Jay", age: 10)
+
+    `A non-Latin name.`
+    ("サンプル": "http://example.com",)
+
+    `Two named attributes.`
+    \%(
+        name : "Michelle",
+        age  : 17,
+    )
+```
 
 ## Tuple Array
 
@@ -907,12 +1064,31 @@ element, and that every such `*_member` element's `<member>` is a
 Examples:
 
 ```
+    `Zero attributes + zero tuples.`
     \~%()
 
+    `Zero attributes + one tuple.`
     \~%[()]
-```
 
-*TODO.*
+    `Three named attributes + zero tuples.`
+    \~%(x,y,z)
+
+    `Three positional attributes + zero tuples.`
+    \~%(0..2)
+
+    `Two named attributes + three tuples (1 duplicate).`
+    \~%[
+        (name: "Amy"     , age: 14),
+        (name: "Michelle", age: 17),
+        (name: "Amy"     , age: 14),
+    ]
+
+    `Two positional attributes + two tuples.`
+    \~%[
+        ("Michelle", 17),
+        ("Amy"     , 14),
+    ]
+```
 
 ## Relation / Tuple Set
 
@@ -936,12 +1112,30 @@ element, and that every such `*_member` element's `<member>` is a
 Examples:
 
 ```
+    `Zero attributes + zero tuples.`
     \?%()
 
+    `Zero attributes + one tuple.`
     \?%{()}
-```
 
-*TODO.*
+    `Three named attributes + zero tuples.`
+    \?%(x,y,z)
+
+    `Three positional attributes + zero tuples.`
+    \?%(0..2)
+
+    `Two named attributes + two tuples.`
+    \?%{
+        (name: "Michelle", age: 17),
+        (name: "Amy"     , age: 14),
+    }
+
+    `Two positional attributes + two tuples.`
+    \?%{
+        ("Michelle", 17),
+        ("Amy"     , 14),
+    }
+```
 
 ## Tuple Bag
 
@@ -965,12 +1159,98 @@ element, and that every such `*_member` element's `<member>` is a
 Examples:
 
 ```
+    `Zero attributes + zero tuples.`
     \+%()
 
+    `Zero attributes + one tuple.`
     \+%{()}
+
+    `Three named attributes + zero tuples.`
+    \+%(x,y,z)
+
+    `Three positional attributes + zero tuples.`
+    \+%(0..2)
+
+    `Two named attributes + six tuples (4 duplicates).`
+    \+%{
+        (name: "Michelle", age: 17),
+        (name: "Amy"     , age: 14) : 5,
+    }
+
+    `Two positional attributes + two tuples.`
+    \+%{
+        ("Michelle", 17),
+        ("Amy"     , 14),
+    }
 ```
 
+## Interval
+
+An **Interval** value, represented by `<Interval>`, is a ...
+
 *TODO.*
+
+Grammar:
+
+```
+    <Interval> ::=
+        '\\..' <sp> <interval_no_pfx>
+
+    <interval_no_pfx> ::=
+        '(' <sp> <interval_members> <sp> ')'
+
+    <interval_members> ::=
+        <interval_empty> | <interval_single> | <interval_range>
+
+    <interval_empty> ::=
+        ''
+
+    <interval_single> ::=
+        <Any>
+
+    <interval_range> ::=
+        <interval_low>? <interval_boundary_kind> <interval_high>?
+
+    <interval_low> ::=
+        <Any>
+
+    <interval_high> ::=
+        <Any>
+
+    <interval_boundary_kind> ::=
+        '..' | '-..' | '..-' | '-..-'
+```
+
+Examples:
+
+```
+    `Empty interval (zero members).`
+    \..()
+
+    `Unit interval (one member).`
+    \..("abc")
+
+    `Closed interval (probably 10 members, depending on the model used).`
+    \..(1..10)
+
+    `Left-closed, right-open interval; every Decimal x in {2.7<=x<9.3}.`
+    \..(2.7..-9.3)
+
+    `Left-open, right-closed interval; every Text x ordered in {"a"<x<="z"}.`
+    \..("a"-.."z")
+
+    `Open interval; time period between Dec 6 and 20 excluding both.`
+    \..((\UTCInstant:(2002,12,6)) -..- (\UTCInstant:(2002,12,20)))
+
+    `Left-unbounded, right-closed interval; every Integer <= 3.`
+    \..(..3)
+
+    `Left-closed, right-unbounded interval; every Integer >= 29.`
+    \..(29..)
+
+    `Universal interval; unbounded; every value of type system is a member.`
+    \..(..)
+```
 
 ## Capsule
 
@@ -995,6 +1275,21 @@ Examples:
 
 ```
     (\Point : (x : 5, y : 3))
+
+    (\Float : (
+        significand : 45207196,
+        radix       : 10,
+        exponent    : 37,
+    ))
+
+    (\@the_db::UTCDateTime : (
+        year   : 2003,
+        month  : 10,
+        day    : 26,
+        hour   : 1,
+        minute : 30,
+        second : 0.0,
+    ))
 ```
 
 # SYNTACTIC MNEMONICS
@@ -1052,6 +1347,7 @@ that means they are used in pairs.
           |                        | * label/attributes separator in Capsule sel
           |                        | * L1 of optional prefix for Capsule selectors
           |                        | * disambiguate Bag sel from Set sel
+          |                        | * L2 of prefix for Renaming literals
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
           |                        | * separate members in Array/Set/Bag sels
@@ -1086,17 +1382,33 @@ that means they are used in pairs.
           |                        | * prefix for Excuse literals/selectors
     ------+------------------------+---------------------------------------
     @     | locators/at/headings   | * indicates identifiers/names are featured
-          |                        | * L1 of prefix for Heading/Attr-Name-List literals
+          |                        | * L1 of prefix for Heading/Nesting literals
+          |                        | * L1 of prefix for Renaming literals
     ------+------------------------+---------------------------------------
     -     | subtraction            | * indicates negative-Integer/Fraction/Decimal literal
+          |                        | * indicates open endpoint in Interval selectors
     ------+------------------------+---------------------------------------
     /     | division               | * disambiguate Fraction lit from Integer/Decimal lit
     ------+------------------------+---------------------------------------
     .     | radix point            | * disambiguate Decimal lit from Integer/Fraction lit
+          | intervals/ranges       | * L1+L2 of prefix for Interval selectors
+          |                        | * pair separator in Interval selectors
     ------+------------------------+---------------------------------------
     digit | number                 | * first char 0..9 in bareword indicates is a number
     ------+------------------------+---------------------------------------
     alpha | identifier             | * first char a..z/etc in bareword indicates is identifier
+    ------+------------------------+---------------------------------------
+    0b    | base-2                 | * indicates base-2/binary notation
+          |                        | * prefix for Integer in base-2
+    ------+------------------------+---------------------------------------
+    0o    | base-8                 | * indicates base-8/octal notation
+          |                        | * prefix for Integer in base-8
+    ------+------------------------+---------------------------------------
+    0d    | base-10                | * indicates base-10/decimal notation
+          |                        | * optional prefix for Integer in base-10
+    ------+------------------------+---------------------------------------
+    0x    | base-16                | * indicates base-16/hexadecimal notation
+          |                        | * prefix for Integer in base-16
     ------+------------------------+---------------------------------------
 
     When combining symbols in a \XY prefix (L0+L1+L2) to represent both
