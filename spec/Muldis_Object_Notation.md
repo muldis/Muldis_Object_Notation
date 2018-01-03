@@ -5,7 +5,8 @@ Source code and data interchange format
 
 # VERSION
 
-This document is Muldis Object Notation version 0.201.0.
+The fully-qualified name of this document is
+`Muldis_Object_Notation http://muldis.com 0.201.0`.
 
 # SYNOPSIS
 
@@ -26,8 +27,6 @@ This document is Muldis Object Notation version 0.201.0.
     }
 ```
 
-*TODO.*
-
 # DESCRIPTION
 
 This document is the human readable authoritative formal specification named
@@ -35,7 +34,7 @@ This document is the human readable authoritative formal specification named
 The fully-qualified name of this document and specification is
 `Muldis_Object_Notation http://muldis.com 0.201.0`.
 This is the official/original version by the authority Muldis Data Systems
-(`http://muldis.com`), version number `0.201.0` (matches the VERSION).
+(`http://muldis.com`), version number `0.201.0`.
 
 **Muldis Object Notation** specifies a semi-lightweight source code and
 data interchange format.  It is fairly easy for humans to read and write.
@@ -50,7 +49,135 @@ to interpret them with.  Filename extensions are more for the benefit of
 the operating system or command shell or users than for a MUON parser or
 generator, the latter just cares about the content of the file.
 
+# FEATURES
+
+These sections outline some key features of MUON, including some that are
+more unique to it and some reasons for why one might want to use it.
+
+## Data Types
+
+**Muldis Object Notation** is mainly characterized by a set of *data types*
+that all *values* represented with MUON syntax are members of.
+Each MUON data type corresponds 1:1 with a distinct grammar in this document.
+
+- Logical: Boolean
+- Numeric: Integer, Fraction, Decimal
+- Stringy: Bits, Blob, Text
+- Discrete: Array, Set, Bag
+- Structural: Tuple
+- Relational: Tuple Array, Relation, Tuple Bag
+- Continuous: Interval
+- Generic: Capsule
+- Source Code: Heading, Nesting, Renaming
+- Singleton: Excuse
+
+This document avoids defining any relationship between these types, and
+officially leaves it up to each external data model used with MUON to
+define for itself whether any two given types are *conjoined* (have any
+values in common) or *disjoint* (have no values in common).  For example,
+some external data models may consider **Integer** to be a *subtype* of
+**Decimal** (`42` is a member of both) while others may consider the two
+types to be disjoint (`42` and `42.0` do not compare as equal).  The sole
+exceptions are that the (not listed above) **Any** and **None** types
+explicitly are a *supertype* or *subtype* respectively of every other type,
+regardless of the data model, for what that's worth.
+
+Each external data model used with MUON is not required to support every
+one of the types defined here; however, every *value* that the external
+data model supports generating into or parsing from MUON must be losslessly
+represented using at least one of the types defined here, and that value
+must be losslessly round-trippable using all of those representations.
+Note that the **Capsule** type is the idiomatic way for an external data
+model to represent "new" types in a consistent way.
+
+## Ease of Use
+
 *TODO.*
+
+## Resiliency
+
+*TODO.*
+
+## Extensibility
+
+*TODO.*
+
+# NORMALIZATION
+
+The grammar comprising most of this document assumes that the MUON *parsing
+unit* it takes as input has already been through some basic normalization,
+which this section describes.  Said normalization is expected to be
+performed by a MUON parser natively as its first step.
+
+## UNIX Shebang Interpreter Directive
+
+[https://en.wikipedia.org/wiki/Shebang_(Unix)](
+https://en.wikipedia.org/wiki/Shebang_(Unix))
+
+Since a MUON file may typically define an executable program that could be
+directly invoked in the typical manner of a UNIX script, MUON officially
+supports the option of a *shebang line* at the start of a *parsing unit*.
+The shebang line tells the program loader what interpreter to invoke to run
+the MUON file and what other additional arguments it should be given.
+
+Examples:
+
+```
+    #!/usr/bin/env muldisre
+```
+
+The `#!` is a magic number and the shebang continues until the first
+linebreak; the parser should discard that line and then process the rest of
+the input according to the regular MUON grammar.
+
+## Script / Character Encoding
+
+Assuming that the MUON parser proper operates logically in terms of the
+input *parsing unit* being a Unicode character string (characterized by a
+sequence of Unicode *character codepoints*, each corresponding to an
+integer in the set {0..0xD7FF,0xE000..0x10FFFF}), a MUON parser that is
+actually given an octet string as input (per a raw file) will need to
+determine which of possibly many possible encoding formats was used to
+encode the character data as octets, and then convert the input as such.
+
+In self-defining terms, the regular MUON parser expects a **Text** value
+as input, but a raw file is directly characterized by a **Blob** value,
+so a normalization function would need to map from the latter value to the
+former, a process typically known as *character decoding*.
+
+It is mandatory for every MUON parser and generator to support the UTF-8
+character format associated with the **Unicode** standard version 2.1 and
+later; the proper subset 7-bit ASCII character format is also mandatory.
+Both the UTF-8 variants with and without the leading Byte Order Mark (BOM)
+character must be supported.
+
+It is recommended but not mandatory for a MUON parser or generator to also
+support other commonly used character formats, particularly UTF-16BE and
+UTF-16LE (both with and without a BOM), either legacy or modern.
+
+It is strongly recommended but not mandatory for a MUON parser or generator
+to support the externally defined standard **Muldis Content Predicate**
+(**MCP**) format for source code metadata.  The MCP standard was
+co-developed with the MUON standard as a recommended way to make a MUON
+*parsing unit* more strongly typed, in particular to explicitly declare
+what script / character encoding was used in its file / octet string form.
+While heuristics (and BOMs) can lead to a strong guess as to what character
+encoding a file is, an explicit MCP declaration makes things more certain.
+
+A **Muldis Content Predicate** declaration would normally be embedded in a
+MUON *dividing space* quoted comment string, so the regular MUON parser
+needs no special handling grammar/logic to ignore it (unlike a shebang).
+
+Examples:
+
+```
+    `Muldis_Content_Predicate
+    MCP version http://muldis.com 0.201.0 MCP
+    MCP script Unicode 2.1 UTF-8 MCP
+    MCP syntax Muldis_Object_Notation http://muldis.com 0.201.0 MCP
+    MCP model Muldis_Data_Language http://muldis.com 0.201.0 MCP
+    Muldis_Content_Predicate`
+```
 
 # GRAMMAR
 
@@ -63,17 +190,35 @@ Grammar:
 
 ```
     <MUON> ::=
-        ^ <parsing_unit> $
+        <sp>
+            <Any>
+        <sp>
 
-    <parsing_unit> ::=
-        <shebang_line>? <sp> <parsing_unit_subject>
+    <sp> ::=
+        [<whitespace> | <quoted_sp_comment_str>]*
 
-    <shebang_line> ::=
-        '#!' ...
+    <whitespace> ::=
+        [' ' | '\t' | '\n' | '\r']+
 
-    <parsing_unit_subject> ::=
-        <Any>
+    <quoted_sp_comment_str> ::=
+        '`' <-[`]>* '`'
+```
 
+A `<sp>` represents *dividing space* that may be used to visually format
+MUON for readability (with line breaks and line indentation), or to embed
+comments, without changing its meaning.  A superset of the MUON grammar
+might require *dividing space* to disambiguate the boundaries of
+otherwise-consecutive grammar tokens, but plain MUON does not.
+
+## Universal Type (Any)
+
+The **Any** type is the *universal type*, which is the maximal data type of
+the type system and consists of all values which can possibly exist.
+This is represented by `<Any>`.
+
+Grammar:
+
+```
     <Any> ::=
         <opaque> | <collection>
 
@@ -99,15 +244,6 @@ Grammar:
         | <Tuple_Bag>
         | <Interval>
         | <Capsule>
-
-    <sp> ::=
-        [<whitespace> | <quoted_sp_comment_str>]*
-
-    <whitespace> ::=
-        [' ' | '\t' | '\n' | '\r']+
-
-    <quoted_sp_comment_str> ::=
-        '`' <-[`]>* '`'
 ```
 
 An `<Any>` represents a generic value literal that is allowed to be of any
@@ -120,33 +256,6 @@ many cases are also simple collections.
 A `<collection>` is an `<Any>` that explicitly does have child `<Any>`
 nodes in the general case; in conventional terms, one is for selecting
 values representing collections of other values.
-
-A `<sp>` represents *dividing space* that may be used to visually format
-MUON for readability (with line breaks and line indentation), or to embed
-comments, without changing its meaning.  A superset of the MUON grammar
-might require *dividing space* to disambiguate the boundaries of
-otherwise-consecutive grammar tokens, but plain MUON does not.
-
-A `<shebang_line>`, if it exists, must be the first characters of the text
-file, and consists of a magic number which expressed as ASCII or UTF-8 is
-`#!`, followed by a Unix-like interpreter directive or path to an
-executable that can interpret Muldis Object Notation files.  When a MUON
-file starts with a shebang line, it can be invoked directly as if it were
-an executable on a Unix-like system.  The format of `<shebang_directive>`
-isn't defined in this document; see the appropriate external Unix/etc
-documentation for that; however, the MUON file must have at least one
-line-breaking whitespace character of some kind following it, which is how
-we know where the MUON code begins.
-
-Example of a shebang line:
-
-    #!/usr/bin/env muldisdre
-
-## Universal Type (Any)
-
-The **Any** type is the *universal type*, which is the maximal data type of
-the type system and consists of all values which can possibly exist.
-This is represented by `<Any>`.
 
 ## Empty Type (None)
 
