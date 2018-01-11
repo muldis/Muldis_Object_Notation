@@ -263,7 +263,7 @@ The **None** type is the *empty type*, which is the minimal data type of
 the type system and consists of exactly zero values.
 This has no representation in the grammar, but is mentioned for parity.
 
-## Logical Boolean
+## Boolean
 
 A **Boolean** value, represented by `<Boolean>`, is a general purpose
 2-valued logic boolean or *truth value*, or specifically it is one of the 2
@@ -288,7 +288,7 @@ Examples:
     \?True
 ```
 
-## Big Integer
+## Integer
 
 An **Integer** value, represented by `<Integer>`, is a general purpose
 exact integral number of any magnitude, which explicitly does not represent
@@ -383,7 +383,7 @@ Examples:
     0b11001001
 ```
 
-## Big Fraction
+## Fraction
 
 A **Fraction** value, represented by `<Fraction>`, is a general purpose
 exact rational number of any magnitude and precision, which explicitly does
@@ -444,7 +444,7 @@ Examples:
         "/170141183460469231731687303715884105727"
 ```
 
-## Big Decimal
+## Decimal
 
 A **Decimal** value, represented by `<Decimal>`, is a general purpose exact
 rational number of any magnitude and precision that can be represented as a
@@ -501,7 +501,7 @@ Examples:
         "58209_74944_59230_78164_06286_20899_86280_34825_34211_70679"
 ```
 
-## Bit String (Bits)
+## Bits
 
 A **Bits** value, represented by `<Bits>`, is characterized by an
 arbitrarily-long sequence of *bits* where each bit is represented by an
@@ -528,7 +528,7 @@ Examples:
     \~?"00101110100010"
 ```
 
-## Octet String (Blob)
+## Blob
 
 A **Blob** value, represented by `<Blob>`, is characterized by an
 arbitrarily-long sequence of *octets* where each octet is represented by an
@@ -559,7 +559,7 @@ Examples:
     \~+"A705E416"
 ```
 
-## Unicode Character String (Text)
+## Text / Attribute Name
 
 A **Text** value, represented by `<Text>`, is characterized by an
 arbitrarily-long sequence of **Unicode** 10.0 standard *character
@@ -580,7 +580,7 @@ Grammar:
 
 ```
     <Text> ::=
-        <quoted_text> | <nonquoted_text>
+        <quoted_text> | <codepoint_text>
 
     <quoted_text> ::=
         ['\\~' <sp>]? <quoted_text_no_pfx>
@@ -606,17 +606,8 @@ Grammar:
         | '\\t' | '\\n' | '\\r'
         | ['\\c<' <codepoint> '>']
 
-    <nonquoted_text> ::=
-        '\\' <sp> <nonquoted_text_no_pfx>
-
-    <nonquoted_text_no_pfx> ::=
-        <nonord_nq_text> | <ord_nq_text>
-
-    <nonord_nq_text> ::=
-        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
-
-    <ord_nq_text> ::=
-        <codepoint>
+    <codepoint_text> ::=
+        '\\~' <sp> <codepoint>
 
     <codepoint> ::=
         <nonsigned_int> | <nonsigned_int_with_radix>
@@ -648,10 +639,7 @@ One reason for this feature is to empower more elegant passing of
 Unicode-savvy MUON through a communications channel that is more limited,
 such as to 7-bit ASCII.
 
-The meaning of `<nonord_nq_text>` is exactly the same as if it was
-surrounded by quotation marks, a non-empty **Text** of the same characters.
-
-The meaning of `<ord_nq_text>` is different; it denotes a **Text** of
+A `<codepoint_text>` is a specialized shorthand for a **Text** of
 exactly 1 character whose codepoint number it denotes.
 
 Given that **Text** values or syntax serve double duty for not only regular
@@ -676,19 +664,16 @@ Examples:
 
     \~"Green"
 
-    `One non-ordered nonquoted Text (or, one named attribute).`
-    \sales
-
-    `Same Text value.`
+    `One non-ordered quoted Text (or, one named attribute).`
     "sales"
 
     `One attribute name with a space in it.`
     "First Name"
 
     `One ordered nonquoted Text (or, one ordered attribute).`
-    \0
+    \~0
 
-    `Same Text value.`
+    `Same Text value (or, one ordered attr written in format of a named).`
     "\\c<0>"
 
     `From a graduate student (in finals week), the following haiku:`
@@ -697,7 +682,7 @@ Examples:
         "\close book. sleep? what's that?\n"
 ```
 
-## Generic Array
+## Array
 
 An **Array** value, represented by `<Array>`, is a general purpose
 arbitrarily-long ordered sequence of any other, *member* values, which
@@ -745,7 +730,7 @@ Examples:
     ]
 ```
 
-## Generic Set
+## Set
 
 A **Set** value, represented by `<Set>`, is a general purpose
 arbitrarily-large unordered collection of any other, *member* values, which
@@ -791,7 +776,7 @@ Examples:
     }
 ```
 
-## Generic Bag / Multiset
+## Bag / Multiset
 
 A **Bag** value, represented by `<Bag>`, is a general purpose
 arbitrarily-large unordered collection of any other, *member* values, which
@@ -1231,7 +1216,7 @@ Examples:
     ))
 ```
 
-## Nesting Attribute Name List
+## Nesting / Attribute Name List
 
 A **Nesting** value, represented by `<Nesting>`, is an arbitrarily-large
 nonempty ordered collection of attribute names, intended for referencing an
@@ -1241,7 +1226,7 @@ Grammar:
 
 ```
     <Nesting> ::=
-        '\\@' <sp> <nesting_attr_names>
+        '\\' <sp> <nesting_attr_names>
 
     <nesting_attr_names> ::=
         <attr_name> % [<sp> '::' <sp>]
@@ -1250,22 +1235,28 @@ Grammar:
         <nonord_attr_name> | <ord_attr_name>
 
     <nonord_attr_name> ::=
-        <nonord_nq_text> | <quoted_text_no_pfx>
+        <nonord_nonquoted_attr_name> | <quoted_text_no_pfx>
+
+    <nonord_nonquoted_attr_name> ::=
+        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
 
     <ord_attr_name> ::=
-        <ord_nq_text>
+        <codepoint>
 ```
+
+The meaning of `<nonord_nonquoted_attr_name>` is exactly the same as if the
+same characters surrounded by quotation marks.
 
 Examples:
 
 ```
-    \@person
+    \person
 
-    \@person::birth_date
+    \person::birth_date
 
-    \@person::birth_date::year
+    \person::birth_date::year
 
-    \@the_db::stats::"samples by order"
+    \the_db::stats::"samples by order"
 ```
 
 ## Heading / Attribute Name Set
@@ -1511,7 +1502,7 @@ that means they are used in pairs.
           |                        | * prefix for Excuse literals/selectors
     ------+------------------------+---------------------------------------
     @     | locators/at/headings   | * indicates identifiers/names are featured
-          |                        | * L1 of prefix for Heading/Nesting literals
+          |                        | * L1 of prefix for Heading literals
           |                        | * L1 of prefix for Renaming literals
     ------+------------------------+---------------------------------------
     -     | subtraction            | * indicates negative-Integer/Fraction/Decimal literal
