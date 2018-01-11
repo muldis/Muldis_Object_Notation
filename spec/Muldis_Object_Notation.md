@@ -68,7 +68,7 @@ Each MUON data type corresponds 1:1 with a distinct grammar in this document.
 - Relational: Tuple Array, Relation, Tuple Bag
 - Continuous: Interval
 - Generic: Capsule
-- Source Code: Heading, Nesting, Renaming
+- Source Code: Nesting, Heading, Renaming
 - Singleton: Excuse
 
 This document avoids defining any relationship between these types, and
@@ -858,196 +858,6 @@ Examples:
     }
 ```
 
-## Heading / Attribute Name Set
-
-A **Heading** value, represented by `<Heading>`, is an arbitrarily-large
-unordered collection of *attribute names*, such that no 2 attribute names
-are the same.
-
-Grammar:
-
-```
-    <Heading> ::=
-        '\\@' <sp> <delim_attr_name_commalist>
-
-    <delim_attr_name_commalist> ::=
-        '(' <sp> <attr_name_commalist> <sp> ')'
-
-    <attr_name_commalist> ::=
-        [<attr_name> | <ord_attr_name_range> | ''] % [<sp> ',' <sp>]
-
-    <attr_name> ::=
-        <nonord_attr_name> | <ord_attr_name>
-
-    <nonord_attr_name> ::=
-        <nonord_nq_text> | <quoted_text_no_pfx>
-
-    <ord_attr_name> ::=
-        <ord_nq_text>
-
-    <ord_attr_name_range> ::=
-        <min_ord_attr> <sp> '..' <sp> <max_ord_attr>
-
-    <min_ord_attr> ::=
-        <ord_attr_name>
-
-    <max_ord_attr> ::=
-        <ord_attr_name>
-```
-
-An `<ord_attr_name_range>` is subject to the additional rule that its
-integral `<min_ord_attr>` value must be less than or equal to its integral
-`<max_ord_attr>` value.
-
-Examples:
-
-```
-    `Zero attributes.`
-    \@()
-
-    `One named attribute.`
-    \@(sales)
-
-    `Same thing.`
-    \@("sales")
-
-    `One ordered attribute.`
-    \@(0)
-
-    `Same thing.`
-    \@("\\c<0>")
-
-    `Three named attributes.`
-    \@(region,revenue,qty)
-
-    `Three ordered attributes.`
-    \@(0..2)
-
-    `One of each.`
-    \@(1,age)
-
-    `Some attribute names can only appear quoted.`
-    \@("Street Address")
-
-    `A non-Latin name.`
-    \@("サンプル")
-```
-
-## Nesting Attribute Name List
-
-A **Nesting** value, represented by `<Nesting>`, is an arbitrarily-large
-nonempty ordered collection of attribute names, intended for referencing an
-entity in a multi-level namespace, such as nested **Tuple** may implement.
-
-Grammar:
-
-```
-    <Nesting> ::=
-        '\\@' <sp> <nesting_attr_names>
-
-    <nesting_attr_names> ::=
-        <attr_name> % [<sp> '::' <sp>]
-```
-
-Examples:
-
-```
-    \@person
-
-    \@person::birth_date
-
-    \@person::birth_date::year
-
-    \@the_db::stats::"samples by order"
-```
-
-## Attribute Renaming Specification
-
-A **Renaming** value, represented by `<Renaming>`, is an arbitrarily-large
-unordered collection of attribute renaming specifications.
-
-Grammar:
-
-```
-    <Renaming> ::=
-        '\\@:' <sp> <delim_renaming_commalist>
-
-    <delim_renaming_commalist> ::=
-        '(' <sp> <renaming_commalist> <sp> ')'
-
-    <renaming_commalist> ::=
-        [<anon_attr_rename> | <named_attr_rename> | ''] % [<sp> ',' <sp>]
-
-    <anon_attr_rename> ::=
-          ['->' <sp> <attr_name_after>]
-        | [<attr_name_after> <sp> '<-']
-        | [<attr_name_before> <sp> '->']
-        | ['<-' <sp> <attr_name_before>]
-
-    <named_attr_rename> ::=
-          [<attr_name_before> <sp> '->' <sp> <attr_name_after>]
-        | [<attr_name_after> <sp> '<-' <sp> <attr_name_before>]
-
-    <attr_name_before> ::=
-        <attr_name>
-
-    <attr_name_after> ::=
-        <attr_name>
-```
-
-Each attribute renaming specification is a pair of attribute names marked
-with a `->` or a `<-` element; the associated `<attr_name_before>` and
-`<attr_name_after>` indicate the name that an attribute has *before* and
-*after* the renaming operation, respectively.  Iff the renaming
-specification is an `<anon_attr_rename>` then either the *before* or
-*after* name is an ordered attribute name corresponding to the ordinal
-position of the renaming specification element in the
-`<renaming_commalist>`, starting at zero.
-
-A `<renaming_commalist>` is subject to the additional rule that no 2
-`<attr_name_before>` may be the same attribute name and that no 2
-`<attr_name_after>` may be the same attribute name.
-
-Examples:
-
-```
-    `Zero renamings, a no-op.`
-    \@:()
-
-    `Also a no-op.`
-    \@:(age->age)
-
-    `Rename one attribute.`
-    \@:(fname->first_name)
-
-    `Same thing.`
-    \@:(first_name<-fname)
-
-    `Swap 2 named attributes.`
-    \@:(foo->bar,foo<-bar)
-
-    `Convert ordered names to nonordered.`
-    \@:(->foo,->bar)
-
-    `Same thing.`
-    \@:(0->foo,1->bar)
-
-    `Convert nonordered names to ordered.`
-    \@:(<-foo,<-bar)
-
-    `Same thing.`
-    \@:(0<-foo,1<-bar)
-
-    `Swap 2 ordered attributes.`
-    \@:(0->1,0<-1)
-
-    `Same thing.`
-    \@:(->1,->0)
-
-    `Some attribute names can only appear quoted.`
-    \@:("First Name"->"Last Name")
-```
-
 ## Tuple / Attribute Set
 
 A **Tuple** value, represented by `<Tuple>`, is a general purpose
@@ -1419,6 +1229,196 @@ Examples:
         minute : 30,
         second : 0.0,
     ))
+```
+
+## Nesting Attribute Name List
+
+A **Nesting** value, represented by `<Nesting>`, is an arbitrarily-large
+nonempty ordered collection of attribute names, intended for referencing an
+entity in a multi-level namespace, such as nested **Tuple** may implement.
+
+Grammar:
+
+```
+    <Nesting> ::=
+        '\\@' <sp> <nesting_attr_names>
+
+    <nesting_attr_names> ::=
+        <attr_name> % [<sp> '::' <sp>]
+
+    <attr_name> ::=
+        <nonord_attr_name> | <ord_attr_name>
+
+    <nonord_attr_name> ::=
+        <nonord_nq_text> | <quoted_text_no_pfx>
+
+    <ord_attr_name> ::=
+        <ord_nq_text>
+```
+
+Examples:
+
+```
+    \@person
+
+    \@person::birth_date
+
+    \@person::birth_date::year
+
+    \@the_db::stats::"samples by order"
+```
+
+## Heading / Attribute Name Set
+
+A **Heading** value, represented by `<Heading>`, is an arbitrarily-large
+unordered collection of *attribute names*, such that no 2 attribute names
+are the same.
+
+Grammar:
+
+```
+    <Heading> ::=
+        '\\@' <sp> <delim_attr_name_commalist>
+
+    <delim_attr_name_commalist> ::=
+        '(' <sp> <attr_name_commalist> <sp> ')'
+
+    <attr_name_commalist> ::=
+        [<attr_name> | <ord_attr_name_range> | ''] % [<sp> ',' <sp>]
+
+    <ord_attr_name_range> ::=
+        <min_ord_attr> <sp> '..' <sp> <max_ord_attr>
+
+    <min_ord_attr> ::=
+        <ord_attr_name>
+
+    <max_ord_attr> ::=
+        <ord_attr_name>
+```
+
+An `<ord_attr_name_range>` is subject to the additional rule that its
+integral `<min_ord_attr>` value must be less than or equal to its integral
+`<max_ord_attr>` value.
+
+Examples:
+
+```
+    `Zero attributes.`
+    \@()
+
+    `One named attribute.`
+    \@(sales)
+
+    `Same thing.`
+    \@("sales")
+
+    `One ordered attribute.`
+    \@(0)
+
+    `Same thing.`
+    \@("\\c<0>")
+
+    `Three named attributes.`
+    \@(region,revenue,qty)
+
+    `Three ordered attributes.`
+    \@(0..2)
+
+    `One of each.`
+    \@(1,age)
+
+    `Some attribute names can only appear quoted.`
+    \@("Street Address")
+
+    `A non-Latin name.`
+    \@("サンプル")
+```
+
+## Attribute Renaming Specification
+
+A **Renaming** value, represented by `<Renaming>`, is an arbitrarily-large
+unordered collection of attribute renaming specifications.
+
+Grammar:
+
+```
+    <Renaming> ::=
+        '\\@:' <sp> <delim_renaming_commalist>
+
+    <delim_renaming_commalist> ::=
+        '(' <sp> <renaming_commalist> <sp> ')'
+
+    <renaming_commalist> ::=
+        [<anon_attr_rename> | <named_attr_rename> | ''] % [<sp> ',' <sp>]
+
+    <anon_attr_rename> ::=
+          ['->' <sp> <attr_name_after>]
+        | [<attr_name_after> <sp> '<-']
+        | [<attr_name_before> <sp> '->']
+        | ['<-' <sp> <attr_name_before>]
+
+    <named_attr_rename> ::=
+          [<attr_name_before> <sp> '->' <sp> <attr_name_after>]
+        | [<attr_name_after> <sp> '<-' <sp> <attr_name_before>]
+
+    <attr_name_before> ::=
+        <attr_name>
+
+    <attr_name_after> ::=
+        <attr_name>
+```
+
+Each attribute renaming specification is a pair of attribute names marked
+with a `->` or a `<-` element; the associated `<attr_name_before>` and
+`<attr_name_after>` indicate the name that an attribute has *before* and
+*after* the renaming operation, respectively.  Iff the renaming
+specification is an `<anon_attr_rename>` then either the *before* or
+*after* name is an ordered attribute name corresponding to the ordinal
+position of the renaming specification element in the
+`<renaming_commalist>`, starting at zero.
+
+A `<renaming_commalist>` is subject to the additional rule that no 2
+`<attr_name_before>` may be the same attribute name and that no 2
+`<attr_name_after>` may be the same attribute name.
+
+Examples:
+
+```
+    `Zero renamings, a no-op.`
+    \@:()
+
+    `Also a no-op.`
+    \@:(age->age)
+
+    `Rename one attribute.`
+    \@:(fname->first_name)
+
+    `Same thing.`
+    \@:(first_name<-fname)
+
+    `Swap 2 named attributes.`
+    \@:(foo->bar,foo<-bar)
+
+    `Convert ordered names to nonordered.`
+    \@:(->foo,->bar)
+
+    `Same thing.`
+    \@:(0->foo,1->bar)
+
+    `Convert nonordered names to ordered.`
+    \@:(<-foo,<-bar)
+
+    `Same thing.`
+    \@:(0<-foo,1<-bar)
+
+    `Swap 2 ordered attributes.`
+    \@:(0->1,0<-1)
+
+    `Same thing.`
+    \@:(->1,->0)
+
+    `Some attribute names can only appear quoted.`
+    \@:("First Name"->"Last Name")
 ```
 
 # SYNTACTIC MNEMONICS
