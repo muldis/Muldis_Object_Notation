@@ -505,7 +505,8 @@ Examples:
 
 A **Bits** value, represented by `<Bits>`, is characterized by an
 arbitrarily-long sequence of *bits* where each bit is represented by an
-**Integer** in the range 0..1.
+**Integer** in the range 0..1,
+which explicitly does not represent any kind of thing in particular.
 
 Grammar:
 
@@ -532,7 +533,8 @@ Examples:
 
 A **Blob** value, represented by `<Blob>`, is characterized by an
 arbitrarily-long sequence of *octets* where each octet is represented by an
-**Integer** in the range 0..255.
+**Integer** in the range 0..255,
+which explicitly does not represent any kind of thing in particular.
 
 Grammar:
 
@@ -564,9 +566,14 @@ Examples:
 A **Text** value, represented by `<Text>`, is characterized by an
 arbitrarily-long sequence of **Unicode** 10.0 standard *character
 codepoints*, where each distinct codepoint corresponds to a distinct
-integer in the set **{0..0xD7FF,0xE000..0x10FFFF}**.
+integer in the set **{0..0xD7FF,0xE000..0x10FFFF}**,
+which explicitly does not represent any kind of thing in particular.
 
 See also [https://unicode.org](https://unicode.org).
+
+A **Text** value has 2 fundamental uses, one being for generic user data,
+and the other being the canonical form of a standalone *attribute name*
+(see the **Tuple** type) which is an unqualified program identifier.
 
 Note that some programming languages or execution environments support a
 "Unicode character string" concept that is less strict than the **Unicode**
@@ -644,8 +651,8 @@ exactly 1 character whose codepoint number it denotes.
 
 Given that **Text** values or syntax serve double duty for not only regular
 user data but also for attribute names of tuples or other kinds of
-identifiers, the non-quoted variants provide a nicer alternative for
-specifying them in latter contexts; particularly, the `<ord_nq_text>` is
+identifiers, the `<codepoint_text>` variant provides a nicer alternative
+for specifying them in latter contexts; it is
 purposefully like a regular integer for use in situations where we have
 conceptually ordered (rather than conceptually named) attributes.
 
@@ -854,15 +861,16 @@ name being used to look up the attribute in a **Tuple**.  An *attribute
 name* is an unqualified program identifier and is conceptually a character
 string that is not a **Text** value.  In the general case each attribute of
 a tuple is of a distinct data type, though multiple attributes often have
-the same type. The set of attribute names of a **Tuple** is called its
+the same type.  The set of attribute names of a **Tuple** is called its
 *heading*, and the corresponding attribute assets are called its *body*.
+
 With respect to the relational model of data, a *heading* represents a
 predicate, for which each *attribute name* is a free variable, and a
 **Tuple** as a whole represents a derived proposition, where the
 corresponding attribute asset values substitute for the free variables;
-however, any actual predicate/etc is defined by the context of a **Tuple**
-value and a **Tuple** in isolation explicitly does not represent any
-proposition in particular.
+however, any actual predicate/etc is defined by the context of a
+**Tuple** value and a **Tuple** in isolation explicitly does not
+represent any proposition in particular.
 
 The canonical way to represent the concept of a *tuple* that has ordered
 attributes is to use integral names; to be specific, the attribute name
@@ -968,9 +976,11 @@ Examples:
 
 ## Tuple Array
 
-A **Tuple Array** value, represented by `<Tuple_Array>`, is a ...
-
-*TODO.*
+A **Tuple Array** value, represented by `<Tuple_Array>`, is characterized
+by the pairing of a **Heading** value with an **Array** value, which define
+its *heading* and *body*, respectively.  A **Tuple Array** is isomorphic to
+a **Relation** with the sole exception of being based on an **Array**
+rather than a **Set**.
 
 Grammar:
 
@@ -1016,9 +1026,21 @@ Examples:
 
 ## Relation / Tuple Set
 
-A **Relation** value, represented by `<Relation>`, is a ...
+A **Relation** value, represented by `<Relation>`, is characterized
+by the pairing of a **Heading** value with a **Set** value, which define
+its *heading* and *body*, respectively.  A **Relation** ensures that every
+*member* of its *body* is a **Tuple** having the same *heading* (set of
+*attribute names*) as its own *heading*.  A **Relation** can alternately be
+characterized by the pairing of a single set of attribute names with a set
+of corresponding attribute assets for each attribute name.
 
-*TODO.*
+With respect to the relational model of data, a *heading* represents a
+predicate, for which each *attribute name* is a free variable, and a
+**Relation** as a whole represents a set of derived propositions, where the
+corresponding attribute asset values substitute for the free variables;
+however, any actual predicate/etc is defined by the context of a
+**Relation** value and a **Relation** in isolation explicitly does not
+represent any proposition in particular.
 
 Grammar:
 
@@ -1063,9 +1085,11 @@ Examples:
 
 ## Tuple Bag
 
-A **Tuple Bag** value, represented by `<Tuple_Bag>`, is a ...
-
-*TODO.*
+A **Tuple Bag** value, represented by `<Tuple_Bag>`, is characterized
+by the pairing of a **Heading** value with a **Bag** value, which define
+its *heading* and *body*, respectively.  A **Tuple Bag** is isomorphic to
+a **Relation** with the sole exception of being based on a **Bag**
+rather than a **Set**.
 
 Grammar:
 

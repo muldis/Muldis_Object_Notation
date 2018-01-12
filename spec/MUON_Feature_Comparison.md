@@ -31,11 +31,13 @@ as each provides distinct *false* and *true* literals that are distinct
 values from numbers and strings and anything else.
 
 MUON is more expressive than JSON regarding numeric literals.
-They are equal in only supporting base 10 / decimal notation, and not base
-2/8/16; the latter isn't a great loss because all rational values that are
-terminating in base 2/8/16 are also terminating in base 10.
+MUON supports 4 numeric bases (2,8,10,16) for integer literals,
+though currently only base 10 for non-integer numeric literals,
+while JSON only supports base 10 for all numeric literals.
+(This is merely a syntactic convenience given that all rational values that
+are terminating in base 2/8/16 are also terminating in base 10.)
 MUON also natively supports exact rational numeric literals that are *not*
-terminating in base 10, using its *Fraction* syntax, while JSON does not.
+terminating in base 10, using its **Fraction** syntax, while JSON does not.
 As of this writing, only JSON supports scientific notation for inexact
 numeric literals and MUON does not, though MUON still supports all of the
 same rational values written out in full.
