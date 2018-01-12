@@ -1200,23 +1200,46 @@ Examples:
     \..(..)
 ```
 
-## Capsule
+## Capsule / Labelled Tuple
 
-A **Capsule** value, represented by `<Capsule>`, is a ...
+A **Capsule** value, represented by `<Capsule>`, is characterized by the
+pairing of a *label* with a set of 0..N *attributes* where that set is a
+**Tuple** value; the label can be of any type but is idiomatically a
+**Nesting** value.
 
-*TODO.*
+The **Capsule** type is the idiomatic way for an external data model to
+represent "new" types of a nominal type system in a consistent way.  The
+*label* represents a fully-qualified external data type name, and thus a
+namespace within all the **Capsule** values, while the *attributes* define
+all the components of a value of that external type.  Thus a **Capsule**
+corresponds to a generic *object* of an object-oriented language, the
+*label* is the *class* of that *object*, and *attributes* are *properties*.
+
+The idiomatic way to represent a singleton type value is as a **Capsule**
+where the *label* is the singleton type name and the *attributes* is the
+**Tuple** with zero attributes.
+
+The idiomatic default attribute name for a single-attribute **Capsule** is
+`0` (the first conceptually ordered attribute name) when there isn't an
+actual meaningful name to give it.
 
 Grammar:
 
 ```
     <Capsule> ::=
-        ['\\:' <sp>]? '(' <sp> <c_label> <sp> ':' <sp> <c_attrs> <sp> ')'
+        <generic_capsule> | <singleton_capsule>
+
+    <generic_capsule> ::=
+        ['\\*' <sp>]? '(' <sp> <c_label> <sp> ':' <sp> <c_attrs> <sp> ')'
 
     <c_label> ::=
         <Any>
 
     <c_attrs> ::=
         <Tuple>
+
+    <singleton_capsule> ::=
+        '\\*' <sp> <nesting_attr_names>
 ```
 
 Examples:
@@ -1230,7 +1253,7 @@ Examples:
         exponent    : 37,
     ))
 
-    (\@the_db::UTCDateTime : (
+    \*(\the_db::UTCDateTime : (
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -1238,6 +1261,8 @@ Examples:
         minute : 30,
         second : 0.0,
     ))
+
+    \*Positive_Infinity
 ```
 
 ## Nesting / Attribute Name List
@@ -1489,7 +1514,6 @@ that means they are used in pairs.
           |                        | * optional pair separator in Tuple/Excuse sels
           |                        | * optional pair separator in ne-TA/Rel/TB sels
           |                        | * label/attributes separator in Capsule sel
-          |                        | * L1 of optional prefix for Capsule selectors
           |                        | * disambiguate Bag sel from Set sel
           |                        | * L2 of prefix for Renaming literals
     ------+------------------------+---------------------------------------
@@ -1521,6 +1545,9 @@ that means they are used in pairs.
     %     | tuples/heterogeneous   | * indicates that tuples are featured
           |                        | * L1 of optional prefix for Tuple selectors
           |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
+    ------+------------------------+---------------------------------------
+    *     | generics               | * indicates a generic type context
+          |                        | * L1 of optional prefix for Capsule selectors
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured
           |                        | * prefix for Excuse literals/selectors
