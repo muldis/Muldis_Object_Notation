@@ -67,9 +67,8 @@ Each MUON data type corresponds 1:1 with a distinct grammar in this document.
 - Continuous: Interval
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
-- Generic: Capsule
+- Generic: Capsule, Excuse, Ignorance
 - Source Code: Nesting, Heading, Renaming
-- Singleton: Excuse
 
 This document avoids defining any relationship between these types, and
 officially leaves it up to each external data model used with MUON to
@@ -210,7 +209,7 @@ comments, without changing its meaning.  A superset of the MUON grammar
 might require *dividing space* to disambiguate the boundaries of
 otherwise-consecutive grammar tokens, but plain MUON does not.
 
-## Universal Type (Any)
+## Any / Universal Type
 
 The **Any** type is the *universal type*, which is the maximal data type of
 the type system and consists of all values which can possibly exist.
@@ -230,6 +229,7 @@ Grammar:
         | <Bits>
         | <Blob>
         | <Text>
+        | <Ignorance>
         | <Nesting>
         | <Heading>
         | <Renaming>
@@ -244,6 +244,7 @@ Grammar:
         | <Relation>
         | <Tuple_Bag>
         | <Capsule>
+        | <Excuse>
 ```
 
 An `<Any>` represents a generic value literal that is allowed to be of any
@@ -257,7 +258,7 @@ A `<collection>` is an `<Any>` that explicitly does have child `<Any>`
 nodes in the general case; in conventional terms, one is for selecting
 values representing collections of other values.
 
-## Empty Type (None)
+## None / Empty Type
 
 The **None** type is the *empty type*, which is the minimal data type of
 the type system and consists of exactly zero values.
@@ -1215,6 +1216,11 @@ all the components of a value of that external type.  Thus a **Capsule**
 corresponds to a generic *object* of an object-oriented language, the
 *label* is the *class* of that *object*, and *attributes* are *properties*.
 
+As a primary exception to the above, the large number of *exception* or
+*error* types common in some data models / type systems should *not* be
+represented using a **Capsule** but rather with the structurally identical
+**Excuse** which natively carries that extra semantic.
+
 The idiomatic way to represent a singleton type value is as a **Capsule**
 where the *label* is the singleton type name and the *attributes* is the
 **Tuple** with zero attributes.
@@ -1230,12 +1236,15 @@ Grammar:
         <generic_capsule> | <singleton_capsule>
 
     <generic_capsule> ::=
-        ['\\*' <sp>]? '(' <sp> <c_label> <sp> ':' <sp> <c_attrs> <sp> ')'
+        ['\\*' <sp>]? <label_attrs_pair>
 
-    <c_label> ::=
+    <label_attrs_pair> ::=
+        '(' <sp> <label> <sp> ':' <sp> <attrs> <sp> ')'
+
+    <label> ::=
         <Any>
 
-    <c_attrs> ::=
+    <attrs> ::=
         <Tuple>
 
     <singleton_capsule> ::=
@@ -1263,6 +1272,90 @@ Examples:
     ))
 
     \*Positive_Infinity
+```
+
+## Excuse
+
+An **Excuse** value, represented by `<Excuse>`, is an explicitly stated
+reason for why, given some particular problem domain, a value is not being
+used that is ordinary for that domain.  Alternately, an **Excuse** is
+characterized by a **Capsule** that has the added semantic of representing
+some kind of error condition, in contrast to an actual **Capsule** which
+explicitly does *not* represent an error condition in the general case.
+
+For example, the typical integer division operation is not defined to give
+an integer result when the divisor is zero, and so a function for integer
+division could be defined to result in an **Excuse** value rather than
+throw an exception in that case.  For another example, an **Excuse** value
+could be used to declare that the information we are storing about a person
+is missing certain details and why those are missing, such as because the
+person left the birthdate field blank on their application form.
+
+An **Excuse** is isomorphic to an *exception* but that use of the former is
+not meant to terminate execution of code early unlike the latter which is.
+
+The **Excuse** type is the idiomatic way for an external data model to
+represent "new" *error* or *exception* types of a nominal type system in a
+consistent way.  The counterpart **Capsule** type should *not* be used for
+these things, but rather just every other kind of externally-defined type.
+
+Grammar:
+
+```
+    <Excuse> ::=
+        '\\!' <sp> [<label_attrs_pair> | <nesting_attr_names>]
+```
+
+Examples:
+
+```
+    \!(\Input_Field_Wrong : (name : "Your Age"))
+
+    \!Div_By_Zero
+
+    \!No_Such_Attr_Name
+```
+
+## Ignorance
+
+The singleton **Ignorance** value, represented by `<Ignorance>`, is
+characterized by an **Excuse** which simply says that an ordinary value for
+any given domain is missing and that there is simply no excuse that has
+been given for this; in other words, something has gone wrong without the
+slightest hint of an explanation.
+
+This is conceptually the most generic excuse value there is and it can
+be used by lazy programmers as a fallback for when they don't have even a
+semblance of a better explanation for why an ordinary value is missing.
+
+The **Ignorance** value has its own special syntax in MUON disjoint from
+any **Excuse** syntax so that this MUON-defined excuse doesn't step on any
+possible name that a particular external data model might use.
+
+When an external data model natively has exactly one generic *null* or
+*nil* or *undefined* or *unknown* or similar value or quasi-value,
+**Ignorance** is the official way to represent an instance of it in MUON.
+
+When an external data model natively has a concept of 3-valued logic (MUON
+itself does not), specifically a concept like such where the multiplicity
+of scenarios that may produce a special no-regular-value-is-here marker do
+in fact all produce the exact same marker, **Ignorance** is the official
+way to represent that marker.  This includes the *null* of any common
+dialect of SQL.  Whereas, for external data models that distinguish the
+reasons for why a regular value may be missing, **Ignorance** should NOT be
+used and instead other more applicable **Excuse** values should instead.
+
+Grammar:
+
+```
+    <Ignorance> ::=
+        '\\!!' <sp> Ignorance
+```
+
+Examples:
+
+```
+    \!!Ignorance
 ```
 
 ## Nesting / Attribute Name List
@@ -1550,7 +1643,7 @@ that means they are used in pairs.
           |                        | * L1 of optional prefix for Capsule selectors
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured
-          |                        | * prefix for Excuse literals/selectors
+          |                        | * L1 of prefix for Excuse literals/selectors
     ------+------------------------+---------------------------------------
     @     | locators/at/headings   | * indicates identifiers/names are featured
           |                        | * L1 of prefix for Heading literals

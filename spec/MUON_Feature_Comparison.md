@@ -161,17 +161,8 @@ types via `System.Tuple`.
 .NET has a direct `Excuse` analogy which is provided by the .NET class
 `System.Exception`.
 
-.NET has a direct `No_Reason` analogy which is provided by `null`,
+.NET has a direct `Ignorance` analogy which is provided by `null`,
 and another provided by the .NET singleton class `System.DBNull`.
-
-.NET has a direct `Div_By_Zero` analogy which is provided by
-the .NET class `System.DivideByZeroException`.
-
-.NET has a direct `No_Such_Ord_Pos` analogy which is provided by
-the .NET class `System.IndexOutOfRangeException`.
-
-.NET has a direct `No_Such_Attr_Name` analogy which is provided by
-the .NET class `System.Collections.Generic.KeyNotFoundException`.
 
 *TODO.*
 
@@ -304,10 +295,7 @@ Perl 6 has a direct `Excuse` analogy which is provided by the Perl 6 class
 Also of note, `X::AdHoc` is the Perl 6 type into which objects are wrapped
 if they are thrown as exceptions, but don't inherit from `Exception`.
 
-Perl 6 has a direct `Excuse_No_Reason` analogy which is provided by the
+Perl 6 has a direct `Ignorance` analogy which is provided by the
 Perl 6 class `Nil`.
-
-Perl 6 has a direct `Excuse_No_Such_Ord_Pos` analogy which is provided by
-the Perl 6 class `X::OutOfRange`.
 
 *TODO.*
