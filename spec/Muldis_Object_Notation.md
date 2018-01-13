@@ -64,9 +64,9 @@ Each MUON data type corresponds 1:1 with a distinct grammar in this document.
 - Numeric: Integer, Fraction, Decimal
 - Stringy: Bits, Blob, Text
 - Discrete: Array, Set, Bag
+- Continuous: Interval
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
-- Continuous: Interval
 - Generic: Capsule
 - Source Code: Nesting, Heading, Renaming
 - Singleton: Excuse
@@ -230,19 +230,19 @@ Grammar:
         | <Bits>
         | <Blob>
         | <Text>
-        | <Heading>
         | <Nesting>
+        | <Heading>
         | <Renaming>
 
     <collection> ::=
           <Array>
         | <Set>
         | <Bag>
+        | <Interval>
         | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
-        | <Interval>
         | <Capsule>
 ```
 
@@ -850,6 +850,74 @@ Examples:
     }
 ```
 
+## Interval
+
+An **Interval** value, represented by `<Interval>`, is a ...
+
+*TODO.*
+
+Grammar:
+
+```
+    <Interval> ::=
+        '\\..' <sp> <interval_no_pfx>
+
+    <interval_no_pfx> ::=
+        '(' <sp> <interval_members> <sp> ')'
+
+    <interval_members> ::=
+        <interval_empty> | <interval_single> | <interval_range>
+
+    <interval_empty> ::=
+        ''
+
+    <interval_single> ::=
+        <Any>
+
+    <interval_range> ::=
+        <interval_low>? <interval_boundary_kind> <interval_high>?
+
+    <interval_low> ::=
+        <Any>
+
+    <interval_high> ::=
+        <Any>
+
+    <interval_boundary_kind> ::=
+        '..' | '-..' | '..-' | '-..-'
+```
+
+Examples:
+
+```
+    `Empty interval (zero members).`
+    \..()
+
+    `Unit interval (one member).`
+    \..("abc")
+
+    `Closed interval (probably 10 members, depending on the model used).`
+    \..(1..10)
+
+    `Left-closed, right-open interval; every Decimal x in {2.7<=x<9.3}.`
+    \..(2.7..-9.3)
+
+    `Left-open, right-closed interval; every Text x ordered in {"a"<x<="z"}.`
+    \..("a"-.."z")
+
+    `Open interval; time period between Dec 6 and 20 excluding both.`
+    \..((\UTCInstant:(2002,12,6)) -..- (\UTCInstant:(2002,12,20)))
+
+    `Left-unbounded, right-closed interval; every Integer <= 3.`
+    \..(..3)
+
+    `Left-closed, right-unbounded interval; every Integer >= 29.`
+    \..(29..)
+
+    `Universal interval; unbounded; every value of type system is a member.`
+    \..(..)
+```
+
 ## Tuple / Attribute Set
 
 A **Tuple** value, represented by `<Tuple>`, is a general purpose
@@ -1130,74 +1198,6 @@ Examples:
         ("Michelle", 17),
         ("Amy"     , 14),
     }
-```
-
-## Interval
-
-An **Interval** value, represented by `<Interval>`, is a ...
-
-*TODO.*
-
-Grammar:
-
-```
-    <Interval> ::=
-        '\\..' <sp> <interval_no_pfx>
-
-    <interval_no_pfx> ::=
-        '(' <sp> <interval_members> <sp> ')'
-
-    <interval_members> ::=
-        <interval_empty> | <interval_single> | <interval_range>
-
-    <interval_empty> ::=
-        ''
-
-    <interval_single> ::=
-        <Any>
-
-    <interval_range> ::=
-        <interval_low>? <interval_boundary_kind> <interval_high>?
-
-    <interval_low> ::=
-        <Any>
-
-    <interval_high> ::=
-        <Any>
-
-    <interval_boundary_kind> ::=
-        '..' | '-..' | '..-' | '-..-'
-```
-
-Examples:
-
-```
-    `Empty interval (zero members).`
-    \..()
-
-    `Unit interval (one member).`
-    \..("abc")
-
-    `Closed interval (probably 10 members, depending on the model used).`
-    \..(1..10)
-
-    `Left-closed, right-open interval; every Decimal x in {2.7<=x<9.3}.`
-    \..(2.7..-9.3)
-
-    `Left-open, right-closed interval; every Text x ordered in {"a"<x<="z"}.`
-    \..("a"-.."z")
-
-    `Open interval; time period between Dec 6 and 20 excluding both.`
-    \..((\UTCInstant:(2002,12,6)) -..- (\UTCInstant:(2002,12,20)))
-
-    `Left-unbounded, right-closed interval; every Integer <= 3.`
-    \..(..3)
-
-    `Left-closed, right-unbounded interval; every Integer >= 29.`
-    \..(29..)
-
-    `Universal interval; unbounded; every value of type system is a member.`
-    \..(..)
 ```
 
 ## Capsule / Labelled Tuple
