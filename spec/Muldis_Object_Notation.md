@@ -853,9 +853,47 @@ Examples:
 
 ## Interval
 
-An **Interval** value, represented by `<Interval>`, is a ...
+An **Interval** value, represented by `<Interval>`, is a general purpose
+arbitrarily-large unordered collection of any other, *member* values, which
+explicitly does not represent any kind of thing in particular, and is
+simply the sum of its members; the count of members may be either finite or
+infinite depending on the external data model or type system in question.
 
-*TODO.*
+In stark contrast to a **Set** value, whose set of members is characterized
+by an enumeration of every member value, an **Interval** value's set of
+members is instead characterized by exactly 2 *endpoint* values (or exactly
+1 or exactly zero) of some *orderable* type such that every value in the
+type system with a defined total order between those 2 endpoints is
+considered to be a member value of the **Interval**.  Depending on the
+external data model or type system in question, an **Interval** value may
+(and typically does) consist of an infinite set of members, in contrast
+with a **Set** which can only have a finite set of members.
+
+An *empty interval* has exactly zero members.  A *unit interval* has
+exactly 1 member.  A *closed interval* includes both endpoint values in its
+membership; an *open interval* excludes both endpoint values; a
+*half-closed, half-open interval* includes one and excludes the other.
+A *half-unbounded, half-bounded interval* includes all values that are
+ordered either before or after the single endpoint; a *universal interval*
+or *unbounded interval* includes every value in the type system.
+
+In the general case, for MUON-defined types, only a *bounded interval* over
+2 distinct **Integer** (or **Boolean**) endpoints has a finite member
+count; whereas, a *bounded interval* over 2 distinct endpoints over any
+other type (such as **Fraction** or **Text**) has an infinite member count,
+because given any 2 distinct values of most types you can find another
+distinct value that is ordered between them.  Also, a non-bounded interval
+over **Integer** has an infinite member count in MUON.  An external data
+model can only change this by defining its corresponding member data types
+to have a finite membership themselves, in contrast to mathematics.
+
+Note that it is up to the external data model to define any total orders
+for any member value types, either which one is used implicitly when the
+**Interval** has no explicit context to specify one, or how to interpret
+that explicit context.  For a common example, there exist a wide variety of
+character string collations in common use, and it would require context or
+the external data model to declare which to use for **Text** members.
+MUON itself simply characterizes an **Interval** *as* its endpoints.
 
 Grammar:
 
