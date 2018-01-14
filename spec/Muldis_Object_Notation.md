@@ -67,6 +67,7 @@ Each MUON data type corresponds 1:1 with a distinct grammar in this document.
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
+- Symbolic: Unit, Measure
 - Generic: Capsule, Excuse, Ignorance
 - Source Code: Nesting, Heading, Renaming
 
@@ -245,6 +246,8 @@ Grammar:
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
+        | <Unit>
+        | <Measure>
         | <Capsule>
         | <Excuse>
 ```
@@ -1336,6 +1339,197 @@ Examples:
     }
 ```
 
+## Unit
+
+A **Unit** value, represented by `<Unit>`, is a symbol intended to be used
+as a *unit of measurement*, which explicitly is agnostic to any externally
+defined standards and should be able to represent units from any of them.
+
+*TODO: Reconsider whether Unit should be its own distinct MUON type apart
+from Measure versus just having its definition folded into the latter.*
+
+A **Unit** value is characterized by a set of 0..N *unit factors* such that
+each *unit factor* is a *unit label* / *unit exponent* pair.  A *unit
+label* can be of any type but is idiomatically either a **Nesting** value
+or a **Text** value or a singleton **Capsule** value; it represents a basic
+named component unit such as `Meter` or `Second` or `Gram`; MUON generally
+does not define any of these basic names itself, leaving that to external
+data models.  A *unit exponent* is any **Integer** value, typically
+positive one.  A **Unit** ensures that no 2 of its *unit factor* have the
+same *unit label*.
+
+MUON does not otherwise normalize **Unit** values in any way, leaving that
+to external data models.
+
+A **Unit** value is characterized by a mathematical expression consisting
+of 0..N factors that are multiplied together where each factor is an
+exponentiated named constant.  If there are exactly zero factors then the
+expression has the value positive one, the identity value for multiplication.
+
+The **Unit** type is numeric and is closed under multiplication and
+division and reciprocal and integer exponentiation, but is not closed under
+addition or subtraction (but the **Measure** type supports those too).
+
+The sole **Unit** value with exactly zero *unit factor* is the *identity
+unit*; using this as the unit of a measurement is explicitly saying that
+all you have is a plain number, and not a number *of* anything.  The
+*identity unit* is the identity value for the **Unit** type; multiplying
+any **Unit** X with this yields X.
+
+*TODO: Consider if a singleton Capsule is actually the best idiomatic type
+for a unit label.*
+
+Grammar:
+
+```
+    <Unit> ::=
+        <generic_unit> | <simple_unit>
+
+    <generic_unit> ::=
+        '\\$$' <sp> '{' <sp> <unit_factor_list> <sp> '}'
+
+    <unit_factor_list> ::=
+        [<simple_unit_factor> | <expon_unit_factor>] % [<sp> '*' <sp>]
+
+    <simple_unit_factor> ::=
+        <label>
+
+    <expon_unit_factor> ::=
+        <label> <sp> '^' <sp> <exponent>
+
+    <exponent> ::=
+        <Integer>
+
+    <simple_unit> ::=
+        '\\$$' <sp> <nesting_attr_names>
+```
+
+A `<simple_unit>` is shorthand for a `<generic_unit>` such that it
+represents a **Unit** consisting of exactly 1 *unit factor* where its *unit
+exponent* is positive one and its *unit label* is the **Nesting** that
+directly corresponds to the `<nesting_attr_names>`.
+
+Examples:
+
+```
+    `The identity unit.`
+    \$${}
+
+    `Acceleration.`
+    \$${\Meter * \Second ^ -2}
+
+    `Mass.`
+    \$$Gram
+
+    `Same thing.`
+    \$${\Gram}
+```
+
+## Measure
+
+A **Measure** value, represented by `<Measure>`, is a measurement of some
+quantity or position or other thing that one measures, in terms of numbers
+paired with units, which explicitly is agnostic to any externally defined
+standards and should be able to represent units from any of them.
+
+MUON provides the **Measure** type as a powerful expressive generic
+foundation for for external data models layered over top of MUON to use
+with their own concepts of measures and quantities and units.  Examples of
+such measurements include temporal (instant and duration to arbitrary
+precision or on any calendar), spatial or geospatial (locations or shapes
+or volumes), physical phenomina (mass, velocity, acceleration, power), and
+currency (US Dollar or Euro etc).  Using this foundation, one can do a lot
+of common operations such as adding or multiplying or differencing
+measurements using generic code that doesn't know anything specific to any
+units and get accurate answers, albeit sometimes in a non-standard format;
+one typically would use a unit-savvy normalization step such as to get nice
+calendar dates out but that's the domain of the higher level data model.
+
+A **Measure** value is characterized by a set of 0..N *measure terms* such
+that each *measure term* is a *measure coefficient* / *measure unit* pair.
+A *measure coefficient* is intended to be of any type that is considered a
+normal number, such as **Integer** or **Fraction** or **Decimal**, but MUON
+permits a value of any type, leaving the data model in use to judge what is
+actually a number.  A *measure unit* is any **Unit** value.  A **Measure**
+ensures that no 2 of its *measure term* have the same *measure unit*.
+
+A **Measure** value is characterized by a mathematical expression
+consisting of 0..N terms that are added together where each term is a
+number multiplied by a **Unit**.  If there are exactly zero terms then the
+expression has the value zero, the identity value for addition.
+
+The **Measure** type as a whole is numeric and is closed under every
+mathematical operator that the set of rational numbers is closed under;
+this is conceptually guaranteed to be true if every *measure coefficient*
+is a **Fraction** value; for **Integer** it is conceptually not closed
+under division and similar operators, but only with respect to the
+coefficients, though that can be worked around if rounding division is
+employed; all of these details depend on the data model in use.
+
+The sole **Measure** value with exactly zero *measure term* is the
+*identity measure*; using this is explicitly saying that you have a zero,
+whatever that means to the context in question, such as a zero quantity or
+a home position; or, devoid of an external context, it might be more like
+explicitly saying you didn't take a measurement in the first place, though
+in such circumstances you should be using an **Excuse** instead of a
+**Measure**.  The *identity measure* is the identity value for the
+**Measure** type; adding any **Measure** X to this yields X.
+
+Grammar:
+
+```
+    <Measure> ::=
+        <generic_measure> | <simple_measure>
+
+    <generic_measure> ::=
+        '\\$' <sp> '{' <sp> <measure_term_list> <sp> '}'
+
+    <measure_term_list> ::=
+        [<coefficient> | <unit> | <measure_term_pair>] % [<sp> '+' <sp>]
+
+    <measure_term_pair> ::=
+        <coefficient> <sp> '*' <sp> <unit>
+
+    <coefficient> ::=
+        <Any>
+
+    <unit> ::=
+        <unit_factor_list>
+
+    <simple_measure> ::=
+        '\\$' <sp> <nesting_attr_names>
+```
+
+A `<simple_measure>` is shorthand for a `<generic_measure>` such that it
+represents a **Measure** consisting of exactly 1 *measure term* where its
+*measure coefficient* is positive one and its *measure unit* is the
+*simple unit* that directly corresponds to the `<nesting_attr_names>`.
+
+Examples:
+
+```
+    `The identity measure.`
+    \${}
+
+    `Acceleration under Earth's gravity.`
+    \${9.8 * \Meter * \Second ^ -2}
+
+    `One gram of mass.`
+    \$Gram
+
+    `Same thing.`
+    \${\Gram}
+
+    `The Day The Music Died.`
+    \${\Gregorian + 1959 * \Year + 2 * \Month + 3 * \Day}
+
+    `The cost of a surgery.`
+    \${29.95 * \USD}
+
+    `Somewhere out there.`
+    \${-94.746094 * \Longitude + 37.483577 * \Latitude}
+```
+
 ## Capsule / Labelled Tuple
 
 A **Capsule** value, represented by `<Capsule>`, is characterized by the
@@ -1766,6 +1960,7 @@ that means they are used in pairs.
           |                        | * L1 of optional prefix for Bag selectors
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
+          | addition               | * separate terms in Measure selectors
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
           |                        | * L1 of prefix for Bits/Blob literals
@@ -1781,8 +1976,12 @@ that means they are used in pairs.
           |                        | * L1 of optional prefix for Tuple selectors
           |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
     ------+------------------------+---------------------------------------
+    $     | measures               | * indicates that units or measures are featured
+          |                        | * L1 of prefix for Unit/Measure selectors
+    ------+------------------------+---------------------------------------
     *     | generics               | * indicates a generic type context
           |                        | * L1 of optional prefix for Capsule selectors
+          | multiplication         | * separate factors in Unit/Measure selectors
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured
           |                        | * L1 of prefix for Excuse literals/selectors
@@ -1797,6 +1996,8 @@ that means they are used in pairs.
     /     | division               | * disambiguate Fraction lit from Integer/Decimal lit
     ------+------------------------+---------------------------------------
     .     | radix point            | * disambiguate Decimal lit from Integer/Fraction lit
+    ------+------------------------+---------------------------------------
+    ^     | exponentiation         | * label/exponent separator in Unit/Measure selectors
     ------+------------------------+---------------------------------------
     digit | number                 | * first char 0..9 in bareword indicates is a number
     ------+------------------------+---------------------------------------
