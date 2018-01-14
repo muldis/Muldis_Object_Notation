@@ -1930,6 +1930,73 @@ Examples:
     )
 ```
 
+# EXCLUDED TYPES
+
+Muldis Object Notation eschews dedicated syntax for some data types that
+users might expect to see here.  This section enumerates some and says why.
+
+Floating-point numbers or scientific notation or inexact numbers: Some of
+these might be added later but for now any rational value representable by
+an IEEE float can be exactly represented by a **Fraction** or **Decimal**,
+albeit more verbosely in the uncommon cases using large exponents.  Any
+added would be bareword only as expected to be relatively short.
+Regardless, any special values of an IEEE float such as infinities,
+over/underflows, NaNs, would not be part of those new types and rather
+would be their own singleton **Capsule** or **Excuse** types.
+
+Fixed-precision/scale numbers and/or significant figures indication and/or
+error margin indication, left up to to overlaid data model.  Any added
+would be bareword only as expected to be relatively short. They would be
+defined in terms of being a scaled integer or fixed-denominator fraction.
+
+Dictionary types in the general case are excluded because the relational
+types should be able to represent all their variations (eg, unordered,
+ordered, one-directional vs bi-directional, with or without duplicates,
+etc) more effectively and in a more generic manner.  The canonical way to
+represent a dictionary used like an anonymous structure or class, where the
+dictionary keys are all character strings, is the **Tuple**.  The canonical
+way to represent the general case of a dictionary where the dictionary keys
+might be of any data type is with a binary **Relation** with 2 *positional*
+attributes, and a single key-value pair of such a dictionary is a binary
+**Tuple**.  A canonical syntax specific to the most common case of a
+Dictionary, namely unordered, one-directional, any key type, no duplicates,
+may be added later.
+
+Temporal types in the general case are excluded because the **Measure**
+type should be able to represent all their variations in a more generic
+manner.  A Duration is a **Measure** consisting of units like
+{year,month,day,hour,minute,second} where all are optional, and an Instant
+is an Era/Calendar paired with a Duration defining an offset from it, again
+all parts optional because we support partials, and also this means
+multiple calendars can all be treated the same. We might consider adding
+special MUON syntax for Duration/Instant etc if a case can be made for
+them, eg Gregorian calendar. A TELL pairs an Instant with a Coordinate
+(Elevation, Latitude, Longitude). MUON might explicitly define Units common
+for these, such as Year etc.
+
+Spatial types in the general case are excluded because they are better
+defined by a data model layered over top of MUON and they are complex,
+though certain simple cases like a Coordinate (lat/lon) might be added.
+
+Currency types in the general case are excluded because the **Measure** types
+should be able to represent all their variations in a more generic manner.
+
+Media types in the general case, such as audio or still or moving visual,
+are excluded because they are better defined by a data model layered over
+top of MUON and they are complex.  Only generic plain-text media is native.
+
+Source code types in the general case, such as definitions of functions or
+procedures or data types, are excluded because they are better defined by a
+data model layered over top of MUON and they are both complex and highly
+variable.  Only a few source code types have dedicated MUON syntax because
+they specifically benefit from that and conceptually they are simple even
+if they may vary greatly in implementation, such as unqualified identifiers
+(via **Text**) and **Nesting**, **Heading**, **Renaming**.
+
+Generic foreign serialization types such as JSON and XML are excluded
+because MUON as a whole is supposed to natively handle everything they can
+represent but better; otherwise one can still use **Text** to embed those.
+
 # SYNTACTIC MNEMONICS
 
 The syntax of Muldis Object Notation is designed around a variety of
