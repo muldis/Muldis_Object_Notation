@@ -64,7 +64,7 @@ Each MUON data type corresponds 1:1 with a distinct grammar in this document.
 - Numeric: Integer, Fraction, Decimal
 - Stringy: Bits, Blob, Text
 - Discrete: Array, Set, Bag
-- Continuous: Interval
+- Continuous: Interval, Interval Set, Interval Bag
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
 - Generic: Capsule, Excuse, Ignorance
@@ -239,6 +239,8 @@ Grammar:
         | <Set>
         | <Bag>
         | <Interval>
+        | <Interval_Set>
+        | <Interval_Bag>
         | <Tuple>
         | <Tuple_Array>
         | <Relation>
@@ -899,10 +901,7 @@ Grammar:
 
 ```
     <Interval> ::=
-        '\\..' <sp> <interval_no_pfx>
-
-    <interval_no_pfx> ::=
-        '(' <sp> <interval_members> <sp> ')'
+        '\\..' <sp> '{' <sp> <interval_members> <sp> '}'
 
     <interval_members> ::=
         <interval_empty> | <interval_single> | <interval_range>
@@ -930,31 +929,132 @@ Examples:
 
 ```
     `Empty interval (zero members).`
-    \..()
+    \..{}
 
     `Unit interval (one member).`
-    \..("abc")
+    \..{"abc"}
 
     `Closed interval (probably 10 members, depending on the model used).`
-    \..(1..10)
+    \..{1..10}
 
     `Left-closed, right-open interval; every Decimal x in {2.7<=x<9.3}.`
-    \..(2.7..-9.3)
+    \..{2.7..-9.3}
 
     `Left-open, right-closed interval; every Text x ordered in {"a"<x<="z"}.`
-    \..("a"-.."z")
+    \..{"a"-.."z"}
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
-    \..((\UTCInstant:(2002,12,6)) -..- (\UTCInstant:(2002,12,20)))
+    \..{(\UTCInstant:(2002,12,6)) -..- (\UTCInstant:(2002,12,20))}
 
     `Left-unbounded, right-closed interval; every Integer <= 3.`
-    \..(..3)
+    \..{..3}
 
     `Left-closed, right-unbounded interval; every Integer >= 29.`
-    \..(29..)
+    \..{29..}
 
     `Universal interval; unbounded; every value of type system is a member.`
-    \..(..)
+    \..{..}
+```
+
+## Interval Set
+
+An **Interval Set** value, represented by `<Interval_Set>`, is
+characterized by a **Set** value such that every member value of the
+**Set** is an **Interval**.  An **Interval Set** is alternately
+characterized by a single **Interval** that is allowed to have
+discontinuities, and is in the typical case characterized by more than 2
+*endpoint* values.
+
+When reasoning about an interval in terms of defining a set of values by
+endpoints under a total order rather than by enumeration, an **Interval
+Set** is the actual best direct analogy to a **Set** because every possible
+distinct **Set** value can map to a distinct **Interval Set** value but
+only a proper subset of the former can map to an **Interval**.  The
+**Interval Set** type is closed under *set union* operations just as
+**Set** is, while **Interval** is not.
+
+Unlike with the **Set** type, the **Interval Set** type also has a
+meaningful *set absolute complement* operation applicable to it.
+
+Grammar:
+
+```
+    <Interval_Set> ::=
+        '\\?..' <sp> <nonord_interval_commalist>
+```
+
+Examples:
+
+```
+    `Empty interval-set (zero members).`
+    \?..{}
+
+    `Unit interval-set (one member).`
+    \?..{"abc"}
+
+    `Probably 10 members, depending on the model used.`
+    \?..{1..10}
+
+    `Probably 6 members.`
+    \?..{1..3,6,8..9}
+
+    `Every Integer x except for {4..13,22..28}`
+    \?..{..3,14..21,29..}
+
+    `Set of all valid Unicode codepoints.`
+    \?..{0..0xD7FF,0xE000..0x10FFFF}
+
+    `Probably 15 members (no duplicates), depending on the model used.`
+    \?..{1..10,6..15}
+
+    `Probably same thing, regardless of data model used.`
+    \?..{1..-6,6..10:2,10-..15}
+```
+
+## Interval Bag
+
+An **Interval Bag** value, represented by `<Interval_Bag>`, is
+characterized by a generalization of an **Interval Set** that permits
+multiple members to have the same value; an **Interval Bag** is isomorphic
+to a **Bag** in the same way that an **Interval Set** is to a **Set**;
+every possible distinct **Bag** can map to a distinct **Interval Bag**.
+
+Grammar:
+
+```
+    <Interval_Bag> ::=
+        '\\+..' <sp> <nonord_interval_commalist>
+
+    <nonord_interval_commalist> ::=
+        '{' <sp> <interval_commalist> <sp> '}'
+
+    <interval_commalist> ::=
+        [<single_interval> | <multiplied_interval> | ''] % [<sp> ',' <sp>]
+
+    <single_interval> ::=
+        <interval_members>
+
+    <multiplied_interval> ::=
+        <interval_members> <sp> ':' <sp> <multiplicity>
+```
+
+Examples:
+
+```
+    `Empty interval-bag (zero members).`
+    \+..{}
+
+    `Unit interval-bag (one member).`
+    \+..{"abc"}
+
+    `Five members (4 duplicates).`
+    \+..{"def":5}
+
+    `Probably 20 members (5 duplicates), depending on the model used.`
+    \+..{1..10,6..15}
+
+    `Probably same thing, regardless of data model used.`
+    \+..{1..-6,6..10:2,10-..15}
 ```
 
 ## Tuple / Attribute Set
@@ -993,10 +1093,7 @@ Grammar:
 
 ```
     <Tuple> ::=
-        ['\\%' <sp>]? <delim_attr_commalist>
-
-    <delim_attr_commalist> ::=
-        '(' <sp> <attr_commalist> <sp> ')'
+        ['\\%' <sp>]? '(' <sp> <attr_commalist> <sp> ')'
 
     <attr_commalist> ::=
         [<anon_attr> | <named_attr> | <nested_named_attr> | ''] % [<sp> ',' <sp>]
@@ -1137,7 +1234,7 @@ A **Relation** value, represented by `<Relation>`, is characterized
 by the pairing of a **Heading** value with a **Set** value, which define
 its *heading* and *body*, respectively.  A **Relation** ensures that every
 *member* of its *body* is a **Tuple** having the same *heading* (set of
-*attribute names*) as its own *heading*.  A **Relation** can alternately be
+*attribute names*) as its own *heading*.  A **Relation** is alternately
 characterized by the pairing of a single set of attribute names with a set
 of corresponding attribute assets for each attribute name.
 
@@ -1631,6 +1728,7 @@ that means they are used in pairs.
     {}    | nonordered collections | * delimit homogeneous nonordered collections
           |                        |   of members, concept asset+cardinal pairs
           |                        | * delimit Set/Bag selectors
+          |                        | * delimit Interval-Set/Interval-Bag selectors
           |                        | * delimit nonempty-Relation/Tuple-Bag sels
     ------+------------------------+---------------------------------------
     ()    | aordered collections   | * delimit heterogeneous aordered collections
@@ -1659,12 +1757,14 @@ that means they are used in pairs.
           |                        | * L1 of optional prefix for Boolean literals
           |                        | * L2 of prefix for Bits literals
           |                        | * L1 of optional prefix for Set selectors
+          |                        | * L1 of prefix for Interval-Set selectors
           |                        | * L1 of prefix for Relation lits/sels
     ------+------------------------+---------------------------------------
     +     | quantifications/count  | * indicates a quantifying/count context
           |                        | * L1 of optional prefix for Integer/Fraction/Decimal literals
           |                        | * L2 of prefix for Blob literals
           |                        | * L1 of optional prefix for Bag selectors
+          |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
@@ -1672,6 +1772,10 @@ that means they are used in pairs.
           |                        | * L1 of optional prefix for Text literals
           |                        | * L1 of optional prefix for Array selectors
           |                        | * L1 of prefix for Tuple-Array lits/sels
+    ------+------------------------+---------------------------------------
+    ..    | intervals/ranges       | * L1 of prefix for Interval selectors
+          |                        | * L2 of prefix for Interval-Set/Interval-Bag selectors
+          |                        | * pair separator in Interval/Ivl-Set/Ivl-Bag selectors
     ------+------------------------+---------------------------------------
     %     | tuples/heterogeneous   | * indicates that tuples are featured
           |                        | * L1 of optional prefix for Tuple selectors
@@ -1693,8 +1797,6 @@ that means they are used in pairs.
     /     | division               | * disambiguate Fraction lit from Integer/Decimal lit
     ------+------------------------+---------------------------------------
     .     | radix point            | * disambiguate Decimal lit from Integer/Fraction lit
-          | intervals/ranges       | * L1+L2 of prefix for Interval selectors
-          |                        | * pair separator in Interval selectors
     ------+------------------------+---------------------------------------
     digit | number                 | * first char 0..9 in bareword indicates is a number
     ------+------------------------+---------------------------------------
