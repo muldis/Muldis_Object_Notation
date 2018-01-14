@@ -69,7 +69,7 @@ Each MUON data type corresponds 1:1 with a distinct grammar in this document.
 - Relational: Tuple Array, Relation, Tuple Bag
 - Symbolic: Unit, Measure
 - Generic: Capsule, Excuse, Ignorance
-- Source Code: Nesting, Heading, Renaming
+- Source Code: Nesting, Heading, Renaming, Entity
 
 This document avoids defining any relationship between these types, and
 officially leaves it up to each external data model used with MUON to
@@ -250,6 +250,7 @@ Grammar:
         | <Measure>
         | <Capsule>
         | <Excuse>
+        | <Entity>
 ```
 
 An `<Any>` represents a generic value literal that is allowed to be of any
@@ -1883,6 +1884,52 @@ Examples:
     \@:("First Name"->"Last Name")
 ```
 
+## Entity
+
+An **Entity** value, represented by `<Entity>`, is a trivial annotation
+wrapper for an appearance of some other value whose main intended purpose
+is to mark the specific context of that appearance within a MUON document.
+This is so that naive development tools that know about MUON specifically
+but not about any source code defining data models layered over it can be
+expressly pointed to the parts of the MUON document that declare something
+interesting, such as a package or routine or type declaration, so that
+generic MUON tooling can, say, generate a navigation menu to quickly jump
+around a document to each entity declaration therein.
+
+The intended context for a **Entity** value to be used is where the
+entities themselves, eg the routine definitions, are defined as **Tuple**
+attribute assets, and the corresponding attribute names are the declared
+names of those entities for the purpose of navigating to or indexing them.
+
+When interpreting MUON source code in the general sense, an **Entity**
+should be considered a transparent wrapper, or a collection of exactly 1
+element, such that the logical meaning of the MUON is as if the **Entity**
+wasn't there and its wrapped value was in its place.
+
+*TODO: Consider adding other more generic annotation types and/or expanding
+this one, to enable for example a generic way of applying comments that are
+retained as part of the MUON data rather than being tossed as whitespace;
+otherwise it is up to the layered data models to have their own of these.*
+
+Grammar:
+
+```
+    <Entity> ::=
+        '\\@@' <sp> '(' <sp> <Any> <sp> ')'
+```
+
+Examples:
+
+```
+    (
+        My_Func : \@@((\Function : ...)),
+
+        My_Proc_1 : \@@((\Procedure : ...)),
+
+        My_Proc_2 : \@@((\Procedure : ...)),
+    )
+```
+
 # SYNTACTIC MNEMONICS
 
 The syntax of Muldis Object Notation is designed around a variety of
@@ -1989,6 +2036,7 @@ that means they are used in pairs.
     @     | locators/at/headings   | * indicates identifiers/names are featured
           |                        | * L1 of prefix for Heading literals
           |                        | * L1 of prefix for Renaming literals
+          |                        | * L1+L2 of prefix for Entity selectors
     ------+------------------------+---------------------------------------
     -     | subtraction            | * indicates negative-Integer/Fraction/Decimal literal
           |                        | * indicates open endpoint in Interval selectors
