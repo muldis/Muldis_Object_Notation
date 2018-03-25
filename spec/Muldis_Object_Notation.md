@@ -61,7 +61,7 @@ that all *values* represented with MUON syntax are members of.
 Each MUON data type corresponds 1:1 with a distinct grammar in this document.
 
 - Logical: Boolean
-- Numeric: Integer, Fraction, Decimal
+- Numeric: Integer, Fraction
 - Stringy: Bits, Blob, Text
 - Discrete: Array, Set, Bag
 - Continuous: Interval, Interval Set, Interval Bag
@@ -76,7 +76,7 @@ officially leaves it up to each external data model used with MUON to
 define for itself whether any two given types are *conjoined* (have any
 values in common) or *disjoint* (have no values in common).  For example,
 some external data models may consider **Integer** to be a *subtype* of
-**Decimal** (`42` is a member of both) while others may consider the two
+**Fraction** (`42` is a member of both) while others may consider the two
 types to be disjoint (`42` and `42.0` do not compare as equal).  The sole
 exceptions are that the (not listed above) **Any** and **None** types
 explicitly are a *supertype* or *subtype* respectively of every other type,
@@ -202,6 +202,9 @@ Grammar:
 
     <quoted_sp_comment_str> ::=
         '`' <-[`]>* '`'
+
+    <qu_sp> ::=
+        ['"' <sp> '"']*
 ```
 
 A `<sp>` represents *dividing space* that may be used to visually format
@@ -226,7 +229,6 @@ Grammar:
           <Boolean>
         | <Integer>
         | <Fraction>
-        | <Decimal>
         | <Bits>
         | <Blob>
         | <Text>
@@ -306,40 +308,76 @@ Grammar:
 
 ```
     <Integer> ::=
-        <nonquoted_int> | <quoted_int> | <int_with_radix>
+        <nonquoted_int> | <quoted_int>
 
     <nonquoted_int> ::=
         ['\\+' <sp>]? <asigned_int>
 
     <asigned_int> ::=
-        <[+-]>? <nonsigned_int>
+        <num_sign>? <nonsigned_int>
+
+    <num_sign> ::=
+        <[+-]>
 
     <nonsigned_int> ::=
-        <[ 0..9 _ ]>+
-
-    <quoted_int> ::=
-        '\\+' <sp> '"' <asigned_int> '"' [<sp> '"' <nonsigned_int> '"']*
-
-    <int_with_radix> ::=
-        ['\\+' <sp>]? <asigned_int_with_radix>
-
-    <asigned_int_with_radix> ::=
-        <[+-]>? <nonsigned_int_with_radix>
-
-    <nonsigned_int_with_radix> ::=
         <ns_int_2> | <ns_int_8> | <ns_int_10> | <ns_int_16>
 
     <ns_int_2> ::=
-        0b <[ 0..1 _ ]>+
+        0b <nc_2>+
 
     <ns_int_8> ::=
-        0o <[ 0..7 _ ]>+
+        0o <nc_8>+
 
     <ns_int_10> ::=
-        0d <[ 0..9 _ ]>+
+        [0d]? <nc_10>+
 
     <ns_int_16> ::=
-        0x <[ 0..9 A..F _ a..f ]>+
+        0x <nc_16>+
+
+    <nc_2> ::=
+        <[ 0..1 _ ]>
+
+    <nc_8> ::=
+        <[ 0..7 _ ]>
+
+    <nc_10> ::=
+        <[ 0..9 _ ]>
+
+    <nc_16> ::=
+        <[ 0..9 A..F _ a..f ]>
+
+    <quoted_int> ::=
+        '\\+' <sp> '"' <qu_sp> <qu_asigned_int> <qu_sp> '"'
+
+    <qu_asigned_int> ::=
+        <num_sign>? <qu_sp> <qu_nonsigned_int>
+
+    <qu_nonsigned_int> ::=
+        <qu_ns_int_2> | <qu_ns_int_8> | <qu_ns_int_10> | <qu_ns_int_16>
+
+    <qu_ns_int_2> ::=
+        0 <qu_sp> b <qu_sp> <nc_2> <qu_nc_2>*
+
+    <qu_ns_int_8> ::=
+        0 <qu_sp> o <qu_sp> <nc_8> <qu_nc_8>*
+
+    <qu_ns_int_10> ::=
+        [0 <qu_sp> d <qu_sp>]? <nc_10> <qu_nc_10>*
+
+    <qu_ns_int_16> ::=
+        0 <qu_sp> x <qu_sp> <nc_16> <qu_nc_16>*
+
+    <qu_nc_2> ::=
+        <nc_2> | <qu_sp>
+
+    <qu_nc_8> ::=
+        <nc_8> | <qu_sp>
+
+    <qu_nc_10> ::=
+        <nc_10> | <qu_sp>
+
+    <qu_nc_16> ::=
+        <nc_16> | <qu_sp>
 ```
 
 This grammar supports writing **Integer** literals in any of the numeric
@@ -353,11 +391,8 @@ this segmenting ability is provided to support code that contains very long
 numeric literals while still being well formatted (no extra long lines).
 
 This grammar is subject to the additional rule that the total count of
-digit characters (`0..9`) in the `<nonsigned_int>` must be at least 1.
-
-This grammar is subject to the additional rule that the total count of
-numeric position characters (`0..9 A..F a..f`) in the
-`<nonsigned_int_with_radix>` must be at least 1.
+numeric position characters (`0..9 A..F a..f`) in each of the
+`<nonsigned_int>` and in the `<qu_nonsigned_int>` must be at least 1.
 
 Examples:
 
@@ -404,93 +439,138 @@ Grammar:
         <nonquoted_frac> | <quoted_frac>
 
     <nonquoted_frac> ::=
-        <nonquoted_int> '/' <nonsigned_int>
+        ['\\+' <sp>]? <asigned_frac>
+
+    <asigned_frac> ::=
+        <significand> [<sp> '*' <sp> <radix> <sp> '^' <sp> <exponent>]?
+
+    <significand> ::=
+        <radix_point_sig> | <num_dec_sig>
+
+    <radix_point_sig> ::=
+        <num_sign>? <ns_rps>
+
+    <ns_rps> ::=
+        <ns_rps_2> | <ns_rps_8> | <ns_rps_10> | <ns_rps_16>
+
+    <ns_rps_2> ::=
+        <ns_int_2> <sp> '.' <sp> <nc_2>+
+
+    <ns_rps_8> ::=
+        <ns_int_8> <sp> '.' <sp> <nc_8>+
+
+    <ns_rps_10> ::=
+        <ns_int_10> <sp> '.' <sp> <nc_10>+
+
+    <ns_rps_16> ::=
+        <ns_int_16> <sp> '.' <sp> <nc_16>+
+
+    <num_dec_sig> ::=
+        <numerator> <sp> '/' <sp> <denominator>
+
+    <numerator> ::=
+        <asigned_int>
+
+    <denominator> ::=
+        <nonsigned_int>
+
+    <radix> ::=
+        <nonsigned_int>
+
+    <exponent> ::=
+        <asigned_int>
 
     <quoted_frac> ::=
-        '\\+' <sp> '"' <[+-]>? <[ 0..9 _ / ]>+
-            '"' [<sp> '"' <[ 0..9 _ / ]>+ '"']*
+        '\\+' <sp> '"' <qu_sp> <qu_asigned_frac> <qu_sp> '"'
+
+    <qu_asigned_frac> ::=
+        <qu_significand> [<qu_sp> '*' <qu_sp> <qu_radix> <qu_sp> '^' <qu_sp> <qu_exponent>]?
+
+    <qu_significand> ::=
+        <qu_radix_point_sig> | <qu_num_dec_sig>
+
+    <qu_radix_point_sig> ::=
+        <num_sign>? <qu_ns_rps>
+
+    <qu_ns_rps> ::=
+        <qu_ns_rps_2> | <qu_ns_rps_8> | <qu_ns_rps_10> | <qu_ns_rps_16>
+
+    <qu_ns_rps_2> ::=
+        <qu_ns_int_2> <qu_sp> '.' <qu_sp> <nc_2> <qu_nc_2>*
+
+    <qu_ns_rps_8> ::=
+        <qu_ns_int_8> <qu_sp> '.' <qu_sp> <nc_8> <qu_nc_8>*
+
+    <qu_ns_rps_10> ::=
+        <qu_ns_int_10> <qu_sp> '.' <qu_sp> <nc_10> <qu_nc_10>*
+
+    <qu_ns_rps_16> ::=
+        <qu_ns_int_16> <qu_sp> '.' <qu_sp> <nc_16> <qu_nc_16>*
+
+    <qu_num_dec_sig> ::=
+        <qu_numerator> <qu_sp> '/' <qu_sp> <qu_denominator>
+
+    <qu_numerator> ::=
+        <qu_asigned_int>
+
+    <qu_denominator> ::=
+        <qu_nonsigned_int>
+
+    <qu_radix> ::=
+        <qu_nonsigned_int>
+
+    <qu_exponent> ::=
+        <qu_asigned_int>
 ```
 
-This grammar supports writing **Fraction** literals in numeric base 10
-only, as a *numerator* / *denominator* pair of **Integer** whose
-*denominator* is positive, using conventional syntax.  MUON does not
-require the *numerator* / *denominator* pair to be coprime, but typically a
-type system will normalize the pair as such when determining value
-identity.  The literal may optionally contain underscore characters (`_`),
-which exist just to help with visual formatting, such as for `20_194/17`.
+This grammar supports writing **Fraction** literals in any of the numeric
+bases {2,8,10,16}, using conventional syntax.  The literal may optionally
+contain underscore characters (`_`), which exist just to help with visual
+formatting, such as for `20_194/17` or `3.141_59`.
+
+The general form of a **Fraction** literal is `N/D*R^E` such that {N,D,R,E}
+are each integers and the literal represents the rational number that
+results from evaluating the mathematical expression using the following
+implicit order of operations, `(N/D)*(R^E)` such that `/` means divide, `*`
+means multiply, and `^` means exponentiate.
+
+MUON does not require the numerator/denominator pair to be coprime, but
+typically a type system will normalize the pair as such when determining
+value identity.  Similarly, MUON does not require any other kind of
+normalization between the components of a **Fraction** literal.
+
+While the wider general format `N/D*R^E` can represent every rational
+number, as can just the `N/D` portion by itself, the alternate but typical
+format `X.X` can only represent a proper subset of the rational numbers,
+that subset being every rational number that can be represented as a
+terminating decimal number.  Note that every rational number that can be
+represented as a terminating binary or octal or hexadecimal number can also
+be represented as a terminating decimal number.
+
+Note that in order to keep the grammar simpler or more predictable, each
+**Fraction** component {N,D,R,E} must have its numeric base specified
+individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
+be interpreted as base 10.  This keeps behavior consistent with a parser
+that sees a **Fraction** literal but interprets it as multiple **Integer**
+literals separated by symbolic infix operators, evaluation order aside.
+Also per normal expectations, literals in the format `X.X` only specify the
+base at most once in total, *not* separately for the part after the `.`.
 
 A quoted `<Fraction>` may optionally be split into 1..N quoted segments
 where each pair of consecutive segments is separated by dividing space;
 this segmenting ability is provided to support code that contains very long
 numeric literals while still being well formatted (no extra long lines).
 
-This grammar is subject to the additional rule that the total count of `/`
-in the `<quoted_frac>` must be exactly 1.
-
 This grammar is subject to the additional rule that the total count of
-digit characters (`0..9`) in the `<quoted_frac>` must be at least 2,
-such that the `/` is positioned after at least 1 and before at least 1.
-
-Examples:
-
-```
-    0/1
-
-    1/1
-
-    5/3
-
-    -472/100
-
-    15_485_863/32_452_843
-
-    \+355/113
-
-    `Mersenne Primes 2^107-1 divided by 2^127-1.`
-    \+"162259276829213363391578010288127"
-        "/170141183460469231731687303715884105727"
-```
-
-## Decimal
-
-A **Decimal** value, represented by `<Decimal>`, is a general purpose exact
-rational number of any magnitude and precision that can be represented as a
-terminating decimal number, which explicitly does not represent any kind of
-thing in particular, neither cardinal nor ordinal nor nominal.  Note that
-every rational number that can be represented as a terminating binary or
-octal or hexadecimal number can also be represented as a terminating
-decimal number.  It has no minimum or maximum value.
-
-Grammar:
-
-```
-    <Decimal> ::=
-        <nonquoted_dec> | <quoted_dec>
-
-    <nonquoted_dec> ::=
-        <nonquoted_int> '.' <nonsigned_int>
-
-    <quoted_dec> ::=
-        '\\+' <sp> '"' <[+-]>? <[ 0..9 _ \. ]>+
-            '"' [<sp> '"' <[ 0..9 _ \. ]>+ '"']*
-```
-
-This grammar supports writing **Decimal** literals in numeric base 10 only,
-using conventional syntax.  The literal may optionally contain underscore
-characters (`_`), which exist just to help with visual formatting, such as
-for `3.141_59`.
-
-A quoted `<Decimal>` may optionally be split into 1..N quoted segments
-where each pair of consecutive segments is separated by dividing space;
-this segmenting ability is provided to support code that contains very long
-numeric literals while still being well formatted (no extra long lines).
-
-This grammar is subject to the additional rule that the total count of `.`
-in the `<quoted_dec>` must be exactly 1.
-
-This grammar is subject to the additional rule that the total count of
-digit characters (`0..9`) in the `<quoted_dec>` must be at least 2,
+numeric position characters (`0..9 A..F a..f`) in each of the
+`<radix_point_sig>` and in the `<qu_radix_point_sig>` must be at least 2,
 such that the `.` is positioned after at least 1 and before at least 1.
+
+This grammar is subject to the additional rule that the integer denoted by
+each of `<denominator>` and `<qu_denominator>` must be nonzero.
+
+This grammar is subject to the additional rule that the integer denoted by
+each of `<radix>` and `<qu_radix>` must be at least 2.
 
 Examples:
 
@@ -503,9 +583,35 @@ Examples:
 
     \+29.95
 
+    0/1
+
+    1/1
+
+    5/3
+
+    -472/100
+
+    15_485_863/32_452_843
+
+    \+355/113
+
     `First 101 digits of transcendental number π.`
     \+"3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510"
         "58209_74944_59230_78164_06286_20899_86280_34825_34211_70679"
+
+    `Mersenne Primes 2^107-1 divided by 2^127-1.`
+    \+"162259276829213363391578010288127"
+        "/170141183460469231731687303715884105727"
+
+    4.5207196*10^37
+
+    0xDEADBEEF.FACE
+
+    -0o35/0o3
+
+    0b1.1
+
+    0b1.011101101*0b10^-0b11011
 ```
 
 ## Bits
@@ -624,7 +730,7 @@ Grammar:
         '\\~' <sp> <codepoint>
 
     <codepoint> ::=
-        <nonsigned_int> | <nonsigned_int_with_radix>
+        <nonsigned_int>
 ```
 
 A `<Text>` may optionally be split into 1..N segments where each pair
@@ -820,7 +926,7 @@ Grammar:
         <Any>
 
     <multiplicity> ::=
-        <nonsigned_int> | <nonsigned_int_with_radix>
+        <nonsigned_int>
 ```
 
 A `<Bag>` is subject to the additional rule that, either its
@@ -941,7 +1047,7 @@ Examples:
     `Closed interval (probably 10 members, depending on the model used).`
     \..{1..10}
 
-    `Left-closed, right-open interval; every Decimal x in {2.7<=x<9.3}.`
+    `Left-closed, right-open interval; every Fraction x in {2.7<=x<9.3}.`
     \..{2.7..-9.3}
 
     `Left-open, right-closed interval; every Text x ordered in {"a"<x<="z"}.`
@@ -1449,7 +1555,7 @@ calendar dates out but that's the domain of the higher level data model.
 A **Measure** value is characterized by a set of 0..N *measure terms* such
 that each *measure term* is a *measure coefficient* / *measure unit* pair.
 A *measure coefficient* is intended to be of any type that is considered a
-normal number, such as **Integer** or **Fraction** or **Decimal**, but MUON
+normal number, such as **Integer** or **Fraction**, but MUON
 permits a value of any type, leaving the data model in use to judge what is
 actually a number.  A *measure unit* is any **Unit** value.  A **Measure**
 ensures that no 2 of its *measure term* have the same *measure unit*.
@@ -1602,6 +1708,8 @@ Examples:
     ))
 
     \*Positive_Infinity
+
+    \*Negative_Zero
 ```
 
 ## Excuse
@@ -1797,7 +1905,7 @@ Examples:
     \@("サンプル")
 ```
 
-## Attribute Renaming Specification
+## Renaming / Attribute Name Map
 
 A **Renaming** value, represented by `<Renaming>`, is an arbitrarily-large
 unordered collection of attribute renaming specifications.
@@ -1935,17 +2043,13 @@ Examples:
 Muldis Object Notation eschews dedicated syntax for some data types that
 users might expect to see here.  This section enumerates some and says why.
 
-Floating-point numbers or scientific notation or inexact numbers: Some of
-these might be added later but for now any rational value representable by
-an IEEE float can be exactly represented by a **Fraction** or **Decimal**,
-albeit more verbosely in the uncommon cases using large exponents.  Any
-added would be bareword only as expected to be relatively short.
-Regardless, any special values of an IEEE float such as infinities,
-over/underflows, NaNs, would not be part of those new types and rather
-would be their own singleton **Capsule** or **Excuse** types.
+Special values of an IEEE floating-point number such as infinities,
+over/underflows, NaNs, are not part of the **Fraction** type and rather
+would be their own singleton **Capsule** or **Excuse** types, usually left
+up to the overlaid data model.
 
 Fixed-precision/scale numbers and/or significant figures indication and/or
-error margin indication, left up to to overlaid data model.  Any added
+error margin indication, left up to the overlaid data model.  Any added
 would be bareword only as expected to be relatively short. They would be
 defined in terms of being a scaled integer or fixed-denominator fraction.
 
@@ -2015,7 +2119,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ""    | stringy data and names | * delimit quoted opaque regular literals
           |                        | * delimit all Bits/Blob/Text literals
-          |                        | * delimit quoted Integer/Fraction/Decimal literals
+          |                        | * delimit quoted Integer/Fraction literals
           |                        | * delimit quoted code identifiers/names
     ------+------------------------+---------------------------------------
     ``    | stringy comments       | * delimit expendable dividing space comments
@@ -2069,7 +2173,7 @@ that means they are used in pairs.
           |                        | * L1 of prefix for Relation lits/sels
     ------+------------------------+---------------------------------------
     +     | quantifications/count  | * indicates a quantifying/count context
-          |                        | * L1 of optional prefix for Integer/Fraction/Decimal literals
+          |                        | * L1 of optional prefix for Integer/Fraction literals
           |                        | * L2 of prefix for Blob literals
           |                        | * L1 of optional prefix for Bag selectors
           |                        | * L1 of prefix for Interval-Bag selectors
@@ -2095,7 +2199,8 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     *     | generics               | * indicates a generic type context
           |                        | * L1 of optional prefix for Capsule selectors
-          | multiplication         | * separate factors in Unit/Measure selectors
+          | multiplication         | * significand/radix separator in Fraction literals
+          |                        | * separate factors in Unit/Measure selectors
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured
           |                        | * L1 of prefix for Excuse literals/selectors
@@ -2105,14 +2210,15 @@ that means they are used in pairs.
           |                        | * L1 of prefix for Renaming literals
           |                        | * L1+L2 of prefix for Entity selectors
     ------+------------------------+---------------------------------------
-    -     | subtraction            | * indicates negative-Integer/Fraction/Decimal literal
+    -     | subtraction            | * indicates negative-Integer/Fraction literal
           |                        | * indicates open endpoint in Interval selectors
     ------+------------------------+---------------------------------------
-    /     | division               | * disambiguate Fraction lit from Integer/Decimal lit
+    /     | division               | * disambiguate Fraction lit from Integer lit
     ------+------------------------+---------------------------------------
-    .     | radix point            | * disambiguate Decimal lit from Integer/Fraction lit
+    .     | radix point            | * disambiguate Fraction lit from Integer lit
     ------+------------------------+---------------------------------------
-    ^     | exponentiation         | * label/exponent separator in Unit/Measure selectors
+    ^     | exponentiation         | * radix/exponent separator in Fraction literals
+          |                        | * label/exponent separator in Unit/Measure selectors
     ------+------------------------+---------------------------------------
     digit | number                 | * first char 0..9 in bareword indicates is a number
     ------+------------------------+---------------------------------------

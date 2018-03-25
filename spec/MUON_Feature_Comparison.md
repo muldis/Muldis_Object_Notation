@@ -31,16 +31,14 @@ as each provides distinct *false* and *true* literals that are distinct
 values from numbers and strings and anything else.
 
 MUON is more expressive than JSON regarding numeric literals.
-MUON supports 4 numeric bases (2,8,10,16) for integer literals,
-though currently only base 10 for non-integer numeric literals,
+MUON supports 4 numeric bases (2,8,10,16) for all numeric literals,
 while JSON only supports base 10 for all numeric literals.
 (This is merely a syntactic convenience given that all rational values that
 are terminating in base 2/8/16 are also terminating in base 10.)
 MUON also natively supports exact rational numeric literals that are *not*
 terminating in base 10, using its **Fraction** syntax, while JSON does not.
-As of this writing, only JSON supports scientific notation for inexact
-numeric literals and MUON does not, though MUON still supports all of the
-same rational values written out in full.
+Both MUON and JSON support scientific notation for numeric literals, though
+their exact syntax differs, `4.263*10^15` and `4.263e15` respectively.
 
 MUON is more expressive than JSON regarding character string literals.
 MUON directly supports expression of all 17 **Unicode** planes, that is all
@@ -62,7 +60,7 @@ JSON has no native support for parser-ignorable (treated like insignificant
 whitespace) comments, as an intentional difference from JavaScript, while
 MUON does support such comments.
 
-MUON provides an explicit type/syntax *Capsule* to indicate that a
+MUON provides an explicit type/syntax **Capsule** to indicate that a
 particular user-defined collection denotes a value or object of some
 user-defined type or class, while those using JSON tend to overload the
 meaning of the elements of an *object* to indicate either object type or
@@ -128,7 +126,8 @@ struct `System.Boolean`.
 integral types, of which `System.Int32` is the most commonly used.
 
 .NET doesn't have a native dedicated unlimited-size-fraction type but does
-provide several fixed-size exact rational types such as `System.Decimal`.
+provide several fixed-size exact rational types such as `System.Decimal`
+and `System.Float`.
 
 .NET has a direct `Bits` analogy which is provided by the .NET
 class `System.Collections.BitArray`.
