@@ -54,11 +54,12 @@ generator, the latter just cares about the content of the file.
 These sections outline some key features of MUON, including some that are
 more unique to it and some reasons for why one might want to use it.
 
-## Data Types
+## Data Type Possreps
 
-**Muldis Object Notation** is mainly characterized by a set of *data types*
-that all *values* represented with MUON syntax are members of.
-Each MUON data type corresponds 1:1 with a distinct grammar in this document.
+**Muldis Object Notation** is mainly characterized by a set of *data type
+possreps* or *possreps* (*possible representations*) that all *values*
+represented with MUON syntax are characterized by.
+Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
 
 - Logical: Boolean
 - Numeric: Integer, Fraction
@@ -71,23 +72,32 @@ Each MUON data type corresponds 1:1 with a distinct grammar in this document.
 - Generic: Capsule, Excuse, Ignorance
 - Source Code: Nesting, Heading, Renaming, Entity
 
-This document avoids defining any relationship between these types, and
+A *possrep* corresponds to the concept of a *data type*, where the latter
+is characterized by a set of *values*, and one may choose to use those
+terms interchangeably in less formal speech.  But formally a *data type*
+exists only as part of an external data model used with MUON and is not
+part of MUON itself.  Depending on the data model in question, each MUON
+possrep may correspond to exactly 1 data type, or to multiple data types,
+or multiple possreps may correspond to 1 data type.
+
+This document avoids defining any relationship between these possreps, and
 officially leaves it up to each external data model used with MUON to
-define for itself whether any two given types are *conjoined* (have any
+define for itself whether any two given possreps are *conjoined* (have any
 values in common) or *disjoint* (have no values in common).  For example,
-some external data models may consider **Integer** to be a *subtype* of
-**Fraction** (`42` is a member of both) while others may consider the two
-types to be disjoint (`42` and `42.0` do not compare as equal).  The sole
-exceptions are that the (not listed above) **Any** and **None** types
-explicitly are a *supertype* or *subtype* respectively of every other type,
+some external data models may consider **Integer** to correspond to a
+*subtype* of what **Fraction** corresponds to (`42` is a member of both)
+while others may consider the two possreps to be disjoint (`42` and `42.0`
+do not compare as equal).  The sole exceptions are that the (not listed
+above) **Any** and **None** possreps explicitly correspond to a *supertype*
+or *subtype* respectively of what every other possrep corresponds to,
 regardless of the data model, for what that's worth.
 
 Each external data model used with MUON is not required to support every
-one of the types defined here; however, every *value* that the external
+one of the possreps defined here; however, every *value* that the external
 data model supports generating into or parsing from MUON must be losslessly
-represented using at least one of the types defined here, and that value
-must be losslessly round-trippable using all of those representations.
-Note that the **Capsule** type is the idiomatic way for an external data
+represented using at least one of the possreps defined here, and that value
+must be losslessly round-trippable using all of those possreps.
+Note that the **Capsule** possrep is the idiomatic way for an external data
 model to represent "new" types in a consistent way.
 
 ## Ease of Use
@@ -213,11 +223,11 @@ comments, without changing its meaning.  A superset of the MUON grammar
 might require *dividing space* to disambiguate the boundaries of
 otherwise-consecutive grammar tokens, but plain MUON does not.
 
-## Any / Universal Type
+## Any / Universal Type Possrep
 
-The **Any** type is the *universal type*, which is the maximal data type of
-the type system and consists of all values which can possibly exist.
-This is represented by `<Any>`.
+The **Any** possrep corresponds to the *universal type*, which is the
+maximal data type of each type system and consists of all values which can
+possibly exist.  This is represented by `<Any>`.
 
 Grammar:
 
@@ -256,7 +266,7 @@ Grammar:
 ```
 
 An `<Any>` represents a generic value literal that is allowed to be of any
-type at all, except where specifically noted otherwise.
+possrep at all, except where specifically noted otherwise.
 
 An `<opaque>` is an `<Any>` that explicitly has no child `<Any>` nodes; in
 conventional terms, one is typically for selecting scalar values, though
@@ -266,10 +276,10 @@ A `<collection>` is an `<Any>` that explicitly does have child `<Any>`
 nodes in the general case; in conventional terms, one is for selecting
 values representing collections of other values.
 
-## None / Empty Type
+## None / Empty Type Possrep
 
-The **None** type is the *empty type*, which is the minimal data type of
-the type system and consists of exactly zero values.
+The **None** possrep corresponds to the *empty type*, which is the minimal
+data type of each type system and consists of exactly zero values.
 This has no representation in the grammar, but is mentioned for parity.
 
 ## Boolean
@@ -686,7 +696,7 @@ See also [https://unicode.org](https://unicode.org).
 
 A **Text** value has 2 fundamental uses, one being for generic user data,
 and the other being the canonical form of a standalone *attribute name*
-(see the **Tuple** type) which is an unqualified program identifier.
+(see the **Tuple** possrep) which is an unqualified program identifier.
 
 Note that some programming languages or execution environments support a
 "Unicode character string" concept that is less strict than the **Unicode**
@@ -1452,12 +1462,12 @@ A **Unit** value, represented by `<Unit>`, is a symbol intended to be used
 as a *unit of measurement*, which explicitly is agnostic to any externally
 defined standards and should be able to represent units from any of them.
 
-*TODO: Reconsider whether Unit should be its own distinct MUON type apart
+*TODO: Reconsider whether Unit should be its own distinct MUON possrep apart
 from Measure versus just having its definition folded into the latter.*
 
 A **Unit** value is characterized by a set of 0..N *unit factors* such that
 each *unit factor* is a *unit label* / *unit exponent* pair.  A *unit
-label* can be of any type but is idiomatically either a **Nesting** value
+label* can be of any possrep but is idiomatically either a **Nesting** value
 or a **Text** value or a singleton **Capsule** value; it represents a basic
 named component unit such as `Meter` or `Second` or `Gram`; MUON generally
 does not define any of these basic names itself, leaving that to external
@@ -1483,7 +1493,7 @@ all you have is a plain number, and not a number *of* anything.  The
 *identity unit* is the identity value for the **Unit** type; multiplying
 any **Unit** X with this yields X.
 
-*TODO: Consider if a singleton Capsule is actually the best idiomatic type
+*TODO: Consider if a singleton Capsule is actually the best idiomatic possrep
 for a unit label.*
 
 Grammar:
@@ -1539,8 +1549,8 @@ quantity or position or other thing that one measures, in terms of numbers
 paired with units, which explicitly is agnostic to any externally defined
 standards and should be able to represent units from any of them.
 
-MUON provides the **Measure** type as a powerful expressive generic
-foundation for for external data models layered over top of MUON to use
+MUON provides the **Measure** possrep as a powerful expressive generic
+foundation for external data models layered over top of MUON to use
 with their own concepts of measures and quantities and units.  Examples of
 such measurements include temporal (instant and duration to arbitrary
 precision or on any calendar), spatial or geospatial (locations or shapes
@@ -1644,7 +1654,7 @@ pairing of a *label* with a set of 0..N *attributes* where that set is a
 **Tuple** value; the label can be of any type but is idiomatically a
 **Nesting** value.
 
-The **Capsule** type is the idiomatic way for an external data model to
+The **Capsule** possrep is the idiomatic way for an external data model to
 represent "new" types of a nominal type system in a consistent way.  The
 *label* represents a fully-qualified external data type name, and thus a
 namespace within all the **Capsule** values, while the *attributes* define
@@ -1732,9 +1742,9 @@ person left the birthdate field blank on their application form.
 An **Excuse** is isomorphic to an *exception* but that use of the former is
 not meant to terminate execution of code early unlike the latter which is.
 
-The **Excuse** type is the idiomatic way for an external data model to
+The **Excuse** possrep is the idiomatic way for an external data model to
 represent "new" *error* or *exception* types of a nominal type system in a
-consistent way.  The counterpart **Capsule** type should *not* be used for
+consistent way.  The counterpart **Capsule** possrep should *not* be used for
 these things, but rather just every other kind of externally-defined type.
 
 Grammar:
@@ -2014,7 +2024,7 @@ should be considered a transparent wrapper, or a collection of exactly 1
 element, such that the logical meaning of the MUON is as if the **Entity**
 wasn't there and its wrapped value was in its place.
 
-*TODO: Consider adding other more generic annotation types and/or expanding
+*TODO: Consider adding other more generic annotation possreps and/or expanding
 this one, to enable for example a generic way of applying comments that are
 retained as part of the MUON data rather than being tossed as whitespace;
 otherwise it is up to the layered data models to have their own of these.*
@@ -2038,14 +2048,14 @@ Examples:
     )
 ```
 
-# EXCLUDED TYPES
+# EXCLUDED DATA TYPE POSSREPS
 
 Muldis Object Notation eschews dedicated syntax for some data types that
 users might expect to see here.  This section enumerates some and says why.
 
 Special values of an IEEE floating-point number such as infinities,
-over/underflows, NaNs, are not part of the **Fraction** type and rather
-would be their own singleton **Capsule** or **Excuse** types, usually left
+over/underflows, NaNs, are not part of the **Fraction** possrep and rather
+would be their own singleton **Capsule** or **Excuse** possreps, usually left
 up to the overlaid data model.
 
 Fixed-precision/scale numbers and/or significant figures indication and/or
