@@ -213,7 +213,7 @@ Grammar:
     <quoted_sp_comment_str> ::=
         '`' <-[`]>* '`'
 
-    <qu_sp> ::=
+    <seg_sp> ::=
         ['"' <sp> '"']*
 ```
 
@@ -222,6 +222,14 @@ MUON for readability (with line breaks and line indentation), or to embed
 comments, without changing its meaning.  A superset of the MUON grammar
 might require *dividing space* to disambiguate the boundaries of
 otherwise-consecutive grammar tokens, but plain MUON does not.
+
+A `<seg_sp>` represents *segmenting space* that may be used to split a
+quotation-mark-delimited literal into multiple segments, where each segment
+is quotation-mark-delimited and each pair of consecutive segments is
+separated by dividing space.  This segmenting ability is provided to
+support code that contains very long numeric or stringy literals while
+still being well formatted (no extra long lines).  The expected usage
+context of `<seg_sp>` is like `'"' ... <seg_sp> ... '"'`.
 
 ## Any / Universal Type Possrep
 
@@ -357,48 +365,43 @@ Grammar:
         <[ 0..9 A..F _ a..f ]>
 
     <quoted_int> ::=
-        '\\+' <sp> '"' <qu_sp> <qu_asigned_int> <qu_sp> '"'
+        '\\+' <sp> '"' <seg_sp> <qu_asigned_int> <seg_sp> '"'
 
     <qu_asigned_int> ::=
-        <num_sign>? <qu_sp> <qu_nonsigned_int>
+        <num_sign>? <seg_sp> <qu_nonsigned_int>
 
     <qu_nonsigned_int> ::=
         <qu_ns_int_2> | <qu_ns_int_8> | <qu_ns_int_10> | <qu_ns_int_16>
 
     <qu_ns_int_2> ::=
-        0 <qu_sp> b <qu_sp> <nc_2> <qu_nc_2>*
+        0 <seg_sp> b <seg_sp> <nc_2> <qu_nc_2>*
 
     <qu_ns_int_8> ::=
-        0 <qu_sp> o <qu_sp> <nc_8> <qu_nc_8>*
+        0 <seg_sp> o <seg_sp> <nc_8> <qu_nc_8>*
 
     <qu_ns_int_10> ::=
-        [0 <qu_sp> d <qu_sp>]? <nc_10> <qu_nc_10>*
+        [0 <seg_sp> d <seg_sp>]? <nc_10> <qu_nc_10>*
 
     <qu_ns_int_16> ::=
-        0 <qu_sp> x <qu_sp> <nc_16> <qu_nc_16>*
+        0 <seg_sp> x <seg_sp> <nc_16> <qu_nc_16>*
 
     <qu_nc_2> ::=
-        <nc_2> | <qu_sp>
+        <nc_2> | <seg_sp>
 
     <qu_nc_8> ::=
-        <nc_8> | <qu_sp>
+        <nc_8> | <seg_sp>
 
     <qu_nc_10> ::=
-        <nc_10> | <qu_sp>
+        <nc_10> | <seg_sp>
 
     <qu_nc_16> ::=
-        <nc_16> | <qu_sp>
+        <nc_16> | <seg_sp>
 ```
 
 This grammar supports writing **Integer** literals in any of the numeric
 bases {2,8,10,16}, using conventional syntax.  The literal may optionally
 contain underscore characters (`_`), which exist just to help with visual
 formatting, such as for `10_000_000`.
-
-A quoted `<Integer>` may optionally be split into 1..N quoted segments
-where each pair of consecutive segments is separated by dividing space;
-this segmenting ability is provided to support code that contains very long
-numeric literals while still being well formatted (no extra long lines).
 
 This grammar is subject to the additional rule that the total count of
 numeric position characters (`0..9 A..F a..f`) in each of the
@@ -491,10 +494,10 @@ Grammar:
         <asigned_int>
 
     <quoted_frac> ::=
-        '\\+' <sp> '"' <qu_sp> <qu_asigned_frac> <qu_sp> '"'
+        '\\+' <sp> '"' <seg_sp> <qu_asigned_frac> <seg_sp> '"'
 
     <qu_asigned_frac> ::=
-        <qu_significand> [<qu_sp> '*' <qu_sp> <qu_radix> <qu_sp> '^' <qu_sp> <qu_exponent>]?
+        <qu_significand> [<seg_sp> '*' <seg_sp> <qu_radix> <seg_sp> '^' <seg_sp> <qu_exponent>]?
 
     <qu_significand> ::=
         <qu_radix_point_sig> | <qu_num_dec_sig>
@@ -506,19 +509,19 @@ Grammar:
         <qu_ns_rps_2> | <qu_ns_rps_8> | <qu_ns_rps_10> | <qu_ns_rps_16>
 
     <qu_ns_rps_2> ::=
-        <qu_ns_int_2> <qu_sp> '.' <qu_sp> <nc_2> <qu_nc_2>*
+        <qu_ns_int_2> <seg_sp> '.' <seg_sp> <nc_2> <qu_nc_2>*
 
     <qu_ns_rps_8> ::=
-        <qu_ns_int_8> <qu_sp> '.' <qu_sp> <nc_8> <qu_nc_8>*
+        <qu_ns_int_8> <seg_sp> '.' <seg_sp> <nc_8> <qu_nc_8>*
 
     <qu_ns_rps_10> ::=
-        <qu_ns_int_10> <qu_sp> '.' <qu_sp> <nc_10> <qu_nc_10>*
+        <qu_ns_int_10> <seg_sp> '.' <seg_sp> <nc_10> <qu_nc_10>*
 
     <qu_ns_rps_16> ::=
-        <qu_ns_int_16> <qu_sp> '.' <qu_sp> <nc_16> <qu_nc_16>*
+        <qu_ns_int_16> <seg_sp> '.' <seg_sp> <nc_16> <qu_nc_16>*
 
     <qu_num_dec_sig> ::=
-        <qu_numerator> <qu_sp> '/' <qu_sp> <qu_denominator>
+        <qu_numerator> <seg_sp> '/' <seg_sp> <qu_denominator>
 
     <qu_numerator> ::=
         <qu_asigned_int>
@@ -565,11 +568,6 @@ that sees a **Fraction** literal but interprets it as multiple **Integer**
 literals separated by symbolic infix operators, evaluation order aside.
 Also per normal expectations, literals in the format `X.X` only specify the
 base at most once in total, *not* separately for the part after the `.`.
-
-A quoted `<Fraction>` may optionally be split into 1..N quoted segments
-where each pair of consecutive segments is separated by dividing space;
-this segmenting ability is provided to support code that contains very long
-numeric literals while still being well formatted (no extra long lines).
 
 This grammar is subject to the additional rule that the total count of
 numeric position characters (`0..9 A..F a..f`) in each of the
@@ -635,14 +633,13 @@ Grammar:
 
 ```
     <Bits> ::=
-        '\\~?' <sp> [['"' <[ 0..1 _ ]>* '"'] % <sp>]
+        '\\~?' <sp> '"' [<[ 0..1 _ ]> | <seg_sp>]* '"'
 ```
 
 This grammar supports writing **Bits** literals in numeric base
 2 only, using conventional syntax.  The literal may optionally contain
 underscore characters (`_`), which exist just to help with visual
-formatting.  A `<Bits>` may optionally be split into 1..N segments
-where each pair of consecutive segments is separated by dividing space.
+formatting.
 
 Examples:
 
@@ -663,14 +660,13 @@ Grammar:
 
 ```
     <Blob> ::=
-        '\\~+' <sp> [['"' <[ 0..9 A..F _ a..f ]>* '"'] % <sp>]
+        '\\~+' <sp> '"' [<[ 0..9 A..F _ a..f ]> | <seg_sp>]* '"'
 ```
 
 This grammar supports writing **Blob** literals in numeric base
 16 only, using conventional syntax.  The literal may optionally contain
 underscore characters (`_`), which exist just to help with visual
-formatting.  A `<Blob>` may optionally be split into 1..N segments
-where each pair of consecutive segments is separated by dividing space.
+formatting.
 
 This grammar is subject to the additional rule that the total count of
 hexit characters (`0..9 A..F _ a..f`) in the `<Blob>` excluding `_` must be
@@ -704,7 +700,7 @@ standard, and thus allow malformed character strings.  For example, some
 may allow isolated/non-paired UTF-16 "surrogate" codepoints corresponding
 to integers in the set **{0xD800..0xDFFF}**.  MUON forbids the use of any
 such "character strings" using the `<Text>` syntax.  However, such data can
-still be conveyed using other means such as MUON's `<Array>+<Integer>`.
+still be conveyed using other means such as MUON's `<Array>`+`<Integer>`.
 
 Grammar:
 
@@ -745,6 +741,10 @@ Grammar:
 
 A `<Text>` may optionally be split into 1..N segments where each pair
 of consecutive segments is separated by dividing space.
+However the exact semantics of this for `<Text>` are different than for
+other quotation-mark-delimited possreps; mainly it is that the optional
+leading `\` is specified separately per segment and it only affects that
+segment; also, individual character escape sequences may not cross segments.
 
 This grammar is subject to the additional rule that the non-negative integer
 denoted by `<codepoint>` must be in the set {0..0xD7FF,0xE000..0x10FFFF}.
