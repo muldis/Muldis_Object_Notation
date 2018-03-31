@@ -60,7 +60,7 @@ JSON has no native support for parser-ignorable (treated like insignificant
 whitespace) comments, as an intentional difference from JavaScript, while
 MUON does support such comments.
 
-MUON provides an explicit possrep/syntax **Capsule** to indicate that a
+MUON provides an explicit possrep/syntax **Article** to indicate that a
 particular user-defined collection denotes a value or object of some
 user-defined type or class, while those using JSON tend to overload the
 meaning of the elements of an *object* to indicate either object type or

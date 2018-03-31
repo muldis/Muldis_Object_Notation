@@ -69,7 +69,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
 - Symbolic: Unit, Measure
-- Generic: Capsule, Excuse, Ignorance
+- Generic: Article, Excuse, Ignorance
 - Source Code: Nesting, Heading, Renaming, Entity
 
 A *possrep* corresponds to the concept of a *data type*, where the latter
@@ -97,7 +97,7 @@ one of the possreps defined here; however, every *value* that the external
 data model supports generating into or parsing from MUON must be losslessly
 represented using at least one of the possreps defined here, and that value
 must be losslessly round-trippable using all of those possreps.
-Note that the **Capsule** possrep is the idiomatic way for an external data
+Note that the **Article** possrep is the idiomatic way for an external data
 model to represent "new" types in a consistent way.
 
 ## Ease of Use
@@ -268,7 +268,7 @@ Grammar:
         | <Tuple_Bag>
         | <Unit>
         | <Measure>
-        | <Capsule>
+        | <Article>
         | <Excuse>
         | <Entity>
 ```
@@ -1235,7 +1235,7 @@ A `<Tuple>` is subject to the additional rule that, iff its
 `<attr_commalist>` has exactly 1 `<*_attr>` element, either that element
 must have a leading or trailing comma, or the `<Tuple>` must have the `\%`
 prefix, so that the `<Tuple>` can be distinguished from every possible
-`<Capsule>` (and from a superset grammar's generic grouping parenthesis).
+`<Article>` (and from a superset grammar's generic grouping parenthesis).
 
 Examples:
 
@@ -1468,7 +1468,7 @@ from Measure versus just having its definition folded into the latter.*
 A **Unit** value is characterized by a set of 0..N *unit factors* such that
 each *unit factor* is a *unit label* / *unit exponent* pair.  A *unit
 label* can be of any possrep but is idiomatically either a **Nesting** value
-or a **Text** value or a singleton **Capsule** value; it represents a basic
+or a **Text** value or a singleton **Article** value; it represents a basic
 named component unit such as `Meter` or `Second` or `Gram`; MUON generally
 does not define any of these basic names itself, leaving that to external
 data models.  A *unit exponent* is any **Integer** value, typically
@@ -1493,7 +1493,7 @@ all you have is a plain number, and not a number *of* anything.  The
 *identity unit* is the identity value for the **Unit** type; multiplying
 any **Unit** X with this yields X.
 
-*TODO: Consider if a singleton Capsule is actually the best idiomatic possrep
+*TODO: Consider if a singleton Article is actually the best idiomatic possrep
 for a unit label.*
 
 Grammar:
@@ -1647,41 +1647,41 @@ Examples:
     \${-94.746094 * \Longitude + 37.483577 * \Latitude}
 ```
 
-## Capsule / Labelled Tuple
+## Article / Labelled Tuple
 
-A **Capsule** value, represented by `<Capsule>`, is characterized by the
+An **Article** value, represented by `<Article>`, is characterized by the
 pairing of a *label* with a set of 0..N *attributes* where that set is a
 **Tuple** value; the label can be of any type but is idiomatically a
 **Nesting** value.
 
-The **Capsule** possrep is the idiomatic way for an external data model to
+The **Article** possrep is the idiomatic way for an external data model to
 represent "new" types of a nominal type system in a consistent way.  The
 *label* represents a fully-qualified external data type name, and thus a
-namespace within all the **Capsule** values, while the *attributes* define
-all the components of a value of that external type.  Thus a **Capsule**
+namespace within all the **Article** values, while the *attributes* define
+all the components of a value of that external type.  Thus an **Article**
 corresponds to a generic *object* of an object-oriented language, the
 *label* is the *class* of that *object*, and *attributes* are *properties*.
 
 As a primary exception to the above, the large number of *exception* or
 *error* types common in some data models / type systems should *not* be
-represented using a **Capsule** but rather with the structurally identical
+represented using an **Article** but rather with the structurally identical
 **Excuse** which natively carries that extra semantic.
 
-The idiomatic way to represent a singleton type value is as a **Capsule**
+The idiomatic way to represent a singleton type value is as an **Article**
 where the *label* is the singleton type name and the *attributes* is the
 **Tuple** with zero attributes.
 
-The idiomatic default attribute name for a single-attribute **Capsule** is
+The idiomatic default attribute name for a single-attribute **Article** is
 `0` (the first conceptually ordered attribute name) when there isn't an
 actual meaningful name to give it.
 
 Grammar:
 
 ```
-    <Capsule> ::=
-        <generic_capsule> | <singleton_capsule>
+    <Article> ::=
+        <generic_article> | <singleton_article>
 
-    <generic_capsule> ::=
+    <generic_article> ::=
         ['\\*' <sp>]? <label_attrs_pair>
 
     <label_attrs_pair> ::=
@@ -1693,7 +1693,7 @@ Grammar:
     <attrs> ::=
         <Tuple>
 
-    <singleton_capsule> ::=
+    <singleton_article> ::=
         '\\*' <sp> <nesting_attr_names>
 ```
 
@@ -1727,8 +1727,8 @@ Examples:
 An **Excuse** value, represented by `<Excuse>`, is an explicitly stated
 reason for why, given some particular problem domain, a value is not being
 used that is ordinary for that domain.  Alternately, an **Excuse** is
-characterized by a **Capsule** that has the added semantic of representing
-some kind of error condition, in contrast to an actual **Capsule** which
+characterized by an **Article** that has the added semantic of representing
+some kind of error condition, in contrast to an actual **Article** which
 explicitly does *not* represent an error condition in the general case.
 
 For example, the typical integer division operation is not defined to give
@@ -1744,7 +1744,7 @@ not meant to terminate execution of code early unlike the latter which is.
 
 The **Excuse** possrep is the idiomatic way for an external data model to
 represent "new" *error* or *exception* types of a nominal type system in a
-consistent way.  The counterpart **Capsule** possrep should *not* be used for
+consistent way.  The counterpart **Article** possrep should *not* be used for
 these things, but rather just every other kind of externally-defined type.
 
 Grammar:
@@ -2055,7 +2055,7 @@ users might expect to see here.  This section enumerates some and says why.
 
 Special values of an IEEE floating-point number such as infinities,
 over/underflows, NaNs, are not part of the **Fraction** possrep and rather
-would be their own singleton **Capsule** or **Excuse** possreps, usually left
+would be their own singleton **Article** or **Excuse** possreps, usually left
 up to the overlaid data model.
 
 Fixed-precision/scale numbers and/or significant figures indication and/or
@@ -2155,7 +2155,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ()    | aordered collections   | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs
-          |                        | * delimit Tuple/Capsule/Excuse selectors
+          |                        | * delimit Tuple/Article/Excuse selectors
           |                        | * delimit Heading literals
           |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
     ------+------------------------+---------------------------------------
@@ -2164,7 +2164,7 @@ that means they are used in pairs.
           |                        | * optional pair separator in Array/Set/Bag sels
           |                        | * optional pair separator in Tuple/Excuse sels
           |                        | * optional pair separator in ne-TA/Rel/TB sels
-          |                        | * label/attributes separator in Capsule sel
+          |                        | * label/attributes separator in Article sel
           |                        | * disambiguate Bag sel from Set sel
           |                        | * L2 of prefix for Renaming literals
     ------+------------------------+---------------------------------------
@@ -2173,7 +2173,7 @@ that means they are used in pairs.
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Tuple/Excuse sels
           |                        | * separate attributes in Heading lits
-          |                        | * disambiguate unary named Tuple sels from Capsule sels
+          |                        | * disambiguate unary named Tuple sels from Article sels
     ------+------------------------+---------------------------------------
     ?     | qualifications/is?/so  | * indicates a qualifying/yes-or-no context
           |                        | * L1 of optional prefix for Boolean literals
@@ -2208,7 +2208,7 @@ that means they are used in pairs.
           |                        | * L1 of prefix for Unit/Measure selectors
     ------+------------------------+---------------------------------------
     *     | generics               | * indicates a generic type context
-          |                        | * L1 of optional prefix for Capsule selectors
+          |                        | * L1 of optional prefix for Article selectors
           | multiplication         | * significand/radix separator in Fraction literals
           |                        | * separate factors in Unit/Measure selectors
     ------+------------------------+---------------------------------------
