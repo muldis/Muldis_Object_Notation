@@ -92,13 +92,22 @@ above) **Any** and **None** possreps explicitly correspond to a *supertype*
 or *subtype* respectively of what every other possrep corresponds to,
 regardless of the data model, for what that's worth.
 
-Each external data model used with MUON is not required to support every
-one of the possreps defined here; however, every *value* that the external
-data model supports generating into or parsing from MUON must be losslessly
-represented using at least one of the possreps defined here, and that value
-must be losslessly round-trippable using all of those possreps.
+When an external data model is used with MUON, MUON requires that a
+thorough mapping is defined for every MUON possrep to some data type of
+that model.  The intent here is that every well-formed MUON *parsing unit*
+can be deterministically parsed into some value of that model, and
+therefore that there would never be a MUON parsing failure due to the data
+model not supporting some particular data type.  The mapping should be a
+reasonable best fit, even if crude, when there isn't a perfect analogy.
+In contrast, MUON does *not* require that a mapping exist from every value
+of an external data model to MUON, in particular types that are like opaque
+pointers to memory addresses which don't meaningfully serialize.  MUON also
+does require that any value which a data model supports generating a MUON
+parsing unit from must be losslessly round-trippable, that when one
+generates MUON from said value, and then turns around and parses that MUON
+with the same model, it will be parsed as the exact same value.
 Note that the **Article** possrep is the idiomatic way for an external data
-model to represent "new" types in a consistent way.
+model to represent "new" types as MUON in a consistent way.
 
 ## Ease of Use
 
@@ -144,7 +153,7 @@ the input according to the regular MUON grammar.
 
 Assuming that the MUON parser proper operates logically in terms of the
 input *parsing unit* being a Unicode character string (characterized by a
-sequence of Unicode *character codepoints*, each corresponding to an
+sequence of Unicode *character code points*, each corresponding to an
 integer in the set {0..0xD7FF,0xE000..0x10FFFF}), a MUON parser that is
 actually given an octet string as input (per a raw file) will need to
 determine which of possibly many possible encoding formats was used to
@@ -567,7 +576,7 @@ be represented as a terminating decimal number.
 Note that in order to keep the grammar simpler or more predictable, each
 **Fraction** component {N,D,R,E} must have its numeric base specified
 individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
-be interpreted as base 10.  This keeps behavior consistent with a parser
+be interpreted as base 10.  This keeps behaviour consistent with a parser
 that sees a **Fraction** literal but interprets it as multiple **Integer**
 literals separated by symbolic infix operators, evaluation order aside.
 Also per normal expectations, literals in the format `X.X` only specify the
@@ -688,7 +697,7 @@ Examples:
 
 A **Text** value, represented by `<Text>`, is characterized by an
 arbitrarily-long sequence of **Unicode** 10.0 standard *character
-codepoints*, where each distinct codepoint corresponds to a distinct
+code points*, where each distinct code point corresponds to a distinct
 integer in the set **{0..0xD7FF,0xE000..0x10FFFF}**,
 which explicitly does not represent any kind of thing in particular.
 
@@ -701,7 +710,7 @@ and the other being the canonical form of a standalone *attribute name*
 Note that some programming languages or execution environments support a
 "Unicode character string" concept that is less strict than the **Unicode**
 standard, and thus allow malformed character strings.  For example, some
-may allow isolated/non-paired UTF-16 "surrogate" codepoints corresponding
+may allow isolated/non-paired UTF-16 "surrogate" code points corresponding
 to integers in the set **{0xD800..0xDFFF}**.  MUON forbids the use of any
 such "character strings" using the `<Text>` syntax.  However, such data can
 still be conveyed using other means such as MUON's `<Array>`+`<Integer>`.
@@ -734,12 +743,12 @@ Grammar:
           '\\q' | '\\g'
         | '\\b'
         | '\\t' | '\\n' | '\\r'
-        | ['\\c<' <codepoint> '>']
+        | ['\\c<' <code_point> '>']
 
     <codepoint_text> ::=
-        '\\~' <sp> <codepoint>
+        '\\~' <sp> <code_point>
 
-    <codepoint> ::=
+    <code_point> ::=
         <nonsigned_int>
 ```
 
@@ -751,30 +760,30 @@ leading `\` is specified separately per segment and it only affects that
 segment; also, individual character escape sequences may not cross segments.
 
 This grammar is subject to the additional rule that the non-negative integer
-denoted by `<codepoint>` must be in the set {0..0xD7FF,0xE000..0x10FFFF}.
+denoted by `<code_point>` must be in the set {0..0xD7FF,0xE000..0x10FFFF}.
 
 The meanings of the simple character escape sequences are:
 
 ```
-    Esc | Unicode   | Unicode         | Chr | Literal character used
-    Seq | Codepoint | Character Name  | Lit | for when not escaped
-    ----+-----------+-----------------+-----+------------------------------
-    \q  | 0x22   34 | QUOTATION MARK  | "   | delimit Text/opaque literals
-    \g  | 0x60   96 | GRAVE ACCENT    | `   | delimit dividing space comments
-    \b  | 0x5C   93 | REVERSE SOLIDUS | \   | no special meaning in non-escaped
-    \t  | 0x9     9 | CHAR... TAB...  |     | control char horizontal tab
-    \n  | 0xA    10 | LINE FEED (LF)  |     | ctrl char line feed / newline
-    \r  | 0xD    13 | CARR. RET. (CR) |     | control char carriage return
+    Esc | Unicode    | Unicode         | Chr | Literal character used
+    Seq | Code Point | Character Name  | Lit | for when not escaped
+    ----+------------+-----------------+-----+------------------------------
+    \q  | 0x22    34 | QUOTATION MARK  | "   | delimit Text/opaque literals
+    \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
+    \b  | 0x5C    93 | REVERSE SOLIDUS | \   | no special meaning in non-escaped
+    \t  | 0x9      9 | CHAR... TAB...  |     | control char horizontal tab
+    \n  | 0xA     10 | LINE FEED (LF)  |     | ctrl char line feed / newline
+    \r  | 0xD     13 | CARR. RET. (CR) |     | control char carriage return
 ```
 
 There is just one complex escape sequence, of the format `\c<...>`, that
-supports specifying characters in terms of their Unicode codepoint number.
+supports specifying characters in terms of their Unicode code point number.
 One reason for this feature is to empower more elegant passing of
 Unicode-savvy MUON through a communications channel that is more limited,
 such as to 7-bit ASCII.
 
 A `<codepoint_text>` is a specialized shorthand for a **Text** of
-exactly 1 character whose codepoint number it denotes.
+exactly 1 character whose code point number it denotes.
 
 Given that **Text** values or syntax serve double duty for not only regular
 user data but also for attribute names of tuples or other kinds of
@@ -1125,7 +1134,7 @@ Examples:
     `Every Integer x except for {4..13,22..28}`
     \?..{..3,14..21,29..}
 
-    `Set of all valid Unicode codepoints.`
+    `Set of all valid Unicode code points.`
     \?..{0..0xD7FF,0xE000..0x10FFFF}
 
     `Probably 15 members (no duplicates), depending on the model used.`
@@ -1205,10 +1214,10 @@ represent any proposition in particular.
 
 The canonical way to represent the concept of a *tuple* that has ordered
 attributes is to use integral names; to be specific, the attribute name
-consisting of just the character codepoint 0 would mark the first ordered
-attribute, the name consisting of just the codepoint 1 would mark the
+consisting of just the character code point 0 would mark the first ordered
+attribute, the name consisting of just the code point 1 would mark the
 second, and so on; this can be repeated up to 32 "positional" names whose
-names would correspond to non-printing Unicode codepoints and would
+names would correspond to non-printing Unicode code points and would
 alphabetically sort correctly and prior to any normal text-like attribute
 names like **name** or **age**; said first 32 would likewise be distinct in
 appearance from all regular printable numbers used as attribute names.
@@ -1566,7 +1575,7 @@ foundation for external data models layered over top of MUON to use
 with their own concepts of measures and quantities and units.  Examples of
 such measurements include temporal (instant and duration to arbitrary
 precision or on any calendar), spatial or geospatial (locations or shapes
-or volumes), physical phenomina (mass, velocity, acceleration, power), and
+or volumes), physical phenomena (mass, velocity, acceleration, power), and
 currency (US Dollar or Euro etc).  Using this foundation, one can do a lot
 of common operations such as adding or multiplying or differencing
 measurements using generic code that doesn't know anything specific to any
@@ -1904,7 +1913,7 @@ Grammar:
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
 
     <ord_attr_name> ::=
-        <codepoint>
+        <code_point>
 ```
 
 The meaning of `<nonord_nonquoted_attr_name>` is exactly the same as if the

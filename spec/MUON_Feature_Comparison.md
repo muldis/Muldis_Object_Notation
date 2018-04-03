@@ -42,9 +42,9 @@ their exact syntax differs, `4.263*10^15` and `4.263e15` respectively.
 
 MUON is more expressive than JSON regarding character string literals.
 MUON directly supports expression of all 17 **Unicode** planes, that is all
-of the codepoints up to 0x10FFFF, while JSON only directly supports the
-BMP, that is only the codepoints up to 0xFFFF.  Users of JSON must
-explicitly use pairs of UTF-16 surrogate codepoints to represent codepoints
+of the code points up to 0x10FFFF, while JSON only directly supports the
+BMP, that is only the code points up to 0xFFFF.  Users of JSON must
+explicitly use pairs of UTF-16 surrogate code points to represent code points
 on the other 16 planes, which is a separate data model layer above the JSON.
 
 MUON uses the same string delimiters `"` as JSON but MUON is easier to
@@ -139,7 +139,7 @@ class `System.String`.
 
 Every `Text` value corresponds 1:1 with a .NET `String` value, but a .NET
 `String` is also capable of being malformed, and contain isolated UTF-16
-"surrogate" Char elements that don't correspond to valid Unicode codepoints.
+"surrogate" Char elements that don't correspond to valid Unicode code points.
 
 .NET has a direct `Array` analogy which is provided by the .NET
 class `System.Collections.Generic.List`.
