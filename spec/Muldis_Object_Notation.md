@@ -1661,7 +1661,7 @@ is conceivably just a non-normalized form of a single **Measure** which can
 conceivably be derived by normalizing and summing the list members, but we
 are recording the parts instead for better accuracy or some other reason.
 
-One common example is temporal instants, which may be expressed in days
+One common example is temporal durations, which may be expressed in days
 plus hours plus minutes.  Or another is liquid measures which may be
 expressed in cups plus teaspoons.  Or another is a geospatial dimension
 which might be in degrees plus minutes plus seconds.
@@ -1717,8 +1717,8 @@ Examples:
     `The multiplicative identity compound measure.`
     \$+(1)
 
-    `The Day The Music Died.`
-    \$+(\Gregorian + 1959 * \Year + 2 * \Month + 3 * \Day)
+    `The Day The Music Died (if paired with Gregorian calendar).`
+    \$+(1959 * \Year + 2 * \Month + 3 * \Day)
 
     `Some food thing.`
     \$+(2 * \Cup + 5 * \Ounce)
