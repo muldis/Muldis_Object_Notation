@@ -1682,7 +1682,7 @@ Grammar:
 
 ```
     <Heading> ::=
-        '\\@' <sp> <delim_attr_name_commalist>
+        '\\$' <sp> <delim_attr_name_commalist>
 
     <delim_attr_name_commalist> ::=
         '(' <sp> <attr_name_commalist> <sp> ')'
@@ -1708,34 +1708,34 @@ Examples:
 
 ```
     `Zero attributes.`
-    \@()
+    \$()
 
     `One named attribute.`
-    \@(sales)
+    \$(sales)
 
     `Same thing.`
-    \@("sales")
+    \$("sales")
 
     `One ordered attribute.`
-    \@(0)
+    \$(0)
 
     `Same thing.`
-    \@("\\c<0>")
+    \$("\\c<0>")
 
     `Three named attributes.`
-    \@(region,revenue,qty)
+    \$(region,revenue,qty)
 
     `Three ordered attributes.`
-    \@(0..2)
+    \$(0..2)
 
     `One of each.`
-    \@(1,age)
+    \$(1,age)
 
     `Some attribute names can only appear quoted.`
-    \@("Street Address")
+    \$("Street Address")
 
     `A non-Latin name.`
-    \@("サンプル")
+    \$("サンプル")
 ```
 
 ## Renaming / Attribute Name Map
@@ -1747,7 +1747,7 @@ Grammar:
 
 ```
     <Renaming> ::=
-        '\\@:' <sp> <delim_renaming_commalist>
+        '\\$:' <sp> <delim_renaming_commalist>
 
     <delim_renaming_commalist> ::=
         '(' <sp> <renaming_commalist> <sp> ')'
@@ -1789,40 +1789,40 @@ Examples:
 
 ```
     `Zero renamings, a no-op.`
-    \@:()
+    \$:()
 
     `Also a no-op.`
-    \@:(age->age)
+    \$:(age->age)
 
     `Rename one attribute.`
-    \@:(fname->first_name)
+    \$:(fname->first_name)
 
     `Same thing.`
-    \@:(first_name<-fname)
+    \$:(first_name<-fname)
 
     `Swap 2 named attributes.`
-    \@:(foo->bar,foo<-bar)
+    \$:(foo->bar,foo<-bar)
 
     `Convert ordered names to nonordered.`
-    \@:(->foo,->bar)
+    \$:(->foo,->bar)
 
     `Same thing.`
-    \@:(0->foo,1->bar)
+    \$:(0->foo,1->bar)
 
     `Convert nonordered names to ordered.`
-    \@:(<-foo,<-bar)
+    \$:(<-foo,<-bar)
 
     `Same thing.`
-    \@:(0<-foo,1<-bar)
+    \$:(0<-foo,1<-bar)
 
     `Swap 2 ordered attributes.`
-    \@:(0->1,0<-1)
+    \$:(0->1,0<-1)
 
     `Same thing.`
-    \@:(->1,->0)
+    \$:(->1,->0)
 
     `Some attribute names can only appear quoted.`
-    \@:("First Name"->"Last Name")
+    \$:("First Name"->"Last Name")
 ```
 
 ## Entity
@@ -1856,18 +1856,18 @@ Grammar:
 
 ```
     <Entity> ::=
-        '\\@@' <sp> '(' <sp> <Any> <sp> ')'
+        '\\$$' <sp> '(' <sp> <Any> <sp> ')'
 ```
 
 Examples:
 
 ```
     (
-        My_Func : \@@((\Function : ...)),
+        My_Func : \$$((\Function : ...)),
 
-        My_Proc_1 : \@@((\Procedure : ...)),
+        My_Proc_1 : \$$((\Procedure : ...)),
 
-        My_Proc_2 : \@@((\Procedure : ...)),
+        My_Proc_2 : \$$((\Procedure : ...)),
     )
 ```
 
@@ -2029,14 +2029,14 @@ that means they are used in pairs.
           |                        | * L1 of optional prefix for Tuple selectors
           |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
     ------+------------------------+---------------------------------------
-    *     | generics               | * indicates a generic type context
+    *     | generics/whatever      | * indicates a generic type context
           |                        | * L1 of optional prefix for Article selectors
           | multiplication         | * significand/radix separator in Fraction literals
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured
           |                        | * L1 of prefix for Excuse literals/selectors
     ------+------------------------+---------------------------------------
-    @     | locators/at/headings   | * indicates identifiers/names are featured
+    $     | identifiers/names      | * indicates identifiers/names are featured
           |                        | * L1 of prefix for Heading literals
           |                        | * L1 of prefix for Renaming literals
           |                        | * L1+L2 of prefix for Entity selectors
