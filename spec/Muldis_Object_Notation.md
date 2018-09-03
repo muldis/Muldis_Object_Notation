@@ -64,7 +64,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
 - Logical: Boolean
 - Numeric: Integer, Fraction
 - Stringy: Bits, Blob, Text
-- Discrete: Array, Set, Bag
+- Discrete: Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
@@ -267,6 +267,7 @@ Grammar:
           <Array>
         | <Set>
         | <Bag>
+        | <Mix>
         | <Interval>
         | <Interval_Set>
         | <Interval_Bag>
@@ -458,7 +459,7 @@ Grammar:
         <nonquoted_frac> | <quoted_frac>
 
     <nonquoted_frac> ::=
-        ['\\+' <sp>]? <asigned_frac>
+        ['\\/' <sp>]? <asigned_frac>
 
     <asigned_frac> ::=
         <significand> [<sp> '*' <sp> <radix> <sp> '^' <sp> <exponent>]?
@@ -500,7 +501,7 @@ Grammar:
         <asigned_int>
 
     <quoted_frac> ::=
-        '\\+' <sp> '"' <seg_sp> <qu_asigned_frac> <seg_sp> '"'
+        '\\/' <sp> '"' <seg_sp> <qu_asigned_frac> <seg_sp> '"'
 
     <qu_asigned_frac> ::=
         <qu_significand> [<seg_sp> '*' <seg_sp> <qu_radix> <seg_sp> '^' <seg_sp> <qu_exponent>]?
@@ -598,7 +599,7 @@ Examples:
 
     -4.72
 
-    \+29.95
+    \/29.95
 
     0/1
 
@@ -610,14 +611,14 @@ Examples:
 
     15_485_863/32_452_843
 
-    \+355/113
+    \/355/113
 
     `First 101 digits of transcendental number π.`
-    \+"3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510"
+    \/"3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510"
         "58209_74944_59230_78164_06286_20899_86280_34825_34211_70679"
 
     `Mersenne Primes 2^107-1 divided by 2^127-1.`
-    \+"162259276829213363391578010288127"
+    \/"162259276829213363391578010288127"
         "/170141183460469231731687303715884105727"
 
     4.5207196*10^37
@@ -877,6 +878,10 @@ explicitly does not represent any kind of thing in particular, and is
 simply the sum of its members.  A **Set** ensures that no 2 of its members
 are the same value.
 
+A **Set** value is also characterized by a set of 0..N *multiplied members*
+such that each *multiplied member* is a *member* / *multiplicity* pair such
+that no 2 *member* are the same value and *multiplicity* is 1.
+
 Grammar:
 
 ```
@@ -887,7 +892,7 @@ Grammar:
 A `<Set>` is subject to the additional rule that, either its
 `<member_commalist>` must not have any `<multiplied_member>` elements, or
 the `<Set>` must have the `\?` prefix, so that the `<Set>` can be
-distinguished from every possible `<Bag>`.
+distinguished from every possible `<Bag>` and `<Mix>`.
 
 Examples:
 
@@ -923,6 +928,11 @@ explicitly does not represent any kind of thing in particular, and is
 simply the sum of its members.  A **Bag** in the general case may have
 multiple members that are the same value.
 
+A **Bag** value is also characterized by a set of 0..N *multiplied members*
+such that each *multiplied member* is a *member* / *multiplicity* pair such
+that no 2 *member* are the same value and *multiplicity* is a positive
+**Integer**.
+
 Grammar:
 
 ```
@@ -949,10 +959,10 @@ Grammar:
 ```
 
 A `<Bag>` is subject to the additional rule that, either its
-`<member_commalist>`  must have at least 1 `<multiplied_member>` element,
-or the `<Bag>` must have the `\+` prefix, so that the `<Bag>` can be
-distinguished from every possible `<Set>`.  An idiomatic way to represent
-an empty **Bag** is to have exactly 1 `<multiplied_member>` whose
+`<member_commalist>` must have at least 1 `<multiplied_member>` element, or
+the `<Bag>` must have the `\+` prefix, so that the `<Bag>` can be
+distinguished from every possible `<Set>` and `<Mix>`.  An idiomatic way to
+represent an empty **Bag** is to have exactly 1 `<multiplied_member>` whose
 `<multiplicity>` is zero.
 
 Examples:
@@ -980,6 +990,110 @@ Examples:
         "Baz",
         "Baz",
     }
+```
+
+## Mix
+
+A **Mix** value, represented by `<Mix>`, is a general purpose
+arbitrarily-large unordered collection of any other, *member* values, which
+explicitly does not represent any kind of thing in particular, and is
+simply the sum of its members.  A **Mix** in the general case may have
+multiple members that are the same value, and it may have fractions of
+members, and it may have negations of members.
+
+A **Mix** value is also characterized by a set of 0..N *multiplied members*
+such that each *multiplied member* is a *member* / *multiplicity* pair such
+that no 2 *member* are the same value and *multiplicity* is a nonzero
+**Fraction**.
+
+The **Mix** possrep is the idiomatic way for an external data model to
+represent the general case of a *measure*, a measurement of some quantity
+or position or other kind of thing that one measures, in terms of a number
+paired with a unit, or a set of 0..N of such, which explicitly is agnostic
+to any externally defined standards and should be able to represent units
+from any of them.  In this context, a *member* represents each measurement
+unit and its *multiplicity* is the measurement in that unit.  While **Mix**
+allows each *member* to have any possrep, in practice the **Nesting** and
+**Text** possreps are the most common, or an external data model might have
+a dedicated type to represent a unit definition.
+
+See also [http://unitsofmeasure.org/ucum.html](http://unitsofmeasure.org/ucum.html).
+
+Grammar:
+
+```
+    <Mix> ::=
+        ['\\/' <sp>]? <mix_nonord_member_commalist>
+
+    <mix_nonord_member_commalist> ::=
+        '{' <sp> <mix_member_commalist> <sp> '}'
+
+    <mix_member_commalist> ::=
+        [<mix_single_member> | <mix_multiplied_member> | ''] % [<sp> ',' <sp>]
+
+    <mix_single_member> ::=
+        <member>
+
+    <mix_multiplied_member> ::=
+        <member> <sp> ':' <sp> <mix_multiplicity>
+
+    <mix_multiplicity> ::=
+        <asigned_frac> | <asigned_int>
+```
+
+A `<Mix>` is subject to the additional rule that, either its
+`<mix_member_commalist>` must have at least 1 `<mix_multiplied_member>`
+element whose `<mix_multiplicity>` is an `<asigned_frac>`, or the `<Mix>`
+must have the `\/` prefix, so that the `<Mix>` can be distinguished from
+every possible `<Set>` and `<Bag>`.  An idiomatic way to represent an empty
+**Mix** is to have exactly 1 `<mix_multiplied_member>` whose
+`<mix_multiplicity>` is zero.
+
+Examples:
+
+```
+    `Zero members; we measured zero of nothing in particular.`
+    {0:0.0}
+
+    `One member; one gram of mass.`
+    {\Gram: 1.0}
+
+    `Same thing.`
+    \/{\Gram: 1}
+
+    `29.95 members (28.95 duplicates); the cost of a surgery.`
+    {\USD: 29.95}
+
+    `9.8 members; acceleration under Earth's gravity.`
+    {\Meter_Per_Second_Squared: 9.8}
+
+    `0.615 members (fractions of 3 distinct members); recipe.`
+    {
+        \Butter : 0.22,
+        \Sugar  : 0.1,
+        \Flour  : 0.275,
+        \Sugar  : 0.02,
+    }
+
+    `4/3 members (fractions of 3 distinct members); this-mix.`
+    {
+        "Sugar": 1/3,
+        "Spice": 1/4,
+        "All_Things_Nice": 3/4,
+    }
+
+    `-1.5 members; adjustment for recipe.`
+    {
+        "Rice": +4.0,
+        "Beans": -5.7,
+        "Carrots": +0.2,
+    }
+
+    `Circa -85 members; geographic coordinates of Googleplex.`
+    {\Longitude: -122.0857017, \Latitude: 37.4218363}
+
+    `The Day The Music Died (if paired with Gregorian calendar).`
+    \/{\Year: 1959, \Month: 2, \Day: 3}
 ```
 
 ## Interval
@@ -1886,6 +2000,12 @@ error margin indication, left up to the overlaid data model.  Any added
 would be bareword only as expected to be relatively short. They would be
 defined in terms of being a scaled integer or fixed-denominator fraction.
 
+While **Mix** is characterized by a generalization of a **Bag**, there are
+currently no possreps defined like **Interval Mix** or **Tuple Mix**,
+because there doesn't seem to be a use case for them.  However, if it turns
+out that either would have a practical use, there is appropriate syntax
+already reserved for them, namely `\/..{}` and `\/%()` plus `\/%{}`.
+
 Dictionary types in the general case are excluded because the relational
 types should be able to represent all their variations (eg, unordered,
 ordered, one-directional vs bi-directional, with or without duplicates,
@@ -2001,6 +2121,12 @@ that means they are used in pairs.
           |                        | * separate attributes in Heading lits
           |                        | * disambiguate unary named Tuple sels from Article sels
     ------+------------------------+---------------------------------------
+    ~     | sequences/stitching    | * indicates a sequencing context
+          |                        | * L1 of prefix for Bits/Blob literals
+          |                        | * L1 of optional prefix for Text literals
+          |                        | * L1 of optional prefix for Array selectors
+          |                        | * L1 of prefix for Tuple-Array lits/sels
+    ------+------------------------+---------------------------------------
     ?     | qualifications/is?/so  | * indicates a qualifying/yes-or-no context
           |                        | * L1 of optional prefix for Boolean literals
           |                        | * L2 of prefix for Bits literals
@@ -2008,18 +2134,18 @@ that means they are used in pairs.
           |                        | * L1 of prefix for Interval-Set selectors
           |                        | * L1 of prefix for Relation lits/sels
     ------+------------------------+---------------------------------------
-    +     | quantifications/count  | * indicates a quantifying/count context
-          |                        | * L1 of optional prefix for Integer/Fraction literals
+    +     | quantifications/count  | * indicates an integral quantifying/count context
+          |                        | * L1 of optional prefix for Integer literals
           |                        | * L2 of prefix for Blob literals
           |                        | * L1 of optional prefix for Bag selectors
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
     ------+------------------------+---------------------------------------
-    ~     | sequences/stitching    | * indicates a sequencing context
-          |                        | * L1 of prefix for Bits/Blob literals
-          |                        | * L1 of optional prefix for Text literals
-          |                        | * L1 of optional prefix for Array selectors
-          |                        | * L1 of prefix for Tuple-Array lits/sels
+    /     | fractions/measures     | * indicates a fractional quantifying/count context
+          |                        | * L1 of optional prefix for Fraction literals
+          |                        | * L1 of optional prefix for Mix selectors
+          | division               | * disambiguate Fraction lit from Integer lit
+          |                        | * numerator/denominator separator in Fraction literals
     ------+------------------------+---------------------------------------
     ..    | intervals/ranges       | * L1 of prefix for Interval selectors
           |                        | * L2 of prefix for Interval-Set/Interval-Bag selectors
@@ -2043,8 +2169,6 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     -     | subtraction            | * indicates negative-Integer/Fraction literal
           |                        | * indicates open endpoint in Interval selectors
-    ------+------------------------+---------------------------------------
-    /     | division               | * disambiguate Fraction lit from Integer lit
     ------+------------------------+---------------------------------------
     .     | radix point            | * disambiguate Fraction lit from Integer lit
     ------+------------------------+---------------------------------------
