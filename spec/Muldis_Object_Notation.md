@@ -68,7 +68,6 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
-- Symbolic: Unit, Measure, Compound Measure
 - Generic: Article, Excuse, Ignorance
 - Source Code: Nesting, Heading, Renaming, Entity
 
@@ -275,9 +274,6 @@ Grammar:
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
-        | <Unit>
-        | <Measure>
-        | <Compound_Measure>
         | <Article>
         | <Excuse>
         | <Entity>
@@ -468,7 +464,7 @@ Grammar:
         <significand> [<sp> '*' <sp> <radix> <sp> '^' <sp> <exponent>]?
 
     <significand> ::=
-        <radix_point_sig> | <num_dec_sig>
+        <radix_point_sig> | <num_den_sig>
 
     <radix_point_sig> ::=
         <num_sign>? <ns_rps>
@@ -488,7 +484,7 @@ Grammar:
     <ns_rps_16> ::=
         <ns_int_16> <sp> '.' <sp> <nc_16>+
 
-    <num_dec_sig> ::=
+    <num_den_sig> ::=
         <numerator> <sp> '/' <sp> <denominator>
 
     <numerator> ::=
@@ -510,7 +506,7 @@ Grammar:
         <qu_significand> [<seg_sp> '*' <seg_sp> <qu_radix> <seg_sp> '^' <seg_sp> <qu_exponent>]?
 
     <qu_significand> ::=
-        <qu_radix_point_sig> | <qu_num_dec_sig>
+        <qu_radix_point_sig> | <qu_num_den_sig>
 
     <qu_radix_point_sig> ::=
         <num_sign>? <qu_ns_rps>
@@ -530,7 +526,7 @@ Grammar:
     <qu_ns_rps_16> ::=
         <qu_ns_int_16> <seg_sp> '.' <seg_sp> <nc_16> <qu_nc_16>*
 
-    <qu_num_dec_sig> ::=
+    <qu_num_den_sig> ::=
         <qu_numerator> <seg_sp> '/' <seg_sp> <qu_denominator>
 
     <qu_numerator> ::=
@@ -1469,261 +1465,6 @@ Examples:
     }
 ```
 
-## Unit
-
-A **Unit** value, represented by `<Unit>`, is a symbol intended to be used
-as a *unit of measurement*, which explicitly is agnostic to any externally
-defined standards and should be able to represent units from any of them.
-
-See also [http://unitsofmeasure.org/ucum.html](http://unitsofmeasure.org/ucum.html).
-
-A **Unit** value is characterized by a set of 0..N *unit factors* such that
-each *unit factor* is a *unit label* / *unit exponent* pair.  A *unit
-label* is any singleton **Article** value; it represents a basic named
-component unit such as `Meter` or `Second` or `Gram`; MUON generally does
-not define any of these basic names itself, leaving that to external data
-models.  For ease of use, the grammar also allows the **Nesting** and
-**Text** syntaxes to be used there, but the latter two will be interpreted
-as the equivalent former value, for example, writing `\Gram` or `"Gram"`
-will be interpreted as if it was `\*Gram`.  Alternately, a *unit label* may
-be a positive **Integer**.  A *unit exponent* is any **Integer** value,
-by default positive one.  A **Unit** ensures that no 2 of its *unit factor*
-have the same *unit label*, and at most 1 *unit label* is an **Integer**.
-
-MUON does not otherwise normalize **Unit** values in any way, leaving that
-to external data models.
-
-A **Unit** value is characterized by a mathematical expression consisting
-of 0..N factors that are multiplied together where each factor is an
-exponentiated named constant.  If there are exactly zero factors then the
-expression has the value positive one, the identity value for multiplication.
-
-The **Unit** type is structurally numeric and is closed under
-multiplication and division and reciprocal and integer exponentiation, but
-is not closed under addition or subtraction.  But logically this only makes
-sense when the underlying logical base units are explicitly on a *ratio
-scale* and/or satisfy particular conditions according to the external data
-model that defined them.  See the **UCUM** specification for a discussion.
-
-The sole **Unit** value with exactly zero *unit factor* is *the unity* or
-the neutral number 1; using this as the unit of a measurement is explicitly
-saying that all you have is a plain number, and not a number *of* anything.
-This **Unit** value is the multiplicative identity value for the **Unit**
-type; multiplying any **Unit** X with this yields X.
-
-Grammar:
-
-```
-    <Unit> ::=
-        <generic_unit> | <simple_unit>
-
-    <generic_unit> ::=
-        '\\$$' <sp> '(' <sp> <unit_factor_list> <sp> ')'
-
-    <unit_factor_list> ::=
-        [<simple_unit_factor> | <expon_unit_factor>] % [<sp> '*' <sp>]
-
-    <simple_unit_factor> ::=
-        <unit_label>
-
-    <expon_unit_factor> ::=
-        <unit_label> <sp> '^' <sp> <unit_exponent>
-
-    <unit_label> ::=
-        <singleton_article> | <Nesting> | <Text> | <nonsigned_int>
-
-    <unit_exponent> ::=
-        <asigned_int>
-
-    <simple_unit> ::=
-        '\\$$' <sp> <nesting_attr_names>
-```
-
-A `<simple_unit>` is shorthand for a `<generic_unit>` such that it
-represents a **Unit** consisting of exactly 1 *unit factor* where its *unit
-exponent* is positive one and its *unit label* is the **Article** that
-directly corresponds to the `<nesting_attr_names>`.
-
-Examples:
-
-```
-    `The unity.`
-    \$$()
-
-    `Same thing.`
-    \$$(1)
-
-    `Acceleration.`
-    \$$(\Meter * \Second ^ -2)
-
-    `Mass.`
-    \$$Gram
-
-    `Same thing.`
-    \$$(\Gram)
-```
-
-## Measure
-
-A **Measure** value, represented by `<Measure>`, is a measurement of some
-quantity or position or other thing that one measures, in terms of a number
-paired with a unit, which explicitly is agnostic to any externally defined
-standards and should be able to represent units from any of them.
-
-MUON provides the **Measure** possrep as a powerful expressive generic
-foundation for external data models layered over top of MUON to use
-with their own concepts of measures and quantities and units.  Examples of
-such measurements include temporal (instant and duration to arbitrary
-precision or on any calendar), spatial or geospatial (locations or shapes
-or volumes), physical phenomena (mass, velocity, acceleration, power), and
-currency (US Dollar or Euro etc).  Using this foundation, one can do a lot
-of common operations such as adding or multiplying or differencing
-measurements using generic code that doesn't know anything specific to any
-units and get accurate answers, albeit sometimes in a non-standard format;
-one typically would use a unit-savvy normalization step such as to get nice
-calendar dates out but that's the domain of the higher level data model.
-
-A **Measure** value is characterized by a *measure coefficient* / *measure
-unit* pair.  A *measure coefficient* is any **Fraction** value; for ease of
-use, the grammar also allows the **Integer** syntax to be used there, but
-the latter will be interpreted as the equivalent former value, for example,
-writing `42` will be interpreted as if it was `42.0`.  A *measure unit* is
-any **Unit** value, by default *the unity*.
-
-The **Measure** type is structurally numeric with all of the same features
-and limitations as **Unit**.
-
-The **Measure** value whose coefficient is 1 and whose unit is *the unity*
-is the multiplicative identity value for the **Measure** type; multiplying
-any **Measure** X with this yields X.
-
-Grammar:
-
-```
-    <Measure> ::=
-        <generic_measure> | <simple_measure>
-
-    <generic_measure> ::=
-        '\\$' <sp> '(' <sp> <measure_term> <sp> ')'
-
-    <measure_term> ::=
-        <measure_coefficient> [<sp> '*' <sp> <measure_unit>]?
-
-    <measure_coefficient> ::=
-        <numeric_as_fraction>
-
-    <measure_unit> ::=
-        <Unit> | <unit_factor_list>
-
-    <simple_measure> ::=
-        '\\$' <sp> <nesting_attr_names>
-```
-
-A `<simple_measure>` is shorthand for a `<generic_measure>` such that its
-*measure coefficient* is positive one and its *measure unit* is the
-*simple unit* that directly corresponds to the `<nesting_attr_names>`.
-
-Examples:
-
-```
-    `We measured zero of nothing in particular.`
-    \$(0)
-
-    `The multiplicative identity measure, one of nothing in particular.`
-    \$(1)
-
-    `Acceleration under Earth's gravity.`
-    \$(9.8 * \Meter * \Second ^ -2)
-
-    `Zero grams of mass.`
-    \$(0 * \Gram)
-
-    `One gram of mass.`
-    \$Gram
-
-    `Same thing.`
-    \$(\Gram)
-
-    `Same thing.`
-    \$(1 * \Gram)
-
-    `The cost of a surgery.`
-    \$(29.95 * \USD)
-```
-
-## Compound Measure
-
-A **Compound Measure** value, represented by `<Compound_Measure>`, is
-characterized by a **Set** value such that every member value of the
-**Set** is a **Measure**, where every such **Measure** has a distinct
-*measure unit* but all of the units measure the same thing and thus the set
-is conceivably just a non-normalized form of a single **Measure** which can
-conceivably be derived by normalizing and summing the list members, but we
-are recording the parts instead for better accuracy or some other reason.
-
-One common example is temporal durations, which may be expressed in days
-plus hours plus minutes.  Or another is liquid measures which may be
-expressed in cups plus teaspoons.  Or another is a geospatial dimension
-which might be in degrees plus minutes plus seconds.
-
-A **Compound Measure** value is characterized by a mathematical expression
-consisting of 0..N terms that are added together where each term is a
-**Fraction** multiplied by a **Unit**.  If there are exactly zero terms
-then the expression has the value zero, the identity value for addition.
-
-The **Compound Measure** type is structurally numeric and is closed under
-addition and subtraction and opposite and multiplication and division and
-reciprocal and integer exponentiation.  But the same logical limitations
-apply as with **Unit** concerning when performing these make any sense.
-
-The sole **Compound Measure** value with exactly zero *measure term* is the
-*additive identity compound measure*; using this is explicitly saying that
-you have a zero, whatever that means to the context in question, such as a
-zero quantity or a home position; or, devoid of an external context, it
-might be more like explicitly saying you didn't take a measurement in the
-first place, though in such circumstances you should be using an **Excuse**
-instead of a **Compound Measure**.  The *additive identity compound
-measure* is the additive identity value for the **Compound Measure** type;
-adding any **Compound Measure** X to this yields X.
-
-Grammar:
-
-```
-    <Compound_Measure> ::=
-        <generic_compound_measure> | <simple_compound_measure>
-
-    <generic_compound_measure> ::=
-        '\\$+' <sp> '(' <sp> <measure_term_list> <sp> ')'
-
-    <measure_term_list> ::=
-        [<Measure> | <coefficient_unit_pair>] % [<sp> '+' <sp>]
-
-    <simple_compound_measure> ::=
-        '\\$+' <sp> <nesting_attr_names>
-```
-
-A `<simple_compound_measure>` is shorthand for a
-`<generic_compound_measure>` such that it represents a **Compound Measure**
-consisting of exactly 1 *measure term* where its *measure coefficient* is
-positive one and its *measure unit* is the *simple unit* that directly
-corresponds to the `<nesting_attr_names>`.
-
-Examples:
-
-```
-    `The additive identity compound measure.`
-    \$+()
-
-    `The multiplicative identity compound measure.`
-    \$+(1)
-
-    `The Day The Music Died (if paired with Gregorian calendar).`
-    \$+(1959 * \Year + 2 * \Month + 3 * \Day)
-
-    `Some food thing.`
-    \$+(2 * \Cup + 5 * \Ounce)
-```
-
 ## Article / Labelled Tuple
 
 An **Article** value, represented by `<Article>`, is characterized by the
@@ -2137,8 +1878,8 @@ users might expect to see here.  This section enumerates some and says why.
 
 Special values of an IEEE floating-point number such as infinities,
 over/underflows, NaNs, are not part of the **Fraction** possrep and rather
-would be their own singleton **Article** or **Excuse** possreps, usually left
-up to the overlaid data model.
+would be their own singleton **Article** or **Excuse** possreps, usually
+left up to the overlaid data model.
 
 Fixed-precision/scale numbers and/or significant figures indication and/or
 error margin indication, left up to the overlaid data model.  Any added
@@ -2156,8 +1897,9 @@ might be of any data type is with a binary **Relation** with 2 *positional*
 attributes, and a single key-value pair of such a dictionary is a binary
 **Tuple**.  A canonical syntax specific to the most common case of a
 Dictionary, namely unordered, one-directional, any key type, no duplicates,
-may be added later.
+might be added later.
 
+TODO, REWRITE THIS:
 Temporal types in the general case are excluded because the **Measure**
 types should be able to represent all their variations in a more generic
 manner.  A Duration is a **Compound Measure** consisting of units like
@@ -2170,10 +1912,12 @@ them, eg Gregorian calendar. A TELL pairs an Instant with a Coordinate
 (Elevation, Latitude, Longitude). MUON might explicitly define Units common
 for these, such as Year etc.
 
+TODO, REWRITE THIS:
 Spatial types in the general case are excluded because they are better
 defined by a data model layered over top of MUON and they are complex,
 though certain simple cases like a Coordinate (lat/lon) might be added.
 
+TODO, REWRITE THIS:
 Currency types in the general case are excluded because the **Measure** types
 should be able to represent all their variations in a more generic manner.
 
@@ -2270,8 +2014,6 @@ that means they are used in pairs.
           |                        | * L1 of optional prefix for Bag selectors
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
-          | addition               | * separate terms in Compound-Measure selectors
-          |                        | * L2 of prefix for Compound Measure selectors
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
           |                        | * L1 of prefix for Bits/Blob literals
@@ -2287,13 +2029,9 @@ that means they are used in pairs.
           |                        | * L1 of optional prefix for Tuple selectors
           |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
     ------+------------------------+---------------------------------------
-    $     | measures               | * indicates that units or measures are featured
-          |                        | * L1 of prefix for Unit/Measure/C-M selectors
-    ------+------------------------+---------------------------------------
     *     | generics               | * indicates a generic type context
           |                        | * L1 of optional prefix for Article selectors
           | multiplication         | * significand/radix separator in Fraction literals
-          |                        | * separate factors in Unit/Measure/C-M selectors
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured
           |                        | * L1 of prefix for Excuse literals/selectors
@@ -2311,7 +2049,6 @@ that means they are used in pairs.
     .     | radix point            | * disambiguate Fraction lit from Integer lit
     ------+------------------------+---------------------------------------
     ^     | exponentiation         | * radix/exponent separator in Fraction literals
-          |                        | * label/exponent separator in Unit/Measure/C-M selectors
     ------+------------------------+---------------------------------------
     digit | number                 | * first char 0..9 in bareword indicates is a number
     ------+------------------------+---------------------------------------
