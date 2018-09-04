@@ -68,6 +68,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
+- Locational: Calendar Time, Calendar Duration, Calendar Instant, Calendar Instant With Zone
 - Generic: Article, Excuse, Ignorance
 - Source Code: Nesting, Heading, Renaming, Entity
 
@@ -258,6 +259,10 @@ Grammar:
         | <Bits>
         | <Blob>
         | <Text>
+        | <Calendar_Time>
+        | <Calendar_Duration>
+        | <Calendar_Instant_With_Zone>
+        | <Calendar_Instant>
         | <Ignorance>
         | <Nesting>
         | <Heading>
@@ -1091,9 +1096,6 @@ Examples:
 
     `Circa -85 members; geographic coordinates of Googleplex.`
     {\Longitude: -122.0857017, \Latitude: 37.4218363}
-
-    `The Day The Music Died (if paired with Gregorian calendar).`
-    \/{\Year: 1959, \Month: 2, \Day: 3}
 ```
 
 ## Interval
@@ -1579,6 +1581,182 @@ Examples:
     }
 ```
 
+## Calendar Time
+
+A **Calendar Time** value, represented by `<Calendar_Time>`, is
+characterized by a **Tuple** having any subset of the 6 attributes of the
+heading `\$(year,month,day,hour,minute,second)` where each attribute is a
+**Fraction**, or alternately by an isomorphic **Mix**.  For each of the 6
+attributes, it explicitly distinguishes between the attribute value being
+specified as zero versus being unspecified; omitting the attribute entirely
+means the latter.  Its main intended purpose is to be a more generic common
+element for a variety of other, more specific time-related possreps,
+including ones representing both durations and instants, or for direct use
+with types defined by external data models.  It does *not* specifically
+represent a time of day.
+
+Grammar:
+
+```
+    <Calendar_Time> ::=
+        '\\@%' <sp> <ord_time_commalist>
+
+    <ord_time_commalist> ::=
+        '(' <sp> <member_commalist> <sp> ')'
+
+    <time_commalist> ::=
+        <year>?
+        <sp> ',' <sp>
+        <month>?
+        <sp> ',' <sp>
+        <day>?
+        <sp> ',' <sp>
+        <hour>?
+        <sp> ',' <sp>
+        <minute>?
+        <sp> ',' <sp>
+        <second>?
+
+    <year> ::=
+        <mix_multiplicity>
+
+    <month> ::=
+        <mix_multiplicity>
+
+    <day> ::=
+        <mix_multiplicity>
+
+    <hour> ::=
+        <mix_multiplicity>
+
+    <minute> ::=
+        <mix_multiplicity>
+
+    <second> ::=
+        <mix_multiplicity>
+```
+
+Examples:
+
+```
+    `No measurement was taken or specified at all.`
+    \@%(,,,,,)
+
+    `Either an unspecified period in 1970 or a duration of 1970 years.`
+    \@%(1970,,,,,)
+
+    `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
+    \@%(2015,5,3,,,)
+
+    `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
+    \@%(1998,,300,,,)
+
+    `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
+    \@%(1776,,42,,,)
+
+    `Either the first quarter of 1953 or a duration of 1953.25 years.`
+    \@%(1953.25,,,,,)
+
+    `Either high noon on an unspecified day or a duration of 12 hours.`
+    \@%(,,,12,0,0)
+
+    `Either a fully specified civil date and time or a 6-part duration.`
+    \@%(1884,10,17,20,55,30)
+
+    `Either an ancient date and time or a negative duration.`
+    \@%(-370,1,24,11,0,0)
+
+    `Either a time on some unspecified day or a duration of seconds.`
+    \@%(,,,,,5923.21124603)
+```
+
+## Calendar Duration
+
+A **Calendar Duration** value, represented by `<Calendar_Duration>`, is a
+length of time expressed in terms of the units of a standard civil or
+similar calendar.  It is characterized by a **Calendar Time**.  It is up to
+the context supplied or interpreted by an external data model to give it
+further meaning, such as whether not specifying any smallest units means an
+uncertainty interval versus treating them as zero, and so on.
+
+Grammar:
+
+```
+    <Calendar_Duration> ::=
+        '\\@+' <sp> <ord_time_commalist>
+```
+
+Examples:
+
+```
+    `Addition of 2 years and 3 months.`
+    \@+(2,3,0,0,0,0)
+
+    `Subtraction of 22 hours.`
+    \@+(0,0,0,-22,0,0)
+```
+
+## Calendar Instant
+
+A **Calendar Instant** value, represented by `<Calendar_Instant>`, is a
+particular moment in time expressed in terms of a standard civil or similar
+calendar.  It is characterized by a **Calendar Time**.  This possrep by
+itself explicitly defines a *floating* instant, either a calendar date or
+timestamp that is not associated with a specific time zone or a time zone
+offset, or it defines a time of day not associated with any particular day.
+Beyond that it is up to the context supplied or interpreted by an external
+data model to give it further meaning, such as whether it is Gregorian or
+Julian etc, or whether it is tied to a specific time zone, or whether not
+specifying any largest units means a repeating event or not, or whether not
+specifying any smallest units means an interval or a point, and so on.
+
+Grammar:
+
+```
+    <Calendar_Instant> ::=
+        '\\@' <sp> <ord_time_commalist>
+```
+
+Examples:
+
+```
+    `The Day The Music Died (if paired with Gregorian calendar).`
+    \@(1959,2,3,,,)
+
+    `A time of day when one might have breakfast.`
+    \@(,,,7,30,0)
+```
+
+## Calendar Instant With Zone
+
+A **Calendar Instant With Zone** value, represented by
+`<Calendar_Instant_With_Zone>`, is characterized by a **Calendar Instant**
+that also has an explicit associated time zone offset characterized by a
+**Calendar Time**.
+
+Grammar:
+
+```
+    <Calendar_Instant_With_Zone> ::=
+        '\\@@' <sp> '(' <sp> <base_instant> <sp> '+' <sp> <zone_offset> <sp> ')'
+
+    <base_instant> ::=
+        <ord_time_commalist>
+
+    <zone_offset> ::=
+        <ord_time_commalist>
+```
+
+Examples:
+
+```
+    `What was now in the Pacific zone (if paired with Gregorian calendar).`
+    \@@((2018,9,3,20,51,17)+(0,0,0,-8,0,0))
+
+    `A time of day in the UTC zone on an unspecified day.`
+    \@@((,,,9,25,0)+(0,0,0,0,0,0))
+```
+
 ## Article / Labelled Tuple
 
 An **Article** value, represented by `<Article>`, is characterized by the
@@ -1942,7 +2120,7 @@ Examples:
 ## Entity
 
 An **Entity** value, represented by `<Entity>`, is a trivial annotation
-wrapper for an appearance of some other value whose main intended purpose
+wrapper for an appearance of some other value, whose main intended purpose
 is to mark the specific context of that appearance within a MUON document.
 This is so that naive development tools that know about MUON specifically
 but not about any source code defining data models layered over it can be
@@ -2037,8 +2215,7 @@ Spatial types in the general case are excluded because they are better
 defined by a data model layered over top of MUON and they are complex,
 though certain simple cases like a Coordinate (lat/lon) might be added.
 
-TODO, REWRITE THIS:
-Currency types in the general case are excluded because the **Measure** types
+Currency types in the general case are excluded because the **Mix** possrep
 should be able to represent all their variations in a more generic manner.
 
 Media types in the general case, such as audio or still or moving visual,
@@ -2104,11 +2281,12 @@ that means they are used in pairs.
           |                        | * delimit Tuple/Article/Excuse selectors
           |                        | * delimit Heading literals
           |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
+          |                        | * delimit Calendar-* literals
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
           |                        | * separates the 2 parts of a pair
           |                        | * optional pair separator in Array/Set/Bag sels
-          |                        | * optional pair separator in Tuple/Excuse sels
+          |                        | * optional pair separator in Tuple/Article/Excuse sels
           |                        | * optional pair separator in ne-TA/Rel/TB sels
           |                        | * label/attributes separator in Article sel
           |                        | * disambiguate Bag sel from Set sel
@@ -2117,9 +2295,10 @@ that means they are used in pairs.
     ,     | list builders          | * separates collection elements
           |                        | * separate members in Array/Set/Bag sels
           |                        | * separate members in nonempty-TA/Rel/TB sels
-          |                        | * separate attributes in Tuple/Excuse sels
+          |                        | * separate attributes in Tuple/Article/Excuse sels
           |                        | * separate attributes in Heading lits
           |                        | * disambiguate unary named Tuple sels from Article sels
+          |                        | * separate elements in Calendar-* lits
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
           |                        | * L1 of prefix for Bits/Blob literals
@@ -2140,6 +2319,8 @@ that means they are used in pairs.
           |                        | * L1 of optional prefix for Bag selectors
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
+          |                        | * L2 of prefix for Calendar-Duration literals
+          |                        | * base/zone separator in Calendar-IWZ lits
     ------+------------------------+---------------------------------------
     /     | fractions/measures     | * indicates a fractional quantifying/count context
           |                        | * L1 of optional prefix for Fraction literals
@@ -2154,6 +2335,11 @@ that means they are used in pairs.
     %     | tuples/heterogeneous   | * indicates that tuples are featured
           |                        | * L1 of optional prefix for Tuple selectors
           |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
+          |                        | * L2 of prefix for Calendar-Time literals
+    ------+------------------------+---------------------------------------
+    @     | at/locators/when/where | * indicates temporals/spatials are featured
+          |                        | * L1 of prefix for Calendar-* literals
+          |                        | * L2 of prefix for Calendar-IWZ literals
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
           |                        | * L1 of optional prefix for Article selectors
