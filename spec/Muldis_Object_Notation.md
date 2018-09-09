@@ -68,7 +68,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
-- Locational: Calendar Time, Calendar Duration, Calendar Instant
+- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Generic: Article, Excuse, Ignorance
 - Source Code: Nesting, Heading, Renaming, Entity
 
@@ -262,6 +262,7 @@ Grammar:
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
+        | <Geographic_Point>
         | <Ignorance>
         | <Nesting>
         | <Heading>
@@ -1092,9 +1093,6 @@ Examples:
         "Beans": -5.7,
         "Carrots": +0.2,
     }
-
-    `Circa -85 members; geographic coordinates of Googleplex.`
-    {\Longitude: -122.0857017, \Latitude: 37.4218363}
 ```
 
 ## Interval
@@ -1778,6 +1776,77 @@ Examples:
     \@((2001,4,16,20,1,44)@"PST")
 ```
 
+## Geographic Point
+
+A **Geographic Point** value, represented by `<Geographic_Point>`, is a
+particular point location on the Earth's surface characterized by cartesian
+coordinates named *longitude* and *latitude* and *elevation*, where each of
+the latter is characterized by a single **Fraction** value.  Each
+coordinate may be either specified or unspecified; omitting it means the
+latter and providing it, even if zero, means the former.
+
+The coordinates may be specified in any order, and are distinguished by
+their own prefix symbols.  The literal syntax has right-pointing `>` and
+up-pointing `^` arrows that are meant to visually evoke *longitude* and
+*latitude* respectively, so that it is more clear at a glance which of the
+coordinates is which.  The `+` literal syntax represents *elevation*.  A
+more-positive *longitude* is further to the East than a more-negative one,
+while a more-positive *latitude* is further to the North than a
+more-negative one, and a more-positive *elevation* is further from the
+center of the Earth than a more-negative one.
+
+While the *latitude* and *longitude* have semi-specific meanings, which
+loosely are possibly fractional degrees in the range -180..180 and -90..90
+respectively, MUON explicitly does not ascribe any specific interpretation
+to the *elevation* value, aside from it increasing away from the center of
+the Earth.  It is up to an external data model used with MUON to specify
+the *elevation* units, such as meters or feet or whatever, as well as the
+starting point, such as the center of the Earth or the surface or whatever.
+The external data model also gives the more specific meanings of *latitude*
+and *longitude*, such as whether they are along the surface of the Earth or
+something more specific.
+
+Grammar:
+
+```
+    <Geographic_Point> ::=
+        '\\@@' <sp> <delim_point_commalist>
+
+    <delim_point_commalist> ::=
+        '(' <sp> <point_commalist> <sp> ')'
+
+    <point_commalist> ::=
+        [<longitude> | <latitude> | <elevation> | ''] % [<sp> ',' <sp>]
+
+    <longitude> ::=
+        '>' <sp> <mix_multiplicity>
+
+    <latitude> ::=
+        '^' <sp> <mix_multiplicity>
+
+    <elevation> ::=
+        '+' <sp> <mix_multiplicity>
+```
+
+Examples:
+
+```
+    `No specified coordinates at all.`
+    \@@()
+
+    `Just an elevation specified.`
+    \@@(+ 920)
+
+    `Geographic surface coordinates of Googleplex; elevation not specified.`
+    \@@(> -122.0857017, ^ 37.4218363)
+
+    `Same thing.`
+    \@@(^ 37.4218363, > -122.0857017)
+
+    `Some location with all coordinates specified.`
+    \@@(> -101, ^ -70, + 1000)
+```
+
 ## Article / Labelled Tuple
 
 An **Article** value, represented by `<Article>`, is characterized by the
@@ -2218,10 +2287,18 @@ attributes, and a single key-value pair of such a dictionary is a binary
 Dictionary, namely unordered, one-directional, any key type, no duplicates,
 might be added later.
 
-TODO, REWRITE THIS:
-Spatial types in the general case are excluded because they are better
-defined by a data model layered over top of MUON and they are complex,
-though certain simple cases like a Coordinate (lat/lon) might be added.
+Most complexities related to temporal types are excluded by MUON, and are
+best handled by a data model layered over top of MUON.  For example, MUON
+itself does not place any restrictions on how many
+months/days/hours/minutes/seconds are permitted in particular slots for the
+possreps it does provide.  Also, MUON itself makes no assumptions on what
+particular calendars/eras/epochs are in use, eg Gregorian or other.
+
+Most complexities related to spatial types are excluded by MUON, and are
+best handled by a data model layered over top of MUON.  While MUON includes
+the **Geographic Point** possrep to handle the generally most simple and
+widely useful geographic coordinate type, it doesn't explicitly support any
+other kinds of geometries.
 
 Currency types in the general case are excluded because the **Mix** possrep
 should be able to represent all their variations in a more generic manner.
@@ -2290,7 +2367,7 @@ that means they are used in pairs.
           |                        | * delimit Tuple/Article/Excuse selectors
           |                        | * delimit Heading literals
           |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
-          |                        | * delimit Calendar-* literals
+          |                        | * delimit Calendar-*, Geographic-* literals
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
           |                        | * separates the 2 parts of a pair
@@ -2307,7 +2384,7 @@ that means they are used in pairs.
           |                        | * separate attributes in Tuple/Article/Excuse sels
           |                        | * separate attributes in Heading lits
           |                        | * disambiguate unary named Tuple sels from Article sels
-          |                        | * separate elements in Calendar-* lits
+          |                        | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
           |                        | * L1 of prefix for Bits/Blob literals
@@ -2329,6 +2406,7 @@ that means they are used in pairs.
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
           |                        | * L2 of prefix for Calendar-Duration literals
+          |                        | * indicates elevation in Geographic-Point literals
     ------+------------------------+---------------------------------------
     /     | fractions/measures     | * indicates a fractional quantifying/count context
           |                        | * L1 of optional prefix for Fraction literals
@@ -2346,7 +2424,8 @@ that means they are used in pairs.
           |                        | * L2 of prefix for Calendar-Time literals
     ------+------------------------+---------------------------------------
     @     | at/locators/when/where | * indicates temporals/spatials are featured
-          |                        | * L1 of prefix for Calendar-* literals
+          |                        | * L1 of prefix for Calendar-*, Geographic-* literals
+          |                        | * L2 of prefix for Geographic-Point literals
           |                        | * base/offset/zone separator in Calendar-Instant lits
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
@@ -2367,6 +2446,9 @@ that means they are used in pairs.
     .     | radix point            | * disambiguate Fraction lit from Integer lit
     ------+------------------------+---------------------------------------
     ^     | exponentiation         | * radix/exponent separator in Fraction literals
+          | up-pointing-arrow      | * indicates latitude in Geographic-Point literals
+    ------+------------------------+---------------------------------------
+    >     | right-pointing-arrow   | * indicates longitude in Geographic-Point literals
     ------+------------------------+---------------------------------------
     digit | number                 | * first char 0..9 in bareword indicates is a number
     ------+------------------------+---------------------------------------
