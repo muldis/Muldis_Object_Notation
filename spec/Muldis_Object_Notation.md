@@ -68,7 +68,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
-- Locational: Calendar Time, Calendar Duration, Calendar Instant, Calendar Instant With Zone
+- Locational: Calendar Time, Calendar Duration, Calendar Instant
 - Generic: Article, Excuse, Ignorance
 - Source Code: Nesting, Heading, Renaming, Entity
 
@@ -261,7 +261,6 @@ Grammar:
         | <Text>
         | <Calendar_Time>
         | <Calendar_Duration>
-        | <Calendar_Instant_With_Zone>
         | <Calendar_Instant>
         | <Ignorance>
         | <Nesting>
@@ -1189,7 +1188,7 @@ Examples:
     \..{"a"-.."z"}
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
-    \..{(\UTCInstant:(2002,12,6)) -..- (\UTCInstant:(2002,12,20))}
+    \..{\@((2002,12,6,,,)@"UTC") -..- \@((2002,12,20,,,)@"UTC")}
 
     `Left-unbounded, right-closed interval; every Integer <= 3.`
     \..{..3}
@@ -1599,23 +1598,25 @@ Grammar:
 
 ```
     <Calendar_Time> ::=
-        '\\@%' <sp> <ord_time_commalist>
+        '\\@%' <sp> <delim_time_ymdhms_commalist>
 
-    <ord_time_commalist> ::=
-        '(' <sp> <member_commalist> <sp> ')'
+    <delim_time_ymdhms_commalist> ::=
+        '(' <sp> <time_ymdhms_commalist> <sp> ')'
 
-    <time_commalist> ::=
-        <year>?
-        <sp> ',' <sp>
-        <month>?
-        <sp> ',' <sp>
-        <day>?
-        <sp> ',' <sp>
-        <hour>?
-        <sp> ',' <sp>
-        <minute>?
-        <sp> ',' <sp>
-        <second>?
+    <delim_time_ymd_commalist> ::=
+        '(' <sp> <time_ymd_commalist> <sp> ')'
+
+    <delim_time_hms_commalist> ::=
+        '(' <sp> <time_hms_commalist> <sp> ')'
+
+    <time_ymdhms_commalist> ::=
+        <time_ymd_commalist> <sp> ',' <sp> <time_hms_commalist>
+
+    <time_ymd_commalist> ::=
+        <year>? <sp> ',' <sp> <month>? <sp> ',' <sp> <day>?
+
+    <time_hms_commalist> ::=
+        <hour>? <sp> ',' <sp> <minute>? <sp> ',' <sp> <second>?
 
     <year> ::=
         <mix_multiplicity>
@@ -1683,7 +1684,7 @@ Grammar:
 
 ```
     <Calendar_Duration> ::=
-        '\\@+' <sp> <ord_time_commalist>
+        '\\@+' <sp> <delim_time_ymdhms_commalist>
 ```
 
 Examples:
@@ -1700,21 +1701,62 @@ Examples:
 
 A **Calendar Instant** value, represented by `<Calendar_Instant>`, is a
 particular moment in time expressed in terms of a standard civil or similar
-calendar.  It is characterized by a **Calendar Time**.  This possrep by
-itself explicitly defines a *floating* instant, either a calendar date or
+calendar.  It is characterized by an *instant base* (characterized by a
+**Calendar Time**) that is either standalone or is paired with an *instant
+offset* (characterized by a **Calendar Duration**) or an *instant zone* (a
+time zone name characterized by a **Text**).
+
+When a **Calendar Instant** consists only of an *instant base*, it
+explicitly defines a *floating* instant, either a calendar date or
 timestamp that is not associated with a specific time zone or a time zone
 offset, or it defines a time of day not associated with any particular day.
+
+When a **Calendar Instant** also has an *instant offset*, it explicitly
+defines a calendar date or time that is local to a time zone offset from
+UTC, and also indicates what that offset amount is.
+
+When a **Calendar Instant** also has an *instant zone*, it explicitly
+defines a calendar date or time that is local to a geographic time zone and
+also indicates the name of that time zone.
+
 Beyond that it is up to the context supplied or interpreted by an external
 data model to give it further meaning, such as whether it is Gregorian or
-Julian etc, or whether it is tied to a specific time zone, or whether not
-specifying any largest units means a repeating event or not, or whether not
-specifying any smallest units means an interval or a point, and so on.
+Julian etc, or whether not specifying any largest units means a repeating
+event or not, or whether not specifying any smallest units means an
+interval or a point, and so on.  Also, it is up to the external data model
+to define what are valid time zone names; MUON accepts any **Text** value.
+
+*TODO: Consider further changes to support explicit indication of daylight
+savings time observence or similar things, which might be satisfied by
+permitting both an instant offset and zone name to be given together;
+the existing time zone name support may also indicate this by itself.*
 
 Grammar:
 
 ```
     <Calendar_Instant> ::=
-        '\\@' <sp> <ord_time_commalist>
+        '\\@' <sp> <delim_instant_commalist>
+
+    <delim_instant_commalist> ::=
+        <instant_floating> | <instant_with_offset> | <instant_with_zone>
+
+    <instant_floating> ::=
+        <instant_base>
+
+    <instant_base> ::=
+        <delim_time_ymdhms_commalist>
+
+    <instant_with_offset> ::=
+        '(' <sp> <instant_base> <sp> '@' <sp> <instant_offset> <sp> ')'
+
+    <instant_offset> ::=
+        <delim_time_hms_commalist>
+
+    <instant_with_zone> ::=
+        '(' <sp> <instant_base> <sp> '@' <sp> <instant_zone> <sp> ')'
+
+    <instant_zone> ::=
+        <quoted_text_no_pfx>
 ```
 
 Examples:
@@ -1725,36 +1767,15 @@ Examples:
 
     `A time of day when one might have breakfast.`
     \@(,,,7,30,0)
-```
 
-## Calendar Instant With Zone
-
-A **Calendar Instant With Zone** value, represented by
-`<Calendar_Instant_With_Zone>`, is characterized by a **Calendar Instant**
-that also has an explicit associated time zone offset characterized by a
-**Calendar Time**.
-
-Grammar:
-
-```
-    <Calendar_Instant_With_Zone> ::=
-        '\\@@' <sp> '(' <sp> <base_instant> <sp> '+' <sp> <zone_offset> <sp> ')'
-
-    <base_instant> ::=
-        <ord_time_commalist>
-
-    <zone_offset> ::=
-        <ord_time_commalist>
-```
-
-Examples:
-
-```
     `What was now in the Pacific zone (if paired with Gregorian calendar).`
-    \@@((2018,9,3,20,51,17)+(0,0,0,-8,0,0))
+    \@((2018,9,3,20,51,17)@(-8,0,0))
 
     `A time of day in the UTC zone on an unspecified day.`
-    \@@((,,,9,25,0)+(0,0,0,0,0,0))
+    \@((,,,9,25,0)@(0,0,0))
+
+    `A specific day and time in the Pacific Standard Time zone.`
+    \@((2001,4,16,20,1,44)@"PST")
 ```
 
 ## Article / Labelled Tuple
@@ -2198,19 +2219,6 @@ Dictionary, namely unordered, one-directional, any key type, no duplicates,
 might be added later.
 
 TODO, REWRITE THIS:
-Temporal types in the general case are excluded because the **Measure**
-types should be able to represent all their variations in a more generic
-manner.  A Duration is a **Compound Measure** consisting of units like
-{year,month,day,hour,minute,second} where all are optional, and an Instant
-is an Era/Calendar paired with a Duration defining an offset from it, again
-all parts optional because we support partials, and also this means
-multiple calendars can all be treated the same. We might consider adding
-special MUON syntax for Duration/Instant etc if a case can be made for
-them, eg Gregorian calendar. A TELL pairs an Instant with a Coordinate
-(Elevation, Latitude, Longitude). MUON might explicitly define Units common
-for these, such as Year etc.
-
-TODO, REWRITE THIS:
 Spatial types in the general case are excluded because they are better
 defined by a data model layered over top of MUON and they are complex,
 though certain simple cases like a Coordinate (lat/lon) might be added.
@@ -2254,6 +2262,7 @@ that means they are used in pairs.
           |                        | * delimit all Bits/Blob/Text literals
           |                        | * delimit quoted Integer/Fraction literals
           |                        | * delimit quoted code identifiers/names
+          |                        | * delimit Calendar-Instant zone names
     ------+------------------------+---------------------------------------
     ``    | stringy comments       | * delimit expendable dividing space comments
     ------+------------------------+---------------------------------------
@@ -2320,7 +2329,6 @@ that means they are used in pairs.
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
           |                        | * L2 of prefix for Calendar-Duration literals
-          |                        | * base/zone separator in Calendar-IWZ lits
     ------+------------------------+---------------------------------------
     /     | fractions/measures     | * indicates a fractional quantifying/count context
           |                        | * L1 of optional prefix for Fraction literals
@@ -2339,7 +2347,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     @     | at/locators/when/where | * indicates temporals/spatials are featured
           |                        | * L1 of prefix for Calendar-* literals
-          |                        | * L2 of prefix for Calendar-IWZ literals
+          |                        | * base/offset/zone separator in Calendar-Instant lits
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
           |                        | * L1 of optional prefix for Article selectors
