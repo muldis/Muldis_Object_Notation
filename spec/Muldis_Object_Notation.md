@@ -721,7 +721,7 @@ Grammar:
 
 ```
     <Text> ::=
-        <quoted_text> | <codepoint_text>
+        <quoted_text> | <code_point_text>
 
     <quoted_text> ::=
         ['\\~' <sp>]? <quoted_text_no_pfx>
@@ -747,7 +747,7 @@ Grammar:
         | '\\t' | '\\n' | '\\r'
         | ['\\c<' <code_point> '>']
 
-    <codepoint_text> ::=
+    <code_point_text> ::=
         '\\~' <sp> <code_point>
 
     <code_point> ::=
@@ -784,12 +784,12 @@ One reason for this feature is to empower more elegant passing of
 Unicode-savvy MUON through a communications channel that is more limited,
 such as to 7-bit ASCII.
 
-A `<codepoint_text>` is a specialized shorthand for a **Text** of
+A `<code_point_text>` is a specialized shorthand for a **Text** of
 exactly 1 character whose code point number it denotes.
 
 Given that **Text** values or syntax serve double duty for not only regular
 user data but also for attribute names of tuples or other kinds of
-identifiers, the `<codepoint_text>` variant provides a nicer alternative
+identifiers, the `<code_point_text>` variant provides a nicer alternative
 for specifying them in latter contexts; it is
 purposefully like a regular integer for use in situations where we have
 conceptually ordered (rather than conceptually named) attributes.
@@ -1845,6 +1845,9 @@ Examples:
 
     `Some location with all coordinates specified.`
     \@@(> -101, ^ -70, + 1000)
+
+    `Another place.`
+    \@@(> -94.746094, ^ 37.483577)
 ```
 
 ## Article / Labelled Tuple
@@ -1906,11 +1909,6 @@ Examples:
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
-    ))
-
-    (\Coordinate : (
-        longitude : \$(-94.746094 * \Degrees)
-        latitude  : \$( 37.483577 * \Degrees)
     ))
 
     \*(\the_db::UTCDateTime : (
@@ -2064,7 +2062,7 @@ Grammar:
 
 ```
     <Heading> ::=
-        '\\$' <sp> <delim_attr_name_commalist>
+        '\\\$' <sp> <delim_attr_name_commalist>
 
     <delim_attr_name_commalist> ::=
         '(' <sp> <attr_name_commalist> <sp> ')'
@@ -2129,7 +2127,7 @@ Grammar:
 
 ```
     <Renaming> ::=
-        '\\$:' <sp> <delim_renaming_commalist>
+        '\\\$:' <sp> <delim_renaming_commalist>
 
     <delim_renaming_commalist> ::=
         '(' <sp> <renaming_commalist> <sp> ')'
@@ -2238,7 +2236,7 @@ Grammar:
 
 ```
     <Entity> ::=
-        '\\$$' <sp> '(' <sp> <Any> <sp> ')'
+        '\\\$\$' <sp> '(' <sp> <Any> <sp> ')'
 ```
 
 Examples:
