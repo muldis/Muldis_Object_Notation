@@ -70,7 +70,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
 - Relational: Tuple Array, Relation, Tuple Bag
 - Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Generic: Article, Excuse, Ignorance
-- Source Code: Nesting, Heading, Renaming, Entity
+- Source Code: Nesting, Heading, Renaming
 
 A *possrep* corresponds to the concept of a *data type*, where the latter
 is characterized by a set of *values*, and one may choose to use those
@@ -214,13 +214,16 @@ Grammar:
         <sp>
 
     <sp> ::=
-        [<whitespace> | <quoted_sp_comment_str>]*
+        [<whitespace> | <quoted_sp_comment_str> | <entity_marker>]*
 
     <whitespace> ::=
         [' ' | '\t' | '\n' | '\r']+
 
     <quoted_sp_comment_str> ::=
         '`' <-[`]>* '`'
+
+    <entity_marker> ::=
+        '`\$\$\$`'
 
     <seg_sp> ::=
         ['"' <sp> '"']*
@@ -239,6 +242,34 @@ separated by dividing space.  This segmenting ability is provided to
 support code that contains very long numeric or stringy literals while
 still being well formatted (no extra long lines).  The expected usage
 context of `<seg_sp>` is like `'"' ... <seg_sp> ... '"'`.
+
+An `<entity_marker>` is a feature that is optional for a MUON parser or
+generator to support.  It is syntactically a proper subset of a
+`<quoted_sp_comment_str>` and would simply be seen as such by a MUON parser
+that didn't specifically know about it.  An `<entity_marker>` is intended
+as a trivial annotation for some MUON construct that immediately follows
+it.  This is so that naive development tools that know about MUON
+specifically but not about any source code defining data models layered
+over it can be expressly pointed to the parts of the MUON document that
+declare something interesting, such as a package or routine or type
+declaration, so that generic MUON tooling can, say, generate a navigation
+menu to quickly jump around a document to each entity declaration therein.
+The idomatic location for an `<entity_marker>` is immediately before a
+**Tuple** attribute name, assuming that the corresponding attribute value
+is the construct of interest and the attribute name is used as the name to
+refer to it with in function menus.
+
+Examples:
+
+```
+    (
+        `$$$` My_Func : (\Function : ...),
+
+        `$$$` My_Proc_1 : (\Procedure : ...),
+
+        `$$$` My_Proc_2 : (\Procedure : ...),
+    )
+```
 
 ## Any / Universal Type Possrep
 
@@ -282,7 +313,6 @@ Grammar:
         | <Tuple_Bag>
         | <Article>
         | <Excuse>
-        | <Entity>
 ```
 
 An `<Any>` represents a generic value literal that is allowed to be of any
@@ -2205,52 +2235,6 @@ Examples:
     \$:("First Name"->"Last Name")
 ```
 
-## Entity
-
-An **Entity** value, represented by `<Entity>`, is a trivial annotation
-wrapper for an appearance of some other value, whose main intended purpose
-is to mark the specific context of that appearance within a MUON document.
-This is so that naive development tools that know about MUON specifically
-but not about any source code defining data models layered over it can be
-expressly pointed to the parts of the MUON document that declare something
-interesting, such as a package or routine or type declaration, so that
-generic MUON tooling can, say, generate a navigation menu to quickly jump
-around a document to each entity declaration therein.
-
-The intended context for a **Entity** value to be used is where the
-entities themselves, eg the routine definitions, are defined as **Tuple**
-attribute assets, and the corresponding attribute names are the declared
-names of those entities for the purpose of navigating to or indexing them.
-
-When interpreting MUON source code in the general sense, an **Entity**
-should be considered a transparent wrapper, or a collection of exactly 1
-element, such that the logical meaning of the MUON is as if the **Entity**
-wasn't there and its wrapped value was in its place.
-
-*TODO: Consider adding other more generic annotation possreps and/or expanding
-this one, to enable for example a generic way of applying comments that are
-retained as part of the MUON data rather than being tossed as whitespace;
-otherwise it is up to the layered data models to have their own of these.*
-
-Grammar:
-
-```
-    <Entity> ::=
-        '\\\$\$' <sp> '(' <sp> <Any> <sp> ')'
-```
-
-Examples:
-
-```
-    (
-        My_Func : \$$((\Function : ...)),
-
-        My_Proc_1 : \$$((\Procedure : ...)),
-
-        My_Proc_2 : \$$((\Procedure : ...)),
-    )
-```
-
 # EXCLUDED DATA TYPE POSSREPS
 
 Muldis Object Notation eschews dedicated syntax for some data types that
@@ -2436,7 +2420,7 @@ that means they are used in pairs.
     $     | identifiers/names      | * indicates identifiers/names are featured
           |                        | * L1 of prefix for Heading literals
           |                        | * L1 of prefix for Renaming literals
-          |                        | * L1+L2 of prefix for Entity selectors
+          |                        | * a triple of this indicates an entity marker
     ------+------------------------+---------------------------------------
     -     | subtraction            | * indicates negative-Integer/Fraction literal
           |                        | * indicates open endpoint in Interval selectors

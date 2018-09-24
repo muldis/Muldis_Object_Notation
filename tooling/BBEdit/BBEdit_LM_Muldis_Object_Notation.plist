@@ -45,7 +45,8 @@
 
     <key>Function Pattern</key>
     <string><![CDATA[(?xs:
-      (?<!\w)
+      `\$\$\$`
+      \s*
       (?P<function_name>
         (
             [a-zA-Z_][a-zA-Z0-9_]*
@@ -60,7 +61,6 @@
         )*
       )
       \s* : \s*
-      \\\$\$ \s* \(
     )]]></string>
   </dict>
 </dict>
