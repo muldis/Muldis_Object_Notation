@@ -201,7 +201,7 @@ Examples:
 # GRAMMAR
 
 The format of the grammar itself seen in this document is proprietary as a
-whole and is influenced both by EBNF and Perl 6 rules; it is designed for
+whole and is influenced both by EBNF and Perl 6 (Raku) rules; it is designed for
 human readability and is not meant to be consumed by a parser-generator,
 but it should have all the needed details to derive an executable parser.
 
@@ -460,6 +460,8 @@ Examples:
 
     42
 
+    +42
+
     `USA national debt in US dollars close to midnight of 2017 Dec 31.`
     20_597_460_196_915
 
@@ -634,6 +636,8 @@ Examples:
 
     -4.72
 
+    +4.72
+
     \/29.95
 
     0/1
@@ -643,6 +647,8 @@ Examples:
     5/3
 
     -472/100
+
+    +472/100
 
     15_485_863/32_452_843
 
@@ -728,7 +734,7 @@ Examples:
 ## Text / Attribute Name
 
 A **Text** value, represented by `<Text>`, is characterized by an
-arbitrarily-long sequence of **Unicode** 10.0 standard *character
+arbitrarily-long sequence of **Unicode** 11.0 standard *character
 code points*, where each distinct code point corresponds to a distinct
 integer in the set **{0..0xD7FF,0xE000..0x10FFFF}**,
 which explicitly does not represent any kind of thing in particular.
@@ -2582,7 +2588,7 @@ Darren Duncan - darren@DarrenDuncan.net
 This file is part of the formal specification named
 **Muldis Object Notation** (**MUON**).
 
-MUON is Copyright © 2002-2017, Muldis Data Systems, Inc.
+MUON is Copyright © 2002-2018, Muldis Data Systems, Inc.
 
 [http://www.muldis.com/](http://www.muldis.com/)
 

@@ -179,7 +179,7 @@ https://docs.oracle.com/javase/specs/jls/se8/html/index.html)
 
 *TODO.*
 
-## Perl: Pumpkin / Perl 5
+## Perl 5 / Pumpkin Perl
 
 [https://www.perl.org](https://www.perl.org)
 
@@ -248,21 +248,17 @@ Perl 5 scalar value `undef`.
 
 *TODO.*
 
-## Perl: Rakudo / Perl 6
+## Perl 6 / Raku
 
 [https://perl6.org](https://perl6.org)
 
-Perl 6 has a direct `Any` analogy which is provided by the Perl 6
-class `Any`.
+Perl 6 has a direct `Any` analogy which is provided by the Perl 6 class `Any`.
 
-Perl 6 has a direct `Boolean` analogy which is provided by the Perl 6
-enumeration `Bool`.
+Perl 6 has a direct `Boolean` analogy which is provided by the Perl 6 enumeration `Bool`.
 
-Perl 6 has a direct `Integer` analogy which is provided by the Perl 6
-class `Int`.
+Perl 6 has a direct `Integer` analogy which is provided by the Perl 6 class `Int`.
 
-Perl 6 has a direct `Fraction` analogy which is provided by the Perl 6
-class `FatRat`.
+Perl 6 has a direct `Fraction` analogy which is provided by the Perl 6 class `FatRat`.
 
 Perl 6 has a direct `Bits` analogy which is provided by the Perl 6 role
 class `Blob`, or specifically by a composing class that uses a list of
@@ -272,29 +268,23 @@ Perl 6 has a direct `Blob` analogy which is provided by the Perl 6 role
 class `Blob`, or specifically by a composing class that uses a list of
 unsigned 8-bit integers, an immutable list being the best match.
 
-Perl 6 has a direct `Text` analogy which is provided by the Perl 6
-class `Str`.
+Perl 6 has a direct `Text` analogy which is provided by the Perl 6 class `Str`.
 
-Perl 6 has a direct `Array` analogy which is provided by the Perl 6
-class `List`.
+Perl 6 has a direct `Array` analogy which is provided by the Perl 6 class `List`.
 
-Perl 6 has a direct `Set` analogy which is provided by the Perl 6
-class `Set`.
+Perl 6 has a direct `Set` analogy which is provided by the Perl 6 class `Set`.
 
-Perl 6 has a direct `Bag` analogy which is provided by the Perl 6
-class `Bag`.
+Perl 6 has a direct `Bag` analogy which is provided by the Perl 6 class `Bag`.
 
 Perl 6 has a direct `Tuple` analogy which is provided by the Perl 6
 class `Capture`.  This analogy extends to the fact that a primary purpose
 of both is to represent a collection of arguments for a routine.
 
-Perl 6 has a direct `Excuse` analogy which is provided by the Perl 6 class
-`Failure`.
+Perl 6 has a direct `Excuse` analogy which is provided by the Perl 6 class `Failure`.
 
 Also of note, `X::AdHoc` is the Perl 6 type into which objects are wrapped
 if they are thrown as exceptions, but don't inherit from `Exception`.
 
-Perl 6 has a direct `Ignorance` analogy which is provided by the
-Perl 6 class `Nil`.
+Perl 6 has a direct `Ignorance` analogy which is provided by the Perl 6 class `Nil`.
 
 *TODO.*
