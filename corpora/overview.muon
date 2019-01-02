@@ -1,0 +1,779 @@
+#!/usr/bin/env muldisre
+
+`Muldis_Content_Predicate
+MCP version http://muldis.com 0.300.0 MCP
+MCP script Unicode 2.1 UTF-8 MCP
+MCP syntax Muldis_Object_Notation http://muldis.com 0.300.0 MCP
+MCP model Muldis_Data_Language http://muldis.com 0.300.0 MCP
+Muldis_Content_Predicate`
+
+`#########################################################################`
+`#########################################################################`
+
+(
+
+`#########################################################################`
+
+    `$$$` Boolean : (
+
+        False,
+
+        True,
+
+        \?False,
+
+        \?True,
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Integer : (
+
+        0,
+
+        1,
+
+        -3,
+
+        42,
+
+        +42,
+
+        `USA national debt in US dollars close to midnight of 2017 Dec 31.`
+        20_597_460_196_915,
+
+        \+81,
+
+        `Mersenne Prime 2^521-1, 157 digits, discovered 1952 Jan 30.`
+        \+"68_64797"
+            "66013_06097_14981_90079_90813_93217_26943_53001_43305_40939"
+            "44634_59185_54318_33976_56052_12255_96406_61454_55497_72963"
+            "11391_48085_80371_21987_99971_66438_12574_02829_11150_57151",
+
+        0d39,
+
+        0xDEADBEEF,
+
+        0o644,
+
+        0b11001001,
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Fraction : (
+
+        0.0,
+
+        1.0,
+
+        -4.72,
+
+        +4.72,
+
+        \/29.95,
+
+        0/1,
+
+        1/1,
+
+        5/3,
+
+        -472/100,
+
+        +472/100,
+
+        15_485_863/32_452_843,
+
+        \/355/113,
+
+        `First 101 digits of transcendental number π.`
+        \/"3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510"
+            "58209_74944_59230_78164_06286_20899_86280_34825_34211_70679",
+
+        `Mersenne Primes 2^107-1 divided by 2^127-1.`
+        \/"162259276829213363391578010288127"
+            "/170141183460469231731687303715884105727",
+
+        4.5207196*10^37,
+
+        0xDEADBEEF.FACE,
+
+        -0o35/0o3,
+
+        0b1.1,
+
+        0b1.011101101*0b10^-0b11011,
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Bits : (
+
+        \~?"",
+
+        \~?"00101110100010",
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Blob : (
+
+        \~+"",
+
+        \~+"A705E416",
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Text : (
+
+        "",
+
+        "Ceres",
+
+        "サンプル",
+
+        "\This isn't not escaped.\n",
+
+        "\\c<0x263A>\c<65>",
+
+        \~"Green",
+
+        `One non-ordered quoted Text (or, one named attribute).`
+        "sales",
+
+        `One attribute name with a space in it.`
+        "First Name",
+
+        `One ordered nonquoted Text (or, one ordered attribute).`
+        \~0,
+
+        `Same Text value (or, one ordered attr written in format of a named).`
+        "\\c<0>",
+
+        `From a graduate student (in finals week), the following haiku:`
+        "\study, write, study,\n"
+            "\do review (each word) if time.\n"
+            "\close book. sleep? what's that?\n",
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Array : (
+
+        `Zero members.`
+        [],
+
+        `One member.`
+        [ "You got it!" ],
+
+        `Three members.`
+        [
+            "Alphonse",
+            "Edward",
+            "Winry",
+        ],
+
+        `Five members (1 duplicate).`
+        \~[
+            57,
+            45,
+            63,
+            61,
+            63,
+        ],
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Set : (
+
+        `Zero members.`
+        {},
+
+        `One member.`
+        { "I know this one!" },
+
+        `Four members (no duplicates).`
+        {
+            "Canada",
+            "Spain",
+            "Jordan",
+            "Jordan",
+            "Thailand",
+        },
+
+        `Three members.`
+        \?{
+            3,
+            16,
+            85,
+        },
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Bag : (
+
+        `Zero members.`
+        {0:0},
+
+        `One member.`
+        { "I hear that!": 1 },
+
+        `1200 members (1197 duplicates).`
+        {
+            "Apple"  : 500,
+            "Orange" : 300,
+            "Banana" : 400,
+        },
+
+        `Six members (2 duplicates).`
+        \+{
+            "Foo",
+            "Quux",
+            "Foo",
+            "Bar",
+            "Baz",
+            "Baz",
+        },
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Mix : (
+
+        `Zero members; we measured zero of nothing in particular.`
+        {0:0.0},
+
+        `One member; one gram of mass.`
+        {\Gram: 1.0},
+
+        `Same thing.`
+        \/{\Gram: 1},
+
+        `29.95 members (28.95 duplicates); the cost of a surgery.`
+        {\USD: 29.95},
+
+        `9.8 members; acceleration under Earth's gravity.`
+        {\Meter_Per_Second_Squared: 9.8},
+
+        `0.615 members (fractions of 3 distinct members); recipe.`
+        {
+            \Butter : 0.22,
+            \Sugar  : 0.1,
+            \Flour  : 0.275,
+            \Sugar  : 0.02,
+        },
+
+        `4/3 members (fractions of 3 distinct members); this-mix.`
+        {
+            "Sugar": 1/3,
+            "Spice": 1/4,
+            "All_Things_Nice": 3/4,
+        },
+
+        `-1.5 members; adjustment for recipe.`
+        {
+            "Rice": +4.0,
+            "Beans": -5.7,
+            "Carrots": +0.2,
+        },
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Interval : (
+
+        `Empty interval (zero members).`
+        \..{},
+
+        `Unit interval (one member).`
+        \..{"abc"},
+
+        `Closed interval (probably 10 members, depending on the model used).`
+        \..{1..10},
+
+        `Left-closed, right-open interval; every Fraction x in {2.7<=x<9.3}.`
+        \..{2.7..-9.3},
+
+        `Left-open, right-closed interval; every Text x ordered in {"a"<x<="z"}.`
+        \..{"a"-.."z"},
+
+        `Open interval; time period between Dec 6 and 20 excluding both.`
+        \..{\@((2002,12,6,,)@"UTC") -..- \@((2002,12,20,,)@"UTC")},
+
+        `Left-unbounded, right-closed interval; every Integer <= 3.`
+        \..{..3},
+
+        `Left-closed, right-unbounded interval; every Integer >= 29.`
+        \..{29..},
+
+        `Universal interval; unbounded; every value of type system is a member.`
+        \..{..},
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Interval_Set : (
+
+        `Empty interval-set (zero members).`
+        \?..{},
+
+        `Unit interval-set (one member).`
+        \?..{"abc"},
+
+        `Probably 10 members, depending on the model used.`
+        \?..{1..10},
+
+        `Probably 6 members.`
+        \?..{1..3,6,8..9},
+
+        `Every Integer x except for {4..13,22..28}`
+        \?..{..3,14..21,29..},
+
+        `Set of all valid Unicode code points.`
+        \?..{0..0xD7FF,0xE000..0x10FFFF},
+
+        `Probably 15 members (no duplicates), depending on the model used.`
+        \?..{1..10,6..15},
+
+        `Probably same thing, regardless of data model used.`
+        \?..{1..-6,6..10:2,10-..15},
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Interval_Bag : (
+
+        `Empty interval-bag (zero members).`
+        \+..{},
+
+        `Unit interval-bag (one member).`
+        \+..{"abc"},
+
+        `Five members (4 duplicates).`
+        \+..{"def":5},
+
+        `Probably 20 members (5 duplicates), depending on the model used.`
+        \+..{1..10,6..15},
+
+        `Probably same thing, regardless of data model used.`
+        \+..{1..-6,6..10:2,10-..15},
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Tuple : (
+
+        `Zero attributes.`
+        (),
+
+        `One named attribute.`
+        ("First Name": "Joy",),
+
+        `One ordered attribute.`
+        (53,),
+
+        `Same thing.`
+        (0: 53,),
+
+        `Same thing.`
+        ("\\c<0>": 53,),
+
+        `Three named attributes.`
+        (
+            login_name : "hartmark",
+            login_pass : "letmein",
+            is_special : True,
+        ),
+
+        `Three ordered attributes.`
+        ("hello",26,True),
+
+        `One of each.`
+        ("Jay", age: 10),
+
+        `A non-Latin name.`
+        ("サンプル": "http://example.com",),
+
+        `Two named attributes.`
+        \%(
+            name : "Michelle",
+            age  : 17,
+        ),
+
+        `Four leaf attributes in nested multi-level namespace.`
+        (
+            name: "John Glenn",
+            birth_date::year: 1921,
+            comment: "Fly!",
+            birth_date::month: 7,
+            birth_date::day: 18,
+        ),
+
+        `Same thing.`
+        (
+            name: "John Glenn",
+            birth_date: (
+                year: 1921,
+                month: 7,
+                day: 18,
+            ),
+            comment: "Fly!",
+        ),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Tuple_Array : (
+
+        `Zero attributes + zero tuples.`
+        \~%(),
+
+        `Zero attributes + one tuple.`
+        \~%[()],
+
+        `Three named attributes + zero tuples.`
+        \~%(x,y,z),
+
+        `Three positional attributes + zero tuples.`
+        \~%(0..2),
+
+        `Two named attributes + three tuples (1 duplicate).`
+        \~%[
+            (name: "Amy"     , age: 14),
+            (name: "Michelle", age: 17),
+            (name: "Amy"     , age: 14),
+        ],
+
+        `Two positional attributes + two tuples.`
+        \~%[
+            ("Michelle", 17),
+            ("Amy"     , 14),
+        ],
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Relation : (
+
+        `Zero attributes + zero tuples.`
+        \?%(),
+
+        `Zero attributes + one tuple.`
+        \?%{()},
+
+        `Three named attributes + zero tuples.`
+        \?%(x,y,z),
+
+        `Three positional attributes + zero tuples.`
+        \?%(0..2),
+
+        `Two named attributes + two tuples.`
+        \?%{
+            (name: "Michelle", age: 17),
+            (name: "Amy"     , age: 14),
+        },
+
+        `Two positional attributes + two tuples.`
+        \?%{
+            ("Michelle", 17),
+            ("Amy"     , 14),
+        },
+
+       `Some people records.`
+        \?%{
+            (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
+                phone_numbers : {"+1.4045552995", "+1.7705557572"}),
+            (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : {}),
+            (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
+                phone_numbers : {"+81.9072391679"}),
+        },
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Tuple_Bag : (
+
+        `Zero attributes + zero tuples.`
+        \+%(),
+
+        `Zero attributes + one tuple.`
+        \+%{()},
+
+        `Three named attributes + zero tuples.`
+        \+%(x,y,z),
+
+        `Three positional attributes + zero tuples.`
+        \+%(0..2),
+
+        `Two named attributes + six tuples (4 duplicates).`
+        \+%{
+            (name: "Michelle", age: 17),
+            (name: "Amy"     , age: 14) : 5,
+        },
+
+        `Two positional attributes + two tuples.`
+        \+%{
+            ("Michelle", 17),
+            ("Amy"     , 14),
+        },
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Calendar_Time : (
+
+        `No measurement was taken or specified at all.`
+        \@%(,,,,,),
+
+        `Either an unspecified period in 1970 or a duration of 1970 years.`
+        \@%(1970,,,,,),
+
+        `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
+        \@%(2015,5,3,,,),
+
+        `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
+        \@%(1998,,300,,,),
+
+        `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
+        \@%(1776,,42,,,),
+
+        `Either the first quarter of 1953 or a duration of 1953.25 years.`
+        \@%(1953.25,,,,,),
+
+        `Either high noon on an unspecified day or a duration of 12 hours.`
+        \@%(,,,12,0,0),
+
+        `Either a fully specified civil date and time or a 6-part duration.`
+        \@%(1884,10,17,20,55,30),
+
+        `Either an ancient date and time or a negative duration.`
+        \@%(-370,1,24,11,0,0),
+
+        `Either a time on some unspecified day or a duration of seconds.`
+        \@%(,,,,,5923.21124603),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Calendar_Duration : (
+
+        `Addition of 2 years and 3 months.`
+        \@+(2,3,0,0,0,0),
+
+        `Subtraction of 22 hours.`
+        \@+(0,0,0,-22,0,0),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Calendar_Instant : (
+
+        `The Day The Music Died (if paired with Gregorian calendar).`
+        \@(1959,2,3,,,),
+
+        `A time of day when one might have breakfast.`
+        \@(,7,30,0),
+
+        `What was now in the Pacific zone (if paired with Gregorian calendar).`
+        \@((2018,9,3,20,51,17)@(-8,0,0)),
+
+        `A time of day in the UTC zone on an unspecified day.`
+        \@((,9,25,0)@(0,0,0)),
+
+        `A specific day and time in the Pacific Standard Time zone.`
+        \@((2001,4,16,20,1,44)@"PST"),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Geographic_Point : (
+
+        `No specified coordinates at all.`
+        \@@(),
+
+        `Just an elevation specified.`
+        \@@(+ 920),
+
+        `Geographic surface coordinates of Googleplex; elevation not specified.`
+        \@@(> -122.0857017, ^ 37.4218363),
+
+        `Same thing.`
+        \@@(^ 37.4218363, > -122.0857017),
+
+        `Some location with all coordinates specified.`
+        \@@(> -101, ^ -70, + 1000),
+
+        `Another place.`
+        \@@(> -94.746094, ^ 37.483577),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Article : (
+
+        (\Point : (x : 5, y : 3)),
+
+        (\Float : (
+            significand : 45207196,
+            radix       : 10,
+            exponent    : 37,
+        )),
+
+        \*(\the_db::UTCDateTime : (
+            year   : 2003,
+            month  : 10,
+            day    : 26,
+            hour   : 1,
+            minute : 30,
+            second : 0.0,
+        )),
+
+        \*Positive_Infinity,
+
+        \*Negative_Zero,
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Excuse : (
+
+        \!(\Input_Field_Wrong : (name : "Your Age")),
+
+        \!Div_By_Zero,
+
+        \!No_Such_Attr_Name,
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Ignorance : (
+
+        \!!Ignorance,
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Nesting : (
+
+        \person,
+
+        \person::birth_date,
+
+        \person::birth_date::year,
+
+        \the_db::stats::"samples by order",
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Heading : (
+
+        `Zero attributes.`
+        \$(),
+
+        `One named attribute.`
+        \$(sales),
+
+        `Same thing.`
+        \$("sales"),
+
+        `One ordered attribute.`
+        \$(0),
+
+        `Same thing.`
+        \$("\\c<0>"),
+
+        `Three named attributes.`
+        \$(region,revenue,qty),
+
+        `Three ordered attributes.`
+        \$(0..2),
+
+        `One of each.`
+        \$(1,age),
+
+        `Some attribute names can only appear quoted.`
+        \$("Street Address"),
+
+        `A non-Latin name.`
+        \$("サンプル"),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Renaming : (
+
+        `Zero renamings, a no-op.`
+        \$:(),
+
+        `Also a no-op.`
+        \$:(age->age),
+
+        `Rename one attribute.`
+        \$:(fname->first_name),
+
+        `Same thing.`
+        \$:(first_name<-fname),
+
+        `Swap 2 named attributes.`
+        \$:(foo->bar,foo<-bar),
+
+        `Convert ordered names to nonordered.`
+        \$:(->foo,->bar),
+
+        `Same thing.`
+        \$:(0->foo,1->bar),
+
+        `Convert nonordered names to ordered.`
+        \$:(<-foo,<-bar),
+
+        `Same thing.`
+        \$:(0<-foo,1<-bar),
+
+        `Swap 2 ordered attributes.`
+        \$:(0->1,0<-1),
+
+        `Same thing.`
+        \$:(->1,->0),
+
+        `Some attribute names can only appear quoted.`
+        \$:("First Name"->"Last Name"),
+
+    ),
+
+`#########################################################################`
+
+)
+
+`#########################################################################`
+`#########################################################################`
