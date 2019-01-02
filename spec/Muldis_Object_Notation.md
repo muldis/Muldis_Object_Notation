@@ -6,23 +6,23 @@ Source code and data interchange format
 # VERSION
 
 The fully-qualified name of this document is
-`Muldis_Object_Notation http://muldis.com 0.201.0`.
+`Muldis_Object_Notation http://muldis.com 0.300.0`.
 
 # SYNOPSIS
 
 ```
     `Muldis_Content_Predicate
-    MCP version http://muldis.com 0.201.0 MCP
+    MCP version http://muldis.com 0.300.0 MCP
     MCP script Unicode 2.1 UTF-8 MCP
-    MCP syntax Muldis_Object_Notation http://muldis.com 0.201.0 MCP
-    MCP model Muldis_Data_Language http://muldis.com 0.201.0 MCP
+    MCP syntax Muldis_Object_Notation http://muldis.com 0.300.0 MCP
+    MCP model Muldis_Data_Language http://muldis.com 0.300.0 MCP
     Muldis_Content_Predicate`
 
     \?%{
-        (name : "Jane Ives", birth_date : "1971-11-06",
+        (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
             phone_numbers : {"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : "1995-08-27", phone_numbers : {}),
-        (name : "岩倉 玲音", birth_date : "1984-07-06",
+        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : {}),
+        (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
             phone_numbers : {"+81.9072391679"}),
     }
 ```
@@ -32,9 +32,9 @@ The fully-qualified name of this document is
 This document is the human readable authoritative formal specification named
 **Muldis Object Notation** (**MUON**).
 The fully-qualified name of this document and specification is
-`Muldis_Object_Notation http://muldis.com 0.201.0`.
+`Muldis_Object_Notation http://muldis.com 0.300.0`.
 This is the official/original version by the authority Muldis Data Systems
-(`http://muldis.com`), version number `0.201.0`.
+(`http://muldis.com`), version number `0.300.0`.
 
 **Muldis Object Notation** specifies a semi-lightweight source code and
 data interchange format.  It is fairly easy for humans to read and write.
@@ -191,19 +191,50 @@ Examples:
 
 ```
     `Muldis_Content_Predicate
-    MCP version http://muldis.com 0.201.0 MCP
+    MCP version http://muldis.com 0.300.0 MCP
     MCP script Unicode 2.1 UTF-8 MCP
-    MCP syntax Muldis_Object_Notation http://muldis.com 0.201.0 MCP
-    MCP model Muldis_Data_Language http://muldis.com 0.201.0 MCP
+    MCP syntax Muldis_Object_Notation http://muldis.com 0.300.0 MCP
+    MCP model Muldis_Data_Language http://muldis.com 0.300.0 MCP
     Muldis_Content_Predicate`
 ```
 
 # GRAMMAR
 
-The format of the grammar itself seen in this document is proprietary as a
-whole and is influenced both by EBNF and Perl 6 (Raku) rules; it is designed for
-human readability and is not meant to be consumed by a parser-generator,
-but it should have all the needed details to derive an executable parser.
+The syntax and intended interpretation of the grammar itself seen in this
+document should match that of the user-defined grammars feature of the Perl
+6 (Raku) language, which is described by
+[https://docs.perl6.org/language/grammars](
+https://docs.perl6.org/language/grammars).
+
+A fundamental exception is that this document uses a proprietary shorthand
+in syntax for declaring each named grammar section.
+
+Every time you see this:
+
+```
+    <foo> ::=
+        ...
+```
+
+That is shorthand for this Perl 6 code:
+
+```
+    token foo
+    {
+        ...
+    }
+```
+
+The shorthand is intended to aid human readability of the grammar and is
+not meant to be consumed by a parser-generator, but it should have all the
+needed details to derive an executable parser.
+
+*This shorthand may be eliminated in favor of the full syntax.*
+
+See also the bundled actual Perl 6 module
+[hosts/Perl6/lib/Muldis/Reference/Object_Notation.pm6](
+../hosts/Perl6/lib/Muldis/Reference/Object_Notation.pm6)
+which has the executable grammar written out in full.
 
 Grammar:
 
@@ -763,19 +794,19 @@ Grammar:
         ['\\~' <sp>]? <quoted_text_no_pfx>
 
     <quoted_text_no_pfx> ::=
-        [['"' <text_content> '"'] % <sp>]
+        ['"' <text_content> '"']+ % <sp>
 
     <text_content> ::=
         <text_nonescaped_content> | <text_escaped_content>
 
     <text_nonescaped_content> ::=
-        [<restricted_inside_char-[\\]> <restricted_inside_char>*]?
+        [<restricted_inside_char> & <-[\\]> <restricted_inside_char>*]?
 
     <text_escaped_content> ::=
-        '\\' [<restricted_inside_char-[\\]> | <escaped_char>]*
+        '\\' [<restricted_inside_char> & <-[\\]> | <escaped_char>]*
 
     <restricted_inside_char> ::=
-        <-[ \x<0>..\x<1F> "` \x<80>..\x<9F> ]>*
+        <-[ \x[0]..\x[1F] "` \x[80]..\x[9F] ]>*
 
     <escaped_char> ::=
           '\\q' | '\\g'
@@ -984,7 +1015,7 @@ Grammar:
         '{' <sp> <member_commalist> <sp> '}'
 
     <member_commalist> ::=
-        [<single_member> | <multiplied_member> | ''] % [<sp> ',' <sp>]
+        [<single_member> | <multiplied_member> | '']+ % [<sp> ',' <sp>]
 
     <single_member> ::=
         <member>
@@ -1070,7 +1101,7 @@ Grammar:
         '{' <sp> <mix_member_commalist> <sp> '}'
 
     <mix_member_commalist> ::=
-        [<mix_single_member> | <mix_multiplied_member> | ''] % [<sp> ',' <sp>]
+        [<mix_single_member> | <mix_multiplied_member> | '']+ % [<sp> ',' <sp>]
 
     <mix_single_member> ::=
         <member>
@@ -1307,7 +1338,7 @@ Grammar:
         '{' <sp> <interval_commalist> <sp> '}'
 
     <interval_commalist> ::=
-        [<single_interval> | <multiplied_interval> | ''] % [<sp> ',' <sp>]
+        [<single_interval> | <multiplied_interval> | '']+ % [<sp> ',' <sp>]
 
     <single_interval> ::=
         <interval_members>
@@ -1374,7 +1405,7 @@ Grammar:
         ['\\%' <sp>]? '(' <sp> <attr_commalist> <sp> ')'
 
     <attr_commalist> ::=
-        [<anon_attr> | <named_attr> | <nested_named_attr> | ''] % [<sp> ',' <sp>]
+        [<anon_attr> | <named_attr> | <nested_named_attr> | '']+ % [<sp> ',' <sp>]
 
     <anon_attr> ::=
         <attr_asset>
@@ -1562,6 +1593,15 @@ Examples:
     \?%{
         ("Michelle", 17),
         ("Amy"     , 14),
+    }
+
+    `Some people records.`
+    \?%{
+        (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
+            phone_numbers : {"+1.4045552995", "+1.7705557572"}),
+        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : {}),
+        (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
+            phone_numbers : {"+81.9072391679"}),
     }
 ```
 
@@ -1852,7 +1892,7 @@ Grammar:
         '(' <sp> <point_commalist> <sp> ')'
 
     <point_commalist> ::=
-        [<longitude> | <latitude> | <elevation> | ''] % [<sp> ',' <sp>]
+        [<longitude> | <latitude> | <elevation> | '']+ % [<sp> ',' <sp>]
 
     <longitude> ::=
         '>' <sp> <mix_multiplicity>
@@ -2058,7 +2098,7 @@ Grammar:
         '\\' <sp> <nesting_attr_names>
 
     <nesting_attr_names> ::=
-        <attr_name> % [<sp> '::' <sp>]
+        <attr_name>+ % [<sp> '::' <sp>]
 
     <attr_name> ::=
         <nonord_attr_name> | <ord_attr_name>
@@ -2104,7 +2144,7 @@ Grammar:
         '(' <sp> <attr_name_commalist> <sp> ')'
 
     <attr_name_commalist> ::=
-        [<attr_name> | <ord_attr_name_range> | ''] % [<sp> ',' <sp>]
+        [<attr_name> | <ord_attr_name_range> | '']+ % [<sp> ',' <sp>]
 
     <ord_attr_name_range> ::=
         <min_ord_attr> <sp> '..' <sp> <max_ord_attr>
@@ -2169,7 +2209,7 @@ Grammar:
         '(' <sp> <renaming_commalist> <sp> ')'
 
     <renaming_commalist> ::=
-        [<anon_attr_rename> | <named_attr_rename> | ''] % [<sp> ',' <sp>]
+        [<anon_attr_rename> | <named_attr_rename> | '']+ % [<sp> ',' <sp>]
 
     <anon_attr_rename> ::=
           ['->' <sp> <attr_name_after>]
@@ -2588,7 +2628,7 @@ Darren Duncan - darren@DarrenDuncan.net
 This file is part of the formal specification named
 **Muldis Object Notation** (**MUON**).
 
-MUON is Copyright © 2002-2018, Muldis Data Systems, Inc.
+MUON is Copyright © 2002-2019, Muldis Data Systems, Inc.
 
 [http://www.muldis.com/](http://www.muldis.com/)
 
