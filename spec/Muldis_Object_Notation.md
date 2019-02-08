@@ -175,6 +175,17 @@ support other commonly used character formats, particularly UTF-16BE and
 UTF-16LE (both with and without a BOM), either legacy or modern.
 
 It is strongly recommended but not mandatory for a MUON parser or generator
+to natively accept or return both **Text** and **Blob** values directly.
+Typically this means providing 2 parsing or generating functions that
+differ only in accepting or returning a **Text** or a **Blob**.
+This can make the parsing or generating operations use less memory or time
+by avoiding extra intermediate copies or conversions of the data; it should
+be quite straightforward to parse or generate MUON octet streams directly.
+This also means applications using them don't have to concern themselves as
+much with explicit character decoding or encoding, and can simply feed or
+output a file or network stream etc.
+
+It is strongly recommended but not mandatory for a MUON parser or generator
 to support the externally defined standard **Muldis Content Predicate**
 (**MCP**) format for source code metadata.  The MCP standard was
 co-developed with the MUON standard as a recommended way to make a MUON
@@ -186,6 +197,19 @@ encoding a file is, an explicit MCP declaration makes things more certain.
 A **Muldis Content Predicate** declaration would normally be embedded in a
 MUON *dividing space* quoted comment string, so the regular MUON parser
 needs no special handling grammar/logic to ignore it (unlike a shebang).
+
+If a MUON parser supports scanning a *parsing unit* for a MCP *parsing unit
+predicate*, then it is mandatory for any scan to look through the lesser of
+the first 1000 characters, the first 2000 octets, or the entirety, of the
+*parsing unit*, before it gives up on trying to find a *parsing unit
+predicate*; giving up after that point is recommended.  To be specific,
+only the entire first `Muldis_Content_Predicate` token needs to be found in
+that scan area, and the rest of the *predicate* may extend past it.  This
+means that any *predicate* needs to be located near the start of the
+*parsing unit* if it has any expectation of being seen.  This requirement
+exists to aid performance of a MUON parser by invalidating pathological
+cases, so a parser doesn't have to scan a large *parsing unit* just in case
+it might have a buried *predicate* that most likely isn't there at all.
 
 Examples:
 
