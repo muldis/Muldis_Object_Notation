@@ -1490,7 +1490,7 @@ Examples:
         age  : 17,
     )
 
-    `Four leaf attributes in nested multi-level namespace.`
+    `Five leaf attributes in nested multi-level namespace.`
     (
         name: "John Glenn",
         birth_date::year: 1921,
@@ -2663,16 +2663,16 @@ License version 2 (AL2) as published by the Perl Foundation
 You should have received copies of the AL2 as part of the
 MUON distribution, in the file
 [LICENSE/artistic-2_0.txt](../LICENSE/artistic-2_0.txt); if not, see
-[http://www.perlfoundation.org/attachment/legal/artistic-2_0.txt](
-http://www.perlfoundation.org/attachment/legal/artistic-2_0.txt).
+[https://www.perlfoundation.org/artistic-license-20.html](
+https://www.perlfoundation.org/artistic-license-20.html).
 
 Any versions of MUON that you modify and distribute must carry prominent
 notices stating that you changed the files and the date of any changes, in
 addition to preserving this original copyright notice and other credits.
 
 While it is by no means required, the copyright holder of MUON would
-appreciate being informed any time you create a modified version of Muldis
-D that you are willing to distribute, because that is a practical way of
+appreciate being informed any time you create a modified version of MUON
+that you are willing to distribute, because that is a practical way of
 suggesting improvements to the standard version.
 
 # TRADEMARK POLICY

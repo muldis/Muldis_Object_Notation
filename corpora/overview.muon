@@ -417,7 +417,7 @@ Muldis_Content_Predicate`
             age  : 17,
         ),
 
-        `Four leaf attributes in nested multi-level namespace.`
+        `Five leaf attributes in nested multi-level namespace.`
         (
             name: "John Glenn",
             birth_date::year: 1921,

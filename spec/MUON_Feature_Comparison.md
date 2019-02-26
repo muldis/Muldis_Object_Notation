@@ -67,6 +67,19 @@ meaning of the elements of an *object* to indicate either object type or
 object attributes/properties, and this is done ad-hoc by an overlaid extra
 type system layer; MUON types and attributes are clearly distinguished.
 
+MUON also competes with JSON by being more fully specified, such that every
+2 MUON libraries should exhibit the same behavior and be fully compatible,
+which is apparently not true for JSON, which is much more loosely specified
+or leaves important details unspecified, and has multiple competing
+definitions.
+See
+[http://seriot.ch/parsing_json.php](http://seriot.ch/parsing_json.php) and
+[https://github.com/nst/JSONTestSuite](
+https://github.com/nst/JSONTestSuite) for more about this.
+So reliability and consistency could also be a primary benefit of MUON over
+JSON, and a key reason to adopt it over JSON.
+This paragraph will be fleshed out more.
+
 *TODO.*
 
 ## XML - Extensible Markup Language
@@ -77,7 +90,7 @@ XML is, after JSON particularly, one of the most direct counterpart
 languages to MUON both somewhat in form and in function; MUON is intended
 to compete for all of the same use cases.
 
-MUON competes as a JSON alternative primarily by being both more strongly
+MUON competes as an XML alternative primarily by being both more strongly
 typed and, like JSON, in being much less verbose.
 
 *TODO.*
