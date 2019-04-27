@@ -230,58 +230,48 @@ document should match that of the user-defined grammars feature of the Perl
 [https://docs.perl6.org/language/grammars](
 https://docs.perl6.org/language/grammars).
 
-A fundamental exception is that this document uses a proprietary shorthand
-in syntax for declaring each named grammar section.
-
-Every time you see this:
-
-```
-    <foo> ::=
-        ...
-```
-
-That is shorthand for this Perl 6 code:
-
-```
-    token foo
-    {
-        ...
-    }
-```
-
-The shorthand is intended to aid human readability of the grammar and is
-not meant to be consumed by a parser-generator, but it should have all the
-needed details to derive an executable parser.
-
-*This shorthand may be eliminated in favor of the full syntax.*
+Any references like `<foo>` in either the grammar itself or in the written
+documentation specifically refer to the corresponding grammar token `foo`.
 
 See also the bundled actual Perl 6 module
 [hosts/Perl6/lib/Muldis/Reference/Object_Notation.pm6](
 ../hosts/Perl6/lib/Muldis/Reference/Object_Notation.pm6)
-which has the executable grammar written out in full.
+which has an executable copy of the grammar.
 
 Grammar:
 
 ```
-    <MUON> ::=
+    token MUON
+    {
         <sp>
             <Any>
         <sp>
+    }
 
-    <sp> ::=
+    token sp
+    {
         [<whitespace> | <quoted_sp_comment_str> | <entity_marker>]*
+    }
 
-    <whitespace> ::=
+    token whitespace
+    {
         [' ' | '\t' | '\n' | '\r']+
+    }
 
-    <quoted_sp_comment_str> ::=
+    token quoted_sp_comment_str
+    {
         '`' <-[`]>* '`'
+    }
 
-    <entity_marker> ::=
+    token entity_marker
+    {
         '`\$\$\$`'
+    }
 
-    <seg_sp> ::=
+    token seg_sp
+    {
         ['"' <sp> '"']*
+    }
 ```
 
 A `<sp>` represents *dividing space* that may be used to visually format
@@ -335,10 +325,13 @@ possibly exist.  This is represented by `<Any>`.
 Grammar:
 
 ```
-    <Any> ::=
+    token Any
+    {
         <opaque> | <collection>
+    }
 
-    <opaque> ::=
+    token opaque
+    {
           <Boolean>
         | <Integer>
         | <Fraction>
@@ -353,8 +346,10 @@ Grammar:
         | <Nesting>
         | <Heading>
         | <Renaming>
+    }
 
-    <collection> ::=
+    token collection
+    {
           <Array>
         | <Set>
         | <Bag>
@@ -368,6 +363,7 @@ Grammar:
         | <Tuple_Bag>
         | <Article>
         | <Excuse>
+    }
 ```
 
 An `<Any>` represents a generic value literal that is allowed to be of any
@@ -396,8 +392,10 @@ values *False* and *True*.
 Grammar:
 
 ```
-    <Boolean> ::=
+    token Boolean
+    {
         ['\\?' <sp>]? [False | True]
+    }
 ```
 
 Examples:
@@ -422,77 +420,125 @@ It has no minimum or maximum value.
 Grammar:
 
 ```
-    <Integer> ::=
+    token Integer
+    {
         <nonquoted_int> | <quoted_int>
+    }
 
-    <nonquoted_int> ::=
+    token nonquoted_int
+    {
         ['\\+' <sp>]? <asigned_int>
+    }
 
-    <asigned_int> ::=
+    token asigned_int
+    {
         <num_sign>? <nonsigned_int>
+    }
 
-    <num_sign> ::=
+    token num_sign
+    {
         <[+-]>
+    }
 
-    <nonsigned_int> ::=
+    token nonsigned_int
+    {
         <ns_int_2> | <ns_int_8> | <ns_int_10> | <ns_int_16>
+    }
 
-    <ns_int_2> ::=
+    token ns_int_2
+    {
         0b <nc_2>+
+    }
 
-    <ns_int_8> ::=
+    token ns_int_8
+    {
         0o <nc_8>+
+    }
 
-    <ns_int_10> ::=
+    token ns_int_10
+    {
         [0d]? <nc_10>+
+    }
 
-    <ns_int_16> ::=
+    token ns_int_16
+    {
         0x <nc_16>+
+    }
 
-    <nc_2> ::=
+    token nc_2
+    {
         <[ 0..1 _ ]>
+    }
 
-    <nc_8> ::=
+    token nc_8
+    {
         <[ 0..7 _ ]>
+    }
 
-    <nc_10> ::=
+    token nc_10
+    {
         <[ 0..9 _ ]>
+    }
 
-    <nc_16> ::=
+    token nc_16
+    {
         <[ 0..9 A..F _ a..f ]>
+    }
 
-    <quoted_int> ::=
+    token quoted_int
+    {
         '\\+' <sp> '"' <seg_sp> <qu_asigned_int> <seg_sp> '"'
+    }
 
-    <qu_asigned_int> ::=
+    token qu_asigned_int
+    {
         <num_sign>? <seg_sp> <qu_nonsigned_int>
+    }
 
-    <qu_nonsigned_int> ::=
+    token qu_nonsigned_int
+    {
         <qu_ns_int_2> | <qu_ns_int_8> | <qu_ns_int_10> | <qu_ns_int_16>
+    }
 
-    <qu_ns_int_2> ::=
+    token qu_ns_int_2
+    {
         0 <seg_sp> b <seg_sp> <nc_2> <qu_nc_2>*
+    }
 
-    <qu_ns_int_8> ::=
+    token qu_ns_int_8
+    {
         0 <seg_sp> o <seg_sp> <nc_8> <qu_nc_8>*
+    }
 
-    <qu_ns_int_10> ::=
+    token qu_ns_int_10
+    {
         [0 <seg_sp> d <seg_sp>]? <nc_10> <qu_nc_10>*
+    }
 
-    <qu_ns_int_16> ::=
+    token qu_ns_int_16
+    {
         0 <seg_sp> x <seg_sp> <nc_16> <qu_nc_16>*
+    }
 
-    <qu_nc_2> ::=
+    token qu_nc_2
+    {
         <nc_2> | <seg_sp>
+    }
 
-    <qu_nc_8> ::=
+    token qu_nc_8
+    {
         <nc_8> | <seg_sp>
+    }
 
-    <qu_nc_10> ::=
+    token qu_nc_10
+    {
         <nc_10> | <seg_sp>
+    }
 
-    <qu_nc_16> ::=
+    token qu_nc_16
+    {
         <nc_16> | <seg_sp>
+    }
 ```
 
 This grammar supports writing **Integer** literals in any of the numeric
@@ -547,95 +593,155 @@ nor nominal.  It has no minimum or maximum value.
 Grammar:
 
 ```
-    <Fraction> ::=
+    token Fraction
+    {
         <nonquoted_frac> | <quoted_frac>
+    }
 
-    <nonquoted_frac> ::=
+    token nonquoted_frac
+    {
         ['\\/' <sp>]? <asigned_frac>
+    }
 
-    <asigned_frac> ::=
+    token asigned_frac
+    {
         <significand> [<sp> '*' <sp> <radix> <sp> '^' <sp> <exponent>]?
+    }
 
-    <significand> ::=
+    token significand
+    {
         <radix_point_sig> | <num_den_sig>
+    }
 
-    <radix_point_sig> ::=
+    token radix_point_sig
+    {
         <num_sign>? <ns_rps>
+    }
 
-    <ns_rps> ::=
+    token ns_rps
+    {
         <ns_rps_2> | <ns_rps_8> | <ns_rps_10> | <ns_rps_16>
+    }
 
-    <ns_rps_2> ::=
+    token ns_rps_2
+    {
         <ns_int_2> <sp> '.' <sp> <nc_2>+
+    }
 
-    <ns_rps_8> ::=
+    token ns_rps_8
+    {
         <ns_int_8> <sp> '.' <sp> <nc_8>+
+    }
 
-    <ns_rps_10> ::=
+    token ns_rps_10
+    {
         <ns_int_10> <sp> '.' <sp> <nc_10>+
+    }
 
-    <ns_rps_16> ::=
+    token ns_rps_16
+    {
         <ns_int_16> <sp> '.' <sp> <nc_16>+
+    }
 
-    <num_den_sig> ::=
+    token num_den_sig
+    {
         <numerator> <sp> '/' <sp> <denominator>
+    }
 
-    <numerator> ::=
+    token numerator
+    {
         <asigned_int>
+    }
 
-    <denominator> ::=
+    token denominator
+    {
         <nonsigned_int>
+    }
 
-    <radix> ::=
+    token radix
+    {
         <nonsigned_int>
+    }
 
-    <exponent> ::=
+    token exponent
+    {
         <asigned_int>
+    }
 
-    <quoted_frac> ::=
+    token quoted_frac
+    {
         '\\/' <sp> '"' <seg_sp> <qu_asigned_frac> <seg_sp> '"'
+    }
 
-    <qu_asigned_frac> ::=
+    token qu_asigned_frac
+    {
         <qu_significand> [<seg_sp> '*' <seg_sp> <qu_radix> <seg_sp> '^' <seg_sp> <qu_exponent>]?
+    }
 
-    <qu_significand> ::=
+    token qu_significand
+    {
         <qu_radix_point_sig> | <qu_num_den_sig>
+    }
 
-    <qu_radix_point_sig> ::=
+    token qu_radix_point_sig
+    {
         <num_sign>? <qu_ns_rps>
+    }
 
-    <qu_ns_rps> ::=
+    token qu_ns_rps
+    {
         <qu_ns_rps_2> | <qu_ns_rps_8> | <qu_ns_rps_10> | <qu_ns_rps_16>
+    }
 
-    <qu_ns_rps_2> ::=
+    token qu_ns_rps_2
+    {
         <qu_ns_int_2> <seg_sp> '.' <seg_sp> <nc_2> <qu_nc_2>*
+    }
 
-    <qu_ns_rps_8> ::=
+    token qu_ns_rps_8
+    {
         <qu_ns_int_8> <seg_sp> '.' <seg_sp> <nc_8> <qu_nc_8>*
+    }
 
-    <qu_ns_rps_10> ::=
+    token qu_ns_rps_10
+    {
         <qu_ns_int_10> <seg_sp> '.' <seg_sp> <nc_10> <qu_nc_10>*
+    }
 
-    <qu_ns_rps_16> ::=
+    token qu_ns_rps_16
+    {
         <qu_ns_int_16> <seg_sp> '.' <seg_sp> <nc_16> <qu_nc_16>*
+    }
 
-    <qu_num_den_sig> ::=
+    token qu_num_den_sig
+    {
         <qu_numerator> <seg_sp> '/' <seg_sp> <qu_denominator>
+    }
 
-    <qu_numerator> ::=
+    token qu_numerator
+    {
         <qu_asigned_int>
+    }
 
-    <qu_denominator> ::=
+    token qu_denominator
+    {
         <qu_nonsigned_int>
+    }
 
-    <qu_radix> ::=
+    token qu_radix
+    {
         <qu_nonsigned_int>
+    }
 
-    <qu_exponent> ::=
+    token qu_exponent
+    {
         <qu_asigned_int>
+    }
 
-    <numeric_as_fraction> ::=
+    token numeric_as_fraction
+    {
         <Fraction> | <Integer>
+    }
 ```
 
 This grammar supports writing **Fraction** literals in any of the numeric
@@ -738,8 +844,10 @@ which explicitly does not represent any kind of thing in particular.
 Grammar:
 
 ```
-    <Bits> ::=
+    token Bits
+    {
         '\\~?' <sp> '"' [<[ 0..1 _ ]> | <seg_sp>]* '"'
+    }
 ```
 
 This grammar supports writing **Bits** literals in numeric base
@@ -765,8 +873,10 @@ which explicitly does not represent any kind of thing in particular.
 Grammar:
 
 ```
-    <Blob> ::=
+    token Blob
+    {
         '\\~+' <sp> '"' [<[ 0..9 A..F _ a..f ]> | <seg_sp>]* '"'
+    }
 ```
 
 This grammar supports writing **Blob** literals in numeric base
@@ -811,38 +921,58 @@ still be conveyed using other means such as MUON's `<Array>`+`<Integer>`.
 Grammar:
 
 ```
-    <Text> ::=
+    token Text
+    {
         <quoted_text> | <code_point_text>
+    }
 
-    <quoted_text> ::=
+    token quoted_text
+    {
         ['\\~' <sp>]? <quoted_text_no_pfx>
+    }
 
-    <quoted_text_no_pfx> ::=
+    token quoted_text_no_pfx
+    {
         ['"' <text_content> '"']+ % <sp>
+    }
 
-    <text_content> ::=
+    token text_content
+    {
         <text_nonescaped_content> | <text_escaped_content>
+    }
 
-    <text_nonescaped_content> ::=
-        [<restricted_inside_char> & <-[\\]> <restricted_inside_char>*]?
+    token text_nonescaped_content
+    {
+        [[<restricted_inside_char> & <-[\\]>] <restricted_inside_char>*]?
+    }
 
-    <text_escaped_content> ::=
-        '\\' [<restricted_inside_char> & <-[\\]> | <escaped_char>]*
+    token text_escaped_content
+    {
+        '\\' [[<restricted_inside_char> & <-[\\]>] | <escaped_char>]*
+    }
 
-    <restricted_inside_char> ::=
+    token restricted_inside_char
+    {
         <-[ \x[0]..\x[1F] "` \x[80]..\x[9F] ]>*
+    }
 
-    <escaped_char> ::=
+    token escaped_char
+    {
           '\\q' | '\\g'
         | '\\b'
         | '\\t' | '\\n' | '\\r'
         | ['\\c<' <code_point> '>']
+    }
 
-    <code_point_text> ::=
+    token code_point_text
+    {
         '\\~' <sp> <code_point>
+    }
 
-    <code_point> ::=
+    token code_point
+    {
         <nonsigned_int>
+    }
 ```
 
 A `<Text>` may optionally be split into 1..N segments where each pair
@@ -933,11 +1063,15 @@ may not exist at consecutive ordinal positions.
 Grammar:
 
 ```
-    <Array> ::=
+    token Array
+    {
         ['\\~' <sp>]? <ord_member_commalist>
+    }
 
-    <ord_member_commalist> ::=
+    token ord_member_commalist
+    {
         '[' <sp> <member_commalist> <sp> ']'
+    }
 ```
 
 Examples:
@@ -981,8 +1115,10 @@ that no 2 *member* are the same value and *multiplicity* is 1.
 Grammar:
 
 ```
-    <Set> ::=
+    token Set
+    {
         ['\\?' <sp>]? <nonord_member_commalist>
+    }
 ```
 
 A `<Set>` is subject to the additional rule that, either its
@@ -1032,26 +1168,40 @@ that no 2 *member* are the same value and *multiplicity* is a positive
 Grammar:
 
 ```
-    <Bag> ::=
+    token Bag
+    {
         ['\\+' <sp>]? <nonord_member_commalist>
+    }
 
-    <nonord_member_commalist> ::=
+    token nonord_member_commalist
+    {
         '{' <sp> <member_commalist> <sp> '}'
+    }
 
-    <member_commalist> ::=
+    token member_commalist
+    {
         [<single_member> | <multiplied_member> | '']+ % [<sp> ',' <sp>]
+    }
 
-    <single_member> ::=
+    token single_member
+    {
         <member>
+    }
 
-    <multiplied_member> ::=
+    token multiplied_member
+    {
         <member> <sp> ':' <sp> <multiplicity>
+    }
 
-    <member> ::=
+    token member
+    {
         <Any>
+    }
 
-    <multiplicity> ::=
+    token multiplicity
+    {
         <nonsigned_int>
+    }
 ```
 
 A `<Bag>` is subject to the additional rule that, either its
@@ -1118,23 +1268,35 @@ See also [http://unitsofmeasure.org/ucum.html](http://unitsofmeasure.org/ucum.ht
 Grammar:
 
 ```
-    <Mix> ::=
+    token Mix
+    {
         ['\\/' <sp>]? <mix_nonord_member_commalist>
+    }
 
-    <mix_nonord_member_commalist> ::=
+    token mix_nonord_member_commalist
+    {
         '{' <sp> <mix_member_commalist> <sp> '}'
+    }
 
-    <mix_member_commalist> ::=
+    token mix_member_commalist
+    {
         [<mix_single_member> | <mix_multiplied_member> | '']+ % [<sp> ',' <sp>]
+    }
 
-    <mix_single_member> ::=
+    token mix_single_member
+    {
         <member>
+    }
 
-    <mix_multiplied_member> ::=
+    token mix_multiplied_member
+    {
         <member> <sp> ':' <sp> <mix_multiplicity>
+    }
 
-    <mix_multiplicity> ::=
+    token mix_multiplicity
+    {
         <asigned_frac> | <asigned_int>
+    }
 ```
 
 A `<Mix>` is subject to the additional rule that, either its
@@ -1233,29 +1395,45 @@ MUON itself simply characterizes an **Interval** *as* its endpoints.
 Grammar:
 
 ```
-    <Interval> ::=
+    token Interval
+    {
         '\\..' <sp> '{' <sp> <interval_members> <sp> '}'
+    }
 
-    <interval_members> ::=
+    token interval_members
+    {
         <interval_empty> | <interval_single> | <interval_range>
+    }
 
-    <interval_empty> ::=
+    token interval_empty
+    {
         ''
+    }
 
-    <interval_single> ::=
+    token interval_single
+    {
         <Any>
+    }
 
-    <interval_range> ::=
+    token interval_range
+    {
         <interval_low>? <interval_boundary_kind> <interval_high>?
+    }
 
-    <interval_low> ::=
+    token interval_low
+    {
         <Any>
+    }
 
-    <interval_high> ::=
+    token interval_high
+    {
         <Any>
+    }
 
-    <interval_boundary_kind> ::=
+    token interval_boundary_kind
+    {
         '..' | '-..' | '..-' | '-..-'
+    }
 ```
 
 Examples:
@@ -1312,8 +1490,10 @@ meaningful *set absolute complement* operation applicable to it.
 Grammar:
 
 ```
-    <Interval_Set> ::=
+    token Interval_Set
+    {
         '\\?..' <sp> <nonord_interval_commalist>
+    }
 ```
 
 Examples:
@@ -1355,20 +1535,30 @@ every possible distinct **Bag** can map to a distinct **Interval Bag**.
 Grammar:
 
 ```
-    <Interval_Bag> ::=
+    token Interval_Bag
+    {
         '\\+..' <sp> <nonord_interval_commalist>
+    }
 
-    <nonord_interval_commalist> ::=
+    token nonord_interval_commalist
+    {
         '{' <sp> <interval_commalist> <sp> '}'
+    }
 
-    <interval_commalist> ::=
+    token interval_commalist
+    {
         [<single_interval> | <multiplied_interval> | '']+ % [<sp> ',' <sp>]
+    }
 
-    <single_interval> ::=
+    token single_interval
+    {
         <interval_members>
+    }
 
-    <multiplied_interval> ::=
+    token multiplied_interval
+    {
         <interval_members> <sp> ':' <sp> <multiplicity>
+    }
 ```
 
 Examples:
@@ -1425,23 +1615,35 @@ appearance from all regular printable numbers used as attribute names.
 Grammar:
 
 ```
-    <Tuple> ::=
+    token Tuple
+    {
         ['\\%' <sp>]? '(' <sp> <attr_commalist> <sp> ')'
+    }
 
-    <attr_commalist> ::=
+    token attr_commalist
+    {
         [<anon_attr> | <named_attr> | <nested_named_attr> | '']+ % [<sp> ',' <sp>]
+    }
 
-    <anon_attr> ::=
+    token anon_attr
+    {
         <attr_asset>
+    }
 
-    <named_attr> ::=
+    token named_attr
+    {
         <attr_name> <sp> ':' <sp> <attr_asset>
+    }
 
-    <nested_named_attr> ::=
+    token nested_named_attr
+    {
         <nesting_attr_names> <sp> ':' <sp> <attr_asset>
+    }
 
-    <attr_asset> ::=
+    token attr_asset
+    {
         <Any>
+    }
 ```
 
 A `<Tuple>` is subject to the additional rule that, iff its
@@ -1522,8 +1724,10 @@ rather than a **Set**.
 Grammar:
 
 ```
-    <Tuple_Array> ::=
+    token Tuple_Array
+    {
         '\\~%' <sp> [<delim_attr_name_commalist> | <ord_member_commalist>]
+    }
 ```
 
 A `<Tuple_Array>` with an `<ord_member_commalist>` is subject to the
@@ -1582,8 +1786,10 @@ represent any proposition in particular.
 Grammar:
 
 ```
-    <Relation> ::=
+    token Relation
+    {
         '\\?%' <sp> [<delim_attr_name_commalist> | <nonord_member_commalist>]
+    }
 ```
 
 A `<Relation>` with a `<nonord_member_commalist>` is subject to the
@@ -1640,8 +1846,10 @@ rather than a **Set**.
 Grammar:
 
 ```
-    <Tuple_Bag> ::=
+    token Tuple_Bag
+    {
         '\\+%' <sp> [<delim_attr_name_commalist> | <nonord_member_commalist>]
+    }
 ```
 
 A `<Tuple_Bag>` with a `<nonord_member_commalist>` is subject to the
@@ -1695,44 +1903,70 @@ represent a time of day.
 Grammar:
 
 ```
-    <Calendar_Time> ::=
+    token Calendar_Time
+    {
         '\\@%' <sp> <delim_time_ymdhms_commalist>
+    }
 
-    <delim_time_ymdhms_commalist> ::=
+    token delim_time_ymdhms_commalist
+    {
         '(' <sp> <time_ymdhms_commalist> <sp> ')'
+    }
 
-    <delim_time_ymd_commalist> ::=
+    token delim_time_ymd_commalist
+    {
         '(' <sp> <time_ymd_commalist> <sp> ')'
+    }
 
-    <delim_time_hms_commalist> ::=
+    token delim_time_hms_commalist
+    {
         '(' <sp> <time_hms_commalist> <sp> ')'
+    }
 
-    <time_ymdhms_commalist> ::=
+    token time_ymdhms_commalist
+    {
         <time_ymd_commalist> <sp> ',' <sp> <time_hms_commalist>
+    }
 
-    <time_ymd_commalist> ::=
+    token time_ymd_commalist
+    {
         <year>? <sp> ',' <sp> <month>? <sp> ',' <sp> <day>?
+    }
 
-    <time_hms_commalist> ::=
+    token time_hms_commalist
+    {
         <hour>? <sp> ',' <sp> <minute>? <sp> ',' <sp> <second>?
+    }
 
-    <year> ::=
+    token year
+    {
         <mix_multiplicity>
+    }
 
-    <month> ::=
+    token month
+    {
         <mix_multiplicity>
+    }
 
-    <day> ::=
+    token day
+    {
         <mix_multiplicity>
+    }
 
-    <hour> ::=
+    token hour
+    {
         <mix_multiplicity>
+    }
 
-    <minute> ::=
+    token minute
+    {
         <mix_multiplicity>
+    }
 
-    <second> ::=
+    token second
+    {
         <mix_multiplicity>
+    }
 ```
 
 Examples:
@@ -1781,8 +2015,10 @@ uncertainty interval versus treating them as zero, and so on.
 Grammar:
 
 ```
-    <Calendar_Duration> ::=
+    token Calendar_Duration
+    {
         '\\@+' <sp> <delim_time_ymdhms_commalist>
+    }
 ```
 
 Examples:
@@ -1832,29 +2068,45 @@ the existing time zone name support may also indicate this by itself.*
 Grammar:
 
 ```
-    <Calendar_Instant> ::=
+    token Calendar_Instant
+    {
         '\\@' <sp> <delim_instant_commalist>
+    }
 
-    <delim_instant_commalist> ::=
+    token delim_instant_commalist
+    {
         <instant_floating> | <instant_with_offset> | <instant_with_zone>
+    }
 
-    <instant_floating> ::=
+    token instant_floating
+    {
         <instant_base>
+    }
 
-    <instant_base> ::=
+    token instant_base
+    {
         <delim_time_ymdhms_commalist>
+    }
 
-    <instant_with_offset> ::=
+    token instant_with_offset
+    {
         '(' <sp> <instant_base> <sp> '@' <sp> <instant_offset> <sp> ')'
+    }
 
-    <instant_offset> ::=
+    token instant_offset
+    {
         <delim_time_hms_commalist>
+    }
 
-    <instant_with_zone> ::=
+    token instant_with_zone
+    {
         '(' <sp> <instant_base> <sp> '@' <sp> <instant_zone> <sp> ')'
+    }
 
-    <instant_zone> ::=
+    token instant_zone
+    {
         <quoted_text_no_pfx>
+    }
 ```
 
 Examples:
@@ -1909,23 +2161,35 @@ something more specific.
 Grammar:
 
 ```
-    <Geographic_Point> ::=
+    token Geographic_Point
+    {
         '\\@@' <sp> <delim_point_commalist>
+    }
 
-    <delim_point_commalist> ::=
+    token delim_point_commalist
+    {
         '(' <sp> <point_commalist> <sp> ')'
+    }
 
-    <point_commalist> ::=
+    token point_commalist
+    {
         [<longitude> | <latitude> | <elevation> | '']+ % [<sp> ',' <sp>]
+    }
 
-    <longitude> ::=
+    token longitude
+    {
         '>' <sp> <mix_multiplicity>
+    }
 
-    <latitude> ::=
+    token latitude
+    {
         '^' <sp> <mix_multiplicity>
+    }
 
-    <elevation> ::=
+    token elevation
+    {
         '+' <sp> <mix_multiplicity>
+    }
 ```
 
 Examples:
@@ -1981,23 +2245,35 @@ actual meaningful name to give it.
 Grammar:
 
 ```
-    <Article> ::=
+    token Article
+    {
         <generic_article> | <singleton_article>
+    }
 
-    <generic_article> ::=
+    token generic_article
+    {
         ['\\*' <sp>]? <label_attrs_pair>
+    }
 
-    <label_attrs_pair> ::=
+    token label_attrs_pair
+    {
         '(' <sp> <label> <sp> ':' <sp> <attrs> <sp> ')'
+    }
 
-    <label> ::=
+    token label
+    {
         <Any>
+    }
 
-    <attrs> ::=
+    token attrs
+    {
         <Tuple>
+    }
 
-    <singleton_article> ::=
+    token singleton_article
+    {
         '\\*' <sp> <nesting_attr_names>
+    }
 ```
 
 Examples:
@@ -2053,8 +2329,10 @@ these things, but rather just every other kind of externally-defined type.
 Grammar:
 
 ```
-    <Excuse> ::=
+    token Excuse
+    {
         '\\!' <sp> [<label_attrs_pair> | <nesting_attr_names>]
+    }
 ```
 
 Examples:
@@ -2099,8 +2377,10 @@ used and instead other more applicable **Excuse** values should instead.
 Grammar:
 
 ```
-    <Ignorance> ::=
+    token Ignorance
+    {
         '\\!!' <sp> Ignorance
+    }
 ```
 
 Examples:
@@ -2118,23 +2398,35 @@ entity in a multi-level namespace, such as nested **Tuple** may implement.
 Grammar:
 
 ```
-    <Nesting> ::=
+    token Nesting
+    {
         '\\' <sp> <nesting_attr_names>
+    }
 
-    <nesting_attr_names> ::=
+    token nesting_attr_names
+    {
         <attr_name>+ % [<sp> '::' <sp>]
+    }
 
-    <attr_name> ::=
+    token attr_name
+    {
         <nonord_attr_name> | <ord_attr_name>
+    }
 
-    <nonord_attr_name> ::=
+    token nonord_attr_name
+    {
         <nonord_nonquoted_attr_name> | <quoted_text_no_pfx>
+    }
 
-    <nonord_nonquoted_attr_name> ::=
+    token nonord_nonquoted_attr_name
+    {
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+    }
 
-    <ord_attr_name> ::=
+    token ord_attr_name
+    {
         <code_point>
+    }
 ```
 
 The meaning of `<nonord_nonquoted_attr_name>` is exactly the same as if the
@@ -2161,23 +2453,35 @@ are the same.
 Grammar:
 
 ```
-    <Heading> ::=
+    token Heading
+    {
         '\\\$' <sp> <delim_attr_name_commalist>
+    }
 
-    <delim_attr_name_commalist> ::=
+    token delim_attr_name_commalist
+    {
         '(' <sp> <attr_name_commalist> <sp> ')'
+    }
 
-    <attr_name_commalist> ::=
+    token attr_name_commalist
+    {
         [<attr_name> | <ord_attr_name_range> | '']+ % [<sp> ',' <sp>]
+    }
 
-    <ord_attr_name_range> ::=
+    token ord_attr_name_range
+    {
         <min_ord_attr> <sp> '..' <sp> <max_ord_attr>
+    }
 
-    <min_ord_attr> ::=
+    token min_ord_attr
+    {
         <ord_attr_name>
+    }
 
-    <max_ord_attr> ::=
+    token max_ord_attr
+    {
         <ord_attr_name>
+    }
 ```
 
 An `<ord_attr_name_range>` is subject to the additional rule that its
@@ -2226,30 +2530,44 @@ unordered collection of attribute renaming specifications.
 Grammar:
 
 ```
-    <Renaming> ::=
+    token Renaming
+    {
         '\\\$:' <sp> <delim_renaming_commalist>
+    }
 
-    <delim_renaming_commalist> ::=
+    token delim_renaming_commalist
+    {
         '(' <sp> <renaming_commalist> <sp> ')'
+    }
 
-    <renaming_commalist> ::=
+    token renaming_commalist
+    {
         [<anon_attr_rename> | <named_attr_rename> | '']+ % [<sp> ',' <sp>]
+    }
 
-    <anon_attr_rename> ::=
+    token anon_attr_rename
+    {
           ['->' <sp> <attr_name_after>]
         | [<attr_name_after> <sp> '<-']
         | [<attr_name_before> <sp> '->']
         | ['<-' <sp> <attr_name_before>]
+    }
 
-    <named_attr_rename> ::=
+    token named_attr_rename
+    {
           [<attr_name_before> <sp> '->' <sp> <attr_name_after>]
         | [<attr_name_after> <sp> '<-' <sp> <attr_name_before>]
+    }
 
-    <attr_name_before> ::=
+    token attr_name_before
+    {
         <attr_name>
+    }
 
-    <attr_name_after> ::=
+    token attr_name_after
+    {
         <attr_name>
+    }
 ```
 
 Each attribute renaming specification is a pair of attribute names marked
