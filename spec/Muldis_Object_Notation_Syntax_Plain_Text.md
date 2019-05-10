@@ -8,6 +8,12 @@ Source code and data interchange format
 The fully-qualified name of this document is
 `Muldis_Object_Notation http://muldis.com 0.300.0`.
 
+# PART
+
+This artifact is part 3 of 3 of the document
+`Muldis_Object_Notation http://muldis.com 0.300.0`;
+its part name is `Syntax_Plain_Text`.
+
 # SYNOPSIS
 
 ```
@@ -29,18 +35,22 @@ The fully-qualified name of this document is
 
 # DESCRIPTION
 
-This document is the human readable authoritative formal specification named
-**Muldis Object Notation** (**MUON**).
-The fully-qualified name of this document and specification is
-`Muldis_Object_Notation http://muldis.com 0.300.0`.
-This is the official/original version by the authority Muldis Data Systems
-(`http://muldis.com`), version number `0.300.0`.
+This document consists of multiple parts; for a directory to all of the
+parts, see [Overview](Muldis_Object_Notation.md).
 
-**Muldis Object Notation** specifies a semi-lightweight source code and
-data interchange format.  It is fairly easy for humans to read and write.
-It is fairly easy for machines to parse and generate.  MUON is a plain text
-format that is completely language independent but uses conventions that
-are familiar to programmers of many other languages.
+This part of the **Muldis Object Notation** document specifies the
+canonical plain text syntax of MUON which all other MUON syntaxes are
+derived from and map with.
+
+The MUON canonical plain text format is semi-lightweight and designed to
+support interchange of source code and data between any 2 environments that
+do not have a common working memory, such as because they are distinct
+machine processes written in different programming languages, or because
+they are on distinct machines, or because they are mediated by a network or
+disk file.  The format is fairly easy for humans to read and write.  It is
+fairly easy for machines to parse and generate.  The MUON plain text format
+that is completely language independent but uses conventions that are
+familiar to programmers of many other languages.
 
 The prescribed standard filename extension for files featuring a MUON
 parsing unit is `.muon`, though as per standard UNIX conventions, such MUON
@@ -49,17 +59,12 @@ to interpret them with.  Filename extensions are more for the benefit of
 the operating system or command shell or users than for a MUON parser or
 generator, the latter just cares about the content of the file.
 
-# FEATURES
-
-These sections outline some key features of MUON, including some that are
-more unique to it and some reasons for why one might want to use it.
-
-## Data Type Possreps
+# DATA TYPE POSSREPS
 
 **Muldis Object Notation** is mainly characterized by a set of *data type
 possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
-Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
+Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 
 - Logical: Boolean
 - Numeric: Integer, Fraction
@@ -72,54 +77,10 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
 - Generic: Article, Excuse, Ignorance
 - Source Code: Nesting, Heading, Renaming
 
-A *possrep* corresponds to the concept of a *data type*, where the latter
-is characterized by a set of *values*, and one may choose to use those
-terms interchangeably in less formal speech.  But formally a *data type*
-exists only as part of an external data model used with MUON and is not
-part of MUON itself.  Depending on the data model in question, each MUON
-possrep may correspond to exactly 1 data type, or to multiple data types,
-or multiple possreps may correspond to 1 data type.
-
-This document avoids defining any relationship between these possreps, and
-officially leaves it up to each external data model used with MUON to
-define for itself whether any two given possreps are *conjoined* (have any
-values in common) or *disjoint* (have no values in common).  For example,
-some external data models may consider **Integer** to correspond to a
-*subtype* of what **Fraction** corresponds to (`42` is a member of both)
-while others may consider the two possreps to be disjoint (`42` and `42.0`
-do not compare as equal).  The sole exceptions are that the (not listed
-above) **Any** and **None** possreps explicitly correspond to a *supertype*
-or *subtype* respectively of what every other possrep corresponds to,
-regardless of the data model, for what that's worth.
-
-When an external data model is used with MUON, MUON requires that a
-thorough mapping is defined for every MUON possrep to some data type of
-that model.  The intent here is that every well-formed MUON *parsing unit*
-can be deterministically parsed into some value of that model, and
-therefore that there would never be a MUON parsing failure due to the data
-model not supporting some particular data type.  The mapping should be a
-reasonable best fit, even if crude, when there isn't a perfect analogy.
-In contrast, MUON does *not* require that a mapping exist from every value
-of an external data model to MUON, in particular types that are like opaque
-pointers to memory addresses which don't meaningfully serialize.  MUON also
-does require that any value which a data model supports generating a MUON
-parsing unit from must be losslessly round-trippable, that when one
-generates MUON from said value, and then turns around and parses that MUON
-with the same model, it will be parsed as the exact same value.
-Note that the **Article** possrep is the idiomatic way for an external data
-model to represent "new" types as MUON in a consistent way.
-
-## Ease of Use
-
-*TODO.*
-
-## Resiliency
-
-*TODO.*
-
-## Extensibility
-
-*TODO.*
+See the DATA TYPE POSSREPS of [Semantics](
+Muldis_Object_Notation_Semantics.md) for details and the intended
+interpretation of each possrep, to provide valuable context for the grammar
+and examples in the current part that isn't being repeated here.
 
 # NORMALIZATION
 
@@ -318,9 +279,7 @@ Examples:
 
 ## Any / Universal Type Possrep
 
-The **Any** possrep corresponds to the *universal type*, which is the
-maximal data type of each type system and consists of all values which can
-possibly exist.  This is represented by `<Any>`.
+The **Any** possrep is represented by `<Any>`.
 
 Grammar:
 
@@ -379,15 +338,12 @@ values representing collections of other values.
 
 ## None / Empty Type Possrep
 
-The **None** possrep corresponds to the *empty type*, which is the minimal
-data type of each type system and consists of exactly zero values.
-This has no representation in the grammar, but is mentioned for parity.
+The **None** possrep
+has no representation in the grammar, but is mentioned for parity.
 
 ## Boolean
 
-A **Boolean** value, represented by `<Boolean>`, is a general purpose
-2-valued logic boolean or *truth value*, or specifically it is one of the 2
-values *False* and *True*.
+A **Boolean** value is represented by `<Boolean>`.
 
 Grammar:
 
@@ -412,10 +368,7 @@ Examples:
 
 ## Integer
 
-An **Integer** value, represented by `<Integer>`, is a general purpose
-exact integral number of any magnitude, which explicitly does not represent
-any kind of thing in particular, neither cardinal nor ordinal nor nominal.
-It has no minimum or maximum value.
+An **Integer** value is represented by `<Integer>`.
 
 Grammar:
 
@@ -585,10 +538,7 @@ Examples:
 
 ## Fraction
 
-A **Fraction** value, represented by `<Fraction>`, is a general purpose
-exact rational number of any magnitude and precision, which explicitly does
-not represent any kind of thing in particular, neither cardinal nor ordinal
-nor nominal.  It has no minimum or maximum value.
+A **Fraction** value is represented by `<Fraction>`.
 
 Grammar:
 
@@ -836,10 +786,7 @@ Examples:
 
 ## Bits
 
-A **Bits** value, represented by `<Bits>`, is characterized by an
-arbitrarily-long sequence of *bits* where each bit is represented by an
-**Integer** in the range 0..1,
-which explicitly does not represent any kind of thing in particular.
+A **Bits** value is represented by `<Bits>`.
 
 Grammar:
 
@@ -865,10 +812,7 @@ Examples:
 
 ## Blob
 
-A **Blob** value, represented by `<Blob>`, is characterized by an
-arbitrarily-long sequence of *octets* where each octet is represented by an
-**Integer** in the range 0..255,
-which explicitly does not represent any kind of thing in particular.
+A **Blob** value is represented by `<Blob>`.
 
 Grammar:
 
@@ -898,25 +842,7 @@ Examples:
 
 ## Text / Attribute Name
 
-A **Text** value, represented by `<Text>`, is characterized by an
-arbitrarily-long sequence of **Unicode** 11.0 standard *character
-code points*, where each distinct code point corresponds to a distinct
-integer in the set **{0..0xD7FF,0xE000..0x10FFFF}**,
-which explicitly does not represent any kind of thing in particular.
-
-See also [https://unicode.org](https://unicode.org).
-
-A **Text** value has 2 fundamental uses, one being for generic user data,
-and the other being the canonical form of a standalone *attribute name*
-(see the **Tuple** possrep) which is an unqualified program identifier.
-
-Note that some programming languages or execution environments support a
-"Unicode character string" concept that is less strict than the **Unicode**
-standard, and thus allow malformed character strings.  For example, some
-may allow isolated/non-paired UTF-16 "surrogate" code points corresponding
-to integers in the set **{0xD800..0xDFFF}**.  MUON forbids the use of any
-such "character strings" using the `<Text>` syntax.  However, such data can
-still be conveyed using other means such as MUON's `<Array>`+`<Integer>`.
+A **Text** value is represented by `<Text>`.
 
 Grammar:
 
@@ -1050,15 +976,7 @@ Examples:
 
 ## Array
 
-An **Array** value, represented by `<Array>`, is a general purpose
-arbitrarily-long ordered sequence of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members.  An **Array** value is dense; iff it has any
-members, then its first-ordered member is at ordinal position **0**, and
-its last-ordinal-positioned member is at the ordinal position that is one
-less than the count of its members.  An **Array** in the general case may
-have multiple members that are the same value, and any duplicates may or
-may not exist at consecutive ordinal positions.
+An **Array** value is represented by `<Array>`.
 
 Grammar:
 
@@ -1102,15 +1020,7 @@ Examples:
 
 ## Set
 
-A **Set** value, represented by `<Set>`, is a general purpose
-arbitrarily-large unordered collection of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members.  A **Set** ensures that no 2 of its members
-are the same value.
-
-A **Set** value is also characterized by a set of 0..N *multiplied members*
-such that each *multiplied member* is a *member* / *multiplicity* pair such
-that no 2 *member* are the same value and *multiplicity* is 1.
+A **Set** value is represented by `<Set>`.
 
 Grammar:
 
@@ -1154,16 +1064,7 @@ Examples:
 
 ## Bag / Multiset
 
-A **Bag** value, represented by `<Bag>`, is a general purpose
-arbitrarily-large unordered collection of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members.  A **Bag** in the general case may have
-multiple members that are the same value.
-
-A **Bag** value is also characterized by a set of 0..N *multiplied members*
-such that each *multiplied member* is a *member* / *multiplicity* pair such
-that no 2 *member* are the same value and *multiplicity* is a positive
-**Integer**.
+A **Bag** value is represented by `<Bag>`.
 
 Grammar:
 
@@ -1240,30 +1141,7 @@ Examples:
 
 ## Mix
 
-A **Mix** value, represented by `<Mix>`, is a general purpose
-arbitrarily-large unordered collection of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members.  A **Mix** in the general case may have
-multiple members that are the same value, and it may have fractions of
-members, and it may have negations of members.
-
-A **Mix** value is also characterized by a set of 0..N *multiplied members*
-such that each *multiplied member* is a *member* / *multiplicity* pair such
-that no 2 *member* are the same value and *multiplicity* is a nonzero
-**Fraction**.
-
-The **Mix** possrep is the idiomatic way for an external data model to
-represent the general case of a *measure*, a measurement of some quantity
-or position or other kind of thing that one measures, in terms of a number
-paired with a unit, or a set of 0..N of such, which explicitly is agnostic
-to any externally defined standards and should be able to represent units
-from any of them.  In this context, a *member* represents each measurement
-unit and its *multiplicity* is the measurement in that unit.  While **Mix**
-allows each *member* to have any possrep, in practice the **Nesting** and
-**Text** possreps are the most common, or an external data model might have
-a dedicated type to represent a unit definition.
-
-See also [http://unitsofmeasure.org/ucum.html](http://unitsofmeasure.org/ucum.html).
+A **Mix** value is represented by `<Mix>`.
 
 Grammar:
 
@@ -1350,47 +1228,7 @@ Examples:
 
 ## Interval
 
-An **Interval** value, represented by `<Interval>`, is a general purpose
-arbitrarily-large unordered collection of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members; the count of members may be either finite or
-infinite depending on the external data model or type system in question.
-
-In stark contrast to a **Set** value, whose set of members is characterized
-by an enumeration of every member value, an **Interval** value's set of
-members is instead characterized by exactly 2 *endpoint* values (or exactly
-1 or exactly zero) of some *orderable* type such that every value in the
-type system with a defined total order between those 2 endpoints is
-considered to be a member value of the **Interval**.  Depending on the
-external data model or type system in question, an **Interval** value may
-(and typically does) consist of an infinite set of members, in contrast
-with a **Set** which can only have a finite set of members.
-
-An *empty interval* has exactly zero members.  A *unit interval* has
-exactly 1 member.  A *closed interval* includes both endpoint values in its
-membership; an *open interval* excludes both endpoint values; a
-*half-closed, half-open interval* includes one and excludes the other.
-A *half-unbounded, half-bounded interval* includes all values that are
-ordered either before or after the single endpoint; a *universal interval*
-or *unbounded interval* includes every value in the type system.
-
-In the general case, for MUON-defined types, only a *bounded interval* over
-2 distinct **Integer** (or **Boolean**) endpoints has a finite member
-count; whereas, a *bounded interval* over 2 distinct endpoints over any
-other type (such as **Fraction** or **Text**) has an infinite member count,
-because given any 2 distinct values of most types you can find another
-distinct value that is ordered between them.  Also, a non-bounded interval
-over **Integer** has an infinite member count in MUON.  An external data
-model can only change this by defining its corresponding member data types
-to have a finite membership themselves, in contrast to mathematics.
-
-Note that it is up to the external data model to define any total orders
-for any member value types, either which one is used implicitly when the
-**Interval** has no explicit context to specify one, or how to interpret
-that explicit context.  For a common example, there exist a wide variety of
-character string collations in common use, and it would require context or
-the external data model to declare which to use for **Text** members.
-MUON itself simply characterizes an **Interval** *as* its endpoints.
+An **Interval** value is represented by `<Interval>`.
 
 Grammar:
 
@@ -1469,23 +1307,7 @@ Examples:
 
 ## Interval Set
 
-An **Interval Set** value, represented by `<Interval_Set>`, is
-characterized by a **Set** value such that every member value of the
-**Set** is an **Interval**.  An **Interval Set** is alternately
-characterized by a single **Interval** that is allowed to have
-discontinuities, and is in the typical case characterized by more than 2
-*endpoint* values.
-
-When reasoning about an interval in terms of defining a set of values by
-endpoints under a total order rather than by enumeration, an **Interval
-Set** is the actual best direct analogy to a **Set** because every possible
-distinct **Set** value can map to a distinct **Interval Set** value but
-only a proper subset of the former can map to an **Interval**.  The
-**Interval Set** type is closed under *set union* operations just as
-**Set** is, while **Interval** is not.
-
-Unlike with the **Set** type, the **Interval Set** type also has a
-meaningful *set absolute complement* operation applicable to it.
+An **Interval Set** value is represented by `<Interval_Set>`.
 
 Grammar:
 
@@ -1526,11 +1348,7 @@ Examples:
 
 ## Interval Bag
 
-An **Interval Bag** value, represented by `<Interval_Bag>`, is
-characterized by a generalization of an **Interval Set** that permits
-multiple members to have the same value; an **Interval Bag** is isomorphic
-to a **Bag** in the same way that an **Interval Set** is to a **Set**;
-every possible distinct **Bag** can map to a distinct **Interval Bag**.
+An **Interval Bag** value is represented by `<Interval_Bag>`.
 
 Grammar:
 
@@ -1582,35 +1400,7 @@ Examples:
 
 ## Tuple / Attribute Set
 
-A **Tuple** value, represented by `<Tuple>`, is a general purpose
-arbitrarily-large unordered heterogeneous collection of named *attributes*,
-such that no 2 attributes have the same *attribute name*, which explicitly
-does not represent any kind of thing in particular, and is simply the sum
-of its attributes.  An attribute is conceptually a name-asset pair, the
-name being used to look up the attribute in a **Tuple**.  An *attribute
-name* is an unqualified program identifier and is conceptually a character
-string that is not a **Text** value.  In the general case each attribute of
-a tuple is of a distinct data type, though multiple attributes often have
-the same type.  The set of attribute names of a **Tuple** is called its
-*heading*, and the corresponding attribute assets are called its *body*.
-
-With respect to the relational model of data, a *heading* represents a
-predicate, for which each *attribute name* is a free variable, and a
-**Tuple** as a whole represents a derived proposition, where the
-corresponding attribute asset values substitute for the free variables;
-however, any actual predicate/etc is defined by the context of a
-**Tuple** value and a **Tuple** in isolation explicitly does not
-represent any proposition in particular.
-
-The canonical way to represent the concept of a *tuple* that has ordered
-attributes is to use integral names; to be specific, the attribute name
-consisting of just the character code point 0 would mark the first ordered
-attribute, the name consisting of just the code point 1 would mark the
-second, and so on; this can be repeated up to 32 "positional" names whose
-names would correspond to non-printing Unicode code points and would
-alphabetically sort correctly and prior to any normal text-like attribute
-names like **name** or **age**; said first 32 would likewise be distinct in
-appearance from all regular printable numbers used as attribute names.
+A **Tuple** value is represented by `<Tuple>`.
 
 Grammar:
 
@@ -1715,11 +1505,7 @@ Examples:
 
 ## Tuple Array
 
-A **Tuple Array** value, represented by `<Tuple_Array>`, is characterized
-by the pairing of a **Heading** value with an **Array** value, which define
-its *heading* and *body*, respectively.  A **Tuple Array** is isomorphic to
-a **Relation** with the sole exception of being based on an **Array**
-rather than a **Set**.
+A **Tuple Array** value is represented by `<Tuple_Array>`.
 
 Grammar:
 
@@ -1767,21 +1553,7 @@ Examples:
 
 ## Relation / Tuple Set
 
-A **Relation** value, represented by `<Relation>`, is characterized
-by the pairing of a **Heading** value with a **Set** value, which define
-its *heading* and *body*, respectively.  A **Relation** ensures that every
-*member* of its *body* is a **Tuple** having the same *heading* (set of
-*attribute names*) as its own *heading*.  A **Relation** is alternately
-characterized by the pairing of a single set of attribute names with a set
-of corresponding attribute assets for each attribute name.
-
-With respect to the relational model of data, a *heading* represents a
-predicate, for which each *attribute name* is a free variable, and a
-**Relation** as a whole represents a set of derived propositions, where the
-corresponding attribute asset values substitute for the free variables;
-however, any actual predicate/etc is defined by the context of a
-**Relation** value and a **Relation** in isolation explicitly does not
-represent any proposition in particular.
+A **Relation** value is represented by `<Relation>`.
 
 Grammar:
 
@@ -1837,11 +1609,7 @@ Examples:
 
 ## Tuple Bag
 
-A **Tuple Bag** value, represented by `<Tuple_Bag>`, is characterized
-by the pairing of a **Heading** value with a **Bag** value, which define
-its *heading* and *body*, respectively.  A **Tuple Bag** is isomorphic to
-a **Relation** with the sole exception of being based on a **Bag**
-rather than a **Set**.
+A **Tuple Bag** value is represented by `<Tuple_Bag>`.
 
 Grammar:
 
@@ -1888,17 +1656,7 @@ Examples:
 
 ## Calendar Time
 
-A **Calendar Time** value, represented by `<Calendar_Time>`, is
-characterized by a **Tuple** having any subset of the 6 attributes of the
-heading `\$(year,month,day,hour,minute,second)` where each attribute is a
-**Fraction**, or alternately by an isomorphic **Mix**.  For each of the 6
-attributes, it explicitly distinguishes between the attribute value being
-specified as zero versus being unspecified; omitting the attribute entirely
-means the latter.  Its main intended purpose is to be a more generic common
-element for a variety of other, more specific time-related possreps,
-including ones representing both durations and instants, or for direct use
-with types defined by external data models.  It does *not* specifically
-represent a time of day.
+A **Calendar Time** value is represented by `<Calendar_Time>`.
 
 Grammar:
 
@@ -2005,12 +1763,7 @@ Examples:
 
 ## Calendar Duration
 
-A **Calendar Duration** value, represented by `<Calendar_Duration>`, is a
-length of time expressed in terms of the units of a standard civil or
-similar calendar.  It is characterized by a **Calendar Time**.  It is up to
-the context supplied or interpreted by an external data model to give it
-further meaning, such as whether not specifying any smallest units means an
-uncertainty interval versus treating them as zero, and so on.
+A **Calendar Duration** value is represented by `<Calendar_Duration>`.
 
 Grammar:
 
@@ -2033,37 +1786,7 @@ Examples:
 
 ## Calendar Instant
 
-A **Calendar Instant** value, represented by `<Calendar_Instant>`, is a
-particular moment in time expressed in terms of a standard civil or similar
-calendar.  It is characterized by an *instant base* (characterized by a
-**Calendar Time**) that is either standalone or is paired with an *instant
-offset* (characterized by a **Calendar Duration**) or an *instant zone* (a
-time zone name characterized by a **Text**).
-
-When a **Calendar Instant** consists only of an *instant base*, it
-explicitly defines a *floating* instant, either a calendar date or
-timestamp that is not associated with a specific time zone or a time zone
-offset, or it defines a time of day not associated with any particular day.
-
-When a **Calendar Instant** also has an *instant offset*, it explicitly
-defines a calendar date or time that is local to a time zone offset from
-UTC, and also indicates what that offset amount is.
-
-When a **Calendar Instant** also has an *instant zone*, it explicitly
-defines a calendar date or time that is local to a geographic time zone and
-also indicates the name of that time zone.
-
-Beyond that it is up to the context supplied or interpreted by an external
-data model to give it further meaning, such as whether it is Gregorian or
-Julian etc, or whether not specifying any largest units means a repeating
-event or not, or whether not specifying any smallest units means an
-interval or a point, and so on.  Also, it is up to the external data model
-to define what are valid time zone names; MUON accepts any **Text** value.
-
-*TODO: Consider further changes to support explicit indication of daylight
-savings time observence or similar things, which might be satisfied by
-permitting both an instant offset and zone name to be given together;
-the existing time zone name support may also indicate this by itself.*
+A **Calendar Instant** value is represented by `<Calendar_Instant>`.
 
 Grammar:
 
@@ -2130,33 +1853,7 @@ Examples:
 
 ## Geographic Point
 
-A **Geographic Point** value, represented by `<Geographic_Point>`, is a
-particular point location on the Earth's surface characterized by cartesian
-coordinates named *longitude* and *latitude* and *elevation*, where each of
-the latter is characterized by a single **Fraction** value.  Each
-coordinate may be either specified or unspecified; omitting it means the
-latter and providing it, even if zero, means the former.
-
-The coordinates may be specified in any order, and are distinguished by
-their own prefix symbols.  The literal syntax has right-pointing `>` and
-up-pointing `^` arrows that are meant to visually evoke *longitude* and
-*latitude* respectively, so that it is more clear at a glance which of the
-coordinates is which.  The `+` literal syntax represents *elevation*.  A
-more-positive *longitude* is further to the East than a more-negative one,
-while a more-positive *latitude* is further to the North than a
-more-negative one, and a more-positive *elevation* is further from the
-center of the Earth than a more-negative one.
-
-While the *latitude* and *longitude* have semi-specific meanings, which
-loosely are possibly fractional degrees in the range -180..180 and -90..90
-respectively, MUON explicitly does not ascribe any specific interpretation
-to the *elevation* value, aside from it increasing away from the center of
-the Earth.  It is up to an external data model used with MUON to specify
-the *elevation* units, such as meters or feet or whatever, as well as the
-starting point, such as the center of the Earth or the surface or whatever.
-The external data model also gives the more specific meanings of *latitude*
-and *longitude*, such as whether they are along the surface of the Earth or
-something more specific.
+A **Geographic Point** value is represented by `<Geographic_Point>`.
 
 Grammar:
 
@@ -2216,31 +1913,7 @@ Examples:
 
 ## Article / Labelled Tuple
 
-An **Article** value, represented by `<Article>`, is characterized by the
-pairing of a *label* with a set of 0..N *attributes* where that set is a
-**Tuple** value; the label can be of any type but is idiomatically a
-**Nesting** value.
-
-The **Article** possrep is the idiomatic way for an external data model to
-represent "new" types of a nominal type system in a consistent way.  The
-*label* represents a fully-qualified external data type name, and thus a
-namespace within all the **Article** values, while the *attributes* define
-all the components of a value of that external type.  Thus an **Article**
-corresponds to a generic *object* of an object-oriented language, the
-*label* is the *class* of that *object*, and *attributes* are *properties*.
-
-As a primary exception to the above, the large number of *exception* or
-*error* types common in some data models / type systems should *not* be
-represented using an **Article** but rather with the structurally identical
-**Excuse** which natively carries that extra semantic.
-
-The idiomatic way to represent a singleton type value is as an **Article**
-where the *label* is the singleton type name and the *attributes* is the
-**Tuple** with zero attributes.
-
-The idiomatic default attribute name for a single-attribute **Article** is
-`0` (the first conceptually ordered attribute name) when there isn't an
-actual meaningful name to give it.
+An **Article** value is represented by `<Article>`.
 
 Grammar:
 
@@ -2303,28 +1976,7 @@ Examples:
 
 ## Excuse
 
-An **Excuse** value, represented by `<Excuse>`, is an explicitly stated
-reason for why, given some particular problem domain, a value is not being
-used that is ordinary for that domain.  Alternately, an **Excuse** is
-characterized by an **Article** that has the added semantic of representing
-some kind of error condition, in contrast to an actual **Article** which
-explicitly does *not* represent an error condition in the general case.
-
-For example, the typical integer division operation is not defined to give
-an integer result when the divisor is zero, and so a function for integer
-division could be defined to result in an **Excuse** value rather than
-throw an exception in that case.  For another example, an **Excuse** value
-could be used to declare that the information we are storing about a person
-is missing certain details and why those are missing, such as because the
-person left the birthdate field blank on their application form.
-
-An **Excuse** is isomorphic to an *exception* but that use of the former is
-not meant to terminate execution of code early unlike the latter which is.
-
-The **Excuse** possrep is the idiomatic way for an external data model to
-represent "new" *error* or *exception* types of a nominal type system in a
-consistent way.  The counterpart **Article** possrep should *not* be used for
-these things, but rather just every other kind of externally-defined type.
+An **Excuse** value is represented by `<Excuse>`.
 
 Grammar:
 
@@ -2347,32 +1999,7 @@ Examples:
 
 ## Ignorance
 
-The singleton **Ignorance** value, represented by `<Ignorance>`, is
-characterized by an **Excuse** which simply says that an ordinary value for
-any given domain is missing and that there is simply no excuse that has
-been given for this; in other words, something has gone wrong without the
-slightest hint of an explanation.
-
-This is conceptually the most generic excuse value there is and it can
-be used by lazy programmers as a fallback for when they don't have even a
-semblance of a better explanation for why an ordinary value is missing.
-
-The **Ignorance** value has its own special syntax in MUON disjoint from
-any **Excuse** syntax so that this MUON-defined excuse doesn't step on any
-possible name that a particular external data model might use.
-
-When an external data model natively has exactly one generic *null* or
-*nil* or *undefined* or *unknown* or similar value or quasi-value,
-**Ignorance** is the official way to represent an instance of it in MUON.
-
-When an external data model natively has a concept of 3-valued logic (MUON
-itself does not), specifically a concept like such where the multiplicity
-of scenarios that may produce a special no-regular-value-is-here marker do
-in fact all produce the exact same marker, **Ignorance** is the official
-way to represent that marker.  This includes the *null* of any common
-dialect of SQL.  Whereas, for external data models that distinguish the
-reasons for why a regular value may be missing, **Ignorance** should NOT be
-used and instead other more applicable **Excuse** values should instead.
+The singleton **Ignorance** value is represented by `<Ignorance>`.
 
 Grammar:
 
@@ -2391,9 +2018,7 @@ Examples:
 
 ## Nesting / Attribute Name List
 
-A **Nesting** value, represented by `<Nesting>`, is an arbitrarily-large
-nonempty ordered collection of attribute names, intended for referencing an
-entity in a multi-level namespace, such as nested **Tuple** may implement.
+A **Nesting** value is represented by `<Nesting>`.
 
 Grammar:
 
@@ -2446,9 +2071,7 @@ Examples:
 
 ## Heading / Attribute Name Set
 
-A **Heading** value, represented by `<Heading>`, is an arbitrarily-large
-unordered collection of *attribute names*, such that no 2 attribute names
-are the same.
+A **Heading** value is represented by `<Heading>`.
 
 Grammar:
 
@@ -2524,8 +2147,7 @@ Examples:
 
 ## Renaming / Attribute Name Map
 
-A **Renaming** value, represented by `<Renaming>`, is an arbitrarily-large
-unordered collection of attribute renaming specifications.
+A **Renaming** value is represented by `<Renaming>`.
 
 Grammar:
 
@@ -2622,72 +2244,6 @@ Examples:
     `Some attribute names can only appear quoted.`
     \$:("First Name"->"Last Name")
 ```
-
-# EXCLUDED DATA TYPE POSSREPS
-
-Muldis Object Notation eschews dedicated syntax for some data types that
-users might expect to see here.  This section enumerates some and says why.
-
-Special values of an IEEE floating-point number such as infinities,
-over/underflows, NaNs, are not part of the **Fraction** possrep and rather
-would be their own singleton **Article** or **Excuse** possreps, usually
-left up to the overlaid data model.
-
-Fixed-precision/scale numbers and/or significant figures indication and/or
-error margin indication, left up to the overlaid data model.  Any added
-would be bareword only as expected to be relatively short. They would be
-defined in terms of being a scaled integer or fixed-denominator fraction.
-
-While **Mix** is characterized by a generalization of a **Bag**, there are
-currently no possreps defined like **Interval Mix** or **Tuple Mix**,
-because there doesn't seem to be a use case for them.  However, if it turns
-out that either would have a practical use, there is appropriate syntax
-already reserved for them, namely `\/..{}` and `\/%()` plus `\/%{}`.
-
-Dictionary types in the general case are excluded because the relational
-types should be able to represent all their variations (eg, unordered,
-ordered, one-directional vs bi-directional, with or without duplicates,
-etc) more effectively and in a more generic manner.  The canonical way to
-represent a dictionary used like an anonymous structure or class, where the
-dictionary keys are all character strings, is the **Tuple**.  The canonical
-way to represent the general case of a dictionary where the dictionary keys
-might be of any data type is with a binary **Relation** with 2 *positional*
-attributes, and a single key-value pair of such a dictionary is a binary
-**Tuple**.  A canonical syntax specific to the most common case of a
-Dictionary, namely unordered, one-directional, any key type, no duplicates,
-might be added later.
-
-Most complexities related to temporal types are excluded by MUON, and are
-best handled by a data model layered over top of MUON.  For example, MUON
-itself does not place any restrictions on how many
-months/days/hours/minutes/seconds are permitted in particular slots for the
-possreps it does provide.  Also, MUON itself makes no assumptions on what
-particular calendars/eras/epochs are in use, eg Gregorian or other.
-
-Most complexities related to spatial types are excluded by MUON, and are
-best handled by a data model layered over top of MUON.  While MUON includes
-the **Geographic Point** possrep to handle the generally most simple and
-widely useful geographic coordinate type, it doesn't explicitly support any
-other kinds of geometries.
-
-Currency types in the general case are excluded because the **Mix** possrep
-should be able to represent all their variations in a more generic manner.
-
-Media types in the general case, such as audio or still or moving visual,
-are excluded because they are better defined by a data model layered over
-top of MUON and they are complex.  Only generic plain-text media is native.
-
-Source code types in the general case, such as definitions of functions or
-procedures or data types, are excluded because they are better defined by a
-data model layered over top of MUON and they are both complex and highly
-variable.  Only a few source code types have dedicated MUON syntax because
-they specifically benefit from that and conceptually they are simple even
-if they may vary greatly in implementation, such as unqualified identifiers
-(via **Text**) and **Nesting**, **Heading**, **Renaming**.
-
-Generic foreign serialization types such as JSON and XML are excluded
-because MUON as a whole is supposed to natively handle everything they can
-represent but better; otherwise one can still use **Text** to embed those.
 
 # SYNTACTIC MNEMONICS
 
@@ -2846,117 +2402,6 @@ that means they are used in pairs.
 Some of the above mnemonics also carry additional meanings in a wider
 **Muldis Data Language** context, but those are not described here.
 
-# VERSIONING
-
-Every version of this specification document is expected to declare its own
-fully-qualified name, or *identity*, so that it can easily be referred to
-and be distinguished from every other version that does or might exist.
-
-The expected fully-qualified name of every version of this specification
-document, as either declared in said document or as referenced by other
-documents or by source code, has 3 main parts: *document base name*,
-*authority*, and *version number*.
-
-The *document base name* is the character string `Muldis_Object_Notation`.
-
-An *authority* is some nonempty character string whose value uniquely
-identifies the authority or author of the versioned entity.  Generally
-speaking, the community at large should self-regulate authority identifier
-strings so they are reasonable formats and so each prospective
-authority/author has one of their own that everyone recognizes as theirs.
-Note that an authority/author doesn't have to be an individual person; it
-could be some corporate entity instead.
-
-Examples of recommended *authority* naming schemes include a qualified
-base HTTP url belonging to the authority (example `http://muldis.com`) or
-a qualified user identifier at some well-known asset repository
-(example `http://github.com/muldis` or `cpan:DUNCAND`).
-
-For all official/original works by Muldis Data Systems, Inc., the
-*authority* has always been `http://muldis.com` and is expected to remain
-so during the foreseeable future.
-
-If someone else wants to *embrace and extend* this specification document,
-then they must use their own (not `http://muldis.com`) base authority
-identifier, to prevent ambiguity, assist quality control, and give due credit.
-
-In this context, *embrace and extend* means for someone to do any of the
-following:
-
-- Releasing a modified version of this current document or any
-component thereof where the original of the modified version was released
-by someone else (the original typically being the official release), as
-opposed to just releasing a delta document that references the current one
-as a foundation.  This applies both for unofficial modifications and for
-official modifications following a change of who is the official maintainer.
-
-- Releasing a delta document for a version of this current document or
-any component thereof where the referenced original is released by someone
-else, and where the delta either makes significant incompatible changes.
-
-A *version number* is an ordered sequence of 1 or more integers.  A
-*version number* is used to distinguish between all of the versions of a
-named entity that have a common *authority*, per each kind of versioned
-entity; version numbers typically indicate the release order of these
-related versions and how easily users can substitute one version for
-another.  The actual intended meaning of any given *version number*
-regarding for example substitutability is officially dependant on each
-*authority* and no implicit assumptions should be made that 2 *version
-number* with different *authority* are comparable in any meaningful way,
-aside from case-by-case where a particular *authority* declares they use a
-scheme compatible with another.  The only thing this document requires is that
-every distinct version of an entity has a distinct fully-qualified name.
-
-For each official/original work by Muldis Data Systems related to this
-specification document and released after 2016 April 1, except where
-otherwise stated, it uses *semantic versioning* for each *version number*,
-as described below.  Others are encouraged to follow the same format, but
-are not required to.  For all intents and purposes, every *version number*
-of an official Muldis work is intended to conform to the external public
-standard **Semantic Versioning 2.0.0** as published at
-[https://semver.org](https://semver.org), but it is re-explained below for
-clarity or in case the external document disappears.
-
-A *version number* for authority `http://muldis.com` is an ordered sequence
-of integers, the order of these being from most significant to least, with
-3 positions [MAJOR,MINOR,PATCH] and further ones possible.  The version
-sequence may have have as few as 1 most significant position.  Any omitted
-trailing position is treated as if it were zero.  Each of
-{MAJOR,MINOR,PATCH} must be a non-negative integer. MAJOR is always (except
-when it is zero) incremented when a change is made which breaks
-backwards-compatibility for functioning uses, such as when removing a
-feature; it may optionally be incremented at other times, such as for
-marketing purposes.  Otherwise, MINOR is always incremented when a change
-is made that breaks forwards-compatibility for functioning uses, such as
-when adding a feature; it may optionally be incremented at other times,
-such as for when a large internals change is made.  Otherwise, PATCH must
-be incremented when making any kind or size of change at all, as long as it
-doesn't break compatibility; typically this is bug-fixes or performance
-improvements or some documentation changes or any test suite changes.  For
-fixes to bugs or security holes which users may have come to rely on in
-conceptually functioning uses, they should be treated like API changes.
-When MAJOR is zero, MINOR is incremented for any kind of breaking change.
-There is no requirement that successive versions have adjacent integers,
-but they must be increases.
-
-Strictly speaking a *version number* reflects intention of the authority's
-release and not necessarily its actuality.  If PATCH is incremented but the
-release unknowingly had a breaking change, then once this is discovered
-another release should be made which increments PATCH again and undoes that
-breaking change, in order to safeguard upgrading users from surprises; an
-additional release can be made which instead increments MAJOR or MINOR with
-the breaking change if that change was actually desired.
-
-*Currently this document does not specify matters such as how to indicate
-maturity, for example production vs pre-production/beta/etc, so explicit
-markers of such can either be omitted or be based on other standards.
-However, a major version of zero should be considered either pre-production
-or that the authority expects frequent upcoming backwards-incompatible changes.*
-
-See also [http://design.perl6.org/S11.html#Versioning](
-http://design.perl6.org/S11.html#Versioning) which was the primary
-influence for the versioning scheme described above.
-
 # SEE ALSO
 
 *TODO.*
@@ -2972,40 +2417,12 @@ This file is part of the formal specification named
 
 MUON is Copyright © 2002-2019, Muldis Data Systems, Inc.
 
-[http://www.muldis.com/](http://www.muldis.com/)
-
-MUON is free documentation for software;
-you can redistribute it and/or modify it under the terms of the Artistic
-License version 2 (AL2) as published by the Perl Foundation
-([http://www.perlfoundation.org/](http://www.perlfoundation.org/)).
-You should have received copies of the AL2 as part of the
-MUON distribution, in the file
-[LICENSE/artistic-2_0.txt](../LICENSE/artistic-2_0.txt); if not, see
-[https://www.perlfoundation.org/artistic-license-20.html](
-https://www.perlfoundation.org/artistic-license-20.html).
-
-Any versions of MUON that you modify and distribute must carry prominent
-notices stating that you changed the files and the date of any changes, in
-addition to preserving this original copyright notice and other credits.
-
-While it is by no means required, the copyright holder of MUON would
-appreciate being informed any time you create a modified version of MUON
-that you are willing to distribute, because that is a practical way of
-suggesting improvements to the standard version.
+See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
 # TRADEMARK POLICY
 
-**MULDIS** and **MULDIS MULTIVERSE OF DISCOURSE** are trademarks of Muldis
-Data Systems, Inc. ([http://www.muldis.com/](http://www.muldis.com/)).
-The trademarks apply to computer database software and related services.
-See [http://www.muldis.com/trademark_policy.html](
-http://www.muldis.com/trademark_policy.html) for the full written details
-of Muldis Data Systems' trademark policy.
+The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
 
 # ACKNOWLEDGEMENTS
 
-*None yet.*
-
-# FORUMS
-
-*TODO.*
+The ACKNOWLEDGEMENTS in [Overview](Muldis_Object_Notation.md) apply to this file too.
