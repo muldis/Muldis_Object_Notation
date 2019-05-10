@@ -1,0 +1,3011 @@
+# NAME
+
+Muldis Object Notation (MUON) -
+Source code and data interchange format
+
+# VERSION
+
+The fully-qualified name of this document is
+`Muldis_Object_Notation http://muldis.com 0.300.0`.
+
+# SYNOPSIS
+
+```
+    `Muldis_Content_Predicate
+    MCP version http://muldis.com 0.300.0 MCP
+    MCP script Unicode 2.1 UTF-8 MCP
+    MCP syntax Muldis_Object_Notation http://muldis.com 0.300.0 MCP
+    MCP model Muldis_Data_Language http://muldis.com 0.300.0 MCP
+    Muldis_Content_Predicate`
+
+    \?%{
+        (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
+            phone_numbers : {"+1.4045552995", "+1.7705557572"}),
+        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : {}),
+        (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
+            phone_numbers : {"+81.9072391679"}),
+    }
+```
+
+# DESCRIPTION
+
+This document is the human readable authoritative formal specification named
+**Muldis Object Notation** (**MUON**).
+The fully-qualified name of this document and specification is
+`Muldis_Object_Notation http://muldis.com 0.300.0`.
+This is the official/original version by the authority Muldis Data Systems
+(`http://muldis.com`), version number `0.300.0`.
+
+**Muldis Object Notation** specifies a semi-lightweight source code and
+data interchange format.  It is fairly easy for humans to read and write.
+It is fairly easy for machines to parse and generate.  MUON is a plain text
+format that is completely language independent but uses conventions that
+are familiar to programmers of many other languages.
+
+The prescribed standard filename extension for files featuring a MUON
+parsing unit is `.muon`, though as per standard UNIX conventions, such MUON
+files can in fact have any filename extension when there is other context
+to interpret them with.  Filename extensions are more for the benefit of
+the operating system or command shell or users than for a MUON parser or
+generator, the latter just cares about the content of the file.
+
+# FEATURES
+
+These sections outline some key features of MUON, including some that are
+more unique to it and some reasons for why one might want to use it.
+
+## Data Type Possreps
+
+**Muldis Object Notation** is mainly characterized by a set of *data type
+possreps* or *possreps* (*possible representations*) that all *values*
+represented with MUON syntax are characterized by.
+Each MUON possrep corresponds 1:1 with a distinct grammar in this document.
+
+- Logical: Boolean
+- Numeric: Integer, Fraction
+- Stringy: Bits, Blob, Text
+- Discrete: Array, Set, Bag, Mix
+- Continuous: Interval, Interval Set, Interval Bag
+- Structural: Tuple
+- Relational: Tuple Array, Relation, Tuple Bag
+- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
+- Generic: Article, Excuse, Ignorance
+- Source Code: Nesting, Heading, Renaming
+
+A *possrep* corresponds to the concept of a *data type*, where the latter
+is characterized by a set of *values*, and one may choose to use those
+terms interchangeably in less formal speech.  But formally a *data type*
+exists only as part of an external data model used with MUON and is not
+part of MUON itself.  Depending on the data model in question, each MUON
+possrep may correspond to exactly 1 data type, or to multiple data types,
+or multiple possreps may correspond to 1 data type.
+
+This document avoids defining any relationship between these possreps, and
+officially leaves it up to each external data model used with MUON to
+define for itself whether any two given possreps are *conjoined* (have any
+values in common) or *disjoint* (have no values in common).  For example,
+some external data models may consider **Integer** to correspond to a
+*subtype* of what **Fraction** corresponds to (`42` is a member of both)
+while others may consider the two possreps to be disjoint (`42` and `42.0`
+do not compare as equal).  The sole exceptions are that the (not listed
+above) **Any** and **None** possreps explicitly correspond to a *supertype*
+or *subtype* respectively of what every other possrep corresponds to,
+regardless of the data model, for what that's worth.
+
+When an external data model is used with MUON, MUON requires that a
+thorough mapping is defined for every MUON possrep to some data type of
+that model.  The intent here is that every well-formed MUON *parsing unit*
+can be deterministically parsed into some value of that model, and
+therefore that there would never be a MUON parsing failure due to the data
+model not supporting some particular data type.  The mapping should be a
+reasonable best fit, even if crude, when there isn't a perfect analogy.
+In contrast, MUON does *not* require that a mapping exist from every value
+of an external data model to MUON, in particular types that are like opaque
+pointers to memory addresses which don't meaningfully serialize.  MUON also
+does require that any value which a data model supports generating a MUON
+parsing unit from must be losslessly round-trippable, that when one
+generates MUON from said value, and then turns around and parses that MUON
+with the same model, it will be parsed as the exact same value.
+Note that the **Article** possrep is the idiomatic way for an external data
+model to represent "new" types as MUON in a consistent way.
+
+## Ease of Use
+
+*TODO.*
+
+## Resiliency
+
+*TODO.*
+
+## Extensibility
+
+*TODO.*
+
+# NORMALIZATION
+
+The grammar comprising most of this document assumes that the MUON *parsing
+unit* it takes as input has already been through some basic normalization,
+which this section describes.  Said normalization is expected to be
+performed by a MUON parser natively as its first step.
+
+## UNIX Shebang Interpreter Directive
+
+[https://en.wikipedia.org/wiki/Shebang_(Unix)](
+https://en.wikipedia.org/wiki/Shebang_(Unix))
+
+Since a MUON file may typically define an executable program that could be
+directly invoked in the typical manner of a UNIX script, MUON officially
+supports the option of a *shebang line* at the start of a *parsing unit*.
+The shebang line tells the program loader what interpreter to invoke to run
+the MUON file and what other additional arguments it should be given.
+
+Examples:
+
+```
+    #!/usr/bin/env muldisre
+```
+
+The `#!` is a magic number and the shebang continues until the first
+linebreak; the parser should discard that line and then process the rest of
+the input according to the regular MUON grammar.
+
+## Script / Character Encoding
+
+Assuming that the MUON parser proper operates logically in terms of the
+input *parsing unit* being a Unicode character string (characterized by a
+sequence of Unicode *character code points*, each corresponding to an
+integer in the set {0..0xD7FF,0xE000..0x10FFFF}), a MUON parser that is
+actually given an octet string as input (per a raw file) will need to
+determine which of possibly many possible encoding formats was used to
+encode the character data as octets, and then convert the input as such.
+
+In self-defining terms, the regular MUON parser expects a **Text** value
+as input, but a raw file is directly characterized by a **Blob** value,
+so a normalization function would need to map from the latter value to the
+former, a process typically known as *character decoding*.
+
+It is mandatory for every MUON parser and generator to support the UTF-8
+character format associated with the **Unicode** standard version 2.1 and
+later; the proper subset 7-bit ASCII character format is also mandatory.
+Both the UTF-8 variants with and without the leading Byte Order Mark (BOM)
+character must be supported.
+
+It is recommended but not mandatory for a MUON parser or generator to also
+support other commonly used character formats, particularly UTF-16BE and
+UTF-16LE (both with and without a BOM), either legacy or modern.
+
+It is strongly recommended but not mandatory for a MUON parser or generator
+to natively accept or return both **Text** and **Blob** values directly.
+Typically this means providing 2 parsing or generating functions that
+differ only in accepting or returning a **Text** or a **Blob**.
+This can make the parsing or generating operations use less memory or time
+by avoiding extra intermediate copies or conversions of the data; it should
+be quite straightforward to parse or generate MUON octet streams directly.
+This also means applications using them don't have to concern themselves as
+much with explicit character decoding or encoding, and can simply feed or
+output a file or network stream etc.
+
+It is strongly recommended but not mandatory for a MUON parser or generator
+to support the externally defined standard **Muldis Content Predicate**
+(**MCP**) format for source code metadata.  The MCP standard was
+co-developed with the MUON standard as a recommended way to make a MUON
+*parsing unit* more strongly typed, in particular to explicitly declare
+what script / character encoding was used in its file / octet string form.
+While heuristics (and BOMs) can lead to a strong guess as to what character
+encoding a file is, an explicit MCP declaration makes things more certain.
+
+A **Muldis Content Predicate** declaration would normally be embedded in a
+MUON *dividing space* quoted comment string, so the regular MUON parser
+needs no special handling grammar/logic to ignore it (unlike a shebang).
+
+If a MUON parser supports scanning a *parsing unit* for a MCP *parsing unit
+predicate*, then it is mandatory for any scan to look through the lesser of
+the first 1000 characters, the first 2000 octets, or the entirety, of the
+*parsing unit*, before it gives up on trying to find a *parsing unit
+predicate*; giving up after that point is recommended.  To be specific,
+only the entire first `Muldis_Content_Predicate` token needs to be found in
+that scan area, and the rest of the *predicate* may extend past it.  This
+means that any *predicate* needs to be located near the start of the
+*parsing unit* if it has any expectation of being seen.  This requirement
+exists to aid performance of a MUON parser by invalidating pathological
+cases, so a parser doesn't have to scan a large *parsing unit* just in case
+it might have a buried *predicate* that most likely isn't there at all.
+
+Examples:
+
+```
+    `Muldis_Content_Predicate
+    MCP version http://muldis.com 0.300.0 MCP
+    MCP script Unicode 2.1 UTF-8 MCP
+    MCP syntax Muldis_Object_Notation http://muldis.com 0.300.0 MCP
+    MCP model Muldis_Data_Language http://muldis.com 0.300.0 MCP
+    Muldis_Content_Predicate`
+```
+
+# GRAMMAR
+
+The syntax and intended interpretation of the grammar itself seen in this
+document should match that of the user-defined grammars feature of the Perl
+6 (Raku) language, which is described by
+[https://docs.perl6.org/language/grammars](
+https://docs.perl6.org/language/grammars).
+
+Any references like `<foo>` in either the grammar itself or in the written
+documentation specifically refer to the corresponding grammar token `foo`.
+
+See also the bundled actual Perl 6 module
+[hosts/Perl6/lib/Muldis/Reference/Object_Notation.pm6](
+../hosts/Perl6/lib/Muldis/Reference/Object_Notation.pm6)
+which has an executable copy of the grammar.
+
+Grammar:
+
+```
+    token MUON
+    {
+        <sp>
+            <Any>
+        <sp>
+    }
+
+    token sp
+    {
+        [<whitespace> | <quoted_sp_comment_str> | <entity_marker>]*
+    }
+
+    token whitespace
+    {
+        [' ' | '\t' | '\n' | '\r']+
+    }
+
+    token quoted_sp_comment_str
+    {
+        '`' <-[`]>* '`'
+    }
+
+    token entity_marker
+    {
+        '`\$\$\$`'
+    }
+
+    token seg_sp
+    {
+        ['"' <sp> '"']*
+    }
+```
+
+A `<sp>` represents *dividing space* that may be used to visually format
+MUON for readability (with line breaks and line indentation), or to embed
+comments, without changing its meaning.  A superset of the MUON grammar
+might require *dividing space* to disambiguate the boundaries of
+otherwise-consecutive grammar tokens, but plain MUON does not.
+
+A `<seg_sp>` represents *segmenting space* that may be used to split a
+quotation-mark-delimited literal into multiple segments, where each segment
+is quotation-mark-delimited and each pair of consecutive segments is
+separated by dividing space.  This segmenting ability is provided to
+support code that contains very long numeric or stringy literals while
+still being well formatted (no extra long lines).  The expected usage
+context of `<seg_sp>` is like `'"' ... <seg_sp> ... '"'`.
+
+An `<entity_marker>` is a feature that is optional for a MUON parser or
+generator to support.  It is syntactically a proper subset of a
+`<quoted_sp_comment_str>` and would simply be seen as such by a MUON parser
+that didn't specifically know about it.  An `<entity_marker>` is intended
+as a trivial annotation for some MUON construct that immediately follows
+it.  This is so that naive development tools that know about MUON
+specifically but not about any source code defining data models layered
+over it can be expressly pointed to the parts of the MUON document that
+declare something interesting, such as a package or routine or type
+declaration, so that generic MUON tooling can, say, generate a navigation
+menu to quickly jump around a document to each entity declaration therein.
+The idomatic location for an `<entity_marker>` is immediately before a
+**Tuple** attribute name, assuming that the corresponding attribute value
+is the construct of interest and the attribute name is used as the name to
+refer to it with in function menus.
+
+Examples:
+
+```
+    (
+        `$$$` My_Func : (\Function : ...),
+
+        `$$$` My_Proc_1 : (\Procedure : ...),
+
+        `$$$` My_Proc_2 : (\Procedure : ...),
+    )
+```
+
+## Any / Universal Type Possrep
+
+The **Any** possrep corresponds to the *universal type*, which is the
+maximal data type of each type system and consists of all values which can
+possibly exist.  This is represented by `<Any>`.
+
+Grammar:
+
+```
+    token Any
+    {
+        <opaque> | <collection>
+    }
+
+    token opaque
+    {
+          <Boolean>
+        | <Integer>
+        | <Fraction>
+        | <Bits>
+        | <Blob>
+        | <Text>
+        | <Calendar_Time>
+        | <Calendar_Duration>
+        | <Calendar_Instant>
+        | <Geographic_Point>
+        | <Ignorance>
+        | <Nesting>
+        | <Heading>
+        | <Renaming>
+    }
+
+    token collection
+    {
+          <Array>
+        | <Set>
+        | <Bag>
+        | <Mix>
+        | <Interval>
+        | <Interval_Set>
+        | <Interval_Bag>
+        | <Tuple>
+        | <Tuple_Array>
+        | <Relation>
+        | <Tuple_Bag>
+        | <Article>
+        | <Excuse>
+    }
+```
+
+An `<Any>` represents a generic value literal that is allowed to be of any
+possrep at all, except where specifically noted otherwise.
+
+An `<opaque>` is an `<Any>` that explicitly has no child `<Any>` nodes; in
+conventional terms, one is typically for selecting scalar values, though
+many cases are also simple collections.
+
+A `<collection>` is an `<Any>` that explicitly does have child `<Any>`
+nodes in the general case; in conventional terms, one is for selecting
+values representing collections of other values.
+
+## None / Empty Type Possrep
+
+The **None** possrep corresponds to the *empty type*, which is the minimal
+data type of each type system and consists of exactly zero values.
+This has no representation in the grammar, but is mentioned for parity.
+
+## Boolean
+
+A **Boolean** value, represented by `<Boolean>`, is a general purpose
+2-valued logic boolean or *truth value*, or specifically it is one of the 2
+values *False* and *True*.
+
+Grammar:
+
+```
+    token Boolean
+    {
+        ['\\?' <sp>]? [False | True]
+    }
+```
+
+Examples:
+
+```
+    False
+
+    True
+
+    \?False
+
+    \?True
+```
+
+## Integer
+
+An **Integer** value, represented by `<Integer>`, is a general purpose
+exact integral number of any magnitude, which explicitly does not represent
+any kind of thing in particular, neither cardinal nor ordinal nor nominal.
+It has no minimum or maximum value.
+
+Grammar:
+
+```
+    token Integer
+    {
+        <nonquoted_int> | <quoted_int>
+    }
+
+    token nonquoted_int
+    {
+        ['\\+' <sp>]? <asigned_int>
+    }
+
+    token asigned_int
+    {
+        <num_sign>? <nonsigned_int>
+    }
+
+    token num_sign
+    {
+        <[+-]>
+    }
+
+    token nonsigned_int
+    {
+        <ns_int_2> | <ns_int_8> | <ns_int_10> | <ns_int_16>
+    }
+
+    token ns_int_2
+    {
+        0b <nc_2>+
+    }
+
+    token ns_int_8
+    {
+        0o <nc_8>+
+    }
+
+    token ns_int_10
+    {
+        [0d]? <nc_10>+
+    }
+
+    token ns_int_16
+    {
+        0x <nc_16>+
+    }
+
+    token nc_2
+    {
+        <[ 0..1 _ ]>
+    }
+
+    token nc_8
+    {
+        <[ 0..7 _ ]>
+    }
+
+    token nc_10
+    {
+        <[ 0..9 _ ]>
+    }
+
+    token nc_16
+    {
+        <[ 0..9 A..F _ a..f ]>
+    }
+
+    token quoted_int
+    {
+        '\\+' <sp> '"' <seg_sp> <qu_asigned_int> <seg_sp> '"'
+    }
+
+    token qu_asigned_int
+    {
+        <num_sign>? <seg_sp> <qu_nonsigned_int>
+    }
+
+    token qu_nonsigned_int
+    {
+        <qu_ns_int_2> | <qu_ns_int_8> | <qu_ns_int_10> | <qu_ns_int_16>
+    }
+
+    token qu_ns_int_2
+    {
+        0 <seg_sp> b <seg_sp> <nc_2> <qu_nc_2>*
+    }
+
+    token qu_ns_int_8
+    {
+        0 <seg_sp> o <seg_sp> <nc_8> <qu_nc_8>*
+    }
+
+    token qu_ns_int_10
+    {
+        [0 <seg_sp> d <seg_sp>]? <nc_10> <qu_nc_10>*
+    }
+
+    token qu_ns_int_16
+    {
+        0 <seg_sp> x <seg_sp> <nc_16> <qu_nc_16>*
+    }
+
+    token qu_nc_2
+    {
+        <nc_2> | <seg_sp>
+    }
+
+    token qu_nc_8
+    {
+        <nc_8> | <seg_sp>
+    }
+
+    token qu_nc_10
+    {
+        <nc_10> | <seg_sp>
+    }
+
+    token qu_nc_16
+    {
+        <nc_16> | <seg_sp>
+    }
+```
+
+This grammar supports writing **Integer** literals in any of the numeric
+bases {2,8,10,16}, using conventional syntax.  The literal may optionally
+contain underscore characters (`_`), which exist just to help with visual
+formatting, such as for `10_000_000`.
+
+This grammar is subject to the additional rule that the total count of
+numeric position characters (`0..9 A..F a..f`) in each of the
+`<nonsigned_int>` and in the `<qu_nonsigned_int>` must be at least 1.
+
+Examples:
+
+```
+    0
+
+    1
+
+    -3
+
+    42
+
+    +42
+
+    `USA national debt in US dollars close to midnight of 2017 Dec 31.`
+    20_597_460_196_915
+
+    \+81
+
+    `Mersenne Prime 2^521-1, 157 digits, discovered 1952 Jan 30.`
+    \+"68_64797"
+        "66013_06097_14981_90079_90813_93217_26943_53001_43305_40939"
+        "44634_59185_54318_33976_56052_12255_96406_61454_55497_72963"
+        "11391_48085_80371_21987_99971_66438_12574_02829_11150_57151"
+
+    0d39
+
+    0xDEADBEEF
+
+    0o644
+
+    0b11001001
+```
+
+## Fraction
+
+A **Fraction** value, represented by `<Fraction>`, is a general purpose
+exact rational number of any magnitude and precision, which explicitly does
+not represent any kind of thing in particular, neither cardinal nor ordinal
+nor nominal.  It has no minimum or maximum value.
+
+Grammar:
+
+```
+    token Fraction
+    {
+        <nonquoted_frac> | <quoted_frac>
+    }
+
+    token nonquoted_frac
+    {
+        ['\\/' <sp>]? <asigned_frac>
+    }
+
+    token asigned_frac
+    {
+        <significand> [<sp> '*' <sp> <radix> <sp> '^' <sp> <exponent>]?
+    }
+
+    token significand
+    {
+        <radix_point_sig> | <num_den_sig>
+    }
+
+    token radix_point_sig
+    {
+        <num_sign>? <ns_rps>
+    }
+
+    token ns_rps
+    {
+        <ns_rps_2> | <ns_rps_8> | <ns_rps_10> | <ns_rps_16>
+    }
+
+    token ns_rps_2
+    {
+        <ns_int_2> <sp> '.' <sp> <nc_2>+
+    }
+
+    token ns_rps_8
+    {
+        <ns_int_8> <sp> '.' <sp> <nc_8>+
+    }
+
+    token ns_rps_10
+    {
+        <ns_int_10> <sp> '.' <sp> <nc_10>+
+    }
+
+    token ns_rps_16
+    {
+        <ns_int_16> <sp> '.' <sp> <nc_16>+
+    }
+
+    token num_den_sig
+    {
+        <numerator> <sp> '/' <sp> <denominator>
+    }
+
+    token numerator
+    {
+        <asigned_int>
+    }
+
+    token denominator
+    {
+        <nonsigned_int>
+    }
+
+    token radix
+    {
+        <nonsigned_int>
+    }
+
+    token exponent
+    {
+        <asigned_int>
+    }
+
+    token quoted_frac
+    {
+        '\\/' <sp> '"' <seg_sp> <qu_asigned_frac> <seg_sp> '"'
+    }
+
+    token qu_asigned_frac
+    {
+        <qu_significand> [<seg_sp> '*' <seg_sp> <qu_radix> <seg_sp> '^' <seg_sp> <qu_exponent>]?
+    }
+
+    token qu_significand
+    {
+        <qu_radix_point_sig> | <qu_num_den_sig>
+    }
+
+    token qu_radix_point_sig
+    {
+        <num_sign>? <qu_ns_rps>
+    }
+
+    token qu_ns_rps
+    {
+        <qu_ns_rps_2> | <qu_ns_rps_8> | <qu_ns_rps_10> | <qu_ns_rps_16>
+    }
+
+    token qu_ns_rps_2
+    {
+        <qu_ns_int_2> <seg_sp> '.' <seg_sp> <nc_2> <qu_nc_2>*
+    }
+
+    token qu_ns_rps_8
+    {
+        <qu_ns_int_8> <seg_sp> '.' <seg_sp> <nc_8> <qu_nc_8>*
+    }
+
+    token qu_ns_rps_10
+    {
+        <qu_ns_int_10> <seg_sp> '.' <seg_sp> <nc_10> <qu_nc_10>*
+    }
+
+    token qu_ns_rps_16
+    {
+        <qu_ns_int_16> <seg_sp> '.' <seg_sp> <nc_16> <qu_nc_16>*
+    }
+
+    token qu_num_den_sig
+    {
+        <qu_numerator> <seg_sp> '/' <seg_sp> <qu_denominator>
+    }
+
+    token qu_numerator
+    {
+        <qu_asigned_int>
+    }
+
+    token qu_denominator
+    {
+        <qu_nonsigned_int>
+    }
+
+    token qu_radix
+    {
+        <qu_nonsigned_int>
+    }
+
+    token qu_exponent
+    {
+        <qu_asigned_int>
+    }
+
+    token numeric_as_fraction
+    {
+        <Fraction> | <Integer>
+    }
+```
+
+This grammar supports writing **Fraction** literals in any of the numeric
+bases {2,8,10,16}, using conventional syntax.  The literal may optionally
+contain underscore characters (`_`), which exist just to help with visual
+formatting, such as for `20_194/17` or `3.141_59`.
+
+The general form of a **Fraction** literal is `N/D*R^E` such that {N,D,R,E}
+are each integers and the literal represents the rational number that
+results from evaluating the mathematical expression using the following
+implicit order of operations, `(N/D)*(R^E)` such that `/` means divide, `*`
+means multiply, and `^` means exponentiate.
+
+MUON does not require the numerator/denominator pair to be coprime, but
+typically a type system will normalize the pair as such when determining
+value identity.  Similarly, MUON does not require any other kind of
+normalization between the components of a **Fraction** literal.
+
+While the wider general format `N/D*R^E` can represent every rational
+number, as can just the `N/D` portion by itself, the alternate but typical
+format `X.X` can only represent a proper subset of the rational numbers,
+that subset being every rational number that can be represented as a
+terminating decimal number.  Note that every rational number that can be
+represented as a terminating binary or octal or hexadecimal number can also
+be represented as a terminating decimal number.
+
+Note that in order to keep the grammar simpler or more predictable, each
+**Fraction** component {N,D,R,E} must have its numeric base specified
+individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
+be interpreted as base 10.  This keeps behaviour consistent with a parser
+that sees a **Fraction** literal but interprets it as multiple **Integer**
+literals separated by symbolic infix operators, evaluation order aside.
+Also per normal expectations, literals in the format `X.X` only specify the
+base at most once in total, *not* separately for the part after the `.`.
+
+This grammar is subject to the additional rule that the total count of
+numeric position characters (`0..9 A..F a..f`) in each of the
+`<radix_point_sig>` and in the `<qu_radix_point_sig>` must be at least 2,
+such that the `.` is positioned after at least 1 and before at least 1.
+
+This grammar is subject to the additional rule that the integer denoted by
+each of `<denominator>` and `<qu_denominator>` must be nonzero.
+
+This grammar is subject to the additional rule that the integer denoted by
+each of `<radix>` and `<qu_radix>` must be at least 2.
+
+Examples:
+
+```
+    0.0
+
+    1.0
+
+    -4.72
+
+    +4.72
+
+    \/29.95
+
+    0/1
+
+    1/1
+
+    5/3
+
+    -472/100
+
+    +472/100
+
+    15_485_863/32_452_843
+
+    \/355/113
+
+    `First 101 digits of transcendental number π.`
+    \/"3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510"
+        "58209_74944_59230_78164_06286_20899_86280_34825_34211_70679"
+
+    `Mersenne Primes 2^107-1 divided by 2^127-1.`
+    \/"162259276829213363391578010288127"
+        "/170141183460469231731687303715884105727"
+
+    4.5207196*10^37
+
+    0xDEADBEEF.FACE
+
+    -0o35/0o3
+
+    0b1.1
+
+    0b1.011101101*0b10^-0b11011
+```
+
+## Bits
+
+A **Bits** value, represented by `<Bits>`, is characterized by an
+arbitrarily-long sequence of *bits* where each bit is represented by an
+**Integer** in the range 0..1,
+which explicitly does not represent any kind of thing in particular.
+
+Grammar:
+
+```
+    token Bits
+    {
+        '\\~?' <sp> '"' [<[ 0..1 _ ]> | <seg_sp>]* '"'
+    }
+```
+
+This grammar supports writing **Bits** literals in numeric base
+2 only, using conventional syntax.  The literal may optionally contain
+underscore characters (`_`), which exist just to help with visual
+formatting.
+
+Examples:
+
+```
+    \~?""
+
+    \~?"00101110100010"
+```
+
+## Blob
+
+A **Blob** value, represented by `<Blob>`, is characterized by an
+arbitrarily-long sequence of *octets* where each octet is represented by an
+**Integer** in the range 0..255,
+which explicitly does not represent any kind of thing in particular.
+
+Grammar:
+
+```
+    token Blob
+    {
+        '\\~+' <sp> '"' [<[ 0..9 A..F _ a..f ]> | <seg_sp>]* '"'
+    }
+```
+
+This grammar supports writing **Blob** literals in numeric base
+16 only, using conventional syntax.  The literal may optionally contain
+underscore characters (`_`), which exist just to help with visual
+formatting.
+
+This grammar is subject to the additional rule that the total count of
+hexit characters (`0..9 A..F _ a..f`) in the `<Blob>` excluding `_` must be
+a multiple of 2.
+
+Examples:
+
+```
+    \~+""
+
+    \~+"A705E416"
+```
+
+## Text / Attribute Name
+
+A **Text** value, represented by `<Text>`, is characterized by an
+arbitrarily-long sequence of **Unicode** 11.0 standard *character
+code points*, where each distinct code point corresponds to a distinct
+integer in the set **{0..0xD7FF,0xE000..0x10FFFF}**,
+which explicitly does not represent any kind of thing in particular.
+
+See also [https://unicode.org](https://unicode.org).
+
+A **Text** value has 2 fundamental uses, one being for generic user data,
+and the other being the canonical form of a standalone *attribute name*
+(see the **Tuple** possrep) which is an unqualified program identifier.
+
+Note that some programming languages or execution environments support a
+"Unicode character string" concept that is less strict than the **Unicode**
+standard, and thus allow malformed character strings.  For example, some
+may allow isolated/non-paired UTF-16 "surrogate" code points corresponding
+to integers in the set **{0xD800..0xDFFF}**.  MUON forbids the use of any
+such "character strings" using the `<Text>` syntax.  However, such data can
+still be conveyed using other means such as MUON's `<Array>`+`<Integer>`.
+
+Grammar:
+
+```
+    token Text
+    {
+        <quoted_text> | <code_point_text>
+    }
+
+    token quoted_text
+    {
+        ['\\~' <sp>]? <quoted_text_no_pfx>
+    }
+
+    token quoted_text_no_pfx
+    {
+        ['"' <text_content> '"']+ % <sp>
+    }
+
+    token text_content
+    {
+        <text_nonescaped_content> | <text_escaped_content>
+    }
+
+    token text_nonescaped_content
+    {
+        [[<restricted_inside_char> & <-[\\]>] <restricted_inside_char>*]?
+    }
+
+    token text_escaped_content
+    {
+        '\\' [[<restricted_inside_char> & <-[\\]>] | <escaped_char>]*
+    }
+
+    token restricted_inside_char
+    {
+        <-[ \x[0]..\x[1F] "` \x[80]..\x[9F] ]>*
+    }
+
+    token escaped_char
+    {
+          '\\q' | '\\g'
+        | '\\b'
+        | '\\t' | '\\n' | '\\r'
+        | ['\\c<' <code_point> '>']
+    }
+
+    token code_point_text
+    {
+        '\\~' <sp> <code_point>
+    }
+
+    token code_point
+    {
+        <nonsigned_int>
+    }
+```
+
+A `<Text>` may optionally be split into 1..N segments where each pair
+of consecutive segments is separated by dividing space.
+However the exact semantics of this for `<Text>` are different than for
+other quotation-mark-delimited possreps; mainly it is that the optional
+leading `\` is specified separately per segment and it only affects that
+segment; also, individual character escape sequences may not cross segments.
+
+This grammar is subject to the additional rule that the non-negative integer
+denoted by `<code_point>` must be in the set {0..0xD7FF,0xE000..0x10FFFF}.
+
+The meanings of the simple character escape sequences are:
+
+```
+    Esc | Unicode    | Unicode         | Chr | Literal character used
+    Seq | Code Point | Character Name  | Lit | for when not escaped
+    ----+------------+-----------------+-----+------------------------------
+    \q  | 0x22    34 | QUOTATION MARK  | "   | delimit Text/opaque literals
+    \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
+    \b  | 0x5C    93 | REVERSE SOLIDUS | \   | no special meaning in non-escaped
+    \t  | 0x9      9 | CHAR... TAB...  |     | control char horizontal tab
+    \n  | 0xA     10 | LINE FEED (LF)  |     | ctrl char line feed / newline
+    \r  | 0xD     13 | CARR. RET. (CR) |     | control char carriage return
+```
+
+There is just one complex escape sequence, of the format `\c<...>`, that
+supports specifying characters in terms of their Unicode code point number.
+One reason for this feature is to empower more elegant passing of
+Unicode-savvy MUON through a communications channel that is more limited,
+such as to 7-bit ASCII.
+
+A `<code_point_text>` is a specialized shorthand for a **Text** of
+exactly 1 character whose code point number it denotes.
+
+Given that **Text** values or syntax serve double duty for not only regular
+user data but also for attribute names of tuples or other kinds of
+identifiers, the `<code_point_text>` variant provides a nicer alternative
+for specifying them in latter contexts; it is
+purposefully like a regular integer for use in situations where we have
+conceptually ordered (rather than conceptually named) attributes.
+
+Examples:
+
+```
+    ""
+
+    "Ceres"
+
+    "サンプル"
+
+    "\This isn't not escaped.\n"
+
+    "\\c<0x263A>\c<65>"
+
+    \~"Green"
+
+    `One non-ordered quoted Text (or, one named attribute).`
+    "sales"
+
+    `One attribute name with a space in it.`
+    "First Name"
+
+    `One ordered nonquoted Text (or, one ordered attribute).`
+    \~0
+
+    `Same Text value (or, one ordered attr written in format of a named).`
+    "\\c<0>"
+
+    `From a graduate student (in finals week), the following haiku:`
+    "\study, write, study,\n"
+        "\do review (each word) if time.\n"
+        "\close book. sleep? what's that?\n"
+```
+
+## Array
+
+An **Array** value, represented by `<Array>`, is a general purpose
+arbitrarily-long ordered sequence of any other, *member* values, which
+explicitly does not represent any kind of thing in particular, and is
+simply the sum of its members.  An **Array** value is dense; iff it has any
+members, then its first-ordered member is at ordinal position **0**, and
+its last-ordinal-positioned member is at the ordinal position that is one
+less than the count of its members.  An **Array** in the general case may
+have multiple members that are the same value, and any duplicates may or
+may not exist at consecutive ordinal positions.
+
+Grammar:
+
+```
+    token Array
+    {
+        ['\\~' <sp>]? <ord_member_commalist>
+    }
+
+    token ord_member_commalist
+    {
+        '[' <sp> <member_commalist> <sp> ']'
+    }
+```
+
+Examples:
+
+```
+    `Zero members.`
+    []
+
+    `One member.`
+    [ "You got it!" ]
+
+    `Three members.`
+    [
+        "Alphonse",
+        "Edward",
+        "Winry",
+    ]
+
+    `Five members (1 duplicate).`
+    \~[
+        57,
+        45,
+        63,
+        61,
+        63,
+    ]
+```
+
+## Set
+
+A **Set** value, represented by `<Set>`, is a general purpose
+arbitrarily-large unordered collection of any other, *member* values, which
+explicitly does not represent any kind of thing in particular, and is
+simply the sum of its members.  A **Set** ensures that no 2 of its members
+are the same value.
+
+A **Set** value is also characterized by a set of 0..N *multiplied members*
+such that each *multiplied member* is a *member* / *multiplicity* pair such
+that no 2 *member* are the same value and *multiplicity* is 1.
+
+Grammar:
+
+```
+    token Set
+    {
+        ['\\?' <sp>]? <nonord_member_commalist>
+    }
+```
+
+A `<Set>` is subject to the additional rule that, either its
+`<member_commalist>` must not have any `<multiplied_member>` elements, or
+the `<Set>` must have the `\?` prefix, so that the `<Set>` can be
+distinguished from every possible `<Bag>` and `<Mix>`.
+
+Examples:
+
+```
+    `Zero members.`
+    {}
+
+    `One member.`
+    { "I know this one!" }
+
+    `Four members (no duplicates).`
+    {
+        "Canada",
+        "Spain",
+        "Jordan",
+        "Jordan",
+        "Thailand",
+    }
+
+    `Three members.`
+    \?{
+        3,
+        16,
+        85,
+    }
+```
+
+## Bag / Multiset
+
+A **Bag** value, represented by `<Bag>`, is a general purpose
+arbitrarily-large unordered collection of any other, *member* values, which
+explicitly does not represent any kind of thing in particular, and is
+simply the sum of its members.  A **Bag** in the general case may have
+multiple members that are the same value.
+
+A **Bag** value is also characterized by a set of 0..N *multiplied members*
+such that each *multiplied member* is a *member* / *multiplicity* pair such
+that no 2 *member* are the same value and *multiplicity* is a positive
+**Integer**.
+
+Grammar:
+
+```
+    token Bag
+    {
+        ['\\+' <sp>]? <nonord_member_commalist>
+    }
+
+    token nonord_member_commalist
+    {
+        '{' <sp> <member_commalist> <sp> '}'
+    }
+
+    token member_commalist
+    {
+        [<single_member> | <multiplied_member> | '']+ % [<sp> ',' <sp>]
+    }
+
+    token single_member
+    {
+        <member>
+    }
+
+    token multiplied_member
+    {
+        <member> <sp> ':' <sp> <multiplicity>
+    }
+
+    token member
+    {
+        <Any>
+    }
+
+    token multiplicity
+    {
+        <nonsigned_int>
+    }
+```
+
+A `<Bag>` is subject to the additional rule that, either its
+`<member_commalist>` must have at least 1 `<multiplied_member>` element, or
+the `<Bag>` must have the `\+` prefix, so that the `<Bag>` can be
+distinguished from every possible `<Set>` and `<Mix>`.  An idiomatic way to
+represent an empty **Bag** is to have exactly 1 `<multiplied_member>` whose
+`<multiplicity>` is zero.
+
+Examples:
+
+```
+    `Zero members.`
+    {0:0}
+
+    `One member.`
+    { "I hear that!": 1 }
+
+    `1200 members (1197 duplicates).`
+    {
+        "Apple"  : 500,
+        "Orange" : 300,
+        "Banana" : 400,
+    }
+
+    `Six members (2 duplicates).`
+    \+{
+        "Foo",
+        "Quux",
+        "Foo",
+        "Bar",
+        "Baz",
+        "Baz",
+    }
+```
+
+## Mix
+
+A **Mix** value, represented by `<Mix>`, is a general purpose
+arbitrarily-large unordered collection of any other, *member* values, which
+explicitly does not represent any kind of thing in particular, and is
+simply the sum of its members.  A **Mix** in the general case may have
+multiple members that are the same value, and it may have fractions of
+members, and it may have negations of members.
+
+A **Mix** value is also characterized by a set of 0..N *multiplied members*
+such that each *multiplied member* is a *member* / *multiplicity* pair such
+that no 2 *member* are the same value and *multiplicity* is a nonzero
+**Fraction**.
+
+The **Mix** possrep is the idiomatic way for an external data model to
+represent the general case of a *measure*, a measurement of some quantity
+or position or other kind of thing that one measures, in terms of a number
+paired with a unit, or a set of 0..N of such, which explicitly is agnostic
+to any externally defined standards and should be able to represent units
+from any of them.  In this context, a *member* represents each measurement
+unit and its *multiplicity* is the measurement in that unit.  While **Mix**
+allows each *member* to have any possrep, in practice the **Nesting** and
+**Text** possreps are the most common, or an external data model might have
+a dedicated type to represent a unit definition.
+
+See also [http://unitsofmeasure.org/ucum.html](http://unitsofmeasure.org/ucum.html).
+
+Grammar:
+
+```
+    token Mix
+    {
+        ['\\/' <sp>]? <mix_nonord_member_commalist>
+    }
+
+    token mix_nonord_member_commalist
+    {
+        '{' <sp> <mix_member_commalist> <sp> '}'
+    }
+
+    token mix_member_commalist
+    {
+        [<mix_single_member> | <mix_multiplied_member> | '']+ % [<sp> ',' <sp>]
+    }
+
+    token mix_single_member
+    {
+        <member>
+    }
+
+    token mix_multiplied_member
+    {
+        <member> <sp> ':' <sp> <mix_multiplicity>
+    }
+
+    token mix_multiplicity
+    {
+        <asigned_frac> | <asigned_int>
+    }
+```
+
+A `<Mix>` is subject to the additional rule that, either its
+`<mix_member_commalist>` must have at least 1 `<mix_multiplied_member>`
+element whose `<mix_multiplicity>` is an `<asigned_frac>`, or the `<Mix>`
+must have the `\/` prefix, so that the `<Mix>` can be distinguished from
+every possible `<Set>` and `<Bag>`.  An idiomatic way to represent an empty
+**Mix** is to have exactly 1 `<mix_multiplied_member>` whose
+`<mix_multiplicity>` is zero.
+
+Examples:
+
+```
+    `Zero members; we measured zero of nothing in particular.`
+    {0:0.0}
+
+    `One member; one gram of mass.`
+    {\Gram: 1.0}
+
+    `Same thing.`
+    \/{\Gram: 1}
+
+    `29.95 members (28.95 duplicates); the cost of a surgery.`
+    {\USD: 29.95}
+
+    `9.8 members; acceleration under Earth's gravity.`
+    {\Meter_Per_Second_Squared: 9.8}
+
+    `0.615 members (fractions of 3 distinct members); recipe.`
+    {
+        \Butter : 0.22,
+        \Sugar  : 0.1,
+        \Flour  : 0.275,
+        \Sugar  : 0.02,
+    }
+
+    `4/3 members (fractions of 3 distinct members); this-mix.`
+    {
+        "Sugar": 1/3,
+        "Spice": 1/4,
+        "All_Things_Nice": 3/4,
+    }
+
+    `-1.5 members; adjustment for recipe.`
+    {
+        "Rice": +4.0,
+        "Beans": -5.7,
+        "Carrots": +0.2,
+    }
+```
+
+## Interval
+
+An **Interval** value, represented by `<Interval>`, is a general purpose
+arbitrarily-large unordered collection of any other, *member* values, which
+explicitly does not represent any kind of thing in particular, and is
+simply the sum of its members; the count of members may be either finite or
+infinite depending on the external data model or type system in question.
+
+In stark contrast to a **Set** value, whose set of members is characterized
+by an enumeration of every member value, an **Interval** value's set of
+members is instead characterized by exactly 2 *endpoint* values (or exactly
+1 or exactly zero) of some *orderable* type such that every value in the
+type system with a defined total order between those 2 endpoints is
+considered to be a member value of the **Interval**.  Depending on the
+external data model or type system in question, an **Interval** value may
+(and typically does) consist of an infinite set of members, in contrast
+with a **Set** which can only have a finite set of members.
+
+An *empty interval* has exactly zero members.  A *unit interval* has
+exactly 1 member.  A *closed interval* includes both endpoint values in its
+membership; an *open interval* excludes both endpoint values; a
+*half-closed, half-open interval* includes one and excludes the other.
+A *half-unbounded, half-bounded interval* includes all values that are
+ordered either before or after the single endpoint; a *universal interval*
+or *unbounded interval* includes every value in the type system.
+
+In the general case, for MUON-defined types, only a *bounded interval* over
+2 distinct **Integer** (or **Boolean**) endpoints has a finite member
+count; whereas, a *bounded interval* over 2 distinct endpoints over any
+other type (such as **Fraction** or **Text**) has an infinite member count,
+because given any 2 distinct values of most types you can find another
+distinct value that is ordered between them.  Also, a non-bounded interval
+over **Integer** has an infinite member count in MUON.  An external data
+model can only change this by defining its corresponding member data types
+to have a finite membership themselves, in contrast to mathematics.
+
+Note that it is up to the external data model to define any total orders
+for any member value types, either which one is used implicitly when the
+**Interval** has no explicit context to specify one, or how to interpret
+that explicit context.  For a common example, there exist a wide variety of
+character string collations in common use, and it would require context or
+the external data model to declare which to use for **Text** members.
+MUON itself simply characterizes an **Interval** *as* its endpoints.
+
+Grammar:
+
+```
+    token Interval
+    {
+        '\\..' <sp> '{' <sp> <interval_members> <sp> '}'
+    }
+
+    token interval_members
+    {
+        <interval_empty> | <interval_single> | <interval_range>
+    }
+
+    token interval_empty
+    {
+        ''
+    }
+
+    token interval_single
+    {
+        <Any>
+    }
+
+    token interval_range
+    {
+        <interval_low>? <interval_boundary_kind> <interval_high>?
+    }
+
+    token interval_low
+    {
+        <Any>
+    }
+
+    token interval_high
+    {
+        <Any>
+    }
+
+    token interval_boundary_kind
+    {
+        '..' | '-..' | '..-' | '-..-'
+    }
+```
+
+Examples:
+
+```
+    `Empty interval (zero members).`
+    \..{}
+
+    `Unit interval (one member).`
+    \..{"abc"}
+
+    `Closed interval (probably 10 members, depending on the model used).`
+    \..{1..10}
+
+    `Left-closed, right-open interval; every Fraction x in {2.7<=x<9.3}.`
+    \..{2.7..-9.3}
+
+    `Left-open, right-closed interval; every Text x ordered in {"a"<x<="z"}.`
+    \..{"a"-.."z"}
+
+    `Open interval; time period between Dec 6 and 20 excluding both.`
+    \..{\@((2002,12,6,,,)@"UTC") -..- \@((2002,12,20,,,)@"UTC")}
+
+    `Left-unbounded, right-closed interval; every Integer <= 3.`
+    \..{..3}
+
+    `Left-closed, right-unbounded interval; every Integer >= 29.`
+    \..{29..}
+
+    `Universal interval; unbounded; every value of type system is a member.`
+    \..{..}
+```
+
+## Interval Set
+
+An **Interval Set** value, represented by `<Interval_Set>`, is
+characterized by a **Set** value such that every member value of the
+**Set** is an **Interval**.  An **Interval Set** is alternately
+characterized by a single **Interval** that is allowed to have
+discontinuities, and is in the typical case characterized by more than 2
+*endpoint* values.
+
+When reasoning about an interval in terms of defining a set of values by
+endpoints under a total order rather than by enumeration, an **Interval
+Set** is the actual best direct analogy to a **Set** because every possible
+distinct **Set** value can map to a distinct **Interval Set** value but
+only a proper subset of the former can map to an **Interval**.  The
+**Interval Set** type is closed under *set union* operations just as
+**Set** is, while **Interval** is not.
+
+Unlike with the **Set** type, the **Interval Set** type also has a
+meaningful *set absolute complement* operation applicable to it.
+
+Grammar:
+
+```
+    token Interval_Set
+    {
+        '\\?..' <sp> <nonord_interval_commalist>
+    }
+```
+
+Examples:
+
+```
+    `Empty interval-set (zero members).`
+    \?..{}
+
+    `Unit interval-set (one member).`
+    \?..{"abc"}
+
+    `Probably 10 members, depending on the model used.`
+    \?..{1..10}
+
+    `Probably 6 members.`
+    \?..{1..3,6,8..9}
+
+    `Every Integer x except for {4..13,22..28}`
+    \?..{..3,14..21,29..}
+
+    `Set of all valid Unicode code points.`
+    \?..{0..0xD7FF,0xE000..0x10FFFF}
+
+    `Probably 15 members (no duplicates), depending on the model used.`
+    \?..{1..10,6..15}
+
+    `Probably same thing, regardless of data model used.`
+    \?..{1..-6,6..10:2,10-..15}
+```
+
+## Interval Bag
+
+An **Interval Bag** value, represented by `<Interval_Bag>`, is
+characterized by a generalization of an **Interval Set** that permits
+multiple members to have the same value; an **Interval Bag** is isomorphic
+to a **Bag** in the same way that an **Interval Set** is to a **Set**;
+every possible distinct **Bag** can map to a distinct **Interval Bag**.
+
+Grammar:
+
+```
+    token Interval_Bag
+    {
+        '\\+..' <sp> <nonord_interval_commalist>
+    }
+
+    token nonord_interval_commalist
+    {
+        '{' <sp> <interval_commalist> <sp> '}'
+    }
+
+    token interval_commalist
+    {
+        [<single_interval> | <multiplied_interval> | '']+ % [<sp> ',' <sp>]
+    }
+
+    token single_interval
+    {
+        <interval_members>
+    }
+
+    token multiplied_interval
+    {
+        <interval_members> <sp> ':' <sp> <multiplicity>
+    }
+```
+
+Examples:
+
+```
+    `Empty interval-bag (zero members).`
+    \+..{}
+
+    `Unit interval-bag (one member).`
+    \+..{"abc"}
+
+    `Five members (4 duplicates).`
+    \+..{"def":5}
+
+    `Probably 20 members (5 duplicates), depending on the model used.`
+    \+..{1..10,6..15}
+
+    `Probably same thing, regardless of data model used.`
+    \+..{1..-6,6..10:2,10-..15}
+```
+
+## Tuple / Attribute Set
+
+A **Tuple** value, represented by `<Tuple>`, is a general purpose
+arbitrarily-large unordered heterogeneous collection of named *attributes*,
+such that no 2 attributes have the same *attribute name*, which explicitly
+does not represent any kind of thing in particular, and is simply the sum
+of its attributes.  An attribute is conceptually a name-asset pair, the
+name being used to look up the attribute in a **Tuple**.  An *attribute
+name* is an unqualified program identifier and is conceptually a character
+string that is not a **Text** value.  In the general case each attribute of
+a tuple is of a distinct data type, though multiple attributes often have
+the same type.  The set of attribute names of a **Tuple** is called its
+*heading*, and the corresponding attribute assets are called its *body*.
+
+With respect to the relational model of data, a *heading* represents a
+predicate, for which each *attribute name* is a free variable, and a
+**Tuple** as a whole represents a derived proposition, where the
+corresponding attribute asset values substitute for the free variables;
+however, any actual predicate/etc is defined by the context of a
+**Tuple** value and a **Tuple** in isolation explicitly does not
+represent any proposition in particular.
+
+The canonical way to represent the concept of a *tuple* that has ordered
+attributes is to use integral names; to be specific, the attribute name
+consisting of just the character code point 0 would mark the first ordered
+attribute, the name consisting of just the code point 1 would mark the
+second, and so on; this can be repeated up to 32 "positional" names whose
+names would correspond to non-printing Unicode code points and would
+alphabetically sort correctly and prior to any normal text-like attribute
+names like **name** or **age**; said first 32 would likewise be distinct in
+appearance from all regular printable numbers used as attribute names.
+
+Grammar:
+
+```
+    token Tuple
+    {
+        ['\\%' <sp>]? '(' <sp> <attr_commalist> <sp> ')'
+    }
+
+    token attr_commalist
+    {
+        [<anon_attr> | <named_attr> | <nested_named_attr> | '']+ % [<sp> ',' <sp>]
+    }
+
+    token anon_attr
+    {
+        <attr_asset>
+    }
+
+    token named_attr
+    {
+        <attr_name> <sp> ':' <sp> <attr_asset>
+    }
+
+    token nested_named_attr
+    {
+        <nesting_attr_names> <sp> ':' <sp> <attr_asset>
+    }
+
+    token attr_asset
+    {
+        <Any>
+    }
+```
+
+A `<Tuple>` is subject to the additional rule that, iff its
+`<attr_commalist>` has exactly 1 `<*_attr>` element, either that element
+must have a leading or trailing comma, or the `<Tuple>` must have the `\%`
+prefix, so that the `<Tuple>` can be distinguished from every possible
+`<Article>` (and from a superset grammar's generic grouping parenthesis).
+
+Examples:
+
+```
+    `Zero attributes.`
+    ()
+
+    `One named attribute.`
+    ("First Name": "Joy",)
+
+    `One ordered attribute.`
+    (53,)
+
+    `Same thing.`
+    (0: 53,)
+
+    `Same thing.`
+    ("\\c<0>": 53,)
+
+    `Three named attributes.`
+    (
+        login_name : "hartmark",
+        login_pass : "letmein",
+        is_special : True,
+    )
+
+    `Three ordered attributes.`
+    ("hello",26,True)
+
+    `One of each.`
+    ("Jay", age: 10)
+
+    `A non-Latin name.`
+    ("サンプル": "http://example.com",)
+
+    `Two named attributes.`
+    \%(
+        name : "Michelle",
+        age  : 17,
+    )
+
+    `Five leaf attributes in nested multi-level namespace.`
+    (
+        name: "John Glenn",
+        birth_date::year: 1921,
+        comment: "Fly!",
+        birth_date::month: 7,
+        birth_date::day: 18,
+    )
+
+    `Same thing.`
+    (
+        name: "John Glenn",
+        birth_date: (
+            year: 1921,
+            month: 7,
+            day: 18,
+        ),
+        comment: "Fly!",
+    )
+```
+
+## Tuple Array
+
+A **Tuple Array** value, represented by `<Tuple_Array>`, is characterized
+by the pairing of a **Heading** value with an **Array** value, which define
+its *heading* and *body*, respectively.  A **Tuple Array** is isomorphic to
+a **Relation** with the sole exception of being based on an **Array**
+rather than a **Set**.
+
+Grammar:
+
+```
+    token Tuple_Array
+    {
+        '\\~%' <sp> [<delim_attr_name_commalist> | <ord_member_commalist>]
+    }
+```
+
+A `<Tuple_Array>` with an `<ord_member_commalist>` is subject to the
+additional rule that its `<member_commalist>` has at least 1 `*_member`
+element, and that every such `*_member` element's `<member>` is a
+`<Tuple>`; otherwise the `<Tuple_Array>` must have a
+`<delim_attr_name_commalist>`.
+
+Examples:
+
+```
+    `Zero attributes + zero tuples.`
+    \~%()
+
+    `Zero attributes + one tuple.`
+    \~%[()]
+
+    `Three named attributes + zero tuples.`
+    \~%(x,y,z)
+
+    `Three positional attributes + zero tuples.`
+    \~%(0..2)
+
+    `Two named attributes + three tuples (1 duplicate).`
+    \~%[
+        (name: "Amy"     , age: 14),
+        (name: "Michelle", age: 17),
+        (name: "Amy"     , age: 14),
+    ]
+
+    `Two positional attributes + two tuples.`
+    \~%[
+        ("Michelle", 17),
+        ("Amy"     , 14),
+    ]
+```
+
+## Relation / Tuple Set
+
+A **Relation** value, represented by `<Relation>`, is characterized
+by the pairing of a **Heading** value with a **Set** value, which define
+its *heading* and *body*, respectively.  A **Relation** ensures that every
+*member* of its *body* is a **Tuple** having the same *heading* (set of
+*attribute names*) as its own *heading*.  A **Relation** is alternately
+characterized by the pairing of a single set of attribute names with a set
+of corresponding attribute assets for each attribute name.
+
+With respect to the relational model of data, a *heading* represents a
+predicate, for which each *attribute name* is a free variable, and a
+**Relation** as a whole represents a set of derived propositions, where the
+corresponding attribute asset values substitute for the free variables;
+however, any actual predicate/etc is defined by the context of a
+**Relation** value and a **Relation** in isolation explicitly does not
+represent any proposition in particular.
+
+Grammar:
+
+```
+    token Relation
+    {
+        '\\?%' <sp> [<delim_attr_name_commalist> | <nonord_member_commalist>]
+    }
+```
+
+A `<Relation>` with a `<nonord_member_commalist>` is subject to the
+additional rule that its `<member_commalist>` has at least 1 `*_member`
+element, and that every such `*_member` element's `<member>` is a
+`<Tuple>`; otherwise the `<Relation>` must have a
+`<delim_attr_name_commalist>`.
+
+Examples:
+
+```
+    `Zero attributes + zero tuples.`
+    \?%()
+
+    `Zero attributes + one tuple.`
+    \?%{()}
+
+    `Three named attributes + zero tuples.`
+    \?%(x,y,z)
+
+    `Three positional attributes + zero tuples.`
+    \?%(0..2)
+
+    `Two named attributes + two tuples.`
+    \?%{
+        (name: "Michelle", age: 17),
+        (name: "Amy"     , age: 14),
+    }
+
+    `Two positional attributes + two tuples.`
+    \?%{
+        ("Michelle", 17),
+        ("Amy"     , 14),
+    }
+
+    `Some people records.`
+    \?%{
+        (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
+            phone_numbers : {"+1.4045552995", "+1.7705557572"}),
+        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : {}),
+        (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
+            phone_numbers : {"+81.9072391679"}),
+    }
+```
+
+## Tuple Bag
+
+A **Tuple Bag** value, represented by `<Tuple_Bag>`, is characterized
+by the pairing of a **Heading** value with a **Bag** value, which define
+its *heading* and *body*, respectively.  A **Tuple Bag** is isomorphic to
+a **Relation** with the sole exception of being based on a **Bag**
+rather than a **Set**.
+
+Grammar:
+
+```
+    token Tuple_Bag
+    {
+        '\\+%' <sp> [<delim_attr_name_commalist> | <nonord_member_commalist>]
+    }
+```
+
+A `<Tuple_Bag>` with a `<nonord_member_commalist>` is subject to the
+additional rule that its `<member_commalist>` has at least 1 `*_member`
+element, and that every such `*_member` element's `<member>` is a
+`<Tuple>`; otherwise the `<Tuple_Bag>` must have a
+`<delim_attr_name_commalist>`.
+
+Examples:
+
+```
+    `Zero attributes + zero tuples.`
+    \+%()
+
+    `Zero attributes + one tuple.`
+    \+%{()}
+
+    `Three named attributes + zero tuples.`
+    \+%(x,y,z)
+
+    `Three positional attributes + zero tuples.`
+    \+%(0..2)
+
+    `Two named attributes + six tuples (4 duplicates).`
+    \+%{
+        (name: "Michelle", age: 17),
+        (name: "Amy"     , age: 14) : 5,
+    }
+
+    `Two positional attributes + two tuples.`
+    \+%{
+        ("Michelle", 17),
+        ("Amy"     , 14),
+    }
+```
+
+## Calendar Time
+
+A **Calendar Time** value, represented by `<Calendar_Time>`, is
+characterized by a **Tuple** having any subset of the 6 attributes of the
+heading `\$(year,month,day,hour,minute,second)` where each attribute is a
+**Fraction**, or alternately by an isomorphic **Mix**.  For each of the 6
+attributes, it explicitly distinguishes between the attribute value being
+specified as zero versus being unspecified; omitting the attribute entirely
+means the latter.  Its main intended purpose is to be a more generic common
+element for a variety of other, more specific time-related possreps,
+including ones representing both durations and instants, or for direct use
+with types defined by external data models.  It does *not* specifically
+represent a time of day.
+
+Grammar:
+
+```
+    token Calendar_Time
+    {
+        '\\@%' <sp> <delim_time_ymdhms_commalist>
+    }
+
+    token delim_time_ymdhms_commalist
+    {
+        '(' <sp> <time_ymdhms_commalist> <sp> ')'
+    }
+
+    token delim_time_ymd_commalist
+    {
+        '(' <sp> <time_ymd_commalist> <sp> ')'
+    }
+
+    token delim_time_hms_commalist
+    {
+        '(' <sp> <time_hms_commalist> <sp> ')'
+    }
+
+    token time_ymdhms_commalist
+    {
+        <time_ymd_commalist> <sp> ',' <sp> <time_hms_commalist>
+    }
+
+    token time_ymd_commalist
+    {
+        <year>? <sp> ',' <sp> <month>? <sp> ',' <sp> <day>?
+    }
+
+    token time_hms_commalist
+    {
+        <hour>? <sp> ',' <sp> <minute>? <sp> ',' <sp> <second>?
+    }
+
+    token year
+    {
+        <mix_multiplicity>
+    }
+
+    token month
+    {
+        <mix_multiplicity>
+    }
+
+    token day
+    {
+        <mix_multiplicity>
+    }
+
+    token hour
+    {
+        <mix_multiplicity>
+    }
+
+    token minute
+    {
+        <mix_multiplicity>
+    }
+
+    token second
+    {
+        <mix_multiplicity>
+    }
+```
+
+Examples:
+
+```
+    `No measurement was taken or specified at all.`
+    \@%(,,,,,)
+
+    `Either an unspecified period in 1970 or a duration of 1970 years.`
+    \@%(1970,,,,,)
+
+    `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
+    \@%(2015,5,3,,,)
+
+    `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
+    \@%(1998,,300,,,)
+
+    `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
+    \@%(1776,,42,,,)
+
+    `Either the first quarter of 1953 or a duration of 1953.25 years.`
+    \@%(1953.25,,,,,)
+
+    `Either high noon on an unspecified day or a duration of 12 hours.`
+    \@%(,,,12,0,0)
+
+    `Either a fully specified civil date and time or a 6-part duration.`
+    \@%(1884,10,17,20,55,30)
+
+    `Either an ancient date and time or a negative duration.`
+    \@%(-370,1,24,11,0,0)
+
+    `Either a time on some unspecified day or a duration of seconds.`
+    \@%(,,,,,5923.21124603)
+```
+
+## Calendar Duration
+
+A **Calendar Duration** value, represented by `<Calendar_Duration>`, is a
+length of time expressed in terms of the units of a standard civil or
+similar calendar.  It is characterized by a **Calendar Time**.  It is up to
+the context supplied or interpreted by an external data model to give it
+further meaning, such as whether not specifying any smallest units means an
+uncertainty interval versus treating them as zero, and so on.
+
+Grammar:
+
+```
+    token Calendar_Duration
+    {
+        '\\@+' <sp> <delim_time_ymdhms_commalist>
+    }
+```
+
+Examples:
+
+```
+    `Addition of 2 years and 3 months.`
+    \@+(2,3,0,0,0,0)
+
+    `Subtraction of 22 hours.`
+    \@+(0,0,0,-22,0,0)
+```
+
+## Calendar Instant
+
+A **Calendar Instant** value, represented by `<Calendar_Instant>`, is a
+particular moment in time expressed in terms of a standard civil or similar
+calendar.  It is characterized by an *instant base* (characterized by a
+**Calendar Time**) that is either standalone or is paired with an *instant
+offset* (characterized by a **Calendar Duration**) or an *instant zone* (a
+time zone name characterized by a **Text**).
+
+When a **Calendar Instant** consists only of an *instant base*, it
+explicitly defines a *floating* instant, either a calendar date or
+timestamp that is not associated with a specific time zone or a time zone
+offset, or it defines a time of day not associated with any particular day.
+
+When a **Calendar Instant** also has an *instant offset*, it explicitly
+defines a calendar date or time that is local to a time zone offset from
+UTC, and also indicates what that offset amount is.
+
+When a **Calendar Instant** also has an *instant zone*, it explicitly
+defines a calendar date or time that is local to a geographic time zone and
+also indicates the name of that time zone.
+
+Beyond that it is up to the context supplied or interpreted by an external
+data model to give it further meaning, such as whether it is Gregorian or
+Julian etc, or whether not specifying any largest units means a repeating
+event or not, or whether not specifying any smallest units means an
+interval or a point, and so on.  Also, it is up to the external data model
+to define what are valid time zone names; MUON accepts any **Text** value.
+
+*TODO: Consider further changes to support explicit indication of daylight
+savings time observence or similar things, which might be satisfied by
+permitting both an instant offset and zone name to be given together;
+the existing time zone name support may also indicate this by itself.*
+
+Grammar:
+
+```
+    token Calendar_Instant
+    {
+        '\\@' <sp> <delim_instant_commalist>
+    }
+
+    token delim_instant_commalist
+    {
+        <instant_floating> | <instant_with_offset> | <instant_with_zone>
+    }
+
+    token instant_floating
+    {
+        <instant_base>
+    }
+
+    token instant_base
+    {
+        <delim_time_ymdhms_commalist>
+    }
+
+    token instant_with_offset
+    {
+        '(' <sp> <instant_base> <sp> '@' <sp> <instant_offset> <sp> ')'
+    }
+
+    token instant_offset
+    {
+        <delim_time_hms_commalist>
+    }
+
+    token instant_with_zone
+    {
+        '(' <sp> <instant_base> <sp> '@' <sp> <instant_zone> <sp> ')'
+    }
+
+    token instant_zone
+    {
+        <quoted_text_no_pfx>
+    }
+```
+
+Examples:
+
+```
+    `The Day The Music Died (if paired with Gregorian calendar).`
+    \@(1959,2,3,,,)
+
+    `A time of day when one might have breakfast.`
+    \@(,,,7,30,0)
+
+    `What was now in the Pacific zone (if paired with Gregorian calendar).`
+    \@((2018,9,3,20,51,17)@(-8,0,0))
+
+    `A time of day in the UTC zone on an unspecified day.`
+    \@((,,,9,25,0)@(0,0,0))
+
+    `A specific day and time in the Pacific Standard Time zone.`
+    \@((2001,4,16,20,1,44)@"PST")
+```
+
+## Geographic Point
+
+A **Geographic Point** value, represented by `<Geographic_Point>`, is a
+particular point location on the Earth's surface characterized by cartesian
+coordinates named *longitude* and *latitude* and *elevation*, where each of
+the latter is characterized by a single **Fraction** value.  Each
+coordinate may be either specified or unspecified; omitting it means the
+latter and providing it, even if zero, means the former.
+
+The coordinates may be specified in any order, and are distinguished by
+their own prefix symbols.  The literal syntax has right-pointing `>` and
+up-pointing `^` arrows that are meant to visually evoke *longitude* and
+*latitude* respectively, so that it is more clear at a glance which of the
+coordinates is which.  The `+` literal syntax represents *elevation*.  A
+more-positive *longitude* is further to the East than a more-negative one,
+while a more-positive *latitude* is further to the North than a
+more-negative one, and a more-positive *elevation* is further from the
+center of the Earth than a more-negative one.
+
+While the *latitude* and *longitude* have semi-specific meanings, which
+loosely are possibly fractional degrees in the range -180..180 and -90..90
+respectively, MUON explicitly does not ascribe any specific interpretation
+to the *elevation* value, aside from it increasing away from the center of
+the Earth.  It is up to an external data model used with MUON to specify
+the *elevation* units, such as meters or feet or whatever, as well as the
+starting point, such as the center of the Earth or the surface or whatever.
+The external data model also gives the more specific meanings of *latitude*
+and *longitude*, such as whether they are along the surface of the Earth or
+something more specific.
+
+Grammar:
+
+```
+    token Geographic_Point
+    {
+        '\\@@' <sp> <delim_point_commalist>
+    }
+
+    token delim_point_commalist
+    {
+        '(' <sp> <point_commalist> <sp> ')'
+    }
+
+    token point_commalist
+    {
+        [<longitude> | <latitude> | <elevation> | '']+ % [<sp> ',' <sp>]
+    }
+
+    token longitude
+    {
+        '>' <sp> <mix_multiplicity>
+    }
+
+    token latitude
+    {
+        '^' <sp> <mix_multiplicity>
+    }
+
+    token elevation
+    {
+        '+' <sp> <mix_multiplicity>
+    }
+```
+
+Examples:
+
+```
+    `No specified coordinates at all.`
+    \@@()
+
+    `Just an elevation specified.`
+    \@@(+ 920)
+
+    `Geographic surface coordinates of Googleplex; elevation not specified.`
+    \@@(> -122.0857017, ^ 37.4218363)
+
+    `Same thing.`
+    \@@(^ 37.4218363, > -122.0857017)
+
+    `Some location with all coordinates specified.`
+    \@@(> -101, ^ -70, + 1000)
+
+    `Another place.`
+    \@@(> -94.746094, ^ 37.483577)
+```
+
+## Article / Labelled Tuple
+
+An **Article** value, represented by `<Article>`, is characterized by the
+pairing of a *label* with a set of 0..N *attributes* where that set is a
+**Tuple** value; the label can be of any type but is idiomatically a
+**Nesting** value.
+
+The **Article** possrep is the idiomatic way for an external data model to
+represent "new" types of a nominal type system in a consistent way.  The
+*label* represents a fully-qualified external data type name, and thus a
+namespace within all the **Article** values, while the *attributes* define
+all the components of a value of that external type.  Thus an **Article**
+corresponds to a generic *object* of an object-oriented language, the
+*label* is the *class* of that *object*, and *attributes* are *properties*.
+
+As a primary exception to the above, the large number of *exception* or
+*error* types common in some data models / type systems should *not* be
+represented using an **Article** but rather with the structurally identical
+**Excuse** which natively carries that extra semantic.
+
+The idiomatic way to represent a singleton type value is as an **Article**
+where the *label* is the singleton type name and the *attributes* is the
+**Tuple** with zero attributes.
+
+The idiomatic default attribute name for a single-attribute **Article** is
+`0` (the first conceptually ordered attribute name) when there isn't an
+actual meaningful name to give it.
+
+Grammar:
+
+```
+    token Article
+    {
+        <generic_article> | <singleton_article>
+    }
+
+    token generic_article
+    {
+        ['\\*' <sp>]? <label_attrs_pair>
+    }
+
+    token label_attrs_pair
+    {
+        '(' <sp> <label> <sp> ':' <sp> <attrs> <sp> ')'
+    }
+
+    token label
+    {
+        <Any>
+    }
+
+    token attrs
+    {
+        <Tuple>
+    }
+
+    token singleton_article
+    {
+        '\\*' <sp> <nesting_attr_names>
+    }
+```
+
+Examples:
+
+```
+    (\Point : (x : 5, y : 3))
+
+    (\Float : (
+        significand : 45207196,
+        radix       : 10,
+        exponent    : 37,
+    ))
+
+    \*(\the_db::UTCDateTime : (
+        year   : 2003,
+        month  : 10,
+        day    : 26,
+        hour   : 1,
+        minute : 30,
+        second : 0.0,
+    ))
+
+    \*Positive_Infinity
+
+    \*Negative_Zero
+```
+
+## Excuse
+
+An **Excuse** value, represented by `<Excuse>`, is an explicitly stated
+reason for why, given some particular problem domain, a value is not being
+used that is ordinary for that domain.  Alternately, an **Excuse** is
+characterized by an **Article** that has the added semantic of representing
+some kind of error condition, in contrast to an actual **Article** which
+explicitly does *not* represent an error condition in the general case.
+
+For example, the typical integer division operation is not defined to give
+an integer result when the divisor is zero, and so a function for integer
+division could be defined to result in an **Excuse** value rather than
+throw an exception in that case.  For another example, an **Excuse** value
+could be used to declare that the information we are storing about a person
+is missing certain details and why those are missing, such as because the
+person left the birthdate field blank on their application form.
+
+An **Excuse** is isomorphic to an *exception* but that use of the former is
+not meant to terminate execution of code early unlike the latter which is.
+
+The **Excuse** possrep is the idiomatic way for an external data model to
+represent "new" *error* or *exception* types of a nominal type system in a
+consistent way.  The counterpart **Article** possrep should *not* be used for
+these things, but rather just every other kind of externally-defined type.
+
+Grammar:
+
+```
+    token Excuse
+    {
+        '\\!' <sp> [<label_attrs_pair> | <nesting_attr_names>]
+    }
+```
+
+Examples:
+
+```
+    \!(\Input_Field_Wrong : (name : "Your Age"))
+
+    \!Div_By_Zero
+
+    \!No_Such_Attr_Name
+```
+
+## Ignorance
+
+The singleton **Ignorance** value, represented by `<Ignorance>`, is
+characterized by an **Excuse** which simply says that an ordinary value for
+any given domain is missing and that there is simply no excuse that has
+been given for this; in other words, something has gone wrong without the
+slightest hint of an explanation.
+
+This is conceptually the most generic excuse value there is and it can
+be used by lazy programmers as a fallback for when they don't have even a
+semblance of a better explanation for why an ordinary value is missing.
+
+The **Ignorance** value has its own special syntax in MUON disjoint from
+any **Excuse** syntax so that this MUON-defined excuse doesn't step on any
+possible name that a particular external data model might use.
+
+When an external data model natively has exactly one generic *null* or
+*nil* or *undefined* or *unknown* or similar value or quasi-value,
+**Ignorance** is the official way to represent an instance of it in MUON.
+
+When an external data model natively has a concept of 3-valued logic (MUON
+itself does not), specifically a concept like such where the multiplicity
+of scenarios that may produce a special no-regular-value-is-here marker do
+in fact all produce the exact same marker, **Ignorance** is the official
+way to represent that marker.  This includes the *null* of any common
+dialect of SQL.  Whereas, for external data models that distinguish the
+reasons for why a regular value may be missing, **Ignorance** should NOT be
+used and instead other more applicable **Excuse** values should instead.
+
+Grammar:
+
+```
+    token Ignorance
+    {
+        '\\!!' <sp> Ignorance
+    }
+```
+
+Examples:
+
+```
+    \!!Ignorance
+```
+
+## Nesting / Attribute Name List
+
+A **Nesting** value, represented by `<Nesting>`, is an arbitrarily-large
+nonempty ordered collection of attribute names, intended for referencing an
+entity in a multi-level namespace, such as nested **Tuple** may implement.
+
+Grammar:
+
+```
+    token Nesting
+    {
+        '\\' <sp> <nesting_attr_names>
+    }
+
+    token nesting_attr_names
+    {
+        <attr_name>+ % [<sp> '::' <sp>]
+    }
+
+    token attr_name
+    {
+        <nonord_attr_name> | <ord_attr_name>
+    }
+
+    token nonord_attr_name
+    {
+        <nonord_nonquoted_attr_name> | <quoted_text_no_pfx>
+    }
+
+    token nonord_nonquoted_attr_name
+    {
+        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+    }
+
+    token ord_attr_name
+    {
+        <code_point>
+    }
+```
+
+The meaning of `<nonord_nonquoted_attr_name>` is exactly the same as if the
+same characters surrounded by quotation marks.
+
+Examples:
+
+```
+    \person
+
+    \person::birth_date
+
+    \person::birth_date::year
+
+    \the_db::stats::"samples by order"
+```
+
+## Heading / Attribute Name Set
+
+A **Heading** value, represented by `<Heading>`, is an arbitrarily-large
+unordered collection of *attribute names*, such that no 2 attribute names
+are the same.
+
+Grammar:
+
+```
+    token Heading
+    {
+        '\\\$' <sp> <delim_attr_name_commalist>
+    }
+
+    token delim_attr_name_commalist
+    {
+        '(' <sp> <attr_name_commalist> <sp> ')'
+    }
+
+    token attr_name_commalist
+    {
+        [<attr_name> | <ord_attr_name_range> | '']+ % [<sp> ',' <sp>]
+    }
+
+    token ord_attr_name_range
+    {
+        <min_ord_attr> <sp> '..' <sp> <max_ord_attr>
+    }
+
+    token min_ord_attr
+    {
+        <ord_attr_name>
+    }
+
+    token max_ord_attr
+    {
+        <ord_attr_name>
+    }
+```
+
+An `<ord_attr_name_range>` is subject to the additional rule that its
+integral `<min_ord_attr>` value must be less than or equal to its integral
+`<max_ord_attr>` value.
+
+Examples:
+
+```
+    `Zero attributes.`
+    \$()
+
+    `One named attribute.`
+    \$(sales)
+
+    `Same thing.`
+    \$("sales")
+
+    `One ordered attribute.`
+    \$(0)
+
+    `Same thing.`
+    \$("\\c<0>")
+
+    `Three named attributes.`
+    \$(region,revenue,qty)
+
+    `Three ordered attributes.`
+    \$(0..2)
+
+    `One of each.`
+    \$(1,age)
+
+    `Some attribute names can only appear quoted.`
+    \$("Street Address")
+
+    `A non-Latin name.`
+    \$("サンプル")
+```
+
+## Renaming / Attribute Name Map
+
+A **Renaming** value, represented by `<Renaming>`, is an arbitrarily-large
+unordered collection of attribute renaming specifications.
+
+Grammar:
+
+```
+    token Renaming
+    {
+        '\\\$:' <sp> <delim_renaming_commalist>
+    }
+
+    token delim_renaming_commalist
+    {
+        '(' <sp> <renaming_commalist> <sp> ')'
+    }
+
+    token renaming_commalist
+    {
+        [<anon_attr_rename> | <named_attr_rename> | '']+ % [<sp> ',' <sp>]
+    }
+
+    token anon_attr_rename
+    {
+          ['->' <sp> <attr_name_after>]
+        | [<attr_name_after> <sp> '<-']
+        | [<attr_name_before> <sp> '->']
+        | ['<-' <sp> <attr_name_before>]
+    }
+
+    token named_attr_rename
+    {
+          [<attr_name_before> <sp> '->' <sp> <attr_name_after>]
+        | [<attr_name_after> <sp> '<-' <sp> <attr_name_before>]
+    }
+
+    token attr_name_before
+    {
+        <attr_name>
+    }
+
+    token attr_name_after
+    {
+        <attr_name>
+    }
+```
+
+Each attribute renaming specification is a pair of attribute names marked
+with a `->` or a `<-` element; the associated `<attr_name_before>` and
+`<attr_name_after>` indicate the name that an attribute has *before* and
+*after* the renaming operation, respectively.  Iff the renaming
+specification is an `<anon_attr_rename>` then either the *before* or
+*after* name is an ordered attribute name corresponding to the ordinal
+position of the renaming specification element in the
+`<renaming_commalist>`, starting at zero.
+
+A `<renaming_commalist>` is subject to the additional rule that no 2
+`<attr_name_before>` may be the same attribute name and that no 2
+`<attr_name_after>` may be the same attribute name.
+
+Examples:
+
+```
+    `Zero renamings, a no-op.`
+    \$:()
+
+    `Also a no-op.`
+    \$:(age->age)
+
+    `Rename one attribute.`
+    \$:(fname->first_name)
+
+    `Same thing.`
+    \$:(first_name<-fname)
+
+    `Swap 2 named attributes.`
+    \$:(foo->bar,foo<-bar)
+
+    `Convert ordered names to nonordered.`
+    \$:(->foo,->bar)
+
+    `Same thing.`
+    \$:(0->foo,1->bar)
+
+    `Convert nonordered names to ordered.`
+    \$:(<-foo,<-bar)
+
+    `Same thing.`
+    \$:(0<-foo,1<-bar)
+
+    `Swap 2 ordered attributes.`
+    \$:(0->1,0<-1)
+
+    `Same thing.`
+    \$:(->1,->0)
+
+    `Some attribute names can only appear quoted.`
+    \$:("First Name"->"Last Name")
+```
+
+# EXCLUDED DATA TYPE POSSREPS
+
+Muldis Object Notation eschews dedicated syntax for some data types that
+users might expect to see here.  This section enumerates some and says why.
+
+Special values of an IEEE floating-point number such as infinities,
+over/underflows, NaNs, are not part of the **Fraction** possrep and rather
+would be their own singleton **Article** or **Excuse** possreps, usually
+left up to the overlaid data model.
+
+Fixed-precision/scale numbers and/or significant figures indication and/or
+error margin indication, left up to the overlaid data model.  Any added
+would be bareword only as expected to be relatively short. They would be
+defined in terms of being a scaled integer or fixed-denominator fraction.
+
+While **Mix** is characterized by a generalization of a **Bag**, there are
+currently no possreps defined like **Interval Mix** or **Tuple Mix**,
+because there doesn't seem to be a use case for them.  However, if it turns
+out that either would have a practical use, there is appropriate syntax
+already reserved for them, namely `\/..{}` and `\/%()` plus `\/%{}`.
+
+Dictionary types in the general case are excluded because the relational
+types should be able to represent all their variations (eg, unordered,
+ordered, one-directional vs bi-directional, with or without duplicates,
+etc) more effectively and in a more generic manner.  The canonical way to
+represent a dictionary used like an anonymous structure or class, where the
+dictionary keys are all character strings, is the **Tuple**.  The canonical
+way to represent the general case of a dictionary where the dictionary keys
+might be of any data type is with a binary **Relation** with 2 *positional*
+attributes, and a single key-value pair of such a dictionary is a binary
+**Tuple**.  A canonical syntax specific to the most common case of a
+Dictionary, namely unordered, one-directional, any key type, no duplicates,
+might be added later.
+
+Most complexities related to temporal types are excluded by MUON, and are
+best handled by a data model layered over top of MUON.  For example, MUON
+itself does not place any restrictions on how many
+months/days/hours/minutes/seconds are permitted in particular slots for the
+possreps it does provide.  Also, MUON itself makes no assumptions on what
+particular calendars/eras/epochs are in use, eg Gregorian or other.
+
+Most complexities related to spatial types are excluded by MUON, and are
+best handled by a data model layered over top of MUON.  While MUON includes
+the **Geographic Point** possrep to handle the generally most simple and
+widely useful geographic coordinate type, it doesn't explicitly support any
+other kinds of geometries.
+
+Currency types in the general case are excluded because the **Mix** possrep
+should be able to represent all their variations in a more generic manner.
+
+Media types in the general case, such as audio or still or moving visual,
+are excluded because they are better defined by a data model layered over
+top of MUON and they are complex.  Only generic plain-text media is native.
+
+Source code types in the general case, such as definitions of functions or
+procedures or data types, are excluded because they are better defined by a
+data model layered over top of MUON and they are both complex and highly
+variable.  Only a few source code types have dedicated MUON syntax because
+they specifically benefit from that and conceptually they are simple even
+if they may vary greatly in implementation, such as unqualified identifiers
+(via **Text**) and **Nesting**, **Heading**, **Renaming**.
+
+Generic foreign serialization types such as JSON and XML are excluded
+because MUON as a whole is supposed to natively handle everything they can
+represent but better; otherwise one can still use **Text** to embed those.
+
+# SYNTACTIC MNEMONICS
+
+The syntax of Muldis Object Notation is designed around a variety of
+mnemonics that bring it some self-similarity and an association between
+syntax and semantics so that it is easier to read and write data and code
+in it.  Some of these mnemonics are more about self-similarity and others
+are more about shared traits with other languages.
+
+The following table enumerates and explains the syntactic character
+mnemonics that Muldis Object Notation itself has specific knowledge of and
+ascribes specific meanings to; where multiple characters are shown together
+that means they are used in pairs.
+
+```
+    Chars | Generic Meaning        | Specific Use Cases
+    ------+------------------------+---------------------------------------
+    ""    | stringy data and names | * delimit quoted opaque regular literals
+          |                        | * delimit all Bits/Blob/Text literals
+          |                        | * delimit quoted Integer/Fraction literals
+          |                        | * delimit quoted code identifiers/names
+          |                        | * delimit Calendar-Instant zone names
+    ------+------------------------+---------------------------------------
+    ``    | stringy comments       | * delimit expendable dividing space comments
+    ------+------------------------+---------------------------------------
+    \     | special contexts       | * indicates special contexts where
+          |                        |   typical meanings may not apply
+          |                        | * first char inside a quoted string
+          |                        |   to indicate it has escaped characters
+          |                        | * prefix for each escaped char in quoted string
+          |                        | * L0 of prefix for literals/selectors
+          |                        |   to disambiguate that they are lits/sels
+    ------+------------------------+---------------------------------------
+    []    | ordered collections    | * delimit homogeneous ordered collections
+          |                        |   of members, concept ordinal+asset pairs
+          |                        | * delimit Array selectors
+          |                        | * delimit nonempty-Tuple-Array selectors
+    ------+------------------------+---------------------------------------
+    {}    | nonordered collections | * delimit homogeneous nonordered collections
+          |                        |   of members, concept asset+cardinal pairs
+          |                        | * delimit Set/Bag selectors
+          |                        | * delimit Interval-Set/Interval-Bag selectors
+          |                        | * delimit nonempty-Relation/Tuple-Bag sels
+    ------+------------------------+---------------------------------------
+    ()    | aordered collections   | * delimit heterogeneous aordered collections
+          |                        |   of attributes, concept nominal+asset pairs
+          |                        | * delimit Tuple/Article/Excuse selectors
+          |                        | * delimit Heading literals
+          |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
+          |                        | * delimit Calendar-*, Geographic-* literals
+    ------+------------------------+---------------------------------------
+    :     | pairings               | * indicates a pairing context
+          |                        | * separates the 2 parts of a pair
+          |                        | * optional pair separator in Array/Set/Bag sels
+          |                        | * optional pair separator in Tuple/Article/Excuse sels
+          |                        | * optional pair separator in ne-TA/Rel/TB sels
+          |                        | * label/attributes separator in Article sel
+          |                        | * disambiguate Bag sel from Set sel
+          |                        | * L2 of prefix for Renaming literals
+    ------+------------------------+---------------------------------------
+    ,     | list builders          | * separates collection elements
+          |                        | * separate members in Array/Set/Bag sels
+          |                        | * separate members in nonempty-TA/Rel/TB sels
+          |                        | * separate attributes in Tuple/Article/Excuse sels
+          |                        | * separate attributes in Heading lits
+          |                        | * disambiguate unary named Tuple sels from Article sels
+          |                        | * separate elements in Calendar-*, Geographic-* lits
+    ------+------------------------+---------------------------------------
+    ~     | sequences/stitching    | * indicates a sequencing context
+          |                        | * L1 of prefix for Bits/Blob literals
+          |                        | * L1 of optional prefix for Text literals
+          |                        | * L1 of optional prefix for Array selectors
+          |                        | * L1 of prefix for Tuple-Array lits/sels
+    ------+------------------------+---------------------------------------
+    ?     | qualifications/is?/so  | * indicates a qualifying/yes-or-no context
+          |                        | * L1 of optional prefix for Boolean literals
+          |                        | * L2 of prefix for Bits literals
+          |                        | * L1 of optional prefix for Set selectors
+          |                        | * L1 of prefix for Interval-Set selectors
+          |                        | * L1 of prefix for Relation lits/sels
+    ------+------------------------+---------------------------------------
+    +     | quantifications/count  | * indicates an integral quantifying/count context
+          |                        | * L1 of optional prefix for Integer literals
+          |                        | * L2 of prefix for Blob literals
+          |                        | * L1 of optional prefix for Bag selectors
+          |                        | * L1 of prefix for Interval-Bag selectors
+          |                        | * L1 of prefix for Tuple-Bag lits/sels
+          |                        | * L2 of prefix for Calendar-Duration literals
+          |                        | * indicates elevation in Geographic-Point literals
+    ------+------------------------+---------------------------------------
+    /     | fractions/measures     | * indicates a fractional quantifying/count context
+          |                        | * L1 of optional prefix for Fraction literals
+          |                        | * L1 of optional prefix for Mix selectors
+          | division               | * disambiguate Fraction lit from Integer lit
+          |                        | * numerator/denominator separator in Fraction literals
+    ------+------------------------+---------------------------------------
+    ..    | intervals/ranges       | * L1 of prefix for Interval selectors
+          |                        | * L2 of prefix for Interval-Set/Interval-Bag selectors
+          |                        | * pair separator in Interval/Ivl-Set/Ivl-Bag selectors
+    ------+------------------------+---------------------------------------
+    %     | tuples/heterogeneous   | * indicates that tuples are featured
+          |                        | * L1 of optional prefix for Tuple selectors
+          |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
+          |                        | * L2 of prefix for Calendar-Time literals
+    ------+------------------------+---------------------------------------
+    @     | at/locators/when/where | * indicates temporals/spatials are featured
+          |                        | * L1 of prefix for Calendar-*, Geographic-* literals
+          |                        | * L2 of prefix for Geographic-Point literals
+          |                        | * base/offset/zone separator in Calendar-Instant lits
+    ------+------------------------+---------------------------------------
+    *     | generics/whatever      | * indicates a generic type context
+          |                        | * L1 of optional prefix for Article selectors
+          | multiplication         | * significand/radix separator in Fraction literals
+    ------+------------------------+---------------------------------------
+    !     | excuses/but/not        | * indicates that excuses are featured
+          |                        | * L1 of prefix for Excuse literals/selectors
+    ------+------------------------+---------------------------------------
+    $     | identifiers/names      | * indicates identifiers/names are featured
+          |                        | * L1 of prefix for Heading literals
+          |                        | * L1 of prefix for Renaming literals
+          |                        | * a triple of this indicates an entity marker
+    ------+------------------------+---------------------------------------
+    -     | subtraction            | * indicates negative-Integer/Fraction literal
+          |                        | * indicates open endpoint in Interval selectors
+    ------+------------------------+---------------------------------------
+    .     | radix point            | * disambiguate Fraction lit from Integer lit
+    ------+------------------------+---------------------------------------
+    ^     | exponentiation         | * radix/exponent separator in Fraction literals
+          | up-pointing-arrow      | * indicates latitude in Geographic-Point literals
+    ------+------------------------+---------------------------------------
+    >     | right-pointing-arrow   | * indicates longitude in Geographic-Point literals
+    ------+------------------------+---------------------------------------
+    digit | number                 | * first char 0..9 in bareword indicates is a number
+    ------+------------------------+---------------------------------------
+    alpha | identifier             | * first char a..z/etc in bareword indicates is identifier
+    ------+------------------------+---------------------------------------
+    0b    | base-2                 | * indicates base-2/binary notation
+          |                        | * prefix for Integer in base-2
+    ------+------------------------+---------------------------------------
+    0o    | base-8                 | * indicates base-8/octal notation
+          |                        | * prefix for Integer in base-8
+    ------+------------------------+---------------------------------------
+    0d    | base-10                | * indicates base-10/decimal notation
+          |                        | * optional prefix for Integer in base-10
+    ------+------------------------+---------------------------------------
+    0x    | base-16                | * indicates base-16/hexadecimal notation
+          |                        | * prefix for Integer in base-16
+    ------+------------------------+---------------------------------------
+
+    When combining symbols in a \XY prefix (L0+L1+L2) to represent both
+    collection type and element type, the X and Y always indicate the
+    collection and element type respectively; the mnemonic is "X of Y", for
+    example, \?% says "set of tuple", or \~? says "string of boolean".
+```
+
+Some of the above mnemonics also carry additional meanings in a wider
+**Muldis Data Language** context, but those are not described here.
+
+# VERSIONING
+
+Every version of this specification document is expected to declare its own
+fully-qualified name, or *identity*, so that it can easily be referred to
+and be distinguished from every other version that does or might exist.
+
+The expected fully-qualified name of every version of this specification
+document, as either declared in said document or as referenced by other
+documents or by source code, has 3 main parts: *document base name*,
+*authority*, and *version number*.
+
+The *document base name* is the character string `Muldis_Object_Notation`.
+
+An *authority* is some nonempty character string whose value uniquely
+identifies the authority or author of the versioned entity.  Generally
+speaking, the community at large should self-regulate authority identifier
+strings so they are reasonable formats and so each prospective
+authority/author has one of their own that everyone recognizes as theirs.
+Note that an authority/author doesn't have to be an individual person; it
+could be some corporate entity instead.
+
+Examples of recommended *authority* naming schemes include a qualified
+base HTTP url belonging to the authority (example `http://muldis.com`) or
+a qualified user identifier at some well-known asset repository
+(example `http://github.com/muldis` or `cpan:DUNCAND`).
+
+For all official/original works by Muldis Data Systems, Inc., the
+*authority* has always been `http://muldis.com` and is expected to remain
+so during the foreseeable future.
+
+If someone else wants to *embrace and extend* this specification document,
+then they must use their own (not `http://muldis.com`) base authority
+identifier, to prevent ambiguity, assist quality control, and give due credit.
+
+In this context, *embrace and extend* means for someone to do any of the
+following:
+
+- Releasing a modified version of this current document or any
+component thereof where the original of the modified version was released
+by someone else (the original typically being the official release), as
+opposed to just releasing a delta document that references the current one
+as a foundation.  This applies both for unofficial modifications and for
+official modifications following a change of who is the official maintainer.
+
+- Releasing a delta document for a version of this current document or
+any component thereof where the referenced original is released by someone
+else, and where the delta either makes significant incompatible changes.
+
+A *version number* is an ordered sequence of 1 or more integers.  A
+*version number* is used to distinguish between all of the versions of a
+named entity that have a common *authority*, per each kind of versioned
+entity; version numbers typically indicate the release order of these
+related versions and how easily users can substitute one version for
+another.  The actual intended meaning of any given *version number*
+regarding for example substitutability is officially dependant on each
+*authority* and no implicit assumptions should be made that 2 *version
+number* with different *authority* are comparable in any meaningful way,
+aside from case-by-case where a particular *authority* declares they use a
+scheme compatible with another.  The only thing this document requires is that
+every distinct version of an entity has a distinct fully-qualified name.
+
+For each official/original work by Muldis Data Systems related to this
+specification document and released after 2016 April 1, except where
+otherwise stated, it uses *semantic versioning* for each *version number*,
+as described below.  Others are encouraged to follow the same format, but
+are not required to.  For all intents and purposes, every *version number*
+of an official Muldis work is intended to conform to the external public
+standard **Semantic Versioning 2.0.0** as published at
+[https://semver.org](https://semver.org), but it is re-explained below for
+clarity or in case the external document disappears.
+
+A *version number* for authority `http://muldis.com` is an ordered sequence
+of integers, the order of these being from most significant to least, with
+3 positions [MAJOR,MINOR,PATCH] and further ones possible.  The version
+sequence may have have as few as 1 most significant position.  Any omitted
+trailing position is treated as if it were zero.  Each of
+{MAJOR,MINOR,PATCH} must be a non-negative integer. MAJOR is always (except
+when it is zero) incremented when a change is made which breaks
+backwards-compatibility for functioning uses, such as when removing a
+feature; it may optionally be incremented at other times, such as for
+marketing purposes.  Otherwise, MINOR is always incremented when a change
+is made that breaks forwards-compatibility for functioning uses, such as
+when adding a feature; it may optionally be incremented at other times,
+such as for when a large internals change is made.  Otherwise, PATCH must
+be incremented when making any kind or size of change at all, as long as it
+doesn't break compatibility; typically this is bug-fixes or performance
+improvements or some documentation changes or any test suite changes.  For
+fixes to bugs or security holes which users may have come to rely on in
+conceptually functioning uses, they should be treated like API changes.
+When MAJOR is zero, MINOR is incremented for any kind of breaking change.
+There is no requirement that successive versions have adjacent integers,
+but they must be increases.
+
+Strictly speaking a *version number* reflects intention of the authority's
+release and not necessarily its actuality.  If PATCH is incremented but the
+release unknowingly had a breaking change, then once this is discovered
+another release should be made which increments PATCH again and undoes that
+breaking change, in order to safeguard upgrading users from surprises; an
+additional release can be made which instead increments MAJOR or MINOR with
+the breaking change if that change was actually desired.
+
+*Currently this document does not specify matters such as how to indicate
+maturity, for example production vs pre-production/beta/etc, so explicit
+markers of such can either be omitted or be based on other standards.
+However, a major version of zero should be considered either pre-production
+or that the authority expects frequent upcoming backwards-incompatible changes.*
+
+See also [http://design.perl6.org/S11.html#Versioning](
+http://design.perl6.org/S11.html#Versioning) which was the primary
+influence for the versioning scheme described above.
+
+# SEE ALSO
+
+*TODO.*
+
+# AUTHOR
+
+Darren Duncan - darren@DarrenDuncan.net
+
+# LICENSE AND COPYRIGHT
+
+This file is part of the formal specification named
+**Muldis Object Notation** (**MUON**).
+
+MUON is Copyright © 2002-2019, Muldis Data Systems, Inc.
+
+[http://www.muldis.com/](http://www.muldis.com/)
+
+MUON is free documentation for software;
+you can redistribute it and/or modify it under the terms of the Artistic
+License version 2 (AL2) as published by the Perl Foundation
+([http://www.perlfoundation.org/](http://www.perlfoundation.org/)).
+You should have received copies of the AL2 as part of the
+MUON distribution, in the file
+[LICENSE/artistic-2_0.txt](../LICENSE/artistic-2_0.txt); if not, see
+[https://www.perlfoundation.org/artistic-license-20.html](
+https://www.perlfoundation.org/artistic-license-20.html).
+
+Any versions of MUON that you modify and distribute must carry prominent
+notices stating that you changed the files and the date of any changes, in
+addition to preserving this original copyright notice and other credits.
+
+While it is by no means required, the copyright holder of MUON would
+appreciate being informed any time you create a modified version of MUON
+that you are willing to distribute, because that is a practical way of
+suggesting improvements to the standard version.
+
+# TRADEMARK POLICY
+
+**MULDIS** and **MULDIS MULTIVERSE OF DISCOURSE** are trademarks of Muldis
+Data Systems, Inc. ([http://www.muldis.com/](http://www.muldis.com/)).
+The trademarks apply to computer database software and related services.
+See [http://www.muldis.com/trademark_policy.html](
+http://www.muldis.com/trademark_policy.html) for the full written details
+of Muldis Data Systems' trademark policy.
+
+# ACKNOWLEDGEMENTS
+
+*None yet.*
+
+# FORUMS
+
+*TODO.*
