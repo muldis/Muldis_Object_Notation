@@ -145,7 +145,7 @@ which explicitly does not represent any kind of thing in particular.
 ## Text / Attribute Name
 
 A **Text** value is characterized by an
-arbitrarily-long sequence of **Unicode** 11.0 standard *character
+arbitrarily-long sequence of **Unicode** 12.1 standard *character
 code points*, where each distinct code point corresponds to a distinct
 integer in the set **{0..0xD7FF,0xE000..0x10FFFF}**,
 which explicitly does not represent any kind of thing in particular.

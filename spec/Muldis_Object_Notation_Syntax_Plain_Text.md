@@ -228,11 +228,6 @@ Grammar:
     {
         '`\$\$\$`'
     }
-
-    token seg_sp
-    {
-        ['"' <sp> '"']*
-    }
 ```
 
 A `<sp>` represents *dividing space* that may be used to visually format
@@ -241,13 +236,13 @@ comments, without changing its meaning.  A superset of the MUON grammar
 might require *dividing space* to disambiguate the boundaries of
 otherwise-consecutive grammar tokens, but plain MUON does not.
 
-A `<seg_sp>` represents *segmenting space* that may be used to split a
-quotation-mark-delimited literal into multiple segments, where each segment
-is quotation-mark-delimited and each pair of consecutive segments is
+A special feature of MUON is that any unrestrained-length literal or
+identifier may be split into multiple segments 
 separated by dividing space.  This segmenting ability is provided to
 support code that contains very long numeric or stringy literals while
-still being well formatted (no extra long lines).  The expected usage
-context of `<seg_sp>` is like `'"' ... <seg_sp> ... '"'`.
+still being well formatted (no extra long lines).
+See the grammar sections for `<Integer>`, `<Fraction>`, `<Bits>`, `<Blob>`,
+`<Text>` for more details on how this specifically applies to them.
 
 An `<entity_marker>` is a feature that is optional for a MUON parser or
 generator to support.  It is syntactically a proper subset of a
@@ -375,122 +370,20 @@ Grammar:
 ```
     token Integer
     {
-        <nonquoted_int> | <quoted_int>
-    }
-
-    token nonquoted_int
-    {
         ['\\+' <sp>]? <asigned_int>
     }
 
     token asigned_int
     {
-        <num_sign>? <nonsigned_int>
-    }
-
-    token num_sign
-    {
-        <[+-]>
+        <[+-]>? <nonsigned_int>
     }
 
     token nonsigned_int
     {
-        <ns_int_2> | <ns_int_8> | <ns_int_10> | <ns_int_16>
-    }
-
-    token ns_int_2
-    {
-        0b <nc_2>+
-    }
-
-    token ns_int_8
-    {
-        0o <nc_8>+
-    }
-
-    token ns_int_10
-    {
-        [0d]? <nc_10>+
-    }
-
-    token ns_int_16
-    {
-        0x <nc_16>+
-    }
-
-    token nc_2
-    {
-        <[ 0..1 _ ]>
-    }
-
-    token nc_8
-    {
-        <[ 0..7 _ ]>
-    }
-
-    token nc_10
-    {
-        <[ 0..9 _ ]>
-    }
-
-    token nc_16
-    {
-        <[ 0..9 A..F _ a..f ]>
-    }
-
-    token quoted_int
-    {
-        '\\+' <sp> '"' <seg_sp> <qu_asigned_int> <seg_sp> '"'
-    }
-
-    token qu_asigned_int
-    {
-        <num_sign>? <seg_sp> <qu_nonsigned_int>
-    }
-
-    token qu_nonsigned_int
-    {
-        <qu_ns_int_2> | <qu_ns_int_8> | <qu_ns_int_10> | <qu_ns_int_16>
-    }
-
-    token qu_ns_int_2
-    {
-        0 <seg_sp> b <seg_sp> <nc_2> <qu_nc_2>*
-    }
-
-    token qu_ns_int_8
-    {
-        0 <seg_sp> o <seg_sp> <nc_8> <qu_nc_8>*
-    }
-
-    token qu_ns_int_10
-    {
-        [0 <seg_sp> d <seg_sp>]? <nc_10> <qu_nc_10>*
-    }
-
-    token qu_ns_int_16
-    {
-        0 <seg_sp> x <seg_sp> <nc_16> <qu_nc_16>*
-    }
-
-    token qu_nc_2
-    {
-        <nc_2> | <seg_sp>
-    }
-
-    token qu_nc_8
-    {
-        <nc_8> | <seg_sp>
-    }
-
-    token qu_nc_10
-    {
-        <nc_10> | <seg_sp>
-    }
-
-    token qu_nc_16
-    {
-        <nc_16> | <seg_sp>
+          [0b    <sp> [<[ 0..1           ]>+]+ % [_ | <sp>]]
+        | [0o    <sp> [<[ 0..7           ]>+]+ % [_ | <sp>]]
+        | [[0d]? <sp> [<[ 0..9           ]>+]+ % [_ | <sp>]]
+        | [0x    <sp> [<[ 0..9 A..F a..f ]>+]+ % [_ | <sp>]]
     }
 ```
 
@@ -498,10 +391,6 @@ This grammar supports writing **Integer** literals in any of the numeric
 bases {2,8,10,16}, using conventional syntax.  The literal may optionally
 contain underscore characters (`_`), which exist just to help with visual
 formatting, such as for `10_000_000`.
-
-This grammar is subject to the additional rule that the total count of
-numeric position characters (`0..9 A..F a..f`) in each of the
-`<nonsigned_int>` and in the `<qu_nonsigned_int>` must be at least 1.
 
 Examples:
 
@@ -522,10 +411,10 @@ Examples:
     \+81
 
     `Mersenne Prime 2^521-1, 157 digits, discovered 1952 Jan 30.`
-    \+"68_64797"
-        "66013_06097_14981_90079_90813_93217_26943_53001_43305_40939"
-        "44634_59185_54318_33976_56052_12255_96406_61454_55497_72963"
-        "11391_48085_80371_21987_99971_66438_12574_02829_11150_57151"
+    \+68_64797
+        66013_06097_14981_90079_90813_93217_26943_53001_43305_40939
+        44634_59185_54318_33976_56052_12255_96406_61454_55497_72963
+        11391_48085_80371_21987_99971_66438_12574_02829_11150_57151
 
     0d39
 
@@ -545,11 +434,6 @@ Grammar:
 ```
     token Fraction
     {
-        <nonquoted_frac> | <quoted_frac>
-    }
-
-    token nonquoted_frac
-    {
         ['\\/' <sp>]? <asigned_frac>
     }
 
@@ -560,37 +444,20 @@ Grammar:
 
     token significand
     {
-        <radix_point_sig> | <num_den_sig>
+        <asigned_radix_point_sig> | <num_den_sig>
     }
 
-    token radix_point_sig
+    token asigned_radix_point_sig
     {
-        <num_sign>? <ns_rps>
+        <[+-]>? <nonsigned_radix_point_sig>
     }
 
-    token ns_rps
+    token nonsigned_radix_point_sig
     {
-        <ns_rps_2> | <ns_rps_8> | <ns_rps_10> | <ns_rps_16>
-    }
-
-    token ns_rps_2
-    {
-        <ns_int_2> <sp> '.' <sp> <nc_2>+
-    }
-
-    token ns_rps_8
-    {
-        <ns_int_8> <sp> '.' <sp> <nc_8>+
-    }
-
-    token ns_rps_10
-    {
-        <ns_int_10> <sp> '.' <sp> <nc_10>+
-    }
-
-    token ns_rps_16
-    {
-        <ns_int_16> <sp> '.' <sp> <nc_16>+
+          [0b    <sp> [[<[ 0..1           ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+        | [0o    <sp> [[<[ 0..7           ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+        | [[0d]? <sp> [[<[ 0..9           ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+        | [0x    <sp> [[<[ 0..9 A..F a..f ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
     }
 
     token num_den_sig
@@ -616,81 +483,6 @@ Grammar:
     token exponent
     {
         <asigned_int>
-    }
-
-    token quoted_frac
-    {
-        '\\/' <sp> '"' <seg_sp> <qu_asigned_frac> <seg_sp> '"'
-    }
-
-    token qu_asigned_frac
-    {
-        <qu_significand> [<seg_sp> '*' <seg_sp> <qu_radix> <seg_sp> '^' <seg_sp> <qu_exponent>]?
-    }
-
-    token qu_significand
-    {
-        <qu_radix_point_sig> | <qu_num_den_sig>
-    }
-
-    token qu_radix_point_sig
-    {
-        <num_sign>? <qu_ns_rps>
-    }
-
-    token qu_ns_rps
-    {
-        <qu_ns_rps_2> | <qu_ns_rps_8> | <qu_ns_rps_10> | <qu_ns_rps_16>
-    }
-
-    token qu_ns_rps_2
-    {
-        <qu_ns_int_2> <seg_sp> '.' <seg_sp> <nc_2> <qu_nc_2>*
-    }
-
-    token qu_ns_rps_8
-    {
-        <qu_ns_int_8> <seg_sp> '.' <seg_sp> <nc_8> <qu_nc_8>*
-    }
-
-    token qu_ns_rps_10
-    {
-        <qu_ns_int_10> <seg_sp> '.' <seg_sp> <nc_10> <qu_nc_10>*
-    }
-
-    token qu_ns_rps_16
-    {
-        <qu_ns_int_16> <seg_sp> '.' <seg_sp> <nc_16> <qu_nc_16>*
-    }
-
-    token qu_num_den_sig
-    {
-        <qu_numerator> <seg_sp> '/' <seg_sp> <qu_denominator>
-    }
-
-    token qu_numerator
-    {
-        <qu_asigned_int>
-    }
-
-    token qu_denominator
-    {
-        <qu_nonsigned_int>
-    }
-
-    token qu_radix
-    {
-        <qu_nonsigned_int>
-    }
-
-    token qu_exponent
-    {
-        <qu_asigned_int>
-    }
-
-    token numeric_as_fraction
-    {
-        <Fraction> | <Integer>
     }
 ```
 
@@ -727,16 +519,11 @@ literals separated by symbolic infix operators, evaluation order aside.
 Also per normal expectations, literals in the format `X.X` only specify the
 base at most once in total, *not* separately for the part after the `.`.
 
-This grammar is subject to the additional rule that the total count of
-numeric position characters (`0..9 A..F a..f`) in each of the
-`<radix_point_sig>` and in the `<qu_radix_point_sig>` must be at least 2,
-such that the `.` is positioned after at least 1 and before at least 1.
+This grammar is subject to the additional rule that the integer denoted by
+`<denominator>` must be nonzero.
 
 This grammar is subject to the additional rule that the integer denoted by
-each of `<denominator>` and `<qu_denominator>` must be nonzero.
-
-This grammar is subject to the additional rule that the integer denoted by
-each of `<radix>` and `<qu_radix>` must be at least 2.
+`<radix>` must be at least 2.
 
 Examples:
 
@@ -766,12 +553,12 @@ Examples:
     \/355/113
 
     `First 101 digits of transcendental number π.`
-    \/"3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510"
-        "58209_74944_59230_78164_06286_20899_86280_34825_34211_70679"
+    \/3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
+        58209_74944_59230_78164_06286_20899_86280_34825_34211_70679
 
     `Mersenne Primes 2^107-1 divided by 2^127-1.`
-    \/"162259276829213363391578010288127"
-        "/170141183460469231731687303715884105727"
+    \/162259276829213363391578010288127
+        /170141183460469231731687303715884105727
 
     4.5207196*10^37
 
@@ -793,7 +580,7 @@ Grammar:
 ```
     token Bits
     {
-        '\\~?' <sp> '"' [<[ 0..1 _ ]> | <seg_sp>]* '"'
+        '\\~?' <sp> [['"' <[ 0..1 _ ]>* '"']+ % <sp>]
     }
 ```
 
@@ -808,6 +595,8 @@ Examples:
     \~?""
 
     \~?"00101110100010"
+
+    \~?"00101110_100010"
 ```
 
 ## Blob
@@ -819,7 +608,7 @@ Grammar:
 ```
     token Blob
     {
-        '\\~+' <sp> '"' [<[ 0..9 A..F _ a..f ]> | <seg_sp>]* '"'
+        '\\~+' <sp> [['"' [<[ 0..9 A..F a..f ]> ** 2 | _]* '"']+ % <sp>]
     }
 ```
 
@@ -828,16 +617,14 @@ This grammar supports writing **Blob** literals in numeric base
 underscore characters (`_`), which exist just to help with visual
 formatting.
 
-This grammar is subject to the additional rule that the total count of
-hexit characters (`0..9 A..F _ a..f`) in the `<Blob>` excluding `_` must be
-a multiple of 2.
-
 Examples:
 
 ```
     \~+""
 
     \~+"A705E416"
+
+    \~+"A705_E416"
 ```
 
 ## Text / Attribute Name
@@ -2263,7 +2050,6 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ""    | stringy data and names | * delimit quoted opaque regular literals
           |                        | * delimit all Bits/Blob/Text literals
-          |                        | * delimit quoted Integer/Fraction literals
           |                        | * delimit quoted code identifiers/names
           |                        | * delimit Calendar-Instant zone names
     ------+------------------------+---------------------------------------

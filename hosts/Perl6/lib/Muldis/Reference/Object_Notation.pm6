@@ -48,11 +48,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
         '`\$\$\$`'
     }
 
-    token seg_sp
-    {
-        ['"' <sp> '"']*
-    }
-
 ###########################################################################
 
     token Any
@@ -106,132 +101,25 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Integer
     {
-        <nonquoted_int> | <quoted_int>
-    }
-
-    token nonquoted_int
-    {
         ['\\+' <sp>]? <asigned_int>
     }
 
     token asigned_int
     {
-        <num_sign>? <nonsigned_int>
-    }
-
-    token num_sign
-    {
-        <[+-]>
+        <[+-]>? <nonsigned_int>
     }
 
     token nonsigned_int
     {
-        <ns_int_2> | <ns_int_8> | <ns_int_10> | <ns_int_16>
-    }
-
-    token ns_int_2
-    {
-        0b <nc_2>+
-    }
-
-    token ns_int_8
-    {
-        0o <nc_8>+
-    }
-
-    token ns_int_10
-    {
-        [0d]? <nc_10>+
-    }
-
-    token ns_int_16
-    {
-        0x <nc_16>+
-    }
-
-    token nc_2
-    {
-        <[ 0..1 _ ]>
-    }
-
-    token nc_8
-    {
-        <[ 0..7 _ ]>
-    }
-
-    token nc_10
-    {
-        <[ 0..9 _ ]>
-    }
-
-    token nc_16
-    {
-        <[ 0..9 A..F _ a..f ]>
-    }
-
-    token quoted_int
-    {
-        '\\+' <sp> '"' <seg_sp> <qu_asigned_int> <seg_sp> '"'
-    }
-
-    token qu_asigned_int
-    {
-        <num_sign>? <seg_sp> <qu_nonsigned_int>
-    }
-
-    token qu_nonsigned_int
-    {
-        <qu_ns_int_2> | <qu_ns_int_8> | <qu_ns_int_10> | <qu_ns_int_16>
-    }
-
-    token qu_ns_int_2
-    {
-        0 <seg_sp> b <seg_sp> <nc_2> <qu_nc_2>*
-    }
-
-    token qu_ns_int_8
-    {
-        0 <seg_sp> o <seg_sp> <nc_8> <qu_nc_8>*
-    }
-
-    token qu_ns_int_10
-    {
-        [0 <seg_sp> d <seg_sp>]? <nc_10> <qu_nc_10>*
-    }
-
-    token qu_ns_int_16
-    {
-        0 <seg_sp> x <seg_sp> <nc_16> <qu_nc_16>*
-    }
-
-    token qu_nc_2
-    {
-        <nc_2> | <seg_sp>
-    }
-
-    token qu_nc_8
-    {
-        <nc_8> | <seg_sp>
-    }
-
-    token qu_nc_10
-    {
-        <nc_10> | <seg_sp>
-    }
-
-    token qu_nc_16
-    {
-        <nc_16> | <seg_sp>
+          [0b    <sp> [<[ 0..1           ]>+]+ % [_ | <sp>]]
+        | [0o    <sp> [<[ 0..7           ]>+]+ % [_ | <sp>]]
+        | [[0d]? <sp> [<[ 0..9           ]>+]+ % [_ | <sp>]]
+        | [0x    <sp> [<[ 0..9 A..F a..f ]>+]+ % [_ | <sp>]]
     }
 
 ###########################################################################
 
     token Fraction
-    {
-        <nonquoted_frac> | <quoted_frac>
-    }
-
-    token nonquoted_frac
     {
         ['\\/' <sp>]? <asigned_frac>
     }
@@ -243,37 +131,20 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token significand
     {
-        <radix_point_sig> | <num_den_sig>
+        <asigned_radix_point_sig> | <num_den_sig>
     }
 
-    token radix_point_sig
+    token asigned_radix_point_sig
     {
-        <num_sign>? <ns_rps>
+        <[+-]>? <nonsigned_radix_point_sig>
     }
 
-    token ns_rps
+    token nonsigned_radix_point_sig
     {
-        <ns_rps_2> | <ns_rps_8> | <ns_rps_10> | <ns_rps_16>
-    }
-
-    token ns_rps_2
-    {
-        <ns_int_2> <sp> '.' <sp> <nc_2>+
-    }
-
-    token ns_rps_8
-    {
-        <ns_int_8> <sp> '.' <sp> <nc_8>+
-    }
-
-    token ns_rps_10
-    {
-        <ns_int_10> <sp> '.' <sp> <nc_10>+
-    }
-
-    token ns_rps_16
-    {
-        <ns_int_16> <sp> '.' <sp> <nc_16>+
+          [0b    <sp> [[<[ 0..1           ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+        | [0o    <sp> [[<[ 0..7           ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+        | [[0d]? <sp> [[<[ 0..9           ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+        | [0x    <sp> [[<[ 0..9 A..F a..f ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
     }
 
     token num_den_sig
@@ -301,93 +172,18 @@ grammar Muldis::Reference::Object_Notation::Grammar
         <asigned_int>
     }
 
-    token quoted_frac
-    {
-        '\\/' <sp> '"' <seg_sp> <qu_asigned_frac> <seg_sp> '"'
-    }
-
-    token qu_asigned_frac
-    {
-        <qu_significand> [<seg_sp> '*' <seg_sp> <qu_radix> <seg_sp> '^' <seg_sp> <qu_exponent>]?
-    }
-
-    token qu_significand
-    {
-        <qu_radix_point_sig> | <qu_num_den_sig>
-    }
-
-    token qu_radix_point_sig
-    {
-        <num_sign>? <qu_ns_rps>
-    }
-
-    token qu_ns_rps
-    {
-        <qu_ns_rps_2> | <qu_ns_rps_8> | <qu_ns_rps_10> | <qu_ns_rps_16>
-    }
-
-    token qu_ns_rps_2
-    {
-        <qu_ns_int_2> <seg_sp> '.' <seg_sp> <nc_2> <qu_nc_2>*
-    }
-
-    token qu_ns_rps_8
-    {
-        <qu_ns_int_8> <seg_sp> '.' <seg_sp> <nc_8> <qu_nc_8>*
-    }
-
-    token qu_ns_rps_10
-    {
-        <qu_ns_int_10> <seg_sp> '.' <seg_sp> <nc_10> <qu_nc_10>*
-    }
-
-    token qu_ns_rps_16
-    {
-        <qu_ns_int_16> <seg_sp> '.' <seg_sp> <nc_16> <qu_nc_16>*
-    }
-
-    token qu_num_den_sig
-    {
-        <qu_numerator> <seg_sp> '/' <seg_sp> <qu_denominator>
-    }
-
-    token qu_numerator
-    {
-        <qu_asigned_int>
-    }
-
-    token qu_denominator
-    {
-        <qu_nonsigned_int>
-    }
-
-    token qu_radix
-    {
-        <qu_nonsigned_int>
-    }
-
-    token qu_exponent
-    {
-        <qu_asigned_int>
-    }
-
-    token numeric_as_fraction
-    {
-        <Fraction> | <Integer>
-    }
-
 ###########################################################################
 
     token Bits
     {
-        '\\~?' <sp> '"' [<[ 0..1 _ ]> | <seg_sp>]* '"'
+        '\\~?' <sp> [['"' <[ 0..1 _ ]>* '"']+ % <sp>]
     }
 
 ###########################################################################
 
     token Blob
     {
-        '\\~+' <sp> '"' [<[ 0..9 A..F _ a..f ]> | <seg_sp>]* '"'
+        '\\~+' <sp> [['"' [<[ 0..9 A..F a..f ]> ** 2 | _]* '"']+ % <sp>]
     }
 
 ###########################################################################
