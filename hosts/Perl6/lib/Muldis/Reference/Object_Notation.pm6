@@ -94,17 +94,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Boolean
     {
-        ['\\?' <sp>]? [False | True]
+        False | True
     }
 
 ###########################################################################
 
     token Integer
-    {
-        ['\\+' <sp>]? <asigned_int>
-    }
-
-    token asigned_int
     {
         <[+-]>? <nonsigned_int>
     }
@@ -121,20 +116,15 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Fraction
     {
-        ['\\/' <sp>]? <asigned_frac>
-    }
-
-    token asigned_frac
-    {
         <significand> [<sp> '*' <sp> <radix> <sp> '^' <sp> <exponent>]?
     }
 
     token significand
     {
-        <asigned_radix_point_sig> | <num_den_sig>
+        <radix_point_sig> | <num_den_sig>
     }
 
-    token asigned_radix_point_sig
+    token radix_point_sig
     {
         <[+-]>? <nonsigned_radix_point_sig>
     }
@@ -154,7 +144,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token numerator
     {
-        <asigned_int>
+        <Integer>
     }
 
     token denominator
@@ -169,7 +159,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token exponent
     {
-        <asigned_int>
+        <Integer>
     }
 
 ###########################################################################
@@ -194,11 +184,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
     }
 
     token quoted_text
-    {
-        ['\\~' <sp>]? <quoted_text_no_pfx>
-    }
-
-    token quoted_text_no_pfx
     {
         ['"' <text_content> '"']+ % <sp>
     }
@@ -245,7 +230,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Array
     {
-        ['\\~' <sp>]? <ord_member_commalist>
+        <ord_member_commalist>
     }
 
     token ord_member_commalist
@@ -257,14 +242,14 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Set
     {
-        ['\\?' <sp>]? <nonord_member_commalist>
+        <nonord_member_commalist>
     }
 
 ###########################################################################
 
     token Bag
     {
-        ['\\+' <sp>]? <nonord_member_commalist>
+        <nonord_member_commalist>
     }
 
     token nonord_member_commalist
@@ -301,7 +286,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Mix
     {
-        ['\\/' <sp>]? <mix_nonord_member_commalist>
+        <mix_nonord_member_commalist>
     }
 
     token mix_nonord_member_commalist
@@ -326,7 +311,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token mix_multiplicity
     {
-        <asigned_frac> | <asigned_int>
+        <Fraction> | <Integer>
     }
 
 ###########################################################################
@@ -409,7 +394,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple
     {
-        ['\\%' <sp>]? '(' <sp> <attr_commalist> <sp> ')'
+        '(' <sp> <attr_commalist> <sp> ')'
     }
 
     token attr_commalist
@@ -571,7 +556,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token instant_zone
     {
-        <quoted_text_no_pfx>
+        <quoted_text>
     }
 
 ###########################################################################
@@ -615,7 +600,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token generic_article
     {
-        ['\\*' <sp>]? <label_attrs_pair>
+        <label_attrs_pair>
     }
 
     token label_attrs_pair
@@ -671,7 +656,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token nonord_attr_name
     {
-        <nonord_nonquoted_attr_name> | <quoted_text_no_pfx>
+        <nonord_nonquoted_attr_name> | <quoted_text>
     }
 
     token nonord_nonquoted_attr_name

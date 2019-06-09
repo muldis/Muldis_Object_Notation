@@ -20,10 +20,6 @@ Muldis_Content_Predicate`
 
         True,
 
-        \?False,
-
-        \?True,
-
     ),
 
 `#########################################################################`
@@ -36,17 +32,13 @@ Muldis_Content_Predicate`
 
         -3,
 
-        42,
-
         +42,
 
         `USA national debt in US dollars close to midnight of 2017 Dec 31.`
         20_597_460_196_915,
 
-        \+81,
-
         `Mersenne Prime 2^521-1, 157 digits, discovered 1952 Jan 30.`
-        \+68_64797
+        68_64797
             66013_06097_14981_90079_90813_93217_26943_53001_43305_40939
             44634_59185_54318_33976_56052_12255_96406_61454_55497_72963
             11391_48085_80371_21987_99971_66438_12574_02829_11150_57151,
@@ -73,8 +65,6 @@ Muldis_Content_Predicate`
 
         +4.72,
 
-        \/29.95,
-
         0/1,
 
         1/1,
@@ -87,14 +77,12 @@ Muldis_Content_Predicate`
 
         15_485_863/32_452_843,
 
-        \/355/113,
-
         `First 101 digits of transcendental number π.`
-        \/3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
+        3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
             58209_74944_59230_78164_06286_20899_86280_34825_34211_70679,
 
         `Mersenne Primes 2^107-1 divided by 2^127-1.`
-        \/162259276829213363391578010288127
+        162259276829213363391578010288127
             /170141183460469231731687303715884105727,
 
         4.5207196*10^37,
@@ -147,8 +135,6 @@ Muldis_Content_Predicate`
 
         "\\c<0x263A>\c<65>",
 
-        \~"Green",
-
         `One non-ordered quoted Text (or, one named attribute).`
         "sales",
 
@@ -186,7 +172,7 @@ Muldis_Content_Predicate`
         ],
 
         `Five members (1 duplicate).`
-        \~[
+        [
             57,
             45,
             63,
@@ -216,7 +202,7 @@ Muldis_Content_Predicate`
         },
 
         `Three members.`
-        \?{
+        {
             3,
             16,
             85,
@@ -242,9 +228,9 @@ Muldis_Content_Predicate`
         },
 
         `Six members (2 duplicates).`
-        \+{
+        {
             "Foo",
-            "Quux",
+            "Quux" : 1,
             "Foo",
             "Bar",
             "Baz",
@@ -262,9 +248,6 @@ Muldis_Content_Predicate`
 
         `One member; one gram of mass.`
         {\Gram: 1.0},
-
-        `Same thing.`
-        \/{\Gram: 1},
 
         `29.95 members (28.95 duplicates); the cost of a surgery.`
         {\USD: 29.95},
@@ -416,7 +399,7 @@ Muldis_Content_Predicate`
         ("サンプル": "http://example.com",),
 
         `Two named attributes.`
-        \%(
+        (
             name : "Michelle",
             age  : 17,
         ),
@@ -648,7 +631,7 @@ Muldis_Content_Predicate`
             exponent    : 37,
         )),
 
-        \*(\the_db::UTCDateTime : (
+        (\the_db::UTCDateTime : (
             year   : 2003,
             month  : 10,
             day    : 26,

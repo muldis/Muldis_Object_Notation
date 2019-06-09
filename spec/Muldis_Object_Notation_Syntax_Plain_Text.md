@@ -345,7 +345,7 @@ Grammar:
 ```
     token Boolean
     {
-        ['\\?' <sp>]? [False | True]
+        False | True
     }
 ```
 
@@ -355,10 +355,6 @@ Examples:
     False
 
     True
-
-    \?False
-
-    \?True
 ```
 
 ## Integer
@@ -369,11 +365,6 @@ Grammar:
 
 ```
     token Integer
-    {
-        ['\\+' <sp>]? <asigned_int>
-    }
-
-    token asigned_int
     {
         <[+-]>? <nonsigned_int>
     }
@@ -401,17 +392,13 @@ Examples:
 
     -3
 
-    42
-
     +42
 
     `USA national debt in US dollars close to midnight of 2017 Dec 31.`
     20_597_460_196_915
 
-    \+81
-
     `Mersenne Prime 2^521-1, 157 digits, discovered 1952 Jan 30.`
-    \+68_64797
+    68_64797
         66013_06097_14981_90079_90813_93217_26943_53001_43305_40939
         44634_59185_54318_33976_56052_12255_96406_61454_55497_72963
         11391_48085_80371_21987_99971_66438_12574_02829_11150_57151
@@ -434,20 +421,15 @@ Grammar:
 ```
     token Fraction
     {
-        ['\\/' <sp>]? <asigned_frac>
-    }
-
-    token asigned_frac
-    {
         <significand> [<sp> '*' <sp> <radix> <sp> '^' <sp> <exponent>]?
     }
 
     token significand
     {
-        <asigned_radix_point_sig> | <num_den_sig>
+        <radix_point_sig> | <num_den_sig>
     }
 
-    token asigned_radix_point_sig
+    token radix_point_sig
     {
         <[+-]>? <nonsigned_radix_point_sig>
     }
@@ -467,7 +449,7 @@ Grammar:
 
     token numerator
     {
-        <asigned_int>
+        <Integer>
     }
 
     token denominator
@@ -482,7 +464,7 @@ Grammar:
 
     token exponent
     {
-        <asigned_int>
+        <Integer>
     }
 ```
 
@@ -536,8 +518,6 @@ Examples:
 
     +4.72
 
-    \/29.95
-
     0/1
 
     1/1
@@ -550,14 +530,12 @@ Examples:
 
     15_485_863/32_452_843
 
-    \/355/113
-
     `First 101 digits of transcendental number π.`
-    \/3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
+    3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
         58209_74944_59230_78164_06286_20899_86280_34825_34211_70679
 
     `Mersenne Primes 2^107-1 divided by 2^127-1.`
-    \/162259276829213363391578010288127
+    162259276829213363391578010288127
         /170141183460469231731687303715884105727
 
     4.5207196*10^37
@@ -640,11 +618,6 @@ Grammar:
     }
 
     token quoted_text
-    {
-        ['\\~' <sp>]? <quoted_text_no_pfx>
-    }
-
-    token quoted_text_no_pfx
     {
         ['"' <text_content> '"']+ % <sp>
     }
@@ -741,8 +714,6 @@ Examples:
 
     "\\c<0x263A>\c<65>"
 
-    \~"Green"
-
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
 
@@ -770,7 +741,7 @@ Grammar:
 ```
     token Array
     {
-        ['\\~' <sp>]? <ord_member_commalist>
+        <ord_member_commalist>
     }
 
     token ord_member_commalist
@@ -796,7 +767,7 @@ Examples:
     ]
 
     `Five members (1 duplicate).`
-    \~[
+    [
         57,
         45,
         63,
@@ -814,13 +785,13 @@ Grammar:
 ```
     token Set
     {
-        ['\\?' <sp>]? <nonord_member_commalist>
+        <nonord_member_commalist>
     }
 ```
 
-A `<Set>` is subject to the additional rule that, either its
-`<member_commalist>` must not have any `<multiplied_member>` elements, or
-the `<Set>` must have the `\?` prefix, so that the `<Set>` can be
+A `<Set>` is subject to the additional rule that its
+`<member_commalist>` must not have any `<multiplied_member>` elements
+so that the `<Set>` can be
 distinguished from every possible `<Bag>` and `<Mix>`.
 
 Examples:
@@ -842,7 +813,7 @@ Examples:
     }
 
     `Three members.`
-    \?{
+    {
         3,
         16,
         85,
@@ -858,7 +829,7 @@ Grammar:
 ```
     token Bag
     {
-        ['\\+' <sp>]? <nonord_member_commalist>
+        <nonord_member_commalist>
     }
 
     token nonord_member_commalist
@@ -892,9 +863,9 @@ Grammar:
     }
 ```
 
-A `<Bag>` is subject to the additional rule that, either its
-`<member_commalist>` must have at least 1 `<multiplied_member>` element, or
-the `<Bag>` must have the `\+` prefix, so that the `<Bag>` can be
+A `<Bag>` is subject to the additional rule that its
+`<member_commalist>` must have at least 1 `<multiplied_member>` element
+so that the `<Bag>` can be
 distinguished from every possible `<Set>` and `<Mix>`.  An idiomatic way to
 represent an empty **Bag** is to have exactly 1 `<multiplied_member>` whose
 `<multiplicity>` is zero.
@@ -916,9 +887,9 @@ Examples:
     }
 
     `Six members (2 duplicates).`
-    \+{
+    {
         "Foo",
-        "Quux",
+        "Quux" : 1,
         "Foo",
         "Bar",
         "Baz",
@@ -935,7 +906,7 @@ Grammar:
 ```
     token Mix
     {
-        ['\\/' <sp>]? <mix_nonord_member_commalist>
+        <mix_nonord_member_commalist>
     }
 
     token mix_nonord_member_commalist
@@ -960,14 +931,14 @@ Grammar:
 
     token mix_multiplicity
     {
-        <asigned_frac> | <asigned_int>
+        <Fraction> | <Integer>
     }
 ```
 
-A `<Mix>` is subject to the additional rule that, either its
+A `<Mix>` is subject to the additional rule that its
 `<mix_member_commalist>` must have at least 1 `<mix_multiplied_member>`
-element whose `<mix_multiplicity>` is an `<asigned_frac>`, or the `<Mix>`
-must have the `\/` prefix, so that the `<Mix>` can be distinguished from
+element whose `<mix_multiplicity>` is an `<Fraction>`
+so that the `<Mix>` can be distinguished from
 every possible `<Set>` and `<Bag>`.  An idiomatic way to represent an empty
 **Mix** is to have exactly 1 `<mix_multiplied_member>` whose
 `<mix_multiplicity>` is zero.
@@ -980,9 +951,6 @@ Examples:
 
     `One member; one gram of mass.`
     {\Gram: 1.0}
-
-    `Same thing.`
-    \/{\Gram: 1}
 
     `29.95 members (28.95 duplicates); the cost of a surgery.`
     {\USD: 29.95}
@@ -1194,7 +1162,7 @@ Grammar:
 ```
     token Tuple
     {
-        ['\\%' <sp>]? '(' <sp> <attr_commalist> <sp> ')'
+        '(' <sp> <attr_commalist> <sp> ')'
     }
 
     token attr_commalist
@@ -1224,9 +1192,9 @@ Grammar:
 ```
 
 A `<Tuple>` is subject to the additional rule that, iff its
-`<attr_commalist>` has exactly 1 `<*_attr>` element, either that element
-must have a leading or trailing comma, or the `<Tuple>` must have the `\%`
-prefix, so that the `<Tuple>` can be distinguished from every possible
+`<attr_commalist>` has exactly 1 `<*_attr>` element, that element
+must have a leading or trailing comma,
+so that the `<Tuple>` can be distinguished from every possible
 `<Article>` (and from a superset grammar's generic grouping parenthesis).
 
 Examples:
@@ -1264,7 +1232,7 @@ Examples:
     ("サンプル": "http://example.com",)
 
     `Two named attributes.`
-    \%(
+    (
         name : "Michelle",
         age  : 17,
     )
@@ -1615,7 +1583,7 @@ Grammar:
 
     token instant_zone
     {
-        <quoted_text_no_pfx>
+        <quoted_text>
     }
 ```
 
@@ -1712,7 +1680,7 @@ Grammar:
 
     token generic_article
     {
-        ['\\*' <sp>]? <label_attrs_pair>
+        <label_attrs_pair>
     }
 
     token label_attrs_pair
@@ -1747,7 +1715,7 @@ Examples:
         exponent    : 37,
     ))
 
-    \*(\the_db::UTCDateTime : (
+    (\the_db::UTCDateTime : (
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -1827,7 +1795,7 @@ Grammar:
 
     token nonord_attr_name
     {
-        <nonord_nonquoted_attr_name> | <quoted_text_no_pfx>
+        <nonord_nonquoted_attr_name> | <quoted_text>
     }
 
     token nonord_nonquoted_attr_name
@@ -2032,6 +2000,80 @@ Examples:
     \$:("First Name"->"Last Name")
 ```
 
+# RESERVED UNUSED SYNTAX
+
+Muldis Object Notation reserves the use of certain syntaxes for various
+reasons.  In some cases it doesn't use those syntaxes now but wants to
+prevent other superset grammars of MUON from defining their own meanings,
+regardless of whether MUON might use them in the future itself.  In other
+cases it doesn't use those syntaxes expressly in order to empower superset
+grammars to define their own meanings.
+
+# Conceptual Possrep Prefixes
+
+Muldis Object Notation is designed around the concept that every possrep
+has its own pure symbolic prefix of the form `\foo` where `foo` is a
+sequence of zero or more ASCII symbolic characters.  Some possreps actually
+use this prefix, and other possreps actually eschew using it because doing
+so makes actually writing or reading MUON more pleasant.
+
+The following table enumerates those symbolic prefixes that are *not*
+actually used, and so are called *conceptual prefixes*:
+
+```
+    Prefix | Possrep/partial | Possrep Instead Identified By
+    -------+-----------------+-----------------------------------------------------
+    \?     | Boolean         | bareword literal False or True
+    \?     | Set             | {} or {...} without any colon
+    \+     | Integer         | 0..9 without any ./*^
+    \+     | Bag             | {...} with >= 1 colon followed by an Integer
+    \/     | Fraction        | 0..9 with at least 1 of ./*^
+    \/     | Mix             | {...} with >= 1 colon followed by a Fraction
+    \~     | quoted-Text     | "" or "..."
+    \~     | Array           | [] or [...]
+    \%     | Tuple           | () or (...) with >= 1 comma
+    \*     | generic-Article | (...:...) without any comma
+```
+
+A few more symbolic prefixes are currently not used but would be used if
+particular possreps were added to MUON later.  If **Interval Mix** or
+**Tuple Mix** are added, then `\/..{}` and `\/%()` plus `\/%{}`
+respectively are reserved for them.
+
+# Features For Superset Grammars
+
+Muldis Object Notation is designed around a minimized set of *syntactic
+namespaces* in order to leave as much useful syntax as possible for
+superset grammars, such as ones defining a more full featured programming
+language, a co-developed example being **Muldis Data Language**.
+
+MUON groups all generic-context symbolic barewords into a single namespace
+defined by a leading `\` which frees up all other possible symbol sequences
+to be defined by the superset; as it isn't typical for any languages to use
+a `\` for their symbolic operator names, the languages can be natural.
+
+While MUON also has some free `.+-*/^`, those only appear adjacent to
+numeric barewords and are considered part of those numeric literals, and so
+shouldn't interfere with a superset using those for regular operators.
+
+Likewise, any uses of `:` or `,` are only used by MUON within various kinds
+of bracketing pairs and a superset should be able to also use them.
+
+MUON has no alpha barewords except for `False` and `True` that can appear
+in isolation from a `\foo` prefix, so to not interfere with any other
+alpha keywords or reserved words a superset may want to use.
+
+MUON does not use the single-quote string delimiter character `'` for
+anything, and leaves it reserved for a superset to use as it sees fit.
+
+MUON makes sure to avoid using the parenthesis pair `()` in any way that
+might be confused with a superset using it as generic grouping syntax.
+Any uses by MUON either has a `\foo` prefix or must contain a `,` or `:`.
+
+MUON does not use the semicolon `;` for anything, so a superset grammar can
+use it for things like separating statements and thus disambiguating its
+own uses of bracketing characters to define statement or expression groups.
+
 # SYNTACTIC MNEMONICS
 
 The syntax of Muldis Object Notation is designed around a variety of
@@ -2070,7 +2112,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     {}    | nonordered collections | * delimit homogeneous nonordered collections
           |                        |   of members, concept asset+cardinal pairs
-          |                        | * delimit Set/Bag selectors
+          |                        | * delimit Set/Bag/Mix selectors
           |                        | * delimit Interval-Set/Interval-Bag selectors
           |                        | * delimit nonempty-Relation/Tuple-Bag sels
     ------+------------------------+---------------------------------------
@@ -2083,15 +2125,16 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
           |                        | * separates the 2 parts of a pair
-          |                        | * optional pair separator in Array/Set/Bag sels
-          |                        | * optional pair separator in Tuple/Article/Excuse sels
-          |                        | * optional pair separator in ne-TA/Rel/TB sels
-          |                        | * label/attributes separator in Article sel
-          |                        | * disambiguate Bag sel from Set sel
+          |                        | * optional pair separator in Array sels
+          |                        | * pair separator in Bag/Mix sels
+          |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
+          |                        | * optional pair separator in nonempty-TA/TB sels
+          |                        | * label/attributes separator in Article/Excuse sels
+          |                        | * disambiguate Bag/Mix sels from Set sel
           |                        | * L2 of prefix for Renaming literals
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
-          |                        | * separate members in Array/Set/Bag sels
+          |                        | * separate members in Array/Set/Bag/Mix sels
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Tuple/Article/Excuse sels
           |                        | * separate attributes in Heading lits
@@ -2100,29 +2143,30 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
           |                        | * L1 of prefix for Bits/Blob literals
-          |                        | * L1 of optional prefix for Text literals
-          |                        | * L1 of optional prefix for Array selectors
+          |                        | * L1 of conceptual prefix for quoted-Text literals
+          |                        | * L1 of prefix for code-point-Text literals
+          |                        | * L1 of conceptual prefix for Array selectors
           |                        | * L1 of prefix for Tuple-Array lits/sels
     ------+------------------------+---------------------------------------
     ?     | qualifications/is?/so  | * indicates a qualifying/yes-or-no context
-          |                        | * L1 of optional prefix for Boolean literals
+          |                        | * L1 of conceptual prefix for Boolean literals
           |                        | * L2 of prefix for Bits literals
-          |                        | * L1 of optional prefix for Set selectors
+          |                        | * L1 of conceptual prefix for Set selectors
           |                        | * L1 of prefix for Interval-Set selectors
           |                        | * L1 of prefix for Relation lits/sels
     ------+------------------------+---------------------------------------
     +     | quantifications/count  | * indicates an integral quantifying/count context
-          |                        | * L1 of optional prefix for Integer literals
+          |                        | * L1 of conceptual prefix for Integer literals
           |                        | * L2 of prefix for Blob literals
-          |                        | * L1 of optional prefix for Bag selectors
+          |                        | * L1 of conceptual prefix for Bag selectors
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
           |                        | * L2 of prefix for Calendar-Duration literals
           |                        | * indicates elevation in Geographic-Point literals
     ------+------------------------+---------------------------------------
     /     | fractions/measures     | * indicates a fractional quantifying/count context
-          |                        | * L1 of optional prefix for Fraction literals
-          |                        | * L1 of optional prefix for Mix selectors
+          |                        | * L1 of conceptual prefix for Fraction literals
+          |                        | * L1 of conceptual prefix for Mix selectors
           | division               | * disambiguate Fraction lit from Integer lit
           |                        | * numerator/denominator separator in Fraction literals
     ------+------------------------+---------------------------------------
@@ -2131,7 +2175,7 @@ that means they are used in pairs.
           |                        | * pair separator in Interval/Ivl-Set/Ivl-Bag selectors
     ------+------------------------+---------------------------------------
     %     | tuples/heterogeneous   | * indicates that tuples are featured
-          |                        | * L1 of optional prefix for Tuple selectors
+          |                        | * L1 of conceptual prefix for Tuple selectors
           |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
           |                        | * L2 of prefix for Calendar-Time literals
     ------+------------------------+---------------------------------------
@@ -2141,7 +2185,8 @@ that means they are used in pairs.
           |                        | * base/offset/zone separator in Calendar-Instant lits
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
-          |                        | * L1 of optional prefix for Article selectors
+          |                        | * L1 of conceptual prefix for generic-Article selectors
+          |                        | * L1 of prefix for singleton-Article literals
           | multiplication         | * significand/radix separator in Fraction literals
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured

@@ -563,7 +563,7 @@ position of the renaming specification element in the
 
 # EXCLUDED DATA TYPE POSSREPS
 
-Muldis Object Notation eschews dedicated syntax for some data types that
+Muldis Object Notation eschews dedicated possreps for some data types that
 users might expect to see here.  This section enumerates some and says why.
 
 Special values of an IEEE floating-point number such as infinities,
@@ -580,7 +580,7 @@ While **Mix** is characterized by a generalization of a **Bag**, there are
 currently no possreps defined like **Interval Mix** or **Tuple Mix**,
 because there doesn't seem to be a use case for them.  However, if it turns
 out that either would have a practical use, there is appropriate syntax
-already reserved for them, namely `\/..{}` and `\/%()` plus `\/%{}`.
+already reserved for them, as described in the Syntax Plain Text section.
 
 Dictionary types in the general case are excluded because the relational
 types should be able to represent all their variations (eg, unordered,
