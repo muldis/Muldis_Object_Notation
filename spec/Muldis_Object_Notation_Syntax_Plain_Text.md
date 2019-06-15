@@ -371,10 +371,18 @@ Grammar:
 
     token nonsigned_int
     {
-          [0b    <sp> [<[ 0..1           ]>+]+ % [_ | <sp>]]
-        | [0o    <sp> [<[ 0..7           ]>+]+ % [_ | <sp>]]
-        | [[0d]? <sp> [<[ 0..9           ]>+]+ % [_ | <sp>]]
-        | [0x    <sp> [<[ 0..9 A..F a..f ]>+]+ % [_ | <sp>]]
+          [0b    <sp> <[ 0..1           ]>+ % [_ | <sp>]]
+        | [0o    <sp> <[ 0..7           ]>+ % [_ | <sp>]]
+        | [[0d]? <sp> <[ 0..9           ]>+ % [_ | <sp>]]
+        | [0x    <sp> <[ 0..9 A..F a..f ]>+ % [_ | <sp>]]
+    }
+
+    token compact_nonsigned_int
+    {
+          [0b    <sp> <[ 0..1           ]>+ % _]
+        | [0o    <sp> <[ 0..7           ]>+ % _]
+        | [[0d]? <sp> <[ 0..9           ]>+ % _]
+        | [0x    <sp> <[ 0..9 A..F a..f ]>+ % _]
     }
 ```
 
@@ -436,10 +444,10 @@ Grammar:
 
     token nonsigned_radix_point_sig
     {
-          [0b    <sp> [[<[ 0..1           ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
-        | [0o    <sp> [[<[ 0..7           ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
-        | [[0d]? <sp> [[<[ 0..9           ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
-        | [0x    <sp> [[<[ 0..9 A..F a..f ]>+]+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+          [0b    <sp> [<[ 0..1           ]>+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+        | [0o    <sp> [<[ 0..7           ]>+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+        | [[0d]? <sp> [<[ 0..9           ]>+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+        | [0x    <sp> [<[ 0..9 A..F a..f ]>+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
     }
 
     token num_den_sig
@@ -657,7 +665,7 @@ Grammar:
 
     token code_point
     {
-        <nonsigned_int>
+        <compact_nonsigned_int>
     }
 ```
 
@@ -859,7 +867,7 @@ Grammar:
 
     token multiplicity
     {
-        <nonsigned_int>
+        <compact_nonsigned_int>
     }
 ```
 
