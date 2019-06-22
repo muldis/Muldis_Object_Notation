@@ -23,14 +23,14 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token MUON
     {
-        <sp>
+        <sp>?
             <Any>
-        <sp>
+        <sp>?
     }
 
     token sp
     {
-        [<whitespace> | <quoted_sp_comment_str> | <entity_marker>]*
+        [<whitespace> | <quoted_sp_comment_str> | <entity_marker>]+
     }
 
     token whitespace
@@ -106,25 +106,25 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token nonsigned_int
     {
-          [0b    <sp> <[ 0..1           ]>+ % [_ | <sp>]]
-        | [0o    <sp> <[ 0..7           ]>+ % [_ | <sp>]]
-        | [[0d]? <sp> <[ 0..9           ]>+ % [_ | <sp>]]
-        | [0x    <sp> <[ 0..9 A..F a..f ]>+ % [_ | <sp>]]
+          [0b    <sp>? <[ 0..1           ]>+ % [_ | <sp>?]]
+        | [0o    <sp>? <[ 0..7           ]>+ % [_ | <sp>?]]
+        | [[0d]? <sp>? <[ 0..9           ]>+ % [_ | <sp>?]]
+        | [0x    <sp>? <[ 0..9 A..F a..f ]>+ % [_ | <sp>?]]
     }
 
     token compact_nonsigned_int
     {
-          [0b    <sp> <[ 0..1           ]>+ % _]
-        | [0o    <sp> <[ 0..7           ]>+ % _]
-        | [[0d]? <sp> <[ 0..9           ]>+ % _]
-        | [0x    <sp> <[ 0..9 A..F a..f ]>+ % _]
+          [0b    <sp>? <[ 0..1           ]>+ % _]
+        | [0o    <sp>? <[ 0..7           ]>+ % _]
+        | [[0d]? <sp>? <[ 0..9           ]>+ % _]
+        | [0x    <sp>? <[ 0..9 A..F a..f ]>+ % _]
     }
 
 ###########################################################################
 
     token Fraction
     {
-        <significand> [<sp> '*' <sp> <radix> <sp> '^' <sp> <exponent>]?
+        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }
 
     token significand
@@ -139,15 +139,15 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token nonsigned_radix_point_sig
     {
-          [0b    <sp> [<[ 0..1           ]>+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
-        | [0o    <sp> [<[ 0..7           ]>+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
-        | [[0d]? <sp> [<[ 0..9           ]>+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
-        | [0x    <sp> [<[ 0..9 A..F a..f ]>+ % [_ | <sp>]] ** 2 % [<sp> '.' <sp>]]
+          [0b    <sp>? [<[ 0..1           ]>+ % [_ | <sp>?]] ** 2 % [<sp>? '.' <sp>?]]
+        | [0o    <sp>? [<[ 0..7           ]>+ % [_ | <sp>?]] ** 2 % [<sp>? '.' <sp>?]]
+        | [[0d]? <sp>? [<[ 0..9           ]>+ % [_ | <sp>?]] ** 2 % [<sp>? '.' <sp>?]]
+        | [0x    <sp>? [<[ 0..9 A..F a..f ]>+ % [_ | <sp>?]] ** 2 % [<sp>? '.' <sp>?]]
     }
 
     token num_den_sig
     {
-        <numerator> <sp> '/' <sp> <denominator>
+        <numerator> <sp>? '/' <sp>? <denominator>
     }
 
     token numerator
@@ -174,14 +174,14 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Bits
     {
-        '\\~?' <sp> [['"' <[ 0..1 _ ]>* '"']+ % <sp>]
+        '\\~?' <sp>? [['"' <[ 0..1 _ ]>* '"']+ % <sp>?]
     }
 
 ###########################################################################
 
     token Blob
     {
-        '\\~+' <sp> [['"' [<[ 0..9 A..F a..f ]> ** 2 | _]* '"']+ % <sp>]
+        '\\~+' <sp>? [['"' [<[ 0..9 A..F a..f ]> ** 2 | _]* '"']+ % <sp>?]
     }
 
 ###########################################################################
@@ -193,7 +193,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token quoted_text
     {
-        ['"' <text_content> '"']+ % <sp>
+        ['"' <text_content> '"']+ % <sp>?
     }
 
     token text_content
@@ -226,7 +226,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token code_point_text
     {
-        '\\~' <sp> <code_point>
+        '\\~' <sp>? <code_point>
     }
 
     token code_point
@@ -243,7 +243,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token ord_member_commalist
     {
-        '[' <sp> <member_commalist> <sp> ']'
+        '[' <sp>? <member_commalist> <sp>? ']'
     }
 
 ###########################################################################
@@ -262,12 +262,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token nonord_member_commalist
     {
-        '{' <sp> <member_commalist> <sp> '}'
+        '{' <sp>? <member_commalist> <sp>? '}'
     }
 
     token member_commalist
     {
-        [<single_member> | <multiplied_member> | '']+ % [<sp> ',' <sp>]
+        [<single_member> | <multiplied_member> | '']+ % [<sp>? ',' <sp>?]
     }
 
     token single_member
@@ -277,7 +277,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token multiplied_member
     {
-        <member> <sp> ':' <sp> <multiplicity>
+        <member> <sp>? ':' <sp>? <multiplicity>
     }
 
     token member
@@ -299,12 +299,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token mix_nonord_member_commalist
     {
-        '{' <sp> <mix_member_commalist> <sp> '}'
+        '{' <sp>? <mix_member_commalist> <sp>? '}'
     }
 
     token mix_member_commalist
     {
-        [<mix_single_member> | <mix_multiplied_member> | '']+ % [<sp> ',' <sp>]
+        [<mix_single_member> | <mix_multiplied_member> | '']+ % [<sp>? ',' <sp>?]
     }
 
     token mix_single_member
@@ -314,7 +314,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token mix_multiplied_member
     {
-        <member> <sp> ':' <sp> <mix_multiplicity>
+        <member> <sp>? ':' <sp>? <mix_multiplicity>
     }
 
     token mix_multiplicity
@@ -326,7 +326,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval
     {
-        '\\..' <sp> '{' <sp> <interval_members> <sp> '}'
+        '\\..' <sp>? '{' <sp>? <interval_members> <sp>? '}'
     }
 
     token interval_members
@@ -368,24 +368,24 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval_Set
     {
-        '\\?..' <sp> <nonord_interval_commalist>
+        '\\?..' <sp>? <nonord_interval_commalist>
     }
 
 ###########################################################################
 
     token Interval_Bag
     {
-        '\\+..' <sp> <nonord_interval_commalist>
+        '\\+..' <sp>? <nonord_interval_commalist>
     }
 
     token nonord_interval_commalist
     {
-        '{' <sp> <interval_commalist> <sp> '}'
+        '{' <sp>? <interval_commalist> <sp>? '}'
     }
 
     token interval_commalist
     {
-        [<single_interval> | <multiplied_interval> | '']+ % [<sp> ',' <sp>]
+        [<single_interval> | <multiplied_interval> | '']+ % [<sp>? ',' <sp>?]
     }
 
     token single_interval
@@ -395,19 +395,19 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token multiplied_interval
     {
-        <interval_members> <sp> ':' <sp> <multiplicity>
+        <interval_members> <sp>? ':' <sp>? <multiplicity>
     }
 
 ###########################################################################
 
     token Tuple
     {
-        '(' <sp> <attr_commalist> <sp> ')'
+        '(' <sp>? <attr_commalist> <sp>? ')'
     }
 
     token attr_commalist
     {
-        [<anon_attr> | <named_attr> | <nested_named_attr> | '']+ % [<sp> ',' <sp>]
+        [<anon_attr> | <named_attr> | <nested_named_attr> | '']+ % [<sp>? ',' <sp>?]
     }
 
     token anon_attr
@@ -417,12 +417,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token named_attr
     {
-        <attr_name> <sp> ':' <sp> <attr_asset>
+        <attr_name> <sp>? ':' <sp>? <attr_asset>
     }
 
     token nested_named_attr
     {
-        <nesting_attr_names> <sp> ':' <sp> <attr_asset>
+        <nesting_attr_names> <sp>? ':' <sp>? <attr_asset>
     }
 
     token attr_asset
@@ -434,58 +434,58 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_Array
     {
-        '\\~%' <sp> [<delim_attr_name_commalist> | <ord_member_commalist>]
+        '\\~%' <sp>? [<delim_attr_name_commalist> | <ord_member_commalist>]
     }
 
 ###########################################################################
 
     token Relation
     {
-        '\\?%' <sp> [<delim_attr_name_commalist> | <nonord_member_commalist>]
+        '\\?%' <sp>? [<delim_attr_name_commalist> | <nonord_member_commalist>]
     }
 
 ###########################################################################
 
     token Tuple_Bag
     {
-        '\\+%' <sp> [<delim_attr_name_commalist> | <nonord_member_commalist>]
+        '\\+%' <sp>? [<delim_attr_name_commalist> | <nonord_member_commalist>]
     }
 
 ###########################################################################
 
     token Calendar_Time
     {
-        '\\@%' <sp> <delim_time_ymdhms_commalist>
+        '\\@%' <sp>? <delim_time_ymdhms_commalist>
     }
 
     token delim_time_ymdhms_commalist
     {
-        '(' <sp> <time_ymdhms_commalist> <sp> ')'
+        '(' <sp>? <time_ymdhms_commalist> <sp>? ')'
     }
 
     token delim_time_ymd_commalist
     {
-        '(' <sp> <time_ymd_commalist> <sp> ')'
+        '(' <sp>? <time_ymd_commalist> <sp>? ')'
     }
 
     token delim_time_hms_commalist
     {
-        '(' <sp> <time_hms_commalist> <sp> ')'
+        '(' <sp>? <time_hms_commalist> <sp>? ')'
     }
 
     token time_ymdhms_commalist
     {
-        <time_ymd_commalist> <sp> ',' <sp> <time_hms_commalist>
+        <time_ymd_commalist> <sp>? ',' <sp>? <time_hms_commalist>
     }
 
     token time_ymd_commalist
     {
-        <year>? <sp> ',' <sp> <month>? <sp> ',' <sp> <day>?
+        <year>? <sp>? ',' <sp>? <month>? <sp>? ',' <sp>? <day>?
     }
 
     token time_hms_commalist
     {
-        <hour>? <sp> ',' <sp> <minute>? <sp> ',' <sp> <second>?
+        <hour>? <sp>? ',' <sp>? <minute>? <sp>? ',' <sp>? <second>?
     }
 
     token year
@@ -522,14 +522,14 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Calendar_Duration
     {
-        '\\@+' <sp> <delim_time_ymdhms_commalist>
+        '\\@+' <sp>? <delim_time_ymdhms_commalist>
     }
 
 ###########################################################################
 
     token Calendar_Instant
     {
-        '\\@' <sp> <delim_instant_commalist>
+        '\\@' <sp>? <delim_instant_commalist>
     }
 
     token delim_instant_commalist
@@ -549,7 +549,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token instant_with_offset
     {
-        '(' <sp> <instant_base> <sp> '@' <sp> <instant_offset> <sp> ')'
+        '(' <sp>? <instant_base> <sp>? '@' <sp>? <instant_offset> <sp>? ')'
     }
 
     token instant_offset
@@ -559,7 +559,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token instant_with_zone
     {
-        '(' <sp> <instant_base> <sp> '@' <sp> <instant_zone> <sp> ')'
+        '(' <sp>? <instant_base> <sp>? '@' <sp>? <instant_zone> <sp>? ')'
     }
 
     token instant_zone
@@ -571,32 +571,32 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Geographic_Point
     {
-        '\\@@' <sp> <delim_point_commalist>
+        '\\@@' <sp>? <delim_point_commalist>
     }
 
     token delim_point_commalist
     {
-        '(' <sp> <point_commalist> <sp> ')'
+        '(' <sp>? <point_commalist> <sp>? ')'
     }
 
     token point_commalist
     {
-        [<longitude> | <latitude> | <elevation> | '']+ % [<sp> ',' <sp>]
+        [<longitude> | <latitude> | <elevation> | '']+ % [<sp>? ',' <sp>?]
     }
 
     token longitude
     {
-        '>' <sp> <mix_multiplicity>
+        '>' <sp>? <mix_multiplicity>
     }
 
     token latitude
     {
-        '^' <sp> <mix_multiplicity>
+        '^' <sp>? <mix_multiplicity>
     }
 
     token elevation
     {
-        '+' <sp> <mix_multiplicity>
+        '+' <sp>? <mix_multiplicity>
     }
 
 ###########################################################################
@@ -613,7 +613,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token label_attrs_pair
     {
-        '(' <sp> <label> <sp> ':' <sp> <attrs> <sp> ')'
+        '(' <sp>? <label> <sp>? ':' <sp>? <attrs> <sp>? ')'
     }
 
     token label
@@ -628,33 +628,33 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token singleton_article
     {
-        '\\*' <sp> <nesting_attr_names>
+        '\\*' <sp>? <nesting_attr_names>
     }
 
 ###########################################################################
 
     token Excuse
     {
-        '\\!' <sp> [<label_attrs_pair> | <nesting_attr_names>]
+        '\\!' <sp>? [<label_attrs_pair> | <nesting_attr_names>]
     }
 
 ###########################################################################
 
     token Ignorance
     {
-        '\\!!' <sp> Ignorance
+        '\\!!' <sp>? Ignorance
     }
 
 ###########################################################################
 
     token Nesting
     {
-        '\\' <sp> <nesting_attr_names>
+        '\\' <sp>? <nesting_attr_names>
     }
 
     token nesting_attr_names
     {
-        <attr_name>+ % [<sp> '::' <sp>]
+        <attr_name>+ % [<sp>? '::' <sp>?]
     }
 
     token attr_name
@@ -681,22 +681,22 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Heading
     {
-        '\\\$' <sp> <delim_attr_name_commalist>
+        '\\\$' <sp>? <delim_attr_name_commalist>
     }
 
     token delim_attr_name_commalist
     {
-        '(' <sp> <attr_name_commalist> <sp> ')'
+        '(' <sp>? <attr_name_commalist> <sp>? ')'
     }
 
     token attr_name_commalist
     {
-        [<attr_name> | <ord_attr_name_range> | '']+ % [<sp> ',' <sp>]
+        [<attr_name> | <ord_attr_name_range> | '']+ % [<sp>? ',' <sp>?]
     }
 
     token ord_attr_name_range
     {
-        <min_ord_attr> <sp> '..' <sp> <max_ord_attr>
+        <min_ord_attr> <sp>? '..' <sp>? <max_ord_attr>
     }
 
     token min_ord_attr
@@ -713,31 +713,31 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Renaming
     {
-        '\\\$:' <sp> <delim_renaming_commalist>
+        '\\\$:' <sp>? <delim_renaming_commalist>
     }
 
     token delim_renaming_commalist
     {
-        '(' <sp> <renaming_commalist> <sp> ')'
+        '(' <sp>? <renaming_commalist> <sp>? ')'
     }
 
     token renaming_commalist
     {
-        [<anon_attr_rename> | <named_attr_rename> | '']+ % [<sp> ',' <sp>]
+        [<anon_attr_rename> | <named_attr_rename> | '']+ % [<sp>? ',' <sp>?]
     }
 
     token anon_attr_rename
     {
-          ['->' <sp> <attr_name_after>]
-        | [<attr_name_after> <sp> '<-']
-        | [<attr_name_before> <sp> '->']
-        | ['<-' <sp> <attr_name_before>]
+          ['->' <sp>? <attr_name_after>]
+        | [<attr_name_after> <sp>? '<-']
+        | [<attr_name_before> <sp>? '->']
+        | ['<-' <sp>? <attr_name_before>]
     }
 
     token named_attr_rename
     {
-          [<attr_name_before> <sp> '->' <sp> <attr_name_after>]
-        | [<attr_name_after> <sp> '<-' <sp> <attr_name_before>]
+          [<attr_name_before> <sp>? '->' <sp>? <attr_name_after>]
+        | [<attr_name_after> <sp>? '<-' <sp>? <attr_name_before>]
     }
 
     token attr_name_before
