@@ -455,111 +455,84 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Calendar_Time
     {
-        '\\@%' <ws>? <delim_time_ymdhms_commalist>
+        '\\@%' <ws>? '(' <ws>? <time_ymdhms> <ws>? ')'
     }
 
-    token delim_time_ymdhms_commalist
+    token time_ymdhms
     {
-        '(' <ws>? <time_ymdhms_commalist> <ws>? ')'
+        <time_ymd> <ws>? ',' <ws>? <time_hms>
     }
 
-    token delim_time_ymd_commalist
-    {
-        '(' <ws>? <time_ymd_commalist> <ws>? ')'
-    }
-
-    token delim_time_hms_commalist
-    {
-        '(' <ws>? <time_hms_commalist> <ws>? ')'
-    }
-
-    token time_ymdhms_commalist
-    {
-        <time_ymd_commalist> <ws>? ',' <ws>? <time_hms_commalist>
-    }
-
-    token time_ymd_commalist
+    token time_ymd
     {
         <year>? <ws>? ',' <ws>? <month>? <ws>? ',' <ws>? <day>?
     }
 
-    token time_hms_commalist
+    token time_hms
     {
         <hour>? <ws>? ',' <ws>? <minute>? <ws>? ',' <ws>? <second>?
     }
 
     token year
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token month
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token day
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token hour
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token minute
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token second
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
+    }
+
+    token loc_multiplicity
+    {
+        <Integer> | <Fraction>
     }
 
 ###########################################################################
 
     token Calendar_Duration
     {
-        '\\@+' <ws>? <delim_time_ymdhms_commalist>
+        '\\@+' <ws>? '(' <ws>? <time_ymdhms> <ws>? ')'
     }
 
 ###########################################################################
 
     token Calendar_Instant
     {
-        '\\@' <ws>? <delim_instant_commalist>
-    }
-
-    token delim_instant_commalist
-    {
-        <instant_floating> | <instant_with_offset> | <instant_with_zone>
-    }
-
-    token instant_floating
-    {
-        <instant_base>
+        '\\@' <ws>?
+        '(' <ws>?
+            <instant_base> [<ws>? '@' <ws>? [<instant_offset> | <instant_zone>]]?
+        <ws>? ')'
     }
 
     token instant_base
     {
-        <delim_time_ymdhms_commalist>
-    }
-
-    token instant_with_offset
-    {
-        '(' <ws>? <instant_base> <ws>? '@' <ws>? <instant_offset> <ws>? ')'
+        <time_ymdhms>
     }
 
     token instant_offset
     {
-        <delim_time_hms_commalist>
-    }
-
-    token instant_with_zone
-    {
-        '(' <ws>? <instant_base> <ws>? '@' <ws>? <instant_zone> <ws>? ')'
+        <time_hms>
     }
 
     token instant_zone
@@ -571,32 +544,25 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Geographic_Point
     {
-        '\\@@' <ws>? <delim_point_commalist>
-    }
-
-    token delim_point_commalist
-    {
-        '(' <ws>? <point_commalist> <ws>? ')'
-    }
-
-    token point_commalist
-    {
-        [<longitude> | <latitude> | <elevation> | '']+ % [<ws>? ',' <ws>?]
+        '\\@@' <ws>?
+        '(' <ws>?
+            [[<longitude> | <latitude> | <elevation>]* % [<ws>? ',' <ws>?]]
+        <ws>? ')'
     }
 
     token longitude
     {
-        '>' <ws>? <mix_multiplicity>
+        '>' <ws>? <loc_multiplicity>
     }
 
     token latitude
     {
-        '^' <ws>? <mix_multiplicity>
+        '^' <ws>? <loc_multiplicity>
     }
 
     token elevation
     {
-        '+' <ws>? <mix_multiplicity>
+        '+' <ws>? <loc_multiplicity>
     }
 
 ###########################################################################

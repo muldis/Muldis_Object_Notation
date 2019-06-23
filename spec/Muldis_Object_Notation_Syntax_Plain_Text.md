@@ -1056,7 +1056,7 @@ Examples:
     \..{"a"-.."z"}
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
-    \..{\@((2002,12,6,,,)@"UTC") -..- \@((2002,12,20,,,)@"UTC")}
+    \..{\@(2002,12,6,,,@"UTC") -..- \@(2002,12,20,,,@"UTC")}
 
     `Left-unbounded, right-closed interval; every Integer <= 3.`
     \..{..3}
@@ -1426,67 +1426,57 @@ Grammar:
 ```
     token Calendar_Time
     {
-        '\\@%' <ws>? <delim_time_ymdhms_commalist>
+        '\\@%' <ws>? '(' <ws>? <time_ymdhms> <ws>? ')'
     }
 
-    token delim_time_ymdhms_commalist
+    token time_ymdhms
     {
-        '(' <ws>? <time_ymdhms_commalist> <ws>? ')'
+        <time_ymd> <ws>? ',' <ws>? <time_hms>
     }
 
-    token delim_time_ymd_commalist
-    {
-        '(' <ws>? <time_ymd_commalist> <ws>? ')'
-    }
-
-    token delim_time_hms_commalist
-    {
-        '(' <ws>? <time_hms_commalist> <ws>? ')'
-    }
-
-    token time_ymdhms_commalist
-    {
-        <time_ymd_commalist> <ws>? ',' <ws>? <time_hms_commalist>
-    }
-
-    token time_ymd_commalist
+    token time_ymd
     {
         <year>? <ws>? ',' <ws>? <month>? <ws>? ',' <ws>? <day>?
     }
 
-    token time_hms_commalist
+    token time_hms
     {
         <hour>? <ws>? ',' <ws>? <minute>? <ws>? ',' <ws>? <second>?
     }
 
     token year
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token month
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token day
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token hour
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token minute
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
     }
 
     token second
     {
-        <mix_multiplicity>
+        <loc_multiplicity>
+    }
+
+    token loc_multiplicity
+    {
+        <Integer> | <Fraction>
     }
 ```
 
@@ -1533,7 +1523,7 @@ Grammar:
 ```
     token Calendar_Duration
     {
-        '\\@+' <ws>? <delim_time_ymdhms_commalist>
+        '\\@+' <ws>? '(' <ws>? <time_ymdhms> <ws>? ')'
     }
 ```
 
@@ -1556,37 +1546,20 @@ Grammar:
 ```
     token Calendar_Instant
     {
-        '\\@' <ws>? <delim_instant_commalist>
-    }
-
-    token delim_instant_commalist
-    {
-        <instant_floating> | <instant_with_offset> | <instant_with_zone>
-    }
-
-    token instant_floating
-    {
-        <instant_base>
+        '\\@' <ws>?
+        '(' <ws>?
+            <instant_base> [<ws>? '@' <ws>? [<instant_offset> | <instant_zone>]]?
+        <ws>? ')'
     }
 
     token instant_base
     {
-        <delim_time_ymdhms_commalist>
-    }
-
-    token instant_with_offset
-    {
-        '(' <ws>? <instant_base> <ws>? '@' <ws>? <instant_offset> <ws>? ')'
+        <time_ymdhms>
     }
 
     token instant_offset
     {
-        <delim_time_hms_commalist>
-    }
-
-    token instant_with_zone
-    {
-        '(' <ws>? <instant_base> <ws>? '@' <ws>? <instant_zone> <ws>? ')'
+        <time_hms>
     }
 
     token instant_zone
@@ -1605,13 +1578,13 @@ Examples:
     \@(,,,7,30,0)
 
     `What was now in the Pacific zone (if paired with Gregorian calendar).`
-    \@((2018,9,3,20,51,17)@(-8,0,0))
+    \@(2018,9,3,20,51,17@-8,0,0)
 
     `A time of day in the UTC zone on an unspecified day.`
-    \@((,,,9,25,0)@(0,0,0))
+    \@(,,,9,25,0@0,0,0)
 
     `A specific day and time in the Pacific Standard Time zone.`
-    \@((2001,4,16,20,1,44)@"PST")
+    \@(2001,4,16,20,1,44@"PST")
 ```
 
 ## Geographic Point
@@ -1623,32 +1596,25 @@ Grammar:
 ```
     token Geographic_Point
     {
-        '\\@@' <ws>? <delim_point_commalist>
-    }
-
-    token delim_point_commalist
-    {
-        '(' <ws>? <point_commalist> <ws>? ')'
-    }
-
-    token point_commalist
-    {
-        [<longitude> | <latitude> | <elevation> | '']+ % [<ws>? ',' <ws>?]
+        '\\@@' <ws>?
+        '(' <ws>?
+            [[<longitude> | <latitude> | <elevation>]* % [<ws>? ',' <ws>?]]
+        <ws>? ')'
     }
 
     token longitude
     {
-        '>' <ws>? <mix_multiplicity>
+        '>' <ws>? <loc_multiplicity>
     }
 
     token latitude
     {
-        '^' <ws>? <mix_multiplicity>
+        '^' <ws>? <loc_multiplicity>
     }
 
     token elevation
     {
-        '+' <ws>? <mix_multiplicity>
+        '+' <ws>? <loc_multiplicity>
     }
 ```
 

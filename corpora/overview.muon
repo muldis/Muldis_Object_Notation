@@ -299,7 +299,7 @@ Muldis_Content_Predicate`
         \..{"a"-.."z"},
 
         `Open interval; time period between Dec 6 and 20 excluding both.`
-        \..{\@((2002,12,6,,)@"UTC") -..- \@((2002,12,20,,)@"UTC")},
+        \..{\@(2002,12,6,,@"UTC") -..- \@(2002,12,20,,@"UTC")},
 
         `Left-unbounded, right-closed interval; every Integer <= 3.`
         \..{..3},
@@ -582,16 +582,16 @@ Muldis_Content_Predicate`
         \@(1959,2,3,,,),
 
         `A time of day when one might have breakfast.`
-        \@(,7,30,0),
+        \@(,,,7,30,0),
 
         `What was now in the Pacific zone (if paired with Gregorian calendar).`
-        \@((2018,9,3,20,51,17)@(-8,0,0)),
+        \@(2018,9,3,20,51,17@-8,0,0),
 
         `A time of day in the UTC zone on an unspecified day.`
-        \@((,9,25,0)@(0,0,0)),
+        \@(,,,9,25,0@0,0,0),
 
         `A specific day and time in the Pacific Standard Time zone.`
-        \@((2001,4,16,20,1,44)@"PST"),
+        \@(2001,4,16,20,1,44@"PST"),
 
     ),
 
