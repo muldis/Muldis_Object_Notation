@@ -238,88 +238,54 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Array
     {
-        <ord_member_commalist>
+        '[' <sp>?
+            [',' <sp>?]?
+            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? ']'
     }
 
-    token ord_member_commalist
-    {
-        '[' <sp>? <member_commalist> <sp>? ']'
-    }
-
-###########################################################################
-
-    token Set
-    {
-        <nonord_member_commalist>
-    }
-
-###########################################################################
-
-    token Bag
-    {
-        <nonord_member_commalist>
-    }
-
-    token nonord_member_commalist
-    {
-        '{' <sp>? <member_commalist> <sp>? '}'
-    }
-
-    token member_commalist
-    {
-        [<single_member> | <multiplied_member> | '']+ % [<sp>? ',' <sp>?]
-    }
-
-    token single_member
-    {
-        <member>
-    }
-
-    token multiplied_member
-    {
-        <member> <sp>? ':' <sp>? <multiplicity>
-    }
-
-    token member
-    {
-        <Any>
-    }
-
-    token multiplicity
+    token int_multiplicity
     {
         <compact_nonsigned_int>
     }
 
 ###########################################################################
 
+    token Set
+    {
+        '{' <sp>?
+            [',' <sp>?]?
+            [[<Any> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? '}'
+    }
+
+###########################################################################
+
+    token Bag
+    {
+        '{' <sp>?
+            [',' <sp>?]?
+            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? '}'
+    }
+
+###########################################################################
+
     token Mix
     {
-        <mix_nonord_member_commalist>
+        '{' <sp>?
+            [',' <sp>?]?
+            [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? '}'
     }
 
-    token mix_nonord_member_commalist
+    token frac_multiplicity
     {
-        '{' <sp>? <mix_member_commalist> <sp>? '}'
-    }
-
-    token mix_member_commalist
-    {
-        [<mix_single_member> | <mix_multiplied_member> | '']+ % [<sp>? ',' <sp>?]
-    }
-
-    token mix_single_member
-    {
-        <member>
-    }
-
-    token mix_multiplied_member
-    {
-        <member> <sp>? ':' <sp>? <mix_multiplicity>
-    }
-
-    token mix_multiplicity
-    {
-        <Fraction> | <Integer>
+        <Fraction>
     }
 
 ###########################################################################
@@ -346,7 +312,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token interval_range
     {
-        <interval_low>? <interval_boundary_kind> <interval_high>?
+        <interval_low>? <sp>? '-'? '..' '-'? <sp>? <interval_high>?
     }
 
     token interval_low
@@ -359,70 +325,64 @@ grammar Muldis::Reference::Object_Notation::Grammar
         <Any>
     }
 
-    token interval_boundary_kind
-    {
-        '..' | '-..' | '..-' | '-..-'
-    }
-
 ###########################################################################
 
     token Interval_Set
     {
-        '\\?..' <ws>? <nonord_interval_commalist>
+        '\\?..' <ws>?
+        '{' <sp>?
+            [',' <sp>?]?
+            [[<interval_members> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? '}'
     }
 
 ###########################################################################
 
     token Interval_Bag
     {
-        '\\+..' <ws>? <nonord_interval_commalist>
-    }
-
-    token nonord_interval_commalist
-    {
-        '{' <sp>? <interval_commalist> <sp>? '}'
-    }
-
-    token interval_commalist
-    {
-        [<single_interval> | <multiplied_interval> | '']+ % [<sp>? ',' <sp>?]
-    }
-
-    token single_interval
-    {
-        <interval_members>
-    }
-
-    token multiplied_interval
-    {
-        <interval_members> <sp>? ':' <sp>? <multiplicity>
+        '\\+..' <ws>?
+        '{' <sp>?
+            [',' <sp>?]?
+            [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? '}'
     }
 
 ###########################################################################
 
     token Tuple
     {
-        '(' <sp>? <attr_commalist> <sp>? ')'
+        '(' <sp>? <tuple_attrs> <sp>? ')'
     }
 
-    token attr_commalist
+    token tuple_attrs
     {
-        [<anon_attr> | <named_attr> | <nested_named_attr> | '']+ % [<sp>? ',' <sp>?]
+        <tuple_nullary> | <tuple_unary> | <tuple_nary>
     }
 
-    token anon_attr
+    token tuple_nullary
     {
-        <attr_asset>
+        ''
     }
 
-    token named_attr
+    token tuple_unary
     {
-        <attr_name> <sp>? ':' <sp>? <attr_asset>
+          [          <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr>          ]
     }
 
-    token nested_named_attr
+    token tuple_nary
     {
-        <nesting_attr_names> <sp>? ':' <sp>? <attr_asset>
+        [',' <sp>?]?
+        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<sp>? ',']?
+    }
+
+    token tuple_attr
+    {
+        [[<attr_name> | <nesting_attr_names>] <sp>? ':' <sp>?]? <attr_asset>
     }
 
     token attr_asset
@@ -434,21 +394,48 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_Array
     {
-        '\\~%' <ws>? [<heading_attr_names> | <ord_member_commalist>]
+        '\\~%' <ws>? [<heading_attr_names> | <tuple_array_nonempty>]
+    }
+
+    token tuple_array_nonempty
+    {
+        '[' <sp>?
+            [',' <sp>?]?
+            [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? ']'
     }
 
 ###########################################################################
 
     token Relation
     {
-        '\\?%' <ws>? [<heading_attr_names> | <nonord_member_commalist>]
+        '\\?%' <ws>? [<heading_attr_names> | <relation_nonempty>]
+    }
+
+    token relation_nonempty
+    {
+        '{' <sp>?
+            [',' <sp>?]?
+            [[<Tuple> [<sp>? ':' <sp>? <Boolean>]?]+ % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? '}'
     }
 
 ###########################################################################
 
     token Tuple_Bag
     {
-        '\\+%' <ws>? [<heading_attr_names> | <nonord_member_commalist>]
+        '\\+%' <ws>? [<heading_attr_names> | <tuple_bag_nonempty>]
+    }
+
+    token tuple_bag_nonempty
+    {
+        '{' <sp>?
+            [',' <sp>?]?
+            [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? '}'
     }
 
 ###########################################################################

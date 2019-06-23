@@ -180,6 +180,14 @@ Muldis_Content_Predicate`
             63,
         ],
 
+        `32 members (28 duplicates in 2 runs).`
+        [
+            "/",
+            "*" : 20,
+            "+" : 10,
+            "-",
+        ],
+
     ),
 
 `#########################################################################`
@@ -208,6 +216,14 @@ Muldis_Content_Predicate`
             85,
         },
 
+        `Two members.`
+        {
+            21 : True,
+            62 : False,
+            3 : True,
+            101 : False,
+        },
+
     ),
 
 `#########################################################################`
@@ -229,12 +245,12 @@ Muldis_Content_Predicate`
 
         `Six members (2 duplicates).`
         {
-            "Foo",
+            "Foo" : 1,
             "Quux" : 1,
-            "Foo",
-            "Bar",
-            "Baz",
-            "Baz",
+            "Foo" : 1,
+            "Bar" : 1,
+            "Baz" : 1,
+            "Baz" : 1,
         },
 
     ),
