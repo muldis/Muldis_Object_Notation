@@ -30,7 +30,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token sp
     {
-        [<ws> | <quoted_sp_comment_str> | <entity_marker>]+
+        [<ws> | <quoted_sp_comment_str>]+
     }
 
     token ws
@@ -41,11 +41,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token quoted_sp_comment_str
     {
         '`' <-[`]>* '`'
-    }
-
-    token entity_marker
-    {
-        '`\$\$\$`'
     }
 
 ###########################################################################

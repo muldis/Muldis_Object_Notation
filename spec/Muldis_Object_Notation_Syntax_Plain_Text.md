@@ -211,7 +211,7 @@ Grammar:
 
     token sp
     {
-        [<ws> | <quoted_sp_comment_str> | <entity_marker>]+
+        [<ws> | <quoted_sp_comment_str>]+
     }
 
     token ws
@@ -222,11 +222,6 @@ Grammar:
     token quoted_sp_comment_str
     {
         '`' <-[`]>* '`'
-    }
-
-    token entity_marker
-    {
-        '`\$\$\$`'
     }
 ```
 
@@ -244,10 +239,10 @@ still being well formatted (no extra long lines).
 See the grammar sections for `<Integer>`, `<Fraction>`, `<Bits>`, `<Blob>`,
 `<Text>` for more details on how this specifically applies to them.
 
-An `<entity_marker>` is a feature that is optional for a MUON parser or
-generator to support.  It is syntactically a proper subset of a
-`<quoted_sp_comment_str>` and would simply be seen as such by a MUON parser
-that didn't specifically know about it.  An `<entity_marker>` is intended
+An *entity marker* is a feature that is optional for a MUON parser or
+generator to support.  It is a special case of a `<quoted_sp_comment_str>`,
+the character string `` `$$$` ``, and would simply be seen as such by a MUON parser
+that didn't specifically know about it.  An *entity marker* is intended
 as a trivial annotation for some MUON construct that immediately follows
 it.  This is so that naive development tools that know about MUON
 specifically but not about any source code defining data models layered
@@ -255,7 +250,7 @@ over it can be expressly pointed to the parts of the MUON document that
 declare something interesting, such as a package or routine or type
 declaration, so that generic MUON tooling can, say, generate a navigation
 menu to quickly jump around a document to each entity declaration therein.
-The idomatic location for an `<entity_marker>` is immediately before a
+The idomatic location for an *entity marker* is immediately before a
 **Tuple** attribute name, assuming that the corresponding attribute value
 is the construct of interest and the attribute name is used as the name to
 refer to it with in function menus.
