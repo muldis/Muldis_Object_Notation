@@ -559,7 +559,7 @@ with a `->` or a `<-` element; the associated `<attr_name_before>` and
 specification is an `<anon_attr_rename>` then either the *before* or
 *after* name is an ordered attribute name corresponding to the ordinal
 position of the renaming specification element in the
-`<renaming_commalist>`, starting at zero.
+`<Renaming>`, starting at zero.
 
 # EXCLUDED DATA TYPE POSSREPS
 

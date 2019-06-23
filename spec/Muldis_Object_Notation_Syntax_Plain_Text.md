@@ -1275,7 +1275,7 @@ Grammar:
 ```
     token Tuple_Array
     {
-        '\\~%' <ws>? [<delim_attr_name_commalist> | <ord_member_commalist>]
+        '\\~%' <ws>? [<heading_attr_names> | <ord_member_commalist>]
     }
 ```
 
@@ -1283,7 +1283,7 @@ A `<Tuple_Array>` with an `<ord_member_commalist>` is subject to the
 additional rule that its `<member_commalist>` has at least 1 `*_member`
 element, and that every such `*_member` element's `<member>` is a
 `<Tuple>`; otherwise the `<Tuple_Array>` must have a
-`<delim_attr_name_commalist>`.
+`<heading_attr_names>`.
 
 Examples:
 
@@ -1323,7 +1323,7 @@ Grammar:
 ```
     token Relation
     {
-        '\\?%' <ws>? [<delim_attr_name_commalist> | <nonord_member_commalist>]
+        '\\?%' <ws>? [<heading_attr_names> | <nonord_member_commalist>]
     }
 ```
 
@@ -1331,7 +1331,7 @@ A `<Relation>` with a `<nonord_member_commalist>` is subject to the
 additional rule that its `<member_commalist>` has at least 1 `*_member`
 element, and that every such `*_member` element's `<member>` is a
 `<Tuple>`; otherwise the `<Relation>` must have a
-`<delim_attr_name_commalist>`.
+`<heading_attr_names>`.
 
 Examples:
 
@@ -1379,7 +1379,7 @@ Grammar:
 ```
     token Tuple_Bag
     {
-        '\\+%' <ws>? [<delim_attr_name_commalist> | <nonord_member_commalist>]
+        '\\+%' <ws>? [<heading_attr_names> | <nonord_member_commalist>]
     }
 ```
 
@@ -1387,7 +1387,7 @@ A `<Tuple_Bag>` with a `<nonord_member_commalist>` is subject to the
 additional rule that its `<member_commalist>` has at least 1 `*_member`
 element, and that every such `*_member` element's `<member>` is a
 `<Tuple>`; otherwise the `<Tuple_Bag>` must have a
-`<delim_attr_name_commalist>`.
+`<heading_attr_names>`.
 
 Examples:
 
@@ -1712,7 +1712,17 @@ Grammar:
 ```
     token Excuse
     {
-        '\\!' <ws>? [<label_attrs_pair> | <nesting_attr_names>]
+        <generic_excuse> | <singleton_excuse>
+    }
+
+    token generic_excuse
+    {
+        '\\!' <ws>? <label_attrs_pair>
+    }
+
+    token singleton_excuse
+    {
+        '\\!' <ws>? <nesting_attr_names>
     }
 ```
 
@@ -1807,38 +1817,37 @@ Grammar:
 ```
     token Heading
     {
-        '\\\$' <ws>? <delim_attr_name_commalist>
+        '\\\$' <ws>? <heading_attr_names>
     }
 
-    token delim_attr_name_commalist
+    token heading_attr_names
     {
-        '(' <sp>? <attr_name_commalist> <sp>? ')'
-    }
-
-    token attr_name_commalist
-    {
-        [<attr_name> | <ord_attr_name_range> | '']+ % [<sp>? ',' <sp>?]
+        '(' <sp>?
+            [',' <sp>?]?
+            [[<attr_name> | <ord_attr_name_range>]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? ')'
     }
 
     token ord_attr_name_range
     {
-        <min_ord_attr> <sp>? '..' <sp>? <max_ord_attr>
+        <ord_attr_name_low> <sp>? '..' <sp>? <ord_attr_name_high>
     }
 
-    token min_ord_attr
+    token ord_attr_name_low
     {
         <ord_attr_name>
     }
 
-    token max_ord_attr
+    token ord_attr_name_high
     {
         <ord_attr_name>
     }
 ```
 
 An `<ord_attr_name_range>` is subject to the additional rule that its
-integral `<min_ord_attr>` value must be less than or equal to its integral
-`<max_ord_attr>` value.
+integral `<ord_attr_name_low>` value must be less than or equal to its
+integral `<ord_attr_name_high>` value.
 
 Examples:
 
@@ -1883,17 +1892,12 @@ Grammar:
 ```
     token Renaming
     {
-        '\\\$:' <ws>? <delim_renaming_commalist>
-    }
-
-    token delim_renaming_commalist
-    {
-        '(' <sp>? <renaming_commalist> <sp>? ')'
-    }
-
-    token renaming_commalist
-    {
-        [<anon_attr_rename> | <named_attr_rename> | '']+ % [<sp>? ',' <sp>?]
+        '\\\$:' <ws>?
+        '(' <sp>?
+            [',' <sp>?]?
+            [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? ')'
     }
 
     token anon_attr_rename
@@ -1928,9 +1932,9 @@ with a `->` or a `<-` element; the associated `<attr_name_before>` and
 specification is an `<anon_attr_rename>` then either the *before* or
 *after* name is an ordered attribute name corresponding to the ordinal
 position of the renaming specification element in the
-`<renaming_commalist>`, starting at zero.
+`<Renaming>`, starting at zero.
 
-A `<renaming_commalist>` is subject to the additional rule that no 2
+A `<Renaming>` is subject to the additional rule that no 2
 `<attr_name_before>` may be the same attribute name and that no 2
 `<attr_name_after>` may be the same attribute name.
 
@@ -2099,10 +2103,10 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
           |                        | * separates the 2 parts of a pair
-          |                        | * optional pair separator in Array sels
+          |                        | * optional pair separator in Array/Set sels
           |                        | * pair separator in Bag/Mix sels
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
-          |                        | * optional pair separator in nonempty-TA/TB sels
+          |                        | * optional pair separator in nonempty-TA/Rel/TB sels
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * disambiguate Bag/Mix sels from Set sel
           |                        | * L2 of prefix for Renaming literals

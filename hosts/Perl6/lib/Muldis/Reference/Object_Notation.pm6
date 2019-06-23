@@ -434,21 +434,21 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_Array
     {
-        '\\~%' <ws>? [<delim_attr_name_commalist> | <ord_member_commalist>]
+        '\\~%' <ws>? [<heading_attr_names> | <ord_member_commalist>]
     }
 
 ###########################################################################
 
     token Relation
     {
-        '\\?%' <ws>? [<delim_attr_name_commalist> | <nonord_member_commalist>]
+        '\\?%' <ws>? [<heading_attr_names> | <nonord_member_commalist>]
     }
 
 ###########################################################################
 
     token Tuple_Bag
     {
-        '\\+%' <ws>? [<delim_attr_name_commalist> | <nonord_member_commalist>]
+        '\\+%' <ws>? [<heading_attr_names> | <nonord_member_commalist>]
     }
 
 ###########################################################################
@@ -601,7 +601,17 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Excuse
     {
-        '\\!' <ws>? [<label_attrs_pair> | <nesting_attr_names>]
+        <generic_excuse> | <singleton_excuse>
+    }
+
+    token generic_excuse
+    {
+        '\\!' <ws>? <label_attrs_pair>
+    }
+
+    token singleton_excuse
+    {
+        '\\!' <ws>? <nesting_attr_names>
     }
 
 ###########################################################################
@@ -647,30 +657,29 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Heading
     {
-        '\\\$' <ws>? <delim_attr_name_commalist>
+        '\\\$' <ws>? <heading_attr_names>
     }
 
-    token delim_attr_name_commalist
+    token heading_attr_names
     {
-        '(' <sp>? <attr_name_commalist> <sp>? ')'
-    }
-
-    token attr_name_commalist
-    {
-        [<attr_name> | <ord_attr_name_range> | '']+ % [<sp>? ',' <sp>?]
+        '(' <sp>?
+            [',' <sp>?]?
+            [[<attr_name> | <ord_attr_name_range>]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? ')'
     }
 
     token ord_attr_name_range
     {
-        <min_ord_attr> <sp>? '..' <sp>? <max_ord_attr>
+        <ord_attr_name_low> <sp>? '..' <sp>? <ord_attr_name_high>
     }
 
-    token min_ord_attr
+    token ord_attr_name_low
     {
         <ord_attr_name>
     }
 
-    token max_ord_attr
+    token ord_attr_name_high
     {
         <ord_attr_name>
     }
@@ -679,17 +688,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Renaming
     {
-        '\\\$:' <ws>? <delim_renaming_commalist>
-    }
-
-    token delim_renaming_commalist
-    {
-        '(' <sp>? <renaming_commalist> <sp>? ')'
-    }
-
-    token renaming_commalist
-    {
-        [<anon_attr_rename> | <named_attr_rename> | '']+ % [<sp>? ',' <sp>?]
+        '\\\$:' <ws>?
+        '(' <sp>?
+            [',' <sp>?]?
+            [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? ')'
     }
 
     token anon_attr_rename
