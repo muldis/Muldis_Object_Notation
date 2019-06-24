@@ -211,12 +211,12 @@ Grammar:
 
     token sp
     {
-        [<ws> | <quoted_sp_comment_str>]+
+        [<whitespace_char> | <quoted_sp_comment_str>]+
     }
 
-    token ws
+    token whitespace_char
     {
-        <[ \t \n \r \x[20] ]>+
+        <[ \t \n \r \x[20] ]>
     }
 
     token quoted_sp_comment_str
@@ -361,15 +361,15 @@ Grammar:
 ```
     token Integer
     {
-        <[+-]>? <ws>? <nonsigned_int>
+        <[+-]>? <sp>? <nonsigned_int>
     }
 
     token nonsigned_int
     {
-          [ 0b <ws>?   <[ 0..1           ]>+ % [_ | <ws>]]
-        | [ 0o <ws>?   <[ 0..7           ]>+ % [_ | <ws>]]
-        | [[0d <ws>?]? <[ 0..9           ]>+ % [_ | <ws>]]
-        | [ 0x <ws>?   <[ 0..9 A..F a..f ]>+ % [_ | <ws>]]
+          [ 0b <sp>?   <[ 0..1           ]>+ % [_ | <sp>]]
+        | [ 0o <sp>?   <[ 0..7           ]>+ % [_ | <sp>]]
+        | [[0d <sp>?]? <[ 0..9           ]>+ % [_ | <sp>]]
+        | [ 0x <sp>?   <[ 0..9 A..F a..f ]>+ % [_ | <sp>]]
     }
 
     token compact_nonsigned_int
@@ -424,7 +424,7 @@ Grammar:
 ```
     token Fraction
     {
-        <significand> [<ws>? '*' <ws>? <radix> <ws>? '^' <ws>? <exponent>]?
+        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }
 
     token significand
@@ -434,20 +434,20 @@ Grammar:
 
     token radix_point_sig
     {
-        <[+-]>? <ws>? <nonsigned_radix_point_sig>
+        <[+-]>? <sp>? <nonsigned_radix_point_sig>
     }
 
     token nonsigned_radix_point_sig
     {
-          [ 0b <ws>?   [<[ 0..1           ]>+ % [_ | <ws>]] ** 2 % [<ws>? '.' <ws>?]]
-        | [ 0o <ws>?   [<[ 0..7           ]>+ % [_ | <ws>]] ** 2 % [<ws>? '.' <ws>?]]
-        | [[0d <ws>?]? [<[ 0..9           ]>+ % [_ | <ws>]] ** 2 % [<ws>? '.' <ws>?]]
-        | [ 0x <ws>?   [<[ 0..9 A..F a..f ]>+ % [_ | <ws>]] ** 2 % [<ws>? '.' <ws>?]]
+          [ 0b <sp>?   [<[ 0..1           ]>+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [ 0o <sp>?   [<[ 0..7           ]>+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [[0d <sp>?]? [<[ 0..9           ]>+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [ 0x <sp>?   [<[ 0..9 A..F a..f ]>+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
     }
 
     token num_den_sig
     {
-        <numerator> <ws>? '/' <ws>? <denominator>
+        <numerator> <sp>? '/' <sp>? <denominator>
     }
 
     token numerator
@@ -561,7 +561,7 @@ Grammar:
 ```
     token Bits
     {
-        '\\~?' <ws>? [['"' <[ 0..1 _ ]>* '"']+ % <ws>]
+        '\\~?' <sp>? [['"' <[ 0..1 _ ]>* '"']+ % <sp>]
     }
 ```
 
@@ -589,7 +589,7 @@ Grammar:
 ```
     token Blob
     {
-        '\\~+' <ws>? [['"' [<[ 0..9 A..F a..f ]> ** 2 | _]* '"']+ % <ws>]
+        '\\~+' <sp>? [['"' [<[ 0..9 A..F a..f ]> ** 2 | _]* '"']+ % <sp>]
     }
 ```
 
@@ -622,7 +622,7 @@ Grammar:
 
     token quoted_text
     {
-        ['"' <text_content> '"']+ % <ws>
+        ['"' <text_content> '"']+ % <sp>
     }
 
     token text_content
@@ -642,15 +642,12 @@ Grammar:
 
     token restricted_inside_char
     {
-        <-[ \x[0]..\x[1F] "` \x[80]..\x[9F] ]>*
+        <-[ \x[0]..\x[1F] "` \x[80]..\x[9F] ]>
     }
 
     token escaped_char
     {
-          '\\q' | '\\g'
-        | '\\b'
-        | '\\t' | '\\n' | '\\r'
-        | ['\\c<' <code_point> '>']
+        '\\' [<[qgbtnr]> | ['c<' <code_point> '>']]
     }
 
     token code_point_text
@@ -961,7 +958,7 @@ Grammar:
 ```
     token Interval
     {
-        '\\..' <ws>? '{' <sp>? <interval_members> <sp>? '}'
+        '\\..' <sp>? '{' <sp>? <interval_members> <sp>? '}'
     }
 
     token interval_members
@@ -1035,7 +1032,7 @@ Grammar:
 ```
     token Interval_Set
     {
-        '\\?..' <ws>?
+        '\\?..' <sp>?
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
@@ -1081,7 +1078,7 @@ Grammar:
 ```
     token Interval_Bag
     {
-        '\\+..' <ws>?
+        '\\+..' <sp>?
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
@@ -1226,7 +1223,7 @@ Grammar:
 ```
     token Tuple_Array
     {
-        '\\~%' <ws>? [<heading_attr_names> | <tuple_array_nonempty>]
+        '\\~%' <sp>? [<heading_attr_names> | <tuple_array_nonempty>]
     }
 
     token tuple_array_nonempty
@@ -1277,7 +1274,7 @@ Grammar:
 ```
     token Relation
     {
-        '\\?%' <ws>? [<heading_attr_names> | <relation_nonempty>]
+        '\\?%' <sp>? [<heading_attr_names> | <relation_nonempty>]
     }
 
     token relation_nonempty
@@ -1336,7 +1333,7 @@ Grammar:
 ```
     token Tuple_Bag
     {
-        '\\+%' <ws>? [<heading_attr_names> | <tuple_bag_nonempty>]
+        '\\+%' <sp>? [<heading_attr_names> | <tuple_bag_nonempty>]
     }
 
     token tuple_bag_nonempty
@@ -1386,22 +1383,22 @@ Grammar:
 ```
     token Calendar_Time
     {
-        '\\@%' <ws>? '(' <ws>? <time_ymdhms> <ws>? ')'
+        '\\@%' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
     }
 
     token time_ymdhms
     {
-        <time_ymd> <ws>? ',' <ws>? <time_hms>
+        <time_ymd> <sp>? ',' <sp>? <time_hms>
     }
 
     token time_ymd
     {
-        <year>? <ws>? ',' <ws>? <month>? <ws>? ',' <ws>? <day>?
+        <year>? <sp>? ',' <sp>? <month>? <sp>? ',' <sp>? <day>?
     }
 
     token time_hms
     {
-        <hour>? <ws>? ',' <ws>? <minute>? <ws>? ',' <ws>? <second>?
+        <hour>? <sp>? ',' <sp>? <minute>? <sp>? ',' <sp>? <second>?
     }
 
     token year
@@ -1483,7 +1480,7 @@ Grammar:
 ```
     token Calendar_Duration
     {
-        '\\@+' <ws>? '(' <ws>? <time_ymdhms> <ws>? ')'
+        '\\@+' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
     }
 ```
 
@@ -1506,10 +1503,10 @@ Grammar:
 ```
     token Calendar_Instant
     {
-        '\\@' <ws>?
-        '(' <ws>?
-            <instant_base> [<ws>? '@' <ws>? [<instant_offset> | <instant_zone>]]?
-        <ws>? ')'
+        '\\@' <sp>?
+        '(' <sp>?
+            <instant_base> [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
+        <sp>? ')'
     }
 
     token instant_base
@@ -1556,25 +1553,25 @@ Grammar:
 ```
     token Geographic_Point
     {
-        '\\@@' <ws>?
-        '(' <ws>?
-            [[<longitude> | <latitude> | <elevation>]* % [<ws>? ',' <ws>?]]
-        <ws>? ')'
+        '\\@@' <sp>?
+        '(' <sp>?
+            [[<longitude> | <latitude> | <elevation>]* % [<sp>? ',' <sp>?]]
+        <sp>? ')'
     }
 
     token longitude
     {
-        '>' <ws>? <loc_multiplicity>
+        '>' <sp>? <loc_multiplicity>
     }
 
     token latitude
     {
-        '^' <ws>? <loc_multiplicity>
+        '^' <sp>? <loc_multiplicity>
     }
 
     token elevation
     {
-        '+' <ws>? <loc_multiplicity>
+        '+' <sp>? <loc_multiplicity>
     }
 ```
 
@@ -1634,7 +1631,7 @@ Grammar:
 
     token singleton_article
     {
-        '\\*' <ws>? <nesting_attr_names>
+        '\\*' <sp>? <nesting_attr_names>
     }
 ```
 
@@ -1677,12 +1674,12 @@ Grammar:
 
     token generic_excuse
     {
-        '\\!' <ws>? <label_attrs_pair>
+        '\\!' <sp>? <label_attrs_pair>
     }
 
     token singleton_excuse
     {
-        '\\!' <ws>? <nesting_attr_names>
+        '\\!' <sp>? <nesting_attr_names>
     }
 ```
 
@@ -1705,7 +1702,7 @@ Grammar:
 ```
     token Ignorance
     {
-        '\\!!' <ws>? Ignorance
+        '\\!!' <sp>? Ignorance
     }
 ```
 
@@ -1724,12 +1721,12 @@ Grammar:
 ```
     token Nesting
     {
-        '\\' <ws>? <nesting_attr_names>
+        '\\' <sp>? <nesting_attr_names>
     }
 
     token nesting_attr_names
     {
-        <attr_name>+ % [<ws>? '::' <ws>?]
+        <attr_name>+ % [<sp>? '::' <sp>?]
     }
 
     token attr_name
@@ -1777,7 +1774,7 @@ Grammar:
 ```
     token Heading
     {
-        '\\\$' <ws>? <heading_attr_names>
+        '\\\$' <sp>? <heading_attr_names>
     }
 
     token heading_attr_names
@@ -1852,7 +1849,7 @@ Grammar:
 ```
     token Renaming
     {
-        '\\\$:' <ws>?
+        '\\\$:' <sp>?
         '(' <sp>?
             [',' <sp>?]?
             [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
