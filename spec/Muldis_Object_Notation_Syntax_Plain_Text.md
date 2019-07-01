@@ -504,11 +504,11 @@ literals separated by symbolic infix operators, evaluation order aside.
 Also per normal expectations, literals in the format `X.X` only specify the
 base at most once in total, *not* separately for the part after the `.`.
 
-This grammar is subject to the additional rule that the integer denoted by
-`<denominator>` must be nonzero.
+A `<denominator>` is subject to the additional rule that the integer it
+denotes must be nonzero.
 
-This grammar is subject to the additional rule that the integer denoted by
-`<radix>` must be at least 2.
+A `<radix>` is subject to the additional rule that the integer it denotes
+must be at least 2.
 
 Examples:
 
@@ -597,13 +597,17 @@ Grammar:
     {
           [ 0xb <sp>? [<[ 0..1      ]> ** 8]* % [_ | <sp>]]
         | [ 0xx <sp>? [<[ 0..9 A..F ]> ** 2]* % [_ | <sp>]]
+        | [ 0xy <sp>? [<[ A..Z a..z 0..9 + / = ]> ** 4]* % [_ | <sp>]]
     }
 ```
 
 This grammar supports writing **Blob** literals in any of the numeric
-bases {2,16}, using semi-conventional syntax.  The literal may optionally
+bases {2,16,64}, using semi-conventional syntax.  The literal may optionally
 contain underscore characters (`_`), which exist just to help with visual
 formatting, such as for `0xxA705_E416`.
+
+A `<Blob>` is subject to the additional rule that any `=` characters may
+only appear at the very end of it.
 
 Examples:
 
@@ -615,6 +619,14 @@ Examples:
     0xxA705_E416
 
     0xb00101110_10001011
+
+    `A quote from Thomas Hobbes' "Leviathan", as UTF-8 text encoded in Base64.`
+    0xy
+        TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz
+        IHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2Yg
+        dGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGlu
+        dWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRo
+        ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=
 ```
 
 ## Text / Attribute Name
@@ -675,8 +687,9 @@ other quotation-mark-delimited possreps; mainly it is that the optional
 leading `\` is specified separately per segment and it only affects that
 segment; also, individual character escape sequences may not cross segments.
 
-This grammar is subject to the additional rule that the non-negative integer
-denoted by `<code_point_text>` must be in the set {0..0xD7FF,0xE000..0x10FFFF}.
+A `<code_point_text>` is subject to the additional rule that the
+non-negative integer it denotes must be in the set
+{0..0xD7FF,0xE000..0x10FFFF}.
 
 The meanings of the simple character escape sequences are:
 
@@ -1964,14 +1977,14 @@ actually used, and so are called *conceptual prefixes*:
     \?     | Set             | {} or {...} with no colon followed by number
     \+     | Integer         | leading 0..9 without any ./*^ and no 0ww or 0c prefix
     \+     | Bag             | {...} with >= 1 colon followed by an Integer
-    \/     | Fraction        | leading 0..9 with at least 1 of ./*^
+    \/     | Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy prefix
     \/     | Mix             | {...} with >= 1 colon followed by a Fraction
     \~     | Text            | "" or "..." or prefix 0c
     \~     | Array           | [] or [...]
     \%     | Tuple           | () or (...) with >= 1 comma
     \*     | generic-Article | (...:...) without any comma
     \~?    | Bits            | prefix 0bb or 0bo or 0bx
-    \~+    | Blob            | prefix 0xb or 0xx
+    \~+    | Blob            | prefix 0xb or 0xx or 0xy
 ```
 
 A few more symbolic prefixes are currently not used but would be used if
@@ -2160,7 +2173,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     0x    | base-16                | * indicates base-16/hexadecimal notation
           |                        | * prefix for Integer or Fraction-part in base-16
-          | octet string           | * prefix for Blob literals; 0xb/0xx means in base-2/16
+          | octet string           | * prefix for Blob literals; 0xb/0xx/0xy means in base-2/16/64
     ------+------------------------+---------------------------------------
     0c    | character code point   | * indicates a Unicode character code point
           |                        | * prefix for code-point-Text lit; 0cb/0co/0cd/0cx means in base-2/8/10/16
