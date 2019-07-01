@@ -107,7 +107,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | [ 0x <sp>?   <[ 0..9 A..F ]>+ % [_ | <sp>]]
     }
 
-    token compact_nonsigned_int
+    token int_multiplicity
     {
           [ 0b   <[ 0..1      ]>+ % _]
         | [ 0o   <[ 0..7      ]>+ % _]
@@ -216,17 +216,15 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token escaped_char
     {
-        '\\' [<[qgbtnr]> | ['c<' <code_point> '>']]
+        '\\' [<[qgbtnr]> | ['<' <code_point_text> '>']]
     }
 
     token code_point_text
     {
-        '\\~' <code_point>
-    }
-
-    token code_point
-    {
-        <compact_nonsigned_int>
+          [0cb  <[ 0..1      ]>+]
+        | [0co  <[ 0..7      ]>+]
+        | [0cd? <[ 0..9      ]>+]
+        | [0cx  <[ 0..9 A..F ]>+]
     }
 
 ###########################################################################
@@ -238,11 +236,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? ']'
-    }
-
-    token int_multiplicity
-    {
-        <compact_nonsigned_int>
     }
 
 ###########################################################################
@@ -632,7 +625,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token ord_attr_name
     {
-        <code_point>
+        <code_point_text>
     }
 
 ###########################################################################

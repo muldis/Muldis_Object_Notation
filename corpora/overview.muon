@@ -139,7 +139,7 @@ Muldis_Content_Predicate`
 
         "\This isn't not escaped.\n",
 
-        "\\c<0x263A>\c<65>",
+        "\\<0cx263A>\<0c65>",
 
         `One non-ordered quoted Text (or, one named attribute).`
         "sales",
@@ -148,10 +148,10 @@ Muldis_Content_Predicate`
         "First Name",
 
         `One ordered nonquoted Text (or, one ordered attribute).`
-        \~0,
+        0c0,
 
         `Same Text value (or, one ordered attr written in format of a named).`
-        "\\c<0>",
+        "\\<0c0>",
 
         `From a graduate student (in finals week), the following haiku:`
         "\study, write, study,\n"
@@ -399,10 +399,10 @@ Muldis_Content_Predicate`
         (53,),
 
         `Same thing.`
-        (0: 53,),
+        (0c0: 53,),
 
         `Same thing.`
-        ("\\c<0>": 53,),
+        ("\\<0c0>": 53,),
 
         `Three named attributes.`
         (
@@ -462,7 +462,7 @@ Muldis_Content_Predicate`
         \~%(x,y,z),
 
         `Three positional attributes + zero tuples.`
-        \~%(0..2),
+        \~%(0c0..0c2),
 
         `Two named attributes + three tuples (1 duplicate).`
         \~%[
@@ -493,7 +493,7 @@ Muldis_Content_Predicate`
         \?%(x,y,z),
 
         `Three positional attributes + zero tuples.`
-        \?%(0..2),
+        \?%(0c0..0c2),
 
         `Two named attributes + two tuples.`
         \?%{
@@ -532,7 +532,7 @@ Muldis_Content_Predicate`
         \+%(x,y,z),
 
         `Three positional attributes + zero tuples.`
-        \+%(0..2),
+        \+%(0c0..0c2),
 
         `Two named attributes + six tuples (4 duplicates).`
         \+%{
@@ -716,19 +716,19 @@ Muldis_Content_Predicate`
         \$("sales"),
 
         `One ordered attribute.`
-        \$(0),
+        \$(0c0),
 
         `Same thing.`
-        \$("\\c<0>"),
+        \$("\\<0c0>"),
 
         `Three named attributes.`
         \$(region,revenue,qty),
 
         `Three ordered attributes.`
-        \$(0..2),
+        \$(0c0..0c2),
 
         `One of each.`
-        \$(1,age),
+        \$(0c1,age),
 
         `Some attribute names can only appear quoted.`
         \$("Street Address"),
@@ -761,19 +761,19 @@ Muldis_Content_Predicate`
         \$:(->foo,->bar),
 
         `Same thing.`
-        \$:(0->foo,1->bar),
+        \$:(0c0->foo,0c1->bar),
 
         `Convert nonordered names to ordered.`
         \$:(<-foo,<-bar),
 
         `Same thing.`
-        \$:(0<-foo,1<-bar),
+        \$:(0c0<-foo,0c1<-bar),
 
         `Swap 2 ordered attributes.`
-        \$:(0->1,0<-1),
+        \$:(0c0->0c1,0c0<-0c1),
 
         `Same thing.`
-        \$:(->1,->0),
+        \$:(->0c1,->0c0),
 
         `Some attribute names can only appear quoted.`
         \$:("First Name"->"Last Name"),

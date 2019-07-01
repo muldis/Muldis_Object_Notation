@@ -372,7 +372,7 @@ Grammar:
         | [ 0x <sp>?   <[ 0..9 A..F ]>+ % [_ | <sp>]]
     }
 
-    token compact_nonsigned_int
+    token int_multiplicity
     {
           [ 0b   <[ 0..1      ]>+ % _]
         | [ 0o   <[ 0..7      ]>+ % _]
@@ -656,17 +656,15 @@ Grammar:
 
     token escaped_char
     {
-        '\\' [<[qgbtnr]> | ['c<' <code_point> '>']]
+        '\\' [<[qgbtnr]> | ['<' <code_point_text> '>']]
     }
 
     token code_point_text
     {
-        '\\~' <code_point>
-    }
-
-    token code_point
-    {
-        <compact_nonsigned_int>
+          [0cb  <[ 0..1      ]>+]
+        | [0co  <[ 0..7      ]>+]
+        | [0cd? <[ 0..9      ]>+]
+        | [0cx  <[ 0..9 A..F ]>+]
     }
 ```
 
@@ -678,7 +676,7 @@ leading `\` is specified separately per segment and it only affects that
 segment; also, individual character escape sequences may not cross segments.
 
 This grammar is subject to the additional rule that the non-negative integer
-denoted by `<code_point>` must be in the set {0..0xD7FF,0xE000..0x10FFFF}.
+denoted by `<code_point_text>` must be in the set {0..0xD7FF,0xE000..0x10FFFF}.
 
 The meanings of the simple character escape sequences are:
 
@@ -694,7 +692,7 @@ The meanings of the simple character escape sequences are:
     \r  | 0xD     13 | CARR. RET. (CR) |     | control char carriage return
 ```
 
-There is just one complex escape sequence, of the format `\c<...>`, that
+There is just one complex escape sequence, of the format `\<...>`, that
 supports specifying characters in terms of their Unicode code point number.
 One reason for this feature is to empower more elegant passing of
 Unicode-savvy MUON through a communications channel that is more limited,
@@ -721,7 +719,7 @@ Examples:
 
     "\This isn't not escaped.\n"
 
-    "\\c<0x263A>\c<65>"
+    "\\<0cx263A>\<0c65>"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
@@ -730,10 +728,10 @@ Examples:
     "First Name"
 
     `One ordered nonquoted Text (or, one ordered attribute).`
-    \~0
+    0c0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\\c<0>"
+    "\\<0c0>"
 
     `From a graduate student (in finals week), the following haiku:`
     "\study, write, study,\n"
@@ -755,11 +753,6 @@ Grammar:
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? ']'
-    }
-
-    token int_multiplicity
-    {
-        <compact_nonsigned_int>
     }
 ```
 
@@ -1175,10 +1168,10 @@ Examples:
     (53,)
 
     `Same thing.`
-    (0: 53,)
+    (0c0: 53,)
 
     `Same thing.`
-    ("\\c<0>": 53,)
+    ("\\<0c0>": 53,)
 
     `Three named attributes.`
     (
@@ -1258,7 +1251,7 @@ Examples:
     \~%(x,y,z)
 
     `Three positional attributes + zero tuples.`
-    \~%(0..2)
+    \~%(0c0..0c2)
 
     `Two named attributes + three tuples (1 duplicate).`
     \~%[
@@ -1309,7 +1302,7 @@ Examples:
     \?%(x,y,z)
 
     `Three positional attributes + zero tuples.`
-    \?%(0..2)
+    \?%(0c0..0c2)
 
     `Two named attributes + two tuples.`
     \?%{
@@ -1368,7 +1361,7 @@ Examples:
     \+%(x,y,z)
 
     `Three positional attributes + zero tuples.`
-    \+%(0..2)
+    \+%(0c0..0c2)
 
     `Two named attributes + six tuples (4 duplicates).`
     \+%{
@@ -1755,7 +1748,7 @@ Grammar:
 
     token ord_attr_name
     {
-        <code_point>
+        <code_point_text>
     }
 ```
 
@@ -1828,19 +1821,19 @@ Examples:
     \$("sales")
 
     `One ordered attribute.`
-    \$(0)
+    \$(0c0)
 
     `Same thing.`
-    \$("\\c<0>")
+    \$("\\<0c0>")
 
     `Three named attributes.`
     \$(region,revenue,qty)
 
     `Three ordered attributes.`
-    \$(0..2)
+    \$(0c0..0c2)
 
     `One of each.`
-    \$(1,age)
+    \$(0c1,age)
 
     `Some attribute names can only appear quoted.`
     \$("Street Address")
@@ -1926,19 +1919,19 @@ Examples:
     \$:(->foo,->bar)
 
     `Same thing.`
-    \$:(0->foo,1->bar)
+    \$:(0c0->foo,0c1->bar)
 
     `Convert nonordered names to ordered.`
     \$:(<-foo,<-bar)
 
     `Same thing.`
-    \$:(0<-foo,1<-bar)
+    \$:(0c0<-foo,0c1<-bar)
 
     `Swap 2 ordered attributes.`
-    \$:(0->1,0<-1)
+    \$:(0c0->0c1,0c0<-0c1)
 
     `Same thing.`
-    \$:(->1,->0)
+    \$:(->0c1,->0c0)
 
     `Some attribute names can only appear quoted.`
     \$:("First Name"->"Last Name")
@@ -1969,11 +1962,11 @@ actually used, and so are called *conceptual prefixes*:
     -------+-----------------+---------------------------------------------
     \?     | Boolean         | bareword literal False or True
     \?     | Set             | {} or {...} with no colon followed by number
-    \+     | Integer         | leading 0..9 without any ./*^ and no 0ww prefix
+    \+     | Integer         | leading 0..9 without any ./*^ and no 0ww or 0c prefix
     \+     | Bag             | {...} with >= 1 colon followed by an Integer
-    \/     | Fraction        | leading 0..9 with at least 1 of ./*^ and no 0ww prefix
+    \/     | Fraction        | leading 0..9 with at least 1 of ./*^
     \/     | Mix             | {...} with >= 1 colon followed by a Fraction
-    \~     | quoted-Text     | "" or "..."
+    \~     | Text            | "" or "..." or prefix 0c
     \~     | Array           | [] or [...]
     \%     | Tuple           | () or (...) with >= 1 comma
     \*     | generic-Article | (...:...) without any comma
@@ -2088,9 +2081,7 @@ that means they are used in pairs.
           |                        | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
-          |                        | * L1 of conceptual prefix for Bits/Blob literals
-          |                        | * L1 of conceptual prefix for quoted-Text literals
-          |                        | * L1 of prefix for code-point-Text literals
+          |                        | * L1 of conceptual prefix for Bits/Blob/Text literals
           |                        | * L1 of conceptual prefix for Array selectors
           |                        | * L1 of prefix for Tuple-Array lits/sels
     ------+------------------------+---------------------------------------
@@ -2153,13 +2144,13 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     >     | right-pointing-arrow   | * indicates longitude in Geographic-Point literals
     ------+------------------------+---------------------------------------
-    digit | number                 | * first char 0..9 in bareword indicates is a number
+    digit | number                 | * first char 0..9 in bareword indicates is number/code-point/Bits/Blob
     ------+------------------------+---------------------------------------
     alpha | identifier             | * first char a..z/etc in bareword indicates is identifier
     ------+------------------------+---------------------------------------
     0b    | base-2                 | * indicates base-2/binary notation
           |                        | * prefix for Integer or Fraction-part in base-2
-          | bit-string             | * prefix for Bits literals; 0bb/0bo/0bx means in base-2/8/16
+          | bit string             | * prefix for Bits literals; 0bb/0bo/0bx means in base-2/8/16
     ------+------------------------+---------------------------------------
     0o    | base-8                 | * indicates base-8/octal notation
           |                        | * prefix for Integer or Fraction-part in base-8
@@ -2169,7 +2160,10 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     0x    | base-16                | * indicates base-16/hexadecimal notation
           |                        | * prefix for Integer or Fraction-part in base-16
-          | octet-string           | * prefix for Blob literals; 0xb/0xx means in base-2/16
+          | octet string           | * prefix for Blob literals; 0xb/0xx means in base-2/16
+    ------+------------------------+---------------------------------------
+    0c    | character code point   | * indicates a Unicode character code point
+          |                        | * prefix for code-point-Text lit; 0cb/0co/0cd/0cx means in base-2/8/10/16
     ------+------------------------+---------------------------------------
 
     When combining symbols in a \XY prefix (L0+L1+L2) to represent both
