@@ -232,7 +232,7 @@ might require *dividing space* to disambiguate the boundaries of
 otherwise-consecutive grammar tokens, but plain MUON does not.
 
 A special feature of MUON is that any unrestrained-length literal or
-identifier may be split into multiple segments 
+identifier may be split into multiple segments
 separated by dividing space.  This segmenting ability is provided to
 support code that contains very long numeric or stringy literals while
 still being well formatted (no extra long lines).
@@ -2187,6 +2187,122 @@ that means they are used in pairs.
 
 Some of the above mnemonics also carry additional meanings in a wider
 **Muldis Data Language** context, but those are not described here.
+
+# NESTING PRECEDENCE RULES
+
+Muldis Object Notation is explicitly designed to avoid parsing complexities
+around operator precedence that are typical with programming languages.
+
+Primarily this is due to user-defined entities such as operators having no
+impact at all on how a MUON artifact is parsed.  The parsing rules are
+static and parsing can be done with no knowledge of anything user-defined.
+
+Secondarily this is due to the static MUON syntax having a small count of
+basic rules so understanding how to parse it shouldn't take much effort.
+The rest of this document section enumerates or gives examples of those,
+generally arranged from tightest precedence at the top to loosest at the bottom.
+
+## Quoted Strings
+
+MUON has 2 kinds of quoted strings which have strict precedence relative to
+each other and above everything else.
+
+A `<quoted_sp_comment_str>`, that is, a pair of grave accents `` ` `` with
+a run of any other characters between them, has the highest precedence of
+the whole MUON grammar, and a valid MUON artifact will only have zero or an
+exact positive multiple of 2 of grave accent characters.  A MUON parser
+would logically isolate all `<quoted_sp_comment_str>` as their own tokens
+first, and then the entire remainder of the grammar would apply as if each
+of those tokens was replaced by a single space character in the original
+artifact.
+
+A `<quoted_text>`, that is, a pair of quotation marks `"` with a run of any
+other (except grave accent) characters between them, has the second highest
+precedence of the whole MUON grammar, and a valid MUON artifact will only
+have zero or an exact positive multiple of 2 of quotation mark characters
+outside of a `<quoted_sp_comment_str>`.  A MUON parser would logically
+isolate all `<quoted_text>` as their own tokens second, and then the
+remainder of the grammar would apply outside of those tokens.
+
+## Symbolic Delimiters/Separators/Indicators
+
+Anywhere outside of a quoted string that these specific symbolic sequences
+appear, each one is its own indivisible token that is not part of any
+bareword or numeric-format literal; when any of these sequences overlap,
+longest token always wins:
+
+```
+    [
+    ]
+    {
+    }
+    (
+    )
+    \..
+    \?..
+    \+..
+    \~%
+    \?%
+    \+%
+    \@
+    \@%
+    \@+
+    \@@
+    \*
+    \!
+    \!!
+    \
+    \$
+    \$:
+    ,
+    :
+    ::
+    ..
+    ..-
+    -..
+    -..-
+    @
+    ->
+    <-
+```
+
+As a special case, where a `+` symbol would otherwise parse as part of a
+numeric-format literal, it will instead parse as its own token when it is
+leading a list item inside a `<Geographic_Point>`; that is, any place where
+a `+` could possibly be interpreted as an `<elevation>`, that
+interpretation will take precedence over all other interpretations.
+
+Note that, while dividing space is generally optional everywhere in MUON, a
+few specific situations require it.  One is an interval whose high endpoint
+is a negative number; in that case, dividing space is mandatory before the
+`-` so that it isn't interpreted as excluding that endpoint; for example,
+`-10..-5` will be interpreted as `-10 ..- 5`, so one will need to say at
+least `-10.. -5` to mean `-10 .. -5`.
+
+## Barewords and Numeric-Format Literals
+
+MUON has a handful of possreps or components of possreps that are either
+contiguous alphanumeric barewords or semi-contiguous alphanumeric barewords
+with a small set of possible embedded symbolic characters as well as
+optional *dividing space*.  Notwithstanding anything declared in prior
+document sub-sections, any bareword or numeric-format literal or quoted
+string literal will always be interpreted with the longest possible match.
+That is, any place where one could possibly interpret that there are
+multiple terms in a row, if it is valid to interpret the second term as a
+continuation of the first one, then it will be taken as a continuation.
+
+For example, an unquoted `29 56 14 09` will be interpreted as a single
+integer of 8 digits, or as part of something larger depending on what
+precedes it, but interrupting with something like a comma as in
+`29 56, 14 09` would instead be two integers of 4 digits.
+
+For example, an unquoted `- 29 / 14 * 2 ^ - 6` will be interpreted as a
+single fraction value and not 4 integers separated by operators.
+
+It is expected that any programming languages whose grammar is a superset
+of MUON's will also keep this precedence over any actual prefix/infix/etc
+operators they may have, which in some case may require parenthesis to
+disambiguate that they want those operator calls instead.
 
 # SEE ALSO
 
