@@ -561,23 +561,29 @@ Grammar:
 ```
     token Bits
     {
-        '\\~?' <sp>? [['"' <[ 0..1 _ ]>* '"']+ % <sp>]
+          [ 0bb <sp>? <[ 0..1      ]>* % [_ | <sp>]]
+        | [ 0bo <sp>? <[ 0..7      ]>* % [_ | <sp>]]
+        | [ 0bx <sp>? <[ 0..9 A..F ]>* % [_ | <sp>]]
     }
 ```
 
-This grammar supports writing **Bits** literals in numeric base
-2 only, using conventional syntax.  The literal may optionally contain
-underscore characters (`_`), which exist just to help with visual
-formatting.
+This grammar supports writing **Bits** literals in any of the numeric
+bases {2,8,16}, using semi-conventional syntax.  The literal may optionally
+contain underscore characters (`_`), which exist just to help with visual
+formatting, such as for `0bb00101110_100010`.
 
 Examples:
 
 ```
-    \~?""
+    0bb
 
-    \~?"00101110100010"
+    0bb00101110100010
 
-    \~?"00101110_100010"
+    0bb00101110_100010
+
+    0bo644
+
+    0bxA705E
 ```
 
 ## Blob
@@ -589,23 +595,26 @@ Grammar:
 ```
     token Blob
     {
-        '\\~+' <sp>? [['"' [<[ 0..9 A..F ]> ** 2 | _]* '"']+ % <sp>]
+          [ 0xb <sp>? [<[ 0..1      ]> ** 8]* % [_ | <sp>]]
+        | [ 0xx <sp>? [<[ 0..9 A..F ]> ** 2]* % [_ | <sp>]]
     }
 ```
 
-This grammar supports writing **Blob** literals in numeric base
-16 only, using conventional syntax.  The literal may optionally contain
-underscore characters (`_`), which exist just to help with visual
-formatting.
+This grammar supports writing **Blob** literals in any of the numeric
+bases {2,16}, using semi-conventional syntax.  The literal may optionally
+contain underscore characters (`_`), which exist just to help with visual
+formatting, such as for `0xxA705_E416`.
 
 Examples:
 
 ```
-    \~+""
+    0xx
 
-    \~+"A705E416"
+    0xxA705E416
 
-    \~+"A705_E416"
+    0xxA705_E416
+
+    0xb00101110_10001011
 ```
 
 ## Text / Attribute Name
@@ -1960,14 +1969,16 @@ actually used, and so are called *conceptual prefixes*:
     -------+-----------------+---------------------------------------------
     \?     | Boolean         | bareword literal False or True
     \?     | Set             | {} or {...} with no colon followed by number
-    \+     | Integer         | 0..9 without any ./*^
+    \+     | Integer         | leading 0..9 without any ./*^ and no 0ww prefix
     \+     | Bag             | {...} with >= 1 colon followed by an Integer
-    \/     | Fraction        | 0..9 with at least 1 of ./*^
+    \/     | Fraction        | leading 0..9 with at least 1 of ./*^ and no 0ww prefix
     \/     | Mix             | {...} with >= 1 colon followed by a Fraction
     \~     | quoted-Text     | "" or "..."
     \~     | Array           | [] or [...]
     \%     | Tuple           | () or (...) with >= 1 comma
     \*     | generic-Article | (...:...) without any comma
+    \~?    | Bits            | prefix 0bb or 0bo or 0bx
+    \~+    | Blob            | prefix 0xb or 0xx
 ```
 
 A few more symbolic prefixes are currently not used but would be used if
@@ -2026,7 +2037,7 @@ that means they are used in pairs.
     Chars | Generic Meaning        | Specific Use Cases
     ------+------------------------+---------------------------------------
     ""    | stringy data and names | * delimit quoted opaque regular literals
-          |                        | * delimit all Bits/Blob/Text literals
+          |                        | * delimit all quoted-Text literals
           |                        | * delimit quoted code identifiers/names
           |                        | * delimit Calendar-Instant zone names
     ------+------------------------+---------------------------------------
@@ -2077,7 +2088,7 @@ that means they are used in pairs.
           |                        | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
-          |                        | * L1 of prefix for Bits/Blob literals
+          |                        | * L1 of conceptual prefix for Bits/Blob literals
           |                        | * L1 of conceptual prefix for quoted-Text literals
           |                        | * L1 of prefix for code-point-Text literals
           |                        | * L1 of conceptual prefix for Array selectors
@@ -2085,14 +2096,14 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ?     | qualifications/is?/so  | * indicates a qualifying/yes-or-no context
           |                        | * L1 of conceptual prefix for Boolean literals
-          |                        | * L2 of prefix for Bits literals
+          |                        | * L2 of conceptual prefix for Bits literals
           |                        | * L1 of conceptual prefix for Set selectors
           |                        | * L1 of prefix for Interval-Set selectors
           |                        | * L1 of prefix for Relation lits/sels
     ------+------------------------+---------------------------------------
     +     | quantifications/count  | * indicates an integral quantifying/count context
           |                        | * L1 of conceptual prefix for Integer literals
-          |                        | * L2 of prefix for Blob literals
+          |                        | * L2 of conceptual prefix for Blob literals
           |                        | * L1 of conceptual prefix for Bag selectors
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
@@ -2147,16 +2158,18 @@ that means they are used in pairs.
     alpha | identifier             | * first char a..z/etc in bareword indicates is identifier
     ------+------------------------+---------------------------------------
     0b    | base-2                 | * indicates base-2/binary notation
-          |                        | * prefix for Integer in base-2
+          |                        | * prefix for Integer or Fraction-part in base-2
+          | bit-string             | * prefix for Bits literals; 0bb/0bo/0bx means in base-2/8/16
     ------+------------------------+---------------------------------------
     0o    | base-8                 | * indicates base-8/octal notation
-          |                        | * prefix for Integer in base-8
+          |                        | * prefix for Integer or Fraction-part in base-8
     ------+------------------------+---------------------------------------
     0d    | base-10                | * indicates base-10/decimal notation
-          |                        | * optional prefix for Integer in base-10
+          |                        | * optional prefix for Integer or Fraction-part in base-10
     ------+------------------------+---------------------------------------
     0x    | base-16                | * indicates base-16/hexadecimal notation
-          |                        | * prefix for Integer in base-16
+          |                        | * prefix for Integer or Fraction-part in base-16
+          | octet-string           | * prefix for Blob literals; 0xb/0xx means in base-2/16
     ------+------------------------+---------------------------------------
 
     When combining symbols in a \XY prefix (L0+L1+L2) to represent both
