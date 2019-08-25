@@ -10,7 +10,7 @@ The fully-qualified name of this document is
 
 # PART
 
-This artifact is part 1 of 3 of the document
+This artifact is part 1 of 4 of the document
 `Muldis_Object_Notation http://muldis.com 0.300.0`;
 its part name is `Overview`.
 
@@ -55,6 +55,7 @@ This document consists of multiple parts:
 1. Overview (the current part)
 1. [Semantics](Muldis_Object_Notation_Semantics.md)
 1. [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
+1. [Syntax_Java](Muldis_Object_Notation_Syntax_Java.md)
 
 # FEATURES
 

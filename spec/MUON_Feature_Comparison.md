@@ -185,13 +185,6 @@ https://www.ecma-international.org/publications/standards/Ecma-262.htm)
 
 *TODO.*
 
-## Java
-
-[https://docs.oracle.com/javase/specs/jls/se8/html/index.html](
-https://docs.oracle.com/javase/specs/jls/se8/html/index.html)
-
-*TODO.*
-
 ## Perl 5 / Pumpkin Perl
 
 [https://www.perl.org](https://www.perl.org)

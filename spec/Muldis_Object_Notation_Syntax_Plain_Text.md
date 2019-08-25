@@ -10,7 +10,7 @@ The fully-qualified name of this document is
 
 # PART
 
-This artifact is part 3 of 3 of the document
+This artifact is part 3 of 4 of the document
 `Muldis_Object_Notation http://muldis.com 0.300.0`;
 its part name is `Syntax_Plain_Text`.
 
@@ -39,7 +39,11 @@ This document consists of multiple parts; for a directory to all of the
 parts, see [Overview](Muldis_Object_Notation.md).
 
 This part of the **Muldis Object Notation** document specifies the
-canonical plain text syntax of MUON which all other MUON syntaxes are
+canonical plain text syntax of MUON, which expresses a MUON artifact in
+terms of a Unicode character string conforming to a well-defined pattern,
+which can exist as a raw file in a filesystem or be exchanged over a
+network or exist in memory of any program as a character string value.
+This is the canonical syntax which all other MUON syntaxes are
 derived from and map with.
 
 The MUON canonical plain text format is semi-lightweight and designed to
