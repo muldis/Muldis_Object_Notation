@@ -124,60 +124,6 @@ well as other tools, so that reasons can be specified.
 
 *TODO.*
 
-## .NET "dot net" / C# "c sharp"
-
-[https://www.microsoft.com/net](https://www.microsoft.com/net)
-
-.NET has a direct `Any` analogy which is provided by the .NET
-class `System.Object`.
-
-.NET has a direct `Boolean` analogy which is provided by the .NET
-struct `System.Boolean`.
-
-.NET has a direct `Integer` analogy which is provided by the .NET struct
-`System.Numerics.BigInteger`; it also provides a handful of fixed-size
-integral types, of which `System.Int32` is the most commonly used.
-
-.NET doesn't have a native dedicated unlimited-size-fraction type but does
-provide several fixed-size exact rational types such as `System.Decimal`
-and `System.Float`.
-
-.NET has a direct `Bits` analogy which is provided by the .NET
-class `System.Collections.BitArray`.
-
-.NET has a direct `Blob` analogy which is an array of `System.Byte`.
-
-.NET has a direct `Text` analogy which is provided by the .NET
-class `System.String`.
-
-Every `Text` value corresponds 1:1 with a .NET `String` value, but a .NET
-`String` is also capable of being malformed, and contain isolated UTF-16
-"surrogate" Char elements that don't correspond to valid Unicode code points.
-
-.NET has a direct `Array` analogy which is provided by the .NET
-class `System.Collections.Generic.List`.
-
-.NET has a direct `Set` analogy which is provided by the .NET
-class `System.Collections.Generic.HashSet`.
-
-.NET has a direct `Bag` analogy which is provided by the .NET class
-`System.Collections.Generic.Dictionary` where every dictionary value is a
-positive integer.
-
-.NET has a direct `Tuple` analogy which is "anonymous types"; it also
-provides support for an unlimited number of attributes with the .NET class
-`System.Collections.Generic.Dictionary` where every dictionary key is a
-string; it also provides a handful of fixed-degree ordered-attribute tuple
-types via `System.Tuple`.
-
-.NET has a direct `Excuse` analogy which is provided by the .NET class
-`System.Exception`.
-
-.NET has a direct `Ignorance` analogy which is provided by `null`,
-and another provided by the .NET singleton class `System.DBNull`.
-
-*TODO.*
-
 ## ECMAScript / JavaScript
 
 [https://www.ecma-international.org/publications/standards/Ecma-262.htm](

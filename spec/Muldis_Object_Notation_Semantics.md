@@ -10,7 +10,7 @@ The fully-qualified name of this document is
 
 # PART
 
-This artifact is part 2 of 4 of the document
+This artifact is part 2 of 5 of the document
 `Muldis_Object_Notation http://muldis.com 0.300.0`;
 its part name is `Semantics`.
 
