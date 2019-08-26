@@ -85,7 +85,7 @@ Every qualified MUON artifact is a value of the .NET structure type
 Every MUON possrep *predicate* is an object of the .NET class
 `System.String` (`String`), and that value is characterized by the name
 of the MUON possrep in this document.  Every MUON possrep *predicate*
-conforms to the character string pattern `<[A..Z]> <[0..9 A..Z _ a..z]>*`.
+conforms to the character string pattern `[<[A..Z]><[a..z]>+]+`.
 
 The general case of every MUON possrep *subject* is an object of the .NET
 class `System.Object` (`Object`), or loosely speaking, any .NET value or
@@ -97,10 +97,7 @@ constrained to those enumerated by the MUON possreps.
 An **Any** artifact is an artifact that qualifies as any of the other MUON
 artifacts, since the **Any** possrep is characterized by the union of all
 other possreps.  Loosely speaking, it is any object of the .NET class
-`System.String` (`String`).
-
-.NET has a direct `Any` analogy which is provided by the .NET
-class `System.Object`.
+`System.Object` (`Object`).
 
 ## None / Empty Type Possrep
 
@@ -123,8 +120,11 @@ An **Integer** artifact has the predicate `Integer`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any value of any of the .NET structure types `System.Byte` (`Byte`),
-`System.Int16` (`Int16`), `System.Int32` (`Int32`), `System.Int64` (`Int64`).
+* Any value of any of the .NET structure types
+`System.Byte` (`Byte`),
+`System.Int16` (`Int16`),
+`System.Int32` (`Int32`),
+`System.Int64` (`Int64`).
 
 * Any value of the .NET structure type `System.Numerics.BigInteger` (`BigInteger`).
 
@@ -134,8 +134,9 @@ A **Fraction** artifact has the predicate `Fraction`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any non-special value of any of the .NET structure types `System.Single`
-(`Single`), `System.Double` (`Double`).
+* Any non-special value of any of the .NET structure types
+`System.Single` (`Single`),
+`System.Double` (`Double`).
 
 * Any value of the .NET structure type `System.Decimal` (`Decimal`).
 
@@ -161,8 +162,6 @@ When its subject is any of the following, the predicate is required:
 
 Note that an unqualified subject of a `System.Byte[]` is treated as an `Array`.
 
-*TODO: Add more options.*
-
 ## Text / Attribute Name
 
 A **Text** artifact has the predicate `Text`.
@@ -172,7 +171,7 @@ When its subject is any of the following, the predicate is optional:
 * Any value of the .NET structure type `System.Char` (`Char`) that is
 not a UTF-16 "surrogate" code point.
 
-* Any object of the .NET class `System.String` (`String`) but that it
+* Any object of the .NET class `System.String` (`String`), but that it
 does not contain any invalid uses of UTF-16 "surrogate" code points.
 
 * Any object of the .NET class `System.Text.StringBuilder` (`StringBuilder`)
@@ -189,10 +188,21 @@ When its subject is any of the following, the predicate is optional:
 
 * Any object of any of the .NET array classes, which is any .NET object
 for whose class the predicate `Type.IsArray()` results in `true`
-(each such class has a name like `foo[]`), but that for every element `E`,
-`E` is a valid **Any** artifact.
+(each such class has a name like `foo[]`), but that every one of its
+members is a valid **Any** artifact.
 
-*TODO: Add more options.*
+* Any value of any of the following .NET structure types that compose the
+.NET interface `System.Collections.Generic.IList` (`IList`), but that every
+one of its members is a valid **Any** artifact:
+`System.Collections.Immutable.ImmutableArray` (`ImmutableArray`).
+
+* Any object of any of the following .NET classes that compose the
+.NET interface `System.Collections.Generic.IList` (`IList`), but that every
+one of its members is a valid **Any** artifact:
+`System.Collections.Generic.List` (`List`),
+`System.Collections.Immutable.ImmutableList` (`ImmutableList`).
+
+*TODO: Add more options and/or remove some.*
 
 ## Set
 
@@ -200,79 +210,173 @@ A **Set** artifact has the predicate `Set`.
 
 When its subject is any of the following, the predicate is optional:
 
-*TODO: Add more options.*
+* Any object of any of the following .NET classes that compose the
+.NET interface `System.Collections.Generic.ISet` (`ISet`), but that every
+one of its members is a valid **Any** artifact:
+`System.Collections.Generic.HashSet` (`HashSet`),
+`System.Collections.Generic.SortedSet` (`SortedSet`),
+`System.Collections.Immutable.ImmutableHashSet` (`ImmutableHashSet`).
+`System.Collections.Immutable.ImmutableSortedSet` (`ImmutableSortedSet`).
 
 When its subject is any of the following, the predicate is required:
 
 * Any **Array** subject.
+
+* Any object of the .NET class `System.Collections.Generic.Dictionary`
+(`Dictionary`), but that every one of its keys is a valid **Any** artifact
+and every one of its values is a valid **Boolean** subject.
+
+*TODO: Add more options and/or remove some.*
 
 ## Bag / Multiset
 
 A **Bag** artifact has the predicate `Bag`.
 
+When its subject is any of the following, the predicate is optional:
+
+* Any object of the .NET class
+`System.Collections.Concurrent.ConcurrentBag` (`ConcurrentBag`), but that
+every one of its members is a valid **Any** artifact.
+
+When its subject is any of the following, the predicate is required:
+
+* Any **Set** subject.
+
+* Any object of the .NET class `System.Collections.Generic.Dictionary`
+(`Dictionary`), but that every one of its keys is a valid **Any** artifact
+and every one of its values is a valid **Integer** subject
+which denotes a non-negative integer.
+
+*TODO: Add more options and/or remove some.*
+
+## Mix
+
+A **Mix** artifact has the predicate `Mix`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any **Bag** subject.
+
+* Any object of the .NET class `System.Collections.Generic.Dictionary`
+(`Dictionary`), but that every one of its keys is a valid **Any** artifact
+and every one of its values is a valid **Fraction** subject.
+
+*TODO: Add more options.*
+
+## Interval
+
+An **Interval** artifact has the predicate `Interval`.
+
+*TODO: Add more options.*
+
+## Interval Set
+
+An **Interval Set** artifact has the predicate `IntervalSet`.
+
+*TODO: Add more options.*
+
+## Interval Bag
+
+An **Interval Bag** artifact has the predicate `IntervalBag`.
+
+*TODO: Add more options.*
+
+## Tuple / Attribute Set
+
+A **Tuple** artifact has the predicate `Tuple`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any value of any of the following .NET structure types that compose the
+.NET interface `System.Runtime.CompilerServices.ITuple` (`ITuple`)
+but that every one of its keys is a valid **Text** subject
+and every one of its values is a valid **Any** artifact:
+`System.ValueTuple<...>` (`ValueTuple`).
+
+* Any value of any of the following .NET structure types that compose the
+.NET interface `System.Runtime.CompilerServices.ITuple` (`ITuple`)
+but that every one of its keys is a valid **Text** subject
+and every one of its values is a valid **Any** artifact:
+`System.Tuple<...>` (`Tuple`).
+
 When its subject is any of the following, the predicate is required:
 
 * Any **Array** subject.
 
-* Any **Set** subject.
+* Any object of the .NET class `System.Collections.Generic.Dictionary`
+(`Dictionary`), but that every one of its keys is a valid **Text** subject
+and every one of its values is a valid **Any** artifact.
 
-*TODO: Add more options.*
-
-## Mix
-
-*TODO.*
-
-## Interval
-
-*TODO.*
-
-## Interval Set
-
-*TODO.*
-
-## Interval Bag
-
-*TODO.*
-
-## Tuple / Attribute Set
-
-*TODO.*
+*TODO: Add more options, such as .NET anonymous types.*
 
 ## Tuple Array
 
-*TODO.*
+A **Tuple Array** artifact has the predicate `TupleArray`.
+
+*TODO: Add more options.*
 
 ## Relation / Tuple Set
 
-*TODO.*
+A **Relation** artifact has the predicate `Relation`.
+
+*TODO: Add more options.*
 
 ## Tuple Bag
 
-*TODO.*
+A **Tuple Bag** artifact has the predicate `TupleBag`.
+
+*TODO: Add more options.*
 
 ## Calendar Time
 
-*TODO.*
+A **Calendar Time** artifact has the predicate `CalendarTime`.
+
+*TODO: Add more options.*
 
 ## Calendar Duration
 
-*TODO.*
+A **Calendar Duration** artifact has the predicate `CalendarDuration`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any value of the .NET structure type `System.TimeSpan` (`TimeSpan`),
+
+*TODO: Add more options.*
 
 ## Calendar Instant
 
-*TODO.*
+A **Calendar Instant** artifact has the predicate `CalendarInstant`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any value of any of the .NET structure types
+`System.DateTime` (`DateTime`),
+`System.DateTimeOffset` (`DateTimeOffset`).
+
+*TODO: Add more options.*
 
 ## Geographic Point
 
-*TODO.*
+A **Geographic Point** artifact has the predicate `GeographicPoint`.
+
+* Any coordinate-specifying object of the .NET class
+`System.Data.Spatial.DbGeography` (`DbGeography`).
+
+*TODO: Check if DbGeography is actually in .NET Standard 2.0 or not.*
+
+*TODO: Add more options.*
 
 ## Article / Labelled Tuple
 
-*TODO.*
+An **Article** artifact has the predicate `Article`.
+
+*TODO: Add more options.*
 
 ## Excuse
 
-*TODO.*
+An **Excuse** artifact has the predicate `Excuse`.
+
+*TODO: Add more options.*
 
 ## Ignorance
 
@@ -286,15 +390,21 @@ When its subject is any of the following, the predicate is optional:
 
 ## Nesting / Attribute Name List
 
-*TODO.*
+A **Nesting** artifact has the predicate `Nesting`.
+
+*TODO: Add more options.*
 
 ## Heading / Attribute Name Set
 
-*TODO.*
+A **Heading** artifact has the predicate `Heading`.
+
+*TODO: Add more options.*
 
 ## Renaming / Attribute Name Map
 
-*TODO.*
+A **Renaming** artifact has the predicate `Renaming`.
+
+*TODO: Add more options.*
 
 # SEE ALSO
 

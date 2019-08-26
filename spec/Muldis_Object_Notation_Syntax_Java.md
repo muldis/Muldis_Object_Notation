@@ -88,7 +88,7 @@ Every qualified MUON artifact is an object of the Java class
 Every MUON possrep *predicate* is an object of the Java class
 `java.lang.String` (`String`), and that value is characterized by the name
 of the MUON possrep in this document.  Every MUON possrep *predicate*
-conforms to the character string pattern `<[A..Z]> <[0..9 A..Z _ a..z]>*`.
+conforms to the character string pattern `[<[A..Z]><[a..z]>+]+`.
 
 The general case of every MUON possrep *subject* is an object of the Java
 class `java.lang.Object` (`Object`), or loosely speaking, any Java value or
@@ -127,8 +127,10 @@ When its subject is any of the following, the predicate is optional:
 
 * Any value of any of the Java primitive types `byte`, `short`, `int`, `long`.
 
-* Any object of any of the Java classes `java.lang.Byte` (`Byte`),
-`java.lang.Short` (`Short`), `java.lang.Integer` (`Integer`),
+* Any object of any of the Java classes
+`java.lang.Byte` (`Byte`),
+`java.lang.Short` (`Short`),
+`java.lang.Integer` (`Integer`),
 `java.lang.Long` (`Long`).
 
 * Any object of the Java class `java.math.BigInteger` (`BigInteger`).
@@ -141,8 +143,9 @@ When its subject is any of the following, the predicate is optional:
 
 * Any non-special value of any of the Java primitive types `float`, `double`.
 
-* Any non-special object of any of the Java classes `java.lang.Float`
-(`Float`), `java.lang.Double` (`Double`).
+* Any non-special object of any of the Java classes
+`java.lang.Float` (`Float`),
+`java.lang.Double` (`Double`).
 
 * Any object of the Java class `java.math.BigDecimal` (`BigDecimal`).
 
@@ -168,8 +171,6 @@ When its subject is any of the following, the predicate is required:
 
 Note that an unqualified subject of a `byte[]` is treated as an `Array`.
 
-*TODO: Add more options.*
-
 ## Text / Attribute Name
 
 A **Text** artifact has the predicate `Text`.
@@ -182,12 +183,13 @@ When its subject is any of the following, the predicate is optional:
 * Any object of the Java class `java.lang.Character` (`Character`) that is
 not a UTF-16 "surrogate" code point.
 
-* Any object of the Java class `java.lang.String` (`String`) but that it
+* Any object of the Java class `java.lang.String` (`String`), but that it
 does not contain any invalid uses of UTF-16 "surrogate" code points.
 
-* Any object of any of the Java classes `java.lang.StringBuffer`
-(`StringBuffer`), `java.lang.StringBuilder` (`StringBuilder`) but that it
-does not contain any invalid uses of UTF-16 "surrogate" code points.
+* Any object of any of the Java classes
+`java.lang.StringBuffer` (`StringBuffer`),
+`java.lang.StringBuilder` (`StringBuilder`)
+but that it does not contain any invalid uses of UTF-16 "surrogate" code points.
 
 Not permitted are Java alternatives such as `char[]`, `int[]`, `byte[]`; if
 you have one, convert it into a Java `String` first.
@@ -200,14 +202,18 @@ When its subject is any of the following, the predicate is optional:
 
 * Any object of any of the Java array classes, which is any Java object
 for whose class the predicate `java.lang.Class.isArray()` results in `true`
-(each such class has a name like `foo[]`), but that for every element `E`,
-`E` is a valid **Any** artifact.
+(each such class has a name like `foo[]`), but that every one of its
+members is a valid **Any** artifact.
 
 * Any object of any of the following Java classes that compose the Java
-interface `java.util.List` (`List`), but that for every element `E`, `E` is
-a valid **Any** artifact: `java.util.ArrayList` (`ArrayList`).
-`java.util.LinkedList` (`LinkedList`), `java.util.Vector` (`Vector`),
+interface `java.util.List` (`List`), but that every one of its members is
+a valid **Any** artifact:
+`java.util.ArrayList` (`ArrayList`).
+`java.util.LinkedList` (`LinkedList`),
+`java.util.Vector` (`Vector`),
 `java.util.concurrent.CopyOnWriteArrayList` (`CopyOnWriteArrayList`).
+
+*TODO: Add more options and/or remove some.*
 
 ## Set
 
@@ -216,8 +222,9 @@ A **Set** artifact has the predicate `Set`.
 When its subject is any of the following, the predicate is optional:
 
 * Any object of any of the following Java classes that compose the Java
-interface `java.util.Set` (`Set`), but that for every element `E`, `E` is a
-valid **Any** artifact: `java.util.HashSet` (`HashSet`),
+interface `java.util.Set` (`Set`), but that every one of its members is a
+valid **Any** artifact:
+`java.util.HashSet` (`HashSet`),
 `java.util.TreeSet` (`TreeSet`),
 `java.util.concurrent.ConcurrentSkipListSet` (`ConcurrentSkipListSet`),
 `java.util.concurrent.CopyOnWriteArraySet` (`CopyOnWriteArraySet`).
@@ -226,75 +233,164 @@ When its subject is any of the following, the predicate is required:
 
 * Any **Array** subject.
 
+* Any object of any of the following Java classes that compose the Java
+interface `java.util.Map` (`Map`), but that every one of its keys is a valid
+**Any** artifact and every one of its values is a valid **Boolean** subject:
+`java.util.HashMap` (`HashMap`),
+`java.util.TreeMap` (`TreeMap`),
+`java.util.LinkedHashMap` (`LinkedHashMap`).
+
+*TODO: Add more options and/or remove some.*
+
 ## Bag / Multiset
 
 A **Bag** artifact has the predicate `Bag`.
 
 When its subject is any of the following, the predicate is required:
 
-* Any **Array** subject.
-
 * Any **Set** subject.
+
+* Any object of any of the following Java classes that compose the Java
+interface `java.util.Map` (`Map`), but that every one of its keys is a valid
+**Any** artifact and every one of its values is a valid **Integer** subject
+which denotes a non-negative integer:
+`java.util.HashMap` (`HashMap`),
+`java.util.TreeMap` (`TreeMap`),
+`java.util.LinkedHashMap` (`LinkedHashMap`).
 
 Note that the Java interface `java.util.Collection` is documented such that
 one should compose it directly when implementing bag/multiset types, but
 no standard classes stood out for use as an unqualified **Bag** subject.
 
+*TODO: Add more options and/or remove some.*
+
 ## Mix
 
-*TODO.*
+A **Mix** artifact has the predicate `Mix`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any **Bag** subject.
+
+* Any object of any of the following Java classes that compose the Java
+interface `java.util.Map` (`Map`), but that every one of its keys is a valid
+**Any** artifact and every one of its values is a valid **Fraction** subject:
+`java.util.HashMap` (`HashMap`),
+`java.util.TreeMap` (`TreeMap`),
+`java.util.LinkedHashMap` (`LinkedHashMap`).
+
+*TODO: Add more options and/or remove some.*
 
 ## Interval
 
-*TODO.*
+An **Interval** artifact has the predicate `Interval`.
+
+*TODO: Add more options.*
 
 ## Interval Set
 
-*TODO.*
+An **Interval Set** artifact has the predicate `IntervalSet`.
+
+*TODO: Add more options.*
 
 ## Interval Bag
 
-*TODO.*
+An **Interval Bag** artifact has the predicate `IntervalBag`.
+
+*TODO: Add more options.*
 
 ## Tuple / Attribute Set
 
-*TODO.*
+A **Tuple** artifact has the predicate `Tuple`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any **Array** subject.
+
+* Any object of any of the following Java classes that compose the Java
+interface `java.util.Map` (`Map`), but that every one of its keys is a valid
+**Text** subject and every one of its values is a valid **Any** artifact:
+`java.util.HashMap` (`HashMap`),
+`java.util.TreeMap` (`TreeMap`),
+`java.util.LinkedHashMap` (`LinkedHashMap`).
+
+*TODO: Add more options and/or remove some.*
 
 ## Tuple Array
 
-*TODO.*
+A **Tuple Array** artifact has the predicate `TupleArray`.
+
+*TODO: Add more options.*
 
 ## Relation / Tuple Set
 
-*TODO.*
+A **Relation** artifact has the predicate `Relation`.
+
+*TODO: Add more options.*
 
 ## Tuple Bag
 
-*TODO.*
+A **Tuple Bag** artifact has the predicate `TupleBag`.
+
+*TODO: Add more options.*
 
 ## Calendar Time
 
-*TODO.*
+A **Calendar Time** artifact has the predicate `CalendarTime`.
+
+*TODO: Add more options.*
 
 ## Calendar Duration
 
-*TODO.*
+A **Calendar Duration** artifact has the predicate `CalendarDuration`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any object of any of the Java classes
+`java.time.Duration` (`Duration`),
+`java.time.Period` (`Period`).
+
+*TODO: Add more options and/or remove some.*
 
 ## Calendar Instant
 
-*TODO.*
+A **Calendar Instant** artifact has the predicate `CalendarInstant`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any object of any of the Java classes
+`java.time.Instant` (`Instant`),
+`java.time.LocalDate` (`LocalDate`),
+`java.time.LocalDateTime` (`LocalDateTime`),
+`java.time.LocalTime` (`LocalTime`),
+`java.time.Month` (`Month`),
+`java.time.MonthDay` (`MonthDay`),
+`java.time.OffsetDateTime` (`OffsetDateTime`),
+`java.time.OffsetTime` (`OffsetTime`),
+`java.time.Year` (`Year`),
+`java.time.YearMonth` (`YearMonth`),
+`java.time.ZonedDateTime` (`ZonedDateTime`),
+`java.time.ZoneOffset` (`ZoneOffset`).
+
+*TODO: Add more options and/or remove some.*
 
 ## Geographic Point
 
-*TODO.*
+A **Geographic Point** artifact has the predicate `GeographicPoint`.
+
+*TODO: Add more options.*
 
 ## Article / Labelled Tuple
 
-*TODO.*
+An **Article** artifact has the predicate `Article`.
+
+*TODO: Add more options.*
 
 ## Excuse
 
-*TODO.*
+An **Excuse** artifact has the predicate `Excuse`.
+
+*TODO: Add more options.*
 
 ## Ignorance
 
@@ -306,15 +402,21 @@ When its subject is any of the following, the predicate is optional:
 
 ## Nesting / Attribute Name List
 
-*TODO.*
+A **Nesting** artifact has the predicate `Nesting`.
+
+*TODO: Add more options.*
 
 ## Heading / Attribute Name Set
 
-*TODO.*
+A **Heading** artifact has the predicate `Heading`.
+
+*TODO: Add more options.*
 
 ## Renaming / Attribute Name Map
 
-*TODO.*
+A **Renaming** artifact has the predicate `Renaming`.
+
+*TODO: Add more options.*
 
 # SEE ALSO
 
