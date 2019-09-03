@@ -68,6 +68,179 @@ Muldis_Object_Notation_Semantics.md) for details and the intended
 interpretation of each possrep, to provide valuable context for the grammar
 and examples in the current part that isn't being repeated here.
 
+# HOST NATIVE DATA TYPES
+
+This document section enumerates, for the host language .NET/C\#,
+the system-defined types that MUON possreps may be composed of.
+Some types may not exist in all language versions, and it is noted when so.
+In rare cases, some third-party types may also be listed as alternatives.
+
+This document section declares aliases in the form `SYS_Foo` by which the
+host language types are referenced, for conciseness and brevity, in the
+rest of the current document part.  The scope of these aliases is strictly
+to `Syntax_DotNet` and other document parts will often be using the
+exact same aliases for cross-part parity that have different definitions.
+
+## SYS_Object
+
+A `SYS_Object` is any of the following:
+
+* Any value of any .NET structure type.
+
+* Any object of any .NET class, in particular `System.Object`,
+which is the common parent class of all .NET classes.
+
+## SYS_Boolean
+
+A `SYS_Boolean` is any of the following:
+
+* Any value of the .NET structure type `System.Boolean`.
+
+## SYS_Integer_Fixed
+
+A `SYS_Integer_Fixed` is any of the following:
+
+* Any value of any of the .NET structure types `System.Int32`, `System.Int64`.
+
+Not permitted is any of the following, to keep things simpler:
+
+* Any value of any of the .NET structure types `System.Byte`, `System.Int16`.
+
+## SYS_Integer_Big
+
+A `SYS_Integer_Big` is any of the following:
+
+* Any value of the .NET structure type `System.Numerics.BigInteger`.
+
+## SYS_Float_Fixed
+
+A `SYS_Float_Fixed` is any of the following:
+
+* Any non-special value of any of the .NET structure types
+`System.Single`, `System.Double`.
+
+Not permitted is any of the following, to keep things more correct and simpler:
+
+* Any special value of any of the .NET structure types
+`System.Single`, `System.Double`.
+
+*TODO: Be more specific about what float/double/etc are allowed or not.*
+
+## SYS_Decimal_Fixed
+
+A `SYS_Decimal_Fixed` is any of the following:
+
+* Any value of the .NET structure type `System.Decimal`.
+
+## SYS_Bit_String
+
+A `SYS_Bit_String` is any of the following:
+
+* Any object of the .NET class `System.Collections.BitArray`.
+
+## SYS_Byte_String
+
+A `SYS_Byte_String` is any of the following:
+
+* Any value of the .NET structure type array `System.Byte[]`.
+
+## SYS_Char_String
+
+A `SYS_Char_String` is any of the following:
+
+* Any object of the .NET class `System.String`, but that it
+does not contain any invalid uses of UTF-16 "surrogate" code points.
+
+Not permitted is any of the following, to keep things simpler or more correct:
+
+* Any object of the .NET class `System.String` that
+contains any invalid uses of UTF-16 "surrogate" code points.
+
+* Any value of the .NET structure type `System.Char`.
+
+* Any object of the .NET class `System.Text.StringBuilder`.
+
+* Any raw or internal alternatives such as `Char[]`.
+
+## SYS_Pair_Key_Value
+
+A `SYS_Pair_Key_Value` is any of the following:
+
+* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`;
+the aliases `SYS_key` and `SYS_value` refer to
+its `SYS_Object` typed properties `Key` and `Value`.
+
+Not permitted is any of the following, to keep things simpler:
+
+* Any values or objects of N-ary collection types having exactly 2 elements.
+
+## SYS_Array
+
+A `SYS_Array` is any of the following:
+
+* Any object of any .NET array class
+(an array class has a name like `foo[]` and is a class for whom
+the predicate `Type.IsArray()` results in true);
+the alias `SYS_members` refers to its `SYS_Object` typed elements.
+
+* Any value of any .NET structure type
+that composes the .NET interface `System.Collections.Generic.IList`;
+the alias `SYS_members` refers to its `SYS_Object` typed elements.
+
+* Any object of any .NET class
+that composes the .NET interface `System.Collections.Generic.IList`;
+the alias `SYS_members` refers to its `SYS_Object` typed elements.
+
+Note that example composers of `System.Collections.Generic.IList` are:
+`System.Collections.Immutable.ImmutableArray`,
+`System.Collections.Generic.List`,
+`System.Collections.Immutable.ImmutableList`.
+
+## SYS_Set
+
+A `SYS_Set` is any of the following:
+
+* Any object of any .NET class
+that composes the .NET interface `System.Collections.Generic.ISet`;
+the alias `SYS_members` refers to its `SYS_Object` typed elements.
+
+Note that example composers of `System.Collections.Generic.ISet` are:
+`System.Collections.Generic.HashSet`,
+`System.Collections.Generic.SortedSet`,
+`System.Collections.Immutable.ImmutableHashSet`.
+`System.Collections.Immutable.ImmutableSortedSet`.
+
+## SYS_Dictionary
+
+A `SYS_Dictionary` is any of the following:
+
+* Any object of the .NET class `System.Collections.Generic.Dictionary`;
+the alias `SYS_members` refers to its `SYS_Pair_Key_Value` typed elements.
+
+## SYS_Tuple_Ordered
+
+A `SYS_Tuple_Ordered` is any of the following:
+
+* Any value of any .NET structure type
+that composes the .NET interface `System.Runtime.CompilerServices.ITuple`;
+the alias `SYS_attribute_assets` refers to its `SYS_Object` typed elements.
+
+* Any object of any .NET class
+that composes the .NET interface `System.Runtime.CompilerServices.ITuple`;
+the alias `SYS_attribute_assets` refers to its `SYS_Object` typed elements.
+
+Note that example composers of `System.Runtime.CompilerServices.ITuple` are:
+`System.ValueTuple<...>`,
+`System.Tuple<...>`.
+
+## SYS_Null
+
+A `SYS_Null` is any of the following:
+
+* The special .NET `null` value.
+
+* The only object of the .NET singleton class `System.DBNull`.
+
 # GRAMMAR
 
 Each valid MUON artifact is an instance of a single MUON possrep.  Every
@@ -78,26 +251,23 @@ possreps also has one or more *unqualified* formats characterized by the
 for normalization and consistency, while employing unqualified formats
 where available is better for brevity and more efficient resource usage.
 
-Every qualified MUON artifact is a value of the .NET structure type
-`System.Collections.Generic.KeyValuePair` (`KeyValuePair`); its
-`Key` is the *predicate* and its `Value` is the *subject*.
+Every qualified MUON artifact is a `SYS_Pair_Key_Value`;
+its `SYS_key` is the *predicate* and its `SYS_value` is the *subject*.
 
-Every MUON possrep *predicate* is an object of the .NET class
-`System.String` (`String`), and that value is characterized by the name
+Every MUON possrep *predicate* is a `SYS_Char_String`,
+and that value is characterized by the name
 of the MUON possrep in this document.  Every MUON possrep *predicate*
 conforms to the character string pattern `[<[A..Z]><[a..z]>+]+`.
 
-The general case of every MUON possrep *subject* is an object of the .NET
-class `System.Object` (`Object`), or loosely speaking, any .NET value or
-object at all, though strictly speaking, the validity of a *subject* is
+The general case of every MUON possrep *subject* is, loosely speaking, a
+`SYS_Object`, though strictly speaking, the validity of a *subject* is
 constrained to those enumerated by the MUON possreps.
 
 ## Any / Universal Type Possrep
 
 An **Any** artifact is an artifact that qualifies as any of the other MUON
 artifacts, since the **Any** possrep is characterized by the union of all
-other possreps.  Loosely speaking, it is any object of the .NET class
-`System.Object` (`Object`).
+other possreps.  Loosely speaking, it is a `SYS_Object`.
 
 ## None / Empty Type Possrep
 
@@ -112,7 +282,13 @@ A **Boolean** artifact has the predicate `Boolean`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any value of the .NET structure type `System.Boolean` (`Boolean`).
+* Any `SYS_Boolean`.
+
+Not permitted is any of the following, to keep things more correct and simpler:
+
+* Any `SYS_Integer_Fixed`, such as zero/one representing false/true.
+
+* Any value of some other type that might represent a boolean.
 
 ## Integer
 
@@ -120,13 +296,9 @@ An **Integer** artifact has the predicate `Integer`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any value of any of the .NET structure types
-`System.Byte` (`Byte`),
-`System.Int16` (`Int16`),
-`System.Int32` (`Int32`),
-`System.Int64` (`Int64`).
+* Any `SYS_Integer_Fixed`.
 
-* Any value of the .NET structure type `System.Numerics.BigInteger` (`BigInteger`).
+* Any `SYS_Integer_Big`.
 
 ## Fraction
 
@@ -134,13 +306,9 @@ A **Fraction** artifact has the predicate `Fraction`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any non-special value of any of the .NET structure types
-`System.Single` (`Single`),
-`System.Double` (`Double`).
+* Any `SYS_Float_Fixed`.
 
-* Any value of the .NET structure type `System.Decimal` (`Decimal`).
-
-*TODO: Be more specific about what float/double/etc are allowed or not.*
+* Any `SYS_Decimal_Fixed`.
 
 *TODO: Add more options.*
 
@@ -150,7 +318,7 @@ A **Bits** artifact has the predicate `Bits`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any object of the .NET class `System.Collections.BitArray` (`BitArray`).
+* Any `SYS_Bit_String`.
 
 ## Blob
 
@@ -158,9 +326,9 @@ A **Blob** artifact has the predicate `Blob`.
 
 When its subject is any of the following, the predicate is required:
 
-* Any value of the .NET structure type array `System.Byte[]`.
+* Any `SYS_Byte_String`.
 
-Note that an unqualified subject of a `System.Byte[]` is treated as an `Array`.
+Note that an unqualified subject of a `SYS_Byte_String` is treated as an `Array`.
 
 ## Text / Attribute Name
 
@@ -168,17 +336,7 @@ A **Text** artifact has the predicate `Text`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any value of the .NET structure type `System.Char` (`Char`) that is
-not a UTF-16 "surrogate" code point.
-
-* Any object of the .NET class `System.String` (`String`), but that it
-does not contain any invalid uses of UTF-16 "surrogate" code points.
-
-* Any object of the .NET class `System.Text.StringBuilder` (`StringBuilder`)
-but that it does not contain any invalid uses of UTF-16 "surrogate" code points.
-
-Not permitted are .NET alternatives such as `Char[]`; if
-you have one, convert it into a .NET `String` first.
+* Any `SYS_Char_String`.
 
 ## Array
 
@@ -186,23 +344,10 @@ An **Array** artifact has the predicate `Array`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any object of any of the .NET array classes, which is any .NET object
-for whose class the predicate `Type.IsArray()` results in `true`
-(each such class has a name like `foo[]`), but that every one of its
-members is a valid **Any** artifact.
+* Any `SYS_Array` such that every one of its `SYS_members` is a valid
+**Any** artifact.
 
-* Any value of any of the following .NET structure types that compose the
-.NET interface `System.Collections.Generic.IList` (`IList`), but that every
-one of its members is a valid **Any** artifact:
-`System.Collections.Immutable.ImmutableArray` (`ImmutableArray`).
-
-* Any object of any of the following .NET classes that compose the
-.NET interface `System.Collections.Generic.IList` (`IList`), but that every
-one of its members is a valid **Any** artifact:
-`System.Collections.Generic.List` (`List`),
-`System.Collections.Immutable.ImmutableList` (`ImmutableList`).
-
-*TODO: Add more options and/or remove some.*
+*TODO: Add options to specify with run-length encoding.*
 
 ## Set
 
@@ -210,23 +355,16 @@ A **Set** artifact has the predicate `Set`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any object of any of the following .NET classes that compose the
-.NET interface `System.Collections.Generic.ISet` (`ISet`), but that every
-one of its members is a valid **Any** artifact:
-`System.Collections.Generic.HashSet` (`HashSet`),
-`System.Collections.Generic.SortedSet` (`SortedSet`),
-`System.Collections.Immutable.ImmutableHashSet` (`ImmutableHashSet`).
-`System.Collections.Immutable.ImmutableSortedSet` (`ImmutableSortedSet`).
+* Any `SYS_Set` such that every one of its `SYS_members` is a valid
+**Any** artifact.
 
 When its subject is any of the following, the predicate is required:
 
 * Any **Array** subject.
 
-* Any object of the .NET class `System.Collections.Generic.Dictionary`
-(`Dictionary`), but that every one of its keys is a valid **Any** artifact
-and every one of its values is a valid **Boolean** subject.
-
-*TODO: Add more options and/or remove some.*
+* Any `SYS_Dictionary` such that for every one of its `SYS_members`,
+that member's `SYS_key` is a valid **Any** artifact and
+that member's `SYS_value` is a valid **Boolean** subject.
 
 ## Bag / Multiset
 
@@ -235,19 +373,17 @@ A **Bag** artifact has the predicate `Bag`.
 When its subject is any of the following, the predicate is optional:
 
 * Any object of the .NET class
-`System.Collections.Concurrent.ConcurrentBag` (`ConcurrentBag`), but that
+`System.Collections.Concurrent.ConcurrentBag` such that
 every one of its members is a valid **Any** artifact.
 
 When its subject is any of the following, the predicate is required:
 
 * Any **Set** subject.
 
-* Any object of the .NET class `System.Collections.Generic.Dictionary`
-(`Dictionary`), but that every one of its keys is a valid **Any** artifact
-and every one of its values is a valid **Integer** subject
+* Any `SYS_Dictionary` such that for every one of its `SYS_members`,
+that member's `SYS_key` is a valid **Any** artifact and
+that member's `SYS_value` is a valid **Integer** subject
 which denotes a non-negative integer.
-
-*TODO: Add more options and/or remove some.*
 
 ## Mix
 
@@ -257,11 +393,9 @@ When its subject is any of the following, the predicate is required:
 
 * Any **Bag** subject.
 
-* Any object of the .NET class `System.Collections.Generic.Dictionary`
-(`Dictionary`), but that every one of its keys is a valid **Any** artifact
-and every one of its values is a valid **Fraction** subject.
-
-*TODO: Add more options.*
+* Any `SYS_Dictionary` such that for every one of its `SYS_members`,
+that member's `SYS_key` is a valid **Any** artifact and
+that member's `SYS_value` is a valid **Fraction** subject.
 
 ## Interval
 
@@ -287,27 +421,18 @@ A **Tuple** artifact has the predicate `Tuple`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any value of any of the following .NET structure types that compose the
-.NET interface `System.Runtime.CompilerServices.ITuple` (`ITuple`)
-but that every one of its keys is a valid **Text** subject
-and every one of its values is a valid **Any** artifact:
-`System.ValueTuple<...>` (`ValueTuple`).
-
-* Any value of any of the following .NET structure types that compose the
-.NET interface `System.Runtime.CompilerServices.ITuple` (`ITuple`)
-but that every one of its keys is a valid **Text** subject
-and every one of its values is a valid **Any** artifact:
-`System.Tuple<...>` (`Tuple`).
+* Any `SYS_Tuple_Ordered` such that every one of its `SYS_attribute_assets`
+is a valid **Any** artifact.
 
 When its subject is any of the following, the predicate is required:
 
 * Any **Array** subject.
 
-* Any object of the .NET class `System.Collections.Generic.Dictionary`
-(`Dictionary`), but that every one of its keys is a valid **Text** subject
-and every one of its values is a valid **Any** artifact.
+* Any `SYS_Dictionary` such that for every one of its `SYS_members`,
+that member's `SYS_key` is a valid **Text** subject and
+that member's `SYS_value` is a valid **Any** artifact.
 
-*TODO: Add more options, such as .NET anonymous types.*
+*TODO: Add more options, such as .NET anonymous, types and/or remove some.*
 
 ## Tuple Array
 
@@ -339,7 +464,7 @@ A **Calendar Duration** artifact has the predicate `CalendarDuration`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any value of the .NET structure type `System.TimeSpan` (`TimeSpan`),
+* Any value of the .NET structure type `System.TimeSpan`,
 
 *TODO: Add more options.*
 
@@ -350,8 +475,8 @@ A **Calendar Instant** artifact has the predicate `CalendarInstant`.
 When its subject is any of the following, the predicate is optional:
 
 * Any value of any of the .NET structure types
-`System.DateTime` (`DateTime`),
-`System.DateTimeOffset` (`DateTimeOffset`).
+`System.DateTime`,
+`System.DateTimeOffset`.
 
 *TODO: Add more options.*
 
@@ -360,7 +485,7 @@ When its subject is any of the following, the predicate is optional:
 A **Geographic Point** artifact has the predicate `GeographicPoint`.
 
 * Any coordinate-specifying object of the .NET class
-`System.Data.Spatial.DbGeography` (`DbGeography`).
+`System.Data.Spatial.DbGeography`.
 
 *TODO: Check if DbGeography is actually in .NET Standard 2.0 or not.*
 
@@ -384,9 +509,7 @@ An **Ignorance** artifact has the predicate `Ignorance`.
 
 When its subject is any of the following, the predicate is optional:
 
-* The special .NET `null` value.
-
-* The only object of the .NET singleton class `System.DBNull` (`DBNull`).
+* Any `SYS_Null`.
 
 ## Nesting / Attribute Name List
 
