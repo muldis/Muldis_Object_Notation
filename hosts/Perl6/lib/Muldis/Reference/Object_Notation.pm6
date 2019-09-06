@@ -301,7 +301,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token interval_range
     {
-        <interval_low>? <sp>? '-'? '..' '-'? <sp>? <interval_high>?
+        [<interval_low> <sp>? | '*'] '-'? '..' '-'? ['*' | <sp>? <interval_high>]
     }
 
     token interval_low

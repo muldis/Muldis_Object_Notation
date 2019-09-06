@@ -997,7 +997,7 @@ Grammar:
 
     token interval_range
     {
-        <interval_low>? <sp>? '-'? '..' '-'? <sp>? <interval_high>?
+        [<interval_low> <sp>? | '*'] '-'? '..' '-'? ['*' | <sp>? <interval_high>]
     }
 
     token interval_low
@@ -1033,13 +1033,13 @@ Examples:
     \..{\@(2002,12,6,,,@"UTC") -..- \@(2002,12,20,,,@"UTC")}
 
     `Left-unbounded, right-closed interval; every Integer <= 3.`
-    \..{..3}
+    \..{*..3}
 
     `Left-closed, right-unbounded interval; every Integer >= 29.`
-    \..{29..}
+    \..{29..*}
 
     `Universal interval; unbounded; every value of type system is a member.`
-    \..{..}
+    \..{*..*}
 ```
 
 ## Interval Set
@@ -1076,7 +1076,7 @@ Examples:
     \?..{1..3,6,8..9}
 
     `Every Integer x except for {4..13,22..28}`
-    \?..{..3,14..21,29..}
+    \?..{*..3,14..21,29..*}
 
     `Set of all valid Unicode code points.`
     \?..{0..0xD7FF,0xE000..0x10FFFF}
@@ -2141,6 +2141,7 @@ that means they are used in pairs.
     *     | generics/whatever      | * indicates a generic type context
           |                        | * L1 of conceptual prefix for generic-Article selectors
           |                        | * L1 of prefix for singleton-Article literals
+          |                        | * indicates unbounded endpoint in Interval selectors
           | multiplication         | * significand/radix separator in Fraction literals
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured
@@ -2155,6 +2156,7 @@ that means they are used in pairs.
           |                        | * indicates open endpoint in Interval selectors
     ------+------------------------+---------------------------------------
     .     | radix point            | * disambiguate Fraction lit from Integer lit
+          |                        | * separate endpoints in Interval selectors
     ------+------------------------+---------------------------------------
     ^     | exponentiation         | * radix/exponent separator in Fraction literals
           | up-pointing-arrow      | * indicates latitude in Geographic-Point literals
