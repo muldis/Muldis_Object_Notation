@@ -178,13 +178,13 @@ contains any invalid uses of UTF-16 "surrogate" code points.
 
 * Any raw or internal alternatives such as `char[]`, `int[]`, `byte[]`.
 
-## SYS_Pair_Key_Value
+## SYS_Pair_KV
 
-A `SYS_Pair_Key_Value` is any of the following:
+A `SYS_Pair_KV` is any of the following:
 
 * Any object of the Java class `java.util.AbstractMap.SimpleImmutableEntry`;
 the aliases `SYS_key` and `SYS_value` refer to
-its `SYS_Object` typed properties `key` and `value`.
+its (`SYS_Object` typed) properties `key` and `value`.
 
 Not permitted is any of the following, to keep things simpler:
 
@@ -200,10 +200,16 @@ A `SYS_Array` is any of the following:
 * Any object of any Java array class
 (an array class has a name like `foo[]` and is a class for whom
 the predicate `java.lang.Class.isArray()` results in true);
-the alias `SYS_members` refers to its `SYS_Object` typed elements.
+the alias `SYS_members` refers to its (`SYS_Object` typed) elements;
+the alias `SYS_pairs_opm` refers to its (`SYS_Object` typed) elements
+paired with their corresponding (`SYS_Integer_Fixed` typed) ordinal positions,
+those being referred to with `SYS_pair_member` and `SYS_pair_ord_pos`.
 
 * Any object of any Java class that composes the Java interface `java.util.List`;
-the alias `SYS_members` refers to its `SYS_Object` typed elements.
+the alias `SYS_members` refers to its (`SYS_Object` typed) elements;
+the alias `SYS_pairs_opm` refers to its (`SYS_Object` typed) elements
+paired with their corresponding (`SYS_Integer_Fixed` typed) ordinal positions,
+those being referred to with `SYS_pair_member` and `SYS_pair_ord_pos`.
 
 Note that example composers of `java.util.List` are:
 `java.util.ArrayList`,
@@ -216,7 +222,7 @@ Note that example composers of `java.util.List` are:
 A `SYS_Set` is any of the following:
 
 * Any object of any Java class that composes the Java interface `java.util.Set`;
-the alias `SYS_members` refers to its `SYS_Object` typed elements.
+the alias `SYS_members` refers to its (`SYS_Object` typed) elements.
 
 Note that example composers of `java.util.Set` are:
 `java.util.HashSet`,
@@ -229,12 +235,36 @@ Note that example composers of `java.util.Set` are:
 A `SYS_Dictionary` is any of the following:
 
 * Any object of any Java class that composes the Java interface `java.util.Map`;
-the alias `SYS_members` refers to its `SYS_Pair_Key_Value` typed elements.
+the alias `SYS_pairs_kv` refers to its (`SYS_Pair_KV` typed) elements.
 
 Note that example composers of `java.util.Map` are:
 `java.util.HashMap`,
 `java.util.TreeMap`,
 `java.util.LinkedHashMap`.
+
+## SYS_Tuple_Ordered
+
+A `SYS_Tuple_Ordered` is any of the following:
+
+* Any `SYS_Tuple_Ordered_As_Array`.
+
+## SYS_Tuple_Ordered_As_Array
+
+A `SYS_Tuple_Ordered_As_Array` is any of the following:
+
+* Any `SYS_Array`; the alias `SYS_attrs_na` refers to its `SYS_pairs_opm`,
+such that the aliases `SYS_attr_name` and `SYS_attr_asset` refer in turn to
+each `SYS_pair_ord_pos` (interpreted as a Unicode code point
+as a `SYS_Char_String`) and `SYS_pair_member`.
+
+## SYS_Tuple_Named_As_Dictionary
+
+A `SYS_Tuple_Named_As_Dictionary` is any of the following:
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`, that
+member's `SYS_key` is a `SYS_Char_String`; the alias `SYS_attrs_na` refers
+to its `SYS_pairs_kv`, such that the aliases `SYS_attr_name` and
+`SYS_attr_asset` refer in turn to each `SYS_key` and `SYS_value`.
 
 ## SYS_Null
 
@@ -252,7 +282,7 @@ possreps also has one or more *unqualified* formats characterized by the
 for normalization and consistency, while employing unqualified formats
 where available is better for brevity and more efficient resource usage.
 
-Every qualified MUON artifact is a `SYS_Pair_Key_Value`;
+Every qualified MUON artifact is a `SYS_Pair_KV`;
 its `SYS_key` is the *predicate* and its `SYS_value` is the *subject*.
 
 Every MUON possrep *predicate* is a `SYS_Char_String`,
@@ -363,7 +393,7 @@ When its subject is any of the following, the predicate is required:
 
 * Any **Array** subject.
 
-* Any `SYS_Dictionary` such that for every one of its `SYS_members`,
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is a valid **Any** artifact and
 that member's `SYS_value` is a valid **Boolean** subject.
 
@@ -375,7 +405,7 @@ When its subject is any of the following, the predicate is required:
 
 * Any **Set** subject.
 
-* Any `SYS_Dictionary` such that for every one of its `SYS_members`,
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is a valid **Any** artifact and
 that member's `SYS_value` is a valid **Integer** subject
 which denotes a non-negative integer.
@@ -392,7 +422,7 @@ When its subject is any of the following, the predicate is required:
 
 * Any **Bag** subject.
 
-* Any `SYS_Dictionary` such that for every one of its `SYS_members`,
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is a valid **Any** artifact and
 that member's `SYS_value` is a valid **Fraction** subject.
 
@@ -420,13 +450,14 @@ A **Tuple** artifact has the predicate `Tuple`.
 
 When its subject is any of the following, the predicate is required:
 
-* Any **Array** subject.
+* Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
+`SYS_attrs_na`, its `SYS_attr_asset` is a valid **Any** artifact.
 
-* Any `SYS_Dictionary` such that for every one of its `SYS_members`,
-that member's `SYS_key` is a valid **Text** subject and
-that member's `SYS_value` is a valid **Any** artifact.
+* Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
+`SYS_attrs_na`, that member's `SYS_attr_name` is a valid **Text** subject
+and that member's `SYS_attr_asset` is a valid **Any** artifact.
 
-*TODO: Add more options and/or remove some.*
+*TODO: Consider adding Java anonymous types as an option if feasible.*
 
 ## Tuple Array
 
