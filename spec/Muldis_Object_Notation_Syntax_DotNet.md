@@ -219,6 +219,14 @@ Note that example composers of `System.Collections.Generic.ISet` are:
 `System.Collections.Immutable.ImmutableHashSet`.
 `System.Collections.Immutable.ImmutableSortedSet`.
 
+## SYS_Bag
+
+A `SYS_Bag` is any of the following:
+
+* Any object of the .NET class `System.Collections.Concurrent.ConcurrentBag`.
+
+*TODO: Revisit this.*
+
 ## SYS_Dictionary
 
 A `SYS_Dictionary` is any of the following:
@@ -390,7 +398,13 @@ When its subject is any of the following, the predicate is optional:
 * Any `SYS_Array` such that every one of its `SYS_members` is a valid
 **Any** artifact.
 
-*TODO: Add options to specify with run-length encoding.*
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+"+" and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is a valid
+**Any** artifact and its `SYS_value` is a valid **Integer** subject which
+denotes a non-negative integer.
 
 ## Set
 
@@ -403,7 +417,8 @@ When its subject is any of the following, the predicate is optional:
 
 When its subject is any of the following, the predicate is required:
 
-* Any **Array** subject.
+* Any `SYS_Array` such that every one of its `SYS_members` is a valid
+**Any** artifact.
 
 * Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is a valid **Any** artifact and
@@ -415,13 +430,16 @@ A **Bag** artifact has the predicate `Bag`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any object of the .NET class
-`System.Collections.Concurrent.ConcurrentBag` such that
-every one of its members is a valid **Any** artifact.
+* Any `SYS_Bag` such that every one of its `SYS_members` is a valid
+**Any** artifact.
 
 When its subject is any of the following, the predicate is required:
 
 * Any **Set** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
+such that its `SYS_key` is a valid **Any** artifact and its `SYS_value`
+is a valid **Integer** subject which denotes a non-negative integer.
 
 * Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is a valid **Any** artifact and
@@ -435,6 +453,10 @@ A **Mix** artifact has the predicate `Mix`.
 When its subject is any of the following, the predicate is required:
 
 * Any **Bag** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
+such that its `SYS_key` is a valid **Any** artifact and its `SYS_value`
+is a valid **Fraction** subject.
 
 * Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is a valid **Any** artifact and
@@ -450,13 +472,34 @@ An **Interval** artifact has the predicate `Interval`.
 
 An **Interval Set** artifact has the predicate `IntervalSet`.
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Set` such that every one of its `SYS_members` is a valid
+**Interval** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is a valid
+**Interval** subject.
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is a valid **Interval** subject and
+that member's `SYS_value` is a valid **Boolean** subject.
 
 ## Interval Bag
 
 An **Interval Bag** artifact has the predicate `IntervalBag`.
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any **Interval Set** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
+such that its `SYS_key` is a valid **Interval** subject and its `SYS_value`
+is a valid **Integer** subject which denotes a non-negative integer.
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is a valid **Interval** subject and
+that member's `SYS_value` is a valid **Integer** subject
+which denotes a non-negative integer.
 
 ## Tuple / Attribute Set
 
@@ -482,19 +525,52 @@ and that member's `SYS_attr_asset` is a valid **Any** artifact.
 
 A **Tuple Array** artifact has the predicate `TupleArray`.
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is a valid
+**Tuple** subject.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+"+" and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is a valid
+**Tuple** subject and its `SYS_value` is a valid **Integer** subject which
+denotes a non-negative integer.
 
 ## Relation / Tuple Set
 
 A **Relation** artifact has the predicate `Relation`.
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Set` such that every one of its `SYS_members` is a valid
+**Tuple** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is a valid
+**Tuple** subject.
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is a valid **Tuple** subject and
+that member's `SYS_value` is a valid **Boolean** subject.
 
 ## Tuple Bag
 
 A **Tuple Bag** artifact has the predicate `TupleBag`.
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any **Relation** subject.
+
+* Any `SYS_Bag` such that every one of its `SYS_members` is a valid
+**Tuple** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
+such that its `SYS_key` is a valid **Tuple** subject and its `SYS_value`
+is a valid **Integer** subject which denotes a non-negative integer.
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is a valid **Tuple** subject and
+that member's `SYS_value` is a valid **Integer** subject
+which denotes a non-negative integer.
 
 ## Calendar Time
 
