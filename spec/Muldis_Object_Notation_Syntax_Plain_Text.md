@@ -1822,8 +1822,8 @@ Grammar:
 ```
 
 An `<ord_attr_name_range>` is subject to the additional rule that its
-integral `<ord_attr_name_low>` value must be less than or equal to its
-integral `<ord_attr_name_high>` value.
+integral `<ord_attr_name_low>` and `<ord_attr_name_high>` values must be
+in ascending order.
 
 Examples:
 

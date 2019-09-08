@@ -566,8 +566,8 @@ position of the renaming specification element in the
 Muldis Object Notation eschews dedicated possreps for some data types that
 users might expect to see here.  This section enumerates some and says why.
 
-Special values of an IEEE floating-point number such as infinities,
-over/underflows, NaNs, are not part of the **Fraction** possrep and rather
+IEEE floating-point signed zeroes, infinities, and NaNs are not part of the
+**Fraction** possrep (only regular finite numbers are included) and rather
 would be their own singleton **Article** or **Excuse** possreps, usually
 left up to the overlaid data model.
 
