@@ -401,7 +401,7 @@ When its subject is any of the following, the predicate is optional:
 When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-"+" and its `SYS_value` is any `SYS_Array` such that every one of its
+`+` and its `SYS_value` is any `SYS_Array` such that every one of its
 `SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is a valid
 **Any** artifact and its `SYS_value` is a valid **Integer** subject which
 denotes a non-negative integer.
@@ -492,6 +492,9 @@ When its subject is any of the following, the predicate is required:
 
 * Any **Interval Set** subject.
 
+* Any `SYS_Bag` such that every one of its `SYS_members` is a valid
+**Interval** subject.
+
 * Any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
 such that its `SYS_key` is a valid **Interval** subject and its `SYS_value`
 is a valid **Integer** subject which denotes a non-negative integer.
@@ -527,11 +530,18 @@ A **Tuple Array** artifact has the predicate `TupleArray`.
 
 When its subject is any of the following, the predicate is required:
 
-* Any `SYS_Array` such that every one of its `SYS_members` is a valid
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`$` and its `SYS_value` is any **Heading** subject.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is
+any `SYS_Array` such that every one of its `SYS_members` is a valid
 **Tuple** subject.
 
 * Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-"+" and its `SYS_value` is any `SYS_Array` such that every one of its
+`%` and its `SYS_value` is
+any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`+` and its `SYS_value` is any `SYS_Array` such that every one of its
 `SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is a valid
 **Tuple** subject and its `SYS_value` is a valid **Integer** subject which
 denotes a non-negative integer.
@@ -542,13 +552,22 @@ A **Relation** artifact has the predicate `Relation`.
 
 When its subject is any of the following, the predicate is required:
 
-* Any `SYS_Set` such that every one of its `SYS_members` is a valid
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`$` and its `SYS_value` is any **Heading** subject.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is
+any `SYS_Set` such that every one of its `SYS_members` is a valid
 **Tuple** subject.
 
-* Any `SYS_Array` such that every one of its `SYS_members` is a valid
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is
+any `SYS_Array` such that every one of its `SYS_members` is a valid
 **Tuple** subject.
 
-* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is
+any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is a valid **Tuple** subject and
 that member's `SYS_value` is a valid **Boolean** subject.
 
@@ -560,14 +579,20 @@ When its subject is any of the following, the predicate is required:
 
 * Any **Relation** subject.
 
-* Any `SYS_Bag` such that every one of its `SYS_members` is a valid
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is
+any `SYS_Bag` such that every one of its `SYS_members` is a valid
 **Tuple** subject.
 
-* Any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is
+any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
 such that its `SYS_key` is a valid **Tuple** subject and its `SYS_value`
 is a valid **Integer** subject which denotes a non-negative integer.
 
-* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is
+any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is a valid **Tuple** subject and
 that member's `SYS_value` is a valid **Integer** subject
 which denotes a non-negative integer.
@@ -635,13 +660,28 @@ When its subject is any of the following, the predicate is optional:
 
 A **Nesting** artifact has the predicate `Nesting`.
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is a valid
+**Text** subject.
 
 ## Heading / Attribute Name Set
 
 A **Heading** artifact has the predicate `Heading`.
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Set` such that every one of its `SYS_members` is a valid
+**Text** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is a valid
+**Text** subject.
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is a valid **Text** subject and
+that member's `SYS_value` is a valid **Boolean** subject.
+
+*TODO: Consider supporting ordered attribute name range shorthand.*
 
 ## Renaming / Attribute Name Map
 
