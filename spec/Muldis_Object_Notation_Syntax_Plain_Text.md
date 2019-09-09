@@ -2156,7 +2156,6 @@ that means they are used in pairs.
           |                        | * indicates open endpoint in Interval selectors
     ------+------------------------+---------------------------------------
     .     | radix point            | * disambiguate Fraction lit from Integer lit
-          |                        | * separate endpoints in Interval selectors
     ------+------------------------+---------------------------------------
     ^     | exponentiation         | * radix/exponent separator in Fraction literals
           | up-pointing-arrow      | * indicates latitude in Geographic-Point literals
@@ -2267,6 +2266,18 @@ longest token always wins:
     ..-
     -..
     -..-
+    ..*
+    ..-*
+    -..*
+    -..-*
+    *..
+    *..-
+    *-..
+    *-..-
+    *..*
+    *..-*
+    *-..*
+    *-..-*
     @
     ->
     <-

@@ -161,13 +161,11 @@ A `SYS_Byte_String` is any of the following:
 
 A `SYS_Char_String` is any of the following:
 
-* Any object of the Java class `java.lang.String`, but that it
-does not contain any invalid uses of UTF-16 "surrogate" code points.
+* Any object of the Java class `java.lang.String` that is *well formed*.
 
 Not permitted is any of the following, to keep things simpler or more correct:
 
-* Any object of the Java class `java.lang.String` that
-contains any invalid uses of UTF-16 "surrogate" code points.
+* Any object of the Java class `java.lang.String` that is not *well formed*.
 
 * Any value of the Java primitive type `char`.
 
@@ -177,6 +175,17 @@ contains any invalid uses of UTF-16 "surrogate" code points.
 `java.lang.StringBuffer`, `java.lang.StringBuilder`.
 
 * Any raw or internal alternatives such as `char[]`, `int[]`, `byte[]`.
+
+A Java `java.lang.String` is characterized as a sequence of 0..N `char`
+such that each of the latter is an unsigned 16-bit integer *C*.
+A *well formed* string denotes a Unicode BMP code point with a single *C*
+in the non-surrogate set {0..0xD7FF,0xE000..0xFFFF}
+(`java.lang.Character.isSurrogate()` is false) and it denotes a Unicode
+non-BMP code point with an ordered pair of *C* each in the surrogate set
+{0xD800..0xDFFF} (`java.lang.Character.isSurrogate()` is true) and the pair
+is also well formed (`java.lang.Character.isSurrogatePair()` is true); a
+*well formed* string does not contain any *C* in the surrogate set that
+isn't so paired.
 
 ## SYS_Pair_KV
 
@@ -431,7 +440,7 @@ When its subject is any of the following, the predicate is required:
 `+` and its `SYS_value` is any `SYS_Array` such that every one of its
 `SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
 **Any** artifact and its `SYS_value` is any **Integer** subject which
-denotes a non-negative integer.
+denotes a non-negative integer *multiplicity*.
 
 ## Set
 
@@ -447,6 +456,11 @@ When its subject is any of the following, the predicate is required:
 * Any `SYS_Array` such that every one of its `SYS_members` is any
 **Any** artifact.
 
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`?` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
+**Any** artifact and its `SYS_value` is any **Boolean** subject.
+
 * Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is any **Any** artifact and
 that member's `SYS_value` is any **Boolean** subject.
@@ -461,12 +475,12 @@ When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
 such that its `SYS_key` is any **Any** artifact and its `SYS_value`
-is any **Integer** subject which denotes a non-negative integer.
+is any **Integer** subject which denotes a non-negative integer *multiplicity*.
 
 * Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is any **Any** artifact and
 that member's `SYS_value` is any **Integer** subject
-which denotes a non-negative integer.
+which denotes a non-negative integer *multiplicity*.
 
 Note that the Java interface `java.util.Collection` is documented such that
 one should compose it directly when implementing bag/multiset types, but
@@ -502,18 +516,18 @@ empty string value and attribute 1 is any **Any** artifact;
 this designates a *unit interval*.
 
 * Any `SYS_Tuple_Ordered_D3` such that attribute 0 is any of the
-4 `SYS_Char_String` values {`..`, `-..`, `..-`, `-..-`}
+4 `SYS_Char_String` values {`..`, `..-`, `-..`, `-..-`}
 and attributes 1 and 2 are each any **Any** artifact;
 this designates a *bounded interval*.
 
 * Any `SYS_Tuple_Ordered_D2` such that attribute 0 is any of the
 8 `SYS_Char_String` values
-{`*..`, `*-..`, `*..-`, `*-..-`, `..*`, `-..*`, `..-*`, `-..-*`}
+{`..*`, `..-*`, `-..*`, `-..-*`, `*..`, `*..-`, `*-..`, `*-..-`}
 and attribute 1 is any **Any** artifact;
 this designates a *half-unbounded, half-bounded interval*.
 
 * Any `SYS_Tuple_Ordered_D1` such that attribute 0 is any of the
-4 `SYS_Char_String` values {`*..*`, `*-..*`, `*..-*`, `*-..-*`};
+4 `SYS_Char_String` values {`*..*`, `*..-*`, `*-..*`, `*-..-*`};
 this designates a *universal interval* or *unbounded interval*.
 
 ## Interval Set
@@ -527,6 +541,11 @@ When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Array` such that every one of its `SYS_members` is any
 **Interval** subject.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`?` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
+**Interval** subject and its `SYS_value` is any **Boolean** subject.
 
 * Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is any **Interval** subject and
@@ -542,12 +561,12 @@ When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
 such that its `SYS_key` is any **Interval** subject and its `SYS_value`
-is any **Integer** subject which denotes a non-negative integer.
+is any **Integer** subject which denotes a non-negative integer *multiplicity*.
 
 * Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is any **Interval** subject and
 that member's `SYS_value` is any **Integer** subject
-which denotes a non-negative integer.
+which denotes a non-negative integer *multiplicity*.
 
 ## Tuple / Attribute Set
 
@@ -557,6 +576,12 @@ When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
 `SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` (alias `SYS_attrs_na`) such that its
+`SYS_key` (alias `SYS_attr_name`) is any **Text** subject and its
+`SYS_value` (alias `SYS_attr_asset`) is any **Any** artifact.
 
 * Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
 `SYS_attrs_na`, that member's `SYS_attr_name` is any **Text** subject
@@ -584,7 +609,7 @@ any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
 `+` and its `SYS_value` is any `SYS_Array` such that every one of its
 `SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
 **Tuple** subject and its `SYS_value` is any **Integer** subject which
-denotes a non-negative integer.
+denotes a non-negative integer *multiplicity*.
 
 ## Relation / Tuple Set
 
@@ -607,6 +632,13 @@ any `SYS_Array` such that every one of its `SYS_members` is any
 
 * Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
 `%` and its `SYS_value` is
+any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`?` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
+**Tuple** subject and its `SYS_value` is any **Boolean** subject.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is
 any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is any **Tuple** subject and
 that member's `SYS_value` is any **Boolean** subject.
@@ -623,14 +655,14 @@ When its subject is any of the following, the predicate is required:
 `%` and its `SYS_value` is
 any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
 such that its `SYS_key` is any **Tuple** subject and its `SYS_value`
-is any **Integer** subject which denotes a non-negative integer.
+is any **Integer** subject which denotes a non-negative integer *multiplicity*.
 
 * Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
 `%` and its `SYS_value` is
 any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is any **Tuple** subject and
 that member's `SYS_value` is any **Integer** subject
-which denotes a non-negative integer.
+which denotes a non-negative integer *multiplicity*.
 
 ## Calendar Time
 
@@ -687,14 +719,15 @@ When its subject is any of the following, the predicate is required:
 * Any `SYS_Pair_KV` such that its `SYS_key` is the *label* (any **Any**
 artifact) and its `SYS_value` is the *attributes* (any **Tuple** subject).
 
+* Any **Nesting** subject, which is the *label* (and there are no *attributes*).
+
 ## Excuse
 
 An **Excuse** artifact has the predicate `Excuse`.
 
 When its subject is any of the following, the predicate is required:
 
-* Any `SYS_Pair_KV` such that its `SYS_key` is the *label* (any **Any**
-artifact) and its `SYS_value` is the *attributes* (any **Tuple** subject).
+* Any **Article** subject.
 
 ## Ignorance
 
@@ -734,6 +767,18 @@ that member's `SYS_value` is any **Boolean** subject.
 A **Renaming** artifact has the predicate `Renaming`.
 
 When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`->` and its `SYS_value` is
+any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
+such that its `SYS_key` is the *name before* (any **Text** subject) and its
+`SYS_value` is the *name after* (any **Text** subject).
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`<-` and its `SYS_value` is
+any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
+such that its `SYS_key` is the *name after* (any **Text** subject) and its
+`SYS_value` is the *name before* (any **Text** subject).
 
 * Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
 `->` and its `SYS_value` is
