@@ -305,6 +305,12 @@ A `SYS_Tuple_Ordered_D4` is any of the following:
 
 * Any `SYS_Tuple_Ordered` that has exactly 4 attributes.
 
+## SYS_Tuple_Ordered_D6
+
+A `SYS_Tuple_Ordered_D6` is any of the following:
+
+* Any `SYS_Tuple_Ordered` that has exactly 6 attributes.
+
 ## SYS_Tuple_Named_As_Dictionary
 
 A `SYS_Tuple_Named_As_Dictionary` is any of the following:
@@ -710,7 +716,11 @@ which denotes a non-negative integer *multiplicity*.
 
 A **Calendar Time** artifact has the predicate `CalendarTime`.
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_D6` such that the 6 attribute assets in ascending
+order are the *year*, *month*, *day*, *hour*, *minute*, *second*; each of
+those 6 is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
 
 ## Calendar Duration
 
@@ -720,7 +730,9 @@ When its subject is any of the following, the predicate is optional:
 
 * Any value of the .NET structure type `System.TimeSpan`,
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any **Calendar Time** subject.
 
 ## Calendar Instant
 
@@ -732,18 +744,57 @@ When its subject is any of the following, the predicate is optional:
 `System.DateTime`,
 `System.DateTimeOffset`.
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the *instant base*
+(any **Calendar Time** subject);
+this designates a *floating* instant not associated with any zone or offset.
+
+* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the *instant base*
+(any **Calendar Time** subject) and attribute 1 is the *instant offset*
+(any `SYS_Tuple_Ordered_D3` such that the 3 attribute assets in ascending
+order are the *hour*, *minute*, *second*; same types as in *instant base*);
+this designates an instant local to any zone with a specific offset from UTC.
+
+* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the *instant base*
+(any **Calendar Time** subject) and attribute 1 is the *instant zone* (any
+**Text** subject); this designates an instant local to the named zone.
 
 ## Geographic Point
 
 A **Geographic Point** artifact has the predicate `GeographicPoint`.
+
+When its subject is any of the following, the predicate is optional:
 
 * Any coordinate-specifying object of the .NET class
 `System.Data.Spatial.DbGeography`.
 
 *TODO: Check if DbGeography is actually in .NET Standard 2.0 or not.*
 
-*TODO: Add more options.*
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` *T* such that every one of its `SYS_members` is a
+`SYS_Pair_KV` (alias `SYS_attrs_na`) such that,
+for each of the 3 possible attributes *A* {*longitude*, *latitude*, *elevation*},
+at most 1 of the `SYS_attrs_na` of *T* defines an *A*.
+
+* Any `SYS_Tuple_Named_As_Dictionary` *T* such that,
+for each of the 3 possible attributes *A* {*longitude*, *latitude*, *elevation*},
+at most 1 of the `SYS_attrs_na` of *T* defines an *A*.
+
+The above components are defined as follows:
+
+* A *longitude* is such that
+its `SYS_attr_name` is the `SYS_Char_String` value `>` and
+its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
+
+* A *latitude* is such that
+its `SYS_attr_name` is the `SYS_Char_String` value `^` and
+its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
+
+* An *elevation* is such that
+its `SYS_attr_name` is the `SYS_Char_String` value `+` and
+its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
 
 ## Article / Labelled Tuple
 
