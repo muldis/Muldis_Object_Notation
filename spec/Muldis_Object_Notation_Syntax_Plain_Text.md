@@ -1580,17 +1580,17 @@ Grammar:
 
     token longitude
     {
-        '>' <sp>? <loc_multiplicity>
+        '>' <sp>? ':' <sp>? <loc_multiplicity>
     }
 
     token latitude
     {
-        '^' <sp>? <loc_multiplicity>
+        '^' <sp>? ':' <sp>? <loc_multiplicity>
     }
 
     token elevation
     {
-        '+' <sp>? <loc_multiplicity>
+        '+' <sp>? ':' <sp>? <loc_multiplicity>
     }
 ```
 
@@ -1601,19 +1601,19 @@ Examples:
     \@@()
 
     `Just an elevation specified.`
-    \@@(+ 920)
+    \@@(+ : 920)
 
     `Geographic surface coordinates of Googleplex; elevation not specified.`
-    \@@(> -122.0857017, ^ 37.4218363)
+    \@@(> : -122.0857017, ^ : 37.4218363)
 
     `Same thing.`
-    \@@(^ 37.4218363, > -122.0857017)
+    \@@(^ : 37.4218363, > : -122.0857017)
 
     `Some location with all coordinates specified.`
-    \@@(> -101, ^ -70, + 1000)
+    \@@(> : -101, ^ : -70, + : 1000)
 
     `Another place.`
-    \@@(> -94.746094, ^ 37.483577)
+    \@@(> : -94.746094, ^ : 37.483577)
 ```
 
 ## Article / Labelled Tuple
@@ -2085,6 +2085,7 @@ that means they are used in pairs.
           |                        | * pair separator in Bag/Mix sels
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
           |                        | * optional pair separator in nonempty-TA/Rel/TB sels
+          |                        | * pair separator in Geographic-* literals
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * disambiguate Bag/Mix sels from Set sel
           |                        | * L2 of prefix for Renaming literals

@@ -633,19 +633,19 @@ Muldis_Content_Predicate`
         \@@(),
 
         `Just an elevation specified.`
-        \@@(+ 920),
+        \@@(+ : 920),
 
         `Geographic surface coordinates of Googleplex; elevation not specified.`
-        \@@(> -122.0857017, ^ 37.4218363),
+        \@@(> : -122.0857017, ^ : 37.4218363),
 
         `Same thing.`
-        \@@(^ 37.4218363, > -122.0857017),
+        \@@(^ : 37.4218363, > : -122.0857017),
 
         `Some location with all coordinates specified.`
-        \@@(> -101, ^ -70, + 1000),
+        \@@(> : -101, ^ : -70, + : 1000),
 
         `Another place.`
-        \@@(> -94.746094, ^ 37.483577),
+        \@@(> : -94.746094, ^ : 37.483577),
 
     ),
 

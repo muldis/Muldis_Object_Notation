@@ -528,17 +528,17 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token longitude
     {
-        '>' <sp>? <loc_multiplicity>
+        '>' <sp>? ':' <sp>? <loc_multiplicity>
     }
 
     token latitude
     {
-        '^' <sp>? <loc_multiplicity>
+        '^' <sp>? ':' <sp>? <loc_multiplicity>
     }
 
     token elevation
     {
-        '+' <sp>? <loc_multiplicity>
+        '+' <sp>? ':' <sp>? <loc_multiplicity>
     }
 
 ###########################################################################
