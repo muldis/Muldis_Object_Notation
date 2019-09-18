@@ -653,15 +653,15 @@ Muldis_Content_Predicate`
 
     `$$$` Article : (
 
-        (\Point : (x : 5, y : 3)),
+        \*(\Point : (x : 5, y : 3)),
 
-        (\Float : (
+        \*(\Float : (
             significand : 45207196,
             radix       : 10,
             exponent    : 37,
         )),
 
-        (\the_db::UTCDateTime : (
+        \*(\the_db::UTCDateTime : (
             year   : 2003,
             month  : 10,
             day    : 26,

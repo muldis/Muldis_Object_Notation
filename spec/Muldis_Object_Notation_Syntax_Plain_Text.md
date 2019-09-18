@@ -263,11 +263,11 @@ Examples:
 
 ```
     (
-        `$$$` My_Func : (\Function : ...),
+        `$$$` My_Func : \*(\Function : ...),
 
-        `$$$` My_Proc_1 : (\Procedure : ...),
+        `$$$` My_Proc_1 : \*(\Procedure : ...),
 
-        `$$$` My_Proc_2 : (\Procedure : ...),
+        `$$$` My_Proc_2 : \*(\Procedure : ...),
     )
 ```
 
@@ -1625,15 +1625,15 @@ Grammar:
 ```
     token Article
     {
-        <generic_article> | <singleton_article>
+        '\\*' <sp>? [<label_sans_attrs> | <label_with_attrs>]
     }
 
-    token generic_article
+    token label_sans_attrs
     {
-        <label_attrs_pair>
+        ['(' <sp>? <label> <sp>? ')'] | <label_as_nesting>
     }
 
-    token label_attrs_pair
+    token label_with_attrs
     {
         '(' <sp>? <label> <sp>? ':' <sp>? <attrs> <sp>? ')'
     }
@@ -1648,24 +1648,24 @@ Grammar:
         <Tuple>
     }
 
-    token singleton_article
+    token label_as_nesting
     {
-        '\\*' <sp>? <nesting_attr_names>
+        <nesting_attr_names>
     }
 ```
 
 Examples:
 
 ```
-    (\Point : (x : 5, y : 3))
+    \*(\Point : (x : 5, y : 3))
 
-    (\Float : (
+    \*(\Float : (
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
     ))
 
-    (\the_db::UTCDateTime : (
+    \*(\the_db::UTCDateTime : (
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -1688,17 +1688,7 @@ Grammar:
 ```
     token Excuse
     {
-        <generic_excuse> | <singleton_excuse>
-    }
-
-    token generic_excuse
-    {
-        '\\!' <sp>? <label_attrs_pair>
-    }
-
-    token singleton_excuse
-    {
-        '\\!' <sp>? <nesting_attr_names>
+        '\\!' <sp>? [<label_sans_attrs> | <label_with_attrs>]
     }
 ```
 
@@ -1986,7 +1976,6 @@ actually used, and so are called *conceptual prefixes*:
     \~     | Text            | "" or "..." or prefix 0c
     \~     | Array           | [] or [...]
     \%     | Tuple           | () or (...) with >= 1 comma
-    \*     | generic-Article | (...:...) without any comma
     \~?    | Bits            | prefix 0bb or 0bo or 0bx
     \~+    | Blob            | prefix 0xb or 0xx or 0xy
 ```
@@ -2024,7 +2013,7 @@ anything, and leaves it reserved for a superset to use as it sees fit.
 
 MUON makes sure to avoid using the parenthesis pair `()` in any way that
 might be confused with a superset using it as generic grouping syntax.
-Any uses by MUON either has a `\foo` prefix or must contain a `,` or `:`.
+Any uses by MUON either has a `\foo` prefix or must contain a `,`.
 
 MUON does not use the semicolon `;` for anything, so a superset grammar can
 use it for things like separating statements and thus disambiguating its
@@ -2095,7 +2084,6 @@ that means they are used in pairs.
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Tuple/Article/Excuse sels
           |                        | * separate attributes in Heading lits
-          |                        | * disambiguate unary named Tuple sels from Article sels
           |                        | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
@@ -2140,8 +2128,7 @@ that means they are used in pairs.
           |                        | * base/offset/zone separator in Calendar-Instant lits
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
-          |                        | * L1 of conceptual prefix for generic-Article selectors
-          |                        | * L1 of prefix for singleton-Article literals
+          |                        | * L1 of prefix for Article literals/selectors
           |                        | * indicates unbounded endpoint in Interval selectors
           | multiplication         | * significand/radix separator in Fraction literals
     ------+------------------------+---------------------------------------

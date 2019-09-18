@@ -545,15 +545,15 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Article
     {
-        <generic_article> | <singleton_article>
+        '\\*' <sp>? [<label_sans_attrs> | <label_with_attrs>]
     }
 
-    token generic_article
+    token label_sans_attrs
     {
-        <label_attrs_pair>
+        ['(' <sp>? <label> <sp>? ')'] | <label_as_nesting>
     }
 
-    token label_attrs_pair
+    token label_with_attrs
     {
         '(' <sp>? <label> <sp>? ':' <sp>? <attrs> <sp>? ')'
     }
@@ -568,26 +568,16 @@ grammar Muldis::Reference::Object_Notation::Grammar
         <Tuple>
     }
 
-    token singleton_article
+    token label_as_nesting
     {
-        '\\*' <sp>? <nesting_attr_names>
+        <nesting_attr_names>
     }
 
 ###########################################################################
 
     token Excuse
     {
-        <generic_excuse> | <singleton_excuse>
-    }
-
-    token generic_excuse
-    {
-        '\\!' <sp>? <label_attrs_pair>
-    }
-
-    token singleton_excuse
-    {
-        '\\!' <sp>? <nesting_attr_names>
+        '\\!' <sp>? [<label_sans_attrs> | <label_with_attrs>]
     }
 
 ###########################################################################
