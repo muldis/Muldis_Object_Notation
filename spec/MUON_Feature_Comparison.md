@@ -131,112 +131,112 @@ https://www.ecma-international.org/publications/standards/Ecma-262.htm)
 
 *TODO.*
 
-## Perl 5 / Pumpkin Perl
+## Perl
 
 [https://www.perl.org](https://www.perl.org)
 
-The Perl 5 analogy to the universal type is `UNIVERSAL` and/or the set of
-everything that can possibly be assigned to a Perl 5 scalar variable.
+The Perl analogy to the universal type is `UNIVERSAL` and/or the set of
+everything that can possibly be assigned to a Perl scalar variable.
 
-Perl 5 doesn't have a native dedicated boolean type and canonically
+Perl doesn't have a native dedicated boolean type and canonically
 represents I<false> and I<true> with the results of `(1==0)` and `(1==1)`
 aka the non-ref scalars for the empty string and integer 1 respectively.
 
-Perl 5 doesn't have a native dedicated unlimited-size-integer type but
-provides multiple alternatives for representing them.  A non-ref Perl 5
+Perl doesn't have a native dedicated unlimited-size-integer type but
+provides multiple alternatives for representing them.  A non-ref Perl
 scalar can natively represent an integer as an IV when its size is within
 the range of a signed 32-bit or 64-bit integer, the available option
-depending on how that Perl was compiled.  A non-ref Perl 5 scalar can
+depending on how that Perl was compiled.  A non-ref Perl scalar can
 natively represent any integer at all as a character string enumerating its
-digits (or hexits etc).  A Perl 5 `Math::BigInt` object (class bundled with
-the Perl 5 core) is semantically the closest thing to a native dedicated
+digits (or hexits etc).  A Perl `Math::BigInt` object (class bundled with
+the Perl core) is semantically the closest thing to a native dedicated
 unlimited-size-integer type, expecially when one wants to perform math.
 
-Perl 5 doesn't have a native dedicated unlimited-size-fraction type but
-provides multiple alternatives for representing them.  A non-ref Perl 5
+Perl doesn't have a native dedicated unlimited-size-fraction type but
+provides multiple alternatives for representing them.  A non-ref Perl
 scalar can natively represent a very specific subset of the rational
 numbers as a native floating-point number, but for all practical purposes
-this representation format is unsuitable.  A non-ref Perl 5 scalar can
+this representation format is unsuitable.  A non-ref Perl scalar can
 natively represent a subset of rationals in full precision as a character
 string enumerating its digits (or hexits etc) that also has a radix point
-character.  A Perl 5 `Math::BigRat` object (class bundled with the Perl 5
+character.  A Perl `Math::BigRat` object (class bundled with the Perl
 core) is semantically the closest thing to a native dedicated
 unlimited-size-fraction type, expecially when one wants to perform math.
 
-Perl 5 can natively represent a short `Bits` string either as a Perl 5
-integer (short sequences only) or as a Perl 5 string.
+Perl can natively represent a short `Bits` string either as a Perl
+integer (short sequences only) or as a Perl string.
 
-Perl 5 can natively represent a `Blob` string as a Perl 5 string whose
+Perl can natively represent a `Blob` string as a Perl string whose
 UTF8 flag is false.
 
-The Perl 5 `BLOB` class provided on CPAN "aims to be the single way of
+The Perl `BLOB` class provided on CPAN "aims to be the single way of
 indicating that a string is binary, not text" and is semantically quite
-appropriate for the task of representing a `Blob` value in Perl 5 land.
+appropriate for the task of representing a `Blob` value in Perl land.
 
-Perl 5 can natively represent a `Text` string as a Perl 5 string either
+Perl can natively represent a `Text` string as a Perl string either
 whose UTF8 flag is true or all of whose octets are in the range 0..127.
 
-Perl 5 has a native dedicated unlimited-size-array-of-generic-members type
-such that each array value is natively represented by a Perl 5
+Perl has a native dedicated unlimited-size-array-of-generic-members type
+such that each array value is natively represented by a Perl
 array-reference.  Certain special cases of arrays can also be compactly
-represented by Perl 5 scalars that are Perl 5 strings.
+represented by Perl scalars that are Perl strings.
 
-Perl 5 doesn't have a native dedicated set-of-generic-members type but a
-Perl 5 array can be used with the presumption that the order of its
+Perl doesn't have a native dedicated set-of-generic-members type but a
+Perl array can be used with the presumption that the order of its
 elements is not significant and that any multiplicity of elements
 representing the same I<value> only counts as 1 instance of each value.
 
-Perl 5 doesn't have a native dedicated multiset-of-generic-members type but
-a Perl 5 array can be used with the presumption that the order of its
+Perl doesn't have a native dedicated multiset-of-generic-members type but
+a Perl array can be used with the presumption that the order of its
 elements is not significant.
 
-For all practical purposes, Perl 5 has a native dedicated
+For all practical purposes, Perl has a native dedicated
 unlimited-size-tuple-of-generic-members type such that each tuple value is
-natively represented by a Perl 5 hash-reference, where the Perl 5 hash keys
+natively represented by a Perl hash-reference, where the Perl hash keys
 and values are the attribute names and assets respectively.
 
-Perl 5 has a dedicated generic excuse-with-no-reason singleton which is the
-Perl 5 scalar value `undef`.
+Perl has a dedicated generic excuse-with-no-reason singleton which is the
+Perl scalar value `undef`.
 
 *TODO.*
 
-## Perl 6 / Raku
+## Raku
 
-[https://perl6.org](https://perl6.org)
+[https://raku.org](https://raku.org)
 
-Perl 6 has a direct `Any` analogy which is provided by the Perl 6 class `Any`.
+Raku has a direct `Any` analogy which is provided by the Raku class `Any`.
 
-Perl 6 has a direct `Boolean` analogy which is provided by the Perl 6 enumeration `Bool`.
+Raku has a direct `Boolean` analogy which is provided by the Raku enumeration `Bool`.
 
-Perl 6 has a direct `Integer` analogy which is provided by the Perl 6 class `Int`.
+Raku has a direct `Integer` analogy which is provided by the Raku class `Int`.
 
-Perl 6 has a direct `Fraction` analogy which is provided by the Perl 6 class `FatRat`.
+Raku has a direct `Fraction` analogy which is provided by the Raku class `FatRat`.
 
-Perl 6 has a direct `Bits` analogy which is provided by the Perl 6 role
+Raku has a direct `Bits` analogy which is provided by the Raku role
 class `Blob`, or specifically by a composing class that uses a list of
 unsigned 1-bit integers, an immutable list being the best match.
 
-Perl 6 has a direct `Blob` analogy which is provided by the Perl 6 role
+Raku has a direct `Blob` analogy which is provided by the Raku role
 class `Blob`, or specifically by a composing class that uses a list of
 unsigned 8-bit integers, an immutable list being the best match.
 
-Perl 6 has a direct `Text` analogy which is provided by the Perl 6 class `Str`.
+Raku has a direct `Text` analogy which is provided by the Raku class `Str`.
 
-Perl 6 has a direct `Array` analogy which is provided by the Perl 6 class `List`.
+Raku has a direct `Array` analogy which is provided by the Raku class `List`.
 
-Perl 6 has a direct `Set` analogy which is provided by the Perl 6 class `Set`.
+Raku has a direct `Set` analogy which is provided by the Raku class `Set`.
 
-Perl 6 has a direct `Bag` analogy which is provided by the Perl 6 class `Bag`.
+Raku has a direct `Bag` analogy which is provided by the Raku class `Bag`.
 
-Perl 6 has a direct `Tuple` analogy which is provided by the Perl 6
+Raku has a direct `Tuple` analogy which is provided by the Raku
 class `Capture`.  This analogy extends to the fact that a primary purpose
 of both is to represent a collection of arguments for a routine.
 
-Perl 6 has a direct `Excuse` analogy which is provided by the Perl 6 class `Failure`.
+Raku has a direct `Excuse` analogy which is provided by the Raku class `Failure`.
 
-Also of note, `X::AdHoc` is the Perl 6 type into which objects are wrapped
+Also of note, `X::AdHoc` is the Raku type into which objects are wrapped
 if they are thrown as exceptions, but don't inherit from `Exception`.
 
-Perl 6 has a direct `Ignorance` analogy which is provided by the Perl 6 class `Nil`.
+Raku has a direct `Ignorance` analogy which is provided by the Raku class `Nil`.
 
 *TODO.*

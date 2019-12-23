@@ -190,17 +190,17 @@ Examples:
 # GRAMMAR
 
 The syntax and intended interpretation of the grammar itself seen in this
-document should match that of the user-defined grammars feature of the Perl
-6 (Raku) language, which is described by
-[https://docs.perl6.org/language/grammars](
-https://docs.perl6.org/language/grammars).
+document should match that of the user-defined grammars feature of the Raku
+language, which is described by
+[https://docs.raku.org/language/grammars](
+https://docs.raku.org/language/grammars).
 
 Any references like `<foo>` in either the grammar itself or in the written
 documentation specifically refer to the corresponding grammar token `foo`.
 
-See also the bundled actual Perl 6 module
-[hosts/Perl6/lib/Muldis/Reference/Object_Notation.pm6](
-../hosts/Perl6/lib/Muldis/Reference/Object_Notation.pm6)
+See also the bundled actual Raku module
+[hosts/Raku/lib/Muldis/Reference/Object_Notation.pm6](
+../hosts/Raku/lib/Muldis/Reference/Object_Notation.pm6)
 which has an executable copy of the grammar.
 
 Grammar:
