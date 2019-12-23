@@ -1,10 +1,10 @@
 #!/usr/bin/env muldisre
 
 `Muldis_Content_Predicate
-MCP version http://muldis.com 0.300.0 MCP
+MCP version https://muldis.com 0.300.0 MCP
 MCP script Unicode 2.1 UTF-8 MCP
-MCP syntax Muldis_Object_Notation http://muldis.com 0.300.0 MCP
-MCP model Muldis_Data_Language http://muldis.com 0.300.0 MCP
+MCP syntax Muldis_Object_Notation https://muldis.com 0.300.0 MCP
+MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
 Muldis_Content_Predicate`
 
 `#########################################################################`

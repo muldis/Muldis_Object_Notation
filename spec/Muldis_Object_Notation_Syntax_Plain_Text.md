@@ -1,27 +1,26 @@
 # NAME
 
-Muldis Object Notation (MUON) -
-Source code and data interchange format
+Muldis Object Notation (MUON) - Source code and data interchange format
 
 # VERSION
 
 The fully-qualified name of this document is
-`Muldis_Object_Notation http://muldis.com 0.300.0`.
+`Muldis_Object_Notation https://muldis.com 0.300.0`.
 
 # PART
 
 This artifact is part 3 of 5 of the document
-`Muldis_Object_Notation http://muldis.com 0.300.0`;
+`Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_Plain_Text`.
 
 # SYNOPSIS
 
 ```
     `Muldis_Content_Predicate
-    MCP version http://muldis.com 0.300.0 MCP
+    MCP version https://muldis.com 0.300.0 MCP
     MCP script Unicode 2.1 UTF-8 MCP
-    MCP syntax Muldis_Object_Notation http://muldis.com 0.300.0 MCP
-    MCP model Muldis_Data_Language http://muldis.com 0.300.0 MCP
+    MCP syntax Muldis_Object_Notation https://muldis.com 0.300.0 MCP
+    MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
     Muldis_Content_Predicate`
 
     \?%{
@@ -180,10 +179,10 @@ Examples:
 
 ```
     `Muldis_Content_Predicate
-    MCP version http://muldis.com 0.300.0 MCP
+    MCP version https://muldis.com 0.300.0 MCP
     MCP script Unicode 2.1 UTF-8 MCP
-    MCP syntax Muldis_Object_Notation http://muldis.com 0.300.0 MCP
-    MCP model Muldis_Data_Language http://muldis.com 0.300.0 MCP
+    MCP syntax Muldis_Object_Notation https://muldis.com 0.300.0 MCP
+    MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
     Muldis_Content_Predicate`
 ```
 
