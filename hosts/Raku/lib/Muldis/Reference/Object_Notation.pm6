@@ -77,6 +77,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | <Interval>
         | <Interval_Set>
         | <Interval_Bag>
+        | <Pair>
         | <Tuple>
         | <Tuple_Array>
         | <Relation>
@@ -336,6 +337,23 @@ grammar Muldis::Reference::Object_Notation::Grammar
             [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
+    }
+
+###########################################################################
+
+    token Pair
+    {
+        '(' <sp>? <this> <sp>? ':' <sp>? <that> <sp>? ')'
+    }
+
+    token this
+    {
+        <Any>
+    }
+
+    token that
+    {
+        <Any>
     }
 
 ###########################################################################

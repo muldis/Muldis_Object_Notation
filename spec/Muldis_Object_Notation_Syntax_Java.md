@@ -59,7 +59,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Stringy: Bits, Blob, Text
 - Discrete: Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
-- Structural: Tuple
+- Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
 - Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Generic: Article, Excuse, Ignorance
@@ -572,6 +572,15 @@ is any **Integer** subject which denotes a non-negative integer *multiplicity*.
 that member's `SYS_key` is any **Interval** subject and
 that member's `SYS_value` is any **Integer** subject
 which denotes a non-negative integer *multiplicity*.
+
+## Pair
+
+An **Pair** artifact has the predicate `Pair`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the *this* (any **Any**
+artifact) and its `SYS_value` is the *that* (any **Any** artifact).
 
 ## Tuple / Attribute Set
 

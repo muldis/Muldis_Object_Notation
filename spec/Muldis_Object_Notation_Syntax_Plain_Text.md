@@ -74,7 +74,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Stringy: Bits, Blob, Text
 - Discrete: Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
-- Structural: Tuple
+- Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
 - Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Generic: Article, Excuse, Ignorance
@@ -309,6 +309,7 @@ Grammar:
         | <Interval>
         | <Interval_Set>
         | <Interval_Bag>
+        | <Pair>
         | <Tuple>
         | <Tuple_Array>
         | <Relation>
@@ -1122,6 +1123,37 @@ Examples:
 
     `Probably same thing, regardless of data model used.`
     \+..{1..-6,6..10:2,10-..15}
+```
+
+## Pair
+
+A **Pair** value is represented by `<Pair>`.
+
+Grammar:
+
+```
+    token Pair
+    {
+        '(' <sp>? <this> <sp>? ':' <sp>? <that> <sp>? ')'
+    }
+
+    token this
+    {
+        <Any>
+    }
+
+    token that
+    {
+        <Any>
+    }
+```
+
+Examples:
+
+```
+    (5: -3)
+
+    ("First Name": "Joy")
 ```
 
 ## Tuple / Attribute Set
@@ -1974,6 +2006,7 @@ actually used, and so are called *conceptual prefixes*:
     \/     | Mix             | {...} with >= 1 colon followed by a Fraction
     \~     | Text            | "" or "..." or prefix 0c
     \~     | Array           | [] or [...]
+    \:     | Pair            | (...:...) without any comma
     \%     | Tuple           | () or (...) with >= 1 comma
     \~?    | Bits            | prefix 0bb or 0bo or 0bx
     \~+    | Blob            | prefix 0xb or 0xx or 0xy
@@ -2012,7 +2045,7 @@ anything, and leaves it reserved for a superset to use as it sees fit.
 
 MUON makes sure to avoid using the parenthesis pair `()` in any way that
 might be confused with a superset using it as generic grouping syntax.
-Any uses by MUON either has a `\foo` prefix or must contain a `,`.
+Any uses by MUON either has a `\foo` prefix or must contain a `,` or `:`.
 
 MUON does not use the semicolon `;` for anything, so a superset grammar can
 use it for things like separating statements and thus disambiguating its
@@ -2062,7 +2095,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ()    | aordered collections   | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs
-          |                        | * delimit Tuple/Article/Excuse selectors
+          |                        | * delimit Pair/Tuple/Article/Excuse selectors
           |                        | * delimit Heading literals
           |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
           |                        | * delimit Calendar-*, Geographic-* literals
@@ -2071,6 +2104,7 @@ that means they are used in pairs.
           |                        | * separates the 2 parts of a pair
           |                        | * optional pair separator in Array/Set sels
           |                        | * pair separator in Bag/Mix sels
+          |                        | * this/that separator in Pair sels
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
           |                        | * optional pair separator in nonempty-TA/Rel/TB sels
           |                        | * pair separator in Geographic-* literals
@@ -2083,6 +2117,7 @@ that means they are used in pairs.
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Tuple/Article/Excuse sels
           |                        | * separate attributes in Heading lits
+          |                        | * disambiguate unary named Tuple sels from Pair sels
           |                        | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context

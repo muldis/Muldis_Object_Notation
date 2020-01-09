@@ -33,7 +33,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Stringy: Bits, Blob, Text
 - Discrete: Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
-- Structural: Tuple
+- Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
 - Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Generic: Article, Excuse, Ignorance
@@ -298,6 +298,13 @@ characterized by a generalization of an **Interval Set** that permits
 multiple members to have the same value; an **Interval Bag** is isomorphic
 to a **Bag** in the same way that an **Interval Set** is to a **Set**;
 every possible distinct **Bag** can map to a distinct **Interval Bag**.
+
+## Pair
+
+A **Pair** value is a general purpose 2-element ordered heterogeneous
+collection whose elements in order are *this* and *that*, each of which may
+be any other value.  A **Pair** value is also characterized by a **Tuple**
+value having exactly 2 "positional" attributes.
 
 ## Tuple / Attribute Set
 
@@ -588,7 +595,7 @@ etc) more effectively and in a more generic manner.  The canonical way to
 represent a dictionary used like an anonymous structure or class, where the
 dictionary keys are all character strings, is the **Tuple**.  The canonical
 way to represent the general case of a dictionary where the dictionary keys
-might be of any data type is with a binary **Relation** with 2 *positional*
+might be of any data type is with a binary **Relation** with 2 "positional"
 attributes, and a single key-value pair of such a dictionary is a binary
 **Tuple**.  A canonical syntax specific to the most common case of a
 Dictionary, namely unordered, one-directional, any key type, no duplicates,

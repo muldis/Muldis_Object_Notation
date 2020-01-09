@@ -74,7 +74,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Stringy: Bits, Blob, Text
 - Discrete: Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
-- Structural: Tuple
+- Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
 - Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Generic: Article, Excuse, Ignorance
