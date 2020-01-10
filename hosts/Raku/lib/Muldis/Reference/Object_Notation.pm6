@@ -115,14 +115,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | [ 0x <sp>?   [<[ 0..9 A..F ]>+]+ % [_ | <sp>]]
     }
 
-    token int_multiplicity
-    {
-          [ 0b   [<[ 0..1      ]>+]+ % _]
-        | [ 0o   [<[ 0..7      ]>+]+ % _]
-        | [[0d]? [<[ 0..9      ]>+]+ % _]
-        | [ 0x   [<[ 0..9 A..F ]>+]+ % _]
-    }
-
 ###########################################################################
 
     token Fraction
@@ -444,6 +436,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
+    }
+
+    token int_multiplicity
+    {
+        <nonsigned_int>
     }
 
 ###########################################################################

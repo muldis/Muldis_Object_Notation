@@ -398,14 +398,6 @@ Grammar:
         | [[0d <sp>?]? [<[ 0..9      ]>+]+ % [_ | <sp>]]
         | [ 0x <sp>?   [<[ 0..9 A..F ]>+]+ % [_ | <sp>]]
     }
-
-    token int_multiplicity
-    {
-          [ 0b   [<[ 0..1      ]>+]+ % _]
-        | [ 0o   [<[ 0..7      ]>+]+ % _]
-        | [[0d]? [<[ 0..9      ]>+]+ % _]
-        | [ 0x   [<[ 0..9 A..F ]>+]+ % _]
-    }
 ```
 
 This grammar supports writing **Integer** literals in any of the numeric
@@ -1247,10 +1239,15 @@ Grammar:
             [<sp>? ',']?
         <sp>? '}'
     }
+
+    token int_multiplicity
+    {
+        <nonsigned_int>
+    }
 ```
 
 An idiomatic way to represent an empty **Bag** is to have exactly 1
-`<bag_multiplied_member>` whose `<bag_multiplicity>` is zero.
+`<bag_multiplied_member>` whose `<int_multiplicity>` is zero.
 
 Examples:
 
@@ -1302,7 +1299,7 @@ Grammar:
 ```
 
 An idiomatic way to represent an empty **Mix** is to have exactly 1
-`<mix_multiplied_member>` whose `<mix_multiplicity>` is zero.
+`<mix_multiplied_member>` whose `<frac_multiplicity>` is zero.
 
 Examples:
 
