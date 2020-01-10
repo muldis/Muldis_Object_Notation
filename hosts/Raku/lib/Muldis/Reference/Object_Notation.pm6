@@ -52,17 +52,17 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token opaque
     {
-          <Boolean>
+          <Ignorance>
+        | <Boolean>
         | <Integer>
         | <Fraction>
-        | <Bits>
-        | <Blob>
-        | <Text>
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
         | <Geographic_Point>
-        | <Ignorance>
+        | <Bits>
+        | <Blob>
+        | <Text>
         | <Nesting>
         | <Heading>
         | <Renaming>
@@ -84,6 +84,13 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | <Tuple_Bag>
         | <Article>
         | <Excuse>
+    }
+
+###########################################################################
+
+    token Ignorance
+    {
+        '\\!!' <sp>? Ignorance
     }
 
 ###########################################################################
@@ -168,6 +175,120 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
+    token Calendar_Time
+    {
+        '\\@%' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
+    }
+
+    token time_ymdhms
+    {
+        <time_ymd> <sp>? ',' <sp>? <time_hms>
+    }
+
+    token time_ymd
+    {
+        <year>? <sp>? ',' <sp>? <month>? <sp>? ',' <sp>? <day>?
+    }
+
+    token time_hms
+    {
+        <hour>? <sp>? ',' <sp>? <minute>? <sp>? ',' <sp>? <second>?
+    }
+
+    token year
+    {
+        <loc_multiplicity>
+    }
+
+    token month
+    {
+        <loc_multiplicity>
+    }
+
+    token day
+    {
+        <loc_multiplicity>
+    }
+
+    token hour
+    {
+        <loc_multiplicity>
+    }
+
+    token minute
+    {
+        <loc_multiplicity>
+    }
+
+    token second
+    {
+        <loc_multiplicity>
+    }
+
+    token loc_multiplicity
+    {
+        <Integer> | <Fraction>
+    }
+
+###########################################################################
+
+    token Calendar_Duration
+    {
+        '\\@+' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
+    }
+
+###########################################################################
+
+    token Calendar_Instant
+    {
+        '\\@' <sp>?
+        '(' <sp>?
+            <instant_base> [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
+        <sp>? ')'
+    }
+
+    token instant_base
+    {
+        <time_ymdhms>
+    }
+
+    token instant_offset
+    {
+        <time_hms>
+    }
+
+    token instant_zone
+    {
+        <quoted_text>
+    }
+
+###########################################################################
+
+    token Geographic_Point
+    {
+        '\\@@' <sp>?
+        '(' <sp>?
+            [[<longitude> | <latitude> | <elevation>]* % [<sp>? ',' <sp>?]]
+        <sp>? ')'
+    }
+
+    token longitude
+    {
+        '>' <sp>? ':' <sp>? <loc_multiplicity>
+    }
+
+    token latitude
+    {
+        '^' <sp>? ':' <sp>? <loc_multiplicity>
+    }
+
+    token elevation
+    {
+        '+' <sp>? ':' <sp>? <loc_multiplicity>
+    }
+
+###########################################################################
+
     token Bits
     {
           [ 0bb <sp>? [<[ 0..1      ]>+]* % [_ | <sp>]]
@@ -227,6 +348,69 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | [0co  <[ 0..7      ]>+]
         | [0cd? <[ 0..9      ]>+]
         | [0cx  <[ 0..9 A..F ]>+]
+    }
+
+###########################################################################
+
+    token Nesting
+    {
+        '\\' <sp>? <nesting_attr_names>
+    }
+
+    token nesting_attr_names
+    {
+        <attr_name>+ % [<sp>? '::' <sp>?]
+    }
+
+    token attr_name
+    {
+        <nonord_attr_name> | <ord_attr_name>
+    }
+
+    token nonord_attr_name
+    {
+        <nonord_nonquoted_attr_name> | <quoted_text>
+    }
+
+    token nonord_nonquoted_attr_name
+    {
+        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+    }
+
+    token ord_attr_name
+    {
+        <code_point_text>
+    }
+
+###########################################################################
+
+    token Heading
+    {
+        '\\\$' <sp>? <heading_attr_names>
+    }
+
+    token heading_attr_names
+    {
+        '(' <sp>?
+            [',' <sp>?]?
+            [[<attr_name> | <ord_attr_name_range>]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? ')'
+    }
+
+    token ord_attr_name_range
+    {
+        <ord_attr_name_low> <sp>? '..' <sp>? <ord_attr_name_high>
+    }
+
+    token ord_attr_name_low
+    {
+        <ord_attr_name>
+    }
+
+    token ord_attr_name_high
+    {
+        <ord_attr_name>
     }
 
 ###########################################################################
@@ -447,120 +631,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
-    token Calendar_Time
-    {
-        '\\@%' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
-    }
-
-    token time_ymdhms
-    {
-        <time_ymd> <sp>? ',' <sp>? <time_hms>
-    }
-
-    token time_ymd
-    {
-        <year>? <sp>? ',' <sp>? <month>? <sp>? ',' <sp>? <day>?
-    }
-
-    token time_hms
-    {
-        <hour>? <sp>? ',' <sp>? <minute>? <sp>? ',' <sp>? <second>?
-    }
-
-    token year
-    {
-        <loc_multiplicity>
-    }
-
-    token month
-    {
-        <loc_multiplicity>
-    }
-
-    token day
-    {
-        <loc_multiplicity>
-    }
-
-    token hour
-    {
-        <loc_multiplicity>
-    }
-
-    token minute
-    {
-        <loc_multiplicity>
-    }
-
-    token second
-    {
-        <loc_multiplicity>
-    }
-
-    token loc_multiplicity
-    {
-        <Integer> | <Fraction>
-    }
-
-###########################################################################
-
-    token Calendar_Duration
-    {
-        '\\@+' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
-    }
-
-###########################################################################
-
-    token Calendar_Instant
-    {
-        '\\@' <sp>?
-        '(' <sp>?
-            <instant_base> [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
-        <sp>? ')'
-    }
-
-    token instant_base
-    {
-        <time_ymdhms>
-    }
-
-    token instant_offset
-    {
-        <time_hms>
-    }
-
-    token instant_zone
-    {
-        <quoted_text>
-    }
-
-###########################################################################
-
-    token Geographic_Point
-    {
-        '\\@@' <sp>?
-        '(' <sp>?
-            [[<longitude> | <latitude> | <elevation>]* % [<sp>? ',' <sp>?]]
-        <sp>? ')'
-    }
-
-    token longitude
-    {
-        '>' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-
-    token latitude
-    {
-        '^' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-
-    token elevation
-    {
-        '+' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-
-###########################################################################
-
     token Article
     {
         '\\*' <sp>? [<label_sans_attrs> | <label_with_attrs>]
@@ -596,76 +666,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token Excuse
     {
         '\\!' <sp>? [<label_sans_attrs> | <label_with_attrs>]
-    }
-
-###########################################################################
-
-    token Ignorance
-    {
-        '\\!!' <sp>? Ignorance
-    }
-
-###########################################################################
-
-    token Nesting
-    {
-        '\\' <sp>? <nesting_attr_names>
-    }
-
-    token nesting_attr_names
-    {
-        <attr_name>+ % [<sp>? '::' <sp>?]
-    }
-
-    token attr_name
-    {
-        <nonord_attr_name> | <ord_attr_name>
-    }
-
-    token nonord_attr_name
-    {
-        <nonord_nonquoted_attr_name> | <quoted_text>
-    }
-
-    token nonord_nonquoted_attr_name
-    {
-        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
-    }
-
-    token ord_attr_name
-    {
-        <code_point_text>
-    }
-
-###########################################################################
-
-    token Heading
-    {
-        '\\\$' <sp>? <heading_attr_names>
-    }
-
-    token heading_attr_names
-    {
-        '(' <sp>?
-            [',' <sp>?]?
-            [[<attr_name> | <ord_attr_name_range>]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-        <sp>? ')'
-    }
-
-    token ord_attr_name_range
-    {
-        <ord_attr_name_low> <sp>? '..' <sp>? <ord_attr_name_high>
-    }
-
-    token ord_attr_name_low
-    {
-        <ord_attr_name>
-    }
-
-    token ord_attr_name_high
-    {
-        <ord_attr_name>
     }
 
 ###########################################################################

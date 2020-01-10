@@ -14,6 +14,14 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Ignorance : (
+
+        \!!Ignorance,
+
+    ),
+
+`#########################################################################`
+
     `$$$` Boolean : (
 
         False,
@@ -99,6 +107,99 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Calendar_Time : (
+
+        `No measurement was taken or specified at all.`
+        \@%(,,,,,),
+
+        `Either an unspecified period in 1970 or a duration of 1970 years.`
+        \@%(1970,,,,,),
+
+        `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
+        \@%(2015,5,3,,,),
+
+        `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
+        \@%(1998,,300,,,),
+
+        `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
+        \@%(1776,,42,,,),
+
+        `Either the first quarter of 1953 or a duration of 1953.25 years.`
+        \@%(1953.25,,,,,),
+
+        `Either high noon on an unspecified day or a duration of 12 hours.`
+        \@%(,,,12,0,0),
+
+        `Either a fully specified civil date and time or a 6-part duration.`
+        \@%(1884,10,17,20,55,30),
+
+        `Either an ancient date and time or a negative duration.`
+        \@%(-370,1,24,11,0,0),
+
+        `Either a time on some unspecified day or a duration of seconds.`
+        \@%(,,,,,5923.21124603),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Calendar_Duration : (
+
+        `Addition of 2 years and 3 months.`
+        \@+(2,3,0,0,0,0),
+
+        `Subtraction of 22 hours.`
+        \@+(0,0,0,-22,0,0),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Calendar_Instant : (
+
+        `The Day The Music Died (if paired with Gregorian calendar).`
+        \@(1959,2,3,,,),
+
+        `A time of day when one might have breakfast.`
+        \@(,,,7,30,0),
+
+        `What was now in the Pacific zone (if paired with Gregorian calendar).`
+        \@(2018,9,3,20,51,17@-8,0,0),
+
+        `A time of day in the UTC zone on an unspecified day.`
+        \@(,,,9,25,0@0,0,0),
+
+        `A specific day and time in the Pacific Standard Time zone.`
+        \@(2001,4,16,20,1,44@"PST"),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Geographic_Point : (
+
+        `No specified coordinates at all.`
+        \@@(),
+
+        `Just an elevation specified.`
+        \@@(+ : 920),
+
+        `Geographic surface coordinates of Googleplex; elevation not specified.`
+        \@@(> : -122.0857017, ^ : 37.4218363),
+
+        `Same thing.`
+        \@@(^ : 37.4218363, > : -122.0857017),
+
+        `Some location with all coordinates specified.`
+        \@@(> : -101, ^ : -70, + : 1000),
+
+        `Another place.`
+        \@@(> : -94.746094, ^ : 37.483577),
+
+    ),
+
+`#########################################################################`
+
     `$$$` Bits : (
 
         0bb,
@@ -165,6 +266,56 @@ Muldis_Content_Predicate`
         "\study, write, study,\n"
             "\do review (each word) if time.\n"
             "\close book. sleep? what's that?\n",
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Nesting : (
+
+        \person,
+
+        \person::birth_date,
+
+        \person::birth_date::year,
+
+        \the_db::stats::"samples by order",
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Heading : (
+
+        `Zero attributes.`
+        \$(),
+
+        `One named attribute.`
+        \$(sales),
+
+        `Same thing.`
+        \$("sales"),
+
+        `One ordered attribute.`
+        \$(0c0),
+
+        `Same thing.`
+        \$("\\<0c0>"),
+
+        `Three named attributes.`
+        \$(region,revenue,qty),
+
+        `Three ordered attributes.`
+        \$(0c0..0c2),
+
+        `One of each.`
+        \$(0c1,age),
+
+        `Some attribute names can only appear quoted.`
+        \$("Street Address"),
+
+        `A non-Latin name.`
+        \$("サンプル"),
 
     ),
 
@@ -568,99 +719,6 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
-    `$$$` Calendar_Time : (
-
-        `No measurement was taken or specified at all.`
-        \@%(,,,,,),
-
-        `Either an unspecified period in 1970 or a duration of 1970 years.`
-        \@%(1970,,,,,),
-
-        `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
-        \@%(2015,5,3,,,),
-
-        `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
-        \@%(1998,,300,,,),
-
-        `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
-        \@%(1776,,42,,,),
-
-        `Either the first quarter of 1953 or a duration of 1953.25 years.`
-        \@%(1953.25,,,,,),
-
-        `Either high noon on an unspecified day or a duration of 12 hours.`
-        \@%(,,,12,0,0),
-
-        `Either a fully specified civil date and time or a 6-part duration.`
-        \@%(1884,10,17,20,55,30),
-
-        `Either an ancient date and time or a negative duration.`
-        \@%(-370,1,24,11,0,0),
-
-        `Either a time on some unspecified day or a duration of seconds.`
-        \@%(,,,,,5923.21124603),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Calendar_Duration : (
-
-        `Addition of 2 years and 3 months.`
-        \@+(2,3,0,0,0,0),
-
-        `Subtraction of 22 hours.`
-        \@+(0,0,0,-22,0,0),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Calendar_Instant : (
-
-        `The Day The Music Died (if paired with Gregorian calendar).`
-        \@(1959,2,3,,,),
-
-        `A time of day when one might have breakfast.`
-        \@(,,,7,30,0),
-
-        `What was now in the Pacific zone (if paired with Gregorian calendar).`
-        \@(2018,9,3,20,51,17@-8,0,0),
-
-        `A time of day in the UTC zone on an unspecified day.`
-        \@(,,,9,25,0@0,0,0),
-
-        `A specific day and time in the Pacific Standard Time zone.`
-        \@(2001,4,16,20,1,44@"PST"),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Geographic_Point : (
-
-        `No specified coordinates at all.`
-        \@@(),
-
-        `Just an elevation specified.`
-        \@@(+ : 920),
-
-        `Geographic surface coordinates of Googleplex; elevation not specified.`
-        \@@(> : -122.0857017, ^ : 37.4218363),
-
-        `Same thing.`
-        \@@(^ : 37.4218363, > : -122.0857017),
-
-        `Some location with all coordinates specified.`
-        \@@(> : -101, ^ : -70, + : 1000),
-
-        `Another place.`
-        \@@(> : -94.746094, ^ : 37.483577),
-
-    ),
-
-`#########################################################################`
-
     `$$$` Article : (
 
         \*(\Point : (x : 5, y : 3)),
@@ -695,64 +753,6 @@ Muldis_Content_Predicate`
         \!Div_By_Zero,
 
         \!No_Such_Attr_Name,
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Ignorance : (
-
-        \!!Ignorance,
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Nesting : (
-
-        \person,
-
-        \person::birth_date,
-
-        \person::birth_date::year,
-
-        \the_db::stats::"samples by order",
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Heading : (
-
-        `Zero attributes.`
-        \$(),
-
-        `One named attribute.`
-        \$(sales),
-
-        `Same thing.`
-        \$("sales"),
-
-        `One ordered attribute.`
-        \$(0c0),
-
-        `Same thing.`
-        \$("\\<0c0>"),
-
-        `Three named attributes.`
-        \$(region,revenue,qty),
-
-        `Three ordered attributes.`
-        \$(0c0..0c2),
-
-        `One of each.`
-        \$(0c1,age),
-
-        `Some attribute names can only appear quoted.`
-        \$("Street Address"),
-
-        `A non-Latin name.`
-        \$("サンプル"),
 
     ),
 

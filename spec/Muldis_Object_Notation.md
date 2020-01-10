@@ -69,16 +69,20 @@ possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
 Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 
+- Devoid: Ignorance
 - Logical: Boolean
 - Numeric: Integer, Fraction
+- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Stringy: Bits, Blob, Text
+- Identifier: Nesting, Heading
+
 - Discrete: Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
-- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
-- Generic: Article, Excuse, Ignorance
-- Source Code: Nesting, Heading, Renaming
+- Generic: Article, Excuse
+
+- Source Code: Renaming
 
 See the DATA TYPE POSSREPS of [Semantics](
 Muldis_Object_Notation_Semantics.md) for details.

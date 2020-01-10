@@ -54,16 +54,20 @@ possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
 Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 
+- Devoid: Ignorance
 - Logical: Boolean
 - Numeric: Integer, Fraction
+- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Stringy: Bits, Blob, Text
+- Identifier: Nesting, Heading
+
 - Discrete: Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
-- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
-- Generic: Article, Excuse, Ignorance
-- Source Code: Nesting, Heading, Renaming
+- Generic: Article, Excuse
+
+- Source Code: Renaming
 
 See the DATA TYPE POSSREPS of [Semantics](
 Muldis_Object_Notation_Semantics.md) for details and the intended
@@ -91,6 +95,12 @@ A `SYS_Object` is any of the following:
 
 * Any object of any Java class, in particular `java.lang.Object`,
 which is the common parent class of all Java classes.
+
+## SYS_Null
+
+A `SYS_Null` is any of the following:
+
+* The special Java `null` value.
 
 ## SYS_Boolean
 
@@ -304,12 +314,6 @@ member's `SYS_key` is a `SYS_Char_String`; the alias `SYS_attrs_na` refers
 to its `SYS_pairs_kv`, such that the aliases `SYS_attr_name` and
 `SYS_attr_asset` refer in turn to each `SYS_key` and `SYS_value`.
 
-## SYS_Null
-
-A `SYS_Null` is any of the following:
-
-* The special Java `null` value.
-
 # GRAMMAR
 
 Each valid MUON artifact is an instance of a single MUON possrep.  Every
@@ -344,6 +348,14 @@ A **None** artifact is an artifact that qualifies as none of the other MUON
 artifacts, since the **None** possrep is characterized by the intersection
 of all other possreps.  That is, there are no **None** artifacts at all,
 and this possrep is just mentioned for parity.
+
+## Ignorance
+
+An **Ignorance** artifact has the predicate `Ignorance`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any `SYS_Null`.
 
 ## Boolean
 
@@ -404,6 +416,99 @@ The above components are defined as follows:
 
 * An *exponent* is any **Integer** subject.
 
+## Calendar Time
+
+A **Calendar Time** artifact has the predicate `CalendarTime`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_D6` such that the 6 attribute assets in ascending
+order are the *year*, *month*, *day*, *hour*, *minute*, *second*; each of
+those 6 is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
+
+## Calendar Duration
+
+A **Calendar Duration** artifact has the predicate `CalendarDuration`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any object of any of the Java classes
+`java.time.Duration`,
+`java.time.Period`.
+
+*TODO: Consider removing some of the above options.*
+
+When its subject is any of the following, the predicate is required:
+
+* Any **Calendar Time** subject.
+
+## Calendar Instant
+
+A **Calendar Instant** artifact has the predicate `CalendarInstant`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any object of any of the Java classes
+`java.time.Instant`,
+`java.time.LocalDate`,
+`java.time.LocalDateTime`,
+`java.time.LocalTime`,
+`java.time.Month`,
+`java.time.MonthDay`,
+`java.time.OffsetDateTime`,
+`java.time.OffsetTime`,
+`java.time.Year`,
+`java.time.YearMonth`,
+`java.time.ZonedDateTime`,
+`java.time.ZoneOffset`.
+
+*TODO: Consider removing some of the above options.*
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the *instant base*
+(any **Calendar Time** subject);
+this designates a *floating* instant not associated with any zone or offset.
+
+* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the *instant base*
+(any **Calendar Time** subject) and attribute 1 is the *instant offset*
+(any `SYS_Tuple_Ordered_D3` such that the 3 attribute assets in ascending
+order are the *hour*, *minute*, *second*; same types as in *instant base*);
+this designates an instant local to any zone with a specific offset from UTC.
+
+* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the *instant base*
+(any **Calendar Time** subject) and attribute 1 is the *instant zone* (any
+**Text** subject); this designates an instant local to the named zone.
+
+## Geographic Point
+
+A **Geographic Point** artifact has the predicate `GeographicPoint`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` *T* such that every one of its `SYS_members` is a
+`SYS_Pair_KV` (alias `SYS_attrs_na`) such that,
+for each of the 3 possible attributes *A* {*longitude*, *latitude*, *elevation*},
+at most 1 of the `SYS_attrs_na` of *T* defines an *A*.
+
+* Any `SYS_Tuple_Named_As_Dictionary` *T* such that,
+for each of the 3 possible attributes *A* {*longitude*, *latitude*, *elevation*},
+at most 1 of the `SYS_attrs_na` of *T* defines an *A*.
+
+The above components are defined as follows:
+
+* A *longitude* is such that
+its `SYS_attr_name` is the `SYS_Char_String` value `>` and
+its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
+
+* A *latitude* is such that
+its `SYS_attr_name` is the `SYS_Char_String` value `^` and
+its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
+
+* An *elevation* is such that
+its `SYS_attr_name` is the `SYS_Char_String` value `+` and
+its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
+
 ## Bits
 
 A **Bits** artifact has the predicate `Bits`.
@@ -429,6 +534,31 @@ A **Text** artifact has the predicate `Text`.
 When its subject is any of the following, the predicate is optional:
 
 * Any `SYS_Char_String`.
+
+## Nesting / Attribute Name List
+
+A **Nesting** artifact has the predicate `Nesting`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Text** subject.
+
+## Heading / Attribute Name Set
+
+A **Heading** artifact has the predicate `Heading`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Set` such that every one of its `SYS_members` is any
+**Text** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Text** subject.
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is any **Text** subject and
+that member's `SYS_value` is any **Boolean** subject.
 
 ## Array
 
@@ -678,99 +808,6 @@ that member's `SYS_key` is any **Tuple** subject and
 that member's `SYS_value` is any **Integer** subject
 which denotes a non-negative integer *multiplicity*.
 
-## Calendar Time
-
-A **Calendar Time** artifact has the predicate `CalendarTime`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Tuple_Ordered_D6` such that the 6 attribute assets in ascending
-order are the *year*, *month*, *day*, *hour*, *minute*, *second*; each of
-those 6 is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
-
-## Calendar Duration
-
-A **Calendar Duration** artifact has the predicate `CalendarDuration`.
-
-When its subject is any of the following, the predicate is optional:
-
-* Any object of any of the Java classes
-`java.time.Duration`,
-`java.time.Period`.
-
-*TODO: Consider removing some of the above options.*
-
-When its subject is any of the following, the predicate is required:
-
-* Any **Calendar Time** subject.
-
-## Calendar Instant
-
-A **Calendar Instant** artifact has the predicate `CalendarInstant`.
-
-When its subject is any of the following, the predicate is optional:
-
-* Any object of any of the Java classes
-`java.time.Instant`,
-`java.time.LocalDate`,
-`java.time.LocalDateTime`,
-`java.time.LocalTime`,
-`java.time.Month`,
-`java.time.MonthDay`,
-`java.time.OffsetDateTime`,
-`java.time.OffsetTime`,
-`java.time.Year`,
-`java.time.YearMonth`,
-`java.time.ZonedDateTime`,
-`java.time.ZoneOffset`.
-
-*TODO: Consider removing some of the above options.*
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the *instant base*
-(any **Calendar Time** subject);
-this designates a *floating* instant not associated with any zone or offset.
-
-* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the *instant base*
-(any **Calendar Time** subject) and attribute 1 is the *instant offset*
-(any `SYS_Tuple_Ordered_D3` such that the 3 attribute assets in ascending
-order are the *hour*, *minute*, *second*; same types as in *instant base*);
-this designates an instant local to any zone with a specific offset from UTC.
-
-* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the *instant base*
-(any **Calendar Time** subject) and attribute 1 is the *instant zone* (any
-**Text** subject); this designates an instant local to the named zone.
-
-## Geographic Point
-
-A **Geographic Point** artifact has the predicate `GeographicPoint`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Array` *T* such that every one of its `SYS_members` is a
-`SYS_Pair_KV` (alias `SYS_attrs_na`) such that,
-for each of the 3 possible attributes *A* {*longitude*, *latitude*, *elevation*},
-at most 1 of the `SYS_attrs_na` of *T* defines an *A*.
-
-* Any `SYS_Tuple_Named_As_Dictionary` *T* such that,
-for each of the 3 possible attributes *A* {*longitude*, *latitude*, *elevation*},
-at most 1 of the `SYS_attrs_na` of *T* defines an *A*.
-
-The above components are defined as follows:
-
-* A *longitude* is such that
-its `SYS_attr_name` is the `SYS_Char_String` value `>` and
-its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
-
-* A *latitude* is such that
-its `SYS_attr_name` is the `SYS_Char_String` value `^` and
-its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
-
-* An *elevation* is such that
-its `SYS_attr_name` is the `SYS_Char_String` value `+` and
-its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
-
 ## Article / Labelled Tuple
 
 An **Article** artifact has the predicate `Article`.
@@ -789,39 +826,6 @@ An **Excuse** artifact has the predicate `Excuse`.
 When its subject is any of the following, the predicate is required:
 
 * Any **Article** subject.
-
-## Ignorance
-
-An **Ignorance** artifact has the predicate `Ignorance`.
-
-When its subject is any of the following, the predicate is optional:
-
-* Any `SYS_Null`.
-
-## Nesting / Attribute Name List
-
-A **Nesting** artifact has the predicate `Nesting`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Text** subject.
-
-## Heading / Attribute Name Set
-
-A **Heading** artifact has the predicate `Heading`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Set` such that every one of its `SYS_members` is any
-**Text** subject.
-
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Text** subject.
-
-* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
-that member's `SYS_key` is any **Text** subject and
-that member's `SYS_value` is any **Boolean** subject.
 
 ## Renaming / Attribute Name Map
 

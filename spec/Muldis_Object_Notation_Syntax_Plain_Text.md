@@ -69,16 +69,20 @@ possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
 Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 
+- Devoid: Ignorance
 - Logical: Boolean
 - Numeric: Integer, Fraction
+- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Stringy: Bits, Blob, Text
+- Identifier: Nesting, Heading
+
 - Discrete: Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
-- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
-- Generic: Article, Excuse, Ignorance
-- Source Code: Nesting, Heading, Renaming
+- Generic: Article, Excuse
+
+- Source Code: Renaming
 
 See the DATA TYPE POSSREPS of [Semantics](
 Muldis_Object_Notation_Semantics.md) for details and the intended
@@ -284,17 +288,17 @@ Grammar:
 
     token opaque
     {
-          <Boolean>
+          <Ignorance>
+        | <Boolean>
         | <Integer>
         | <Fraction>
-        | <Bits>
-        | <Blob>
-        | <Text>
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
         | <Geographic_Point>
-        | <Ignorance>
+        | <Bits>
+        | <Blob>
+        | <Text>
         | <Nesting>
         | <Heading>
         | <Renaming>
@@ -334,6 +338,25 @@ values representing collections of other values.
 
 The **None** possrep
 has no representation in the grammar, but is mentioned for parity.
+
+## Ignorance
+
+The singleton **Ignorance** value is represented by `<Ignorance>`.
+
+Grammar:
+
+```
+    token Ignorance
+    {
+        '\\!!' <sp>? Ignorance
+    }
+```
+
+Examples:
+
+```
+    \!!Ignorance
+```
 
 ## Boolean
 
@@ -556,6 +579,229 @@ Examples:
     0b1.011101101*0b10^-0b11011
 ```
 
+## Calendar Time
+
+A **Calendar Time** value is represented by `<Calendar_Time>`.
+
+Grammar:
+
+```
+    token Calendar_Time
+    {
+        '\\@%' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
+    }
+
+    token time_ymdhms
+    {
+        <time_ymd> <sp>? ',' <sp>? <time_hms>
+    }
+
+    token time_ymd
+    {
+        <year>? <sp>? ',' <sp>? <month>? <sp>? ',' <sp>? <day>?
+    }
+
+    token time_hms
+    {
+        <hour>? <sp>? ',' <sp>? <minute>? <sp>? ',' <sp>? <second>?
+    }
+
+    token year
+    {
+        <loc_multiplicity>
+    }
+
+    token month
+    {
+        <loc_multiplicity>
+    }
+
+    token day
+    {
+        <loc_multiplicity>
+    }
+
+    token hour
+    {
+        <loc_multiplicity>
+    }
+
+    token minute
+    {
+        <loc_multiplicity>
+    }
+
+    token second
+    {
+        <loc_multiplicity>
+    }
+
+    token loc_multiplicity
+    {
+        <Integer> | <Fraction>
+    }
+```
+
+Examples:
+
+```
+    `No measurement was taken or specified at all.`
+    \@%(,,,,,)
+
+    `Either an unspecified period in 1970 or a duration of 1970 years.`
+    \@%(1970,,,,,)
+
+    `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
+    \@%(2015,5,3,,,)
+
+    `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
+    \@%(1998,,300,,,)
+
+    `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
+    \@%(1776,,42,,,)
+
+    `Either the first quarter of 1953 or a duration of 1953.25 years.`
+    \@%(1953.25,,,,,)
+
+    `Either high noon on an unspecified day or a duration of 12 hours.`
+    \@%(,,,12,0,0)
+
+    `Either a fully specified civil date and time or a 6-part duration.`
+    \@%(1884,10,17,20,55,30)
+
+    `Either an ancient date and time or a negative duration.`
+    \@%(-370,1,24,11,0,0)
+
+    `Either a time on some unspecified day or a duration of seconds.`
+    \@%(,,,,,5923.21124603)
+```
+
+## Calendar Duration
+
+A **Calendar Duration** value is represented by `<Calendar_Duration>`.
+
+Grammar:
+
+```
+    token Calendar_Duration
+    {
+        '\\@+' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
+    }
+```
+
+Examples:
+
+```
+    `Addition of 2 years and 3 months.`
+    \@+(2,3,0,0,0,0)
+
+    `Subtraction of 22 hours.`
+    \@+(0,0,0,-22,0,0)
+```
+
+## Calendar Instant
+
+A **Calendar Instant** value is represented by `<Calendar_Instant>`.
+
+Grammar:
+
+```
+    token Calendar_Instant
+    {
+        '\\@' <sp>?
+        '(' <sp>?
+            <instant_base> [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
+        <sp>? ')'
+    }
+
+    token instant_base
+    {
+        <time_ymdhms>
+    }
+
+    token instant_offset
+    {
+        <time_hms>
+    }
+
+    token instant_zone
+    {
+        <quoted_text>
+    }
+```
+
+Examples:
+
+```
+    `The Day The Music Died (if paired with Gregorian calendar).`
+    \@(1959,2,3,,,)
+
+    `A time of day when one might have breakfast.`
+    \@(,,,7,30,0)
+
+    `What was now in the Pacific zone (if paired with Gregorian calendar).`
+    \@(2018,9,3,20,51,17@-8,0,0)
+
+    `A time of day in the UTC zone on an unspecified day.`
+    \@(,,,9,25,0@0,0,0)
+
+    `A specific day and time in the Pacific Standard Time zone.`
+    \@(2001,4,16,20,1,44@"PST")
+```
+
+## Geographic Point
+
+A **Geographic Point** value is represented by `<Geographic_Point>`.
+
+Grammar:
+
+```
+    token Geographic_Point
+    {
+        '\\@@' <sp>?
+        '(' <sp>?
+            [[<longitude> | <latitude> | <elevation>]* % [<sp>? ',' <sp>?]]
+        <sp>? ')'
+    }
+
+    token longitude
+    {
+        '>' <sp>? ':' <sp>? <loc_multiplicity>
+    }
+
+    token latitude
+    {
+        '^' <sp>? ':' <sp>? <loc_multiplicity>
+    }
+
+    token elevation
+    {
+        '+' <sp>? ':' <sp>? <loc_multiplicity>
+    }
+```
+
+Examples:
+
+```
+    `No specified coordinates at all.`
+    \@@()
+
+    `Just an elevation specified.`
+    \@@(+ : 920)
+
+    `Geographic surface coordinates of Googleplex; elevation not specified.`
+    \@@(> : -122.0857017, ^ : 37.4218363)
+
+    `Same thing.`
+    \@@(^ : 37.4218363, > : -122.0857017)
+
+    `Some location with all coordinates specified.`
+    \@@(> : -101, ^ : -70, + : 1000)
+
+    `Another place.`
+    \@@(> : -94.746094, ^ : 37.483577)
+```
+
 ## Bits
 
 A **Bits** value is represented by `<Bits>`.
@@ -754,6 +1000,134 @@ Examples:
     "\study, write, study,\n"
         "\do review (each word) if time.\n"
         "\close book. sleep? what's that?\n"
+```
+
+## Nesting / Attribute Name List
+
+A **Nesting** value is represented by `<Nesting>`.
+
+Grammar:
+
+```
+    token Nesting
+    {
+        '\\' <sp>? <nesting_attr_names>
+    }
+
+    token nesting_attr_names
+    {
+        <attr_name>+ % [<sp>? '::' <sp>?]
+    }
+
+    token attr_name
+    {
+        <nonord_attr_name> | <ord_attr_name>
+    }
+
+    token nonord_attr_name
+    {
+        <nonord_nonquoted_attr_name> | <quoted_text>
+    }
+
+    token nonord_nonquoted_attr_name
+    {
+        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+    }
+
+    token ord_attr_name
+    {
+        <code_point_text>
+    }
+```
+
+The meaning of `<nonord_nonquoted_attr_name>` is exactly the same as if the
+same characters were surrounded by quotation marks.
+
+Examples:
+
+```
+    \person
+
+    \person::birth_date
+
+    \person::birth_date::year
+
+    \the_db::stats::"samples by order"
+```
+
+## Heading / Attribute Name Set
+
+A **Heading** value is represented by `<Heading>`.
+
+Grammar:
+
+```
+    token Heading
+    {
+        '\\\$' <sp>? <heading_attr_names>
+    }
+
+    token heading_attr_names
+    {
+        '(' <sp>?
+            [',' <sp>?]?
+            [[<attr_name> | <ord_attr_name_range>]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+        <sp>? ')'
+    }
+
+    token ord_attr_name_range
+    {
+        <ord_attr_name_low> <sp>? '..' <sp>? <ord_attr_name_high>
+    }
+
+    token ord_attr_name_low
+    {
+        <ord_attr_name>
+    }
+
+    token ord_attr_name_high
+    {
+        <ord_attr_name>
+    }
+```
+
+An `<ord_attr_name_range>` is subject to the additional rule that its
+integral `<ord_attr_name_low>` and `<ord_attr_name_high>` values must be
+in ascending order.
+
+Examples:
+
+```
+    `Zero attributes.`
+    \$()
+
+    `One named attribute.`
+    \$(sales)
+
+    `Same thing.`
+    \$("sales")
+
+    `One ordered attribute.`
+    \$(0c0)
+
+    `Same thing.`
+    \$("\\<0c0>")
+
+    `Three named attributes.`
+    \$(region,revenue,qty)
+
+    `Three ordered attributes.`
+    \$(0c0..0c2)
+
+    `One of each.`
+    \$(0c1,age)
+
+    `Some attribute names can only appear quoted.`
+    \$("Street Address")
+
+    `A non-Latin name.`
+    \$("サンプル")
 ```
 
 ## Array
@@ -1424,229 +1798,6 @@ Examples:
     }
 ```
 
-## Calendar Time
-
-A **Calendar Time** value is represented by `<Calendar_Time>`.
-
-Grammar:
-
-```
-    token Calendar_Time
-    {
-        '\\@%' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
-    }
-
-    token time_ymdhms
-    {
-        <time_ymd> <sp>? ',' <sp>? <time_hms>
-    }
-
-    token time_ymd
-    {
-        <year>? <sp>? ',' <sp>? <month>? <sp>? ',' <sp>? <day>?
-    }
-
-    token time_hms
-    {
-        <hour>? <sp>? ',' <sp>? <minute>? <sp>? ',' <sp>? <second>?
-    }
-
-    token year
-    {
-        <loc_multiplicity>
-    }
-
-    token month
-    {
-        <loc_multiplicity>
-    }
-
-    token day
-    {
-        <loc_multiplicity>
-    }
-
-    token hour
-    {
-        <loc_multiplicity>
-    }
-
-    token minute
-    {
-        <loc_multiplicity>
-    }
-
-    token second
-    {
-        <loc_multiplicity>
-    }
-
-    token loc_multiplicity
-    {
-        <Integer> | <Fraction>
-    }
-```
-
-Examples:
-
-```
-    `No measurement was taken or specified at all.`
-    \@%(,,,,,)
-
-    `Either an unspecified period in 1970 or a duration of 1970 years.`
-    \@%(1970,,,,,)
-
-    `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
-    \@%(2015,5,3,,,)
-
-    `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
-    \@%(1998,,300,,,)
-
-    `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
-    \@%(1776,,42,,,)
-
-    `Either the first quarter of 1953 or a duration of 1953.25 years.`
-    \@%(1953.25,,,,,)
-
-    `Either high noon on an unspecified day or a duration of 12 hours.`
-    \@%(,,,12,0,0)
-
-    `Either a fully specified civil date and time or a 6-part duration.`
-    \@%(1884,10,17,20,55,30)
-
-    `Either an ancient date and time or a negative duration.`
-    \@%(-370,1,24,11,0,0)
-
-    `Either a time on some unspecified day or a duration of seconds.`
-    \@%(,,,,,5923.21124603)
-```
-
-## Calendar Duration
-
-A **Calendar Duration** value is represented by `<Calendar_Duration>`.
-
-Grammar:
-
-```
-    token Calendar_Duration
-    {
-        '\\@+' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
-    }
-```
-
-Examples:
-
-```
-    `Addition of 2 years and 3 months.`
-    \@+(2,3,0,0,0,0)
-
-    `Subtraction of 22 hours.`
-    \@+(0,0,0,-22,0,0)
-```
-
-## Calendar Instant
-
-A **Calendar Instant** value is represented by `<Calendar_Instant>`.
-
-Grammar:
-
-```
-    token Calendar_Instant
-    {
-        '\\@' <sp>?
-        '(' <sp>?
-            <instant_base> [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
-        <sp>? ')'
-    }
-
-    token instant_base
-    {
-        <time_ymdhms>
-    }
-
-    token instant_offset
-    {
-        <time_hms>
-    }
-
-    token instant_zone
-    {
-        <quoted_text>
-    }
-```
-
-Examples:
-
-```
-    `The Day The Music Died (if paired with Gregorian calendar).`
-    \@(1959,2,3,,,)
-
-    `A time of day when one might have breakfast.`
-    \@(,,,7,30,0)
-
-    `What was now in the Pacific zone (if paired with Gregorian calendar).`
-    \@(2018,9,3,20,51,17@-8,0,0)
-
-    `A time of day in the UTC zone on an unspecified day.`
-    \@(,,,9,25,0@0,0,0)
-
-    `A specific day and time in the Pacific Standard Time zone.`
-    \@(2001,4,16,20,1,44@"PST")
-```
-
-## Geographic Point
-
-A **Geographic Point** value is represented by `<Geographic_Point>`.
-
-Grammar:
-
-```
-    token Geographic_Point
-    {
-        '\\@@' <sp>?
-        '(' <sp>?
-            [[<longitude> | <latitude> | <elevation>]* % [<sp>? ',' <sp>?]]
-        <sp>? ')'
-    }
-
-    token longitude
-    {
-        '>' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-
-    token latitude
-    {
-        '^' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-
-    token elevation
-    {
-        '+' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-```
-
-Examples:
-
-```
-    `No specified coordinates at all.`
-    \@@()
-
-    `Just an elevation specified.`
-    \@@(+ : 920)
-
-    `Geographic surface coordinates of Googleplex; elevation not specified.`
-    \@@(> : -122.0857017, ^ : 37.4218363)
-
-    `Same thing.`
-    \@@(^ : 37.4218363, > : -122.0857017)
-
-    `Some location with all coordinates specified.`
-    \@@(> : -101, ^ : -70, + : 1000)
-
-    `Another place.`
-    \@@(> : -94.746094, ^ : 37.483577)
-```
-
 ## Article / Labelled Tuple
 
 An **Article** value is represented by `<Article>`.
@@ -1731,153 +1882,6 @@ Examples:
     \!Div_By_Zero
 
     \!No_Such_Attr_Name
-```
-
-## Ignorance
-
-The singleton **Ignorance** value is represented by `<Ignorance>`.
-
-Grammar:
-
-```
-    token Ignorance
-    {
-        '\\!!' <sp>? Ignorance
-    }
-```
-
-Examples:
-
-```
-    \!!Ignorance
-```
-
-## Nesting / Attribute Name List
-
-A **Nesting** value is represented by `<Nesting>`.
-
-Grammar:
-
-```
-    token Nesting
-    {
-        '\\' <sp>? <nesting_attr_names>
-    }
-
-    token nesting_attr_names
-    {
-        <attr_name>+ % [<sp>? '::' <sp>?]
-    }
-
-    token attr_name
-    {
-        <nonord_attr_name> | <ord_attr_name>
-    }
-
-    token nonord_attr_name
-    {
-        <nonord_nonquoted_attr_name> | <quoted_text>
-    }
-
-    token nonord_nonquoted_attr_name
-    {
-        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
-    }
-
-    token ord_attr_name
-    {
-        <code_point_text>
-    }
-```
-
-The meaning of `<nonord_nonquoted_attr_name>` is exactly the same as if the
-same characters were surrounded by quotation marks.
-
-Examples:
-
-```
-    \person
-
-    \person::birth_date
-
-    \person::birth_date::year
-
-    \the_db::stats::"samples by order"
-```
-
-## Heading / Attribute Name Set
-
-A **Heading** value is represented by `<Heading>`.
-
-Grammar:
-
-```
-    token Heading
-    {
-        '\\\$' <sp>? <heading_attr_names>
-    }
-
-    token heading_attr_names
-    {
-        '(' <sp>?
-            [',' <sp>?]?
-            [[<attr_name> | <ord_attr_name_range>]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-        <sp>? ')'
-    }
-
-    token ord_attr_name_range
-    {
-        <ord_attr_name_low> <sp>? '..' <sp>? <ord_attr_name_high>
-    }
-
-    token ord_attr_name_low
-    {
-        <ord_attr_name>
-    }
-
-    token ord_attr_name_high
-    {
-        <ord_attr_name>
-    }
-```
-
-An `<ord_attr_name_range>` is subject to the additional rule that its
-integral `<ord_attr_name_low>` and `<ord_attr_name_high>` values must be
-in ascending order.
-
-Examples:
-
-```
-    `Zero attributes.`
-    \$()
-
-    `One named attribute.`
-    \$(sales)
-
-    `Same thing.`
-    \$("sales")
-
-    `One ordered attribute.`
-    \$(0c0)
-
-    `Same thing.`
-    \$("\\<0c0>")
-
-    `Three named attributes.`
-    \$(region,revenue,qty)
-
-    `Three ordered attributes.`
-    \$(0c0..0c2)
-
-    `One of each.`
-    \$(0c1,age)
-
-    `Some attribute names can only appear quoted.`
-    \$("Street Address")
-
-    `A non-Latin name.`
-    \$("サンプル")
 ```
 
 ## Renaming / Attribute Name Map
@@ -2095,30 +2099,30 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ()    | aordered collections   | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs
-          |                        | * delimit Pair/Tuple/Article/Excuse selectors
-          |                        | * delimit Heading literals
-          |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
           |                        | * delimit Calendar-*, Geographic-* literals
+          |                        | * delimit Heading literals
+          |                        | * delimit Pair/Tuple/Article/Excuse selectors
+          |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
           |                        | * separates the 2 parts of a pair
+          |                        | * pair separator in Geographic-* literals
           |                        | * optional pair separator in Array/Set sels
           |                        | * pair separator in Bag/Mix sels
           |                        | * this/that separator in Pair sels
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
           |                        | * optional pair separator in nonempty-TA/Rel/TB sels
-          |                        | * pair separator in Geographic-* literals
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * disambiguate Bag/Mix sels from Set sel
           |                        | * L2 of prefix for Renaming literals
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
+          |                        | * separate elements in Calendar-*, Geographic-* lits
+          |                        | * separate attributes in Heading lits
           |                        | * separate members in Array/Set/Bag/Mix sels
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Tuple/Article/Excuse sels
-          |                        | * separate attributes in Heading lits
           |                        | * disambiguate unary named Tuple sels from Pair sels
-          |                        | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
           |                        | * L1 of conceptual prefix for Bits/Blob/Text literals
@@ -2134,18 +2138,23 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     +     | quantifications/count  | * indicates an integral quantifying/count context
           |                        | * L1 of conceptual prefix for Integer literals
+          |                        | * L2 of prefix for Calendar-Duration literals
+          |                        | * indicates elevation in Geographic-Point literals
           |                        | * L2 of conceptual prefix for Blob literals
           |                        | * L1 of conceptual prefix for Bag selectors
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
-          |                        | * L2 of prefix for Calendar-Duration literals
-          |                        | * indicates elevation in Geographic-Point literals
     ------+------------------------+---------------------------------------
     /     | fractions/measures     | * indicates a fractional quantifying/count context
           |                        | * L1 of conceptual prefix for Fraction literals
           |                        | * L1 of conceptual prefix for Mix selectors
           | division               | * disambiguate Fraction lit from Integer lit
           |                        | * numerator/denominator separator in Fraction literals
+    ------+------------------------+---------------------------------------
+    @     | at/locators/when/where | * indicates temporals/spatials are featured
+          |                        | * L1 of prefix for Calendar-*, Geographic-* literals
+          |                        | * L2 of prefix for Geographic-Point literals
+          |                        | * base/offset/zone separator in Calendar-Instant lits
     ------+------------------------+---------------------------------------
     ..    | intervals/ranges       | * L1 of prefix for Interval selectors
           |                        | * L2 of prefix for Interval-Set/Interval-Bag selectors
@@ -2155,11 +2164,6 @@ that means they are used in pairs.
           |                        | * L1 of conceptual prefix for Tuple selectors
           |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
           |                        | * L2 of prefix for Calendar-Time literals
-    ------+------------------------+---------------------------------------
-    @     | at/locators/when/where | * indicates temporals/spatials are featured
-          |                        | * L1 of prefix for Calendar-*, Geographic-* literals
-          |                        | * L2 of prefix for Geographic-Point literals
-          |                        | * base/offset/zone separator in Calendar-Instant lits
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
           |                        | * L1 of prefix for Article literals/selectors

@@ -28,16 +28,20 @@ possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
 Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 
+- Devoid: Ignorance
 - Logical: Boolean
 - Numeric: Integer, Fraction
+- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Stringy: Bits, Blob, Text
+- Identifier: Nesting, Heading
+
 - Discrete: Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
-- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
-- Generic: Article, Excuse, Ignorance
-- Source Code: Nesting, Heading, Renaming
+- Generic: Article, Excuse
+
+- Source Code: Renaming
 
 A *possrep* corresponds to the concept of a *data type*, where the latter
 is characterized by a set of *values*, and one may choose to use those
@@ -88,6 +92,35 @@ The **None** possrep corresponds to the *empty type*, which is the minimal
 data type of each type system and consists of exactly zero values.
 This has no representation in any grammar, but is mentioned for parity.
 
+## Ignorance
+
+The singleton **Ignorance** value is
+characterized by an **Excuse** which simply says that an ordinary value for
+any given domain is missing and that there is simply no excuse that has
+been given for this; in other words, something has gone wrong without the
+slightest hint of an explanation.
+
+This is conceptually the most generic excuse value there is and it can
+be used by lazy programmers as a fallback for when they don't have even a
+semblance of a better explanation for why an ordinary value is missing.
+
+The **Ignorance** value has its own special syntax in MUON disjoint from
+any **Excuse** syntax so that this MUON-defined excuse doesn't step on any
+possible name that a particular external data model might use.
+
+When an external data model natively has exactly one generic *null* or
+*nil* or *undefined* or *unknown* or similar value or quasi-value,
+**Ignorance** is the official way to represent an instance of it in MUON.
+
+When an external data model natively has a concept of 3-valued logic (MUON
+itself does not), specifically a concept like such where the multiplicity
+of scenarios that may produce a special no-regular-value-is-here marker do
+in fact all produce the exact same marker, **Ignorance** is the official
+way to represent that marker.  This includes the *null* of any common
+dialect of SQL.  Whereas, for external data models that distinguish the
+reasons for why a regular value may be missing, **Ignorance** should NOT be
+used and instead other more applicable **Excuse** values should instead.
+
 ## Boolean
 
 A **Boolean** value is a general purpose
@@ -127,6 +160,93 @@ terminating decimal number.  Note that every rational number that can be
 represented as a terminating binary or octal or hexadecimal number can also
 be represented as a terminating decimal number.
 
+## Calendar Time
+
+A **Calendar Time** value is
+characterized by a **Tuple** having any subset of the 6 attributes of the
+heading `\$(year,month,day,hour,minute,second)` where each attribute is a
+**Fraction**, or alternately by an isomorphic **Mix**.  For each of the 6
+attributes, it explicitly distinguishes between the attribute value being
+specified as zero versus being unspecified; omitting the attribute entirely
+means the latter.  Its main intended purpose is to be a more generic common
+element for a variety of other, more specific time-related possreps,
+including ones representing both durations and instants, or for direct use
+with types defined by external data models.  It does *not* specifically
+represent a time of day.
+
+## Calendar Duration
+
+A **Calendar Duration** value is a
+length of time expressed in terms of the units of a standard civil or
+similar calendar.  It is characterized by a **Calendar Time**.  It is up to
+the context supplied or interpreted by an external data model to give it
+further meaning, such as whether not specifying any smallest units means an
+uncertainty interval versus treating them as zero, and so on.
+
+## Calendar Instant
+
+A **Calendar Instant** value is a
+particular moment in time expressed in terms of a standard civil or similar
+calendar.  It is characterized by an *instant base* (characterized by a
+**Calendar Time**) that is either standalone or is paired with an *instant
+offset* (characterized by a **Calendar Duration**) or an *instant zone* (a
+time zone name characterized by a **Text**).
+
+When a **Calendar Instant** consists only of an *instant base*, it
+explicitly defines a *floating* instant, either a calendar date or
+timestamp that is not associated with a specific time zone or a time zone
+offset, or it defines a time of day not associated with any particular day.
+
+When a **Calendar Instant** also has an *instant offset*, it explicitly
+defines a calendar date or time that is local to a time zone offset from
+UTC, and also indicates what that offset amount is.
+
+When a **Calendar Instant** also has an *instant zone*, it explicitly
+defines a calendar date or time that is local to a geographic time zone and
+also indicates the name of that time zone.
+
+Beyond that it is up to the context supplied or interpreted by an external
+data model to give it further meaning, such as whether it is Gregorian or
+Julian etc, or whether not specifying any largest units means a repeating
+event or not, or whether not specifying any smallest units means an
+interval or a point, and so on.  Also, it is up to the external data model
+to define what are valid time zone names; MUON accepts any **Text** value.
+
+*TODO: Consider further changes to support explicit indication of daylight
+savings time observence or similar things, which might be satisfied by
+permitting both an instant offset and zone name to be given together;
+the existing time zone name support may also indicate this by itself.*
+
+## Geographic Point
+
+A **Geographic Point** value is a
+particular point location on the Earth's surface characterized by cartesian
+coordinates named *longitude* and *latitude* and *elevation*, where each of
+the latter is characterized by a single **Fraction** value.  Each
+coordinate may be either specified or unspecified; omitting it means the
+latter and providing it, even if zero, means the former.
+
+The coordinates may be specified in any order, and are distinguished by
+their own prefix symbols.  The literal syntax has right-pointing `>` and
+up-pointing `^` arrows that are meant to visually evoke *longitude* and
+*latitude* respectively, so that it is more clear at a glance which of the
+coordinates is which.  The `+` literal syntax represents *elevation*.  A
+more-positive *longitude* is further to the East than a more-negative one,
+while a more-positive *latitude* is further to the North than a
+more-negative one, and a more-positive *elevation* is further from the
+center of the Earth than a more-negative one.
+
+While the *latitude* and *longitude* have semi-specific meanings, which
+loosely are possibly fractional degrees in the range -180..180 and -90..90
+respectively, MUON explicitly does not ascribe any specific interpretation
+to the *elevation* value, aside from it increasing away from the center of
+the Earth.  It is up to an external data model used with MUON to specify
+the *elevation* units, such as meters or feet or whatever, as well as the
+starting point, such as the center of the Earth or the surface or whatever.
+The external data model also gives the more specific meanings of *latitude*
+and *longitude*, such as whether they are along the surface of the Earth or
+something more specific.
+
 ## Bits
 
 A **Bits** value is characterized by an
@@ -162,6 +282,18 @@ may allow isolated/non-paired UTF-16 "surrogate" code points corresponding
 to integers in the set **{0xD800..0xDFFF}**.  MUON forbids the use of any
 such "character strings" using the **Text** possrep.  However, such data can
 still be conveyed using other means such as MUON's **Array**+**Integer**.
+
+## Nesting / Attribute Name List
+
+A **Nesting** value is an arbitrarily-large
+nonempty ordered collection of attribute names, intended for referencing an
+entity in a multi-level namespace, such as nested **Tuple** may implement.
+
+## Heading / Attribute Name Set
+
+A **Heading** value is an arbitrarily-large
+unordered collection of *attribute names*, such that no 2 attribute names
+are the same.
 
 ## Array
 
@@ -372,93 +504,6 @@ its *heading* and *body*, respectively.  A **Tuple Bag** is isomorphic to
 a **Relation** with the sole exception of being based on a **Bag**
 rather than a **Set**.
 
-## Calendar Time
-
-A **Calendar Time** value is
-characterized by a **Tuple** having any subset of the 6 attributes of the
-heading `\$(year,month,day,hour,minute,second)` where each attribute is a
-**Fraction**, or alternately by an isomorphic **Mix**.  For each of the 6
-attributes, it explicitly distinguishes between the attribute value being
-specified as zero versus being unspecified; omitting the attribute entirely
-means the latter.  Its main intended purpose is to be a more generic common
-element for a variety of other, more specific time-related possreps,
-including ones representing both durations and instants, or for direct use
-with types defined by external data models.  It does *not* specifically
-represent a time of day.
-
-## Calendar Duration
-
-A **Calendar Duration** value is a
-length of time expressed in terms of the units of a standard civil or
-similar calendar.  It is characterized by a **Calendar Time**.  It is up to
-the context supplied or interpreted by an external data model to give it
-further meaning, such as whether not specifying any smallest units means an
-uncertainty interval versus treating them as zero, and so on.
-
-## Calendar Instant
-
-A **Calendar Instant** value is a
-particular moment in time expressed in terms of a standard civil or similar
-calendar.  It is characterized by an *instant base* (characterized by a
-**Calendar Time**) that is either standalone or is paired with an *instant
-offset* (characterized by a **Calendar Duration**) or an *instant zone* (a
-time zone name characterized by a **Text**).
-
-When a **Calendar Instant** consists only of an *instant base*, it
-explicitly defines a *floating* instant, either a calendar date or
-timestamp that is not associated with a specific time zone or a time zone
-offset, or it defines a time of day not associated with any particular day.
-
-When a **Calendar Instant** also has an *instant offset*, it explicitly
-defines a calendar date or time that is local to a time zone offset from
-UTC, and also indicates what that offset amount is.
-
-When a **Calendar Instant** also has an *instant zone*, it explicitly
-defines a calendar date or time that is local to a geographic time zone and
-also indicates the name of that time zone.
-
-Beyond that it is up to the context supplied or interpreted by an external
-data model to give it further meaning, such as whether it is Gregorian or
-Julian etc, or whether not specifying any largest units means a repeating
-event or not, or whether not specifying any smallest units means an
-interval or a point, and so on.  Also, it is up to the external data model
-to define what are valid time zone names; MUON accepts any **Text** value.
-
-*TODO: Consider further changes to support explicit indication of daylight
-savings time observence or similar things, which might be satisfied by
-permitting both an instant offset and zone name to be given together;
-the existing time zone name support may also indicate this by itself.*
-
-## Geographic Point
-
-A **Geographic Point** value is a
-particular point location on the Earth's surface characterized by cartesian
-coordinates named *longitude* and *latitude* and *elevation*, where each of
-the latter is characterized by a single **Fraction** value.  Each
-coordinate may be either specified or unspecified; omitting it means the
-latter and providing it, even if zero, means the former.
-
-The coordinates may be specified in any order, and are distinguished by
-their own prefix symbols.  The literal syntax has right-pointing `>` and
-up-pointing `^` arrows that are meant to visually evoke *longitude* and
-*latitude* respectively, so that it is more clear at a glance which of the
-coordinates is which.  The `+` literal syntax represents *elevation*.  A
-more-positive *longitude* is further to the East than a more-negative one,
-while a more-positive *latitude* is further to the North than a
-more-negative one, and a more-positive *elevation* is further from the
-center of the Earth than a more-negative one.
-
-While the *latitude* and *longitude* have semi-specific meanings, which
-loosely are possibly fractional degrees in the range -180..180 and -90..90
-respectively, MUON explicitly does not ascribe any specific interpretation
-to the *elevation* value, aside from it increasing away from the center of
-the Earth.  It is up to an external data model used with MUON to specify
-the *elevation* units, such as meters or feet or whatever, as well as the
-starting point, such as the center of the Earth or the surface or whatever.
-The external data model also gives the more specific meanings of *latitude*
-and *longitude*, such as whether they are along the surface of the Earth or
-something more specific.
-
 ## Article / Labelled Tuple
 
 An **Article** value is characterized by the
@@ -511,47 +556,6 @@ The **Excuse** possrep is the idiomatic way for an external data model to
 represent "new" *error* or *exception* types of a nominal type system in a
 consistent way.  The counterpart **Article** possrep should *not* be used for
 these things, but rather just every other kind of externally-defined type.
-
-## Ignorance
-
-The singleton **Ignorance** value is
-characterized by an **Excuse** which simply says that an ordinary value for
-any given domain is missing and that there is simply no excuse that has
-been given for this; in other words, something has gone wrong without the
-slightest hint of an explanation.
-
-This is conceptually the most generic excuse value there is and it can
-be used by lazy programmers as a fallback for when they don't have even a
-semblance of a better explanation for why an ordinary value is missing.
-
-The **Ignorance** value has its own special syntax in MUON disjoint from
-any **Excuse** syntax so that this MUON-defined excuse doesn't step on any
-possible name that a particular external data model might use.
-
-When an external data model natively has exactly one generic *null* or
-*nil* or *undefined* or *unknown* or similar value or quasi-value,
-**Ignorance** is the official way to represent an instance of it in MUON.
-
-When an external data model natively has a concept of 3-valued logic (MUON
-itself does not), specifically a concept like such where the multiplicity
-of scenarios that may produce a special no-regular-value-is-here marker do
-in fact all produce the exact same marker, **Ignorance** is the official
-way to represent that marker.  This includes the *null* of any common
-dialect of SQL.  Whereas, for external data models that distinguish the
-reasons for why a regular value may be missing, **Ignorance** should NOT be
-used and instead other more applicable **Excuse** values should instead.
-
-## Nesting / Attribute Name List
-
-A **Nesting** value is an arbitrarily-large
-nonempty ordered collection of attribute names, intended for referencing an
-entity in a multi-level namespace, such as nested **Tuple** may implement.
-
-## Heading / Attribute Name Set
-
-A **Heading** value is an arbitrarily-large
-unordered collection of *attribute names*, such that no 2 attribute names
-are the same.
 
 ## Renaming / Attribute Name Map
 
