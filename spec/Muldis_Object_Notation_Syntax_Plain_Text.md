@@ -348,14 +348,14 @@ Grammar:
 ```
     token Ignorance
     {
-        '\\!!' <sp>? Ignorance
+        Ignorance
     }
 ```
 
 Examples:
 
 ```
-    \!!Ignorance
+    Ignorance
 ```
 
 ## Boolean

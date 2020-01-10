@@ -90,7 +90,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Ignorance
     {
-        '\\!!' <sp>? Ignorance
+        Ignorance
     }
 
 ###########################################################################

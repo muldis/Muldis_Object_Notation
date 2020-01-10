@@ -37,7 +37,8 @@
     <key>String Pattern</key>
     <string><![CDATA[(?xs:
       (
-        (False | True)
+        Ignorance
+      | (False | True)
       | (" [^"]* ")
       | ((?<!\w) 0xy ((\s | (` [^`]* `))* [A-Za-z0-9+/=]+)*)
       | ((?<!\w) [-+]? [0-9] [0-9A-Za-z_\./*^\-+]*)
