@@ -47,7 +47,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Any
     {
-        <opaque> | <collection>
+        <generic_group> | <opaque> | <collection>
+    }
+
+    token generic_group
+    {
+        '(' <sp>? <Any> <sp>? ')'
     }
 
     token opaque

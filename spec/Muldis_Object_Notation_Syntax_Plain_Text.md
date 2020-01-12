@@ -283,7 +283,12 @@ Grammar:
 ```
     token Any
     {
-        <opaque> | <collection>
+        <generic_group> | <opaque> | <collection>
+    }
+
+    token generic_group
+    {
+        '(' <sp>? <Any> <sp>? ')'
     }
 
     token opaque
@@ -325,6 +330,10 @@ Grammar:
 
 An `<Any>` represents a generic value literal that is allowed to be of any
 possrep at all, except where specifically noted otherwise.
+
+A `<generic_group>` is an optional syntactic construct to force a
+particular parsing precedence or otherwise help illustrate an existing one;
+it is not actually needed by MUON itself but can assist a superset grammar.
 
 An `<opaque>` is an `<Any>` that explicitly has no child `<Any>` nodes; in
 conventional terms, one is typically for selecting scalar values, though
@@ -2044,10 +2053,6 @@ alpha keywords or reserved words a superset may want to use.
 MUON does not use the single-quote string delimiter character `'` for
 anything, and leaves it reserved for a superset to use as it sees fit.
 
-MUON makes sure to avoid using the parenthesis pair `()` in any way that
-might be confused with a superset using it as generic grouping syntax.
-Any uses by MUON either has a `\foo` prefix or must contain a `,` or `:`.
-
 MUON does not use the semicolon `;` for anything, so a superset grammar can
 use it for things like separating statements and thus disambiguating its
 own uses of bracketing characters to define statement or expression groups.
@@ -2100,6 +2105,7 @@ that means they are used in pairs.
           |                        | * delimit Heading literals
           |                        | * delimit Pair/Tuple/Article/Excuse selectors
           |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
+          | generic grouping       | * optional delimiters around Any to force a parsing precedence
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
           |                        | * separates the 2 parts of a pair
@@ -2341,8 +2347,8 @@ single fraction value and not 4 integers separated by operators.
 
 It is expected that any programming languages whose grammar is a superset
 of MUON's will also keep this precedence over any actual prefix/infix/etc
-operators they may have, which in some case may require parenthesis to
-disambiguate that they want those operator calls instead.
+operators they may have, which in some case may require `<generic_group>`
+parenthesis to disambiguate that they want those operator calls instead.
 
 # SEE ALSO
 
