@@ -174,52 +174,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Calendar_Time
     {
-        '\\@%' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
+        0Lct [<sp>? '@' <sp>? <time_elements>]?
     }
 
-    token time_ymdhms
+    token time_elements
     {
-        <time_ymd> <sp>? ',' <sp>? <time_hms>
-    }
-
-    token time_ymd
-    {
-        <year>? <sp>? ',' <sp>? <month>? <sp>? ',' <sp>? <day>?
-    }
-
-    token time_hms
-    {
-        <hour>? <sp>? ',' <sp>? <minute>? <sp>? ',' <sp>? <second>?
-    }
-
-    token year
-    {
-        <loc_multiplicity>
-    }
-
-    token month
-    {
-        <loc_multiplicity>
-    }
-
-    token day
-    {
-        <loc_multiplicity>
-    }
-
-    token hour
-    {
-        <loc_multiplicity>
-    }
-
-    token minute
-    {
-        <loc_multiplicity>
-    }
-
-    token second
-    {
-        <loc_multiplicity>
+        [<[ymdhis]> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
     }
 
     token loc_multiplicity
@@ -231,27 +191,26 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Calendar_Duration
     {
-        '\\@+' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
+        0Lcd [<sp>? '@' <sp>? <time_elements>]?
     }
 
 ###########################################################################
 
     token Calendar_Instant
     {
-        '\\@' <sp>?
-        '(' <sp>?
-            <instant_base> [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
-        <sp>? ')'
+        0Lci [<sp>? '@' <sp>? <instant_base>
+            [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
+        ]?
     }
 
     token instant_base
     {
-        <time_ymdhms>
+        <time_elements>
     }
 
     token instant_offset
     {
-        <time_hms>
+        <time_elements>
     }
 
     token instant_zone
@@ -263,25 +222,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Geographic_Point
     {
-        '\\@@' <sp>?
-        '(' <sp>?
-            [[<longitude> | <latitude> | <elevation>]* % [<sp>? ',' <sp>?]]
-        <sp>? ')'
+        0Lgp [<sp>? '@' <sp>? <geo_elements>]?
     }
 
-    token longitude
+    token geo_elements
     {
-        '>' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-
-    token latitude
-    {
-        '^' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-
-    token elevation
-    {
-        '+' <sp>? ':' <sp>? <loc_multiplicity>
+        [<[>^+]> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
     }
 
 ###########################################################################

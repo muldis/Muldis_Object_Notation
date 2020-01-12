@@ -24,10 +24,10 @@ its part name is `Syntax_Plain_Text`.
     Muldis_Content_Predicate`
 
     \?%{
-        (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
+        (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
             phone_numbers : \?{"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : \?{}),
-        (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
+        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \?{}),
+        (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
             phone_numbers : \?{"+81.9072391679"}),
     }
 ```
@@ -589,52 +589,12 @@ Grammar:
 ```
     token Calendar_Time
     {
-        '\\@%' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
+        0Lct [<sp>? '@' <sp>? <time_elements>]?
     }
 
-    token time_ymdhms
+    token time_elements
     {
-        <time_ymd> <sp>? ',' <sp>? <time_hms>
-    }
-
-    token time_ymd
-    {
-        <year>? <sp>? ',' <sp>? <month>? <sp>? ',' <sp>? <day>?
-    }
-
-    token time_hms
-    {
-        <hour>? <sp>? ',' <sp>? <minute>? <sp>? ',' <sp>? <second>?
-    }
-
-    token year
-    {
-        <loc_multiplicity>
-    }
-
-    token month
-    {
-        <loc_multiplicity>
-    }
-
-    token day
-    {
-        <loc_multiplicity>
-    }
-
-    token hour
-    {
-        <loc_multiplicity>
-    }
-
-    token minute
-    {
-        <loc_multiplicity>
-    }
-
-    token second
-    {
-        <loc_multiplicity>
+        [<[ymdhis]> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
     }
 
     token loc_multiplicity
@@ -647,34 +607,34 @@ Examples:
 
 ```
     `No measurement was taken or specified at all.`
-    \@%(,,,,,)
+    0Lct
 
     `Either an unspecified period in 1970 or a duration of 1970 years.`
-    \@%(1970,,,,,)
+    0Lct@y1970
 
     `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
-    \@%(2015,5,3,,,)
+    0Lct@y2015|m5|d3
 
     `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
-    \@%(1998,,300,,,)
+    0Lct@y1998|d300
 
     `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
-    \@%(1776,,42,,,)
+    0Lct@y1776|d42
 
     `Either the first quarter of 1953 or a duration of 1953.25 years.`
-    \@%(1953.25,,,,,)
+    0Lct@y1953.25
 
     `Either high noon on an unspecified day or a duration of 12 hours.`
-    \@%(,,,12,0,0)
+    0Lct@h12|i0|s0
 
     `Either a fully specified civil date and time or a 6-part duration.`
-    \@%(1884,10,17,20,55,30)
+    0Lct@y1884|m10|d17|h20|i55|s30
 
     `Either an ancient date and time or a negative duration.`
-    \@%(-370,1,24,11,0,0)
+    0Lct@y-370|m1|d24|h11|i0|s0
 
     `Either a time on some unspecified day or a duration of seconds.`
-    \@%(,,,,,5923.21124603)
+    0Lct@s5923.21124603
 ```
 
 ## Calendar Duration
@@ -686,7 +646,7 @@ Grammar:
 ```
     token Calendar_Duration
     {
-        '\\@+' <sp>? '(' <sp>? <time_ymdhms> <sp>? ')'
+        0Lcd [<sp>? '@' <sp>? <time_elements>]?
     }
 ```
 
@@ -694,10 +654,10 @@ Examples:
 
 ```
     `Addition of 2 years and 3 months.`
-    \@+(2,3,0,0,0,0)
+    0Lcd@y2|m3|d0|h0|i0|s0
 
     `Subtraction of 22 hours.`
-    \@+(0,0,0,-22,0,0)
+    0Lcd@y0|m0|d0|h-22|i0|s0
 ```
 
 ## Calendar Instant
@@ -709,20 +669,19 @@ Grammar:
 ```
     token Calendar_Instant
     {
-        '\\@' <sp>?
-        '(' <sp>?
-            <instant_base> [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
-        <sp>? ')'
+        0Lci [<sp>? '@' <sp>? <instant_base>
+            [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
+        ]?
     }
 
     token instant_base
     {
-        <time_ymdhms>
+        <time_elements>
     }
 
     token instant_offset
     {
-        <time_hms>
+        <time_elements>
     }
 
     token instant_zone
@@ -735,19 +694,19 @@ Examples:
 
 ```
     `The Day The Music Died (if paired with Gregorian calendar).`
-    \@(1959,2,3,,,)
+    0Lci@y1959|m2|d3
 
     `A time of day when one might have breakfast.`
-    \@(,,,7,30,0)
+    0Lci@h7|i30|s0
 
     `What was now in the Pacific zone (if paired with Gregorian calendar).`
-    \@(2018,9,3,20,51,17@-8,0,0)
+    0Lci@y2018|m9|d3|h20|i51|s17@h-8|i0|s0
 
     `A time of day in the UTC zone on an unspecified day.`
-    \@(,,,9,25,0@0,0,0)
+    0Lci@h9|i25|s0@h0|i0|s0
 
     `A specific day and time in the Pacific Standard Time zone.`
-    \@(2001,4,16,20,1,44@"PST")
+    0Lci@y2001|m4|d16|h20|i1|s44@"PST"
 ```
 
 ## Geographic Point
@@ -759,25 +718,12 @@ Grammar:
 ```
     token Geographic_Point
     {
-        '\\@@' <sp>?
-        '(' <sp>?
-            [[<longitude> | <latitude> | <elevation>]* % [<sp>? ',' <sp>?]]
-        <sp>? ')'
+        0Lgp [<sp>? '@' <sp>? <geo_elements>]?
     }
 
-    token longitude
+    token geo_elements
     {
-        '>' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-
-    token latitude
-    {
-        '^' <sp>? ':' <sp>? <loc_multiplicity>
-    }
-
-    token elevation
-    {
-        '+' <sp>? ':' <sp>? <loc_multiplicity>
+        [<[>^+]> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
     }
 ```
 
@@ -785,22 +731,22 @@ Examples:
 
 ```
     `No specified coordinates at all.`
-    \@@()
+    0Lgp
 
     `Just an elevation specified.`
-    \@@(+ : 920)
+    0Lgp@+920
 
     `Geographic surface coordinates of Googleplex; elevation not specified.`
-    \@@(> : -122.0857017, ^ : 37.4218363)
+    0Lgp@>-122.0857017|^37.4218363
 
     `Same thing.`
-    \@@(^ : 37.4218363, > : -122.0857017)
+    0Lgp@^37.4218363|>-122.0857017
 
     `Some location with all coordinates specified.`
-    \@@(> : -101, ^ : -70, + : 1000)
+    0Lgp@>-101|^-70|+1000
 
     `Another place.`
-    \@@(> : -94.746094, ^ : 37.483577)
+    0Lgp@>-94.746094|^37.483577
 ```
 
 ## Bits
@@ -1404,7 +1350,7 @@ Examples:
     \..{"a"-.."z"}
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
-    \..{\@(2002,12,6,,,@"UTC") -..- \@(2002,12,20,,,@"UTC")}
+    \..{0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"}
 
     `Left-unbounded, right-closed interval; every Integer <= 3.`
     \..{*..3}
@@ -1740,10 +1686,10 @@ Examples:
 
     `Some people records.`
     \?%{
-        (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
+        (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
             phone_numbers : \?{"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : \?{}),
-        (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
+        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \?{}),
+        (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
             phone_numbers : \?{"+81.9072391679"}),
     }
 ```
@@ -2091,7 +2037,6 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ()    | aordered collections   | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs
-          |                        | * delimit Calendar-*, Geographic-* literals
           |                        | * delimit Heading literals
           |                        | * delimit Pair/Tuple/Article/Excuse selectors
           |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
@@ -2110,7 +2055,6 @@ that means they are used in pairs.
           |                        | * disambiguate Pair sels from generic_group
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
-          |                        | * separate elements in Calendar-*, Geographic-* lits
           |                        | * separate attributes in Heading lits
           |                        | * separate members in Array/Set/Bag/Mix sels
           |                        | * separate members in nonempty-TA/Rel/TB sels
@@ -2131,7 +2075,6 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     +     | quantifications/count  | * indicates an integral quantifying/count context
           |                        | * L1 of conceptual prefix for Integer literals
-          |                        | * L2 of prefix for Calendar-Duration literals
           |                        | * indicates elevation in Geographic-Point literals
           |                        | * L2 of conceptual prefix for Blob literals
           |                        | * L1 of prefix for Bag selectors
@@ -2145,9 +2088,10 @@ that means they are used in pairs.
           |                        | * numerator/denominator separator in Fraction literals
     ------+------------------------+---------------------------------------
     @     | at/locators/when/where | * indicates temporals/spatials are featured
-          |                        | * L1 of prefix for Calendar-*, Geographic-* literals
-          |                        | * L2 of prefix for Geographic-Point literals
+          |                        | * prefix/main separator for Calendar-*, Geographic-* literals
           |                        | * base/offset/zone separator in Calendar-Instant lits
+    ------+------------------------+---------------------------------------
+    |     | simple collections     | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
     ..    | intervals/ranges       | * L1 of prefix for Interval selectors
           |                        | * L2 of prefix for Interval-Set/Interval-Bag selectors
@@ -2156,7 +2100,6 @@ that means they are used in pairs.
     %     | tuples/heterogeneous   | * indicates that tuples are featured
           |                        | * L1 of conceptual prefix for Tuple selectors
           |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
-          |                        | * L2 of prefix for Calendar-Time literals
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
           |                        | * L1 of prefix for Article literals/selectors
@@ -2201,6 +2144,9 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     0c    | character code point   | * indicates a Unicode character code point
           |                        | * prefix for code-point-Text lit; 0cb/0co/0cd/0cx means in base-2/8/10/16
+    ------+------------------------+---------------------------------------
+    0L    | locator                | * indicates a temporal or spatial value
+          |                        | * prefix for Calendar-*, Geographic-* literals; 0Lct/0Lcd/0Lci/0Lgp
     ------+------------------------+---------------------------------------
 
     When combining symbols in a \XY prefix (L0+L1+L2) to represent both
@@ -2268,13 +2214,12 @@ longest token always wins:
     \~%
     \?%
     \+%
-    \@
-    \@%
-    \@+
-    \@@
+    \~
+    \?
+    \+
+    \/
     \*
     \!
-    \!!
     \
     \$
     \$:
