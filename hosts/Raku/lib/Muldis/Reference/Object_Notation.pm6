@@ -414,7 +414,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval
     {
-        '\\..' <sp>? '{' <sp>? <interval_members> <sp>? '}'
+        '{' <sp>? <interval_members> <sp>? '}'
     }
 
     token interval_members

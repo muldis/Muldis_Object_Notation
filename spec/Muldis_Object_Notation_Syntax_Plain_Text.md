@@ -1297,7 +1297,7 @@ Grammar:
 ```
     token Interval
     {
-        '\\..' <sp>? '{' <sp>? <interval_members> <sp>? '}'
+        '{' <sp>? <interval_members> <sp>? '}'
     }
 
     token interval_members
@@ -1335,31 +1335,31 @@ Examples:
 
 ```
     `Empty interval (zero members).`
-    \..{}
+    {}
 
     `Unit interval (one member).`
-    \..{"abc"}
+    {"abc"}
 
     `Closed interval (probably 10 members, depending on the model used).`
-    \..{1..10}
+    {1..10}
 
     `Left-closed, right-open interval; every Fraction x in {2.7<=x<9.3}.`
-    \..{2.7..-9.3}
+    {2.7..-9.3}
 
     `Left-open, right-closed interval; every Text x ordered in {"a"<x<="z"}.`
-    \..{"a"-.."z"}
+    {"a"-.."z"}
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
-    \..{0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"}
+    {0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"}
 
     `Left-unbounded, right-closed interval; every Integer <= 3.`
-    \..{*..3}
+    {*..3}
 
     `Left-closed, right-unbounded interval; every Integer >= 29.`
-    \..{29..*}
+    {29..*}
 
     `Universal interval; unbounded; every value of type system is a member.`
-    \..{*..*}
+    {*..*}
 ```
 
 ## Interval Set
@@ -1956,6 +1956,7 @@ actually used, and so are called *conceptual prefixes*:
     \%     | Tuple           | () or (...) with >= 1 comma
     \~?    | Bits            | prefix 0bb or 0bo or 0bx
     \~+    | Blob            | prefix 0xb or 0xx or 0xy
+    \..    | Interval        | only {} or {...} without mandatory prefix
 ```
 
 A few more symbolic prefixes are currently not used but would be used if
@@ -2093,7 +2094,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     |     | simple collections     | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
-    ..    | intervals/ranges       | * L1 of prefix for Interval selectors
+    ..    | intervals/ranges       | * L1 of conceptual prefix for Interval selectors
           |                        | * L2 of prefix for Interval-Set/Interval-Bag selectors
           |                        | * pair separator in Interval/Ivl-Set/Ivl-Bag selectors
     ------+------------------------+---------------------------------------
@@ -2208,7 +2209,6 @@ longest token always wins:
     }
     (
     )
-    \..
     \?..
     \+..
     \~%
