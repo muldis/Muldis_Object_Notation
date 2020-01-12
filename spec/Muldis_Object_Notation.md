@@ -23,12 +23,12 @@ its part name is `Overview`.
     MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
     Muldis_Content_Predicate`
 
-    \?%{
+    \Relation\{
         (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-            phone_numbers : \?{"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \?{}),
+            phone_numbers : \Set\{"+1.4045552995", "+1.7705557572"}),
+        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \Set\{}),
         (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-            phone_numbers : \?{"+81.9072391679"}),
+            phone_numbers : \Set\{"+81.9072391679"}),
     }
 ```
 

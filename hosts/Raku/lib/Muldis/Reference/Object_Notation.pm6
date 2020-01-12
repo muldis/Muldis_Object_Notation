@@ -95,7 +95,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Ignorance
     {
-        Ignorance
+        '\\Ignorance\\'
     }
 
 ###########################################################################
@@ -329,7 +329,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Heading
     {
-        '\\\$' <sp>? <heading_attr_names>
+        '\\Heading\\' <sp>? <heading_attr_names>
     }
 
     token heading_attr_names
@@ -360,7 +360,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Array
     {
-        '\\~' <sp>? '[' <sp>?
+        '\\Array\\' <sp>? '[' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -371,7 +371,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Set
     {
-        '\\?' <sp>? '{' <sp>?
+        '\\Set\\' <sp>? '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -382,7 +382,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Bag
     {
-        '\\+' <sp>? '{' <sp>?
+        '\\Bag\\' <sp>? '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -398,7 +398,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Mix
     {
-        '\\/' <sp>? '{' <sp>?
+        '\\Mix\\' <sp>? '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -451,7 +451,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval_Set
     {
-        '\\?..' <sp>?
+        '\\Interval_Set\\' <sp>?
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
@@ -463,7 +463,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval_Bag
     {
-        '\\+..' <sp>?
+        '\\Interval_Bag\\' <sp>?
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
@@ -533,7 +533,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_Array
     {
-        '\\~%' <sp>? [<heading_attr_names> | <tuple_array_nonempty>]
+        '\\Tuple_Array\\' <sp>? [<heading_attr_names> | <tuple_array_nonempty>]
     }
 
     token tuple_array_nonempty
@@ -549,7 +549,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Relation
     {
-        '\\?%' <sp>? [<heading_attr_names> | <relation_nonempty>]
+        '\\Relation\\' <sp>? [<heading_attr_names> | <relation_nonempty>]
     }
 
     token relation_nonempty
@@ -565,7 +565,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_Bag
     {
-        '\\+%' <sp>? [<heading_attr_names> | <tuple_bag_nonempty>]
+        '\\Tuple_Bag\\' <sp>? [<heading_attr_names> | <tuple_bag_nonempty>]
     }
 
     token tuple_bag_nonempty
@@ -581,7 +581,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Article
     {
-        '\\*' <sp>? [<label_sans_attrs> | <label_with_attrs>]
+        '\\Article\\' <sp>? [<label_sans_attrs> | <label_with_attrs>]
     }
 
     token label_sans_attrs
@@ -613,14 +613,14 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Excuse
     {
-        '\\!' <sp>? [<label_sans_attrs> | <label_with_attrs>]
+        '\\Excuse\\' <sp>? [<label_sans_attrs> | <label_with_attrs>]
     }
 
 ###########################################################################
 
     token Renaming
     {
-        '\\\$:' <sp>?
+        '\\Renaming\\' <sp>?
         '(' <sp>?
             [',' <sp>?]?
             [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]

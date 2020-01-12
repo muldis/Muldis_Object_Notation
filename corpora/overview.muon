@@ -16,7 +16,7 @@ Muldis_Content_Predicate`
 
     `$$$` Ignorance : (
 
-        Ignorance,
+        \Ignorance\,
 
     ),
 
@@ -288,34 +288,34 @@ Muldis_Content_Predicate`
     `$$$` Heading : (
 
         `Zero attributes.`
-        \$(),
+        \Heading\(),
 
         `One named attribute.`
-        \$(sales),
+        \Heading\(sales),
 
         `Same thing.`
-        \$("sales"),
+        \Heading\("sales"),
 
         `One ordered attribute.`
-        \$(0c0),
+        \Heading\(0c0),
 
         `Same thing.`
-        \$("\\<0c0>"),
+        \Heading\("\\<0c0>"),
 
         `Three named attributes.`
-        \$(region,revenue,qty),
+        \Heading\(region,revenue,qty),
 
         `Three ordered attributes.`
-        \$(0c0..0c2),
+        \Heading\(0c0..0c2),
 
         `One of each.`
-        \$(0c1,age),
+        \Heading\(0c1,age),
 
         `Some attribute names can only appear quoted.`
-        \$("Street Address"),
+        \Heading\("Street Address"),
 
         `A non-Latin name.`
-        \$("サンプル"),
+        \Heading\("サンプル"),
 
     ),
 
@@ -324,20 +324,20 @@ Muldis_Content_Predicate`
     `$$$` Array : (
 
         `Zero members.`
-        \~[],
+        \Array\[],
 
         `One member.`
-        \~[ "You got it!" ],
+        \Array\[ "You got it!" ],
 
         `Three members.`
-        \~[
+        \Array\[
             "Alphonse",
             "Edward",
             "Winry",
         ],
 
         `Five members (1 duplicate).`
-        \~[
+        \Array\[
             57,
             45,
             63,
@@ -346,7 +346,7 @@ Muldis_Content_Predicate`
         ],
 
         `32 members (28 duplicates in 2 runs).`
-        \~[
+        \Array\[
             "/",
             "*" : 20,
             "+" : 10,
@@ -360,13 +360,13 @@ Muldis_Content_Predicate`
     `$$$` Set : (
 
         `Zero members.`
-        \?{},
+        \Set\{},
 
         `One member.`
-        \?{ "I know this one!" },
+        \Set\{ "I know this one!" },
 
         `Four members (no duplicates).`
-        \?{
+        \Set\{
             "Canada",
             "Spain",
             "Jordan",
@@ -375,14 +375,14 @@ Muldis_Content_Predicate`
         },
 
         `Three members.`
-        \?{
+        \Set\{
             3,
             16,
             85,
         },
 
         `Two members.`
-        \?{
+        \Set\{
             21 : True,
             62 : False,
             3 : True,
@@ -396,20 +396,20 @@ Muldis_Content_Predicate`
     `$$$` Bag : (
 
         `Zero members.`
-        \+{},
+        \Bag\{},
 
         `One member.`
-        \+{ "I hear that!": 1 },
+        \Bag\{ "I hear that!": 1 },
 
         `1200 members (1197 duplicates).`
-        \+{
+        \Bag\{
             "Apple"  : 500,
             "Orange" : 300,
             "Banana" : 400,
         },
 
         `Six members (2 duplicates).`
-        \+{
+        \Bag\{
             "Foo" : 1,
             "Quux" : 1,
             "Foo" : 1,
@@ -425,19 +425,19 @@ Muldis_Content_Predicate`
     `$$$` Mix : (
 
         `Zero members; we measured zero of nothing in particular.`
-        \/{},
+        \Mix\{},
 
         `One member; one gram of mass.`
-        \/{\Gram: 1.0},
+        \Mix\{\Gram: 1.0},
 
         `29.95 members (28.95 duplicates); the cost of a surgery.`
-        \/{\USD: 29.95},
+        \Mix\{\USD: 29.95},
 
         `9.8 members; acceleration under Earth's gravity.`
-        \/{\Meter_Per_Second_Squared: 9.8},
+        \Mix\{\Meter_Per_Second_Squared: 9.8},
 
         `0.615 members (fractions of 3 distinct members); recipe.`
-        \/{
+        \Mix\{
             \Butter : 0.22,
             \Sugar  : 0.1,
             \Flour  : 0.275,
@@ -445,14 +445,14 @@ Muldis_Content_Predicate`
         },
 
         `4/3 members (fractions of 3 distinct members); this-mix.`
-        \/{
+        \Mix\{
             "Sugar": 1/3,
             "Spice": 1/4,
             "All_Things_Nice": 3/4,
         },
 
         `-1.5 members; adjustment for recipe.`
-        \/{
+        \Mix\{
             "Rice": +4.0,
             "Beans": -5.7,
             "Carrots": +0.2,
@@ -498,28 +498,28 @@ Muldis_Content_Predicate`
     `$$$` Interval_Set : (
 
         `Empty interval-set (zero members).`
-        \?..{},
+        \Interval_Set\{},
 
         `Unit interval-set (one member).`
-        \?..{"abc"},
+        \Interval_Set\{"abc"},
 
         `Probably 10 members, depending on the model used.`
-        \?..{1..10},
+        \Interval_Set\{1..10},
 
         `Probably 6 members.`
-        \?..{1..3,6,8..9},
+        \Interval_Set\{1..3,6,8..9},
 
         `Every Integer x except for {4..13,22..28}`
-        \?..{*..3,14..21,29..*},
+        \Interval_Set\{*..3,14..21,29..*},
 
         `Set of all valid Unicode code points.`
-        \?..{0..0xD7FF,0xE000..0x10FFFF},
+        \Interval_Set\{0..0xD7FF,0xE000..0x10FFFF},
 
         `Probably 15 members (no duplicates), depending on the model used.`
-        \?..{1..10,6..15},
+        \Interval_Set\{1..10,6..15},
 
         `Probably same thing, regardless of data model used.`
-        \?..{1..-6,6..10:2,10-..15},
+        \Interval_Set\{1..-6,6..10:2,10-..15},
 
     ),
 
@@ -528,19 +528,19 @@ Muldis_Content_Predicate`
     `$$$` Interval_Bag : (
 
         `Empty interval-bag (zero members).`
-        \+..{},
+        \Interval_Bag\{},
 
         `Unit interval-bag (one member).`
-        \+..{"abc"},
+        \Interval_Bag\{"abc"},
 
         `Five members (4 duplicates).`
-        \+..{"def":5},
+        \Interval_Bag\{"def":5},
 
         `Probably 20 members (5 duplicates), depending on the model used.`
-        \+..{1..10,6..15},
+        \Interval_Bag\{1..10,6..15},
 
         `Probably same thing, regardless of data model used.`
-        \+..{1..-6,6..10:2,10-..15},
+        \Interval_Bag\{1..-6,6..10:2,10-..15},
 
     ),
 
@@ -622,26 +622,26 @@ Muldis_Content_Predicate`
     `$$$` Tuple_Array : (
 
         `Zero attributes + zero tuples.`
-        \~%(),
+        \Tuple_Array\(),
 
         `Zero attributes + one tuple.`
-        \~%[()],
+        \Tuple_Array\[()],
 
         `Three named attributes + zero tuples.`
-        \~%(x,y,z),
+        \Tuple_Array\(x,y,z),
 
         `Three positional attributes + zero tuples.`
-        \~%(0c0..0c2),
+        \Tuple_Array\(0c0..0c2),
 
         `Two named attributes + three tuples (1 duplicate).`
-        \~%[
+        \Tuple_Array\[
             (name: "Amy"     , age: 14),
             (name: "Michelle", age: 17),
             (name: "Amy"     , age: 14),
         ],
 
         `Two positional attributes + two tuples.`
-        \~%[
+        \Tuple_Array\[
             ("Michelle", 17),
             ("Amy"     , 14),
         ],
@@ -653,36 +653,36 @@ Muldis_Content_Predicate`
     `$$$` Relation : (
 
         `Zero attributes + zero tuples.`
-        \?%(),
+        \Relation\(),
 
         `Zero attributes + one tuple.`
-        \?%{()},
+        \Relation\{()},
 
         `Three named attributes + zero tuples.`
-        \?%(x,y,z),
+        \Relation\(x,y,z),
 
         `Three positional attributes + zero tuples.`
-        \?%(0c0..0c2),
+        \Relation\(0c0..0c2),
 
         `Two named attributes + two tuples.`
-        \?%{
+        \Relation\{
             (name: "Michelle", age: 17),
             (name: "Amy"     , age: 14),
         },
 
         `Two positional attributes + two tuples.`
-        \?%{
+        \Relation\{
             ("Michelle", 17),
             ("Amy"     , 14),
         },
 
        `Some people records.`
-        \?%{
+        \Relation\{
             (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-                phone_numbers : \?{"+1.4045552995", "+1.7705557572"}),
-            (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \?{}),
+                phone_numbers : \Set\{"+1.4045552995", "+1.7705557572"}),
+            (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \Set\{}),
             (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-                phone_numbers : \?{"+81.9072391679"}),
+                phone_numbers : \Set\{"+81.9072391679"}),
         },
 
     ),
@@ -692,25 +692,25 @@ Muldis_Content_Predicate`
     `$$$` Tuple_Bag : (
 
         `Zero attributes + zero tuples.`
-        \+%(),
+        \Tuple_Bag\(),
 
         `Zero attributes + one tuple.`
-        \+%{()},
+        \Tuple_Bag\{()},
 
         `Three named attributes + zero tuples.`
-        \+%(x,y,z),
+        \Tuple_Bag\(x,y,z),
 
         `Three positional attributes + zero tuples.`
-        \+%(0c0..0c2),
+        \Tuple_Bag\(0c0..0c2),
 
         `Two named attributes + six tuples (4 duplicates).`
-        \+%{
+        \Tuple_Bag\{
             (name: "Michelle", age: 17),
             (name: "Amy"     , age: 14) : 5,
         },
 
         `Two positional attributes + two tuples.`
-        \+%{
+        \Tuple_Bag\{
             ("Michelle", 17),
             ("Amy"     , 14),
         },
@@ -721,15 +721,15 @@ Muldis_Content_Predicate`
 
     `$$$` Article : (
 
-        \*(\Point : (x : 5, y : 3)),
+        \Article\(\Point : (x : 5, y : 3)),
 
-        \*(\Float : (
+        \Article\(\Float : (
             significand : 45207196,
             radix       : 10,
             exponent    : 37,
         )),
 
-        \*(\the_db::UTCDateTime : (
+        \Article\(\the_db::UTCDateTime : (
             year   : 2003,
             month  : 10,
             day    : 26,
@@ -738,9 +738,9 @@ Muldis_Content_Predicate`
             second : 0.0,
         )),
 
-        \*Positive_Infinity,
+        \Article\Positive_Infinity,
 
-        \*Negative_Zero,
+        \Article\Negative_Zero,
 
     ),
 
@@ -748,11 +748,11 @@ Muldis_Content_Predicate`
 
     `$$$` Excuse : (
 
-        \!(\Input_Field_Wrong : (name : "Your Age")),
+        \Excuse\(\Input_Field_Wrong : (name : "Your Age")),
 
-        \!Div_By_Zero,
+        \Excuse\Div_By_Zero,
 
-        \!No_Such_Attr_Name,
+        \Excuse\No_Such_Attr_Name,
 
     ),
 
@@ -761,40 +761,40 @@ Muldis_Content_Predicate`
     `$$$` Renaming : (
 
         `Zero renamings, a no-op.`
-        \$:(),
+        \Renaming\(),
 
         `Also a no-op.`
-        \$:(age->age),
+        \Renaming\(age->age),
 
         `Rename one attribute.`
-        \$:(fname->first_name),
+        \Renaming\(fname->first_name),
 
         `Same thing.`
-        \$:(first_name<-fname),
+        \Renaming\(first_name<-fname),
 
         `Swap 2 named attributes.`
-        \$:(foo->bar,foo<-bar),
+        \Renaming\(foo->bar,foo<-bar),
 
         `Convert ordered names to nonordered.`
-        \$:(->foo,->bar),
+        \Renaming\(->foo,->bar),
 
         `Same thing.`
-        \$:(0c0->foo,0c1->bar),
+        \Renaming\(0c0->foo,0c1->bar),
 
         `Convert nonordered names to ordered.`
-        \$:(<-foo,<-bar),
+        \Renaming\(<-foo,<-bar),
 
         `Same thing.`
-        \$:(0c0<-foo,0c1<-bar),
+        \Renaming\(0c0<-foo,0c1<-bar),
 
         `Swap 2 ordered attributes.`
-        \$:(0c0->0c1,0c0<-0c1),
+        \Renaming\(0c0->0c1,0c0<-0c1),
 
         `Same thing.`
-        \$:(->0c1,->0c0),
+        \Renaming\(->0c1,->0c0),
 
         `Some attribute names can only appear quoted.`
-        \$:("First Name"->"Last Name"),
+        \Renaming\("First Name"->"Last Name"),
 
     ),
 

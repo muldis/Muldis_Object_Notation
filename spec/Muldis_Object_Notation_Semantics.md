@@ -164,8 +164,8 @@ be represented as a terminating decimal number.
 
 A **Calendar Time** value is
 characterized by a **Tuple** having any subset of the 6 attributes of the
-heading `\$(year,month,day,hour,minute,second)`
-or `\$(y,m,d,h,i,s)` where each attribute is a
+heading `\Heading\(year,month,day,hour,minute,second)`
+or `\Heading\(y,m,d,h,i,s)` where each attribute is a
 **Fraction**, or alternately by an isomorphic **Mix**.  For each of the 6
 attributes, it explicitly distinguishes between the attribute value being
 specified as zero versus being unspecified; omitting the attribute entirely

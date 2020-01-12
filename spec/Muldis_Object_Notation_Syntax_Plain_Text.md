@@ -23,12 +23,12 @@ its part name is `Syntax_Plain_Text`.
     MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
     Muldis_Content_Predicate`
 
-    \?%{
+    \Relation\{
         (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-            phone_numbers : \?{"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \?{}),
+            phone_numbers : \Set\{"+1.4045552995", "+1.7705557572"}),
+        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \Set\{}),
         (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-            phone_numbers : \?{"+81.9072391679"}),
+            phone_numbers : \Set\{"+81.9072391679"}),
     }
 ```
 
@@ -266,11 +266,11 @@ Examples:
 
 ```
     (
-        `$$$` My_Func : \*(\Function : ...),
+        `$$$` My_Func : \Article\(\Function : ...),
 
-        `$$$` My_Proc_1 : \*(\Procedure : ...),
+        `$$$` My_Proc_1 : \Article\(\Procedure : ...),
 
-        `$$$` My_Proc_2 : \*(\Procedure : ...),
+        `$$$` My_Proc_2 : \Article\(\Procedure : ...),
     )
 ```
 
@@ -357,14 +357,14 @@ Grammar:
 ```
     token Ignorance
     {
-        Ignorance
+        '\\Ignorance\\'
     }
 ```
 
 Examples:
 
 ```
-    Ignorance
+    \Ignorance\
 ```
 
 ## Boolean
@@ -1011,7 +1011,7 @@ Grammar:
 ```
     token Heading
     {
-        '\\\$' <sp>? <heading_attr_names>
+        '\\Heading\\' <sp>? <heading_attr_names>
     }
 
     token heading_attr_names
@@ -1047,34 +1047,34 @@ Examples:
 
 ```
     `Zero attributes.`
-    \$()
+    \Heading\()
 
     `One named attribute.`
-    \$(sales)
+    \Heading\(sales)
 
     `Same thing.`
-    \$("sales")
+    \Heading\("sales")
 
     `One ordered attribute.`
-    \$(0c0)
+    \Heading\(0c0)
 
     `Same thing.`
-    \$("\\<0c0>")
+    \Heading\("\\<0c0>")
 
     `Three named attributes.`
-    \$(region,revenue,qty)
+    \Heading\(region,revenue,qty)
 
     `Three ordered attributes.`
-    \$(0c0..0c2)
+    \Heading\(0c0..0c2)
 
     `One of each.`
-    \$(0c1,age)
+    \Heading\(0c1,age)
 
     `Some attribute names can only appear quoted.`
-    \$("Street Address")
+    \Heading\("Street Address")
 
     `A non-Latin name.`
-    \$("サンプル")
+    \Heading\("サンプル")
 ```
 
 ## Array
@@ -1086,7 +1086,7 @@ Grammar:
 ```
     token Array
     {
-        '\\~' <sp>? '[' <sp>?
+        '\\Array\\' <sp>? '[' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1098,20 +1098,20 @@ Examples:
 
 ```
     `Zero members.`
-    \~[]
+    \Array\[]
 
     `One member.`
-    \~[ "You got it!" ]
+    \Array\[ "You got it!" ]
 
     `Three members.`
-    \~[
+    \Array\[
         "Alphonse",
         "Edward",
         "Winry",
     ]
 
     `Five members (1 duplicate).`
-    \~[
+    \Array\[
         57,
         45,
         63,
@@ -1120,7 +1120,7 @@ Examples:
     ]
 
     `32 members (28 duplicates in 2 runs).`
-    \~[
+    \Array\[
         "/",
         "*" : 20,
         "+" : 10,
@@ -1137,7 +1137,7 @@ Grammar:
 ```
     token Set
     {
-        '\\?' <sp>? '{' <sp>?
+        '\\Set\\' <sp>? '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1149,13 +1149,13 @@ Examples:
 
 ```
     `Zero members.`
-    \?{}
+    \Set\{}
 
     `One member.`
-    \?{ "I know this one!" }
+    \Set\{ "I know this one!" }
 
     `Four members (no duplicates).`
-    \?{
+    \Set\{
         "Canada",
         "Spain",
         "Jordan",
@@ -1164,14 +1164,14 @@ Examples:
     }
 
     `Three members.`
-    \?{
+    \Set\{
         3,
         16,
         85,
     }
 
     `Two members.`
-    \?{
+    \Set\{
         21 : True,
         62 : False,
         3 : True,
@@ -1188,7 +1188,7 @@ Grammar:
 ```
     token Bag
     {
-        '\\+' <sp>? '{' <sp>?
+        '\\Bag\\' <sp>? '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1205,20 +1205,20 @@ Examples:
 
 ```
     `Zero members.`
-    \+{}
+    \Bag\{}
 
     `One member.`
-    \+{ "I hear that!": 1 }
+    \Bag\{ "I hear that!": 1 }
 
     `1200 members (1197 duplicates).`
-    \+{
+    \Bag\{
         "Apple"  : 500,
         "Orange" : 300,
         "Banana" : 400,
     }
 
     `Six members (2 duplicates).`
-    \+{
+    \Bag\{
         "Foo" : 1,
         "Quux" : 1,
         "Foo" : 1,
@@ -1237,7 +1237,7 @@ Grammar:
 ```
     token Mix
     {
-        '\\/' <sp>? '{' <sp>?
+        '\\Mix\\' <sp>? '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1254,19 +1254,19 @@ Examples:
 
 ```
     `Zero members; we measured zero of nothing in particular.`
-    \/{}
+    \Mix\{}
 
     `One member; one gram of mass.`
-    \/{\Gram: 1.0}
+    \Mix\{\Gram: 1.0}
 
     `29.95 members (28.95 duplicates); the cost of a surgery.`
-    \/{\USD: 29.95}
+    \Mix\{\USD: 29.95}
 
     `9.8 members; acceleration under Earth's gravity.`
-    \/{\Meter_Per_Second_Squared: 9.8}
+    \Mix\{\Meter_Per_Second_Squared: 9.8}
 
     `0.615 members (fractions of 3 distinct members); recipe.`
-    \/{
+    \Mix\{
         \Butter : 0.22,
         \Sugar  : 0.1,
         \Flour  : 0.275,
@@ -1274,14 +1274,14 @@ Examples:
     }
 
     `4/3 members (fractions of 3 distinct members); this-mix.`
-    \/{
+    \Mix\{
         "Sugar": 1/3,
         "Spice": 1/4,
         "All_Things_Nice": 3/4,
     }
 
     `-1.5 members; adjustment for recipe.`
-    \/{
+    \Mix\{
         "Rice": +4.0,
         "Beans": -5.7,
         "Carrots": +0.2,
@@ -1371,7 +1371,7 @@ Grammar:
 ```
     token Interval_Set
     {
-        '\\?..' <sp>?
+        '\\Interval_Set\\' <sp>?
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
@@ -1384,28 +1384,28 @@ Examples:
 
 ```
     `Empty interval-set (zero members).`
-    \?..{}
+    \Interval_Set\{}
 
     `Unit interval-set (one member).`
-    \?..{"abc"}
+    \Interval_Set\{"abc"}
 
     `Probably 10 members, depending on the model used.`
-    \?..{1..10}
+    \Interval_Set\{1..10}
 
     `Probably 6 members.`
-    \?..{1..3,6,8..9}
+    \Interval_Set\{1..3,6,8..9}
 
     `Every Integer x except for {4..13,22..28}`
-    \?..{*..3,14..21,29..*}
+    \Interval_Set\{*..3,14..21,29..*}
 
     `Set of all valid Unicode code points.`
-    \?..{0..0xD7FF,0xE000..0x10FFFF}
+    \Interval_Set\{0..0xD7FF,0xE000..0x10FFFF}
 
     `Probably 15 members (no duplicates), depending on the model used.`
-    \?..{1..10,6..15}
+    \Interval_Set\{1..10,6..15}
 
     `Probably same thing, regardless of data model used.`
-    \?..{1..-6,6..10:2,10-..15}
+    \Interval_Set\{1..-6,6..10:2,10-..15}
 ```
 
 ## Interval Bag
@@ -1417,7 +1417,7 @@ Grammar:
 ```
     token Interval_Bag
     {
-        '\\+..' <sp>?
+        '\\Interval_Bag\\' <sp>?
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
@@ -1430,19 +1430,19 @@ Examples:
 
 ```
     `Empty interval-bag (zero members).`
-    \+..{}
+    \Interval_Bag\{}
 
     `Unit interval-bag (one member).`
-    \+..{"abc"}
+    \Interval_Bag\{"abc"}
 
     `Five members (4 duplicates).`
-    \+..{"def":5}
+    \Interval_Bag\{"def":5}
 
     `Probably 20 members (5 duplicates), depending on the model used.`
-    \+..{1..10,6..15}
+    \Interval_Bag\{1..10,6..15}
 
     `Probably same thing, regardless of data model used.`
-    \+..{1..-6,6..10:2,10-..15}
+    \Interval_Bag\{1..-6,6..10:2,10-..15}
 ```
 
 ## Pair
@@ -1593,7 +1593,7 @@ Grammar:
 ```
     token Tuple_Array
     {
-        '\\~%' <sp>? [<heading_attr_names> | <tuple_array_nonempty>]
+        '\\Tuple_Array\\' <sp>? [<heading_attr_names> | <tuple_array_nonempty>]
     }
 
     token tuple_array_nonempty
@@ -1610,26 +1610,26 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    \~%()
+    \Tuple_Array\()
 
     `Zero attributes + one tuple.`
-    \~%[()]
+    \Tuple_Array\[()]
 
     `Three named attributes + zero tuples.`
-    \~%(x,y,z)
+    \Tuple_Array\(x,y,z)
 
     `Three positional attributes + zero tuples.`
-    \~%(0c0..0c2)
+    \Tuple_Array\(0c0..0c2)
 
     `Two named attributes + three tuples (1 duplicate).`
-    \~%[
+    \Tuple_Array\[
         (name: "Amy"     , age: 14),
         (name: "Michelle", age: 17),
         (name: "Amy"     , age: 14),
     ]
 
     `Two positional attributes + two tuples.`
-    \~%[
+    \Tuple_Array\[
         ("Michelle", 17),
         ("Amy"     , 14),
     ]
@@ -1644,7 +1644,7 @@ Grammar:
 ```
     token Relation
     {
-        '\\?%' <sp>? [<heading_attr_names> | <relation_nonempty>]
+        '\\Relation\\' <sp>? [<heading_attr_names> | <relation_nonempty>]
     }
 
     token relation_nonempty
@@ -1661,36 +1661,36 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    \?%()
+    \Relation\()
 
     `Zero attributes + one tuple.`
-    \?%{()}
+    \Relation\{()}
 
     `Three named attributes + zero tuples.`
-    \?%(x,y,z)
+    \Relation\(x,y,z)
 
     `Three positional attributes + zero tuples.`
-    \?%(0c0..0c2)
+    \Relation\(0c0..0c2)
 
     `Two named attributes + two tuples.`
-    \?%{
+    \Relation\{
         (name: "Michelle", age: 17),
         (name: "Amy"     , age: 14),
     }
 
     `Two positional attributes + two tuples.`
-    \?%{
+    \Relation\{
         ("Michelle", 17),
         ("Amy"     , 14),
     }
 
     `Some people records.`
-    \?%{
+    \Relation\{
         (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-            phone_numbers : \?{"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \?{}),
+            phone_numbers : \Set\{"+1.4045552995", "+1.7705557572"}),
+        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \Set\{}),
         (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-            phone_numbers : \?{"+81.9072391679"}),
+            phone_numbers : \Set\{"+81.9072391679"}),
     }
 ```
 
@@ -1703,7 +1703,7 @@ Grammar:
 ```
     token Tuple_Bag
     {
-        '\\+%' <sp>? [<heading_attr_names> | <tuple_bag_nonempty>]
+        '\\Tuple_Bag\\' <sp>? [<heading_attr_names> | <tuple_bag_nonempty>]
     }
 
     token tuple_bag_nonempty
@@ -1720,25 +1720,25 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    \+%()
+    \Tuple_Bag\()
 
     `Zero attributes + one tuple.`
-    \+%{()}
+    \Tuple_Bag\{()}
 
     `Three named attributes + zero tuples.`
-    \+%(x,y,z)
+    \Tuple_Bag\(x,y,z)
 
     `Three positional attributes + zero tuples.`
-    \+%(0c0..0c2)
+    \Tuple_Bag\(0c0..0c2)
 
     `Two named attributes + six tuples (4 duplicates).`
-    \+%{
+    \Tuple_Bag\{
         (name: "Michelle", age: 17),
         (name: "Amy"     , age: 14) : 5,
     }
 
     `Two positional attributes + two tuples.`
-    \+%{
+    \Tuple_Bag\{
         ("Michelle", 17),
         ("Amy"     , 14),
     }
@@ -1753,7 +1753,7 @@ Grammar:
 ```
     token Article
     {
-        '\\*' <sp>? [<label_sans_attrs> | <label_with_attrs>]
+        '\\Article\\' <sp>? [<label_sans_attrs> | <label_with_attrs>]
     }
 
     token label_sans_attrs
@@ -1785,15 +1785,15 @@ Grammar:
 Examples:
 
 ```
-    \*(\Point : (x : 5, y : 3))
+    \Article\(\Point : (x : 5, y : 3))
 
-    \*(\Float : (
+    \Article\(\Float : (
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
     ))
 
-    \*(\the_db::UTCDateTime : (
+    \Article\(\the_db::UTCDateTime : (
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -1802,9 +1802,9 @@ Examples:
         second : 0.0,
     ))
 
-    \*Positive_Infinity
+    \Article\Positive_Infinity
 
-    \*Negative_Zero
+    \Article\Negative_Zero
 ```
 
 ## Excuse
@@ -1816,18 +1816,18 @@ Grammar:
 ```
     token Excuse
     {
-        '\\!' <sp>? [<label_sans_attrs> | <label_with_attrs>]
+        '\\Excuse\\' <sp>? [<label_sans_attrs> | <label_with_attrs>]
     }
 ```
 
 Examples:
 
 ```
-    \!(\Input_Field_Wrong : (name : "Your Age"))
+    \Excuse\(\Input_Field_Wrong : (name : "Your Age"))
 
-    \!Div_By_Zero
+    \Excuse\Div_By_Zero
 
-    \!No_Such_Attr_Name
+    \Excuse\No_Such_Attr_Name
 ```
 
 ## Renaming / Attribute Name Map
@@ -1839,7 +1839,7 @@ Grammar:
 ```
     token Renaming
     {
-        '\\\$:' <sp>?
+        '\\Renaming\\' <sp>?
         '(' <sp>?
             [',' <sp>?]?
             [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
@@ -1889,40 +1889,40 @@ Examples:
 
 ```
     `Zero renamings, a no-op.`
-    \$:()
+    \Renaming\()
 
     `Also a no-op.`
-    \$:(age->age)
+    \Renaming\(age->age)
 
     `Rename one attribute.`
-    \$:(fname->first_name)
+    \Renaming\(fname->first_name)
 
     `Same thing.`
-    \$:(first_name<-fname)
+    \Renaming\(first_name<-fname)
 
     `Swap 2 named attributes.`
-    \$:(foo->bar,foo<-bar)
+    \Renaming\(foo->bar,foo<-bar)
 
     `Convert ordered names to nonordered.`
-    \$:(->foo,->bar)
+    \Renaming\(->foo,->bar)
 
     `Same thing.`
-    \$:(0c0->foo,0c1->bar)
+    \Renaming\(0c0->foo,0c1->bar)
 
     `Convert nonordered names to ordered.`
-    \$:(<-foo,<-bar)
+    \Renaming\(<-foo,<-bar)
 
     `Same thing.`
-    \$:(0c0<-foo,0c1<-bar)
+    \Renaming\(0c0<-foo,0c1<-bar)
 
     `Swap 2 ordered attributes.`
-    \$:(0c0->0c1,0c0<-0c1)
+    \Renaming\(0c0->0c1,0c0<-0c1)
 
     `Same thing.`
-    \$:(->0c1,->0c0)
+    \Renaming\(->0c1,->0c0)
 
     `Some attribute names can only appear quoted.`
-    \$:("First Name"->"Last Name")
+    \Renaming\("First Name"->"Last Name")
 ```
 
 # RESERVED UNUSED SYNTAX
@@ -1937,32 +1937,26 @@ grammars to define their own meanings.
 # Conceptual Possrep Prefixes
 
 Muldis Object Notation is designed around the concept that every possrep
-has its own pure symbolic prefix of the form `\foo` where `foo` is a
-sequence of zero or more ASCII symbolic characters.  Some possreps actually
-use this prefix, and other possreps actually eschew using it because doing
-so makes actually writing or reading MUON more pleasant.
+either may or must have a prefix of the form `\Foo\` where `Foo` is a
+sequence of alpha characters corresponding to the possrep name.
 
-The following table enumerates those symbolic prefixes that are *not*
-actually used, and so are called *conceptual prefixes*:
+The following table enumerates those possreps for whom the `\Foo\` prefix
+is optional, and says how in the absense of such the possrep is recognized:
 
 ```
-    Prefix | Possrep/partial | Possrep Instead Identified By
-    -------+-----------------+---------------------------------------------
-    \?     | Boolean         | bareword literal False or True
-    \+     | Integer         | leading 0..9 without any ./*^ and no 0ww or 0c prefix
-    \/     | Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy prefix
-    \~     | Text            | "" or "..." or prefix 0c
-    \:     | Pair            | (...:...) without any comma
-    \%     | Tuple           | () or (...) with >= 1 comma
-    \~?    | Bits            | prefix 0bb or 0bo or 0bx
-    \~+    | Blob            | prefix 0xb or 0xx or 0xy
-    \..    | Interval        | only {} or {...} without mandatory prefix
+    Possrep/partial | Possrep Instead Identified By
+    ----------------+---------------------------------------------
+    Boolean         | bareword literal False or True
+    Integer         | leading 0..9 without any ./*^ and no 0ww or 0c or 0L prefix
+    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy or 0L prefix
+    Text            | "" or "..." or prefix 0c
+    Pair            | (...:...) without any comma
+    Tuple           | () or (...) with >= 1 comma
+    Bits            | prefix 0bb or 0bo or 0bx
+    Blob            | prefix 0xb or 0xx or 0xy
+    Interval        | only {} or {...} without mandatory prefix
+    locationals     | leading 0L
 ```
-
-A few more symbolic prefixes are currently not used but would be used if
-particular possreps were added to MUON later.  If **Interval Mix** or
-**Tuple Mix** are added, then `\/..{}` and `\/%()` plus `\/%{}`
-respectively are reserved for them.
 
 # Features For Superset Grammars
 
@@ -1971,12 +1965,13 @@ namespaces* in order to leave as much useful syntax as possible for
 superset grammars, such as ones defining a more full featured programming
 language, a co-developed example being **Muldis Data Language**.
 
-MUON groups all generic-context symbolic barewords into a single namespace
+MUON doesn't use any generic-context symbolic barewords, but if it did then
+it would group them into a single namespace
 defined by a leading `\` which frees up all other possible symbol sequences
 to be defined by the superset; as it isn't typical for any languages to use
 a `\` for their symbolic operator names, the languages can be natural.
 
-While MUON also has some free `.+-*/^`, those only appear adjacent to
+While MUON also has some free `.+-*/^@|>`, those only appear adjacent to
 numeric barewords and are considered part of those numeric literals, and so
 shouldn't interfere with a superset using those for regular operators.
 
@@ -1984,7 +1979,7 @@ Likewise, any uses of `:` or `,` are only used by MUON within various kinds
 of bracketing pairs and a superset should be able to also use them.
 
 MUON has no alpha barewords except for `False` and `True` that can appear
-in isolation from a `\foo` prefix, so to not interfere with any other
+in isolation from a `\Foo\` form, so to not interfere with any other
 alpha keywords or reserved words a superset may want to use.
 
 MUON does not use the single-quote string delimiter character `'` for
@@ -2022,7 +2017,7 @@ that means they are used in pairs.
           |                        | * first char inside a quoted string
           |                        |   to indicate it has escaped characters
           |                        | * prefix for each escaped char in quoted string
-          |                        | * L0 of prefix for literals/selectors
+          |                        | * L0 or delimit of prefix for literals/selectors
           |                        |   to disambiguate that they are lits/sels
     ------+------------------------+---------------------------------------
     []    | ordered collections    | * delimit homogeneous ordered collections
@@ -2052,7 +2047,6 @@ that means they are used in pairs.
           |                        | * optional pair separator in nonempty-TA/Rel/TB sels
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * disambiguate Bag/Mix sels from Set sel
-          |                        | * L2 of prefix for Renaming literals
           |                        | * disambiguate Pair sels from generic_group
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
@@ -2063,28 +2057,16 @@ that means they are used in pairs.
           |                        | * disambiguate unary named Tuple sels from Pair sels and generic_group
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
-          |                        | * L1 of conceptual prefix for Bits/Blob/Text literals
-          |                        | * L1 of prefix for Array selectors
-          |                        | * L1 of prefix for Tuple-Array lits/sels
+          |                        | * not currently used by this grammar
     ------+------------------------+---------------------------------------
     ?     | qualifications/is?/so  | * indicates a qualifying/yes-or-no context
-          |                        | * L1 of conceptual prefix for Boolean literals
-          |                        | * L2 of conceptual prefix for Bits literals
-          |                        | * L1 of prefix for Set selectors
-          |                        | * L1 of prefix for Interval-Set selectors
-          |                        | * L1 of prefix for Relation lits/sels
+          |                        | * not currently used by this grammar
     ------+------------------------+---------------------------------------
     +     | quantifications/count  | * indicates an integral quantifying/count context
-          |                        | * L1 of conceptual prefix for Integer literals
           |                        | * indicates elevation in Geographic-Point literals
-          |                        | * L2 of conceptual prefix for Blob literals
-          |                        | * L1 of prefix for Bag selectors
-          |                        | * L1 of prefix for Interval-Bag selectors
-          |                        | * L1 of prefix for Tuple-Bag lits/sels
+          | addition               | * optional indicates positive-Integer/Fraction literal
     ------+------------------------+---------------------------------------
     /     | fractions/measures     | * indicates a fractional quantifying/count context
-          |                        | * L1 of conceptual prefix for Fraction literals
-          |                        | * L1 of prefix for Mix selectors
           | division               | * disambiguate Fraction lit from Integer lit
           |                        | * numerator/denominator separator in Fraction literals
     ------+------------------------+---------------------------------------
@@ -2094,25 +2076,20 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     |     | simple collections     | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
-    ..    | intervals/ranges       | * L1 of conceptual prefix for Interval selectors
-          |                        | * L2 of prefix for Interval-Set/Interval-Bag selectors
-          |                        | * pair separator in Interval/Ivl-Set/Ivl-Bag selectors
+    ..    | intervals/ranges       | * pair separator in Interval/Ivl-Set/Ivl-Bag selectors
+          |                        | * pair separator in Heading literals for ordered attr ranges
     ------+------------------------+---------------------------------------
     %     | tuples/heterogeneous   | * indicates that tuples are featured
-          |                        | * L1 of conceptual prefix for Tuple selectors
-          |                        | * L2 of prefix for Tuple-Array/Relation/Tuple-Bag lits/sels
+          |                        | * not currently used by this grammar
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
-          |                        | * L1 of prefix for Article literals/selectors
           |                        | * indicates unbounded endpoint in Interval selectors
           | multiplication         | * significand/radix separator in Fraction literals
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured
-          |                        | * L1 of prefix for Excuse literals/selectors
+          |                        | * not currently used by this grammar
     ------+------------------------+---------------------------------------
     $     | identifiers/names      | * indicates identifiers/names are featured
-          |                        | * L1 of prefix for Heading literals
-          |                        | * L1 of prefix for Renaming literals
           |                        | * a triple of this indicates an entity marker
     ------+------------------------+---------------------------------------
     -     | subtraction            | * indicates negative-Integer/Fraction literal
@@ -2125,7 +2102,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     >     | right-pointing-arrow   | * indicates longitude in Geographic-Point literals
     ------+------------------------+---------------------------------------
-    digit | number                 | * first char 0..9 in bareword indicates is number/code-point/Bits/Blob
+    digit | number                 | * first char 0..9 in bareword indicates is number/code-point/Bits/Blob/locational
     ------+------------------------+---------------------------------------
     alpha | identifier             | * first char a..z/etc in bareword indicates is identifier
     ------+------------------------+---------------------------------------
@@ -2149,11 +2126,6 @@ that means they are used in pairs.
     0L    | locator                | * indicates a temporal or spatial value
           |                        | * prefix for Calendar-*, Geographic-* literals; 0Lct/0Lcd/0Lci/0Lgp
     ------+------------------------+---------------------------------------
-
-    When combining symbols in a \XY prefix (L0+L1+L2) to represent both
-    collection type and element type, the X and Y always indicate the
-    collection and element type respectively; the mnemonic is "X of Y", for
-    example, \?% says "set of tuple", or \~? says "string of boolean".
 ```
 
 Some of the above mnemonics also carry additional meanings in a wider
@@ -2209,20 +2181,7 @@ longest token always wins:
     }
     (
     )
-    \?..
-    \+..
-    \~%
-    \?%
-    \+%
-    \~
-    \?
-    \+
-    \/
-    \*
-    \!
     \
-    \$
-    \$:
     ,
     :
     ::
@@ -2243,6 +2202,7 @@ longest token always wins:
     *-..*
     *-..-*
     @
+    |
     ->
     <-
 ```
@@ -2250,7 +2210,7 @@ longest token always wins:
 As a special case, where a `+` symbol would otherwise parse as part of a
 numeric-format literal, it will instead parse as its own token when it is
 leading a list item inside a `<Geographic_Point>`; that is, any place where
-a `+` could possibly be interpreted as an `<elevation>`, that
+a `+` could possibly be interpreted as an *elevation*, that
 interpretation will take precedence over all other interpretations.
 
 Note that, while dividing space is generally optional everywhere in MUON, a
@@ -2258,7 +2218,8 @@ few specific situations require it.  One is an interval whose high endpoint
 is a negative number; in that case, dividing space is mandatory before the
 `-` so that it isn't interpreted as excluding that endpoint; for example,
 `-10..-5` will be interpreted as `-10 ..- 5`, so one will need to say at
-least `-10.. -5` to mean `-10 .. -5`.
+least `-10.. -5` to mean `-10 .. -5`.  Alternately, one may wrap the
+negative number in parenthesis per `<generic_group>` like `-10..(-5)`.
 
 ## Barewords and Numeric-Format Literals
 
