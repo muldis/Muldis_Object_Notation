@@ -414,7 +414,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Array
     {
-        '[' <sp>?
+        '\\~' <sp>? '[' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -425,7 +425,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Set
     {
-        '{' <sp>?
+        '\\?' <sp>? '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -436,9 +436,9 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Bag
     {
-        '{' <sp>?
+        '\\+' <sp>? '{' <sp>?
             [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }
@@ -452,9 +452,9 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Mix
     {
-        '{' <sp>?
+        '\\/' <sp>? '{' <sp>?
             [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }

@@ -25,10 +25,10 @@ its part name is `Syntax_Plain_Text`.
 
     \?%{
         (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
-            phone_numbers : {"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : {}),
+            phone_numbers : \?{"+1.4045552995", "+1.7705557572"}),
+        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : \?{}),
         (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
-            phone_numbers : {"+81.9072391679"}),
+            phone_numbers : \?{"+81.9072391679"}),
     }
 ```
 
@@ -1140,7 +1140,7 @@ Grammar:
 ```
     token Array
     {
-        '[' <sp>?
+        '\\~' <sp>? '[' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1152,20 +1152,20 @@ Examples:
 
 ```
     `Zero members.`
-    []
+    \~[]
 
     `One member.`
-    [ "You got it!" ]
+    \~[ "You got it!" ]
 
     `Three members.`
-    [
+    \~[
         "Alphonse",
         "Edward",
         "Winry",
     ]
 
     `Five members (1 duplicate).`
-    [
+    \~[
         57,
         45,
         63,
@@ -1174,7 +1174,7 @@ Examples:
     ]
 
     `32 members (28 duplicates in 2 runs).`
-    [
+    \~[
         "/",
         "*" : 20,
         "+" : 10,
@@ -1191,7 +1191,7 @@ Grammar:
 ```
     token Set
     {
-        '{' <sp>?
+        '\\?' <sp>? '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1203,13 +1203,13 @@ Examples:
 
 ```
     `Zero members.`
-    {}
+    \?{}
 
     `One member.`
-    { "I know this one!" }
+    \?{ "I know this one!" }
 
     `Four members (no duplicates).`
-    {
+    \?{
         "Canada",
         "Spain",
         "Jordan",
@@ -1218,14 +1218,14 @@ Examples:
     }
 
     `Three members.`
-    {
+    \?{
         3,
         16,
         85,
     }
 
     `Two members.`
-    {
+    \?{
         21 : True,
         62 : False,
         3 : True,
@@ -1242,9 +1242,9 @@ Grammar:
 ```
     token Bag
     {
-        '{' <sp>?
+        '\\+' <sp>? '{' <sp>?
             [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }
@@ -1255,27 +1255,24 @@ Grammar:
     }
 ```
 
-An idiomatic way to represent an empty **Bag** is to have exactly 1
-`<bag_multiplied_member>` whose `<int_multiplicity>` is zero.
-
 Examples:
 
 ```
     `Zero members.`
-    {0:0}
+    \+{}
 
     `One member.`
-    { "I hear that!": 1 }
+    \+{ "I hear that!": 1 }
 
     `1200 members (1197 duplicates).`
-    {
+    \+{
         "Apple"  : 500,
         "Orange" : 300,
         "Banana" : 400,
     }
 
     `Six members (2 duplicates).`
-    {
+    \+{
         "Foo" : 1,
         "Quux" : 1,
         "Foo" : 1,
@@ -1294,9 +1291,9 @@ Grammar:
 ```
     token Mix
     {
-        '{' <sp>?
+        '\\/' <sp>? '{' <sp>?
             [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }
@@ -1307,26 +1304,23 @@ Grammar:
     }
 ```
 
-An idiomatic way to represent an empty **Mix** is to have exactly 1
-`<mix_multiplied_member>` whose `<frac_multiplicity>` is zero.
-
 Examples:
 
 ```
     `Zero members; we measured zero of nothing in particular.`
-    {0:0.0}
+    \/{}
 
     `One member; one gram of mass.`
-    {\Gram: 1.0}
+    \/{\Gram: 1.0}
 
     `29.95 members (28.95 duplicates); the cost of a surgery.`
-    {\USD: 29.95}
+    \/{\USD: 29.95}
 
     `9.8 members; acceleration under Earth's gravity.`
-    {\Meter_Per_Second_Squared: 9.8}
+    \/{\Meter_Per_Second_Squared: 9.8}
 
     `0.615 members (fractions of 3 distinct members); recipe.`
-    {
+    \/{
         \Butter : 0.22,
         \Sugar  : 0.1,
         \Flour  : 0.275,
@@ -1334,14 +1328,14 @@ Examples:
     }
 
     `4/3 members (fractions of 3 distinct members); this-mix.`
-    {
+    \/{
         "Sugar": 1/3,
         "Spice": 1/4,
         "All_Things_Nice": 3/4,
     }
 
     `-1.5 members; adjustment for recipe.`
-    {
+    \/{
         "Rice": +4.0,
         "Beans": -5.7,
         "Carrots": +0.2,
@@ -1747,10 +1741,10 @@ Examples:
     `Some people records.`
     \?%{
         (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
-            phone_numbers : {"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : {}),
+            phone_numbers : \?{"+1.4045552995", "+1.7705557572"}),
+        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : \?{}),
         (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
-            phone_numbers : {"+81.9072391679"}),
+            phone_numbers : \?{"+81.9072391679"}),
     }
 ```
 
@@ -2009,13 +2003,9 @@ actually used, and so are called *conceptual prefixes*:
     Prefix | Possrep/partial | Possrep Instead Identified By
     -------+-----------------+---------------------------------------------
     \?     | Boolean         | bareword literal False or True
-    \?     | Set             | {} or {...} with no colon followed by number
     \+     | Integer         | leading 0..9 without any ./*^ and no 0ww or 0c prefix
-    \+     | Bag             | {...} with >= 1 colon followed by an Integer
     \/     | Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy prefix
-    \/     | Mix             | {...} with >= 1 colon followed by a Fraction
     \~     | Text            | "" or "..." or prefix 0c
-    \~     | Array           | [] or [...]
     \:     | Pair            | (...:...) without any comma
     \%     | Tuple           | () or (...) with >= 1 comma
     \~?    | Bits            | prefix 0bb or 0bo or 0bx
@@ -2110,14 +2100,14 @@ that means they are used in pairs.
     :     | pairings               | * indicates a pairing context
           |                        | * separates the 2 parts of a pair
           |                        | * pair separator in Geographic-* literals
-          |                        | * optional pair separator in Array/Set sels
-          |                        | * pair separator in Bag/Mix sels
+          |                        | * optional pair separator in Array/Set/Bag/Mix sels
           |                        | * this/that separator in Pair sels
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
           |                        | * optional pair separator in nonempty-TA/Rel/TB sels
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * disambiguate Bag/Mix sels from Set sel
           |                        | * L2 of prefix for Renaming literals
+          |                        | * disambiguate Pair sels from generic_group
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
           |                        | * separate elements in Calendar-*, Geographic-* lits
@@ -2125,17 +2115,17 @@ that means they are used in pairs.
           |                        | * separate members in Array/Set/Bag/Mix sels
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Tuple/Article/Excuse sels
-          |                        | * disambiguate unary named Tuple sels from Pair sels
+          |                        | * disambiguate unary named Tuple sels from Pair sels and generic_group
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
           |                        | * L1 of conceptual prefix for Bits/Blob/Text literals
-          |                        | * L1 of conceptual prefix for Array selectors
+          |                        | * L1 of prefix for Array selectors
           |                        | * L1 of prefix for Tuple-Array lits/sels
     ------+------------------------+---------------------------------------
     ?     | qualifications/is?/so  | * indicates a qualifying/yes-or-no context
           |                        | * L1 of conceptual prefix for Boolean literals
           |                        | * L2 of conceptual prefix for Bits literals
-          |                        | * L1 of conceptual prefix for Set selectors
+          |                        | * L1 of prefix for Set selectors
           |                        | * L1 of prefix for Interval-Set selectors
           |                        | * L1 of prefix for Relation lits/sels
     ------+------------------------+---------------------------------------
@@ -2144,13 +2134,13 @@ that means they are used in pairs.
           |                        | * L2 of prefix for Calendar-Duration literals
           |                        | * indicates elevation in Geographic-Point literals
           |                        | * L2 of conceptual prefix for Blob literals
-          |                        | * L1 of conceptual prefix for Bag selectors
+          |                        | * L1 of prefix for Bag selectors
           |                        | * L1 of prefix for Interval-Bag selectors
           |                        | * L1 of prefix for Tuple-Bag lits/sels
     ------+------------------------+---------------------------------------
     /     | fractions/measures     | * indicates a fractional quantifying/count context
           |                        | * L1 of conceptual prefix for Fraction literals
-          |                        | * L1 of conceptual prefix for Mix selectors
+          |                        | * L1 of prefix for Mix selectors
           | division               | * disambiguate Fraction lit from Integer lit
           |                        | * numerator/denominator separator in Fraction literals
     ------+------------------------+---------------------------------------

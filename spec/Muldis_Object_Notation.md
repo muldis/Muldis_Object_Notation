@@ -25,10 +25,10 @@ its part name is `Overview`.
 
     \?%{
         (name : "Jane Ives", birth_date : \@(1971,11,06,,,),
-            phone_numbers : {"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : {}),
+            phone_numbers : \?{"+1.4045552995", "+1.7705557572"}),
+        (name : "Layla Miller", birth_date : \@(1995,08,27,,,), phone_numbers : \?{}),
         (name : "岩倉 玲音", birth_date : \@(1984,07,06,,,),
-            phone_numbers : {"+81.9072391679"}),
+            phone_numbers : \?{"+81.9072391679"}),
     }
 ```
 
