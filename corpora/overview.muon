@@ -28,6 +28,10 @@ Muldis_Content_Predicate`
 
         True,
 
+        \Boolean\False,
+
+        \Boolean\True,
+
     ),
 
 `#########################################################################`
@@ -58,6 +62,8 @@ Muldis_Content_Predicate`
         0o644,
 
         0b11001001,
+
+        \Integer\69,
 
     ),
 
@@ -102,6 +108,8 @@ Muldis_Content_Predicate`
         0b1.1,
 
         0b1.011101101*0b10^-0b11011,
+
+        \Fraction\2.703,
 
     ),
 

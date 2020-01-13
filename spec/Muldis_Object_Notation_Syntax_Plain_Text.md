@@ -192,6 +192,24 @@ Examples:
 
 # GRAMMAR
 
+Each valid MUON artifact is an instance of a single MUON possrep.  Every
+possrep has one or more general *qualified* formats characterized by the
+pairing of a *predicate* with a *subject*.  Each of a subset of the
+possreps also has one or more *unqualified* formats characterized by the
+*subject* on its own.  Using the qualified formats exclusively is better
+for normalization and consistency, while employing unqualified formats
+where available is better for brevity and more efficient resource usage.
+
+Every qualified MUON artifact has the form `<predicate> <sp>? <subject>`;
+`<predicate>` is the *predicate* and `<subject>` is the *subject*.
+
+Every MUON possrep *predicate*, but for possible additional alternatives,
+takes the form `\Foo\`, where the `Foo` conforms to the character string
+pattern `[<[A..Z]><[a..z]>+]+ % _`.
+
+For just singleton possreps, the *predicate* `\Foo\` is the entire artifact
+and the *subject* is just the empty string / doesn't exist.
+
 The syntax and intended interpretation of the grammar itself seen in this
 document should match that of the user-defined grammars feature of the Raku
 language, which is described by
@@ -376,6 +394,11 @@ Grammar:
 ```
     token Boolean
     {
+        ['\\Boolean\\' <sp>?]? <Boolean_subject>
+    }
+
+    token Boolean_subject
+    {
         False | True
     }
 ```
@@ -386,6 +409,10 @@ Examples:
     False
 
     True
+
+    \Boolean\False
+
+    \Boolean\True
 ```
 
 ## Integer
@@ -396,6 +423,11 @@ Grammar:
 
 ```
     token Integer
+    {
+        ['\\Integer\\' <sp>?]? <Integer_subject>
+    }
+
+    token Integer_subject
     {
         <[+-]>? <sp>? <nonsigned_int>
     }
@@ -441,6 +473,8 @@ Examples:
     0o644
 
     0b11001001
+
+    \Integer\69
 ```
 
 ## Fraction
@@ -451,6 +485,11 @@ Grammar:
 
 ```
     token Fraction
+    {
+        ['\\Fraction\\' <sp>?]? <Fraction_subject>
+    }
+
+    token Fraction_subject
     {
         <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }
@@ -578,6 +617,8 @@ Examples:
     0b1.1
 
     0b1.011101101*0b10^-0b11011
+
+    \Fraction\2.703
 ```
 
 ## Calendar Time
@@ -588,6 +629,11 @@ Grammar:
 
 ```
     token Calendar_Time
+    {
+        ['\\Calendar_Time\\' <sp>?]? <Calendar_Time_subject>
+    }
+
+    token Calendar_Time_subject
     {
         0Lct [<sp>? '@' <sp>? <time_elements>]?
     }
@@ -646,6 +692,11 @@ Grammar:
 ```
     token Calendar_Duration
     {
+        ['\\Calendar_Duration\\' <sp>?]? <Calendar_Duration_subject>
+    }
+
+    token Calendar_Duration_subject
+    {
         0Lcd [<sp>? '@' <sp>? <time_elements>]?
     }
 ```
@@ -668,6 +719,11 @@ Grammar:
 
 ```
     token Calendar_Instant
+    {
+        ['\\Calendar_Instant\\' <sp>?]? <Calendar_Instant_subject>
+    }
+
+    token Calendar_Instant_subject
     {
         0Lci [<sp>? '@' <sp>? <instant_base>
             [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
@@ -718,6 +774,11 @@ Grammar:
 ```
     token Geographic_Point
     {
+        ['\\Geographic_Point\\' <sp>?]? <Geographic_Point_subject>
+    }
+
+    token Geographic_Point_subject
+    {
         0Lgp [<sp>? '@' <sp>? <geo_elements>]?
     }
 
@@ -758,6 +819,11 @@ Grammar:
 ```
     token Bits
     {
+        ['\\Bits\\' <sp>?]? <Bits_subject>
+    }
+
+    token Bits_subject
+    {
           [ 0bb <sp>? [<[ 0..1      ]>+]* % [_ | <sp>]]
         | [ 0bo <sp>? [<[ 0..7      ]>+]* % [_ | <sp>]]
         | [ 0bx <sp>? [<[ 0..9 A..F ]>+]* % [_ | <sp>]]
@@ -791,6 +857,11 @@ Grammar:
 
 ```
     token Blob
+    {
+        ['\\Blob\\' <sp>?]? <Blob_subject>
+    }
+
+    token Blob_subject
     {
           [ 0xb <sp>? [[<[ 0..1      ]> ** 8]+]* % [_ | <sp>]]
         | [ 0xx <sp>? [[<[ 0..9 A..F ]> ** 2]+]* % [_ | <sp>]]
@@ -834,6 +905,11 @@ Grammar:
 
 ```
     token Text
+    {
+        ['\\Text\\' <sp>?]? <Text_subject>
+    }
+
+    token Text_subject
     {
         <quoted_text> | <code_point_text>
     }
@@ -958,10 +1034,10 @@ Grammar:
 ```
     token Nesting
     {
-        '\\' <sp>? <nesting_attr_names>
+        ['\\Nesting\\' | '\\'] <sp>? <Nesting_subject>
     }
 
-    token nesting_attr_names
+    token Nesting_subject
     {
         <attr_name>+ % [<sp>? '::' <sp>?]
     }
@@ -1086,7 +1162,12 @@ Grammar:
 ```
     token Array
     {
-        '\\Array\\' <sp>? '[' <sp>?
+        '\\Array\\' <sp>? <Array_subject>
+    }
+
+    token Array_subject
+    {
+        '[' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1137,7 +1218,12 @@ Grammar:
 ```
     token Set
     {
-        '\\Set\\' <sp>? '{' <sp>?
+        '\\Set\\' <sp>? <Set_subject>
+    }
+
+    token Set_subject
+    {
+        '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1188,7 +1274,12 @@ Grammar:
 ```
     token Bag
     {
-        '\\Bag\\' <sp>? '{' <sp>?
+        '\\Bag\\' <sp>? <Bag_subject>
+    }
+
+    token Bag_subject
+    {
+        '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1237,7 +1328,12 @@ Grammar:
 ```
     token Mix
     {
-        '\\Mix\\' <sp>? '{' <sp>?
+        '\\Mix\\' <sp>? <Mix_subject>
+    }
+
+    token Mix_subject
+    {
+        '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -1296,6 +1392,11 @@ Grammar:
 
 ```
     token Interval
+    {
+         ['\\Interval\\' <sp>?]? <Interval_subject>
+    }
+
+    token Interval_subject
     {
         '{' <sp>? <interval_members> <sp>? '}'
     }
@@ -1371,7 +1472,11 @@ Grammar:
 ```
     token Interval_Set
     {
-        '\\Interval_Set\\' <sp>?
+        '\\Interval_Set\\' <sp>? <Interval_Set_subject>
+    }
+
+    token Interval_Set_subject
+    {
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
@@ -1417,7 +1522,11 @@ Grammar:
 ```
     token Interval_Bag
     {
-        '\\Interval_Bag\\' <sp>?
+        '\\Interval_Bag\\' <sp>? <Interval_Bag_subject>
+    }
+
+    token Interval_Bag_subject
+    {
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
@@ -1454,6 +1563,11 @@ Grammar:
 ```
     token Pair
     {
+         ['\\Pair\\' <sp>?]? <Pair_subject>
+    }
+
+    token Pair_subject
+    {
         '(' <sp>? <this> <sp>? ':' <sp>? <that> <sp>? ')'
     }
 
@@ -1485,6 +1599,11 @@ Grammar:
 ```
     token Tuple
     {
+        ['\\Tuple\\' <sp>?]? <Tuple_subject>
+    }
+
+    token Tuple_subject
+    {
         '(' <sp>? <tuple_attrs> <sp>? ')'
     }
 
@@ -1514,7 +1633,7 @@ Grammar:
 
     token tuple_attr
     {
-        [[<attr_name> | <nesting_attr_names>] <sp>? ':' <sp>?]? <attr_asset>
+        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
     }
 
     token attr_asset
@@ -1593,7 +1712,12 @@ Grammar:
 ```
     token Tuple_Array
     {
-        '\\Tuple_Array\\' <sp>? [<heading_attr_names> | <tuple_array_nonempty>]
+        '\\Tuple_Array\\' <sp>? <Tuple_Array_subject>
+    }
+
+    token Tuple_Array_subject
+    {
+        <heading_attr_names> | <tuple_array_nonempty>
     }
 
     token tuple_array_nonempty
@@ -1644,7 +1768,12 @@ Grammar:
 ```
     token Relation
     {
-        '\\Relation\\' <sp>? [<heading_attr_names> | <relation_nonempty>]
+        '\\Relation\\' <sp>? <Relation_subject>
+    }
+
+    token Relation_subject
+    {
+        <heading_attr_names> | <relation_nonempty>
     }
 
     token relation_nonempty
@@ -1703,7 +1832,12 @@ Grammar:
 ```
     token Tuple_Bag
     {
-        '\\Tuple_Bag\\' <sp>? [<heading_attr_names> | <tuple_bag_nonempty>]
+        '\\Tuple_Bag\\' <sp>? <Tuple_Bag_subject>
+    }
+
+    token Tuple_Bag_subject
+    {
+        <heading_attr_names> | <tuple_bag_nonempty>
     }
 
     token tuple_bag_nonempty
@@ -1753,7 +1887,12 @@ Grammar:
 ```
     token Article
     {
-        '\\Article\\' <sp>? [<label_sans_attrs> | <label_with_attrs>]
+        '\\Article\\' <sp>? <Article_subject>
+    }
+
+    token Article_subject
+    {
+        <label_sans_attrs> | <label_with_attrs>
     }
 
     token label_sans_attrs
@@ -1778,7 +1917,7 @@ Grammar:
 
     token label_as_nesting
     {
-        <nesting_attr_names>
+        <Nesting_subject>
     }
 ```
 
@@ -1816,7 +1955,12 @@ Grammar:
 ```
     token Excuse
     {
-        '\\Excuse\\' <sp>? [<label_sans_attrs> | <label_with_attrs>]
+        '\\Excuse\\' <sp>? <Excuse_subject>
+    }
+
+    token Excuse_subject
+    {
+        <label_sans_attrs> | <label_with_attrs>
     }
 ```
 
@@ -1839,7 +1983,11 @@ Grammar:
 ```
     token Renaming
     {
-        '\\Renaming\\' <sp>?
+        '\\Renaming\\' <sp>? <Renaming_subject>
+    }
+
+    token Renaming_subject
+    {
         '(' <sp>?
             [',' <sp>?]?
             [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
@@ -1934,7 +2082,7 @@ regardless of whether MUON might use them in the future itself.  In other
 cases it doesn't use those syntaxes expressly in order to empower superset
 grammars to define their own meanings.
 
-# Conceptual Possrep Prefixes
+# Optional Possrep Prefixes
 
 Muldis Object Notation is designed around the concept that every possrep
 either may or must have a prefix of the form `\Foo\` where `Foo` is a
@@ -2181,7 +2329,6 @@ longest token always wins:
     }
     (
     )
-    \
     ,
     :
     ::
@@ -2201,8 +2348,6 @@ longest token always wins:
     *..-*
     *-..*
     *-..-*
-    @
-    |
     ->
     <-
 ```

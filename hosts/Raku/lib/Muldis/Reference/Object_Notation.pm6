@@ -102,12 +102,22 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Boolean
     {
+        ['\\Boolean\\' <sp>?]? <Boolean_subject>
+    }
+
+    token Boolean_subject
+    {
         False | True
     }
 
 ###########################################################################
 
     token Integer
+    {
+        ['\\Integer\\' <sp>?]? <Integer_subject>
+    }
+
+    token Integer_subject
     {
         <[+-]>? <sp>? <nonsigned_int>
     }
@@ -123,6 +133,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 ###########################################################################
 
     token Fraction
+    {
+        ['\\Fraction\\' <sp>?]? <Fraction_subject>
+    }
+
+    token Fraction_subject
     {
         <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }
@@ -174,6 +189,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Calendar_Time
     {
+        ['\\Calendar_Time\\' <sp>?]? <Calendar_Time_subject>
+    }
+
+    token Calendar_Time_subject
+    {
         0Lct [<sp>? '@' <sp>? <time_elements>]?
     }
 
@@ -191,12 +211,22 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Calendar_Duration
     {
+        ['\\Calendar_Duration\\' <sp>?]? <Calendar_Duration_subject>
+    }
+
+    token Calendar_Duration_subject
+    {
         0Lcd [<sp>? '@' <sp>? <time_elements>]?
     }
 
 ###########################################################################
 
     token Calendar_Instant
+    {
+        ['\\Calendar_Instant\\' <sp>?]? <Calendar_Instant_subject>
+    }
+
+    token Calendar_Instant_subject
     {
         0Lci [<sp>? '@' <sp>? <instant_base>
             [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
@@ -222,6 +252,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Geographic_Point
     {
+        ['\\Geographic_Point\\' <sp>?]? <Geographic_Point_subject>
+    }
+
+    token Geographic_Point_subject
+    {
         0Lgp [<sp>? '@' <sp>? <geo_elements>]?
     }
 
@@ -234,6 +269,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Bits
     {
+        ['\\Bits\\' <sp>?]? <Bits_subject>
+    }
+
+    token Bits_subject
+    {
           [ 0bb <sp>? [<[ 0..1      ]>+]* % [_ | <sp>]]
         | [ 0bo <sp>? [<[ 0..7      ]>+]* % [_ | <sp>]]
         | [ 0bx <sp>? [<[ 0..9 A..F ]>+]* % [_ | <sp>]]
@@ -243,6 +283,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Blob
     {
+        ['\\Blob\\' <sp>?]? <Blob_subject>
+    }
+
+    token Blob_subject
+    {
           [ 0xb <sp>? [[<[ 0..1      ]> ** 8]+]* % [_ | <sp>]]
         | [ 0xx <sp>? [[<[ 0..9 A..F ]> ** 2]+]* % [_ | <sp>]]
         | [ 0xy <sp>? [[<[ A..Z a..z 0..9 + / = ]> ** 4]+]* % [_ | <sp>]]
@@ -251,6 +296,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 ###########################################################################
 
     token Text
+    {
+        ['\\Text\\' <sp>?]? <Text_subject>
+    }
+
+    token Text_subject
     {
         <quoted_text> | <code_point_text>
     }
@@ -297,10 +347,10 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Nesting
     {
-        '\\' <sp>? <nesting_attr_names>
+        ['\\Nesting\\' | '\\'] <sp>? <Nesting_subject>
     }
 
-    token nesting_attr_names
+    token Nesting_subject
     {
         <attr_name>+ % [<sp>? '::' <sp>?]
     }
@@ -360,7 +410,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Array
     {
-        '\\Array\\' <sp>? '[' <sp>?
+        '\\Array\\' <sp>? <Array_subject>
+    }
+
+    token Array_subject
+    {
+        '[' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -371,7 +426,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Set
     {
-        '\\Set\\' <sp>? '{' <sp>?
+        '\\Set\\' <sp>? <Set_subject>
+    }
+
+    token Set_subject
+    {
+        '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -382,7 +442,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Bag
     {
-        '\\Bag\\' <sp>? '{' <sp>?
+        '\\Bag\\' <sp>? <Bag_subject>
+    }
+
+    token Bag_subject
+    {
+        '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -398,7 +463,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Mix
     {
-        '\\Mix\\' <sp>? '{' <sp>?
+        '\\Mix\\' <sp>? <Mix_subject>
+    }
+
+    token Mix_subject
+    {
+        '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -413,6 +483,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 ###########################################################################
 
     token Interval
+    {
+         ['\\Interval\\' <sp>?]? <Interval_subject>
+    }
+
+    token Interval_subject
     {
         '{' <sp>? <interval_members> <sp>? '}'
     }
@@ -451,7 +526,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval_Set
     {
-        '\\Interval_Set\\' <sp>?
+        '\\Interval_Set\\' <sp>? <Interval_Set_subject>
+    }
+
+    token Interval_Set_subject
+    {
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
@@ -463,7 +542,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval_Bag
     {
-        '\\Interval_Bag\\' <sp>?
+        '\\Interval_Bag\\' <sp>? <Interval_Bag_subject>
+    }
+
+    token Interval_Bag_subject
+    {
         '{' <sp>?
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
@@ -474,6 +557,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 ###########################################################################
 
     token Pair
+    {
+         ['\\Pair\\' <sp>?]? <Pair_subject>
+    }
+
+    token Pair_subject
     {
         '(' <sp>? <this> <sp>? ':' <sp>? <that> <sp>? ')'
     }
@@ -491,6 +579,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 ###########################################################################
 
     token Tuple
+    {
+        ['\\Tuple\\' <sp>?]? <Tuple_subject>
+    }
+
+    token Tuple_subject
     {
         '(' <sp>? <tuple_attrs> <sp>? ')'
     }
@@ -521,7 +614,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token tuple_attr
     {
-        [[<attr_name> | <nesting_attr_names>] <sp>? ':' <sp>?]? <attr_asset>
+        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
     }
 
     token attr_asset
@@ -533,7 +626,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_Array
     {
-        '\\Tuple_Array\\' <sp>? [<heading_attr_names> | <tuple_array_nonempty>]
+        '\\Tuple_Array\\' <sp>? <Tuple_Array_subject>
+    }
+
+    token Tuple_Array_subject
+    {
+        <heading_attr_names> | <tuple_array_nonempty>
     }
 
     token tuple_array_nonempty
@@ -549,7 +647,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Relation
     {
-        '\\Relation\\' <sp>? [<heading_attr_names> | <relation_nonempty>]
+        '\\Relation\\' <sp>? <Relation_subject>
+    }
+
+    token Relation_subject
+    {
+        <heading_attr_names> | <relation_nonempty>
     }
 
     token relation_nonempty
@@ -565,7 +668,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_Bag
     {
-        '\\Tuple_Bag\\' <sp>? [<heading_attr_names> | <tuple_bag_nonempty>]
+        '\\Tuple_Bag\\' <sp>? <Tuple_Bag_subject>
+    }
+
+    token Tuple_Bag_subject
+    {
+        <heading_attr_names> | <tuple_bag_nonempty>
     }
 
     token tuple_bag_nonempty
@@ -581,7 +689,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Article
     {
-        '\\Article\\' <sp>? [<label_sans_attrs> | <label_with_attrs>]
+        '\\Article\\' <sp>? <Article_subject>
+    }
+
+    token Article_subject
+    {
+        <label_sans_attrs> | <label_with_attrs>
     }
 
     token label_sans_attrs
@@ -606,21 +719,30 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token label_as_nesting
     {
-        <nesting_attr_names>
+        <Nesting_subject>
     }
 
 ###########################################################################
 
     token Excuse
     {
-        '\\Excuse\\' <sp>? [<label_sans_attrs> | <label_with_attrs>]
+        '\\Excuse\\' <sp>? <Excuse_subject>
+    }
+
+    token Excuse_subject
+    {
+        <label_sans_attrs> | <label_with_attrs>
     }
 
 ###########################################################################
 
     token Renaming
     {
-        '\\Renaming\\' <sp>?
+        '\\Renaming\\' <sp>? <Renaming_subject>
+    }
+
+    token Renaming_subject
+    {
         '(' <sp>?
             [',' <sp>?]?
             [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
