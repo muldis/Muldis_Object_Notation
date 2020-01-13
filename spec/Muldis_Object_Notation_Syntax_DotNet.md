@@ -437,7 +437,7 @@ The above components are defined as follows:
 
 ## Calendar Time
 
-A **Calendar Time** artifact has the predicate `CalendarTime`.
+A **Calendar Time** artifact has the predicate `Calendar_Time`.
 
 When its subject is any of the following, the predicate is required:
 
@@ -447,7 +447,7 @@ those 6 is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
 
 ## Calendar Duration
 
-A **Calendar Duration** artifact has the predicate `CalendarDuration`.
+A **Calendar Duration** artifact has the predicate `Calendar_Duration`.
 
 When its subject is any of the following, the predicate is optional:
 
@@ -459,7 +459,7 @@ When its subject is any of the following, the predicate is required:
 
 ## Calendar Instant
 
-A **Calendar Instant** artifact has the predicate `CalendarInstant`.
+A **Calendar Instant** artifact has the predicate `Calendar_Instant`.
 
 When its subject is any of the following, the predicate is optional:
 
@@ -485,7 +485,7 @@ this designates an instant local to any zone with a specific offset from UTC.
 
 ## Geographic Point
 
-A **Geographic Point** artifact has the predicate `GeographicPoint`.
+A **Geographic Point** artifact has the predicate `Geographic_Point`.
 
 When its subject is any of the following, the predicate is optional:
 
@@ -682,7 +682,7 @@ this designates a *universal interval* or *unbounded interval*.
 
 ## Interval Set
 
-An **Interval Set** artifact has the predicate `IntervalSet`.
+An **Interval Set** artifact has the predicate `Interval_Set`.
 
 When its subject is any of the following, the predicate is required:
 
@@ -703,7 +703,7 @@ that member's `SYS_value` is any **Boolean** subject.
 
 ## Interval Bag
 
-An **Interval Bag** artifact has the predicate `IntervalBag`.
+An **Interval Bag** artifact has the predicate `Interval_Bag`.
 
 When its subject is any of the following, the predicate is required:
 
@@ -762,7 +762,7 @@ Not permitted is any of the following, to keep things simpler or more correct:
 
 ## Tuple Array
 
-A **Tuple Array** artifact has the predicate `TupleArray`.
+A **Tuple Array** artifact has the predicate `Tuple_Array`.
 
 When its subject is any of the following, the predicate is required:
 
@@ -821,7 +821,7 @@ that member's `SYS_value` is any **Boolean** subject.
 
 ## Tuple Bag
 
-A **Tuple Bag** artifact has the predicate `TupleBag`.
+A **Tuple Bag** artifact has the predicate `Tuple_Bag`.
 
 When its subject is any of the following, the predicate is required:
 
