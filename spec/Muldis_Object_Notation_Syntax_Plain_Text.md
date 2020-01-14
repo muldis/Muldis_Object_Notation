@@ -1167,11 +1167,11 @@ Grammar:
 
     token Array_subject
     {
-        '[' <sp>?
+        '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? ']'
+        <sp>? '}'
     }
 ```
 
@@ -1179,34 +1179,34 @@ Examples:
 
 ```
     `Zero members.`
-    \Array\[]
+    \Array\{}
 
     `One member.`
-    \Array\[ "You got it!" ]
+    \Array\{ "You got it!" }
 
     `Three members.`
-    \Array\[
+    \Array\{
         "Alphonse",
         "Edward",
         "Winry",
-    ]
+    }
 
     `Five members (1 duplicate).`
-    \Array\[
+    \Array\{
         57,
         45,
         63,
         61,
         63,
-    ]
+    }
 
     `32 members (28 duplicates in 2 runs).`
-    \Array\[
+    \Array\{
         "/",
         "*" : 20,
         "+" : 10,
         "-",
-    ]
+    }
 ```
 
 ## Set
@@ -1398,7 +1398,7 @@ Grammar:
 
     token Interval_subject
     {
-        '{' <sp>? <interval_members> <sp>? '}'
+        '[' <sp>? <interval_members> <sp>? ']'
     }
 
     token interval_members
@@ -1436,31 +1436,31 @@ Examples:
 
 ```
     `Empty interval (zero members).`
-    {}
+    []
 
     `Unit interval (one member).`
-    {"abc"}
+    ["abc"]
 
     `Closed interval (probably 10 members, depending on the model used).`
-    {1..10}
+    [1..10]
 
-    `Left-closed, right-open interval; every Fraction x in {2.7<=x<9.3}.`
-    {2.7..-9.3}
+    `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
+    [2.7..-9.3]
 
-    `Left-open, right-closed interval; every Text x ordered in {"a"<x<="z"}.`
-    {"a"-.."z"}
+    `Left-open, right-closed interval; every Text x ordered in ["a"<x<="z"].`
+    ["a"-.."z"]
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
-    {0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"}
+    [0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"]
 
     `Left-unbounded, right-closed interval; every Integer <= 3.`
-    {*..3}
+    [*..3]
 
     `Left-closed, right-unbounded interval; every Integer >= 29.`
-    {29..*}
+    [29..*]
 
     `Universal interval; unbounded; every value of type system is a member.`
-    {*..*}
+    [*..*]
 ```
 
 ## Interval Set
@@ -1722,11 +1722,11 @@ Grammar:
 
     token tuple_array_nonempty
     {
-        '[' <sp>?
+        '{' <sp>?
             [',' <sp>?]?
             [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? ']'
+        <sp>? '}'
     }
 ```
 
@@ -1737,7 +1737,7 @@ Examples:
     \Tuple_Array\()
 
     `Zero attributes + one tuple.`
-    \Tuple_Array\[()]
+    \Tuple_Array\{()}
 
     `Three named attributes + zero tuples.`
     \Tuple_Array\(x,y,z)
@@ -1746,17 +1746,17 @@ Examples:
     \Tuple_Array\(0c0..0c2)
 
     `Two named attributes + three tuples (1 duplicate).`
-    \Tuple_Array\[
+    \Tuple_Array\{
         (name: "Amy"     , age: 14),
         (name: "Michelle", age: 17),
         (name: "Amy"     , age: 14),
-    ]
+    }
 
     `Two positional attributes + two tuples.`
-    \Tuple_Array\[
+    \Tuple_Array\{
         ("Michelle", 17),
         ("Amy"     , 14),
-    ]
+    }
 ```
 
 ## Relation / Tuple Set
@@ -2102,7 +2102,7 @@ is optional, and says how in the absense of such the possrep is recognized:
     Tuple           | () or (...) with >= 1 comma
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
-    Interval        | only {} or {...} without mandatory prefix
+    Interval        | only [] or [...] without mandatory prefix
     locationals     | leading 0L
 ```
 
@@ -2168,18 +2168,16 @@ that means they are used in pairs.
           |                        | * L0 or delimit of prefix for literals/selectors
           |                        |   to disambiguate that they are lits/sels
     ------+------------------------+---------------------------------------
-    []    | ordered collections    | * delimit homogeneous ordered collections
-          |                        |   of members, concept ordinal+asset pairs
-          |                        | * delimit Array selectors
-          |                        | * delimit nonempty-Tuple-Array selectors
-    ------+------------------------+---------------------------------------
-    {}    | nonordered collections | * delimit homogeneous nonordered collections
+    {}    | discrete collections   | * delimit homogeneous discrete collections
           |                        |   of members, concept asset+cardinal pairs
-          |                        | * delimit Set/Bag/Mix selectors
-          |                        | * delimit Interval-Set/Interval-Bag selectors
-          |                        | * delimit nonempty-Relation/Tuple-Bag sels
+          |                        | * delimit Array/Set/Bag/Mix selectors
+          |                        | * delimit nonempty-Tuple-Array/Relation/Tuple-Bag sels
     ------+------------------------+---------------------------------------
-    ()    | aordered collections   | * delimit heterogeneous aordered collections
+    []    | interval collections   | * delimit homogeneous continuous collections
+          |                        |   of members, concept interval low+high endpoint pairs
+          |                        | * delimit Interval selectors
+    ------+------------------------+---------------------------------------
+    ()    | attribute collections  | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs
           |                        | * delimit Heading literals
           |                        | * delimit Pair/Tuple/Article/Excuse selectors
@@ -2323,10 +2321,10 @@ bareword or numeric-format literal; when any of these sequences overlap,
 longest token always wins:
 
 ```
-    [
-    ]
     {
     }
+    [
+    ]
     (
     )
     ,

@@ -415,11 +415,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Array_subject
     {
-        '[' <sp>?
+        '{' <sp>?
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? ']'
+        <sp>? '}'
     }
 
 ###########################################################################
@@ -489,7 +489,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval_subject
     {
-        '{' <sp>? <interval_members> <sp>? '}'
+        '[' <sp>? <interval_members> <sp>? ']'
     }
 
     token interval_members
@@ -636,11 +636,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token tuple_array_nonempty
     {
-        '[' <sp>?
+        '{' <sp>?
             [',' <sp>?]?
             [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? ']'
+        <sp>? '}'
     }
 
 ###########################################################################
