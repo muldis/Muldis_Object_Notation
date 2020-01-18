@@ -570,10 +570,6 @@ When its subject is any of the following, the predicate is required:
 that member's `SYS_key` is any **Text** subject and
 that member's `SYS_value` is any **Boolean** subject.
 
-* Any `SYS_Tuple_Ordered_As_Tuple` having exactly 2 **Integer** subject
-typed attributes which are *attr name low* and *attr name high*
-such that both are non-negative and both are in ascending order.
-
 ## Array
 
 An **Array** artifact has the predicate `Array`.

@@ -357,22 +357,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token attr_name
     {
-        <nonord_attr_name> | <ord_attr_name>
-    }
-
-    token nonord_attr_name
-    {
-        <nonord_nonquoted_attr_name> | <quoted_text>
+        <nonord_nonquoted_attr_name> | <Text_subject>
     }
 
     token nonord_nonquoted_attr_name
     {
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
-    }
-
-    token ord_attr_name
-    {
-        <code_point_text>
     }
 
 ###########################################################################
@@ -386,24 +376,9 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         '(' <sp>?
             [',' <sp>?]?
-            [[<attr_name> | <ord_attr_name_range>]* % [<sp>? ',' <sp>?]]
+            [<attr_name>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? ')'
-    }
-
-    token ord_attr_name_range
-    {
-        <ord_attr_name_low> <sp>? '..' <sp>? <ord_attr_name_high>
-    }
-
-    token ord_attr_name_low
-    {
-        <ord_attr_name>
-    }
-
-    token ord_attr_name_high
-    {
-        <ord_attr_name>
     }
 
 ###########################################################################

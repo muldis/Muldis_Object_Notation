@@ -314,7 +314,7 @@ Muldis_Content_Predicate`
         \Heading\(region,revenue,qty),
 
         `Three ordered attributes.`
-        \Heading\(0c0..0c2),
+        \Heading\(0c0,0c1,0c2),
 
         `One of each.`
         \Heading\(0c1,age),
@@ -639,7 +639,7 @@ Muldis_Content_Predicate`
         \Tuple_Array\(x,y,z),
 
         `Three positional attributes + zero tuples.`
-        \Tuple_Array\(0c0..0c2),
+        \Tuple_Array\(0c0,0c1,0c2),
 
         `Two named attributes + three tuples (1 duplicate).`
         \Tuple_Array\{
@@ -670,7 +670,7 @@ Muldis_Content_Predicate`
         \Relation\(x,y,z),
 
         `Three positional attributes + zero tuples.`
-        \Relation\(0c0..0c2),
+        \Relation\(0c0,0c1,0c2),
 
         `Two named attributes + two tuples.`
         \Relation\{
@@ -709,7 +709,7 @@ Muldis_Content_Predicate`
         \Tuple_Bag\(x,y,z),
 
         `Three positional attributes + zero tuples.`
-        \Tuple_Bag\(0c0..0c2),
+        \Tuple_Bag\(0c0,0c1,0c2),
 
         `Two named attributes + six tuples (4 duplicates).`
         \Tuple_Bag\{

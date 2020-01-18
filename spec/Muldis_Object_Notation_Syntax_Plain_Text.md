@@ -1044,22 +1044,12 @@ Grammar:
 
     token attr_name
     {
-        <nonord_attr_name> | <ord_attr_name>
-    }
-
-    token nonord_attr_name
-    {
-        <nonord_nonquoted_attr_name> | <quoted_text>
+        <nonord_nonquoted_attr_name> | <Text_subject>
     }
 
     token nonord_nonquoted_attr_name
     {
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
-    }
-
-    token ord_attr_name
-    {
-        <code_point_text>
     }
 ```
 
@@ -1094,30 +1084,11 @@ Grammar:
     {
         '(' <sp>?
             [',' <sp>?]?
-            [[<attr_name> | <ord_attr_name_range>]* % [<sp>? ',' <sp>?]]
+            [<attr_name>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? ')'
     }
-
-    token ord_attr_name_range
-    {
-        <ord_attr_name_low> <sp>? '..' <sp>? <ord_attr_name_high>
-    }
-
-    token ord_attr_name_low
-    {
-        <ord_attr_name>
-    }
-
-    token ord_attr_name_high
-    {
-        <ord_attr_name>
-    }
 ```
-
-An `<ord_attr_name_range>` is subject to the additional rule that its
-integral `<ord_attr_name_low>` and `<ord_attr_name_high>` values must be
-in ascending order.
 
 Examples:
 
@@ -1141,7 +1112,7 @@ Examples:
     \Heading\(region,revenue,qty)
 
     `Three ordered attributes.`
-    \Heading\(0c0..0c2)
+    \Heading\(0c0,0c1,0c2)
 
     `One of each.`
     \Heading\(0c1,age)
@@ -1743,7 +1714,7 @@ Examples:
     \Tuple_Array\(x,y,z)
 
     `Three positional attributes + zero tuples.`
-    \Tuple_Array\(0c0..0c2)
+    \Tuple_Array\(0c0,0c1,0c2)
 
     `Two named attributes + three tuples (1 duplicate).`
     \Tuple_Array\{
@@ -1799,7 +1770,7 @@ Examples:
     \Relation\(x,y,z)
 
     `Three positional attributes + zero tuples.`
-    \Relation\(0c0..0c2)
+    \Relation\(0c0,0c1,0c2)
 
     `Two named attributes + two tuples.`
     \Relation\{
@@ -1863,7 +1834,7 @@ Examples:
     \Tuple_Bag\(x,y,z)
 
     `Three positional attributes + zero tuples.`
-    \Tuple_Bag\(0c0..0c2)
+    \Tuple_Bag\(0c0,0c1,0c2)
 
     `Two named attributes + six tuples (4 duplicates).`
     \Tuple_Bag\{
@@ -2223,7 +2194,6 @@ that means they are used in pairs.
     |     | simple collections     | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
     ..    | intervals/ranges       | * pair separator in Interval/Ivl-Set/Ivl-Bag selectors
-          |                        | * pair separator in Heading literals for ordered attr ranges
     ------+------------------------+---------------------------------------
     %     | tuples/heterogeneous   | * indicates that tuples are featured
           |                        | * not currently used by this grammar
