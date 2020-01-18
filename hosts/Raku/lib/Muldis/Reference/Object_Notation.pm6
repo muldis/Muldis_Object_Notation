@@ -245,7 +245,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token instant_zone
     {
-        <quoted_text>
+        <Text_subject>
     }
 
 ###########################################################################
@@ -302,7 +302,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Text_subject
     {
-        <quoted_text> | <code_point_text>
+        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point_text>
     }
 
     token quoted_text
@@ -335,6 +335,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
         '\\' [<[qgbtnr]> | ['<' <code_point_text> '>']]
     }
 
+    token nonquoted_alphanumeric_text
+    {
+        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+    }
+
     token code_point_text
     {
           [0cb  <[ 0..1      ]>+]
@@ -357,12 +362,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token attr_name
     {
-        <nonord_nonquoted_attr_name> | <Text_subject>
-    }
-
-    token nonord_nonquoted_attr_name
-    {
-        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+        <Text_subject>
     }
 
 ###########################################################################

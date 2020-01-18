@@ -742,7 +742,7 @@ Grammar:
 
     token instant_zone
     {
-        <quoted_text>
+        <Text_subject>
     }
 ```
 
@@ -911,7 +911,7 @@ Grammar:
 
     token Text_subject
     {
-        <quoted_text> | <code_point_text>
+        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point_text>
     }
 
     token quoted_text
@@ -944,6 +944,11 @@ Grammar:
         '\\' [<[qgbtnr]> | ['<' <code_point_text> '>']]
     }
 
+    token nonquoted_alphanumeric_text
+    {
+        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+    }
+
     token code_point_text
     {
           [0cb  <[ 0..1      ]>+]
@@ -959,6 +964,12 @@ However the exact semantics of this for `<Text>` are different than for
 other quotation-mark-delimited possreps; mainly it is that the optional
 leading `\` is specified separately per segment and it only affects that
 segment; also, individual character escape sequences may not cross segments.
+
+A `<nonquoted_alphanumeric_text>` is subject to the additional rule that it
+can not be `False` or `True`.
+
+The meaning of `<nonquoted_alphanumeric_text>` is exactly the same as if
+the same characters were surrounded by quotation marks.
 
 A `<code_point_text>` is subject to the additional rule that the
 non-negative integer it denotes must be in the set
@@ -1010,6 +1021,9 @@ Examples:
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
 
+    `Same thing but nonquoted.`
+    sales
+
     `One attribute name with a space in it.`
     "First Name"
 
@@ -1044,17 +1058,9 @@ Grammar:
 
     token attr_name
     {
-        <nonord_nonquoted_attr_name> | <Text_subject>
-    }
-
-    token nonord_nonquoted_attr_name
-    {
-        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+        <Text_subject>
     }
 ```
-
-The meaning of `<nonord_nonquoted_attr_name>` is exactly the same as if the
-same characters were surrounded by quotation marks.
 
 Examples:
 
@@ -2053,7 +2059,7 @@ regardless of whether MUON might use them in the future itself.  In other
 cases it doesn't use those syntaxes expressly in order to empower superset
 grammars to define their own meanings.
 
-# Optional Possrep Prefixes
+## Optional Possrep Prefixes
 
 Muldis Object Notation is designed around the concept that every possrep
 either may or must have a prefix of the form `\Foo\` where `Foo` is a
@@ -2068,7 +2074,7 @@ is optional, and says how in the absense of such the possrep is recognized:
     Boolean         | bareword literal False or True
     Integer         | leading 0..9 without any ./*^ and no 0ww or 0c or 0L prefix
     Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy or 0L prefix
-    Text            | "" or "..." or prefix 0c
+    Text            | "" or "..." or prefix [A..Z _ a..z] or prefix 0c but not Boolean
     Pair            | (...:...) without any comma
     Tuple           | () or (...) with >= 1 comma
     Bits            | prefix 0bb or 0bo or 0bx
@@ -2077,7 +2083,7 @@ is optional, and says how in the absense of such the possrep is recognized:
     locationals     | leading 0L
 ```
 
-# Features For Superset Grammars
+## Features Reserved For Superset Grammars
 
 Muldis Object Notation is designed around a minimized set of *syntactic
 namespaces* in order to leave as much useful syntax as possible for
@@ -2097,16 +2103,28 @@ shouldn't interfere with a superset using those for regular operators.
 Likewise, any uses of `:` or `,` are only used by MUON within various kinds
 of bracketing pairs and a superset should be able to also use them.
 
-MUON has no alpha barewords except for `False` and `True` that can appear
-in isolation from a `\Foo\` form, so to not interfere with any other
-alpha keywords or reserved words a superset may want to use.
-
 MUON does not use the single-quote string delimiter character `'` for
 anything, and leaves it reserved for a superset to use as it sees fit.
 
 MUON does not use the semicolon `;` for anything, so a superset grammar can
 use it for things like separating statements and thus disambiguating its
 own uses of bracketing characters to define statement or expression groups.
+
+## Features Shared With Superset Grammars
+
+MUON declares that all alpha barewords are **Text** literals in the general
+case, meaning any bareword like `foo` is interpreted as if it were `"foo"`;
+the special case of `False` and `True` are instead **Boolean** literals;
+the special case of the form `\Foo\` instead denotes a possrep predicate.
+This syntactic feature is intended to make the common cases of **Nesting**
+or attribute names or similar more pleasant to manually write or read.
+
+MUON assumes that a superset grammar may wish to override that general
+interpretation such as to be reserved words or refer to infix or prefix etc
+operator or routine invocations or to refer to variable names or whatever;
+in that case, any contexts that could be interpreted either as a **Text**
+literal or as something else will be interpreted as the latter, and one can
+use the quoted form of **Text** to force that meaning.
 
 # SYNTACTIC MNEMONICS
 
@@ -2127,7 +2145,7 @@ that means they are used in pairs.
     ""    | stringy data and names | * delimit quoted opaque regular literals
           |                        | * delimit all quoted-Text literals
           |                        | * delimit quoted code identifiers/names
-          |                        | * delimit Calendar-Instant zone names
+          |                        | * delimit quoted Calendar-Instant zone names
     ------+------------------------+---------------------------------------
     ``    | stringy comments       | * delimit expendable dividing space comments
     ------+------------------------+---------------------------------------

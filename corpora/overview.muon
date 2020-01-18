@@ -261,6 +261,9 @@ Muldis_Content_Predicate`
         `One non-ordered quoted Text (or, one named attribute).`
         "sales",
 
+        `Same thing but nonquoted.`
+        sales,
+
         `One attribute name with a space in it.`
         "First Name",
 
