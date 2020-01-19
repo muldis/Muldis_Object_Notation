@@ -429,10 +429,10 @@ Grammar:
 
     token Integer_subject
     {
-        <[+-]>? <sp>? <nonsigned_int>
+        <[+-]>? <sp>? <Integer_subject_nonsigned>
     }
 
-    token nonsigned_int
+    token Integer_subject_nonsigned
     {
           [ 0b <sp>?   [<[ 0..1      ]>+]+ % [_ | <sp>]]
         | [ 0o <sp>?   [<[ 0..7      ]>+]+ % [_ | <sp>]]
@@ -519,22 +519,22 @@ Grammar:
 
     token numerator
     {
-        <Integer>
+        <Integer_subject>
     }
 
     token denominator
     {
-        <nonsigned_int>
+        <Integer_subject_nonsigned>
     }
 
     token radix
     {
-        <nonsigned_int>
+        <Integer_subject_nonsigned>
     }
 
     token exponent
     {
-        <Integer>
+        <Integer_subject>
     }
 ```
 
@@ -640,14 +640,22 @@ Grammar:
 
     token time_elements
     {
-        [<[ymdhis]> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+        [<time_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+    }
+
+    token time_unit
+    {
+        <[ymdhis]>
     }
 
     token loc_multiplicity
     {
-        <Integer> | <Fraction>
+        <Integer_subject> | <Fraction_subject>
     }
 ```
+
+A `<time_elements>` is subject to the additional rule that every distinct
+`<time_unit>` may appear at most once.
 
 Examples:
 
@@ -746,6 +754,9 @@ Grammar:
     }
 ```
 
+An `<instant_offset>` is subject to the additional rule that it may only
+contain `<time_unit>` members of `{h,i,s}` and not `{y,m,d}`.
+
 Examples:
 
 ```
@@ -784,9 +795,17 @@ Grammar:
 
     token geo_elements
     {
-        [<[>^+]> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+        [<geo_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+    }
+
+    token geo_unit
+    {
+        <[>^+]>
     }
 ```
+
+A `<geo_elements>` is subject to the additional rule that every distinct
+`<geo_unit>` may appear at most once.
 
 Examples:
 
@@ -1202,7 +1221,7 @@ Grammar:
     {
         '{' <sp>?
             [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
+            [[<Any> [<sp>? ':' <sp>? <Boolean_subject>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }
@@ -1265,7 +1284,7 @@ Grammar:
 
     token int_multiplicity
     {
-        <nonsigned_int>
+        <Integer_subject_nonsigned>
     }
 ```
 
@@ -1319,7 +1338,7 @@ Grammar:
 
     token frac_multiplicity
     {
-        <Fraction>
+        <Fraction_subject>
     }
 ```
 
@@ -1456,7 +1475,7 @@ Grammar:
     {
         '{' <sp>?
             [',' <sp>?]?
-            [[<interval_members> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
+            [[<interval_members> [<sp>? ':' <sp>? <Boolean_subject>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }
@@ -1757,7 +1776,7 @@ Grammar:
     {
         '{' <sp>?
             [',' <sp>?]?
-            [[<Tuple> [<sp>? ':' <sp>? <Boolean>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Tuple> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }

@@ -119,10 +119,10 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Integer_subject
     {
-        <[+-]>? <sp>? <nonsigned_int>
+        <[+-]>? <sp>? <Integer_subject_nonsigned>
     }
 
-    token nonsigned_int
+    token Integer_subject_nonsigned
     {
           [ 0b <sp>?   [<[ 0..1      ]>+]+ % [_ | <sp>]]
         | [ 0o <sp>?   [<[ 0..7      ]>+]+ % [_ | <sp>]]
@@ -167,22 +167,22 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token numerator
     {
-        <Integer>
+        <Integer_subject>
     }
 
     token denominator
     {
-        <nonsigned_int>
+        <Integer_subject_nonsigned>
     }
 
     token radix
     {
-        <nonsigned_int>
+        <Integer_subject_nonsigned>
     }
 
     token exponent
     {
-        <Integer>
+        <Integer_subject>
     }
 
 ###########################################################################
@@ -199,12 +199,17 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token time_elements
     {
-        [<[ymdhis]> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+        [<time_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+    }
+
+    token time_unit
+    {
+        <[ymdhis]>
     }
 
     token loc_multiplicity
     {
-        <Integer> | <Fraction>
+        <Integer_subject> | <Fraction_subject>
     }
 
 ###########################################################################
@@ -262,7 +267,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token geo_elements
     {
-        [<[>^+]> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+        [<geo_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+    }
+
+    token geo_unit
+    {
+        <[>^+]>
     }
 
 ###########################################################################
@@ -408,7 +418,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         '{' <sp>?
             [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
+            [[<Any> [<sp>? ':' <sp>? <Boolean_subject>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }
@@ -431,7 +441,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token int_multiplicity
     {
-        <nonsigned_int>
+        <Integer_subject_nonsigned>
     }
 
 ###########################################################################
@@ -452,7 +462,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token frac_multiplicity
     {
-        <Fraction>
+        <Fraction_subject>
     }
 
 ###########################################################################
@@ -508,7 +518,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         '{' <sp>?
             [',' <sp>?]?
-            [[<interval_members> [<sp>? ':' <sp>? <Boolean>]?]* % [<sp>? ',' <sp>?]]
+            [[<interval_members> [<sp>? ':' <sp>? <Boolean_subject>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }
@@ -634,7 +644,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         '{' <sp>?
             [',' <sp>?]?
-            [[<Tuple> [<sp>? ':' <sp>? <Boolean>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Tuple> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
         <sp>? '}'
     }
