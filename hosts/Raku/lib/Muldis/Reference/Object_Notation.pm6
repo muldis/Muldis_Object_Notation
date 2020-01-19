@@ -548,7 +548,13 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Pair_subject
     {
-        '(' <sp>? <this> <sp>? ':' <sp>? <that> <sp>? ')'
+        '(' <sp>? <this_and_that> <sp>? ')'
+    }
+
+    token this_and_that
+    {
+          [<this> <sp>? [':'|'->'] <sp>? <that>]
+        | [<that> <sp>?      '<-'  <sp>? <this>]
     }
 
     token this
@@ -679,27 +685,17 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Article_subject
     {
-        <label_sans_attrs> | <label_with_attrs>
-    }
-
-    token label_sans_attrs
-    {
-        ['(' <sp>? <label> <sp>? ')'] | <label_as_nesting>
+        <label_with_attrs> | <delimited_label> | <label_as_nesting>
     }
 
     token label_with_attrs
     {
-        '(' <sp>? <label> <sp>? ':' <sp>? <attrs> <sp>? ')'
+        <Pair_subject>
     }
 
-    token label
+    token delimited_label
     {
-        <Any>
-    }
-
-    token attrs
-    {
-        <Tuple>
+        '(' <sp>? <this> <sp>? ')'
     }
 
     token label_as_nesting
@@ -716,7 +712,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Excuse_subject
     {
-        <label_sans_attrs> | <label_with_attrs>
+        <Article_subject>
     }
 
 ###########################################################################

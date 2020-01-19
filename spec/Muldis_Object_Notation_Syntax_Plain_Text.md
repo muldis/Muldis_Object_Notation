@@ -1564,7 +1564,13 @@ Grammar:
 
     token Pair_subject
     {
-        '(' <sp>? <this> <sp>? ':' <sp>? <that> <sp>? ')'
+        '(' <sp>? <this_and_that> <sp>? ')'
+    }
+
+    token this_and_that
+    {
+          [<this> <sp>? [':'|'->'] <sp>? <that>]
+        | [<that> <sp>?      '<-'  <sp>? <this>]
     }
 
     token this
@@ -1581,9 +1587,20 @@ Grammar:
 Examples:
 
 ```
+    `Pair of Integer.`
     (5: -3)
 
+    `Pair of Text.`
     ("First Name": "Joy")
+
+    `Another Pair.`
+    (x:y)
+
+    `Same thing.`
+    (x->y)
+
+    `Same thing.`
+    (y<-x)
 ```
 
 ## Tuple / Attribute Set
@@ -1888,27 +1905,17 @@ Grammar:
 
     token Article_subject
     {
-        <label_sans_attrs> | <label_with_attrs>
-    }
-
-    token label_sans_attrs
-    {
-        ['(' <sp>? <label> <sp>? ')'] | <label_as_nesting>
+        <label_with_attrs> | <delimited_label> | <label_as_nesting>
     }
 
     token label_with_attrs
     {
-        '(' <sp>? <label> <sp>? ':' <sp>? <attrs> <sp>? ')'
+        <Pair_subject>
     }
 
-    token label
+    token delimited_label
     {
-        <Any>
-    }
-
-    token attrs
-    {
-        <Tuple>
+        '(' <sp>? <this> <sp>? ')'
     }
 
     token label_as_nesting
@@ -1916,6 +1923,16 @@ Grammar:
         <Nesting_subject>
     }
 ```
+
+Within the direct context of an `<Article_subject>`, `<this>` and `<that>`
+have the aliases `<label>` and `<attrs>` respectively.
+
+Iff that `<attrs>` is not explicitly defined then it implicitly defines the
+sole nullary **Tuple** `()`.
+
+Iff that `<attrs>` is so explicitly defined then it is subject to the
+additional rule that the value expression it denotes must evaluate to a
+**Tuple**.
 
 Examples:
 
@@ -1956,7 +1973,7 @@ Grammar:
 
     token Excuse_subject
     {
-        <label_sans_attrs> | <label_with_attrs>
+        <Article_subject>
     }
 ```
 
@@ -2193,13 +2210,13 @@ that means they are used in pairs.
           | generic grouping       | * optional delimiters around Any to force a parsing precedence
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
-          |                        | * separates the 2 parts of a pair
-          |                        | * pair separator in Geographic-* literals
-          |                        | * optional pair separator in Array/Set/Bag/Mix sels
+    ->    |                        | * separates the 2 parts of a pair
+    <-    |                        | * optional pair separator in Array/Set/Bag/Mix sels
           |                        | * this/that separator in Pair sels
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
           |                        | * optional pair separator in nonempty-TA/Rel/TB sels
           |                        | * label/attributes separator in Article/Excuse sels
+          |                        | * before/after separator in Renaming sels
           |                        | * disambiguate Bag/Mix sels from Set sel
           |                        | * disambiguate Pair sels from generic_group
     ------+------------------------+---------------------------------------
@@ -2336,6 +2353,8 @@ longest token always wins:
     )
     ,
     :
+    ->
+    <-
     ::
     ..
     ..-
@@ -2353,8 +2372,6 @@ longest token always wins:
     *..-*
     *-..*
     *-..-*
-    ->
-    <-
 ```
 
 As a special case, where a `+` symbol would otherwise parse as part of a

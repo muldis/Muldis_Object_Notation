@@ -559,9 +559,20 @@ Muldis_Content_Predicate`
 
     `$$$` Pair : (
 
+        `Pair of Integer.`
         (5: -3),
 
+        `Pair of Text.`
         ("First Name": "Joy"),
+
+        `Another Pair.`
+        (x:y),
+
+        `Same thing.`
+        (x->y),
+
+        `Same thing.`
+        (y<-x),
 
     ),
 
