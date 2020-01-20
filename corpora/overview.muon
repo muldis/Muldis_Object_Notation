@@ -284,13 +284,13 @@ Muldis_Content_Predicate`
 
     `$$$` Nesting : (
 
-        \person,
+        ::person,
 
-        \person::birth_date,
+        ::person::birth_date,
 
-        \person::birth_date::year,
+        ::person::birth_date::year,
 
-        \the_db::stats::"samples by order",
+        ::the_db::stats::"samples by order",
 
     ),
 
@@ -439,20 +439,20 @@ Muldis_Content_Predicate`
         \Mix\{},
 
         `One member; one gram of mass.`
-        \Mix\{\Gram: 1.0},
+        \Mix\{::Gram: 1.0},
 
         `29.95 members (28.95 duplicates); the cost of a surgery.`
-        \Mix\{\USD: 29.95},
+        \Mix\{::USD: 29.95},
 
         `9.8 members; acceleration under Earth's gravity.`
-        \Mix\{\Meter_Per_Second_Squared: 9.8},
+        \Mix\{::Meter_Per_Second_Squared: 9.8},
 
         `0.615 members (fractions of 3 distinct members); recipe.`
         \Mix\{
-            \Butter : 0.22,
-            \Sugar  : 0.1,
-            \Flour  : 0.275,
-            \Sugar  : 0.02,
+            ::Butter : 0.22,
+            ::Sugar  : 0.1,
+            ::Flour  : 0.275,
+            ::Sugar  : 0.02,
         },
 
         `4/3 members (fractions of 3 distinct members); this-mix.`
@@ -620,10 +620,10 @@ Muldis_Content_Predicate`
         `Five leaf attributes in nested multi-level namespace.`
         (
             name: "John Glenn",
-            birth_date::year: 1921,
+            ::birth_date::year: 1921,
             comment: "Fly!",
-            birth_date::month: 7,
-            birth_date::day: 18,
+            ::birth_date::month: 7,
+            ::birth_date::day: 18,
         ),
 
         `Same thing.`
@@ -743,15 +743,15 @@ Muldis_Content_Predicate`
 
     `$$$` Article : (
 
-        \Article\(\Point : (x : 5, y : 3)),
+        \Article\(::Point : (x : 5, y : 3)),
 
-        \Article\(\Float : (
+        \Article\(::Float : (
             significand : 45207196,
             radix       : 10,
             exponent    : 37,
         )),
 
-        \Article\(\the_db::UTCDateTime : (
+        \Article\(::the_db::UTCDateTime : (
             year   : 2003,
             month  : 10,
             day    : 26,
@@ -760,9 +760,9 @@ Muldis_Content_Predicate`
             second : 0.0,
         )),
 
-        \Article\Positive_Infinity,
+        \Article\::Positive_Infinity,
 
-        \Article\Negative_Zero,
+        \Article\::Negative_Zero,
 
     ),
 
@@ -770,11 +770,11 @@ Muldis_Content_Predicate`
 
     `$$$` Excuse : (
 
-        \Excuse\(\Input_Field_Wrong : (name : "Your Age")),
+        \Excuse\(::Input_Field_Wrong : (name : "Your Age")),
 
-        \Excuse\Div_By_Zero,
+        \Excuse\::Div_By_Zero,
 
-        \Excuse\No_Such_Attr_Name,
+        \Excuse\::No_Such_Attr_Name,
 
     ),
 

@@ -284,11 +284,11 @@ Examples:
 
 ```
     (
-        `$$$` My_Func : \Article\(\Function : ...),
+        `$$$` My_Func : \Article\(::Function : ...),
 
-        `$$$` My_Proc_1 : \Article\(\Procedure : ...),
+        `$$$` My_Proc_1 : \Article\(::Procedure : ...),
 
-        `$$$` My_Proc_2 : \Article\(\Procedure : ...),
+        `$$$` My_Proc_2 : \Article\(::Procedure : ...),
     )
 ```
 
@@ -1067,12 +1067,12 @@ Grammar:
 ```
     token Nesting
     {
-        ['\\Nesting\\' | '\\'] <sp>? <Nesting_subject>
+        ['\\Nesting\\' <sp>?]? <Nesting_subject>
     }
 
     token Nesting_subject
     {
-        <attr_name>+ % [<sp>? '::' <sp>?]
+        ['::' <sp>? <attr_name>]+ % <sp>?
     }
 
     token attr_name
@@ -1084,13 +1084,13 @@ Grammar:
 Examples:
 
 ```
-    \person
+    ::person
 
-    \person::birth_date
+    ::person::birth_date
 
-    \person::birth_date::year
+    ::person::birth_date::year
 
-    \the_db::stats::"samples by order"
+    ::the_db::stats::"samples by order"
 ```
 
 ## Heading / Attribute Name Set
@@ -1349,20 +1349,20 @@ Examples:
     \Mix\{}
 
     `One member; one gram of mass.`
-    \Mix\{\Gram: 1.0}
+    \Mix\{::Gram: 1.0}
 
     `29.95 members (28.95 duplicates); the cost of a surgery.`
-    \Mix\{\USD: 29.95}
+    \Mix\{::USD: 29.95}
 
     `9.8 members; acceleration under Earth's gravity.`
-    \Mix\{\Meter_Per_Second_Squared: 9.8}
+    \Mix\{::Meter_Per_Second_Squared: 9.8}
 
     `0.615 members (fractions of 3 distinct members); recipe.`
     \Mix\{
-        \Butter : 0.22,
-        \Sugar  : 0.1,
-        \Flour  : 0.275,
-        \Sugar  : 0.02,
+        ::Butter : 0.22,
+        ::Sugar  : 0.1,
+        ::Flour  : 0.275,
+        ::Sugar  : 0.02,
     }
 
     `4/3 members (fractions of 3 distinct members); this-mix.`
@@ -1698,10 +1698,10 @@ Examples:
     `Five leaf attributes in nested multi-level namespace.`
     (
         name: "John Glenn",
-        birth_date::year: 1921,
+        ::birth_date::year: 1921,
         comment: "Fly!",
-        birth_date::month: 7,
-        birth_date::day: 18,
+        ::birth_date::month: 7,
+        ::birth_date::day: 18,
     )
 
     `Same thing.`
@@ -1937,15 +1937,15 @@ additional rule that the value expression it denotes must evaluate to a
 Examples:
 
 ```
-    \Article\(\Point : (x : 5, y : 3))
+    \Article\(::Point : (x : 5, y : 3))
 
-    \Article\(\Float : (
+    \Article\(::Float : (
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
     ))
 
-    \Article\(\the_db::UTCDateTime : (
+    \Article\(::the_db::UTCDateTime : (
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -1954,9 +1954,9 @@ Examples:
         second : 0.0,
     ))
 
-    \Article\Positive_Infinity
+    \Article\::Positive_Infinity
 
-    \Article\Negative_Zero
+    \Article\::Negative_Zero
 ```
 
 ## Excuse
@@ -1980,11 +1980,11 @@ Grammar:
 Examples:
 
 ```
-    \Excuse\(\Input_Field_Wrong : (name : "Your Age"))
+    \Excuse\(::Input_Field_Wrong : (name : "Your Age"))
 
-    \Excuse\Div_By_Zero
+    \Excuse\::Div_By_Zero
 
-    \Excuse\No_Such_Attr_Name
+    \Excuse\::No_Such_Attr_Name
 ```
 
 ## Renaming / Attribute Name Map
@@ -2111,12 +2111,13 @@ is optional, and says how in the absense of such the possrep is recognized:
     Integer         | leading 0..9 without any ./*^ and no 0ww or 0c or 0L prefix
     Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy or 0L prefix
     Text            | "" or "..." or prefix [A..Z _ a..z] or prefix 0c but not Boolean
+    Nesting         | prefix ::
     Pair            | (...:...) without any comma
     Tuple           | () or (...) with >= 1 comma
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
     Interval        | only [] or [...] without mandatory prefix
-    locationals     | leading 0L
+    locationals     | prefix 0L
 ```
 
 ## Features Reserved For Superset Grammars
@@ -2226,6 +2227,9 @@ that means they are used in pairs.
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Tuple/Article/Excuse sels
           |                        | * disambiguate unary named Tuple sels from Pair sels and generic_group
+    ------+------------------------+---------------------------------------
+    ::    | nestings               | * prefix each element of a Nesting literal
+          |                        | * disambiguate Nesting from Text
     ------+------------------------+---------------------------------------
     ~     | sequences/stitching    | * indicates a sequencing context
           |                        | * not currently used by this grammar

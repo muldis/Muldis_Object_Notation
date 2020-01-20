@@ -362,12 +362,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Nesting
     {
-        ['\\Nesting\\' | '\\'] <sp>? <Nesting_subject>
+        ['\\Nesting\\' <sp>?]? <Nesting_subject>
     }
 
     token Nesting_subject
     {
-        <attr_name>+ % [<sp>? '::' <sp>?]
+        ['::' <sp>? <attr_name>]+ % <sp>?
     }
 
     token attr_name
