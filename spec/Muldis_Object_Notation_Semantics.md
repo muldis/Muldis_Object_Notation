@@ -125,7 +125,7 @@ used and instead other more applicable **Excuse** values should instead.
 
 A **Boolean** value is a general purpose
 2-valued logic boolean or *truth value*, or specifically it is one of the 2
-values *False* and *True*.
+values *0bFALSE* and *0bTRUE*.
 
 ## Integer
 

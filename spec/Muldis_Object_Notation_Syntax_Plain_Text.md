@@ -399,20 +399,20 @@ Grammar:
 
     token Boolean_subject
     {
-        False | True
+        0b [FALSE | TRUE]
     }
 ```
 
 Examples:
 
 ```
-    False
+    0bFALSE
 
-    True
+    0bTRUE
 
-    \Boolean\False
+    \Boolean\0bFALSE
 
-    \Boolean\True
+    \Boolean\0bTRUE
 ```
 
 ## Integer
@@ -750,7 +750,7 @@ Grammar:
 
     token instant_zone
     {
-        <Text_subject>
+        <quoted_text_segment>
     }
 ```
 
@@ -935,7 +935,12 @@ Grammar:
 
     token quoted_text
     {
-        ['"' <text_content> '"']+ % <sp>?
+        <quoted_text_segment>+ % <sp>?
+    }
+
+    token quoted_text_segment
+    {
+        '"' <text_content> '"'
     }
 
     token text_content
@@ -977,16 +982,6 @@ Grammar:
     }
 ```
 
-A `<Text>` may optionally be split into 1..N segments where each pair
-of consecutive segments is separated by dividing space.
-However the exact semantics of this for `<Text>` are different than for
-other quotation-mark-delimited possreps; mainly it is that the optional
-leading `\` is specified separately per segment and it only affects that
-segment; also, individual character escape sequences may not cross segments.
-
-A `<nonquoted_alphanumeric_text>` is subject to the additional rule that it
-can not be `False` or `True`.
-
 The meaning of `<nonquoted_alphanumeric_text>` is exactly the same as if
 the same characters were surrounded by quotation marks.
 
@@ -999,7 +994,7 @@ The meanings of the simple character escape sequences are:
 ```
     Esc | Unicode    | Unicode         | Chr | Literal character used
     Seq | Code Point | Character Name  | Lit | for when not escaped
-    ----+------------+-----------------+-----+------------------------------
+    ----+------------+-----------------+-----+-----------------------------
     \q  | 0x22    34 | QUOTATION MARK  | "   | delimit Text/opaque literals
     \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
     \b  | 0x5C    93 | REVERSE SOLIDUS | \   | no special meaning in non-escaped
@@ -1029,7 +1024,7 @@ Examples:
 ```
     ""
 
-    "Ceres"
+    Ceres
 
     "サンプル"
 
@@ -1182,9 +1177,9 @@ Examples:
 
     `Three members.`
     \Array\{
-        "Alphonse",
-        "Edward",
-        "Winry",
+        Alphonse,
+        Edward,
+        Winry,
     }
 
     `Five members (1 duplicate).`
@@ -1238,11 +1233,11 @@ Examples:
 
     `Four members (no duplicates).`
     \Set\{
-        "Canada",
-        "Spain",
-        "Jordan",
-        "Jordan",
-        "Thailand",
+        Canada,
+        Spain,
+        Jordan,
+        Jordan,
+        Thailand,
     }
 
     `Three members.`
@@ -1254,10 +1249,10 @@ Examples:
 
     `Two members.`
     \Set\{
-        21 : True,
-        62 : False,
-        3 : True,
-        101 : False,
+        21 : 0bTRUE,
+        62 : 0bFALSE,
+        3 : 0bTRUE,
+        101 : 0bFALSE,
     }
 ```
 
@@ -1299,19 +1294,19 @@ Examples:
 
     `1200 members (1197 duplicates).`
     \Bag\{
-        "Apple"  : 500,
-        "Orange" : 300,
-        "Banana" : 400,
+        Apple  : 500,
+        Orange : 300,
+        Banana : 400,
     }
 
     `Six members (2 duplicates).`
     \Bag\{
-        "Foo" : 1,
-        "Quux" : 1,
-        "Foo" : 1,
-        "Bar" : 1,
-        "Baz" : 1,
-        "Baz" : 1,
+        Foo : 1,
+        Quux : 1,
+        Foo : 1,
+        Bar : 1,
+        Baz : 1,
+        Baz : 1,
     }
 ```
 
@@ -1367,16 +1362,16 @@ Examples:
 
     `4/3 members (fractions of 3 distinct members); this-mix.`
     \Mix\{
-        "Sugar": 1/3,
-        "Spice": 1/4,
-        "All_Things_Nice": 3/4,
+        Sugar: 1/3,
+        Spice: 1/4,
+        All_Things_Nice: 3/4,
     }
 
     `-1.5 members; adjustment for recipe.`
     \Mix\{
-        "Rice": +4.0,
-        "Beans": -5.7,
-        "Carrots": +0.2,
+        Rice: +4.0,
+        Beans: -5.7,
+        Carrots: +0.2,
     }
 ```
 
@@ -1435,7 +1430,7 @@ Examples:
     []
 
     `Unit interval (one member).`
-    ["abc"]
+    [abc]
 
     `Closed interval (probably 10 members, depending on the model used).`
     [1..10]
@@ -1443,8 +1438,8 @@ Examples:
     `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
     [2.7..-9.3]
 
-    `Left-open, right-closed interval; every Text x ordered in ["a"<x<="z"].`
-    ["a"-.."z"]
+    `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
+    [a-..z]
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
     [0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"]
@@ -1488,7 +1483,7 @@ Examples:
     \Interval_Set\{}
 
     `Unit interval-set (one member).`
-    \Interval_Set\{"abc"}
+    \Interval_Set\{abc}
 
     `Probably 10 members, depending on the model used.`
     \Interval_Set\{1..10}
@@ -1538,10 +1533,10 @@ Examples:
     \Interval_Bag\{}
 
     `Unit interval-bag (one member).`
-    \Interval_Bag\{"abc"}
+    \Interval_Bag\{abc}
 
     `Five members (4 duplicates).`
-    \Interval_Bag\{"def":5}
+    \Interval_Bag\{def:5}
 
     `Probably 20 members (5 duplicates), depending on the model used.`
     \Interval_Bag\{1..10,6..15}
@@ -1591,7 +1586,7 @@ Examples:
     (5: -3)
 
     `Pair of Text.`
-    ("First Name": "Joy")
+    ("First Name": Joy)
 
     `Another Pair.`
     (x:y)
@@ -1662,7 +1657,7 @@ Examples:
     ()
 
     `One named attribute.`
-    ("First Name": "Joy",)
+    ("First Name": Joy,)
 
     `One ordered attribute.`
     (53,)
@@ -1675,23 +1670,23 @@ Examples:
 
     `Three named attributes.`
     (
-        login_name : "hartmark",
-        login_pass : "letmein",
-        is_special : True,
+        login_name : hartmark,
+        login_pass : letmein,
+        is_special : 0bTRUE,
     )
 
     `Three ordered attributes.`
-    ("hello",26,True)
+    (hello,26,0bTRUE)
 
     `One of each.`
-    ("Jay", age: 10)
+    (Jay, age: 10)
 
     `A non-Latin name.`
     ("サンプル": "http://example.com",)
 
     `Two named attributes.`
     (
-        name : "Michelle",
+        name : Michelle,
         age  : 17,
     )
 
@@ -1760,15 +1755,15 @@ Examples:
 
     `Two named attributes + three tuples (1 duplicate).`
     \Tuple_Array\{
-        (name: "Amy"     , age: 14),
-        (name: "Michelle", age: 17),
-        (name: "Amy"     , age: 14),
+        (name: Amy     , age: 14),
+        (name: Michelle, age: 17),
+        (name: Amy     , age: 14),
     }
 
     `Two positional attributes + two tuples.`
     \Tuple_Array\{
-        ("Michelle", 17),
-        ("Amy"     , 14),
+        (Michelle, 17),
+        (Amy     , 14),
     }
 ```
 
@@ -1816,14 +1811,14 @@ Examples:
 
     `Two named attributes + two tuples.`
     \Relation\{
-        (name: "Michelle", age: 17),
-        (name: "Amy"     , age: 14),
+        (name: Michelle, age: 17),
+        (name: Amy     , age: 14),
     }
 
     `Two positional attributes + two tuples.`
     \Relation\{
-        ("Michelle", 17),
-        ("Amy"     , 14),
+        (Michelle, 17),
+        (Amy     , 14),
     }
 
     `Some people records.`
@@ -1880,14 +1875,14 @@ Examples:
 
     `Two named attributes + six tuples (4 duplicates).`
     \Tuple_Bag\{
-        (name: "Michelle", age: 17),
-        (name: "Amy"     , age: 14) : 5,
+        (name: Michelle, age: 17),
+        (name: Amy     , age: 14) : 5,
     }
 
     `Two positional attributes + two tuples.`
     \Tuple_Bag\{
-        ("Michelle", 17),
-        ("Amy"     , 14),
+        (Michelle, 17),
+        (Amy     , 14),
     }
 ```
 
@@ -2107,17 +2102,17 @@ is optional, and says how in the absense of such the possrep is recognized:
 ```
     Possrep/partial | Possrep Instead Identified By
     ----------------+---------------------------------------------
-    Boolean         | bareword literal False or True
-    Integer         | leading 0..9 without any ./*^ and no 0ww or 0c or 0L prefix
-    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy or 0L prefix
-    Text            | "" or "..." or prefix [A..Z _ a..z] or prefix 0c but not Boolean
-    Nesting         | prefix ::
-    Pair            | (...:...) without any comma
-    Tuple           | () or (...) with >= 1 comma
+    Boolean         | prefix 0b followed by FALSE or TRUE
+    Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0[L|c] prefix
+    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
+    locationals     | prefix 0L
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
+    Text            | "" or "..." or prefix [A..Z _ a..z] or prefix 0c
+    Nesting         | prefix ::
     Interval        | only [] or [...] without mandatory prefix
-    locationals     | prefix 0L
+    Pair            | (...:...) without any comma
+    Tuple           | () or (...) with >= 1 comma
 ```
 
 ## Features Reserved For Superset Grammars
@@ -2151,7 +2146,6 @@ own uses of bracketing characters to define statement or expression groups.
 
 MUON declares that all alpha barewords are **Text** literals in the general
 case, meaning any bareword like `foo` is interpreted as if it were `"foo"`;
-the special case of `False` and `True` are instead **Boolean** literals;
 the special case of the form `\Foo\` instead denotes a possrep predicate.
 This syntactic feature is intended to make the common cases of **Nesting**
 or attribute names or similar more pleasant to manually write or read.
@@ -2280,7 +2274,8 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     alpha | identifier             | * first char a..z/etc in bareword indicates is identifier
     ------+------------------------+---------------------------------------
-    0b    | base-2                 | * indicates base-2/binary notation
+    0b    | boolean                | * prefix for Boolean literal
+          | base-2                 | * indicates base-2/binary notation
           |                        | * prefix for Integer or Fraction-part in base-2
           | bit string             | * prefix for Bits literals; 0bb/0bo/0bx means in base-2/8/16
     ------+------------------------+---------------------------------------

@@ -107,7 +107,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Boolean_subject
     {
-        False | True
+        0b [FALSE | TRUE]
     }
 
 ###########################################################################
@@ -250,7 +250,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token instant_zone
     {
-        <Text_subject>
+        <quoted_text_segment>
     }
 
 ###########################################################################
@@ -317,7 +317,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token quoted_text
     {
-        ['"' <text_content> '"']+ % <sp>?
+        <quoted_text_segment>+ % <sp>?
+    }
+
+    token quoted_text_segment
+    {
+        '"' <text_content> '"'
     }
 
     token text_content
