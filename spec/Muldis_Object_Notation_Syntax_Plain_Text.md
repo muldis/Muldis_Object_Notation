@@ -229,9 +229,7 @@ Grammar:
 ```
     token MUON
     {
-        <sp>?
-            <Any>
-        <sp>?
+        <sp>? ~ <sp>? <Any>
     }
 
     token sp
@@ -246,7 +244,7 @@ Grammar:
 
     token quoted_sp_comment_str
     {
-        '`' <-[`]>* '`'
+        '`' ~ '`' <-[`]>*
     }
 ```
 
@@ -306,7 +304,7 @@ Grammar:
 
     token generic_group
     {
-        '(' <sp>? <Any> <sp>? ')'
+        ['(' <sp>?] ~ [<sp>? ')'] <Any>
     }
 
     token opaque
@@ -940,7 +938,7 @@ Grammar:
 
     token quoted_text_segment
     {
-        '"' <text_content> '"'
+        '"' ~ '"' <text_content>
     }
 
     token text_content
@@ -965,7 +963,7 @@ Grammar:
 
     token escaped_char
     {
-        '\\' [<[qgbtnr]> | ['<' <code_point_text> '>']]
+        '\\' [<[qgbtnr]> | ['<' ~ '>' <code_point_text>]]
     }
 
     token nonquoted_alphanumeric_text
@@ -1102,11 +1100,10 @@ Grammar:
 
     token heading_attr_names
     {
-        '(' <sp>?
+        ['(' <sp>?] ~ [<sp>? ')']
             [',' <sp>?]?
             [<attr_name>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? ')'
     }
 ```
 
@@ -1158,11 +1155,10 @@ Grammar:
 
     token Array_subject
     {
-        '{' <sp>?
+        ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? '}'
     }
 ```
 
@@ -1214,11 +1210,10 @@ Grammar:
 
     token Set_subject
     {
-        '{' <sp>?
+        ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <Boolean_subject>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? '}'
     }
 ```
 
@@ -1270,11 +1265,10 @@ Grammar:
 
     token Bag_subject
     {
-        '{' <sp>?
+        ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? '}'
     }
 
     token int_multiplicity
@@ -1324,11 +1318,10 @@ Grammar:
 
     token Mix_subject
     {
-        '{' <sp>?
+        ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
             [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? '}'
     }
 
     token frac_multiplicity
@@ -1389,7 +1382,7 @@ Grammar:
 
     token Interval_subject
     {
-        '[' <sp>? <interval_members> <sp>? ']'
+        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
     }
 
     token interval_members
@@ -1468,11 +1461,10 @@ Grammar:
 
     token Interval_Set_subject
     {
-        '{' <sp>?
+        ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <Boolean_subject>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? '}'
     }
 ```
 
@@ -1518,11 +1510,10 @@ Grammar:
 
     token Interval_Bag_subject
     {
-        '{' <sp>?
+        ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? '}'
     }
 ```
 
@@ -1559,7 +1550,7 @@ Grammar:
 
     token Pair_subject
     {
-        '(' <sp>? <this_and_that> <sp>? ')'
+        ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
     }
 
     token this_and_that
@@ -1612,7 +1603,7 @@ Grammar:
 
     token Tuple_subject
     {
-        '(' <sp>? <tuple_attrs> <sp>? ')'
+        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
     }
 
     token tuple_attrs
@@ -1730,11 +1721,10 @@ Grammar:
 
     token tuple_array_nonempty
     {
-        '{' <sp>?
+        ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
             [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? '}'
     }
 ```
 
@@ -1786,11 +1776,10 @@ Grammar:
 
     token relation_nonempty
     {
-        '{' <sp>?
+        ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
             [[<Tuple> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? '}'
     }
 ```
 
@@ -1850,11 +1839,10 @@ Grammar:
 
     token tuple_bag_nonempty
     {
-        '{' <sp>?
+        ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
             [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? '}'
     }
 ```
 
@@ -1910,7 +1898,7 @@ Grammar:
 
     token delimited_label
     {
-        '(' <sp>? <this> <sp>? ')'
+        ['(' <sp>?] ~ [<sp>? ')'] <this>
     }
 
     token label_as_nesting
@@ -1996,11 +1984,10 @@ Grammar:
 
     token Renaming_subject
     {
-        '(' <sp>?
+        ['(' <sp>?] ~ [<sp>? ')']
             [',' <sp>?]?
             [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-        <sp>? ')'
     }
 
     token anon_attr_rename
