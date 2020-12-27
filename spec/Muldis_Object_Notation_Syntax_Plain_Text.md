@@ -207,9 +207,6 @@ Every MUON possrep *predicate*, but for possible additional alternatives,
 takes the form `\Foo\`, where the `Foo` conforms to the character string
 pattern `[<[A..Z]><[a..z]>+]+ % _`.
 
-For just singleton possreps, the *predicate* `\Foo\` is the entire artifact
-and the *subject* is just the empty string / doesn't exist.
-
 The syntax and intended interpretation of the grammar itself seen in this
 document should match that of the user-defined grammars feature of the Raku
 language, which is described by
@@ -373,14 +370,21 @@ Grammar:
 ```
     token Ignorance
     {
-        '\\Ignorance\\'
+        ['\\Ignorance\\' <sp>?]? <Ignorance_subject>
+    }
+
+    token Ignorance_subject
+    {
+        0sIGNORANCE
     }
 ```
 
 Examples:
 
 ```
-    \Ignorance\
+    0sIGNORANCE
+
+    \Ignorance\0sIGNORANCE
 ```
 
 ## Boolean
@@ -1641,6 +1645,14 @@ Grammar:
     }
 ```
 
+The meaning of a `<tuple_attr>` consisting of only an `<attr_asset>` is
+exactly the same as if the former also had an `<attr_name>` of the form
+`0cN` such that `N` is the zero-based ordinal position of the
+`<tuple_attr>` in the `<tuple_attrs>` among all sibling such
+`<tuple_attr>`.  These *attribute name* are determined without regard to
+any explicit *attribute name* that a `<tuple_attrs>` may contain, and it is
+invalid for any explicit names to duplicate any implicit or explicit names.
+
 Examples:
 
 ```
@@ -2089,6 +2101,7 @@ is optional, and says how in the absense of such the possrep is recognized:
 ```
     Possrep/partial | Possrep Instead Identified By
     ----------------+---------------------------------------------
+    Ignorance       | prefix 0s followed by IGNORANCE
     Boolean         | prefix 0b followed by FALSE or TRUE
     Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0[L|c] prefix
     Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
@@ -2281,6 +2294,10 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     0L    | locator                | * indicates a temporal or spatial value
           |                        | * prefix for Calendar-*, Geographic-* literals; 0Lct/0Lcd/0Lci/0Lgp
+    ------+------------------------+---------------------------------------
+    0s    | singletons             | * indicates a grammar-well-known singleton
+          |                        | * prefix for Ignorance literal
+          |                        | * not otherwise currently used by this grammar
     ------+------------------------+---------------------------------------
 ```
 

@@ -123,9 +123,8 @@ used and instead other more applicable **Excuse** values should instead.
 
 ## Boolean
 
-A **Boolean** value is a general purpose
-2-valued logic boolean or *truth value*, or specifically it is one of the 2
-values *0bFALSE* and *0bTRUE*.
+A **Boolean** value is a general purpose 2-valued logic boolean or *truth
+value*, or specifically it is one of the 2 values *false* and *true*.
 
 ## Integer
 

@@ -93,7 +93,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Ignorance
     {
-        '\\Ignorance\\'
+        ['\\Ignorance\\' <sp>?]? <Ignorance_subject>
+    }
+
+    token Ignorance_subject
+    {
+        0sIGNORANCE
     }
 
 ###########################################################################
