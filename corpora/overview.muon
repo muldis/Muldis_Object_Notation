@@ -334,6 +334,26 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Lot : (
+
+        `Zero members.`
+        {},
+
+        `One member.`
+        { "The lonely only." },
+
+        `Four members.`
+        {
+            Clubs  :  5,
+            Diamonds,
+            Hearts : 10,
+            Spades : 20,
+        },
+
+    ),
+
+`#########################################################################`
+
     `$$$` Array : (
 
         `Zero members.`

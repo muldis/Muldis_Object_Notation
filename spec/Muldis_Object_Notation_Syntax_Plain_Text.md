@@ -76,7 +76,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Stringy: Bits, Blob, Text
 - Identifier: Nesting, Heading
 
-- Discrete: Array, Set, Bag, Mix
+- Discrete: Lot, Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
@@ -324,7 +324,8 @@ Grammar:
 
     token collection
     {
-          <Array>
+          <Lot>
+        | <Array>
         | <Set>
         | <Bag>
         | <Mix>
@@ -1143,6 +1144,52 @@ Examples:
 
     `A non-Latin name.`
     \Heading\("サンプル")
+```
+
+## Lot
+
+An **Lot** value is represented by `<Lot>`.
+
+Grammar:
+
+```
+    token Lot
+    {
+        ['\\Lot\\' <sp>?]? <Lot_subject>
+    }
+
+    token Lot_subject
+    {
+        ['{' <sp>?] ~ [<sp>? '}']
+            [',' <sp>?]?
+            [<this_and_maybe_that>* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+    }
+
+    token this_and_maybe_that
+    {
+          <this>
+        | [<this> <sp>? [':'|'->'] <sp>? <that>]
+        | [<that> <sp>?      '<-'  <sp>? <this>]
+    }
+```
+
+Examples:
+
+```
+    `Zero members.`
+    {}
+
+    `One member.`
+    { "The lonely only." }
+
+    `Four members.`
+    {
+        Clubs  :  5,
+        Diamonds,
+        Hearts : 10,
+        Spades : 20,
+    }
 ```
 
 ## Array
@@ -2110,6 +2157,7 @@ is optional, and says how in the absense of such the possrep is recognized:
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | "" or "..." or prefix [A..Z _ a..z] or prefix 0c
     Nesting         | prefix ::
+    Lot             | only {} or {...} without mandatory prefix
     Interval        | only [] or [...] without mandatory prefix
     Pair            | (...:...) without any comma
     Tuple           | () or (...) with >= 1 comma
@@ -2190,7 +2238,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     {}    | discrete collections   | * delimit homogeneous discrete collections
           |                        |   of members, concept asset+cardinal pairs
-          |                        | * delimit Array/Set/Bag/Mix selectors
+          |                        | * delimit Lot/Array/Set/Bag/Mix selectors
           |                        | * delimit nonempty-Tuple-Array/Relation/Tuple-Bag sels
     ------+------------------------+---------------------------------------
     []    | interval collections   | * delimit homogeneous continuous collections
@@ -2206,7 +2254,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
     ->    |                        | * separates the 2 parts of a pair
-    <-    |                        | * optional pair separator in Array/Set/Bag/Mix sels
+    <-    |                        | * optional pair separator in Lot/Array/Set/Bag/Mix sels
           |                        | * this/that separator in Pair sels
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
           |                        | * optional pair separator in nonempty-TA/Rel/TB sels
@@ -2217,7 +2265,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
           |                        | * separate attributes in Heading lits
-          |                        | * separate members in Array/Set/Bag/Mix sels
+          |                        | * separate members in Lot/Array/Set/Bag/Mix sels
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Tuple/Article/Excuse sels
           |                        | * disambiguate unary named Tuple sels from Pair sels and generic_group

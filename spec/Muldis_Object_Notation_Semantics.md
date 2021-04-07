@@ -35,7 +35,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Stringy: Bits, Blob, Text
 - Identifier: Nesting, Heading
 
-- Discrete: Array, Set, Bag, Mix
+- Discrete: Lot, Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
@@ -294,6 +294,28 @@ entity in a multi-level namespace, such as nested **Tuple** may implement.
 A **Heading** value is an arbitrarily-large
 unordered collection of *attribute names*, such that no 2 attribute names
 are the same.
+
+## Lot
+
+A **Lot** value is a general purpose arbitrarily-long ordered sequence of
+any **Pair** values, which explicitly does not represent any kind of thing
+in particular, and is simply the sum of its members.  A **Lot** value is
+dense; iff it has any members, then its first-ordered member is at ordinal
+position **0**, and its last-ordinal-positioned member is at the ordinal
+position that is one less than the count of its members.  A **Lot** in the
+general case may have multiple members that are the same value, and any
+duplicates may or may not exist at consecutive ordinal positions.
+
+The **Lot** possrep is the idiomatic generalization of a discrete
+homogeneous collection, such that any given MUON syntax can choose to just
+have **Lot** as a fundamental syntax, and then any other possreps for
+discrete homogeneous collections can be represented just as a **Lot** plus
+a plain unary type cast in the form of a **Pair** possrep.
+
+The intended use of the **Lot** possrep is to represent a value expression
+node for selecting at runtime a value of any of the other discrete
+homogeneous collection types where their member values or multiplicities
+are defined by arbitrarily complex sub-expressions.
 
 ## Array
 

@@ -61,7 +61,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Stringy: Bits, Blob, Text
 - Identifier: Nesting, Heading
 
-- Discrete: Array, Set, Bag, Mix
+- Discrete: Lot, Array, Set, Bag, Mix
 - Continuous: Interval, Interval Set, Interval Bag
 - Structural: Pair, Tuple
 - Relational: Tuple Array, Relation, Tuple Bag
@@ -525,7 +525,7 @@ When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Byte_String`.
 
-Note that an unqualified subject of a `SYS_Byte_String` is treated as an `Array`.
+Note that an unqualified subject of a `SYS_Byte_String` is treated as an **Array**.
 
 ## Text / Attribute Name
 
@@ -559,6 +559,21 @@ When its subject is any of the following, the predicate is required:
 * Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is any **Text** subject and
 that member's `SYS_value` is any **Boolean** subject.
+
+## Lot
+
+A **Lot** artifact has the predicate `Lot`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Any** artifact.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`+` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
+**Any** artifact and its `SYS_value` is any **Integer** subject which
+denotes a non-negative integer *multiplicity*.
 
 ## Array
 

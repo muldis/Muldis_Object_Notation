@@ -73,7 +73,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token collection
     {
-          <Array>
+          <Lot>
+        | <Array>
         | <Set>
         | <Bag>
         | <Mix>
@@ -396,6 +397,28 @@ grammar Muldis::Reference::Object_Notation::Grammar
             [',' <sp>?]?
             [<attr_name>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
+    }
+
+###########################################################################
+
+    token Lot
+    {
+        ['\\Lot\\' <sp>?]? <Lot_subject>
+    }
+
+    token Lot_subject
+    {
+        ['{' <sp>?] ~ [<sp>? '}']
+            [',' <sp>?]?
+            [<this_and_maybe_that>* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+    }
+
+    token this_and_maybe_that
+    {
+          <this>
+        | [<this> <sp>? [':'|'->'] <sp>? <that>]
+        | [<that> <sp>?      '<-'  <sp>? <this>]
     }
 
 ###########################################################################
