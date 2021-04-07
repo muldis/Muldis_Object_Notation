@@ -98,8 +98,7 @@ performed by a MUON parser natively as its first step.
 
 ## UNIX Shebang Interpreter Directive
 
-[https://en.wikipedia.org/wiki/Shebang_(Unix)](
-https://en.wikipedia.org/wiki/Shebang_(Unix))
+<https://en.wikipedia.org/wiki/Shebang_(Unix)>
 
 Since a MUON file may typically define an executable program that could be
 directly invoked in the typical manner of a UNIX script, MUON officially
@@ -210,8 +209,7 @@ pattern `[<[A..Z]><[a..z]>+]+ % _`.
 The syntax and intended interpretation of the grammar itself seen in this
 document should match that of the user-defined grammars feature of the Raku
 language, which is described by
-[https://docs.raku.org/language/grammars](
-https://docs.raku.org/language/grammars).
+<https://docs.raku.org/language/grammars>.
 
 Any references like `<foo>` in either the grammar itself or in the written
 documentation specifically refer to the corresponding grammar token `foo`.

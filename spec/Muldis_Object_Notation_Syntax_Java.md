@@ -41,11 +41,9 @@ a Java library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 Java source code.  It is fairly easy for machines to parse and generate.
 
-See also [https://docs.oracle.com/javase/specs/jls/se8/html/index.html](
-https://docs.oracle.com/javase/specs/jls/se8/html/index.html).
+See also <https://docs.oracle.com/javase/specs/jls/se8/html/index.html>.
 
-See also [https://docs.oracle.com/javase/specs/jls/se11/html/index.html](
-https://docs.oracle.com/javase/specs/jls/se11/html/index.html).
+See also <https://docs.oracle.com/javase/specs/jls/se11/html/index.html>.
 
 # DATA TYPE POSSREPS
 

@@ -7,7 +7,7 @@ and other data formats or programming languages used for similar purposes.
 
 ## JSON - JavaScript Object Notation
 
-[https://www.json.org](https://www.json.org)
+<https://www.json.org>
 
 JSON is one of the most direct counterpart languages to MUON both in form
 and in function; MUON is intended to compete for all of the same use cases.
@@ -73,9 +73,8 @@ which is apparently not true for JSON, which is much more loosely specified
 or leaves important details unspecified, and has multiple competing
 definitions.
 See
-[http://seriot.ch/parsing_json.php](http://seriot.ch/parsing_json.php) and
-[https://github.com/nst/JSONTestSuite](
-https://github.com/nst/JSONTestSuite) for more about this.
+<http://seriot.ch/parsing_json.php> and
+<https://github.com/nst/JSONTestSuite> for more about this.
 So reliability and consistency could also be a primary benefit of MUON over
 JSON, and a key reason to adopt it over JSON.
 This paragraph will be fleshed out more.
@@ -84,7 +83,7 @@ This paragraph will be fleshed out more.
 
 ## XML - Extensible Markup Language
 
-[https://www.w3.org/XML](https://www.w3.org/XML)
+<https://www.w3.org/XML>
 
 XML is, after JSON particularly, one of the most direct counterpart
 languages to MUON both somewhat in form and in function; MUON is intended
@@ -97,7 +96,7 @@ typed and, like JSON, in being much less verbose.
 
 ## SQL: ISO/IEC 9075 - Structured Query Language
 
-[https://www.iso.org/standard/63555.html](https://www.iso.org/standard/63555.html)
+<https://www.iso.org/standard/63555.html>
 
 SQL is, in parallel to JSON, one of the most direct counterpart languages
 to MUON both in form and in function; MUON is intended to compete for all
@@ -126,14 +125,13 @@ well as other tools, so that reasons can be specified.
 
 ## ECMAScript / JavaScript
 
-[https://www.ecma-international.org/publications/standards/Ecma-262.htm](
-https://www.ecma-international.org/publications/standards/Ecma-262.htm)
+<https://www.ecma-international.org/publications/standards/Ecma-262.htm>
 
 *TODO.*
 
 ## Perl
 
-[https://www.perl.org](https://www.perl.org)
+<https://www.perl.org>
 
 The Perl analogy to the universal type is `UNIVERSAL` and/or the set of
 everything that can possibly be assigned to a Perl scalar variable.
@@ -202,7 +200,7 @@ Perl scalar value `undef`.
 
 ## Raku
 
-[https://raku.org](https://raku.org)
+<https://raku.org>
 
 Raku has a direct `Any` analogy which is provided by the Raku class `Any`.
 

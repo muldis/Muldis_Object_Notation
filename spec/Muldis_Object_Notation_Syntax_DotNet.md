@@ -42,7 +42,7 @@ a .NET library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 .NET/C\# source code.  It is fairly easy for machines to parse and generate.
 
-See also [https://dotnet.microsoft.com](https://dotnet.microsoft.com).
+See also <https://dotnet.microsoft.com>.
 
 # DATA TYPE POSSREPS
 

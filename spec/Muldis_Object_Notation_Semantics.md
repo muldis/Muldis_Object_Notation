@@ -269,7 +269,7 @@ code points*, where each distinct code point corresponds to a distinct
 integer in the set **{0..0xD7FF,0xE000..0x10FFFF}**,
 which explicitly does not represent any kind of thing in particular.
 
-See also [https://unicode.org](https://unicode.org).
+See also <https://unicode.org>.
 
 A **Text** value has 2 fundamental uses, one being for generic user data,
 and the other being the canonical form of a standalone *attribute name*
@@ -379,7 +379,7 @@ allows each *member* to have any possrep, in practice the **Nesting** and
 **Text** possreps are the most common, or an external data model might have
 a dedicated type to represent a unit definition.
 
-See also [http://unitsofmeasure.org/ucum.html](http://unitsofmeasure.org/ucum.html).
+See also <http://unitsofmeasure.org/ucum.html>.
 
 ## Interval
 
