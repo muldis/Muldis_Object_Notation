@@ -717,17 +717,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Article_subject
     {
-        <label_with_attrs> | <delimited_label> | <label_as_nesting>
+        <label_with_attrs> | <label_as_nesting>
     }
 
     token label_with_attrs
     {
         <Pair_subject>
-    }
-
-    token delimited_label
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <this>
     }
 
     token label_as_nesting

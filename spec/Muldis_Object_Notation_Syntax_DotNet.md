@@ -862,8 +862,8 @@ An **Article** artifact has the predicate `Article`.
 
 When its subject is any of the following, the predicate is required:
 
-* Any `SYS_Pair_KV` such that its `SYS_key` is the *label* (any **Any**
-artifact) and its `SYS_value` is the *attributes* (any **Tuple** subject).
+* Any `SYS_Pair_KV` such that its `SYS_key` is the *label* (any **Nesting**
+subject) and its `SYS_value` is the *attributes* (any **Tuple** subject).
 
 * Any **Nesting** subject, which is the *label* (and there are no *attributes*).
 

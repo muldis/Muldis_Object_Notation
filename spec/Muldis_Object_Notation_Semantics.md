@@ -528,10 +528,9 @@ rather than a **Set**.
 
 ## Article / Labelled Tuple
 
-An **Article** value is characterized by the
-pairing of a *label* with a set of 0..N *attributes* where that set is a
-**Tuple** value; the label can be of any type but is idiomatically a
-**Nesting** value.
+An **Article** value is characterized by the pairing of a *label*, which is
+a **Nesting** value, with a set of 0..N *attributes*, where that set is a
+**Tuple** value.
 
 The **Article** possrep is the idiomatic way for an external data model to
 represent "new" types of a nominal type system in a consistent way.  The

@@ -1935,17 +1935,12 @@ Grammar:
 
     token Article_subject
     {
-        <label_with_attrs> | <delimited_label> | <label_as_nesting>
+        <label_with_attrs> | <label_as_nesting>
     }
 
     token label_with_attrs
     {
         <Pair_subject>
-    }
-
-    token delimited_label
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <this>
     }
 
     token label_as_nesting
@@ -1956,6 +1951,9 @@ Grammar:
 
 Within the direct context of an `<Article_subject>`, `<this>` and `<that>`
 have the aliases `<label>` and `<attrs>` respectively.
+
+That `<label>` is subject to the additional rule that the value expression
+it denotes must evaluate to a **Nesting**.
 
 Iff that `<attrs>` is not explicitly defined then it implicitly defines the
 sole nullary **Tuple** `()`.
