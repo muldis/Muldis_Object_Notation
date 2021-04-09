@@ -94,7 +94,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Ignorance
     {
-        ['\\Ignorance\\' <sp>?]? <Ignorance_subject>
+        <Ignorance_subject>
     }
 
     token Ignorance_subject
@@ -106,7 +106,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Boolean
     {
-        ['\\Boolean\\' <sp>?]? <Boolean_subject>
+        <Boolean_subject>
     }
 
     token Boolean_subject
@@ -118,7 +118,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Integer
     {
-        ['\\Integer\\' <sp>?]? <Integer_subject>
+        <Integer_subject>
     }
 
     token Integer_subject
@@ -138,7 +138,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Fraction
     {
-        ['\\Fraction\\' <sp>?]? <Fraction_subject>
+        <Fraction_subject>
     }
 
     token Fraction_subject
@@ -193,7 +193,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Calendar_Time
     {
-        ['\\Calendar_Time\\' <sp>?]? <Calendar_Time_subject>
+        <Calendar_Time_subject>
     }
 
     token Calendar_Time_subject
@@ -220,7 +220,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Calendar_Duration
     {
-        ['\\Calendar_Duration\\' <sp>?]? <Calendar_Duration_subject>
+        <Calendar_Duration_subject>
     }
 
     token Calendar_Duration_subject
@@ -232,7 +232,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Calendar_Instant
     {
-        ['\\Calendar_Instant\\' <sp>?]? <Calendar_Instant_subject>
+        <Calendar_Instant_subject>
     }
 
     token Calendar_Instant_subject
@@ -261,7 +261,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Geographic_Point
     {
-        ['\\Geographic_Point\\' <sp>?]? <Geographic_Point_subject>
+        <Geographic_Point_subject>
     }
 
     token Geographic_Point_subject
@@ -283,7 +283,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Bits
     {
-        ['\\Bits\\' <sp>?]? <Bits_subject>
+        <Bits_subject>
     }
 
     token Bits_subject
@@ -297,7 +297,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Blob
     {
-        ['\\Blob\\' <sp>?]? <Blob_subject>
+        <Blob_subject>
     }
 
     token Blob_subject
@@ -311,7 +311,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Text
     {
-        ['\\Text\\' <sp>?]? <Text_subject>
+        <Text_subject>
     }
 
     token Text_subject
@@ -371,7 +371,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Nesting
     {
-        ['\\Nesting\\' <sp>?]? <Nesting_subject>
+        <Nesting_subject>
     }
 
     token Nesting_subject
@@ -403,7 +403,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Lot
     {
-        ['\\Lot\\' <sp>?]? <Lot_subject>
+        <Lot_subject>
     }
 
     token Lot_subject
@@ -495,7 +495,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval
     {
-         ['\\Interval\\' <sp>?]? <Interval_subject>
+         <Interval_subject>
     }
 
     token Interval_subject
@@ -567,7 +567,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Pair
     {
-         ['\\Pair\\' <sp>?]? <Pair_subject>
+         <Pair_subject>
     }
 
     token Pair_subject
@@ -595,7 +595,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple
     {
-        ['\\Tuple\\' <sp>?]? <Tuple_subject>
+        <Tuple_subject>
     }
 
     token Tuple_subject

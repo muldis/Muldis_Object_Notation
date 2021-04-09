@@ -369,7 +369,7 @@ Grammar:
 ```
     token Ignorance
     {
-        ['\\Ignorance\\' <sp>?]? <Ignorance_subject>
+        <Ignorance_subject>
     }
 
     token Ignorance_subject
@@ -382,8 +382,6 @@ Examples:
 
 ```
     0sIGNORANCE
-
-    \Ignorance\0sIGNORANCE
 ```
 
 ## Boolean
@@ -395,7 +393,7 @@ Grammar:
 ```
     token Boolean
     {
-        ['\\Boolean\\' <sp>?]? <Boolean_subject>
+        <Boolean_subject>
     }
 
     token Boolean_subject
@@ -410,10 +408,6 @@ Examples:
     0bFALSE
 
     0bTRUE
-
-    \Boolean\0bFALSE
-
-    \Boolean\0bTRUE
 ```
 
 ## Integer
@@ -425,7 +419,7 @@ Grammar:
 ```
     token Integer
     {
-        ['\\Integer\\' <sp>?]? <Integer_subject>
+        <Integer_subject>
     }
 
     token Integer_subject
@@ -474,8 +468,6 @@ Examples:
     0o644
 
     0b11001001
-
-    \Integer\69
 ```
 
 ## Fraction
@@ -487,7 +479,7 @@ Grammar:
 ```
     token Fraction
     {
-        ['\\Fraction\\' <sp>?]? <Fraction_subject>
+        <Fraction_subject>
     }
 
     token Fraction_subject
@@ -618,8 +610,6 @@ Examples:
     0b1.1
 
     0b1.011101101*0b10^-0b11011
-
-    \Fraction\2.703
 ```
 
 ## Calendar Time
@@ -631,7 +621,7 @@ Grammar:
 ```
     token Calendar_Time
     {
-        ['\\Calendar_Time\\' <sp>?]? <Calendar_Time_subject>
+        <Calendar_Time_subject>
     }
 
     token Calendar_Time_subject
@@ -701,7 +691,7 @@ Grammar:
 ```
     token Calendar_Duration
     {
-        ['\\Calendar_Duration\\' <sp>?]? <Calendar_Duration_subject>
+        <Calendar_Duration_subject>
     }
 
     token Calendar_Duration_subject
@@ -729,7 +719,7 @@ Grammar:
 ```
     token Calendar_Instant
     {
-        ['\\Calendar_Instant\\' <sp>?]? <Calendar_Instant_subject>
+        <Calendar_Instant_subject>
     }
 
     token Calendar_Instant_subject
@@ -786,7 +776,7 @@ Grammar:
 ```
     token Geographic_Point
     {
-        ['\\Geographic_Point\\' <sp>?]? <Geographic_Point_subject>
+        <Geographic_Point_subject>
     }
 
     token Geographic_Point_subject
@@ -839,7 +829,7 @@ Grammar:
 ```
     token Bits
     {
-        ['\\Bits\\' <sp>?]? <Bits_subject>
+        <Bits_subject>
     }
 
     token Bits_subject
@@ -878,7 +868,7 @@ Grammar:
 ```
     token Blob
     {
-        ['\\Blob\\' <sp>?]? <Blob_subject>
+        <Blob_subject>
     }
 
     token Blob_subject
@@ -926,7 +916,7 @@ Grammar:
 ```
     token Text
     {
-        ['\\Text\\' <sp>?]? <Text_subject>
+        <Text_subject>
     }
 
     token Text_subject
@@ -1063,7 +1053,7 @@ Grammar:
 ```
     token Nesting
     {
-        ['\\Nesting\\' <sp>?]? <Nesting_subject>
+        <Nesting_subject>
     }
 
     token Nesting_subject
@@ -1153,7 +1143,7 @@ Grammar:
 ```
     token Lot
     {
-        ['\\Lot\\' <sp>?]? <Lot_subject>
+        <Lot_subject>
     }
 
     token Lot_subject
@@ -1426,7 +1416,7 @@ Grammar:
 ```
     token Interval
     {
-         ['\\Interval\\' <sp>?]? <Interval_subject>
+         <Interval_subject>
     }
 
     token Interval_subject
@@ -1594,7 +1584,7 @@ Grammar:
 ```
     token Pair
     {
-         ['\\Pair\\' <sp>?]? <Pair_subject>
+         <Pair_subject>
     }
 
     token Pair_subject
@@ -1647,7 +1637,7 @@ Grammar:
 ```
     token Tuple
     {
-        ['\\Tuple\\' <sp>?]? <Tuple_subject>
+        <Tuple_subject>
     }
 
     token Tuple_subject
@@ -2134,14 +2124,10 @@ regardless of whether MUON might use them in the future itself.  In other
 cases it doesn't use those syntaxes expressly in order to empower superset
 grammars to define their own meanings.
 
-## Optional Possrep Prefixes
+## Possrep Heuristics
 
-Muldis Object Notation is designed around the concept that every possrep
-either may or must have a prefix of the form `\Foo\` where `Foo` is a
-sequence of alpha characters corresponding to the possrep name.
-
-The following table enumerates those possreps for whom the `\Foo\` prefix
-is optional, and says how in the absense of such the possrep is recognized:
+The following table indicates the basic heuristics for how each fundamental
+possrep is recognized within a Muldis Object Notation artifact:
 
 ```
     Possrep/partial | Possrep Instead Identified By
