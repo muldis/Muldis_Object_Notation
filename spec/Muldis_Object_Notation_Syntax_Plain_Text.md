@@ -23,13 +23,14 @@ its part name is `Syntax_Plain_Text`.
     MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
     Muldis_Content_Predicate`
 
-    \Relation\{
+    (Relation<-{
         (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-            phone_numbers : \Set\{"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \Set\{}),
+            phone_numbers : (Set<-{"+1.4045552995", "+1.7705557572"})),
+        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
+            phone_numbers : (Set<-{})),
         (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-            phone_numbers : \Set\{"+81.9072391679"}),
-    }
+            phone_numbers : (Set<-{"+81.9072391679"})),
+    })
 ```
 
 # DESCRIPTION
@@ -191,20 +192,7 @@ Examples:
 
 # GRAMMAR
 
-Each valid MUON artifact is an instance of a single MUON possrep.  Every
-possrep has one or more general *qualified* formats characterized by the
-pairing of a *predicate* with a *subject*.  Each of a subset of the
-possreps also has one or more *unqualified* formats characterized by the
-*subject* on its own.  Using the qualified formats exclusively is better
-for normalization and consistency, while employing unqualified formats
-where available is better for brevity and more efficient resource usage.
-
-Every qualified MUON artifact has the form `<predicate> <sp>? <subject>`;
-`<predicate>` is the *predicate* and `<subject>` is the *subject*.
-
-Every MUON possrep *predicate*, but for possible additional alternatives,
-takes the form `\Foo\`, where the `Foo` conforms to the character string
-pattern `[<[A..Z]><[a..z]>+]+ % _`.
+Each valid MUON artifact is an instance of a single MUON possrep.
 
 The syntax and intended interpretation of the grammar itself seen in this
 document should match that of the user-defined grammars feature of the Raku
@@ -277,11 +265,11 @@ Examples:
 
 ```
     (
-        `$$$` My_Func : \Article\(::Function : ...),
+        `$$$` My_Func : (Article<-(::Function : ...)),
 
-        `$$$` My_Proc_1 : \Article\(::Procedure : ...),
+        `$$$` My_Proc_1 : (Article<-(::Procedure : ...)),
 
-        `$$$` My_Proc_2 : \Article\(::Procedure : ...),
+        `$$$` My_Proc_2 : (Article<-(::Procedure : ...)),
     )
 ```
 
@@ -1088,7 +1076,8 @@ Grammar:
 ```
     token Heading
     {
-        '\\Heading\\' <sp>? <heading_attr_names>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Heading <sp>? '<-' <sp>? <heading_attr_names>
     }
 
     token heading_attr_names
@@ -1104,34 +1093,34 @@ Examples:
 
 ```
     `Zero attributes.`
-    \Heading\()
+    (Heading<-())
 
     `One named attribute.`
-    \Heading\(sales)
+    (Heading<-(sales))
 
     `Same thing.`
-    \Heading\("sales")
+    (Heading<-("sales"))
 
     `One ordered attribute.`
-    \Heading\(0c0)
+    (Heading<-(0c0))
 
     `Same thing.`
-    \Heading\("\\<0c0>")
+    (Heading<-("\\<0c0>"))
 
     `Three named attributes.`
-    \Heading\(region,revenue,qty)
+    (Heading<-(region,revenue,qty))
 
     `Three ordered attributes.`
-    \Heading\(0c0,0c1,0c2)
+    (Heading<-(0c0,0c1,0c2))
 
     `One of each.`
-    \Heading\(0c1,age)
+    (Heading<-(0c1,age))
 
     `Some attribute names can only appear quoted.`
-    \Heading\("Street Address")
+    (Heading<-("Street Address"))
 
     `A non-Latin name.`
-    \Heading\("サンプル")
+    (Heading<-("サンプル"))
 ```
 
 ## Lot
@@ -1189,7 +1178,8 @@ Grammar:
 ```
     token Array
     {
-        '\\Array\\' <sp>? <Array_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Array <sp>? '<-' <sp>? <Array_subject>
     }
 
     token Array_subject
@@ -1205,34 +1195,34 @@ Examples:
 
 ```
     `Zero members.`
-    \Array\{}
+    (Array<-{})
 
     `One member.`
-    \Array\{ "You got it!" }
+    (Array<-{ "You got it!" })
 
     `Three members.`
-    \Array\{
+    (Array<-{
         Alphonse,
         Edward,
         Winry,
-    }
+    })
 
     `Five members (1 duplicate).`
-    \Array\{
+    (Array<-{
         57,
         45,
         63,
         61,
         63,
-    }
+    })
 
     `32 members (28 duplicates in 2 runs).`
-    \Array\{
+    (Array<-{
         "/",
         "*" : 20,
         "+" : 10,
         "-",
-    }
+    })
 ```
 
 ## Set
@@ -1244,7 +1234,8 @@ Grammar:
 ```
     token Set
     {
-        '\\Set\\' <sp>? <Set_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Set <sp>? '<-' <sp>? <Set_subject>
     }
 
     token Set_subject
@@ -1260,34 +1251,34 @@ Examples:
 
 ```
     `Zero members.`
-    \Set\{}
+    (Set<-{})
 
     `One member.`
-    \Set\{ "I know this one!" }
+    (Set<-{ "I know this one!" })
 
     `Four members (no duplicates).`
-    \Set\{
+    (Set<-{
         Canada,
         Spain,
         Jordan,
         Jordan,
         Thailand,
-    }
+    })
 
     `Three members.`
-    \Set\{
+    (Set<-{
         3,
         16,
         85,
-    }
+    })
 
     `Two members.`
-    \Set\{
+    (Set<-{
         21 : 0bTRUE,
         62 : 0bFALSE,
         3 : 0bTRUE,
         101 : 0bFALSE,
-    }
+    })
 ```
 
 ## Bag / Multiset
@@ -1299,7 +1290,8 @@ Grammar:
 ```
     token Bag
     {
-        '\\Bag\\' <sp>? <Bag_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Bag <sp>? '<-' <sp>? <Bag_subject>
     }
 
     token Bag_subject
@@ -1320,27 +1312,27 @@ Examples:
 
 ```
     `Zero members.`
-    \Bag\{}
+    (Bag<-{})
 
     `One member.`
-    \Bag\{ "I hear that!": 1 }
+    (Bag<-{ "I hear that!": 1 })
 
     `1200 members (1197 duplicates).`
-    \Bag\{
+    (Bag<-{
         Apple  : 500,
         Orange : 300,
         Banana : 400,
-    }
+    })
 
     `Six members (2 duplicates).`
-    \Bag\{
+    (Bag<-{
         Foo : 1,
         Quux : 1,
         Foo : 1,
         Bar : 1,
         Baz : 1,
         Baz : 1,
-    }
+    })
 ```
 
 ## Mix
@@ -1352,7 +1344,8 @@ Grammar:
 ```
     token Mix
     {
-        '\\Mix\\' <sp>? <Mix_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Mix <sp>? '<-' <sp>? <Mix_subject>
     }
 
     token Mix_subject
@@ -1373,38 +1366,38 @@ Examples:
 
 ```
     `Zero members; we measured zero of nothing in particular.`
-    \Mix\{}
+    (Mix<-{})
 
     `One member; one gram of mass.`
-    \Mix\{::Gram: 1.0}
+    (Mix<-{::Gram: 1.0})
 
     `29.95 members (28.95 duplicates); the cost of a surgery.`
-    \Mix\{::USD: 29.95}
+    (Mix<-{::USD: 29.95})
 
     `9.8 members; acceleration under Earth's gravity.`
-    \Mix\{::Meter_Per_Second_Squared: 9.8}
+    (Mix<-{::Meter_Per_Second_Squared: 9.8})
 
     `0.615 members (fractions of 3 distinct members); recipe.`
-    \Mix\{
+    (Mix<-{
         ::Butter : 0.22,
         ::Sugar  : 0.1,
         ::Flour  : 0.275,
         ::Sugar  : 0.02,
-    }
+    })
 
     `4/3 members (fractions of 3 distinct members); this-mix.`
-    \Mix\{
+    (Mix<-{
         Sugar: 1/3,
         Spice: 1/4,
         All_Things_Nice: 3/4,
-    }
+    })
 
     `-1.5 members; adjustment for recipe.`
-    \Mix\{
+    (Mix<-{
         Rice: +4.0,
         Beans: -5.7,
         Carrots: +0.2,
-    }
+    })
 ```
 
 ## Interval
@@ -1495,7 +1488,8 @@ Grammar:
 ```
     token Interval_Set
     {
-        '\\Interval_Set\\' <sp>? <Interval_Set_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Interval_Set <sp>? '<-' <sp>? <Interval_Set_subject>
     }
 
     token Interval_Set_subject
@@ -1511,28 +1505,28 @@ Examples:
 
 ```
     `Empty interval-set (zero members).`
-    \Interval_Set\{}
+    (Interval_Set<-{})
 
     `Unit interval-set (one member).`
-    \Interval_Set\{abc}
+    (Interval_Set<-{abc})
 
     `Probably 10 members, depending on the model used.`
-    \Interval_Set\{1..10}
+    (Interval_Set<-{1..10})
 
     `Probably 6 members.`
-    \Interval_Set\{1..3,6,8..9}
+    (Interval_Set<-{1..3,6,8..9})
 
     `Every Integer x except for {4..13,22..28}`
-    \Interval_Set\{*..3,14..21,29..*}
+    (Interval_Set<-{*..3,14..21,29..*})
 
     `Set of all valid Unicode code points.`
-    \Interval_Set\{0..0xD7FF,0xE000..0x10FFFF}
+    (Interval_Set<-{0..0xD7FF,0xE000..0x10FFFF})
 
     `Probably 15 members (no duplicates), depending on the model used.`
-    \Interval_Set\{1..10,6..15}
+    (Interval_Set<-{1..10,6..15})
 
     `Probably same thing, regardless of data model used.`
-    \Interval_Set\{1..-6,6..10:2,10-..15}
+    (Interval_Set<-{1..-6,6..10:2,10-..15})
 ```
 
 ## Interval Bag
@@ -1544,7 +1538,8 @@ Grammar:
 ```
     token Interval_Bag
     {
-        '\\Interval_Bag\\' <sp>? <Interval_Bag_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Interval_Bag <sp>? '<-' <sp>? <Interval_Bag_subject>
     }
 
     token Interval_Bag_subject
@@ -1560,19 +1555,19 @@ Examples:
 
 ```
     `Empty interval-bag (zero members).`
-    \Interval_Bag\{}
+    (Interval_Bag<-{})
 
     `Unit interval-bag (one member).`
-    \Interval_Bag\{abc}
+    (Interval_Bag<-{abc})
 
     `Five members (4 duplicates).`
-    \Interval_Bag\{def:5}
+    (Interval_Bag<-{def:5})
 
     `Probably 20 members (5 duplicates), depending on the model used.`
-    \Interval_Bag\{1..10,6..15}
+    (Interval_Bag<-{1..10,6..15})
 
     `Probably same thing, regardless of data model used.`
-    \Interval_Bag\{1..-6,6..10:2,10-..15}
+    (Interval_Bag<-{1..-6,6..10:2,10-..15})
 ```
 
 ## Pair
@@ -1758,7 +1753,8 @@ Grammar:
 ```
     token Tuple_Array
     {
-        '\\Tuple_Array\\' <sp>? <Tuple_Array_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Tuple_Array <sp>? '<-' <sp>? <Tuple_Array_subject>
     }
 
     token Tuple_Array_subject
@@ -1779,29 +1775,29 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    \Tuple_Array\()
+    (Tuple_Array<-())
 
     `Zero attributes + one tuple.`
-    \Tuple_Array\{()}
+    (Tuple_Array<-{()})
 
     `Three named attributes + zero tuples.`
-    \Tuple_Array\(x,y,z)
+    (Tuple_Array<-(x,y,z))
 
     `Three positional attributes + zero tuples.`
-    \Tuple_Array\(0c0,0c1,0c2)
+    (Tuple_Array<-(0c0,0c1,0c2))
 
     `Two named attributes + three tuples (1 duplicate).`
-    \Tuple_Array\{
+    (Tuple_Array<-{
         (name: Amy     , age: 14),
         (name: Michelle, age: 17),
         (name: Amy     , age: 14),
-    }
+    })
 
     `Two positional attributes + two tuples.`
-    \Tuple_Array\{
+    (Tuple_Array<-{
         (Michelle, 17),
         (Amy     , 14),
-    }
+    })
 ```
 
 ## Relation / Tuple Set
@@ -1813,7 +1809,8 @@ Grammar:
 ```
     token Relation
     {
-        '\\Relation\\' <sp>? <Relation_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Relation <sp>? '<-' <sp>? <Relation_subject>
     }
 
     token Relation_subject
@@ -1834,37 +1831,38 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    \Relation\()
+    (Relation<-())
 
     `Zero attributes + one tuple.`
-    \Relation\{()}
+    (Relation<-{()})
 
     `Three named attributes + zero tuples.`
-    \Relation\(x,y,z)
+    (Relation<-(x,y,z))
 
     `Three positional attributes + zero tuples.`
-    \Relation\(0c0,0c1,0c2)
+    (Relation<-(0c0,0c1,0c2))
 
     `Two named attributes + two tuples.`
-    \Relation\{
+    (Relation<-{
         (name: Michelle, age: 17),
         (name: Amy     , age: 14),
-    }
+    })
 
     `Two positional attributes + two tuples.`
-    \Relation\{
+    (Relation<-{
         (Michelle, 17),
         (Amy     , 14),
-    }
+    })
 
     `Some people records.`
-    \Relation\{
+    (Relation<-{
         (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-            phone_numbers : \Set\{"+1.4045552995", "+1.7705557572"}),
-        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27, phone_numbers : \Set\{}),
+            phone_numbers : (Set<-{"+1.4045552995", "+1.7705557572"})),
+        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
+            phone_numbers : (Set<-{})),
         (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-            phone_numbers : \Set\{"+81.9072391679"}),
-    }
+            phone_numbers : (Set<-{"+81.9072391679"})),
+    })
 ```
 
 ## Tuple Bag
@@ -1876,7 +1874,8 @@ Grammar:
 ```
     token Tuple_Bag
     {
-        '\\Tuple_Bag\\' <sp>? <Tuple_Bag_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Tuple_Bag <sp>? '<-' <sp>? <Tuple_Bag_subject>
     }
 
     token Tuple_Bag_subject
@@ -1897,28 +1896,28 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    \Tuple_Bag\()
+    (Tuple_Bag<-())
 
     `Zero attributes + one tuple.`
-    \Tuple_Bag\{()}
+    (Tuple_Bag<-{()})
 
     `Three named attributes + zero tuples.`
-    \Tuple_Bag\(x,y,z)
+    (Tuple_Bag<-(x,y,z))
 
     `Three positional attributes + zero tuples.`
-    \Tuple_Bag\(0c0,0c1,0c2)
+    (Tuple_Bag<-(0c0,0c1,0c2))
 
     `Two named attributes + six tuples (4 duplicates).`
-    \Tuple_Bag\{
+    (Tuple_Bag<-{
         (name: Michelle, age: 17),
         (name: Amy     , age: 14) : 5,
-    }
+    })
 
     `Two positional attributes + two tuples.`
-    \Tuple_Bag\{
+    (Tuple_Bag<-{
         (Michelle, 17),
         (Amy     , 14),
-    }
+    })
 ```
 
 ## Article / Labelled Tuple
@@ -1930,7 +1929,8 @@ Grammar:
 ```
     token Article
     {
-        '\\Article\\' <sp>? <Article_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Article <sp>? '<-' <sp>? <Article_subject>
     }
 
     token Article_subject
@@ -1967,26 +1967,26 @@ additional rule that the value expression it denotes must evaluate to a
 Examples:
 
 ```
-    \Article\(::Point : (x : 5, y : 3))
+    (Article<-(::Point : (x : 5, y : 3)))
 
-    \Article\(::Float : (
+    (Article<-(::Float : (
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
-    ))
+    )))
 
-    \Article\(::the_db::UTCDateTime : (
+    (Article<-(::the_db::UTCDateTime : (
         year   : 2003,
         month  : 10,
         day    : 26,
         hour   : 1,
         minute : 30,
         second : 0.0,
-    ))
+    )))
 
-    \Article\::Positive_Infinity
+    (Article<-::Positive_Infinity)
 
-    \Article\::Negative_Zero
+    (Article<-::Negative_Zero)
 ```
 
 ## Excuse
@@ -1998,7 +1998,8 @@ Grammar:
 ```
     token Excuse
     {
-        '\\Excuse\\' <sp>? <Excuse_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Excuse <sp>? '<-' <sp>? <Excuse_subject>
     }
 
     token Excuse_subject
@@ -2010,11 +2011,11 @@ Grammar:
 Examples:
 
 ```
-    \Excuse\(::Input_Field_Wrong : (name : "Your Age"))
+    (Excuse<-(::Input_Field_Wrong : (name : "Your Age")))
 
-    \Excuse\::Div_By_Zero
+    (Excuse<-::Div_By_Zero)
 
-    \Excuse\::No_Such_Attr_Name
+    (Excuse<-::No_Such_Attr_Name)
 ```
 
 ## Renaming / Attribute Name Map
@@ -2026,7 +2027,8 @@ Grammar:
 ```
     token Renaming
     {
-        '\\Renaming\\' <sp>? <Renaming_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Renaming <sp>? '<-' <sp>? <Renaming_subject>
     }
 
     token Renaming_subject
@@ -2079,40 +2081,40 @@ Examples:
 
 ```
     `Zero renamings, a no-op.`
-    \Renaming\()
+    (Renaming<-())
 
     `Also a no-op.`
-    \Renaming\(age->age)
+    (Renaming<-(age->age))
 
     `Rename one attribute.`
-    \Renaming\(fname->first_name)
+    (Renaming<-(fname->first_name))
 
     `Same thing.`
-    \Renaming\(first_name<-fname)
+    (Renaming<-(first_name<-fname))
 
     `Swap 2 named attributes.`
-    \Renaming\(foo->bar,foo<-bar)
+    (Renaming<-(foo->bar,foo<-bar))
 
     `Convert ordered names to nonordered.`
-    \Renaming\(->foo,->bar)
+    (Renaming<-(->foo,->bar))
 
     `Same thing.`
-    \Renaming\(0c0->foo,0c1->bar)
+    (Renaming<-(0c0->foo,0c1->bar))
 
     `Convert nonordered names to ordered.`
-    \Renaming\(<-foo,<-bar)
+    (Renaming<-(<-foo,<-bar))
 
     `Same thing.`
-    \Renaming\(0c0<-foo,0c1<-bar)
+    (Renaming<-(0c0<-foo,0c1<-bar))
 
     `Swap 2 ordered attributes.`
-    \Renaming\(0c0->0c1,0c0<-0c1)
+    (Renaming<-(0c0->0c1,0c0<-0c1))
 
     `Same thing.`
-    \Renaming\(->0c1,->0c0)
+    (Renaming<-(->0c1,->0c0))
 
     `Some attribute names can only appear quoted.`
-    \Renaming\("First Name"->"Last Name")
+    (Renaming<-("First Name"->"Last Name"))
 ```
 
 # RESERVED UNUSED SYNTAX
@@ -2176,9 +2178,8 @@ own uses of bracketing characters to define statement or expression groups.
 
 ## Features Shared With Superset Grammars
 
-MUON declares that all alpha barewords are **Text** literals in the general
-case, meaning any bareword like `foo` is interpreted as if it were `"foo"`;
-the special case of the form `\Foo\` instead denotes a possrep predicate.
+MUON declares that all alpha barewords are **Text** literals,
+meaning any bareword like `foo` is interpreted as if it were `"foo"`.
 This syntactic feature is intended to make the common cases of **Nesting**
 or attribute names or similar more pleasant to manually write or read.
 
@@ -2212,13 +2213,9 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ``    | stringy comments       | * delimit expendable dividing space comments
     ------+------------------------+---------------------------------------
-    \     | special contexts       | * indicates special contexts where
-          |                        |   typical meanings may not apply
-          |                        | * first char inside a quoted string
+    \     | escaped characters     | * first char inside a quoted string
           |                        |   to indicate it has escaped characters
           |                        | * prefix for each escaped char in quoted string
-          |                        | * L0 or delimit of prefix for literals/selectors
-          |                        |   to disambiguate that they are lits/sels
     ------+------------------------+---------------------------------------
     {}    | discrete collections   | * delimit homogeneous discrete collections
           |                        |   of members, concept asset+cardinal pairs

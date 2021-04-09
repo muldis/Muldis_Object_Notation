@@ -388,7 +388,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Heading
     {
-        '\\Heading\\' <sp>? <heading_attr_names>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Heading <sp>? '<-' <sp>? <heading_attr_names>
     }
 
     token heading_attr_names
@@ -425,7 +426,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Array
     {
-        '\\Array\\' <sp>? <Array_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Array <sp>? '<-' <sp>? <Array_subject>
     }
 
     token Array_subject
@@ -440,7 +442,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Set
     {
-        '\\Set\\' <sp>? <Set_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Set <sp>? '<-' <sp>? <Set_subject>
     }
 
     token Set_subject
@@ -455,7 +458,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Bag
     {
-        '\\Bag\\' <sp>? <Bag_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Bag <sp>? '<-' <sp>? <Bag_subject>
     }
 
     token Bag_subject
@@ -475,7 +479,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Mix
     {
-        '\\Mix\\' <sp>? <Mix_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Mix <sp>? '<-' <sp>? <Mix_subject>
     }
 
     token Mix_subject
@@ -537,7 +542,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval_Set
     {
-        '\\Interval_Set\\' <sp>? <Interval_Set_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Interval_Set <sp>? '<-' <sp>? <Interval_Set_subject>
     }
 
     token Interval_Set_subject
@@ -552,7 +558,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Interval_Bag
     {
-        '\\Interval_Bag\\' <sp>? <Interval_Bag_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Interval_Bag <sp>? '<-' <sp>? <Interval_Bag_subject>
     }
 
     token Interval_Bag_subject
@@ -641,7 +648,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_Array
     {
-        '\\Tuple_Array\\' <sp>? <Tuple_Array_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Tuple_Array <sp>? '<-' <sp>? <Tuple_Array_subject>
     }
 
     token Tuple_Array_subject
@@ -661,7 +669,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Relation
     {
-        '\\Relation\\' <sp>? <Relation_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Relation <sp>? '<-' <sp>? <Relation_subject>
     }
 
     token Relation_subject
@@ -681,7 +690,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_Bag
     {
-        '\\Tuple_Bag\\' <sp>? <Tuple_Bag_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Tuple_Bag <sp>? '<-' <sp>? <Tuple_Bag_subject>
     }
 
     token Tuple_Bag_subject
@@ -701,7 +711,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Article
     {
-        '\\Article\\' <sp>? <Article_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Article <sp>? '<-' <sp>? <Article_subject>
     }
 
     token Article_subject
@@ -728,7 +739,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Excuse
     {
-        '\\Excuse\\' <sp>? <Excuse_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Excuse <sp>? '<-' <sp>? <Excuse_subject>
     }
 
     token Excuse_subject
@@ -740,7 +752,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Renaming
     {
-        '\\Renaming\\' <sp>? <Renaming_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Renaming <sp>? '<-' <sp>? <Renaming_subject>
     }
 
     token Renaming_subject
