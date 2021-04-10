@@ -75,15 +75,15 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Numeric: Integer, Fraction
 - Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Stringy: Bits, Blob, Text
-- Identifier: Nesting, Heading
+- Identifier: Nesting
 
-- Discrete: Lot, Array, Set, Bag, Mix
-- Continuous: Interval, Interval Set, Interval Bag
-- Structural: Pair, Tuple
+- Collective: Pair, Tuple, Lot, Interval
+
+- Discrete: Array, Set, Bag, Mix
+- Continuous: Interval Set, Interval Bag
 - Relational: Tuple Array, Relation, Tuple Bag
 - Generic: Article, Excuse
-
-- Source Code: Renaming
+- Source Code: Heading, Renaming
 
 See the DATA TYPE POSSREPS of [Semantics](
 Muldis_Object_Notation_Semantics.md) for details and the intended
@@ -304,27 +304,27 @@ Grammar:
         | <Blob>
         | <Text>
         | <Nesting>
-        | <Heading>
-        | <Renaming>
     }
 
     token collection
     {
-          <Lot>
+          <Pair>
+        | <Tuple>
+        | <Lot>
+        | <Interval>
         | <Array>
         | <Set>
         | <Bag>
         | <Mix>
-        | <Interval>
         | <Interval_Set>
         | <Interval_Bag>
-        | <Pair>
-        | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
         | <Article>
         | <Excuse>
+        | <Heading>
+        | <Renaming>
     }
 ```
 
@@ -1067,60 +1067,178 @@ Examples:
     ::the_db::stats::"samples by order"
 ```
 
-## Heading / Attribute Name Set
+## Pair
 
-A **Heading** value is represented by `<Heading>`.
+A **Pair** value is represented by `<Pair>`.
 
 Grammar:
 
 ```
-    token Heading
+    token Pair
     {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Heading <sp>? ':' <sp>? <heading_attr_names>
+         <Pair_subject>
     }
 
-    token heading_attr_names
+    token Pair_subject
     {
-        ['(' <sp>?] ~ [<sp>? ')']
-            [',' <sp>?]?
-            [<attr_name>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
+        ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
+    }
+
+    token this_and_that
+    {
+          [<this> <sp>? [':'|'->'] <sp>? <that>]
+        | [<that> <sp>?      '<-'  <sp>? <this>]
+    }
+
+    token this
+    {
+        <Any>
+    }
+
+    token that
+    {
+        <Any>
     }
 ```
 
 Examples:
 
 ```
+    `Pair of Integer.`
+    (5: -3)
+
+    `Pair of Text.`
+    ("First Name": Joy)
+
+    `Another Pair.`
+    (x:y)
+
+    `Same thing.`
+    (x->y)
+
+    `Same thing.`
+    (y<-x)
+```
+
+## Tuple / Attribute Set
+
+A **Tuple** value is represented by `<Tuple>`.
+
+Grammar:
+
+```
+    token Tuple
+    {
+        <Tuple_subject>
+    }
+
+    token Tuple_subject
+    {
+        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
+    }
+
+    token tuple_attrs
+    {
+        <tuple_nullary> | <tuple_unary> | <tuple_nary>
+    }
+
+    token tuple_nullary
+    {
+        ''
+    }
+
+    token tuple_unary
+    {
+          [          <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr>          ]
+    }
+
+    token tuple_nary
+    {
+        [',' <sp>?]?
+        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<sp>? ',']?
+    }
+
+    token tuple_attr
+    {
+        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
+    }
+
+    token attr_asset
+    {
+        <Any>
+    }
+```
+
+The meaning of a `<tuple_attr>` consisting of only an `<attr_asset>` is
+exactly the same as if the former also had an `<attr_name>` of the form
+`0cN` such that `N` is the zero-based ordinal position of the
+`<tuple_attr>` in the `<tuple_attrs>` among all sibling such
+`<tuple_attr>`.  These *attribute name* are determined without regard to
+any explicit *attribute name* that a `<tuple_attrs>` may contain, and it is
+invalid for any explicit names to duplicate any implicit or explicit names.
+
+Examples:
+
+```
     `Zero attributes.`
-    (Heading:())
+    ()
 
     `One named attribute.`
-    (Heading:(sales))
-
-    `Same thing.`
-    (Heading:("sales"))
+    ("First Name": Joy,)
 
     `One ordered attribute.`
-    (Heading:(0c0))
+    (53,)
 
     `Same thing.`
-    (Heading:("\\<0c0>"))
+    (0c0: 53,)
+
+    `Same thing.`
+    ("\\<0c0>": 53,)
 
     `Three named attributes.`
-    (Heading:(region,revenue,qty))
+    (
+        login_name : hartmark,
+        login_pass : letmein,
+        is_special : 0bTRUE,
+    )
 
     `Three ordered attributes.`
-    (Heading:(0c0,0c1,0c2))
+    (hello,26,0bTRUE)
 
     `One of each.`
-    (Heading:(0c1,age))
-
-    `Some attribute names can only appear quoted.`
-    (Heading:("Street Address"))
+    (Jay, age: 10)
 
     `A non-Latin name.`
-    (Heading:("サンプル"))
+    ("サンプル": "http://example.com",)
+
+    `Two named attributes.`
+    (
+        name : Michelle,
+        age  : 17,
+    )
+
+    `Five leaf attributes in nested multi-level namespace.`
+    (
+        name: "John Glenn",
+        ::birth_date::year: 1921,
+        comment: "Fly!",
+        ::birth_date::month: 7,
+        ::birth_date::day: 18,
+    )
+
+    `Same thing.`
+    (
+        name: "John Glenn",
+        birth_date: (
+            year: 1921,
+            month: 7,
+            day: 18,
+        ),
+        comment: "Fly!",
+    )
 ```
 
 ## Lot
@@ -1167,6 +1285,85 @@ Examples:
         Hearts : 10,
         Spades : 20,
     }
+```
+
+## Interval
+
+An **Interval** value is represented by `<Interval>`.
+
+Grammar:
+
+```
+    token Interval
+    {
+         <Interval_subject>
+    }
+
+    token Interval_subject
+    {
+        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
+    }
+
+    token interval_members
+    {
+        <interval_empty> | <interval_single> | <interval_range>
+    }
+
+    token interval_empty
+    {
+        ''
+    }
+
+    token interval_single
+    {
+        <Any>
+    }
+
+    token interval_range
+    {
+        [<interval_low> <sp>? | '*'] '-'? '..' '-'? ['*' | <sp>? <interval_high>]
+    }
+
+    token interval_low
+    {
+        <Any>
+    }
+
+    token interval_high
+    {
+        <Any>
+    }
+```
+
+Examples:
+
+```
+    `Empty interval (zero members).`
+    []
+
+    `Unit interval (one member).`
+    [abc]
+
+    `Closed interval (probably 10 members, depending on the model used).`
+    [1..10]
+
+    `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
+    [2.7..-9.3]
+
+    `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
+    [a-..z]
+
+    `Open interval; time period between Dec 6 and 20 excluding both.`
+    [0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"]
+
+    `Left-unbounded, right-closed interval; every Integer <= 3.`
+    [*..3]
+
+    `Left-closed, right-unbounded interval; every Integer >= 29.`
+    [29..*]
+
+    `Universal interval; unbounded; every value of type system is a member.`
+    [*..*]
 ```
 
 ## Array
@@ -1400,85 +1597,6 @@ Examples:
     })
 ```
 
-## Interval
-
-An **Interval** value is represented by `<Interval>`.
-
-Grammar:
-
-```
-    token Interval
-    {
-         <Interval_subject>
-    }
-
-    token Interval_subject
-    {
-        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
-    }
-
-    token interval_members
-    {
-        <interval_empty> | <interval_single> | <interval_range>
-    }
-
-    token interval_empty
-    {
-        ''
-    }
-
-    token interval_single
-    {
-        <Any>
-    }
-
-    token interval_range
-    {
-        [<interval_low> <sp>? | '*'] '-'? '..' '-'? ['*' | <sp>? <interval_high>]
-    }
-
-    token interval_low
-    {
-        <Any>
-    }
-
-    token interval_high
-    {
-        <Any>
-    }
-```
-
-Examples:
-
-```
-    `Empty interval (zero members).`
-    []
-
-    `Unit interval (one member).`
-    [abc]
-
-    `Closed interval (probably 10 members, depending on the model used).`
-    [1..10]
-
-    `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
-    [2.7..-9.3]
-
-    `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
-    [a-..z]
-
-    `Open interval; time period between Dec 6 and 20 excluding both.`
-    [0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"]
-
-    `Left-unbounded, right-closed interval; every Integer <= 3.`
-    [*..3]
-
-    `Left-closed, right-unbounded interval; every Integer >= 29.`
-    [29..*]
-
-    `Universal interval; unbounded; every value of type system is a member.`
-    [*..*]
-```
-
 ## Interval Set
 
 An **Interval Set** value is represented by `<Interval_Set>`.
@@ -1568,180 +1686,6 @@ Examples:
 
     `Probably same thing, regardless of data model used.`
     (Interval_Bag:{1..-6,6..10:2,10-..15})
-```
-
-## Pair
-
-A **Pair** value is represented by `<Pair>`.
-
-Grammar:
-
-```
-    token Pair
-    {
-         <Pair_subject>
-    }
-
-    token Pair_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
-    }
-
-    token this_and_that
-    {
-          [<this> <sp>? [':'|'->'] <sp>? <that>]
-        | [<that> <sp>?      '<-'  <sp>? <this>]
-    }
-
-    token this
-    {
-        <Any>
-    }
-
-    token that
-    {
-        <Any>
-    }
-```
-
-Examples:
-
-```
-    `Pair of Integer.`
-    (5: -3)
-
-    `Pair of Text.`
-    ("First Name": Joy)
-
-    `Another Pair.`
-    (x:y)
-
-    `Same thing.`
-    (x->y)
-
-    `Same thing.`
-    (y<-x)
-```
-
-## Tuple / Attribute Set
-
-A **Tuple** value is represented by `<Tuple>`.
-
-Grammar:
-
-```
-    token Tuple
-    {
-        <Tuple_subject>
-    }
-
-    token Tuple_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
-    }
-
-    token tuple_attrs
-    {
-        <tuple_nullary> | <tuple_unary> | <tuple_nary>
-    }
-
-    token tuple_nullary
-    {
-        ''
-    }
-
-    token tuple_unary
-    {
-          [          <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr>          ]
-    }
-
-    token tuple_nary
-    {
-        [',' <sp>?]?
-        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
-        [<sp>? ',']?
-    }
-
-    token tuple_attr
-    {
-        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
-    }
-
-    token attr_asset
-    {
-        <Any>
-    }
-```
-
-The meaning of a `<tuple_attr>` consisting of only an `<attr_asset>` is
-exactly the same as if the former also had an `<attr_name>` of the form
-`0cN` such that `N` is the zero-based ordinal position of the
-`<tuple_attr>` in the `<tuple_attrs>` among all sibling such
-`<tuple_attr>`.  These *attribute name* are determined without regard to
-any explicit *attribute name* that a `<tuple_attrs>` may contain, and it is
-invalid for any explicit names to duplicate any implicit or explicit names.
-
-Examples:
-
-```
-    `Zero attributes.`
-    ()
-
-    `One named attribute.`
-    ("First Name": Joy,)
-
-    `One ordered attribute.`
-    (53,)
-
-    `Same thing.`
-    (0c0: 53,)
-
-    `Same thing.`
-    ("\\<0c0>": 53,)
-
-    `Three named attributes.`
-    (
-        login_name : hartmark,
-        login_pass : letmein,
-        is_special : 0bTRUE,
-    )
-
-    `Three ordered attributes.`
-    (hello,26,0bTRUE)
-
-    `One of each.`
-    (Jay, age: 10)
-
-    `A non-Latin name.`
-    ("サンプル": "http://example.com",)
-
-    `Two named attributes.`
-    (
-        name : Michelle,
-        age  : 17,
-    )
-
-    `Five leaf attributes in nested multi-level namespace.`
-    (
-        name: "John Glenn",
-        ::birth_date::year: 1921,
-        comment: "Fly!",
-        ::birth_date::month: 7,
-        ::birth_date::day: 18,
-    )
-
-    `Same thing.`
-    (
-        name: "John Glenn",
-        birth_date: (
-            year: 1921,
-            month: 7,
-            day: 18,
-        ),
-        comment: "Fly!",
-    )
 ```
 
 ## Tuple Array
@@ -2016,6 +1960,62 @@ Examples:
     (Excuse:::No_Such_Attr_Name)
 ```
 
+## Heading / Attribute Name Set
+
+A **Heading** value is represented by `<Heading>`.
+
+Grammar:
+
+```
+    token Heading
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Heading <sp>? ':' <sp>? <heading_attr_names>
+    }
+
+    token heading_attr_names
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            [',' <sp>?]?
+            [<attr_name>* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+    }
+```
+
+Examples:
+
+```
+    `Zero attributes.`
+    (Heading:())
+
+    `One named attribute.`
+    (Heading:(sales))
+
+    `Same thing.`
+    (Heading:("sales"))
+
+    `One ordered attribute.`
+    (Heading:(0c0))
+
+    `Same thing.`
+    (Heading:("\\<0c0>"))
+
+    `Three named attributes.`
+    (Heading:(region,revenue,qty))
+
+    `Three ordered attributes.`
+    (Heading:(0c0,0c1,0c2))
+
+    `One of each.`
+    (Heading:(0c1,age))
+
+    `Some attribute names can only appear quoted.`
+    (Heading:("Street Address"))
+
+    `A non-Latin name.`
+    (Heading:("サンプル"))
+```
+
 ## Renaming / Attribute Name Map
 
 A **Renaming** value is represented by `<Renaming>`.
@@ -2141,10 +2141,10 @@ possrep is recognized within a Muldis Object Notation artifact:
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | "" or "..." or prefix [A..Z _ a..z] or prefix 0c
     Nesting         | prefix ::
-    Lot             | only {} or {...} without mandatory prefix
-    Interval        | only [] or [...] without mandatory prefix
     Pair            | (...:...) without any comma
     Tuple           | () or (...) with >= 1 comma
+    Lot             | only {} or {...} without mandatory prefix
+    Interval        | only [] or [...] without mandatory prefix
 ```
 
 ## Features Reserved For Superset Grammars
@@ -2215,6 +2215,13 @@ that means they are used in pairs.
           |                        |   to indicate it has escaped characters
           |                        | * prefix for each escaped char in quoted string
     ------+------------------------+---------------------------------------
+    ()    | attribute collections  | * delimit heterogeneous aordered collections
+          |                        |   of attributes, concept nominal+asset pairs
+          |                        | * delimit Heading literals
+          |                        | * delimit Pair/Tuple/Article/Excuse selectors
+          |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
+          | generic grouping       | * optional delimiters around Any to force a parsing precedence
+    ------+------------------------+---------------------------------------
     {}    | discrete collections   | * delimit homogeneous discrete collections
           |                        |   of members, concept asset+cardinal pairs
           |                        | * delimit Lot/Array/Set/Bag/Mix selectors
@@ -2224,30 +2231,23 @@ that means they are used in pairs.
           |                        |   of members, concept interval low+high endpoint pairs
           |                        | * delimit Interval selectors
     ------+------------------------+---------------------------------------
-    ()    | attribute collections  | * delimit heterogeneous aordered collections
-          |                        |   of attributes, concept nominal+asset pairs
-          |                        | * delimit Heading literals
-          |                        | * delimit Pair/Tuple/Article/Excuse selectors
-          |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
-          | generic grouping       | * optional delimiters around Any to force a parsing precedence
-    ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
     ->    |                        | * separates the 2 parts of a pair
-    <-    |                        | * optional pair separator in Lot/Array/Set/Bag/Mix sels
-          |                        | * this/that separator in Pair sels
+    <-    |                        | * this/that separator in Pair sels
+          |                        | * disambiguate Pair sels from generic_group
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
-          |                        | * optional pair separator in nonempty-TA/Rel/TB sels
           |                        | * label/attributes separator in Article/Excuse sels
+          |                        | * optional pair separator in Lot/Array/Set/Bag/Mix sels
+          |                        | * optional pair separator in nonempty-TA/Rel/TB sels
           |                        | * before/after separator in Renaming sels
           |                        | * disambiguate Bag/Mix sels from Set sel
-          |                        | * disambiguate Pair sels from generic_group
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
-          |                        | * separate attributes in Heading lits
-          |                        | * separate members in Lot/Array/Set/Bag/Mix sels
-          |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Tuple/Article/Excuse sels
           |                        | * disambiguate unary named Tuple sels from Pair sels and generic_group
+          |                        | * separate members in Lot/Array/Set/Bag/Mix sels
+          |                        | * separate members in nonempty-TA/Rel/TB sels
+          |                        | * separate attributes in Heading lits
     ------+------------------------+---------------------------------------
     ::    | nestings               | * prefix each element of a Nesting literal
           |                        | * disambiguate Nesting from Text
@@ -2375,16 +2375,16 @@ bareword or numeric-format literal; when any of these sequences overlap,
 longest token always wins:
 
 ```
+    (
+    )
     {
     }
     [
     ]
-    (
-    )
-    ,
     :
     ->
     <-
+    ,
     ::
     ..
     ..-

@@ -56,15 +56,15 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Numeric: Integer, Fraction
 - Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Stringy: Bits, Blob, Text
-- Identifier: Nesting, Heading
+- Identifier: Nesting
 
-- Discrete: Lot, Array, Set, Bag, Mix
-- Continuous: Interval, Interval Set, Interval Bag
-- Structural: Pair, Tuple
+- Collective: Pair, Tuple, Lot, Interval
+
+- Discrete: Array, Set, Bag, Mix
+- Continuous: Interval Set, Interval Bag
 - Relational: Tuple Array, Relation, Tuple Bag
 - Generic: Article, Excuse
-
-- Source Code: Renaming
+- Source Code: Heading, Renaming
 
 See the DATA TYPE POSSREPS of [Semantics](
 Muldis_Object_Notation_Semantics.md) for details and the intended
@@ -554,21 +554,44 @@ When its subject is any of the following, the predicate is required:
 * Any `SYS_Array` such that every one of its `SYS_members` is any
 **Text** subject.
 
-## Heading / Attribute Name Set
+## Pair
 
-A **Heading** artifact has the predicate `Heading`.
+An **Pair** artifact has the predicate `Pair`.
 
 When its subject is any of the following, the predicate is required:
 
-* Any `SYS_Set` such that every one of its `SYS_members` is any
-**Text** subject.
+* Any `SYS_Pair_KV` such that its `SYS_key` is the *this* (any **Any**
+artifact) and its `SYS_value` is the *that* (any **Any** artifact).
 
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Text** subject.
+## Tuple / Attribute Set
 
-* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
-that member's `SYS_key` is any **Text** subject and
-that member's `SYS_value` is any **Boolean** subject.
+A **Tuple** artifact has the predicate `Tuple`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any `SYS_Tuple_Ordered_As_Tuple` such that for every one of its
+`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
+`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` (alias `SYS_attrs_na`) such that its
+`SYS_key` (alias `SYS_attr_name`) is any **Text** subject and its
+`SYS_value` (alias `SYS_attr_asset`) is any **Any** artifact.
+
+* Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
+`SYS_attrs_na`, that member's `SYS_attr_name` is any **Text** subject
+and that member's `SYS_attr_asset` is any **Any** artifact.
+
+Not permitted is any of the following, to keep things simpler or more correct:
+
+* Any object of the .NET class `System.Data.DataRow`.
+
+*TODO: Consider adding .NET anonymous types as an option if feasible.*
 
 ## Lot
 
@@ -584,6 +607,34 @@ When its subject is any of the following, the predicate is required:
 `SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
 **Any** artifact and its `SYS_value` is any **Integer** subject which
 denotes a non-negative integer *multiplicity*.
+
+## Interval
+
+An **Interval** artifact has the predicate `Interval`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the `SYS_Char_String`
+empty string value; this designates an *empty interval*.
+
+* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the `SYS_Char_String`
+empty string value and attribute 1 is any **Any** artifact;
+this designates a *unit interval*.
+
+* Any `SYS_Tuple_Ordered_D3` such that attribute 0 is any of the
+4 `SYS_Char_String` values {`..`, `..-`, `-..`, `-..-`}
+and attributes 1 and 2 are each any **Any** artifact;
+this designates a *bounded interval*.
+
+* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is any of the
+8 `SYS_Char_String` values
+{`..*`, `..-*`, `-..*`, `-..-*`, `*..`, `*..-`, `*-..`, `*-..-`}
+and attribute 1 is any **Any** artifact;
+this designates a *half-unbounded, half-bounded interval*.
+
+* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is any of the
+4 `SYS_Char_String` values {`*..*`, `*..-*`, `*-..*`, `*-..-*`};
+this designates a *universal interval* or *unbounded interval*.
 
 ## Array
 
@@ -663,34 +714,6 @@ is any **Fraction** subject.
 that member's `SYS_key` is any **Any** artifact and
 that member's `SYS_value` is any **Fraction** subject.
 
-## Interval
-
-An **Interval** artifact has the predicate `Interval`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the `SYS_Char_String`
-empty string value; this designates an *empty interval*.
-
-* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the `SYS_Char_String`
-empty string value and attribute 1 is any **Any** artifact;
-this designates a *unit interval*.
-
-* Any `SYS_Tuple_Ordered_D3` such that attribute 0 is any of the
-4 `SYS_Char_String` values {`..`, `..-`, `-..`, `-..-`}
-and attributes 1 and 2 are each any **Any** artifact;
-this designates a *bounded interval*.
-
-* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is any of the
-8 `SYS_Char_String` values
-{`..*`, `..-*`, `-..*`, `-..-*`, `*..`, `*..-`, `*-..`, `*-..-`}
-and attribute 1 is any **Any** artifact;
-this designates a *half-unbounded, half-bounded interval*.
-
-* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is any of the
-4 `SYS_Char_String` values {`*..*`, `*..-*`, `*-..*`, `*-..-*`};
-this designates a *universal interval* or *unbounded interval*.
-
 ## Interval Set
 
 An **Interval Set** artifact has the predicate `Interval_Set`.
@@ -731,45 +754,6 @@ is any **Integer** subject which denotes a non-negative integer *multiplicity*.
 that member's `SYS_key` is any **Interval** subject and
 that member's `SYS_value` is any **Integer** subject
 which denotes a non-negative integer *multiplicity*.
-
-## Pair
-
-An **Pair** artifact has the predicate `Pair`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the *this* (any **Any**
-artifact) and its `SYS_value` is the *that* (any **Any** artifact).
-
-## Tuple / Attribute Set
-
-A **Tuple** artifact has the predicate `Tuple`.
-
-When its subject is any of the following, the predicate is optional:
-
-* Any `SYS_Tuple_Ordered_As_Tuple` such that for every one of its
-`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
-`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`%` and its `SYS_value` is any `SYS_Array` such that every one of its
-`SYS_members` is a `SYS_Pair_KV` (alias `SYS_attrs_na`) such that its
-`SYS_key` (alias `SYS_attr_name`) is any **Text** subject and its
-`SYS_value` (alias `SYS_attr_asset`) is any **Any** artifact.
-
-* Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
-`SYS_attrs_na`, that member's `SYS_attr_name` is any **Text** subject
-and that member's `SYS_attr_asset` is any **Any** artifact.
-
-Not permitted is any of the following, to keep things simpler or more correct:
-
-* Any object of the .NET class `System.Data.DataRow`.
-
-*TODO: Consider adding .NET anonymous types as an option if feasible.*
 
 ## Tuple Array
 
@@ -874,6 +858,22 @@ An **Excuse** artifact has the predicate `Excuse`.
 When its subject is any of the following, the predicate is required:
 
 * Any **Article** subject.
+
+## Heading / Attribute Name Set
+
+A **Heading** artifact has the predicate `Heading`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Set` such that every one of its `SYS_members` is any
+**Text** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Text** subject.
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is any **Text** subject and
+that member's `SYS_value` is any **Boolean** subject.
 
 ## Renaming / Attribute Name Map
 

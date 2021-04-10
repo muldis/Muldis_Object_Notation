@@ -75,15 +75,15 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Numeric: Integer, Fraction
 - Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Stringy: Bits, Blob, Text
-- Identifier: Nesting, Heading
+- Identifier: Nesting
 
-- Discrete: Lot, Array, Set, Bag, Mix
-- Continuous: Interval, Interval Set, Interval Bag
-- Structural: Pair, Tuple
+- Collective: Pair, Tuple, Lot, Interval
+
+- Discrete: Array, Set, Bag, Mix
+- Continuous: Interval Set, Interval Bag
 - Relational: Tuple Array, Relation, Tuple Bag
 - Generic: Article, Excuse
-
-- Source Code: Renaming
+- Source Code: Heading, Renaming
 
 See the DATA TYPE POSSREPS of [Semantics](
 Muldis_Object_Notation_Semantics.md) for details.

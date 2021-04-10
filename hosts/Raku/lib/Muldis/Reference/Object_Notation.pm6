@@ -67,27 +67,27 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | <Blob>
         | <Text>
         | <Nesting>
-        | <Heading>
-        | <Renaming>
     }
 
     token collection
     {
-          <Lot>
+          <Pair>
+        | <Tuple>
+        | <Lot>
+        | <Interval>
         | <Array>
         | <Set>
         | <Bag>
         | <Mix>
-        | <Interval>
         | <Interval_Set>
         | <Interval_Bag>
-        | <Pair>
-        | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
         | <Article>
         | <Excuse>
+        | <Heading>
+        | <Renaming>
     }
 
 ###########################################################################
@@ -386,18 +386,76 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
-    token Heading
+    token Pair
     {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Heading <sp>? ':' <sp>? <heading_attr_names>
+         <Pair_subject>
     }
 
-    token heading_attr_names
+    token Pair_subject
     {
-        ['(' <sp>?] ~ [<sp>? ')']
-            [',' <sp>?]?
-            [<attr_name>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
+        ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
+    }
+
+    token this_and_that
+    {
+          [<this> <sp>? [':'|'->'] <sp>? <that>]
+        | [<that> <sp>?      '<-'  <sp>? <this>]
+    }
+
+    token this
+    {
+        <Any>
+    }
+
+    token that
+    {
+        <Any>
+    }
+
+###########################################################################
+
+    token Tuple
+    {
+        <Tuple_subject>
+    }
+
+    token Tuple_subject
+    {
+        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
+    }
+
+    token tuple_attrs
+    {
+        <tuple_nullary> | <tuple_unary> | <tuple_nary>
+    }
+
+    token tuple_nullary
+    {
+        ''
+    }
+
+    token tuple_unary
+    {
+          [          <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr>          ]
+    }
+
+    token tuple_nary
+    {
+        [',' <sp>?]?
+        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<sp>? ',']?
+    }
+
+    token tuple_attr
+    {
+        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
+    }
+
+    token attr_asset
+    {
+        <Any>
     }
 
 ###########################################################################
@@ -420,6 +478,48 @@ grammar Muldis::Reference::Object_Notation::Grammar
           <this>
         | [<this> <sp>? [':'|'->'] <sp>? <that>]
         | [<that> <sp>?      '<-'  <sp>? <this>]
+    }
+
+###########################################################################
+
+    token Interval
+    {
+         <Interval_subject>
+    }
+
+    token Interval_subject
+    {
+        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
+    }
+
+    token interval_members
+    {
+        <interval_empty> | <interval_single> | <interval_range>
+    }
+
+    token interval_empty
+    {
+        ''
+    }
+
+    token interval_single
+    {
+        <Any>
+    }
+
+    token interval_range
+    {
+        [<interval_low> <sp>? | '*'] '-'? '..' '-'? ['*' | <sp>? <interval_high>]
+    }
+
+    token interval_low
+    {
+        <Any>
+    }
+
+    token interval_high
+    {
+        <Any>
     }
 
 ###########################################################################
@@ -498,48 +598,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
-    token Interval
-    {
-         <Interval_subject>
-    }
-
-    token Interval_subject
-    {
-        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
-    }
-
-    token interval_members
-    {
-        <interval_empty> | <interval_single> | <interval_range>
-    }
-
-    token interval_empty
-    {
-        ''
-    }
-
-    token interval_single
-    {
-        <Any>
-    }
-
-    token interval_range
-    {
-        [<interval_low> <sp>? | '*'] '-'? '..' '-'? ['*' | <sp>? <interval_high>]
-    }
-
-    token interval_low
-    {
-        <Any>
-    }
-
-    token interval_high
-    {
-        <Any>
-    }
-
-###########################################################################
-
     token Interval_Set
     {
         ['(' <sp>?] ~ [<sp>? ')']
@@ -568,80 +626,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-    }
-
-###########################################################################
-
-    token Pair
-    {
-         <Pair_subject>
-    }
-
-    token Pair_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
-    }
-
-    token this_and_that
-    {
-          [<this> <sp>? [':'|'->'] <sp>? <that>]
-        | [<that> <sp>?      '<-'  <sp>? <this>]
-    }
-
-    token this
-    {
-        <Any>
-    }
-
-    token that
-    {
-        <Any>
-    }
-
-###########################################################################
-
-    token Tuple
-    {
-        <Tuple_subject>
-    }
-
-    token Tuple_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
-    }
-
-    token tuple_attrs
-    {
-        <tuple_nullary> | <tuple_unary> | <tuple_nary>
-    }
-
-    token tuple_nullary
-    {
-        ''
-    }
-
-    token tuple_unary
-    {
-          [          <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr>          ]
-    }
-
-    token tuple_nary
-    {
-        [',' <sp>?]?
-        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
-        [<sp>? ',']?
-    }
-
-    token tuple_attr
-    {
-        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
-    }
-
-    token attr_asset
-    {
-        <Any>
     }
 
 ###########################################################################
@@ -741,6 +725,22 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token Excuse_subject
     {
         <Article_subject>
+    }
+
+###########################################################################
+
+    token Heading
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Heading <sp>? ':' <sp>? <heading_attr_names>
+    }
+
+    token heading_attr_names
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            [',' <sp>?]?
+            [<attr_name>* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
     }
 
 ###########################################################################

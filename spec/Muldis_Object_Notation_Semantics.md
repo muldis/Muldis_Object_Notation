@@ -33,15 +33,15 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 - Numeric: Integer, Fraction
 - Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 - Stringy: Bits, Blob, Text
-- Identifier: Nesting, Heading
+- Identifier: Nesting
 
-- Discrete: Lot, Array, Set, Bag, Mix
-- Continuous: Interval, Interval Set, Interval Bag
-- Structural: Pair, Tuple
+- Collective: Pair, Tuple, Lot, Interval
+
+- Discrete: Array, Set, Bag, Mix
+- Continuous: Interval Set, Interval Bag
 - Relational: Tuple Array, Relation, Tuple Bag
 - Generic: Article, Excuse
-
-- Source Code: Renaming
+- Source Code: Heading, Renaming
 
 A *possrep* corresponds to the concept of a *data type*, where the latter
 is characterized by a set of *values*, and one may choose to use those
@@ -289,11 +289,44 @@ A **Nesting** value is an arbitrarily-large
 nonempty ordered collection of attribute names, intended for referencing an
 entity in a multi-level namespace, such as nested **Tuple** may implement.
 
-## Heading / Attribute Name Set
+## Pair
 
-A **Heading** value is an arbitrarily-large
-unordered collection of *attribute names*, such that no 2 attribute names
-are the same.
+A **Pair** value is a general purpose 2-element ordered heterogeneous
+collection whose elements in order are *this* and *that*, each of which may
+be any other value.  A **Pair** value is also characterized by a **Tuple**
+value having exactly 2 "positional" attributes.
+
+## Tuple / Attribute Set
+
+A **Tuple** value is a general purpose
+arbitrarily-large unordered heterogeneous collection of named *attributes*,
+such that no 2 attributes have the same *attribute name*, which explicitly
+does not represent any kind of thing in particular, and is simply the sum
+of its attributes.  An attribute is conceptually a name-asset pair, the
+name being used to look up the attribute in a **Tuple**.  An *attribute
+name* is an unqualified program identifier and is conceptually a character
+string that is not a **Text** value.  In the general case each attribute of
+a tuple is of a distinct data type, though multiple attributes often have
+the same type.  The set of attribute names of a **Tuple** is called its
+*heading*, and the corresponding attribute assets are called its *body*.
+
+With respect to the relational model of data, a *heading* represents a
+predicate, for which each *attribute name* is a free variable, and a
+**Tuple** as a whole represents a derived proposition, where the
+corresponding attribute asset values substitute for the free variables;
+however, any actual predicate/etc is defined by the context of a
+**Tuple** value and a **Tuple** in isolation explicitly does not
+represent any proposition in particular.
+
+The canonical way to represent the concept of a *tuple* that has ordered
+attributes is to use integral names; to be specific, the attribute name
+consisting of just the character code point 0 would mark the first ordered
+attribute, the name consisting of just the code point 1 would mark the
+second, and so on; this can be repeated up to 32 "positional" names whose
+names would correspond to non-printing Unicode code points and would
+alphabetically sort correctly and prior to any normal text-like attribute
+names like **name** or **age**; said first 32 would likewise be distinct in
+appearance from all regular printable numbers used as attribute names.
 
 ## Lot
 
@@ -316,6 +349,50 @@ The intended use of the **Lot** possrep is to represent a value expression
 node for selecting at runtime a value of any of the other discrete
 homogeneous collection types where their member values or multiplicities
 are defined by arbitrarily complex sub-expressions.
+
+## Interval
+
+An **Interval** value is a general purpose
+arbitrarily-large unordered collection of any other, *member* values, which
+explicitly does not represent any kind of thing in particular, and is
+simply the sum of its members; the count of members may be either finite or
+infinite depending on the external data model or type system in question.
+
+In stark contrast to a **Set** value, whose set of members is characterized
+by an enumeration of every member value, an **Interval** value's set of
+members is instead characterized by exactly 2 *endpoint* values (or exactly
+1 or exactly zero) of some *orderable* type such that every value in the
+type system with a defined total order between those 2 endpoints is
+considered to be a member value of the **Interval**.  Depending on the
+external data model or type system in question, an **Interval** value may
+(and typically does) consist of an infinite set of members, in contrast
+with a **Set** which can only have a finite set of members.
+
+An *empty interval* has exactly zero members.  A *unit interval* has
+exactly 1 member.  A *closed interval* includes both endpoint values in its
+membership; an *open interval* excludes both endpoint values; a
+*half-closed, half-open interval* includes one and excludes the other.
+A *half-unbounded, half-bounded interval* includes all values that are
+ordered either before or after the single endpoint; a *universal interval*
+or *unbounded interval* includes every value in the type system.
+
+In the general case, for MUON-defined types, only a *bounded interval* over
+2 distinct **Integer** (or **Boolean**) endpoints has a finite member
+count; whereas, a *bounded interval* over 2 distinct endpoints over any
+other type (such as **Fraction** or **Text**) has an infinite member count,
+because given any 2 distinct values of most types you can find another
+distinct value that is ordered between them.  Also, a non-bounded interval
+over **Integer** has an infinite member count in MUON.  An external data
+model can only change this by defining its corresponding member data types
+to have a finite membership themselves, in contrast to mathematics.
+
+Note that it is up to the external data model to define any total orders
+for any member value types, either which one is used implicitly when the
+**Interval** has no explicit context to specify one, or how to interpret
+that explicit context.  For a common example, there exist a wide variety of
+character string collations in common use, and it would require context or
+the external data model to declare which to use for **Text** members.
+MUON itself simply characterizes an **Interval** *as* its endpoints.
 
 ## Array
 
@@ -381,50 +458,6 @@ a dedicated type to represent a unit definition.
 
 See also <http://unitsofmeasure.org/ucum.html>.
 
-## Interval
-
-An **Interval** value is a general purpose
-arbitrarily-large unordered collection of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members; the count of members may be either finite or
-infinite depending on the external data model or type system in question.
-
-In stark contrast to a **Set** value, whose set of members is characterized
-by an enumeration of every member value, an **Interval** value's set of
-members is instead characterized by exactly 2 *endpoint* values (or exactly
-1 or exactly zero) of some *orderable* type such that every value in the
-type system with a defined total order between those 2 endpoints is
-considered to be a member value of the **Interval**.  Depending on the
-external data model or type system in question, an **Interval** value may
-(and typically does) consist of an infinite set of members, in contrast
-with a **Set** which can only have a finite set of members.
-
-An *empty interval* has exactly zero members.  A *unit interval* has
-exactly 1 member.  A *closed interval* includes both endpoint values in its
-membership; an *open interval* excludes both endpoint values; a
-*half-closed, half-open interval* includes one and excludes the other.
-A *half-unbounded, half-bounded interval* includes all values that are
-ordered either before or after the single endpoint; a *universal interval*
-or *unbounded interval* includes every value in the type system.
-
-In the general case, for MUON-defined types, only a *bounded interval* over
-2 distinct **Integer** (or **Boolean**) endpoints has a finite member
-count; whereas, a *bounded interval* over 2 distinct endpoints over any
-other type (such as **Fraction** or **Text**) has an infinite member count,
-because given any 2 distinct values of most types you can find another
-distinct value that is ordered between them.  Also, a non-bounded interval
-over **Integer** has an infinite member count in MUON.  An external data
-model can only change this by defining its corresponding member data types
-to have a finite membership themselves, in contrast to mathematics.
-
-Note that it is up to the external data model to define any total orders
-for any member value types, either which one is used implicitly when the
-**Interval** has no explicit context to specify one, or how to interpret
-that explicit context.  For a common example, there exist a wide variety of
-character string collations in common use, and it would require context or
-the external data model to declare which to use for **Text** members.
-MUON itself simply characterizes an **Interval** *as* its endpoints.
-
 ## Interval Set
 
 An **Interval Set** value is
@@ -452,45 +485,6 @@ characterized by a generalization of an **Interval Set** that permits
 multiple members to have the same value; an **Interval Bag** is isomorphic
 to a **Bag** in the same way that an **Interval Set** is to a **Set**;
 every possible distinct **Bag** can map to a distinct **Interval Bag**.
-
-## Pair
-
-A **Pair** value is a general purpose 2-element ordered heterogeneous
-collection whose elements in order are *this* and *that*, each of which may
-be any other value.  A **Pair** value is also characterized by a **Tuple**
-value having exactly 2 "positional" attributes.
-
-## Tuple / Attribute Set
-
-A **Tuple** value is a general purpose
-arbitrarily-large unordered heterogeneous collection of named *attributes*,
-such that no 2 attributes have the same *attribute name*, which explicitly
-does not represent any kind of thing in particular, and is simply the sum
-of its attributes.  An attribute is conceptually a name-asset pair, the
-name being used to look up the attribute in a **Tuple**.  An *attribute
-name* is an unqualified program identifier and is conceptually a character
-string that is not a **Text** value.  In the general case each attribute of
-a tuple is of a distinct data type, though multiple attributes often have
-the same type.  The set of attribute names of a **Tuple** is called its
-*heading*, and the corresponding attribute assets are called its *body*.
-
-With respect to the relational model of data, a *heading* represents a
-predicate, for which each *attribute name* is a free variable, and a
-**Tuple** as a whole represents a derived proposition, where the
-corresponding attribute asset values substitute for the free variables;
-however, any actual predicate/etc is defined by the context of a
-**Tuple** value and a **Tuple** in isolation explicitly does not
-represent any proposition in particular.
-
-The canonical way to represent the concept of a *tuple* that has ordered
-attributes is to use integral names; to be specific, the attribute name
-consisting of just the character code point 0 would mark the first ordered
-attribute, the name consisting of just the code point 1 would mark the
-second, and so on; this can be repeated up to 32 "positional" names whose
-names would correspond to non-printing Unicode code points and would
-alphabetically sort correctly and prior to any normal text-like attribute
-names like **name** or **age**; said first 32 would likewise be distinct in
-appearance from all regular printable numbers used as attribute names.
 
 ## Tuple Array
 
@@ -577,6 +571,12 @@ The **Excuse** possrep is the idiomatic way for an external data model to
 represent "new" *error* or *exception* types of a nominal type system in a
 consistent way.  The counterpart **Article** possrep should *not* be used for
 these things, but rather just every other kind of externally-defined type.
+
+## Heading / Attribute Name Set
+
+A **Heading** value is an arbitrarily-large
+unordered collection of *attribute names*, such that no 2 attribute names
+are the same.
 
 ## Renaming / Attribute Name Map
 

@@ -288,37 +288,85 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
-    `$$$` Heading : (
+    `$$$` Pair : (
+
+        `Pair of Integer.`
+        (5: -3),
+
+        `Pair of Text.`
+        ("First Name": Joy),
+
+        `Another Pair.`
+        (x:y),
+
+        `Same thing.`
+        (x->y),
+
+        `Same thing.`
+        (y<-x),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Tuple : (
 
         `Zero attributes.`
-        (Heading:()),
+        (),
 
         `One named attribute.`
-        (Heading:(sales)),
-
-        `Same thing.`
-        (Heading:("sales")),
+        ("First Name": Joy,),
 
         `One ordered attribute.`
-        (Heading:(0c0)),
+        (53,),
 
         `Same thing.`
-        (Heading:("\\<0c0>")),
+        (0c0: 53,),
+
+        `Same thing.`
+        ("\\<0c0>": 53,),
 
         `Three named attributes.`
-        (Heading:(region,revenue,qty)),
+        (
+            login_name : hartmark,
+            login_pass : letmein,
+            is_special : 0bTRUE,
+        ),
 
         `Three ordered attributes.`
-        (Heading:(0c0,0c1,0c2)),
+        (hello,26,0bTRUE),
 
         `One of each.`
-        (Heading:(0c1,age)),
-
-        `Some attribute names can only appear quoted.`
-        (Heading:("Street Address")),
+        (Jay, age: 10),
 
         `A non-Latin name.`
-        (Heading:("サンプル")),
+        ("サンプル": "http://example.com",),
+
+        `Two named attributes.`
+        (
+            name : Michelle,
+            age  : 17,
+        ),
+
+        `Five leaf attributes in nested multi-level namespace.`
+        (
+            name: "John Glenn",
+            ::birth_date::year: 1921,
+            comment: "Fly!",
+            ::birth_date::month: 7,
+            ::birth_date::day: 18,
+        ),
+
+        `Same thing.`
+        (
+            name: "John Glenn",
+            birth_date: (
+                year: 1921,
+                month: 7,
+                day: 18,
+            ),
+            comment: "Fly!",
+        ),
 
     ),
 
@@ -339,6 +387,39 @@ Muldis_Content_Predicate`
             Hearts : 10,
             Spades : 20,
         },
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Interval : (
+
+        `Empty interval (zero members).`
+        [],
+
+        `Unit interval (one member).`
+        [abc],
+
+        `Closed interval (probably 10 members, depending on the model used).`
+        [1..10],
+
+        `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
+        [2.7..-9.3],
+
+        `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
+        [a-..z],
+
+        `Open interval; time period between Dec 6 and 20 excluding both.`
+        [0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"],
+
+        `Left-unbounded, right-closed interval; every Integer <= 3.`
+        [*..3],
+
+        `Left-closed, right-unbounded interval; every Integer >= 29.`
+        [29..*],
+
+        `Universal interval; unbounded; every value of type system is a member.`
+        [*..*],
 
     ),
 
@@ -485,39 +566,6 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
-    `$$$` Interval : (
-
-        `Empty interval (zero members).`
-        [],
-
-        `Unit interval (one member).`
-        [abc],
-
-        `Closed interval (probably 10 members, depending on the model used).`
-        [1..10],
-
-        `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
-        [2.7..-9.3],
-
-        `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
-        [a-..z],
-
-        `Open interval; time period between Dec 6 and 20 excluding both.`
-        [0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"],
-
-        `Left-unbounded, right-closed interval; every Integer <= 3.`
-        [*..3],
-
-        `Left-closed, right-unbounded interval; every Integer >= 29.`
-        [29..*],
-
-        `Universal interval; unbounded; every value of type system is a member.`
-        [*..*],
-
-    ),
-
-`#########################################################################`
-
     `$$$` Interval_Set : (
 
         `Empty interval-set (zero members).`
@@ -564,90 +612,6 @@ Muldis_Content_Predicate`
 
         `Probably same thing, regardless of data model used.`
         (Interval_Bag:{1..-6,6..10:2,10-..15}),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Pair : (
-
-        `Pair of Integer.`
-        (5: -3),
-
-        `Pair of Text.`
-        ("First Name": Joy),
-
-        `Another Pair.`
-        (x:y),
-
-        `Same thing.`
-        (x->y),
-
-        `Same thing.`
-        (y<-x),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Tuple : (
-
-        `Zero attributes.`
-        (),
-
-        `One named attribute.`
-        ("First Name": Joy,),
-
-        `One ordered attribute.`
-        (53,),
-
-        `Same thing.`
-        (0c0: 53,),
-
-        `Same thing.`
-        ("\\<0c0>": 53,),
-
-        `Three named attributes.`
-        (
-            login_name : hartmark,
-            login_pass : letmein,
-            is_special : 0bTRUE,
-        ),
-
-        `Three ordered attributes.`
-        (hello,26,0bTRUE),
-
-        `One of each.`
-        (Jay, age: 10),
-
-        `A non-Latin name.`
-        ("サンプル": "http://example.com",),
-
-        `Two named attributes.`
-        (
-            name : Michelle,
-            age  : 17,
-        ),
-
-        `Five leaf attributes in nested multi-level namespace.`
-        (
-            name: "John Glenn",
-            ::birth_date::year: 1921,
-            comment: "Fly!",
-            ::birth_date::month: 7,
-            ::birth_date::day: 18,
-        ),
-
-        `Same thing.`
-        (
-            name: "John Glenn",
-            birth_date: (
-                year: 1921,
-                month: 7,
-                day: 18,
-            ),
-            comment: "Fly!",
-        ),
 
     ),
 
@@ -788,6 +752,42 @@ Muldis_Content_Predicate`
         (Excuse:::Div_By_Zero),
 
         (Excuse:::No_Such_Attr_Name),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Heading : (
+
+        `Zero attributes.`
+        (Heading:()),
+
+        `One named attribute.`
+        (Heading:(sales)),
+
+        `Same thing.`
+        (Heading:("sales")),
+
+        `One ordered attribute.`
+        (Heading:(0c0)),
+
+        `Same thing.`
+        (Heading:("\\<0c0>")),
+
+        `Three named attributes.`
+        (Heading:(region,revenue,qty)),
+
+        `Three ordered attributes.`
+        (Heading:(0c0,0c1,0c2)),
+
+        `One of each.`
+        (Heading:(0c1,age)),
+
+        `Some attribute names can only appear quoted.`
+        (Heading:("Street Address")),
+
+        `A non-Latin name.`
+        (Heading:("サンプル")),
 
     ),
 
