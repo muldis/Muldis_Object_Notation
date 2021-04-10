@@ -883,7 +883,7 @@ Darren Duncan - darren@DarrenDuncan.net
 This file is part of the formal specification named
 **Muldis Object Notation** (**MUON**).
 
-MUON is Copyright © 2002-2019, Muldis Data Systems, Inc.
+MUON is Copyright © 2002-2021, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
