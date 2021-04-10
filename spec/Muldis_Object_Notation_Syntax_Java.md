@@ -601,19 +601,17 @@ empty string value and attribute 1 is any **Any** artifact;
 this designates a *unit interval*.
 
 * Any `SYS_Tuple_Ordered_D3` such that attribute 0 is any of the
-4 `SYS_Char_String` values {`..`, `..-`, `-..`, `-..-`}
+5 `SYS_Char_String` values {`<=*<=`, `<=*<`, `<*<=`, `<*<`, `..`}
 and attributes 1 and 2 are each any **Any** artifact;
 this designates a *bounded interval*.
 
 * Any `SYS_Tuple_Ordered_D2` such that attribute 0 is any of the
-8 `SYS_Char_String` values
-{`..*`, `..-*`, `-..*`, `-..-*`, `*..`, `*..-`, `*-..`, `*-..-`}
+4 `SYS_Char_String` values {`<=*`, `<*`, `*<=`, `*<`}
 and attribute 1 is any **Any** artifact;
 this designates a *half-unbounded, half-bounded interval*.
 
-* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is any of the
-4 `SYS_Char_String` values {`*..*`, `*..-*`, `*-..*`, `*-..-*`};
-this designates a *universal interval* or *unbounded interval*.
+* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the `SYS_Char_String`
+value `*`; this designates a *universal interval* or *unbounded interval*.
 
 ## Array
 

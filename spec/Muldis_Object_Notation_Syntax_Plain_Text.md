@@ -1321,7 +1321,8 @@ Grammar:
 
     token interval_range
     {
-        [<interval_low> <sp>? | '*'] '-'? '..' '-'? ['*' | <sp>? <interval_high>]
+          [[<interval_low> <sp>? '<' '='?]? '*'  ['<' '='? <sp>? <interval_high>]?]
+        | [ <interval_low> <sp>?            '..'           <sp>? <interval_high>  ]
     }
 
     token interval_low
@@ -1345,25 +1346,28 @@ Examples:
     [abc]
 
     `Closed interval (probably 10 members, depending on the model used).`
+    [1 <=*<= 10]
+
+    `Same thing.`
     [1..10]
 
     `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
-    [2.7..-9.3]
+    [2.7 <=*< 9.3]
 
     `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
-    [a-..z]
+    [a <*<= z]
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
-    [0Lci@y2002|m12|d6@"UTC" -..- 0Lci@y2002|m12|d20@"UTC"]
+    [0Lci@y2002|m12|d6@"UTC" <*< 0Lci@y2002|m12|d20@"UTC"]
 
-    `Left-unbounded, right-closed interval; every Integer <= 3.`
-    [*..3]
+    `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
+    [*<= 3]
 
-    `Left-closed, right-unbounded interval; every Integer >= 29.`
-    [29..*]
+    `Left-closed, right-unbounded interval; every Integer x where 29 <= x.`
+    [29 <=*]
 
     `Universal interval; unbounded; every value of type system is a member.`
-    [*..*]
+    [*]
 ```
 
 ## Array
@@ -1629,13 +1633,16 @@ Examples:
     (Interval_Set:{abc})
 
     `Probably 10 members, depending on the model used.`
+    (Interval_Set:{1<=*<=10})
+
+    `Same thing.`
     (Interval_Set:{1..10})
 
     `Probably 6 members.`
     (Interval_Set:{1..3,6,8..9})
 
     `Every Integer x except for {4..13,22..28}`
-    (Interval_Set:{*..3,14..21,29..*})
+    (Interval_Set:{*<=3,14..21,29<=*})
 
     `Set of all valid Unicode code points.`
     (Interval_Set:{0..0xD7FF,0xE000..0x10FFFF})
@@ -1644,7 +1651,7 @@ Examples:
     (Interval_Set:{1..10,6..15})
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Set:{1..-6,6..10:2,10-..15})
+    (Interval_Set:{1<=*<6,6..10:2,10<*<=15})
 ```
 
 ## Interval Bag
@@ -1682,10 +1689,13 @@ Examples:
     (Interval_Bag:{def:5})
 
     `Probably 20 members (5 duplicates), depending on the model used.`
+    (Interval_Bag:{1<=*<=10,6<=*<=15})
+
+    `Same thing.`
     (Interval_Bag:{1..10,6..15})
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Bag:{1..-6,6..10:2,10-..15})
+    (Interval_Bag:{1<=*<6,6..10:2,10<*<=15})
 ```
 
 ## Tuple Array
@@ -2272,13 +2282,16 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     |     | simple collections     | * separate elements in Calendar-*, Geographic-* lits
     ------+------------------------+---------------------------------------
-    ..    | intervals/ranges       | * pair separator in Interval/Ivl-Set/Ivl-Bag selectors
-    ------+------------------------+---------------------------------------
     %     | tuples/heterogeneous   | * indicates that tuples are featured
           |                        | * not currently used by this grammar
     ------+------------------------+---------------------------------------
+    <=    | intervals/ranges       | * indicates an interval context
+    <     |                        | * pair separator or partial in Interval/Ivl-Set/Ivl-Bag selectors
+    ..    |                        |
+    ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
           |                        | * indicates unbounded endpoint in Interval selectors
+          |                        | * pair separator partial in Interval/Ivl-Set/Ivl-Bag selectors
           | multiplication         | * significand/radix separator in Fraction literals
     ------+------------------------+---------------------------------------
     !     | excuses/but/not        | * indicates that excuses are featured
@@ -2386,22 +2399,16 @@ longest token always wins:
     <-
     ,
     ::
+    <=*<=
+    <=*<
+    <*<=
+    <*<
+    <=*
+    <*
+    *<=
+    *<
+    *
     ..
-    ..-
-    -..
-    -..-
-    ..*
-    ..-*
-    -..*
-    -..-*
-    *..
-    *..-
-    *-..
-    *-..-
-    *..*
-    *..-*
-    *-..*
-    *-..-*
 ```
 
 As a special case, where a `+` symbol would otherwise parse as part of a
@@ -2409,14 +2416,6 @@ numeric-format literal, it will instead parse as its own token when it is
 leading a list item inside a `<Geographic_Point>`; that is, any place where
 a `+` could possibly be interpreted as an *elevation*, that
 interpretation will take precedence over all other interpretations.
-
-Note that, while dividing space is generally optional everywhere in MUON, a
-few specific situations require it.  One is an interval whose high endpoint
-is a negative number; in that case, dividing space is mandatory before the
-`-` so that it isn't interpreted as excluding that endpoint; for example,
-`-10..-5` will be interpreted as `-10 ..- 5`, so one will need to say at
-least `-10.. -5` to mean `-10 .. -5`.  Alternately, one may wrap the
-negative number in parenthesis per `<generic_group>` like `-10..(-5)`.
 
 ## Barewords and Numeric-Format Literals
 
