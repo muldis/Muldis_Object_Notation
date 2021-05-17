@@ -43,12 +43,16 @@ This is the official/original version by the authority Muldis Data Systems
 (`https://muldis.com`), version number `0.300.0`.
 
 **Muldis Object Notation** specifies a semi-lightweight source code and
-data interchange format.  It is fairly easy for humans to read and write.
-It is fairly easy for machines to parse and generate.  MUON is canonically
-a plain text format that is completely language independent but uses
-conventions that are familiar to programmers of many other languages.
-MUON also consists of alternate formats defined in terms of data structures
-of other languages and have deterministic mappings with the plain text one.
+data interchange abstract format.  It is fairly easy for humans to read and
+write.  It is fairly easy for machines to parse and generate.  MUON is
+fundamentally an abstract format defined in terms of a few kinds of simple
+generic data structures such as integers and ordered lists.  MUON also
+consists of multiple concrete formats which satisfy the requirements of the
+abstract format and all have deterministic mappings with each other.
+MUON's canonical concrete format is plain text and is completely language
+independent but uses conventions that are familiar to programmers of many
+other languages.  MUON's other concrete formats are defined in terms of
+data structures of other languages.
 
 This document consists of multiple parts:
 
@@ -68,7 +72,6 @@ more unique to it and some reasons for why one might want to use it.
 **Muldis Object Notation** is mainly characterized by a set of *data type
 possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
-Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 
 - Devoid: Ignorance
 - Logical: Boolean
@@ -88,8 +91,7 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 
 - Source Code: Renaming
 
-See the DATA TYPE POSSREPS of [Semantics](
-Muldis_Object_Notation_Semantics.md) for details.
+See [Semantics](Muldis_Object_Notation_Semantics.md) for details.
 
 ## Ease of Use
 
@@ -233,9 +235,8 @@ MUON is Copyright © 2002-2021, Muldis Data Systems, Inc.
 MUON is free documentation for software;
 you can redistribute it and/or modify it under the terms of the Artistic
 License version 2 (AL2) as published by the Perl Foundation
-(<https://www.perlfoundation.org>).
-You should have received a copy of the AL2 as part of the
-MUON distribution, in the file
+(<https://www.perlfoundation.org>).  You should have received a copy of the
+AL2 as part of the MUON distribution, in the file
 [LICENSE/artistic-2_0.txt](../LICENSE/artistic-2_0.txt); if not, see
 <https://www.perlfoundation.org/artistic-license-20.html>.
 
@@ -243,10 +244,10 @@ Any versions of MUON that you modify and distribute must carry prominent
 notices stating that you changed the files and the date of any changes, in
 addition to preserving this original copyright notice and other credits.
 
-While it is by no means required, the copyright holder of MUON would
-appreciate being informed any time you create a modified version of MUON
-that you are willing to distribute, because that is a practical way of
-suggesting improvements to the standard version.
+While it is by no means required, the copyright holder of MUON
+would appreciate being informed any time you create a modified version of
+MUON that you are willing to distribute, because that is a
+practical way of suggesting improvements to the standard version.
 
 # TRADEMARK POLICY
 

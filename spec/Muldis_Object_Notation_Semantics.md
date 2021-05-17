@@ -21,30 +21,11 @@ parts, see [Overview](Muldis_Object_Notation.md).
 This part of the **Muldis Object Notation** document specifies the
 general semantics of MUON that apply in common to all of its syntaxes.
 
-# DATA TYPE POSSREPS
+# OVERVIEW OF DATA TYPE POSSREPS
 
 **Muldis Object Notation** is mainly characterized by a set of *data type
 possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
-Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
-
-- Devoid: Ignorance
-- Logical: Boolean
-- Integral: Integer
-- Stringy: Bits, Blob, Text
-- Identifier: Nesting
-
-- Collective: Pair, Tuple, Lot
-
-- Fractional: Fraction
-- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
-
-- Discrete: Array, Set, Bag, Mix
-- Continuous: Interval, Interval Set, Interval Bag
-- Relational: Heading, Tuple Array, Relation, Tuple Bag
-- Generic: Article, Excuse
-
-- Source Code: Renaming
 
 A *possrep* corresponds to the concept of a *data type*, where the latter
 is characterized by a set of *values*, and one may choose to use those
@@ -54,15 +35,15 @@ part of MUON itself.  Depending on the data model in question, each MUON
 possrep may correspond to exactly 1 data type, or to multiple data types,
 or multiple possreps may correspond to 1 data type.
 
-This document avoids defining any relationship between these possreps, and
-officially leaves it up to each external data model used with MUON to
+This document largely avoids defining any relationship between these possreps,
+and officially leaves it up to each external data model used with MUON to
 define for itself whether any two given possreps are *conjoined* (have any
 values in common) or *disjoint* (have no values in common).  For example,
 some external data models may consider **Integer** to correspond to a
 *subtype* of what **Fraction** corresponds to (`42` is a member of both)
 while others may consider the two possreps to be disjoint (`42` and `42.0`
-do not compare as equal).  The sole exceptions are that the (not listed
-above) **Any** and **None** possreps explicitly correspond to a *supertype*
+are not the same value).  The sole exceptions are that the
+**Any** and **None** possreps explicitly correspond to a *supertype*
 or *subtype* respectively of what every other possrep corresponds to,
 regardless of the data model, for what that's worth.
 
@@ -73,6 +54,7 @@ can be deterministically parsed into some value of that model, and
 therefore that there would never be a MUON parsing failure due to the data
 model not supporting some particular data type.  The mapping should be a
 reasonable best fit, even if crude, when there isn't a perfect analogy.
+
 In contrast, MUON does *not* require that a mapping exist from every value
 of an external data model to MUON, in particular types that are like opaque
 pointers to memory addresses which don't meaningfully serialize.  MUON also
@@ -83,17 +65,102 @@ with the same model, it will be parsed as the exact same value.
 Note that the **Article** possrep is the idiomatic way for an external data
 model to represent "new" types as MUON in a consistent way.
 
+Each MUON possrep is of exactly one of these 3 kinds:
+*algebraic possrep*, *primary possrep*, *secondary possrep*.
+
+An *algebraic possrep* has no syntax of its own and just exists as a
+concept defined in terms of the union of 0..N other possreps, and in
+practice any reference to an algebraic possrep is just a shorthand for
+referring to a set of the possreps it is defined in terms of.
+There are exactly 2 of these:
+
+- **Any**
+- **None**
+
+A *primary possrep* is a member of the reasonable minimum set of MUON
+possreps that bootstraps every syntax.  Each one is of exactly one of these
+2 kinds:  *simple primary possrep*, *collective primary possrep*.
+No primary possrep is defined in terms of any other possrep, it is
+conceptually opaque.  Every syntax must have a reasonably uncomplicated
+format for each primary possrep that is disjoint from the formats of all
+other primary possreps, and typically there would be a simple literal or
+simple system-defined data type corresponding directly to each one.
+
+A *simple primary possrep* has a strictly non-recursive definition, and
+never is expressed in terms of **Any** components directly or indirectly,
+and typically corresponds to the concept of a single non-collective item.
+There are exactly 7 of these:
+
+- **Ignorance**
+- **Boolean**
+- **Integer**
+- **Bits**
+- **Blob**
+- **Text**
+- **Nesting**
+
+A *collective primary possrep* has a strictly recursive definition, and is
+expressed mainly in terms of **Any** components directly or indirectly,
+and typically corresponds to the concept of a single collective item.
+There are exactly 3 of these:
+
+- **Pair**
+- **Tuple**
+- **Lot**
+
+A *secondary possrep* is one whose canonical definition has no format of
+its own in any syntax and rather its canonical definition is as one or more
+special cases of some other possrep.  To be specific, an artifact of every
+secondary possrep is canonically expressed in every syntax as a **Pair**
+artifact which provides a semantic tag for some other
+typically-structure-defining artifact thus giving the latter a different
+interpretation than otherwise.  Each syntax may optionally define extra
+formats specific to any secondary possrep which are more compact, such as
+a dedicated **Fraction** simple literal syntax or system data type value.
+
+Each of these 5 less-collective-like secondary possreps might have its own
+dedicated simple literal formats or data type values in some syntaxes:
+
+- **Fraction**
+- **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
+
+Some of these 13 more-collective-like secondary possreps might have its own
+dedicated simple literal formats or data type values in some syntaxes:
+
+- **Array**, **Set**, **Bag**, **Mix**
+- **Interval**, **Interval Set**, **Interval Bag**
+- **Heading**, **Tuple Array**, **Relation**, **Tuple Bag**
+- **Article**, **Excuse**
+
+These 1 secondary possreps are specifically for defining program source
+code and are not for defining regular data:
+
+- **Renaming**
+
+*More secondary possreps will be added corresponding to program source code.*
+
+# ALGEBRAIC DATA TYPE POSSREPS
+
 ## Any / Universal Type Possrep
 
 The **Any** possrep corresponds to the *universal type*, which is the
 maximal data type of each type system and consists of all values which can
-possibly exist.
+possibly exist.  It is the union of all other possreps.  It explicitly
+corresponds to a *supertype* of what every other possrep corresponds to,
+regardless of the data model.  When a syntax uses **Any** somewhere,
+typically as an element of a generic collection, it means that potentially
+any other possrep may be used there.
 
 ## None / Empty Type Possrep
 
 The **None** possrep corresponds to the *empty type*, which is the minimal
-data type of each type system and consists of exactly zero values.
-This has no representation in any grammar, but is mentioned for parity.
+data type of each type system and consists of exactly zero values.  It is
+the intersection of all other possreps.  It explicitly corresponds to a
+*subtype* of what every other possrep corresponds to, regardless of the
+data model.  No syntax uses **None** at all, it is just mentioned here as
+the logical complement of **Any**.
+
+# SIMPLE PRIMARY DATA TYPE POSSREPS
 
 ## Ignorance
 
@@ -178,6 +245,8 @@ A **Nesting** value is an arbitrarily-large
 nonempty ordered collection of attribute names, intended for referencing an
 entity in a multi-level namespace, such as nested **Tuple** may implement.
 
+# COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
 ## Pair
 
 A **Pair** value is a general purpose 2-element ordered heterogeneous
@@ -238,6 +307,8 @@ The intended use of the **Lot** possrep is to represent a value expression
 node for selecting at runtime a value of any of the other discrete
 homogeneous collection types where their member values or multiplicities
 are defined by arbitrarily complex sub-expressions.
+
+# LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS
 
 ## Fraction
 
@@ -352,6 +423,8 @@ starting point, such as the center of the Earth or the surface or whatever.
 The external data model also gives the more specific meanings of *latitude*
 and *longitude*, such as whether they are along the surface of the Earth or
 something more specific.
+
+# MORE-COLLECTIVE SECONDARY DATA TYPE POSSREPS
 
 ## Array
 
@@ -580,6 +653,8 @@ The **Excuse** possrep is the idiomatic way for an external data model to
 represent "new" *error* or *exception* types of a nominal type system in a
 consistent way.  The counterpart **Article** possrep should *not* be used for
 these things, but rather just every other kind of externally-defined type.
+
+# SOURCE CODE DEFINING SECONDARY DATA TYPE POSSREPS
 
 ## Renaming / Attribute Name Map
 
