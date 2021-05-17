@@ -72,18 +72,21 @@ Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 
 - Devoid: Ignorance
 - Logical: Boolean
-- Numeric: Integer, Fraction
-- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
+- Integral: Integer
 - Stringy: Bits, Blob, Text
 - Identifier: Nesting
 
-- Collective: Pair, Tuple, Lot, Interval
+- Collective: Pair, Tuple, Lot
+
+- Fractional: Fraction
+- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
 
 - Discrete: Array, Set, Bag, Mix
-- Continuous: Interval Set, Interval Bag
-- Relational: Tuple Array, Relation, Tuple Bag
+- Continuous: Interval, Interval Set, Interval Bag
+- Relational: Heading, Tuple Array, Relation, Tuple Bag
 - Generic: Article, Excuse
-- Source Code: Heading, Renaming
+
+- Source Code: Renaming
 
 See the DATA TYPE POSSREPS of [Semantics](
 Muldis_Object_Notation_Semantics.md) for details and the intended
@@ -295,15 +298,15 @@ Grammar:
           <Ignorance>
         | <Boolean>
         | <Integer>
+        | <Bits>
+        | <Blob>
+        | <Text>
+        | <Nesting>
         | <Fraction>
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
         | <Geographic_Point>
-        | <Bits>
-        | <Blob>
-        | <Text>
-        | <Nesting>
     }
 
     token collection
@@ -311,19 +314,19 @@ Grammar:
           <Pair>
         | <Tuple>
         | <Lot>
-        | <Interval>
         | <Array>
         | <Set>
         | <Bag>
         | <Mix>
+        | <Interval>
         | <Interval_Set>
         | <Interval_Bag>
+        | <Heading>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
         | <Article>
         | <Excuse>
-        | <Heading>
         | <Renaming>
     }
 ```
@@ -2145,8 +2148,6 @@ possrep is recognized within a Muldis Object Notation artifact:
     Ignorance       | prefix 0s followed by IGNORANCE
     Boolean         | prefix 0b followed by FALSE or TRUE
     Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0[L|c] prefix
-    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
-    locationals     | prefix 0L
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | "" or "..." or prefix [A..Z _ a..z] or prefix 0c
@@ -2154,6 +2155,8 @@ possrep is recognized within a Muldis Object Notation artifact:
     Pair            | (...:...) without any comma
     Tuple           | () or (...) with >= 1 comma
     Lot             | only {} or {...} without mandatory prefix
+    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
+    locationals     | prefix 0L
     Interval        | only [] or [...] without mandatory prefix
 ```
 
