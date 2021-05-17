@@ -458,356 +458,6 @@ Examples:
     0b11001001
 ```
 
-## Fraction
-
-A **Fraction** value is represented by `<Fraction>`.
-
-Grammar:
-
-```
-    token Fraction
-    {
-        <Fraction_subject>
-    }
-
-    token Fraction_subject
-    {
-        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
-    }
-
-    token significand
-    {
-        <radix_point_sig> | <num_den_sig>
-    }
-
-    token radix_point_sig
-    {
-        <[+-]>? <sp>? <nonsigned_radix_point_sig>
-    }
-
-    token nonsigned_radix_point_sig
-    {
-          [ 0b <sp>?   [[<[ 0..1      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [ 0o <sp>?   [[<[ 0..7      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [[0d <sp>?]? [[<[ 0..9      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [ 0x <sp>?   [[<[ 0..9 A..F ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-    }
-
-    token num_den_sig
-    {
-        <numerator> <sp>? '/' <sp>? <denominator>
-    }
-
-    token numerator
-    {
-        <Integer_subject>
-    }
-
-    token denominator
-    {
-        <Integer_subject_nonsigned>
-    }
-
-    token radix
-    {
-        <Integer_subject_nonsigned>
-    }
-
-    token exponent
-    {
-        <Integer_subject>
-    }
-```
-
-This grammar supports writing **Fraction** literals in any of the numeric
-bases {2,8,10,16}, using conventional syntax.  The literal may optionally
-contain underscore characters (`_`), which exist just to help with visual
-formatting, such as for `20_194/17` or `3.141_59`.
-
-The general form of a **Fraction** literal is `N/D*R^E` such that {N,D,R,E}
-are each integers and the literal represents the rational number that
-results from evaluating the mathematical expression using the following
-implicit order of operations, `(N/D)*(R^E)` such that `/` means divide, `*`
-means multiply, and `^` means exponentiate.
-
-MUON does not require the numerator/denominator pair to be coprime, but
-typically a type system will normalize the pair as such when determining
-value identity.  Similarly, MUON does not require any other kind of
-normalization between the components of a **Fraction** literal.
-
-While the wider general format `N/D*R^E` can represent every rational
-number, as can just the `N/D` portion by itself, the alternate but typical
-format `X.X` can only represent a proper subset of the rational numbers,
-that subset being every rational number that can be represented as a
-terminating decimal number.  Note that every rational number that can be
-represented as a terminating binary or octal or hexadecimal number can also
-be represented as a terminating decimal number.
-
-Note that in order to keep the grammar simpler or more predictable, each
-**Fraction** component {N,D,R,E} must have its numeric base specified
-individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
-be interpreted as base 10.  This keeps behaviour consistent with a parser
-that sees a **Fraction** literal but interprets it as multiple **Integer**
-literals separated by symbolic infix operators, evaluation order aside.
-Also per normal expectations, literals in the format `X.X` only specify the
-base at most once in total, *not* separately for the part after the `.`.
-
-A `<denominator>` is subject to the additional rule that the integer it
-denotes must be nonzero.
-
-A `<radix>` is subject to the additional rule that the integer it denotes
-must be at least 2.
-
-Examples:
-
-```
-    0.0
-
-    1.0
-
-    -4.72
-
-    +4.72
-
-    0/1
-
-    1/1
-
-    5/3
-
-    -472/100
-
-    +472/100
-
-    15_485_863/32_452_843
-
-    `First 101 digits of transcendental number π.`
-    3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
-        58209_74944_59230_78164_06286_20899_86280_34825_34211_70679
-
-    `Mersenne Primes 2^107-1 divided by 2^127-1.`
-    162259276829213363391578010288127
-        /170141183460469231731687303715884105727
-
-    4.5207196*10^37
-
-    0xDEADBEEF.FACE
-
-    -0o35/0o3
-
-    0b1.1
-
-    0b1.011101101*0b10^-0b11011
-```
-
-## Calendar Time
-
-A **Calendar Time** value is represented by `<Calendar_Time>`.
-
-Grammar:
-
-```
-    token Calendar_Time
-    {
-        <Calendar_Time_subject>
-    }
-
-    token Calendar_Time_subject
-    {
-        0Lct [<sp>? '@' <sp>? <time_elements>]?
-    }
-
-    token time_elements
-    {
-        [<time_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
-    }
-
-    token time_unit
-    {
-        <[ymdhis]>
-    }
-
-    token loc_multiplicity
-    {
-        <Integer_subject> | <Fraction_subject>
-    }
-```
-
-A `<time_elements>` is subject to the additional rule that every distinct
-`<time_unit>` may appear at most once.
-
-Examples:
-
-```
-    `No measurement was taken or specified at all.`
-    0Lct
-
-    `Either an unspecified period in 1970 or a duration of 1970 years.`
-    0Lct@y1970
-
-    `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
-    0Lct@y2015|m5|d3
-
-    `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
-    0Lct@y1998|d300
-
-    `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
-    0Lct@y1776|d42
-
-    `Either the first quarter of 1953 or a duration of 1953.25 years.`
-    0Lct@y1953.25
-
-    `Either high noon on an unspecified day or a duration of 12 hours.`
-    0Lct@h12|i0|s0
-
-    `Either a fully specified civil date and time or a 6-part duration.`
-    0Lct@y1884|m10|d17|h20|i55|s30
-
-    `Either an ancient date and time or a negative duration.`
-    0Lct@y-370|m1|d24|h11|i0|s0
-
-    `Either a time on some unspecified day or a duration of seconds.`
-    0Lct@s5923.21124603
-```
-
-## Calendar Duration
-
-A **Calendar Duration** value is represented by `<Calendar_Duration>`.
-
-Grammar:
-
-```
-    token Calendar_Duration
-    {
-        <Calendar_Duration_subject>
-    }
-
-    token Calendar_Duration_subject
-    {
-        0Lcd [<sp>? '@' <sp>? <time_elements>]?
-    }
-```
-
-Examples:
-
-```
-    `Addition of 2 years and 3 months.`
-    0Lcd@y2|m3|d0|h0|i0|s0
-
-    `Subtraction of 22 hours.`
-    0Lcd@y0|m0|d0|h-22|i0|s0
-```
-
-## Calendar Instant
-
-A **Calendar Instant** value is represented by `<Calendar_Instant>`.
-
-Grammar:
-
-```
-    token Calendar_Instant
-    {
-        <Calendar_Instant_subject>
-    }
-
-    token Calendar_Instant_subject
-    {
-        0Lci [<sp>? '@' <sp>? <instant_base>
-            [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
-        ]?
-    }
-
-    token instant_base
-    {
-        <time_elements>
-    }
-
-    token instant_offset
-    {
-        <time_elements>
-    }
-
-    token instant_zone
-    {
-        <quoted_text_segment>
-    }
-```
-
-An `<instant_offset>` is subject to the additional rule that it may only
-contain `<time_unit>` members of `{h,i,s}` and not `{y,m,d}`.
-
-Examples:
-
-```
-    `The Day The Music Died (if paired with Gregorian calendar).`
-    0Lci@y1959|m2|d3
-
-    `A time of day when one might have breakfast.`
-    0Lci@h7|i30|s0
-
-    `What was now in the Pacific zone (if paired with Gregorian calendar).`
-    0Lci@y2018|m9|d3|h20|i51|s17@h-8|i0|s0
-
-    `A time of day in the UTC zone on an unspecified day.`
-    0Lci@h9|i25|s0@h0|i0|s0
-
-    `A specific day and time in the Pacific Standard Time zone.`
-    0Lci@y2001|m4|d16|h20|i1|s44@"PST"
-```
-
-## Geographic Point
-
-A **Geographic Point** value is represented by `<Geographic_Point>`.
-
-Grammar:
-
-```
-    token Geographic_Point
-    {
-        <Geographic_Point_subject>
-    }
-
-    token Geographic_Point_subject
-    {
-        0Lgp [<sp>? '@' <sp>? <geo_elements>]?
-    }
-
-    token geo_elements
-    {
-        [<geo_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
-    }
-
-    token geo_unit
-    {
-        <[>^+]>
-    }
-```
-
-A `<geo_elements>` is subject to the additional rule that every distinct
-`<geo_unit>` may appear at most once.
-
-Examples:
-
-```
-    `No specified coordinates at all.`
-    0Lgp
-
-    `Just an elevation specified.`
-    0Lgp@+920
-
-    `Geographic surface coordinates of Googleplex; elevation not specified.`
-    0Lgp@>-122.0857017|^37.4218363
-
-    `Same thing.`
-    0Lgp@^37.4218363|>-122.0857017
-
-    `Some location with all coordinates specified.`
-    0Lgp@>-101|^-70|+1000
-
-    `Another place.`
-    0Lgp@>-94.746094|^37.483577
-```
-
 ## Bits
 
 A **Bits** value is represented by `<Bits>`.
@@ -1287,87 +937,354 @@ Examples:
     }
 ```
 
-## Interval
+## Fraction
 
-An **Interval** value is represented by `<Interval>`.
+A **Fraction** value is represented by `<Fraction>`.
 
 Grammar:
 
 ```
-    token Interval
+    token Fraction
     {
-         <Interval_subject>
+        <Fraction_subject>
     }
 
-    token Interval_subject
+    token Fraction_subject
     {
-        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
+        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }
 
-    token interval_members
+    token significand
     {
-        <interval_empty> | <interval_single> | <interval_range>
+        <radix_point_sig> | <num_den_sig>
     }
 
-    token interval_empty
+    token radix_point_sig
     {
-        ''
+        <[+-]>? <sp>? <nonsigned_radix_point_sig>
     }
 
-    token interval_single
+    token nonsigned_radix_point_sig
     {
-        <Any>
+          [ 0b <sp>?   [[<[ 0..1      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [ 0o <sp>?   [[<[ 0..7      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [[0d <sp>?]? [[<[ 0..9      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [ 0x <sp>?   [[<[ 0..9 A..F ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
     }
 
-    token interval_range
+    token num_den_sig
     {
-          [[<interval_low> <sp>? '<' '='?]? '*'  ['<' '='? <sp>? <interval_high>]?]
-        | [ <interval_low> <sp>?            '..'           <sp>? <interval_high>  ]
+        <numerator> <sp>? '/' <sp>? <denominator>
     }
 
-    token interval_low
+    token numerator
     {
-        <Any>
+        <Integer_subject>
     }
 
-    token interval_high
+    token denominator
     {
-        <Any>
+        <Integer_subject_nonsigned>
+    }
+
+    token radix
+    {
+        <Integer_subject_nonsigned>
+    }
+
+    token exponent
+    {
+        <Integer_subject>
+    }
+```
+
+This grammar supports writing **Fraction** literals in any of the numeric
+bases {2,8,10,16}, using conventional syntax.  The literal may optionally
+contain underscore characters (`_`), which exist just to help with visual
+formatting, such as for `20_194/17` or `3.141_59`.
+
+The general form of a **Fraction** literal is `N/D*R^E` such that {N,D,R,E}
+are each integers and the literal represents the rational number that
+results from evaluating the mathematical expression using the following
+implicit order of operations, `(N/D)*(R^E)` such that `/` means divide, `*`
+means multiply, and `^` means exponentiate.
+
+MUON does not require the numerator/denominator pair to be coprime, but
+typically a type system will normalize the pair as such when determining
+value identity.  Similarly, MUON does not require any other kind of
+normalization between the components of a **Fraction** literal.
+
+While the wider general format `N/D*R^E` can represent every rational
+number, as can just the `N/D` portion by itself, the alternate but typical
+format `X.X` can only represent a proper subset of the rational numbers,
+that subset being every rational number that can be represented as a
+terminating decimal number.  Note that every rational number that can be
+represented as a terminating binary or octal or hexadecimal number can also
+be represented as a terminating decimal number.
+
+Note that in order to keep the grammar simpler or more predictable, each
+**Fraction** component {N,D,R,E} must have its numeric base specified
+individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
+be interpreted as base 10.  This keeps behaviour consistent with a parser
+that sees a **Fraction** literal but interprets it as multiple **Integer**
+literals separated by symbolic infix operators, evaluation order aside.
+Also per normal expectations, literals in the format `X.X` only specify the
+base at most once in total, *not* separately for the part after the `.`.
+
+A `<denominator>` is subject to the additional rule that the integer it
+denotes must be nonzero.
+
+A `<radix>` is subject to the additional rule that the integer it denotes
+must be at least 2.
+
+Examples:
+
+```
+    0.0
+
+    1.0
+
+    -4.72
+
+    +4.72
+
+    0/1
+
+    1/1
+
+    5/3
+
+    -472/100
+
+    +472/100
+
+    15_485_863/32_452_843
+
+    `First 101 digits of transcendental number π.`
+    3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
+        58209_74944_59230_78164_06286_20899_86280_34825_34211_70679
+
+    `Mersenne Primes 2^107-1 divided by 2^127-1.`
+    162259276829213363391578010288127
+        /170141183460469231731687303715884105727
+
+    4.5207196*10^37
+
+    0xDEADBEEF.FACE
+
+    -0o35/0o3
+
+    0b1.1
+
+    0b1.011101101*0b10^-0b11011
+```
+
+## Calendar Time
+
+A **Calendar Time** value is represented by `<Calendar_Time>`.
+
+Grammar:
+
+```
+    token Calendar_Time
+    {
+        <Calendar_Time_subject>
+    }
+
+    token Calendar_Time_subject
+    {
+        0Lct [<sp>? '@' <sp>? <time_elements>]?
+    }
+
+    token time_elements
+    {
+        [<time_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+    }
+
+    token time_unit
+    {
+        <[ymdhis]>
+    }
+
+    token loc_multiplicity
+    {
+        <Integer_subject> | <Fraction_subject>
+    }
+```
+
+A `<time_elements>` is subject to the additional rule that every distinct
+`<time_unit>` may appear at most once.
+
+Examples:
+
+```
+    `No measurement was taken or specified at all.`
+    0Lct
+
+    `Either an unspecified period in 1970 or a duration of 1970 years.`
+    0Lct@y1970
+
+    `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
+    0Lct@y2015|m5|d3
+
+    `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
+    0Lct@y1998|d300
+
+    `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
+    0Lct@y1776|d42
+
+    `Either the first quarter of 1953 or a duration of 1953.25 years.`
+    0Lct@y1953.25
+
+    `Either high noon on an unspecified day or a duration of 12 hours.`
+    0Lct@h12|i0|s0
+
+    `Either a fully specified civil date and time or a 6-part duration.`
+    0Lct@y1884|m10|d17|h20|i55|s30
+
+    `Either an ancient date and time or a negative duration.`
+    0Lct@y-370|m1|d24|h11|i0|s0
+
+    `Either a time on some unspecified day or a duration of seconds.`
+    0Lct@s5923.21124603
+```
+
+## Calendar Duration
+
+A **Calendar Duration** value is represented by `<Calendar_Duration>`.
+
+Grammar:
+
+```
+    token Calendar_Duration
+    {
+        <Calendar_Duration_subject>
+    }
+
+    token Calendar_Duration_subject
+    {
+        0Lcd [<sp>? '@' <sp>? <time_elements>]?
     }
 ```
 
 Examples:
 
 ```
-    `Empty interval (zero members).`
-    []
+    `Addition of 2 years and 3 months.`
+    0Lcd@y2|m3|d0|h0|i0|s0
 
-    `Unit interval (one member).`
-    [abc]
+    `Subtraction of 22 hours.`
+    0Lcd@y0|m0|d0|h-22|i0|s0
+```
 
-    `Closed interval (probably 10 members, depending on the model used).`
-    [1 <=*<= 10]
+## Calendar Instant
+
+A **Calendar Instant** value is represented by `<Calendar_Instant>`.
+
+Grammar:
+
+```
+    token Calendar_Instant
+    {
+        <Calendar_Instant_subject>
+    }
+
+    token Calendar_Instant_subject
+    {
+        0Lci [<sp>? '@' <sp>? <instant_base>
+            [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
+        ]?
+    }
+
+    token instant_base
+    {
+        <time_elements>
+    }
+
+    token instant_offset
+    {
+        <time_elements>
+    }
+
+    token instant_zone
+    {
+        <quoted_text_segment>
+    }
+```
+
+An `<instant_offset>` is subject to the additional rule that it may only
+contain `<time_unit>` members of `{h,i,s}` and not `{y,m,d}`.
+
+Examples:
+
+```
+    `The Day The Music Died (if paired with Gregorian calendar).`
+    0Lci@y1959|m2|d3
+
+    `A time of day when one might have breakfast.`
+    0Lci@h7|i30|s0
+
+    `What was now in the Pacific zone (if paired with Gregorian calendar).`
+    0Lci@y2018|m9|d3|h20|i51|s17@h-8|i0|s0
+
+    `A time of day in the UTC zone on an unspecified day.`
+    0Lci@h9|i25|s0@h0|i0|s0
+
+    `A specific day and time in the Pacific Standard Time zone.`
+    0Lci@y2001|m4|d16|h20|i1|s44@"PST"
+```
+
+## Geographic Point
+
+A **Geographic Point** value is represented by `<Geographic_Point>`.
+
+Grammar:
+
+```
+    token Geographic_Point
+    {
+        <Geographic_Point_subject>
+    }
+
+    token Geographic_Point_subject
+    {
+        0Lgp [<sp>? '@' <sp>? <geo_elements>]?
+    }
+
+    token geo_elements
+    {
+        [<geo_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
+    }
+
+    token geo_unit
+    {
+        <[>^+]>
+    }
+```
+
+A `<geo_elements>` is subject to the additional rule that every distinct
+`<geo_unit>` may appear at most once.
+
+Examples:
+
+```
+    `No specified coordinates at all.`
+    0Lgp
+
+    `Just an elevation specified.`
+    0Lgp@+920
+
+    `Geographic surface coordinates of Googleplex; elevation not specified.`
+    0Lgp@>-122.0857017|^37.4218363
 
     `Same thing.`
-    [1..10]
+    0Lgp@^37.4218363|>-122.0857017
 
-    `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
-    [2.7 <=*< 9.3]
+    `Some location with all coordinates specified.`
+    0Lgp@>-101|^-70|+1000
 
-    `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
-    [a <*<= z]
-
-    `Open interval; time period between Dec 6 and 20 excluding both.`
-    [0Lci@y2002|m12|d6@"UTC" <*< 0Lci@y2002|m12|d20@"UTC"]
-
-    `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
-    [*<= 3]
-
-    `Left-closed, right-unbounded interval; every Integer x where 29 <= x.`
-    [29 <=*]
-
-    `Universal interval; unbounded; every value of type system is a member.`
-    [*]
+    `Another place.`
+    0Lgp@>-94.746094|^37.483577
 ```
 
 ## Array
@@ -1601,6 +1518,89 @@ Examples:
     })
 ```
 
+## Interval
+
+An **Interval** value is represented by `<Interval>`.
+
+Grammar:
+
+```
+    token Interval
+    {
+         <Interval_subject>
+    }
+
+    token Interval_subject
+    {
+        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
+    }
+
+    token interval_members
+    {
+        <interval_empty> | <interval_single> | <interval_range>
+    }
+
+    token interval_empty
+    {
+        ''
+    }
+
+    token interval_single
+    {
+        <Any>
+    }
+
+    token interval_range
+    {
+          [[<interval_low> <sp>? '<' '='?]? '*'  ['<' '='? <sp>? <interval_high>]?]
+        | [ <interval_low> <sp>?            '..'           <sp>? <interval_high>  ]
+    }
+
+    token interval_low
+    {
+        <Any>
+    }
+
+    token interval_high
+    {
+        <Any>
+    }
+```
+
+Examples:
+
+```
+    `Empty interval (zero members).`
+    []
+
+    `Unit interval (one member).`
+    [abc]
+
+    `Closed interval (probably 10 members, depending on the model used).`
+    [1 <=*<= 10]
+
+    `Same thing.`
+    [1..10]
+
+    `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
+    [2.7 <=*< 9.3]
+
+    `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
+    [a <*<= z]
+
+    `Open interval; time period between Dec 6 and 20 excluding both.`
+    [0Lci@y2002|m12|d6@"UTC" <*< 0Lci@y2002|m12|d20@"UTC"]
+
+    `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
+    [*<= 3]
+
+    `Left-closed, right-unbounded interval; every Integer x where 29 <= x.`
+    [29 <=*]
+
+    `Universal interval; unbounded; every value of type system is a member.`
+    [*]
+```
+
 ## Interval Set
 
 An **Interval Set** value is represented by `<Interval_Set>`.
@@ -1696,6 +1696,62 @@ Examples:
 
     `Probably same thing, regardless of data model used.`
     (Interval_Bag:{1<=*<6,6..10:2,10<*<=15})
+```
+
+## Heading / Attribute Name Set
+
+A **Heading** value is represented by `<Heading>`.
+
+Grammar:
+
+```
+    token Heading
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Heading <sp>? ':' <sp>? <heading_attr_names>
+    }
+
+    token heading_attr_names
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            [',' <sp>?]?
+            [<attr_name>* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+    }
+```
+
+Examples:
+
+```
+    `Zero attributes.`
+    (Heading:())
+
+    `One named attribute.`
+    (Heading:(sales))
+
+    `Same thing.`
+    (Heading:("sales"))
+
+    `One ordered attribute.`
+    (Heading:(0c0))
+
+    `Same thing.`
+    (Heading:("\\<0c0>"))
+
+    `Three named attributes.`
+    (Heading:(region,revenue,qty))
+
+    `Three ordered attributes.`
+    (Heading:(0c0,0c1,0c2))
+
+    `One of each.`
+    (Heading:(0c1,age))
+
+    `Some attribute names can only appear quoted.`
+    (Heading:("Street Address"))
+
+    `A non-Latin name.`
+    (Heading:("サンプル"))
 ```
 
 ## Tuple Array
@@ -1968,62 +2024,6 @@ Examples:
     (Excuse:::Div_By_Zero)
 
     (Excuse:::No_Such_Attr_Name)
-```
-
-## Heading / Attribute Name Set
-
-A **Heading** value is represented by `<Heading>`.
-
-Grammar:
-
-```
-    token Heading
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Heading <sp>? ':' <sp>? <heading_attr_names>
-    }
-
-    token heading_attr_names
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            [',' <sp>?]?
-            [<attr_name>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Zero attributes.`
-    (Heading:())
-
-    `One named attribute.`
-    (Heading:(sales))
-
-    `Same thing.`
-    (Heading:("sales"))
-
-    `One ordered attribute.`
-    (Heading:(0c0))
-
-    `Same thing.`
-    (Heading:("\\<0c0>"))
-
-    `Three named attributes.`
-    (Heading:(region,revenue,qty))
-
-    `Three ordered attributes.`
-    (Heading:(0c0,0c1,0c2))
-
-    `One of each.`
-    (Heading:(0c1,age))
-
-    `Some attribute names can only appear quoted.`
-    (Heading:("Street Address"))
-
-    `A non-Latin name.`
-    (Heading:("サンプル"))
 ```
 
 ## Renaming / Attribute Name Map

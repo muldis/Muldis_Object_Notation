@@ -379,6 +379,86 @@ When its subject is any of the following, the predicate is optional:
 
 * Any `SYS_Integer_Big`.
 
+## Bits
+
+A **Bits** artifact has the predicate `Bits`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any `SYS_Bit_String`.
+
+## Blob
+
+A **Blob** artifact has the predicate `Blob`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Byte_String`.
+
+Note that an unqualified subject of a `SYS_Byte_String` is treated as an **Array**.
+
+## Text / Attribute Name
+
+A **Text** artifact has the predicate `Text`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any `SYS_Char_String`.
+
+## Nesting / Attribute Name List
+
+A **Nesting** artifact has the predicate `Nesting`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Text** subject.
+
+## Pair
+
+An **Pair** artifact has the predicate `Pair`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the *this* (any **Any**
+artifact) and its `SYS_value` is the *that* (any **Any** artifact).
+
+## Tuple / Attribute Set
+
+A **Tuple** artifact has the predicate `Tuple`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
+`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` (alias `SYS_attrs_na`) such that its
+`SYS_key` (alias `SYS_attr_name`) is any **Text** subject and its
+`SYS_value` (alias `SYS_attr_asset`) is any **Any** artifact.
+
+* Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
+`SYS_attrs_na`, that member's `SYS_attr_name` is any **Text** subject
+and that member's `SYS_attr_asset` is any **Any** artifact.
+
+*TODO: Consider adding Java anonymous types as an option if feasible.*
+
+## Lot
+
+A **Lot** artifact has the predicate `Lot`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Any** artifact.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`+` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
+**Any** artifact and its `SYS_value` is any **Integer** subject which
+denotes a non-negative integer *multiplicity*.
+
 ## Fraction
 
 A **Fraction** artifact has the predicate `Fraction`.
@@ -507,112 +587,6 @@ its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** s
 its `SYS_attr_name` is the `SYS_Char_String` value `+` and
 its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
 
-## Bits
-
-A **Bits** artifact has the predicate `Bits`.
-
-When its subject is any of the following, the predicate is optional:
-
-* Any `SYS_Bit_String`.
-
-## Blob
-
-A **Blob** artifact has the predicate `Blob`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Byte_String`.
-
-Note that an unqualified subject of a `SYS_Byte_String` is treated as an **Array**.
-
-## Text / Attribute Name
-
-A **Text** artifact has the predicate `Text`.
-
-When its subject is any of the following, the predicate is optional:
-
-* Any `SYS_Char_String`.
-
-## Nesting / Attribute Name List
-
-A **Nesting** artifact has the predicate `Nesting`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Text** subject.
-
-## Pair
-
-An **Pair** artifact has the predicate `Pair`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the *this* (any **Any**
-artifact) and its `SYS_value` is the *that* (any **Any** artifact).
-
-## Tuple / Attribute Set
-
-A **Tuple** artifact has the predicate `Tuple`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
-`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`%` and its `SYS_value` is any `SYS_Array` such that every one of its
-`SYS_members` is a `SYS_Pair_KV` (alias `SYS_attrs_na`) such that its
-`SYS_key` (alias `SYS_attr_name`) is any **Text** subject and its
-`SYS_value` (alias `SYS_attr_asset`) is any **Any** artifact.
-
-* Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
-`SYS_attrs_na`, that member's `SYS_attr_name` is any **Text** subject
-and that member's `SYS_attr_asset` is any **Any** artifact.
-
-*TODO: Consider adding Java anonymous types as an option if feasible.*
-
-## Lot
-
-A **Lot** artifact has the predicate `Lot`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Any** artifact.
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`+` and its `SYS_value` is any `SYS_Array` such that every one of its
-`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
-**Any** artifact and its `SYS_value` is any **Integer** subject which
-denotes a non-negative integer *multiplicity*.
-
-## Interval
-
-An **Interval** artifact has the predicate `Interval`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the `SYS_Char_String`
-empty string value; this designates an *empty interval*.
-
-* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the `SYS_Char_String`
-empty string value and attribute 1 is any **Any** artifact;
-this designates a *unit interval*.
-
-* Any `SYS_Tuple_Ordered_D3` such that attribute 0 is any of the
-5 `SYS_Char_String` values {`<=*<=`, `<=*<`, `<*<=`, `<*<`, `..`}
-and attributes 1 and 2 are each any **Any** artifact;
-this designates a *bounded interval*.
-
-* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is any of the
-4 `SYS_Char_String` values {`<=*`, `<*`, `*<=`, `*<`}
-and attribute 1 is any **Any** artifact;
-this designates a *half-unbounded, half-bounded interval*.
-
-* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the `SYS_Char_String`
-value `*`; this designates a *universal interval* or *unbounded interval*.
-
 ## Array
 
 An **Array** artifact has the predicate `Array`.
@@ -690,6 +664,32 @@ is any **Fraction** subject.
 that member's `SYS_key` is any **Any** artifact and
 that member's `SYS_value` is any **Fraction** subject.
 
+## Interval
+
+An **Interval** artifact has the predicate `Interval`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the `SYS_Char_String`
+empty string value; this designates an *empty interval*.
+
+* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is the `SYS_Char_String`
+empty string value and attribute 1 is any **Any** artifact;
+this designates a *unit interval*.
+
+* Any `SYS_Tuple_Ordered_D3` such that attribute 0 is any of the
+5 `SYS_Char_String` values {`<=*<=`, `<=*<`, `<*<=`, `<*<`, `..`}
+and attributes 1 and 2 are each any **Any** artifact;
+this designates a *bounded interval*.
+
+* Any `SYS_Tuple_Ordered_D2` such that attribute 0 is any of the
+4 `SYS_Char_String` values {`<=*`, `<*`, `*<=`, `*<`}
+and attribute 1 is any **Any** artifact;
+this designates a *half-unbounded, half-bounded interval*.
+
+* Any `SYS_Tuple_Ordered_D1` such that attribute 0 is the `SYS_Char_String`
+value `*`; this designates a *universal interval* or *unbounded interval*.
+
 ## Interval Set
 
 An **Interval Set** artifact has the predicate `Interval_Set`.
@@ -727,6 +727,22 @@ is any **Integer** subject which denotes a non-negative integer *multiplicity*.
 that member's `SYS_key` is any **Interval** subject and
 that member's `SYS_value` is any **Integer** subject
 which denotes a non-negative integer *multiplicity*.
+
+## Heading / Attribute Name Set
+
+A **Heading** artifact has the predicate `Heading`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Set` such that every one of its `SYS_members` is any
+**Text** subject.
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Text** subject.
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is any **Text** subject and
+that member's `SYS_value` is any **Boolean** subject.
 
 ## Tuple Array
 
@@ -821,22 +837,6 @@ An **Excuse** artifact has the predicate `Excuse`.
 When its subject is any of the following, the predicate is required:
 
 * Any **Article** subject.
-
-## Heading / Attribute Name Set
-
-A **Heading** artifact has the predicate `Heading`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Set` such that every one of its `SYS_members` is any
-**Text** subject.
-
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Text** subject.
-
-* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
-that member's `SYS_key` is any **Text** subject and
-that member's `SYS_value` is any **Boolean** subject.
 
 ## Renaming / Attribute Name Map
 
