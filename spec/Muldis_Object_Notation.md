@@ -77,23 +77,38 @@ more unique to it and some reasons for why one might want to use it.
 possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
 
-- Devoid: Ignorance
-- Logical: Boolean
-- Integral: Integer
-- Stringy: Bits, Blob, Text
-- Identifier: Nesting
+Algebraic:
 
-- Collective: Pair, Tuple, Lot
+- **Any**
+- **None**
 
-- Fractional: Fraction
-- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
+Simple Primary:
 
-- Discrete: Array, Set, Bag, Mix
-- Continuous: Interval, Interval Set, Interval Bag
-- Relational: Heading, Tuple Array, Relation, Tuple Bag
-- Generic: Article, Excuse
+- **Ignorance**
+- **Boolean**
+- **Integer**
+- Stringy: **Bits**, **Blob**, **Text**
 
-- Source Code: Renaming
+Collective Primary:
+
+- **Pair**
+- **Array**
+
+Less-Collective Secondary:
+
+- **Fraction**
+- Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
+
+More-Collective Secondary:
+
+- Discrete: **Lot**, **Set**, **Bag**, **Mix**
+- Continuous: **Interval**, **Interval Set**, **Interval Bag**
+- Relational: **Heading**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
+- Generic: **Nesting**, **Article**, **Excuse**
+
+Source Code Defining Secondary:
+
+- **Renaming**
 
 See [Semantics](Muldis_Object_Notation_Semantics.md) for details.
 

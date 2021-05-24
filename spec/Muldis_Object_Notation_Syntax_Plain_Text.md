@@ -68,30 +68,8 @@ generator, the latter just cares about the content of the file.
 **Muldis Object Notation** is mainly characterized by a set of *data type
 possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
-Each MUON possrep corresponds 1:1 with a distinct grammar in each MUON syntax.
 
-- Devoid: Ignorance
-- Logical: Boolean
-- Integral: Integer
-- Stringy: Bits, Blob, Text
-- Identifier: Nesting
-
-- Collective: Pair, Tuple, Lot
-
-- Fractional: Fraction
-- Locational: Calendar Time, Calendar Duration, Calendar Instant, Geographic Point
-
-- Discrete: Array, Set, Bag, Mix
-- Continuous: Interval, Interval Set, Interval Bag
-- Relational: Heading, Tuple Array, Relation, Tuple Bag
-- Generic: Article, Excuse
-
-- Source Code: Renaming
-
-See the DATA TYPE POSSREPS of [Semantics](
-Muldis_Object_Notation_Semantics.md) for details and the intended
-interpretation of each possrep, to provide valuable context for the grammar
-and examples in the current part that isn't being repeated here.
+See [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
 # NORMALIZATION
 
@@ -301,20 +279,19 @@ Grammar:
         | <Bits>
         | <Blob>
         | <Text>
-        | <Nesting>
         | <Fraction>
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
         | <Geographic_Point>
+        | <Nesting>
     }
 
     token collection
     {
           <Pair>
-        | <Tuple>
-        | <Lot>
         | <Array>
+        | <Lot>
         | <Set>
         | <Bag>
         | <Mix>
@@ -322,6 +299,7 @@ Grammar:
         | <Interval_Set>
         | <Interval_Bag>
         | <Heading>
+        | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>

@@ -45,7 +45,7 @@ while others may consider the two possreps to be disjoint (`42` and `42.0`
 are not the same value).  The sole exceptions are that the
 **Any** and **None** possreps explicitly correspond to a *supertype*
 or *subtype* respectively of what every other possrep corresponds to,
-regardless of the data model, for what that's worth.
+regardless of the data model.
 
 When an external data model is used with MUON, MUON requires that a
 thorough mapping is defined for every MUON possrep to some data type of
@@ -89,24 +89,20 @@ simple system-defined data type corresponding directly to each one.
 A *simple primary possrep* has a strictly non-recursive definition, and
 never is expressed in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single non-collective item.
-There are exactly 7 of these:
+There are exactly 6 of these:
 
 - **Ignorance**
 - **Boolean**
 - **Integer**
-- **Bits**
-- **Blob**
-- **Text**
-- **Nesting**
+- Stringy: **Bits**, **Blob**, **Text**
 
 A *collective primary possrep* has a strictly recursive definition, and is
 expressed mainly in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single collective item.
-There are exactly 3 of these:
+There are exactly 2 of these:
 
 - **Pair**
-- **Tuple**
-- **Lot**
+- **Array**
 
 A *secondary possrep* is one whose canonical definition has no format of
 its own in any syntax and rather its canonical definition is as one or more
@@ -122,15 +118,15 @@ Each of these 5 less-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
 - **Fraction**
-- **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
+- Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
 
-Some of these 13 more-collective-like secondary possreps might have its own
+Some of these 15 more-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
-- **Array**, **Set**, **Bag**, **Mix**
-- **Interval**, **Interval Set**, **Interval Bag**
-- **Heading**, **Tuple Array**, **Relation**, **Tuple Bag**
-- **Article**, **Excuse**
+- Discrete: **Lot**, **Set**, **Bag**, **Mix**
+- Continuous: **Interval**, **Interval Set**, **Interval Bag**
+- Relational: **Heading**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
+- Generic: **Nesting**, **Article**, **Excuse**
 
 These 1 secondary possreps are specifically for defining program source
 code and are not for defining regular data:
@@ -380,16 +376,11 @@ something more specific.
 
 ## Lot
 
-A **Lot** value is a general purpose arbitrarily-long ordered sequence of
-any **Pair** values, which explicitly does not represent any kind of thing
-in particular, and is simply the sum of its members.  A **Lot** value is
-dense; iff it has any members, then its first-ordered member is at ordinal
-position **0**, and its last-ordinal-positioned member is at the ordinal
-position that is one less than the count of its members.  A **Lot** in the
-general case may have multiple members that are the same value, and any
-duplicates may or may not exist at consecutive ordinal positions.
+A **Lot** value is characterized by an **Array** value such that every
+*member* value of the latter is any **Pair** value; it is the same as an
+**Array** in every way aside from this member type restriction.
 
-The **Lot** possrep is the idiomatic generalization of a discrete
+The **Lot** possrep is an idiomatic generalization of a discrete
 homogeneous collection, such that any given MUON syntax can choose to just
 have **Lot** as a fundamental syntax, and then any other possreps for
 discrete homogeneous collections can be represented just as a **Lot** plus
@@ -526,9 +517,10 @@ every possible distinct **Bag** can map to a distinct **Interval Bag**.
 
 ## Heading / Attribute Name Set
 
-A **Heading** value is an arbitrarily-large
-unordered collection of *attribute names*, such that no 2 attribute names
-are the same.
+A **Heading** value is an arbitrarily-large unordered collection of
+*attribute names*, such that no 2 attribute names are the same.
+A **Heading** value can be characterized by a **Set** value such that every
+*member* value of the latter is any **Text** value.
 
 ## Tuple / Attribute Set
 
@@ -598,9 +590,11 @@ rather than a **Set**.
 
 ## Nesting / Attribute Name List
 
-A **Nesting** value is an arbitrarily-large
-nonempty ordered collection of attribute names, intended for referencing an
-entity in a multi-level namespace, such as nested **Tuple** may implement.
+A **Nesting** value is an arbitrarily-large nonempty ordered collection of
+attribute names, intended for referencing an entity in a multi-level
+namespace, such as nested **Tuple** may implement.  A **Nesting** value can
+be characterized by an **Array** value such that every *member* value of
+the latter is any **Text** value and there is at least 1 member.
 
 ## Article / Labelled Tuple
 
