@@ -63,6 +63,137 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Bits : (
+
+        0bb,
+
+        0bb00101110100010,
+
+        0bb00101110_100010,
+
+        0bo644,
+
+        0bxA705E,
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Blob : (
+
+        0xx,
+
+        0xxA705E416,
+
+        0xxA705_E416,
+
+        0xb00101110_10001011,
+
+        `A quote from Thomas Hobbes' "Leviathan", as UTF-8 text encoded in Base64.`
+        0xy
+            TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz
+            IHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2Yg
+            dGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGlu
+            dWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRo
+            ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=,
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Text : (
+
+        "",
+
+        Ceres,
+
+        "サンプル",
+
+        "\This isn't not escaped.\n",
+
+        "\\<0cx263A>\<0c65>",
+
+        `One non-ordered quoted Text (or, one named attribute).`
+        "sales",
+
+        `Same thing but nonquoted.`
+        sales,
+
+        `One attribute name with a space in it.`
+        "First Name",
+
+        `One ordered nonquoted Text (or, one ordered attribute).`
+        0c0,
+
+        `Same Text value (or, one ordered attr written in format of a named).`
+        "\\<0c0>",
+
+        `From a graduate student (in finals week), the following haiku:`
+        "\study, write, study,\n"
+            "\do review (each word) if time.\n"
+            "\close book. sleep? what's that?\n",
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Pair : (
+
+        `Pair of Integer.`
+        (5: -3),
+
+        `Pair of Text.`
+        ("First Name": Joy),
+
+        `Another Pair.`
+        (x:y),
+
+        `Same thing.`
+        (x->y),
+
+        `Same thing.`
+        (y<-x),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Array : (
+
+        `Zero members.`
+        (Array:{}),
+
+        `One member.`
+        (Array:{ "You got it!" }),
+
+        `Three members.`
+        (Array:{
+            Alphonse,
+            Edward,
+            Winry,
+        }),
+
+        `Five members (1 duplicate).`
+        (Array:{
+            57,
+            45,
+            63,
+            61,
+            63,
+        }),
+
+        `32 members (28 duplicates in 2 runs).`
+        (Array:{
+            "/",
+            "*" : 20,
+            "+" : 10,
+            "-",
+        }),
+
+    ),
+
+`#########################################################################`
+
     `$$$` Fraction : (
 
         0.0,
@@ -200,178 +331,6 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
-    `$$$` Bits : (
-
-        0bb,
-
-        0bb00101110100010,
-
-        0bb00101110_100010,
-
-        0bo644,
-
-        0bxA705E,
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Blob : (
-
-        0xx,
-
-        0xxA705E416,
-
-        0xxA705_E416,
-
-        0xb00101110_10001011,
-
-        `A quote from Thomas Hobbes' "Leviathan", as UTF-8 text encoded in Base64.`
-        0xy
-            TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz
-            IHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2Yg
-            dGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGlu
-            dWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRo
-            ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=,
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Text : (
-
-        "",
-
-        Ceres,
-
-        "サンプル",
-
-        "\This isn't not escaped.\n",
-
-        "\\<0cx263A>\<0c65>",
-
-        `One non-ordered quoted Text (or, one named attribute).`
-        "sales",
-
-        `Same thing but nonquoted.`
-        sales,
-
-        `One attribute name with a space in it.`
-        "First Name",
-
-        `One ordered nonquoted Text (or, one ordered attribute).`
-        0c0,
-
-        `Same Text value (or, one ordered attr written in format of a named).`
-        "\\<0c0>",
-
-        `From a graduate student (in finals week), the following haiku:`
-        "\study, write, study,\n"
-            "\do review (each word) if time.\n"
-            "\close book. sleep? what's that?\n",
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Nesting : (
-
-        ::person,
-
-        ::person::birth_date,
-
-        ::person::birth_date::year,
-
-        ::the_db::stats::"samples by order",
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Pair : (
-
-        `Pair of Integer.`
-        (5: -3),
-
-        `Pair of Text.`
-        ("First Name": Joy),
-
-        `Another Pair.`
-        (x:y),
-
-        `Same thing.`
-        (x->y),
-
-        `Same thing.`
-        (y<-x),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Tuple : (
-
-        `Zero attributes.`
-        (),
-
-        `One named attribute.`
-        ("First Name": Joy,),
-
-        `One ordered attribute.`
-        (53,),
-
-        `Same thing.`
-        (0c0: 53,),
-
-        `Same thing.`
-        ("\\<0c0>": 53,),
-
-        `Three named attributes.`
-        (
-            login_name : hartmark,
-            login_pass : letmein,
-            is_special : 0bTRUE,
-        ),
-
-        `Three ordered attributes.`
-        (hello,26,0bTRUE),
-
-        `One of each.`
-        (Jay, age: 10),
-
-        `A non-Latin name.`
-        ("サンプル": "http://example.com",),
-
-        `Two named attributes.`
-        (
-            name : Michelle,
-            age  : 17,
-        ),
-
-        `Five leaf attributes in nested multi-level namespace.`
-        (
-            name: "John Glenn",
-            ::birth_date::year: 1921,
-            comment: "Fly!",
-            ::birth_date::month: 7,
-            ::birth_date::day: 18,
-        ),
-
-        `Same thing.`
-        (
-            name: "John Glenn",
-            birth_date: (
-                year: 1921,
-                month: 7,
-                day: 18,
-            ),
-            comment: "Fly!",
-        ),
-
-    ),
-
-`#########################################################################`
-
     `$$$` Lot : (
 
         `Zero members.`
@@ -387,78 +346,6 @@ Muldis_Content_Predicate`
             Hearts : 10,
             Spades : 20,
         },
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Interval : (
-
-        `Empty interval (zero members).`
-        [],
-
-        `Unit interval (one member).`
-        [abc],
-
-        `Closed interval (probably 10 members, depending on the model used).`
-        [1 <=*<= 10],
-
-        `Same thing.`
-        [1..10],
-
-        `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
-        [2.7 <=*< 9.3],
-
-        `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
-        [a <*<= z],
-
-        `Open interval; time period between Dec 6 and 20 excluding both.`
-        [0Lci@y2002|m12|d6@"UTC" <*< 0Lci@y2002|m12|d20@"UTC"],
-
-        `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
-        [*<= 3],
-
-        `Left-closed, right-unbounded interval; every Integer x where 29 <= x.`
-        [29 <=*],
-
-        `Universal interval; unbounded; every value of type system is a member.`
-        [*],
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Array : (
-
-        `Zero members.`
-        (Array:{}),
-
-        `One member.`
-        (Array:{ "You got it!" }),
-
-        `Three members.`
-        (Array:{
-            Alphonse,
-            Edward,
-            Winry,
-        }),
-
-        `Five members (1 duplicate).`
-        (Array:{
-            57,
-            45,
-            63,
-            61,
-            63,
-        }),
-
-        `32 members (28 duplicates in 2 runs).`
-        (Array:{
-            "/",
-            "*" : 20,
-            "+" : 10,
-            "-",
-        }),
 
     ),
 
@@ -569,6 +456,42 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Interval : (
+
+        `Empty interval (zero members).`
+        [],
+
+        `Unit interval (one member).`
+        [abc],
+
+        `Closed interval (probably 10 members, depending on the model used).`
+        [1 <=*<= 10],
+
+        `Same thing.`
+        [1..10],
+
+        `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
+        [2.7 <=*< 9.3],
+
+        `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
+        [a <*<= z],
+
+        `Open interval; time period between Dec 6 and 20 excluding both.`
+        [0Lci@y2002|m12|d6@"UTC" <*< 0Lci@y2002|m12|d20@"UTC"],
+
+        `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
+        [*<= 3],
+
+        `Left-closed, right-unbounded interval; every Integer x where 29 <= x.`
+        [29 <=*],
+
+        `Universal interval; unbounded; every value of type system is a member.`
+        [*],
+
+    ),
+
+`#########################################################################`
+
     `$$$` Interval_Set : (
 
         `Empty interval-set (zero members).`
@@ -621,6 +544,105 @@ Muldis_Content_Predicate`
 
         `Probably same thing, regardless of data model used.`
         (Interval_Bag:{1<=*<6,6..10:2,10<*<=15}),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Heading : (
+
+        `Zero attributes.`
+        (Heading:()),
+
+        `One named attribute.`
+        (Heading:(sales)),
+
+        `Same thing.`
+        (Heading:("sales")),
+
+        `One ordered attribute.`
+        (Heading:(0c0)),
+
+        `Same thing.`
+        (Heading:("\\<0c0>")),
+
+        `Three named attributes.`
+        (Heading:(region,revenue,qty)),
+
+        `Three ordered attributes.`
+        (Heading:(0c0,0c1,0c2)),
+
+        `One of each.`
+        (Heading:(0c1,age)),
+
+        `Some attribute names can only appear quoted.`
+        (Heading:("Street Address")),
+
+        `A non-Latin name.`
+        (Heading:("サンプル")),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Tuple : (
+
+        `Zero attributes.`
+        (),
+
+        `One named attribute.`
+        ("First Name": Joy,),
+
+        `One ordered attribute.`
+        (53,),
+
+        `Same thing.`
+        (0c0: 53,),
+
+        `Same thing.`
+        ("\\<0c0>": 53,),
+
+        `Three named attributes.`
+        (
+            login_name : hartmark,
+            login_pass : letmein,
+            is_special : 0bTRUE,
+        ),
+
+        `Three ordered attributes.`
+        (hello,26,0bTRUE),
+
+        `One of each.`
+        (Jay, age: 10),
+
+        `A non-Latin name.`
+        ("サンプル": "http://example.com",),
+
+        `Two named attributes.`
+        (
+            name : Michelle,
+            age  : 17,
+        ),
+
+        `Five leaf attributes in nested multi-level namespace.`
+        (
+            name: "John Glenn",
+            ::birth_date::year: 1921,
+            comment: "Fly!",
+            ::birth_date::month: 7,
+            ::birth_date::day: 18,
+        ),
+
+        `Same thing.`
+        (
+            name: "John Glenn",
+            birth_date: (
+                year: 1921,
+                month: 7,
+                day: 18,
+            ),
+            comment: "Fly!",
+        ),
 
     ),
 
@@ -727,6 +749,20 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Nesting : (
+
+        ::person,
+
+        ::person::birth_date,
+
+        ::person::birth_date::year,
+
+        ::the_db::stats::"samples by order",
+
+    ),
+
+`#########################################################################`
+
     `$$$` Article : (
 
         (Article:(::Point : (x : 5, y : 3))),
@@ -761,42 +797,6 @@ Muldis_Content_Predicate`
         (Excuse:::Div_By_Zero),
 
         (Excuse:::No_Such_Attr_Name),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Heading : (
-
-        `Zero attributes.`
-        (Heading:()),
-
-        `One named attribute.`
-        (Heading:(sales)),
-
-        `Same thing.`
-        (Heading:("sales")),
-
-        `One ordered attribute.`
-        (Heading:(0c0)),
-
-        `Same thing.`
-        (Heading:("\\<0c0>")),
-
-        `Three named attributes.`
-        (Heading:(region,revenue,qty)),
-
-        `Three ordered attributes.`
-        (Heading:(0c0,0c1,0c2)),
-
-        `One of each.`
-        (Heading:(0c1,age)),
-
-        `Some attribute names can only appear quoted.`
-        (Heading:("Street Address")),
-
-        `A non-Latin name.`
-        (Heading:("サンプル")),
 
     ),
 

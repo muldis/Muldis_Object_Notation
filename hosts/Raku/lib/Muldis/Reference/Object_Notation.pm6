@@ -58,35 +58,35 @@ grammar Muldis::Reference::Object_Notation::Grammar
           <Ignorance>
         | <Boolean>
         | <Integer>
+        | <Bits>
+        | <Blob>
+        | <Text>
         | <Fraction>
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
         | <Geographic_Point>
-        | <Bits>
-        | <Blob>
-        | <Text>
         | <Nesting>
     }
 
     token collection
     {
           <Pair>
-        | <Tuple>
-        | <Lot>
-        | <Interval>
         | <Array>
+        | <Lot>
         | <Set>
         | <Bag>
         | <Mix>
+        | <Interval>
         | <Interval_Set>
         | <Interval_Bag>
+        | <Heading>
+        | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
         | <Article>
         | <Excuse>
-        | <Heading>
         | <Renaming>
     }
 
@@ -132,6 +132,138 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | [ 0o <sp>?   [<[ 0..7      ]>+]+ % [_ | <sp>]]
         | [[0d <sp>?]? [<[ 0..9      ]>+]+ % [_ | <sp>]]
         | [ 0x <sp>?   [<[ 0..9 A..F ]>+]+ % [_ | <sp>]]
+    }
+
+###########################################################################
+
+    token Bits
+    {
+        <Bits_subject>
+    }
+
+    token Bits_subject
+    {
+          [ 0bb <sp>? [<[ 0..1      ]>+]* % [_ | <sp>]]
+        | [ 0bo <sp>? [<[ 0..7      ]>+]* % [_ | <sp>]]
+        | [ 0bx <sp>? [<[ 0..9 A..F ]>+]* % [_ | <sp>]]
+    }
+
+###########################################################################
+
+    token Blob
+    {
+        <Blob_subject>
+    }
+
+    token Blob_subject
+    {
+          [ 0xb <sp>? [[<[ 0..1      ]> ** 8]+]* % [_ | <sp>]]
+        | [ 0xx <sp>? [[<[ 0..9 A..F ]> ** 2]+]* % [_ | <sp>]]
+        | [ 0xy <sp>? [[<[ A..Z a..z 0..9 + / = ]> ** 4]+]* % [_ | <sp>]]
+    }
+
+###########################################################################
+
+    token Text
+    {
+        <Text_subject>
+    }
+
+    token Text_subject
+    {
+        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point_text>
+    }
+
+    token quoted_text
+    {
+        <quoted_text_segment>+ % <sp>?
+    }
+
+    token quoted_text_segment
+    {
+        '"' ~ '"' <text_content>
+    }
+
+    token text_content
+    {
+        <text_nonescaped_content> | <text_escaped_content>
+    }
+
+    token text_nonescaped_content
+    {
+        [[<restricted_inside_char> & <-[\\]>] <restricted_inside_char>*]?
+    }
+
+    token text_escaped_content
+    {
+        '\\' [[<restricted_inside_char> & <-[\\]>] | <escaped_char>]*
+    }
+
+    token restricted_inside_char
+    {
+        <-[ \x[0]..\x[1F] "` \x[80]..\x[9F] ]>
+    }
+
+    token escaped_char
+    {
+        '\\' [<[qgbtnr]> | ['<' ~ '>' <code_point_text>]]
+    }
+
+    token nonquoted_alphanumeric_text
+    {
+        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+    }
+
+    token code_point_text
+    {
+          [0cb  <[ 0..1      ]>+]
+        | [0co  <[ 0..7      ]>+]
+        | [0cd? <[ 0..9      ]>+]
+        | [0cx  <[ 0..9 A..F ]>+]
+    }
+
+###########################################################################
+
+    token Pair
+    {
+         <Pair_subject>
+    }
+
+    token Pair_subject
+    {
+        ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
+    }
+
+    token this_and_that
+    {
+          [<this> <sp>? [':'|'->'] <sp>? <that>]
+        | [<that> <sp>?      '<-'  <sp>? <this>]
+    }
+
+    token this
+    {
+        <Any>
+    }
+
+    token that
+    {
+        <Any>
+    }
+
+###########################################################################
+
+    token Array
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Array <sp>? ':' <sp>? <Array_subject>
+    }
+
+    token Array_subject
+    {
+        ['{' <sp>?] ~ [<sp>? '}']
+            [',' <sp>?]?
+            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
     }
 
 ###########################################################################
@@ -281,185 +413,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
-    token Bits
-    {
-        <Bits_subject>
-    }
-
-    token Bits_subject
-    {
-          [ 0bb <sp>? [<[ 0..1      ]>+]* % [_ | <sp>]]
-        | [ 0bo <sp>? [<[ 0..7      ]>+]* % [_ | <sp>]]
-        | [ 0bx <sp>? [<[ 0..9 A..F ]>+]* % [_ | <sp>]]
-    }
-
-###########################################################################
-
-    token Blob
-    {
-        <Blob_subject>
-    }
-
-    token Blob_subject
-    {
-          [ 0xb <sp>? [[<[ 0..1      ]> ** 8]+]* % [_ | <sp>]]
-        | [ 0xx <sp>? [[<[ 0..9 A..F ]> ** 2]+]* % [_ | <sp>]]
-        | [ 0xy <sp>? [[<[ A..Z a..z 0..9 + / = ]> ** 4]+]* % [_ | <sp>]]
-    }
-
-###########################################################################
-
-    token Text
-    {
-        <Text_subject>
-    }
-
-    token Text_subject
-    {
-        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point_text>
-    }
-
-    token quoted_text
-    {
-        <quoted_text_segment>+ % <sp>?
-    }
-
-    token quoted_text_segment
-    {
-        '"' ~ '"' <text_content>
-    }
-
-    token text_content
-    {
-        <text_nonescaped_content> | <text_escaped_content>
-    }
-
-    token text_nonescaped_content
-    {
-        [[<restricted_inside_char> & <-[\\]>] <restricted_inside_char>*]?
-    }
-
-    token text_escaped_content
-    {
-        '\\' [[<restricted_inside_char> & <-[\\]>] | <escaped_char>]*
-    }
-
-    token restricted_inside_char
-    {
-        <-[ \x[0]..\x[1F] "` \x[80]..\x[9F] ]>
-    }
-
-    token escaped_char
-    {
-        '\\' [<[qgbtnr]> | ['<' ~ '>' <code_point_text>]]
-    }
-
-    token nonquoted_alphanumeric_text
-    {
-        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
-    }
-
-    token code_point_text
-    {
-          [0cb  <[ 0..1      ]>+]
-        | [0co  <[ 0..7      ]>+]
-        | [0cd? <[ 0..9      ]>+]
-        | [0cx  <[ 0..9 A..F ]>+]
-    }
-
-###########################################################################
-
-    token Nesting
-    {
-        <Nesting_subject>
-    }
-
-    token Nesting_subject
-    {
-        ['::' <sp>? <attr_name>]+ % <sp>?
-    }
-
-    token attr_name
-    {
-        <Text_subject>
-    }
-
-###########################################################################
-
-    token Pair
-    {
-         <Pair_subject>
-    }
-
-    token Pair_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
-    }
-
-    token this_and_that
-    {
-          [<this> <sp>? [':'|'->'] <sp>? <that>]
-        | [<that> <sp>?      '<-'  <sp>? <this>]
-    }
-
-    token this
-    {
-        <Any>
-    }
-
-    token that
-    {
-        <Any>
-    }
-
-###########################################################################
-
-    token Tuple
-    {
-        <Tuple_subject>
-    }
-
-    token Tuple_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
-    }
-
-    token tuple_attrs
-    {
-        <tuple_nullary> | <tuple_unary> | <tuple_nary>
-    }
-
-    token tuple_nullary
-    {
-        ''
-    }
-
-    token tuple_unary
-    {
-          [          <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr>          ]
-    }
-
-    token tuple_nary
-    {
-        [',' <sp>?]?
-        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
-        [<sp>? ',']?
-    }
-
-    token tuple_attr
-    {
-        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
-    }
-
-    token attr_asset
-    {
-        <Any>
-    }
-
-###########################################################################
-
     token Lot
     {
         <Lot_subject>
@@ -478,65 +431,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
           <this>
         | [<this> <sp>? [':'|'->'] <sp>? <that>]
         | [<that> <sp>?      '<-'  <sp>? <this>]
-    }
-
-###########################################################################
-
-    token Interval
-    {
-         <Interval_subject>
-    }
-
-    token Interval_subject
-    {
-        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
-    }
-
-    token interval_members
-    {
-        <interval_empty> | <interval_single> | <interval_range>
-    }
-
-    token interval_empty
-    {
-        ''
-    }
-
-    token interval_single
-    {
-        <Any>
-    }
-
-    token interval_range
-    {
-          [[<interval_low> <sp>? '<' '='?]? '*'  ['<' '='? <sp>? <interval_high>]?]
-        | [ <interval_low> <sp>?            '..'           <sp>? <interval_high>  ]
-    }
-
-    token interval_low
-    {
-        <Any>
-    }
-
-    token interval_high
-    {
-        <Any>
-    }
-
-###########################################################################
-
-    token Array
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Array <sp>? ':' <sp>? <Array_subject>
-    }
-
-    token Array_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
     }
 
 ###########################################################################
@@ -599,6 +493,49 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
+    token Interval
+    {
+         <Interval_subject>
+    }
+
+    token Interval_subject
+    {
+        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
+    }
+
+    token interval_members
+    {
+        <interval_empty> | <interval_single> | <interval_range>
+    }
+
+    token interval_empty
+    {
+        ''
+    }
+
+    token interval_single
+    {
+        <Any>
+    }
+
+    token interval_range
+    {
+          [[<interval_low> <sp>? '<' '='?]? '*'  ['<' '='? <sp>? <interval_high>]?]
+        | [ <interval_low> <sp>?            '..'           <sp>? <interval_high>  ]
+    }
+
+    token interval_low
+    {
+        <Any>
+    }
+
+    token interval_high
+    {
+        <Any>
+    }
+
+###########################################################################
+
     token Interval_Set
     {
         ['(' <sp>?] ~ [<sp>? ')']
@@ -627,6 +564,68 @@ grammar Muldis::Reference::Object_Notation::Grammar
             [',' <sp>?]?
             [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
+    }
+
+###########################################################################
+
+    token Heading
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Heading <sp>? ':' <sp>? <heading_attr_names>
+    }
+
+    token heading_attr_names
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            [',' <sp>?]?
+            [<attr_name>* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+    }
+
+###########################################################################
+
+    token Tuple
+    {
+        <Tuple_subject>
+    }
+
+    token Tuple_subject
+    {
+        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
+    }
+
+    token tuple_attrs
+    {
+        <tuple_nullary> | <tuple_unary> | <tuple_nary>
+    }
+
+    token tuple_nullary
+    {
+        ''
+    }
+
+    token tuple_unary
+    {
+          [          <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr>          ]
+    }
+
+    token tuple_nary
+    {
+        [',' <sp>?]?
+        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<sp>? ',']?
+    }
+
+    token tuple_attr
+    {
+        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
+    }
+
+    token attr_asset
+    {
+        <Any>
     }
 
 ###########################################################################
@@ -694,6 +693,23 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
+    token Nesting
+    {
+        <Nesting_subject>
+    }
+
+    token Nesting_subject
+    {
+        ['::' <sp>? <attr_name>]+ % <sp>?
+    }
+
+    token attr_name
+    {
+        <Text_subject>
+    }
+
+###########################################################################
+
     token Article
     {
         ['(' <sp>?] ~ [<sp>? ')']
@@ -726,22 +742,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token Excuse_subject
     {
         <Article_subject>
-    }
-
-###########################################################################
-
-    token Heading
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Heading <sp>? ':' <sp>? <heading_attr_names>
-    }
-
-    token heading_attr_names
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            [',' <sp>?]?
-            [<attr_name>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
     }
 
 ###########################################################################
