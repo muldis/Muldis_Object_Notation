@@ -254,15 +254,14 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Array
     {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Array <sp>? ':' <sp>? <Array_subject>
+        <Array_subject>
     }
 
     token Array_subject
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
+            [<Any>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 
@@ -415,22 +414,18 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Lot
     {
-        <Lot_subject>
+          ['(' <sp>? Lot <sp>? ':' <sp>? '{' <sp>? '}' <sp>? ')']
+        | <Lot_subject>
     }
 
     token Lot_subject
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [<this_and_maybe_that>* % [<sp>? ',' <sp>?]]
+            [<this> <sp>? ',' <sp>?]*
+            <this_and_that>
+            [<sp>? ',' <sp>? [<this> | <this_and_that>]]*
             [<sp>? ',']?
-    }
-
-    token this_and_maybe_that
-    {
-          <this>
-        | [<this> <sp>? [':'|'->'] <sp>? <that>]
-        | [<that> <sp>?      '<-'  <sp>? <this>]
     }
 
 ###########################################################################

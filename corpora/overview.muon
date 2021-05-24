@@ -161,34 +161,26 @@ Muldis_Content_Predicate`
     `$$$` Array : (
 
         `Zero members.`
-        (Array:{}),
+        {},
 
         `One member.`
-        (Array:{ "You got it!" }),
+        { "You got it!" },
 
         `Three members.`
-        (Array:{
+        {
             Alphonse,
             Edward,
             Winry,
-        }),
+        },
 
         `Five members (1 duplicate).`
-        (Array:{
+        {
             57,
             45,
             63,
             61,
             63,
-        }),
-
-        `32 members (28 duplicates in 2 runs).`
-        (Array:{
-            "/",
-            "*" : 20,
-            "+" : 10,
-            "-",
-        }),
+        },
 
     ),
 
@@ -334,10 +326,10 @@ Muldis_Content_Predicate`
     `$$$` Lot : (
 
         `Zero members.`
-        {},
+        (Lot:{}),
 
         `One member.`
-        { "The lonely only." },
+        { "The lonely only.": 1 },
 
         `Four members.`
         {
@@ -345,6 +337,14 @@ Muldis_Content_Predicate`
             Diamonds,
             Hearts : 10,
             Spades : 20,
+        },
+
+        `Four members.`
+        {
+            "/",
+            "*" : 20,
+            "+" : 10,
+            "-",
         },
 
     ),

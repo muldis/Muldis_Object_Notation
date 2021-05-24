@@ -725,15 +725,14 @@ Grammar:
 ```
     token Array
     {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Array <sp>? ':' <sp>? <Array_subject>
+        <Array_subject>
     }
 
     token Array_subject
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
+            [<Any>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 ```
@@ -742,34 +741,26 @@ Examples:
 
 ```
     `Zero members.`
-    (Array:{})
+    {}
 
     `One member.`
-    (Array:{ "You got it!" })
+    { "You got it!" }
 
     `Three members.`
-    (Array:{
+    {
         Alphonse,
         Edward,
         Winry,
-    })
+    }
 
     `Five members (1 duplicate).`
-    (Array:{
+    {
         57,
         45,
         63,
         61,
         63,
-    })
-
-    `32 members (28 duplicates in 2 runs).`
-    (Array:{
-        "/",
-        "*" : 20,
-        "+" : 10,
-        "-",
-    })
+    }
 ```
 
 ## Fraction
@@ -1131,22 +1122,18 @@ Grammar:
 ```
     token Lot
     {
-        <Lot_subject>
+          ['(' <sp>? Lot <sp>? ':' <sp>? '{' <sp>? '}' <sp>? ')']
+        | <Lot_subject>
     }
 
     token Lot_subject
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [<this_and_maybe_that>* % [<sp>? ',' <sp>?]]
+            [<this> <sp>? ',' <sp>?]*
+            <this_and_that>
+            [<sp>? ',' <sp>? [<this> | <this_and_that>]]*
             [<sp>? ',']?
-    }
-
-    token this_and_maybe_that
-    {
-          <this>
-        | [<this> <sp>? [':'|'->'] <sp>? <that>]
-        | [<that> <sp>?      '<-'  <sp>? <this>]
     }
 ```
 
@@ -1154,10 +1141,10 @@ Examples:
 
 ```
     `Zero members.`
-    {}
+    (Lot:{})
 
     `One member.`
-    { "The lonely only." }
+    { "The lonely only.": 1 }
 
     `Four members.`
     {
@@ -1165,6 +1152,14 @@ Examples:
         Diamonds,
         Hearts : 10,
         Spades : 20,
+    }
+
+    `Four members.`
+    {
+        "/",
+        "*" : 20,
+        "+" : 10,
+        "-",
     }
 ```
 
@@ -2128,14 +2123,15 @@ possrep is recognized within a Muldis Object Notation artifact:
     Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0[L|c] prefix
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
-    Text            | "" or "..." or prefix [A..Z _ a..z] or prefix 0c
-    Nesting         | prefix ::
+    Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
     Pair            | (...:...) without any comma
-    Tuple           | () or (...) with >= 1 comma
-    Lot             | only {} or {...} without mandatory prefix
+    Array           | only {} or {...} without any colon
     Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
     locationals     | prefix 0L
-    Interval        | only [] or [...] without mandatory prefix
+    Lot             | {...} with >= 1 colon
+    Interval        | only [] or [...]
+    Tuple           | only () or (...) with >= 1 comma
+    Nesting         | prefix ::
 ```
 
 ## Features Reserved For Superset Grammars
@@ -2226,6 +2222,7 @@ that means they are used in pairs.
     ->    |                        | * separates the 2 parts of a pair
     <-    |                        | * this/that separator in Pair sels
           |                        | * disambiguate Pair sels from generic_group
+          |                        | * disambiguate Lot sels from Array sels
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * optional pair separator in Lot/Array/Set/Bag/Mix sels
