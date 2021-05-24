@@ -239,12 +239,6 @@ to integers in the set **{0xD800..0xDFFF}**.  MUON forbids the use of any
 such "character strings" using the **Text** possrep.  However, such data can
 still be conveyed using other means such as MUON's **Array**+**Integer**.
 
-## Nesting / Attribute Name List
-
-A **Nesting** value is an arbitrarily-large
-nonempty ordered collection of attribute names, intended for referencing an
-entity in a multi-level namespace, such as nested **Tuple** may implement.
-
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
 ## Pair
@@ -254,59 +248,17 @@ collection whose elements in order are *this* and *that*, each of which may
 be any other value.  A **Pair** value is also characterized by a **Tuple**
 value having exactly 2 "positional" attributes.
 
-## Tuple / Attribute Set
+## Array
 
-A **Tuple** value is a general purpose
-arbitrarily-large unordered heterogeneous collection of named *attributes*,
-such that no 2 attributes have the same *attribute name*, which explicitly
-does not represent any kind of thing in particular, and is simply the sum
-of its attributes.  An attribute is conceptually a name-asset pair, the
-name being used to look up the attribute in a **Tuple**.  An *attribute
-name* is an unqualified program identifier and is conceptually a character
-string that is not a **Text** value.  In the general case each attribute of
-a tuple is of a distinct data type, though multiple attributes often have
-the same type.  The set of attribute names of a **Tuple** is called its
-*heading*, and the corresponding attribute assets are called its *body*.
-
-With respect to the relational model of data, a *heading* represents a
-predicate, for which each *attribute name* is a free variable, and a
-**Tuple** as a whole represents a derived proposition, where the
-corresponding attribute asset values substitute for the free variables;
-however, any actual predicate/etc is defined by the context of a
-**Tuple** value and a **Tuple** in isolation explicitly does not
-represent any proposition in particular.
-
-The canonical way to represent the concept of a *tuple* that has ordered
-attributes is to use integral names; to be specific, the attribute name
-consisting of just the character code point 0 would mark the first ordered
-attribute, the name consisting of just the code point 1 would mark the
-second, and so on; this can be repeated up to 32 "positional" names whose
-names would correspond to non-printing Unicode code points and would
-alphabetically sort correctly and prior to any normal text-like attribute
-names like **name** or **age**; said first 32 would likewise be distinct in
-appearance from all regular printable numbers used as attribute names.
-
-## Lot
-
-A **Lot** value is a general purpose arbitrarily-long ordered sequence of
-any **Pair** values, which explicitly does not represent any kind of thing
-in particular, and is simply the sum of its members.  A **Lot** value is
-dense; iff it has any members, then its first-ordered member is at ordinal
-position **0**, and its last-ordinal-positioned member is at the ordinal
-position that is one less than the count of its members.  A **Lot** in the
-general case may have multiple members that are the same value, and any
-duplicates may or may not exist at consecutive ordinal positions.
-
-The **Lot** possrep is the idiomatic generalization of a discrete
-homogeneous collection, such that any given MUON syntax can choose to just
-have **Lot** as a fundamental syntax, and then any other possreps for
-discrete homogeneous collections can be represented just as a **Lot** plus
-a plain unary type cast in the form of a **Pair** possrep.
-
-The intended use of the **Lot** possrep is to represent a value expression
-node for selecting at runtime a value of any of the other discrete
-homogeneous collection types where their member values or multiplicities
-are defined by arbitrarily complex sub-expressions.
+An **Array** value is a general purpose
+arbitrarily-long ordered sequence of any other, *member* values, which
+explicitly does not represent any kind of thing in particular, and is
+simply the sum of its members.  An **Array** value is dense; iff it has any
+members, then its first-ordered member is at ordinal position **0**, and
+its last-ordinal-positioned member is at the ordinal position that is one
+less than the count of its members.  An **Array** in the general case may
+have multiple members that are the same value, and any duplicates may or
+may not exist at consecutive ordinal positions.
 
 # LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS
 
@@ -426,17 +378,27 @@ something more specific.
 
 # MORE-COLLECTIVE SECONDARY DATA TYPE POSSREPS
 
-## Array
+## Lot
 
-An **Array** value is a general purpose
-arbitrarily-long ordered sequence of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members.  An **Array** value is dense; iff it has any
-members, then its first-ordered member is at ordinal position **0**, and
-its last-ordinal-positioned member is at the ordinal position that is one
-less than the count of its members.  An **Array** in the general case may
-have multiple members that are the same value, and any duplicates may or
-may not exist at consecutive ordinal positions.
+A **Lot** value is a general purpose arbitrarily-long ordered sequence of
+any **Pair** values, which explicitly does not represent any kind of thing
+in particular, and is simply the sum of its members.  A **Lot** value is
+dense; iff it has any members, then its first-ordered member is at ordinal
+position **0**, and its last-ordinal-positioned member is at the ordinal
+position that is one less than the count of its members.  A **Lot** in the
+general case may have multiple members that are the same value, and any
+duplicates may or may not exist at consecutive ordinal positions.
+
+The **Lot** possrep is the idiomatic generalization of a discrete
+homogeneous collection, such that any given MUON syntax can choose to just
+have **Lot** as a fundamental syntax, and then any other possreps for
+discrete homogeneous collections can be represented just as a **Lot** plus
+a plain unary type cast in the form of a **Pair** possrep.
+
+The intended use of the **Lot** possrep is to represent a value expression
+node for selecting at runtime a value of any of the other discrete
+homogeneous collection types where their member values or multiplicities
+are defined by arbitrarily complex sub-expressions.
 
 ## Set
 
@@ -568,6 +530,38 @@ A **Heading** value is an arbitrarily-large
 unordered collection of *attribute names*, such that no 2 attribute names
 are the same.
 
+## Tuple / Attribute Set
+
+A **Tuple** value is a general purpose
+arbitrarily-large unordered heterogeneous collection of named *attributes*,
+such that no 2 attributes have the same *attribute name*, which explicitly
+does not represent any kind of thing in particular, and is simply the sum
+of its attributes.  An attribute is conceptually a name-asset pair, the
+name being used to look up the attribute in a **Tuple**.  An *attribute
+name* is an unqualified program identifier and is conceptually a character
+string that is not a **Text** value.  In the general case each attribute of
+a tuple is of a distinct data type, though multiple attributes often have
+the same type.  The set of attribute names of a **Tuple** is called its
+*heading*, and the corresponding attribute assets are called its *body*.
+
+With respect to the relational model of data, a *heading* represents a
+predicate, for which each *attribute name* is a free variable, and a
+**Tuple** as a whole represents a derived proposition, where the
+corresponding attribute asset values substitute for the free variables;
+however, any actual predicate/etc is defined by the context of a
+**Tuple** value and a **Tuple** in isolation explicitly does not
+represent any proposition in particular.
+
+The canonical way to represent the concept of a *tuple* that has ordered
+attributes is to use integral names; to be specific, the attribute name
+consisting of just the character code point 0 would mark the first ordered
+attribute, the name consisting of just the code point 1 would mark the
+second, and so on; this can be repeated up to 32 "positional" names whose
+names would correspond to non-printing Unicode code points and would
+alphabetically sort correctly and prior to any normal text-like attribute
+names like **name** or **age**; said first 32 would likewise be distinct in
+appearance from all regular printable numbers used as attribute names.
+
 ## Tuple Array
 
 A **Tuple Array** value is characterized
@@ -601,6 +595,12 @@ by the pairing of a **Heading** value with a **Bag** value, which define
 its *heading* and *body*, respectively.  A **Tuple Bag** is isomorphic to
 a **Relation** with the sole exception of being based on a **Bag**
 rather than a **Set**.
+
+## Nesting / Attribute Name List
+
+A **Nesting** value is an arbitrarily-large
+nonempty ordered collection of attribute names, intended for referencing an
+entity in a multi-level namespace, such as nested **Tuple** may implement.
 
 ## Article / Labelled Tuple
 

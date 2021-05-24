@@ -429,15 +429,6 @@ When its subject is any of the following, the predicate is optional:
 
 * Any `SYS_Char_String`.
 
-## Nesting / Attribute Name List
-
-A **Nesting** artifact has the predicate `Nesting`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Text** subject.
-
 ## Pair
 
 An **Pair** artifact has the predicate `Pair`.
@@ -447,44 +438,16 @@ When its subject is any of the following, the predicate is required:
 * Any `SYS_Pair_KV` such that its `SYS_key` is the *this* (any **Any**
 artifact) and its `SYS_value` is the *that* (any **Any** artifact).
 
-## Tuple / Attribute Set
+## Array
 
-A **Tuple** artifact has the predicate `Tuple`.
+An **Array** artifact has the predicate `Array`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any `SYS_Tuple_Ordered_As_Tuple` such that for every one of its
-`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
-`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`%` and its `SYS_value` is any `SYS_Array` such that every one of its
-`SYS_members` is a `SYS_Pair_KV` (alias `SYS_attrs_na`) such that its
-`SYS_key` (alias `SYS_attr_name`) is any **Text** subject and its
-`SYS_value` (alias `SYS_attr_asset`) is any **Any** artifact.
-
-* Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
-`SYS_attrs_na`, that member's `SYS_attr_name` is any **Text** subject
-and that member's `SYS_attr_asset` is any **Any** artifact.
-
-Not permitted is any of the following, to keep things simpler or more correct:
-
-* Any object of the .NET class `System.Data.DataRow`.
-
-*TODO: Consider adding .NET anonymous types as an option if feasible.*
-
-## Lot
-
-A **Lot** artifact has the predicate `Lot`.
-
-When its subject is any of the following, the predicate is required:
-
 * Any `SYS_Array` such that every one of its `SYS_members` is any
 **Any** artifact.
+
+When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
 `+` and its `SYS_value` is any `SYS_Array` such that every one of its
@@ -611,16 +574,14 @@ its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** s
 its `SYS_attr_name` is the `SYS_Char_String` value `+` and
 its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
 
-## Array
+## Lot
 
-An **Array** artifact has the predicate `Array`.
+A **Lot** artifact has the predicate `Lot`.
 
-When its subject is any of the following, the predicate is optional:
+When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Array` such that every one of its `SYS_members` is any
 **Any** artifact.
-
-When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
 `+` and its `SYS_value` is any `SYS_Array` such that every one of its
@@ -772,6 +733,36 @@ When its subject is any of the following, the predicate is required:
 that member's `SYS_key` is any **Text** subject and
 that member's `SYS_value` is any **Boolean** subject.
 
+## Tuple / Attribute Set
+
+A **Tuple** artifact has the predicate `Tuple`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any `SYS_Tuple_Ordered_As_Tuple` such that for every one of its
+`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
+`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` (alias `SYS_attrs_na`) such that its
+`SYS_key` (alias `SYS_attr_name`) is any **Text** subject and its
+`SYS_value` (alias `SYS_attr_asset`) is any **Any** artifact.
+
+* Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
+`SYS_attrs_na`, that member's `SYS_attr_name` is any **Text** subject
+and that member's `SYS_attr_asset` is any **Any** artifact.
+
+Not permitted is any of the following, to keep things simpler or more correct:
+
+* Any object of the .NET class `System.Data.DataRow`.
+
+*TODO: Consider adding .NET anonymous types as an option if feasible.*
+
 ## Tuple Array
 
 A **Tuple Array** artifact has the predicate `Tuple_Array`.
@@ -856,6 +847,15 @@ any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is any **Tuple** subject and
 that member's `SYS_value` is any **Integer** subject
 which denotes a non-negative integer *multiplicity*.
+
+## Nesting / Attribute Name List
+
+A **Nesting** artifact has the predicate `Nesting`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Text** subject.
 
 ## Article / Labelled Tuple
 

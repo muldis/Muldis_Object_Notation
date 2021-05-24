@@ -685,41 +685,6 @@ Examples:
         "\close book. sleep? what's that?\n"
 ```
 
-## Nesting / Attribute Name List
-
-A **Nesting** value is represented by `<Nesting>`.
-
-Grammar:
-
-```
-    token Nesting
-    {
-        <Nesting_subject>
-    }
-
-    token Nesting_subject
-    {
-        ['::' <sp>? <attr_name>]+ % <sp>?
-    }
-
-    token attr_name
-    {
-        <Text_subject>
-    }
-```
-
-Examples:
-
-```
-    ::person
-
-    ::person::birth_date
-
-    ::person::birth_date::year
-
-    ::the_db::stats::"samples by order"
-```
-
 ## Pair
 
 A **Pair** value is represented by `<Pair>`.
@@ -773,152 +738,25 @@ Examples:
     (y<-x)
 ```
 
-## Tuple / Attribute Set
+## Array
 
-A **Tuple** value is represented by `<Tuple>`.
-
-Grammar:
-
-```
-    token Tuple
-    {
-        <Tuple_subject>
-    }
-
-    token Tuple_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
-    }
-
-    token tuple_attrs
-    {
-        <tuple_nullary> | <tuple_unary> | <tuple_nary>
-    }
-
-    token tuple_nullary
-    {
-        ''
-    }
-
-    token tuple_unary
-    {
-          [          <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr>          ]
-    }
-
-    token tuple_nary
-    {
-        [',' <sp>?]?
-        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
-        [<sp>? ',']?
-    }
-
-    token tuple_attr
-    {
-        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
-    }
-
-    token attr_asset
-    {
-        <Any>
-    }
-```
-
-The meaning of a `<tuple_attr>` consisting of only an `<attr_asset>` is
-exactly the same as if the former also had an `<attr_name>` of the form
-`0cN` such that `N` is the zero-based ordinal position of the
-`<tuple_attr>` in the `<tuple_attrs>` among all sibling such
-`<tuple_attr>`.  These *attribute name* are determined without regard to
-any explicit *attribute name* that a `<tuple_attrs>` may contain, and it is
-invalid for any explicit names to duplicate any implicit or explicit names.
-
-Examples:
-
-```
-    `Zero attributes.`
-    ()
-
-    `One named attribute.`
-    ("First Name": Joy,)
-
-    `One ordered attribute.`
-    (53,)
-
-    `Same thing.`
-    (0c0: 53,)
-
-    `Same thing.`
-    ("\\<0c0>": 53,)
-
-    `Three named attributes.`
-    (
-        login_name : hartmark,
-        login_pass : letmein,
-        is_special : 0bTRUE,
-    )
-
-    `Three ordered attributes.`
-    (hello,26,0bTRUE)
-
-    `One of each.`
-    (Jay, age: 10)
-
-    `A non-Latin name.`
-    ("サンプル": "http://example.com",)
-
-    `Two named attributes.`
-    (
-        name : Michelle,
-        age  : 17,
-    )
-
-    `Five leaf attributes in nested multi-level namespace.`
-    (
-        name: "John Glenn",
-        ::birth_date::year: 1921,
-        comment: "Fly!",
-        ::birth_date::month: 7,
-        ::birth_date::day: 18,
-    )
-
-    `Same thing.`
-    (
-        name: "John Glenn",
-        birth_date: (
-            year: 1921,
-            month: 7,
-            day: 18,
-        ),
-        comment: "Fly!",
-    )
-```
-
-## Lot
-
-An **Lot** value is represented by `<Lot>`.
+An **Array** value is represented by `<Array>`.
 
 Grammar:
 
 ```
-    token Lot
+    token Array
     {
-        <Lot_subject>
+        ['(' <sp>?] ~ [<sp>? ')']
+            Array <sp>? ':' <sp>? <Array_subject>
     }
 
-    token Lot_subject
+    token Array_subject
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [<this_and_maybe_that>* % [<sp>? ',' <sp>?]]
+            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-    }
-
-    token this_and_maybe_that
-    {
-          <this>
-        | [<this> <sp>? [':'|'->'] <sp>? <that>]
-        | [<that> <sp>?      '<-'  <sp>? <this>]
     }
 ```
 
@@ -926,18 +764,34 @@ Examples:
 
 ```
     `Zero members.`
-    {}
+    (Array:{})
 
     `One member.`
-    { "The lonely only." }
+    (Array:{ "You got it!" })
 
-    `Four members.`
-    {
-        Clubs  :  5,
-        Diamonds,
-        Hearts : 10,
-        Spades : 20,
-    }
+    `Three members.`
+    (Array:{
+        Alphonse,
+        Edward,
+        Winry,
+    })
+
+    `Five members (1 duplicate).`
+    (Array:{
+        57,
+        45,
+        63,
+        61,
+        63,
+    })
+
+    `32 members (28 duplicates in 2 runs).`
+    (Array:{
+        "/",
+        "*" : 20,
+        "+" : 10,
+        "-",
+    })
 ```
 
 ## Fraction
@@ -1290,25 +1144,31 @@ Examples:
     0Lgp@>-94.746094|^37.483577
 ```
 
-## Array
+## Lot
 
-An **Array** value is represented by `<Array>`.
+An **Lot** value is represented by `<Lot>`.
 
 Grammar:
 
 ```
-    token Array
+    token Lot
     {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Array <sp>? ':' <sp>? <Array_subject>
+        <Lot_subject>
     }
 
-    token Array_subject
+    token Lot_subject
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
+            [<this_and_maybe_that>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
+    }
+
+    token this_and_maybe_that
+    {
+          <this>
+        | [<this> <sp>? [':'|'->'] <sp>? <that>]
+        | [<that> <sp>?      '<-'  <sp>? <this>]
     }
 ```
 
@@ -1316,34 +1176,18 @@ Examples:
 
 ```
     `Zero members.`
-    (Array:{})
+    {}
 
     `One member.`
-    (Array:{ "You got it!" })
+    { "The lonely only." }
 
-    `Three members.`
-    (Array:{
-        Alphonse,
-        Edward,
-        Winry,
-    })
-
-    `Five members (1 duplicate).`
-    (Array:{
-        57,
-        45,
-        63,
-        61,
-        63,
-    })
-
-    `32 members (28 duplicates in 2 runs).`
-    (Array:{
-        "/",
-        "*" : 20,
-        "+" : 10,
-        "-",
-    })
+    `Four members.`
+    {
+        Clubs  :  5,
+        Diamonds,
+        Hearts : 10,
+        Spades : 20,
+    }
 ```
 
 ## Set
@@ -1757,6 +1601,127 @@ Examples:
     (Heading:("サンプル"))
 ```
 
+## Tuple / Attribute Set
+
+A **Tuple** value is represented by `<Tuple>`.
+
+Grammar:
+
+```
+    token Tuple
+    {
+        <Tuple_subject>
+    }
+
+    token Tuple_subject
+    {
+        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
+    }
+
+    token tuple_attrs
+    {
+        <tuple_nullary> | <tuple_unary> | <tuple_nary>
+    }
+
+    token tuple_nullary
+    {
+        ''
+    }
+
+    token tuple_unary
+    {
+          [          <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr>          ]
+    }
+
+    token tuple_nary
+    {
+        [',' <sp>?]?
+        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<sp>? ',']?
+    }
+
+    token tuple_attr
+    {
+        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
+    }
+
+    token attr_asset
+    {
+        <Any>
+    }
+```
+
+The meaning of a `<tuple_attr>` consisting of only an `<attr_asset>` is
+exactly the same as if the former also had an `<attr_name>` of the form
+`0cN` such that `N` is the zero-based ordinal position of the
+`<tuple_attr>` in the `<tuple_attrs>` among all sibling such
+`<tuple_attr>`.  These *attribute name* are determined without regard to
+any explicit *attribute name* that a `<tuple_attrs>` may contain, and it is
+invalid for any explicit names to duplicate any implicit or explicit names.
+
+Examples:
+
+```
+    `Zero attributes.`
+    ()
+
+    `One named attribute.`
+    ("First Name": Joy,)
+
+    `One ordered attribute.`
+    (53,)
+
+    `Same thing.`
+    (0c0: 53,)
+
+    `Same thing.`
+    ("\\<0c0>": 53,)
+
+    `Three named attributes.`
+    (
+        login_name : hartmark,
+        login_pass : letmein,
+        is_special : 0bTRUE,
+    )
+
+    `Three ordered attributes.`
+    (hello,26,0bTRUE)
+
+    `One of each.`
+    (Jay, age: 10)
+
+    `A non-Latin name.`
+    ("サンプル": "http://example.com",)
+
+    `Two named attributes.`
+    (
+        name : Michelle,
+        age  : 17,
+    )
+
+    `Five leaf attributes in nested multi-level namespace.`
+    (
+        name: "John Glenn",
+        ::birth_date::year: 1921,
+        comment: "Fly!",
+        ::birth_date::month: 7,
+        ::birth_date::day: 18,
+    )
+
+    `Same thing.`
+    (
+        name: "John Glenn",
+        birth_date: (
+            year: 1921,
+            month: 7,
+            day: 18,
+        ),
+        comment: "Fly!",
+    )
+```
+
 ## Tuple Array
 
 A **Tuple Array** value is represented by `<Tuple_Array>`.
@@ -1931,6 +1896,41 @@ Examples:
         (Michelle, 17),
         (Amy     , 14),
     })
+```
+
+## Nesting / Attribute Name List
+
+A **Nesting** value is represented by `<Nesting>`.
+
+Grammar:
+
+```
+    token Nesting
+    {
+        <Nesting_subject>
+    }
+
+    token Nesting_subject
+    {
+        ['::' <sp>? <attr_name>]+ % <sp>?
+    }
+
+    token attr_name
+    {
+        <Text_subject>
+    }
+```
+
+Examples:
+
+```
+    ::person
+
+    ::person::birth_date
+
+    ::person::birth_date::year
+
+    ::the_db::stats::"samples by order"
 ```
 
 ## Article / Labelled Tuple
