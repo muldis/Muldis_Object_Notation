@@ -878,10 +878,10 @@ bases {2,8,10,16}, using conventional syntax.  The literal may optionally
 contain underscore characters (`_`), which exist just to help with visual
 formatting, such as for `20_194/17` or `3.141_59`.
 
-The general form of a **Fraction** literal is `N/D*R^E` such that {N,D,R,E}
+The general form of a **Fraction** literal is `n/d*r^e` such that {n,d,r,e}
 are each integers and the literal represents the rational number that
 results from evaluating the mathematical expression using the following
-implicit order of operations, `(N/D)*(R^E)` such that `/` means divide, `*`
+implicit order of operations, `(n/d)*(r^e)` such that `/` means divide, `*`
 means multiply, and `^` means exponentiate.
 
 MUON does not require the numerator/denominator pair to be coprime, but
@@ -889,21 +889,21 @@ typically a type system will normalize the pair as such when determining
 value identity.  Similarly, MUON does not require any other kind of
 normalization between the components of a **Fraction** literal.
 
-While the wider general format `N/D*R^E` can represent every rational
-number, as can just the `N/D` portion by itself, the alternate but typical
-format `X.X` can only represent a proper subset of the rational numbers,
+While the wider general format `n/d*r^e` can represent every rational
+number, as can just the `n/d` portion by itself, the alternate but typical
+format `x.x` can only represent a proper subset of the rational numbers,
 that subset being every rational number that can be represented as a
 terminating decimal number.  Note that every rational number that can be
 represented as a terminating binary or octal or hexadecimal number can also
 be represented as a terminating decimal number.
 
 Note that in order to keep the grammar simpler or more predictable, each
-**Fraction** component {N,D,R,E} must have its numeric base specified
+**Fraction** component {n,d,r,e} must have its numeric base specified
 individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
 be interpreted as base 10.  This keeps behaviour consistent with a parser
 that sees a **Fraction** literal but interprets it as multiple **Integer**
 literals separated by symbolic infix operators, evaluation order aside.
-Also per normal expectations, literals in the format `X.X` only specify the
+Also per normal expectations, literals in the format `x.x` only specify the
 base at most once in total, *not* separately for the part after the `.`.
 
 A `<denominator>` is subject to the additional rule that the integer it

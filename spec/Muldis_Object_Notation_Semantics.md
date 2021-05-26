@@ -281,31 +281,32 @@ exact rational number of any magnitude and precision, which explicitly does
 not represent any kind of thing in particular, neither cardinal nor ordinal
 nor nominal.  It has no minimum or maximum value.
 
-The general form of a **Fraction** literal is `N/D*R^E` such that {N,D,R,E}
-are each integers and the literal represents the rational number that
-results from evaluating the mathematical expression using the following
-implicit order of operations, `(N/D)*(R^E)` such that `/` means divide, `*`
-means multiply, and `^` means exponentiate.
+A **Fraction** value is characterized by a **Tuple** having a subset of the
+4 attributes of the heading
+{`n|numerator`,`d|denominator`,`r|radix`,`e|exponent`} such that each
+attribute asset is an **Integer**, and {`r|radix`,`e|exponent`} must only
+be given as a pair, and `d|denominator` if given must be non-zero, and
+`r|radix` if given must be at least 2; each of the 4 attributes, if not
+given, respectively have the implicit values {0,1,2,0}.
 
-MUON does not require the numerator/denominator pair to be coprime, but
-typically a type system will normalize the pair as such when determining
-value identity.  Similarly, MUON does not require any other kind of
-normalization between the components of a **Fraction** literal.
+The intended interpretation of a **Fraction** is as the rational number
+that results from evaluating the given 4 integers as the mathematical
+expression `(n/d)*(r^e)`, such that `/` means divide, `*` means multiply,
+and `^` means exponentiate.
 
-While the wider general format `N/D*R^E` can represent every rational
-number, as can just the `N/D` portion by itself, the alternate but typical
-format `X.X` can only represent a proper subset of the rational numbers,
-that subset being every rational number that can be represented as a
-terminating decimal number.  Note that every rational number that can be
-represented as a terminating binary or octal or hexadecimal number can also
-be represented as a terminating decimal number.
+MUON does not require any mathematical normalization of a **Fraction**
+artifact's components in order for it to be a valid artifact; for example,
+the numerator/denominator pair do not need to be coprime.  But typically a
+type system will hide from the user the actual physical representation of
+whatever value a given **Fraction** artifact resolves to, and would
+determine value identity based on the actual logical rational number.
 
 ## Calendar Time
 
 A **Calendar Time** value is
 characterized by a **Tuple** having any subset of the 6 attributes of the
-heading `(Heading:(year,month,day,hour,minute,second))`
-or `(Heading:(y,m,d,h,i,s))` where each attribute is a
+heading {`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`}
+such that each attribute asset is a
 **Fraction**, or alternately by an isomorphic **Mix**.  For each of the 6
 attributes, it explicitly distinguishes between the attribute value being
 specified as zero versus being unspecified; omitting the attribute entirely
@@ -332,6 +333,11 @@ calendar.  It is characterized by an *instant base* (characterized by a
 **Calendar Time**) that is either standalone or is paired with an *instant
 offset* (characterized by a **Calendar Duration**) or an *instant zone* (a
 time zone name characterized by a **Text**).
+
+Alternately, a **Calendar Instant** value is characterized by a **Tuple**
+having a subset of the 3 attributes of the heading {`base`,`offset`,`zone`}
+such that `base` must always be given, and at most one of {`offset`,`zone`}
+may be given.
 
 When a **Calendar Instant** consists only of an *instant base*, it
 explicitly defines a *floating* instant, either a calendar date or
@@ -366,6 +372,11 @@ coordinates named *longitude* and *latitude* and *elevation*, where each of
 the latter is characterized by a single **Fraction** value.  Each
 coordinate may be either specified or unspecified; omitting it means the
 latter and providing it, even if zero, means the former.
+
+Alternately, a **Geographic Point** value is characterized by a **Tuple**
+having any subset of the 3 attributes of the heading
+{`">"|longitude`,`"^"|latitude`,`"+"|elevation`} such that each
+attribute asset is a **Fraction**.
 
 The coordinates may be specified in any order, and are distinguished by
 their own prefix symbols.  The literal syntax has right-pointing `>` and
@@ -526,14 +537,11 @@ A **Heading** value can be characterized by a **Set** value such that every
 A **Renaming** value is an arbitrarily-large
 unordered collection of attribute renaming specifications.
 
-Each attribute renaming specification is a pair of attribute names marked
-with a `->` or a `<-` element; the associated `<attr_name_before>` and
-`<attr_name_after>` indicate the name that an attribute has *before* and
-*after* the renaming operation, respectively.  Iff the renaming
-specification is an `<anon_attr_rename>` then either the *before* or
-*after* name is an ordered attribute name corresponding to the ordinal
-position of the renaming specification element in the
-`<Renaming>`, starting at zero.
+A **Renaming** value is characterized by a **Tuple** such that each
+attribute asset is a **Text**, and no 2 attribute asset values are the same
+value; for each *attribute*, that attribute's name and asset respectively
+specify the *name before* and *name after* of some other attribute being
+renamed of some other attributive value.
 
 ## Tuple / Attribute Set
 
