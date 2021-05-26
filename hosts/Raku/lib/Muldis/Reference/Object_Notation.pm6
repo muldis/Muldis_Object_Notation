@@ -81,13 +81,13 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | <Interval_Set>
         | <Interval_Bag>
         | <Heading>
+        | <Renaming>
         | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
         | <Article>
         | <Excuse>
-        | <Renaming>
     }
 
 ###########################################################################
@@ -267,6 +267,23 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
+    token Lot
+    {
+        0sEMPTY_LOT | <Lot_subject>
+    }
+
+    token Lot_subject
+    {
+        ['{' <sp>?] ~ [<sp>? '}']
+            [',' <sp>?]?
+            [<this> <sp>? ',' <sp>?]*
+            <this_and_that>
+            [<sp>? ',' <sp>? [<this> | <this_and_that>]]*
+            [<sp>? ',']?
+    }
+
+###########################################################################
+
     token Fraction
     {
         <Fraction_subject>
@@ -408,24 +425,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token geo_unit
     {
         <[>^+]>
-    }
-
-###########################################################################
-
-    token Lot
-    {
-          ['(' <sp>? Lot <sp>? ':' <sp>? '{' <sp>? '}' <sp>? ')']
-        | <Lot_subject>
-    }
-
-    token Lot_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [<this> <sp>? ',' <sp>?]*
-            <this_and_that>
-            [<sp>? ',' <sp>? [<this> | <this_and_that>]]*
-            [<sp>? ',']?
     }
 
 ###########################################################################
@@ -575,6 +574,46 @@ grammar Muldis::Reference::Object_Notation::Grammar
             [',' <sp>?]?
             [<attr_name>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
+    }
+
+###########################################################################
+
+    token Renaming
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Renaming <sp>? ':' <sp>? <Renaming_subject>
+    }
+
+    token Renaming_subject
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            [',' <sp>?]?
+            [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+    }
+
+    token anon_attr_rename
+    {
+          ['->' <sp>? <attr_name_after>]
+        | [<attr_name_after> <sp>? '<-']
+        | [<attr_name_before> <sp>? '->']
+        | ['<-' <sp>? <attr_name_before>]
+    }
+
+    token named_attr_rename
+    {
+          [<attr_name_before> <sp>? '->' <sp>? <attr_name_after>]
+        | [<attr_name_after> <sp>? '<-' <sp>? <attr_name_before>]
+    }
+
+    token attr_name_before
+    {
+        <attr_name>
+    }
+
+    token attr_name_after
+    {
+        <attr_name>
     }
 
 ###########################################################################
@@ -737,46 +776,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token Excuse_subject
     {
         <Article_subject>
-    }
-
-###########################################################################
-
-    token Renaming
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Renaming <sp>? ':' <sp>? <Renaming_subject>
-    }
-
-    token Renaming_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            [',' <sp>?]?
-            [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-
-    token anon_attr_rename
-    {
-          ['->' <sp>? <attr_name_after>]
-        | [<attr_name_after> <sp>? '<-']
-        | [<attr_name_before> <sp>? '->']
-        | ['<-' <sp>? <attr_name_before>]
-    }
-
-    token named_attr_rename
-    {
-          [<attr_name_before> <sp>? '->' <sp>? <attr_name_after>]
-        | [<attr_name_after> <sp>? '<-' <sp>? <attr_name_before>]
-    }
-
-    token attr_name_before
-    {
-        <attr_name>
-    }
-
-    token attr_name_after
-    {
-        <attr_name>
     }
 
 ###########################################################################

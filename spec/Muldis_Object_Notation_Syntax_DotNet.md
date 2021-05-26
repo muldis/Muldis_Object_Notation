@@ -433,6 +433,21 @@ When its subject is any of the following, the predicate is required:
 **Any** artifact and its `SYS_value` is any **Integer** subject which
 denotes a non-negative integer *multiplicity*.
 
+## Lot
+
+A **Lot** artifact has the predicate `Lot`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Any** artifact.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`+` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
+**Any** artifact and its `SYS_value` is any **Integer** subject which
+denotes a non-negative integer *multiplicity*.
+
 ## Fraction
 
 A **Fraction** artifact has the predicate `Fraction`.
@@ -551,21 +566,6 @@ its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** s
 * An *elevation* is such that
 its `SYS_attr_name` is the `SYS_Char_String` value `+` and
 its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
-
-## Lot
-
-A **Lot** artifact has the predicate `Lot`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Any** artifact.
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`+` and its `SYS_value` is any `SYS_Array` such that every one of its
-`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
-**Any** artifact and its `SYS_value` is any **Integer** subject which
-denotes a non-negative integer *multiplicity*.
 
 ## Set
 
@@ -711,6 +711,36 @@ When its subject is any of the following, the predicate is required:
 that member's `SYS_key` is any **Text** subject and
 that member's `SYS_value` is any **Boolean** subject.
 
+## Renaming / Attribute Name Map
+
+A **Renaming** artifact has the predicate `Renaming`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`->` and its `SYS_value` is
+any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
+such that its `SYS_key` is the *name before* (any **Text** subject) and its
+`SYS_value` is the *name after* (any **Text** subject).
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`<-` and its `SYS_value` is
+any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
+such that its `SYS_key` is the *name after* (any **Text** subject) and its
+`SYS_value` is the *name before* (any **Text** subject).
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`->` and its `SYS_value` is
+any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is the *name before* (any **Text** subject) and
+that member's `SYS_value` is the *name after* (any **Text** subject).
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`<-` and its `SYS_value` is
+any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
+that member's `SYS_key` is the *name after* (any **Text** subject) and
+that member's `SYS_value` is the *name before* (any **Text** subject).
+
 ## Tuple / Attribute Set
 
 A **Tuple** artifact has the predicate `Tuple`.
@@ -853,36 +883,6 @@ An **Excuse** artifact has the predicate `Excuse`.
 When its subject is any of the following, the predicate is required:
 
 * Any **Article** subject.
-
-## Renaming / Attribute Name Map
-
-A **Renaming** artifact has the predicate `Renaming`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`->` and its `SYS_value` is
-any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
-such that its `SYS_key` is the *name before* (any **Text** subject) and its
-`SYS_value` is the *name after* (any **Text** subject).
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`<-` and its `SYS_value` is
-any `SYS_Array` such that every one of its `SYS_members` is a `SYS_Pair_KV`
-such that its `SYS_key` is the *name after* (any **Text** subject) and its
-`SYS_value` is the *name before* (any **Text** subject).
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`->` and its `SYS_value` is
-any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
-that member's `SYS_key` is the *name before* (any **Text** subject) and
-that member's `SYS_value` is the *name after* (any **Text** subject).
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`<-` and its `SYS_value` is
-any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
-that member's `SYS_key` is the *name after* (any **Text** subject) and
-that member's `SYS_value` is the *name before* (any **Text** subject).
 
 # SEE ALSO
 

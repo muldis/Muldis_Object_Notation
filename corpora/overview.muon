@@ -186,6 +186,34 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Lot : (
+
+        `Zero members.`
+        0sEMPTY_LOT,
+
+        `One member.`
+        { "The lonely only.": 1 },
+
+        `Four members.`
+        {
+            Clubs  :  5,
+            Diamonds,
+            Hearts : 10,
+            Spades : 20,
+        },
+
+        `Four members.`
+        {
+            "/",
+            "*" : 20,
+            "+" : 10,
+            "-",
+        },
+
+    ),
+
+`#########################################################################`
+
     `$$$` Fraction : (
 
         0.0,
@@ -318,34 +346,6 @@ Muldis_Content_Predicate`
 
         `Another place.`
         0Lgp@>-94.746094|^37.483577,
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Lot : (
-
-        `Zero members.`
-        (Lot:{}),
-
-        `One member.`
-        { "The lonely only.": 1 },
-
-        `Four members.`
-        {
-            Clubs  :  5,
-            Diamonds,
-            Hearts : 10,
-            Spades : 20,
-        },
-
-        `Four members.`
-        {
-            "/",
-            "*" : 20,
-            "+" : 10,
-            "-",
-        },
 
     ),
 
@@ -585,6 +585,48 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Renaming : (
+
+        `Zero renamings, a no-op.`
+        (Renaming:()),
+
+        `Also a no-op.`
+        (Renaming:(age->age)),
+
+        `Rename one attribute.`
+        (Renaming:(fname->first_name)),
+
+        `Same thing.`
+        (Renaming:(first_name:fname)),
+
+        `Swap 2 named attributes.`
+        (Renaming:(foo->bar,foo<-bar)),
+
+        `Convert ordered names to nonordered.`
+        (Renaming:(->foo,->bar)),
+
+        `Same thing.`
+        (Renaming:(0c0->foo,0c1->bar)),
+
+        `Convert nonordered names to ordered.`
+        (Renaming:(<-foo,<-bar)),
+
+        `Same thing.`
+        (Renaming:(0c0:foo,0c1<-bar)),
+
+        `Swap 2 ordered attributes.`
+        (Renaming:(0c0->0c1,0c0<-0c1)),
+
+        `Same thing.`
+        (Renaming:(->0c1,->0c0)),
+
+        `Some attribute names can only appear quoted.`
+        (Renaming:("First Name"->"Last Name")),
+
+    ),
+
+`#########################################################################`
+
     `$$$` Tuple : (
 
         `Zero attributes.`
@@ -797,48 +839,6 @@ Muldis_Content_Predicate`
         (Excuse:::Div_By_Zero),
 
         (Excuse:::No_Such_Attr_Name),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Renaming : (
-
-        `Zero renamings, a no-op.`
-        (Renaming:()),
-
-        `Also a no-op.`
-        (Renaming:(age->age)),
-
-        `Rename one attribute.`
-        (Renaming:(fname->first_name)),
-
-        `Same thing.`
-        (Renaming:(first_name:fname)),
-
-        `Swap 2 named attributes.`
-        (Renaming:(foo->bar,foo<-bar)),
-
-        `Convert ordered names to nonordered.`
-        (Renaming:(->foo,->bar)),
-
-        `Same thing.`
-        (Renaming:(0c0->foo,0c1->bar)),
-
-        `Convert nonordered names to ordered.`
-        (Renaming:(<-foo,<-bar)),
-
-        `Same thing.`
-        (Renaming:(0c0:foo,0c1<-bar)),
-
-        `Swap 2 ordered attributes.`
-        (Renaming:(0c0->0c1,0c0<-0c1)),
-
-        `Same thing.`
-        (Renaming:(->0c1,->0c0)),
-
-        `Some attribute names can only appear quoted.`
-        (Renaming:("First Name"->"Last Name")),
 
     ),
 

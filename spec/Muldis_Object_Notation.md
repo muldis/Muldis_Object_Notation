@@ -93,6 +93,7 @@ Collective Primary:
 
 - **Pair**
 - **Array**
+- **Lot**
 
 Less-Collective Secondary:
 
@@ -101,14 +102,14 @@ Less-Collective Secondary:
 
 More-Collective Secondary:
 
-- Discrete: **Lot**, **Set**, **Bag**, **Mix**
+- Discrete: **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
-- Relational: **Heading**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
+- Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
 - Generic: **Nesting**, **Article**, **Excuse**
 
 Source Code Defining Secondary:
 
-- **Renaming**
+*None yet.*
 
 See [Semantics](Muldis_Object_Notation_Semantics.md) for details.
 

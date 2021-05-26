@@ -299,13 +299,13 @@ Grammar:
         | <Interval_Set>
         | <Interval_Bag>
         | <Heading>
+        | <Renaming>
         | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
         | <Article>
         | <Excuse>
-        | <Renaming>
     }
 ```
 
@@ -763,6 +763,55 @@ Examples:
     }
 ```
 
+## Lot
+
+An **Lot** value is represented by `<Lot>`.
+
+Grammar:
+
+```
+    token Lot
+    {
+        0sEMPTY_LOT | <Lot_subject>
+    }
+
+    token Lot_subject
+    {
+        ['{' <sp>?] ~ [<sp>? '}']
+            [',' <sp>?]?
+            [<this> <sp>? ',' <sp>?]*
+            <this_and_that>
+            [<sp>? ',' <sp>? [<this> | <this_and_that>]]*
+            [<sp>? ',']?
+    }
+```
+
+Examples:
+
+```
+    `Zero members.`
+    0sEMPTY_LOT
+
+    `One member.`
+    { "The lonely only.": 1 }
+
+    `Four members.`
+    {
+        Clubs  :  5,
+        Diamonds,
+        Hearts : 10,
+        Spades : 20,
+    }
+
+    `Four members.`
+    {
+        "/",
+        "*" : 20,
+        "+" : 10,
+        "-",
+    }
+```
+
 ## Fraction
 
 A **Fraction** value is represented by `<Fraction>`.
@@ -1111,56 +1160,6 @@ Examples:
 
     `Another place.`
     0Lgp@>-94.746094|^37.483577
-```
-
-## Lot
-
-An **Lot** value is represented by `<Lot>`.
-
-Grammar:
-
-```
-    token Lot
-    {
-          ['(' <sp>? Lot <sp>? ':' <sp>? '{' <sp>? '}' <sp>? ')']
-        | <Lot_subject>
-    }
-
-    token Lot_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [<this> <sp>? ',' <sp>?]*
-            <this_and_that>
-            [<sp>? ',' <sp>? [<this> | <this_and_that>]]*
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Zero members.`
-    (Lot:{})
-
-    `One member.`
-    { "The lonely only.": 1 }
-
-    `Four members.`
-    {
-        Clubs  :  5,
-        Diamonds,
-        Hearts : 10,
-        Spades : 20,
-    }
-
-    `Four members.`
-    {
-        "/",
-        "*" : 20,
-        "+" : 10,
-        "-",
-    }
 ```
 
 ## Set
@@ -1572,6 +1571,105 @@ Examples:
 
     `A non-Latin name.`
     (Heading:("サンプル"))
+```
+
+## Renaming / Attribute Name Map
+
+A **Renaming** value is represented by `<Renaming>`.
+
+Grammar:
+
+```
+    token Renaming
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Renaming <sp>? ':' <sp>? <Renaming_subject>
+    }
+
+    token Renaming_subject
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            [',' <sp>?]?
+            [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+    }
+
+    token anon_attr_rename
+    {
+          ['->' <sp>? <attr_name_after>]
+        | [<attr_name_after> <sp>? '<-']
+        | [<attr_name_before> <sp>? '->']
+        | ['<-' <sp>? <attr_name_before>]
+    }
+
+    token named_attr_rename
+    {
+          [<attr_name_before> <sp>? '->' <sp>? <attr_name_after>]
+        | [<attr_name_after> <sp>? '<-' <sp>? <attr_name_before>]
+    }
+
+    token attr_name_before
+    {
+        <attr_name>
+    }
+
+    token attr_name_after
+    {
+        <attr_name>
+    }
+```
+
+Each attribute renaming specification is a pair of attribute names marked
+with a `->` or a `<-` element; the associated `<attr_name_before>` and
+`<attr_name_after>` indicate the name that an attribute has *before* and
+*after* the renaming operation, respectively.  Iff the renaming
+specification is an `<anon_attr_rename>` then either the *before* or
+*after* name is an ordered attribute name corresponding to the ordinal
+position of the renaming specification element in the
+`<Renaming>`, starting at zero.
+
+A `<Renaming>` is subject to the additional rule that no 2
+`<attr_name_before>` may be the same attribute name and that no 2
+`<attr_name_after>` may be the same attribute name.
+
+Examples:
+
+```
+    `Zero renamings, a no-op.`
+    (Renaming:())
+
+    `Also a no-op.`
+    (Renaming:(age->age))
+
+    `Rename one attribute.`
+    (Renaming:(fname->first_name))
+
+    `Same thing.`
+    (Renaming:(first_name:fname))
+
+    `Swap 2 named attributes.`
+    (Renaming:(foo->bar,foo<-bar))
+
+    `Convert ordered names to nonordered.`
+    (Renaming:(->foo,->bar))
+
+    `Same thing.`
+    (Renaming:(0c0->foo,0c1->bar))
+
+    `Convert nonordered names to ordered.`
+    (Renaming:(<-foo,<-bar))
+
+    `Same thing.`
+    (Renaming:(0c0:foo,0c1<-bar))
+
+    `Swap 2 ordered attributes.`
+    (Renaming:(0c0->0c1,0c0<-0c1))
+
+    `Same thing.`
+    (Renaming:(->0c1,->0c0))
+
+    `Some attribute names can only appear quoted.`
+    (Renaming:("First Name"->"Last Name"))
 ```
 
 ## Tuple / Attribute Set
@@ -2002,105 +2100,6 @@ Examples:
     (Excuse:::No_Such_Attr_Name)
 ```
 
-## Renaming / Attribute Name Map
-
-A **Renaming** value is represented by `<Renaming>`.
-
-Grammar:
-
-```
-    token Renaming
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Renaming <sp>? ':' <sp>? <Renaming_subject>
-    }
-
-    token Renaming_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            [',' <sp>?]?
-            [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-
-    token anon_attr_rename
-    {
-          ['->' <sp>? <attr_name_after>]
-        | [<attr_name_after> <sp>? '<-']
-        | [<attr_name_before> <sp>? '->']
-        | ['<-' <sp>? <attr_name_before>]
-    }
-
-    token named_attr_rename
-    {
-          [<attr_name_before> <sp>? '->' <sp>? <attr_name_after>]
-        | [<attr_name_after> <sp>? '<-' <sp>? <attr_name_before>]
-    }
-
-    token attr_name_before
-    {
-        <attr_name>
-    }
-
-    token attr_name_after
-    {
-        <attr_name>
-    }
-```
-
-Each attribute renaming specification is a pair of attribute names marked
-with a `->` or a `<-` element; the associated `<attr_name_before>` and
-`<attr_name_after>` indicate the name that an attribute has *before* and
-*after* the renaming operation, respectively.  Iff the renaming
-specification is an `<anon_attr_rename>` then either the *before* or
-*after* name is an ordered attribute name corresponding to the ordinal
-position of the renaming specification element in the
-`<Renaming>`, starting at zero.
-
-A `<Renaming>` is subject to the additional rule that no 2
-`<attr_name_before>` may be the same attribute name and that no 2
-`<attr_name_after>` may be the same attribute name.
-
-Examples:
-
-```
-    `Zero renamings, a no-op.`
-    (Renaming:())
-
-    `Also a no-op.`
-    (Renaming:(age->age))
-
-    `Rename one attribute.`
-    (Renaming:(fname->first_name))
-
-    `Same thing.`
-    (Renaming:(first_name:fname))
-
-    `Swap 2 named attributes.`
-    (Renaming:(foo->bar,foo<-bar))
-
-    `Convert ordered names to nonordered.`
-    (Renaming:(->foo,->bar))
-
-    `Same thing.`
-    (Renaming:(0c0->foo,0c1->bar))
-
-    `Convert nonordered names to ordered.`
-    (Renaming:(<-foo,<-bar))
-
-    `Same thing.`
-    (Renaming:(0c0:foo,0c1<-bar))
-
-    `Swap 2 ordered attributes.`
-    (Renaming:(0c0->0c1,0c0<-0c1))
-
-    `Same thing.`
-    (Renaming:(->0c1,->0c0))
-
-    `Some attribute names can only appear quoted.`
-    (Renaming:("First Name"->"Last Name"))
-```
-
 # RESERVED UNUSED SYNTAX
 
 Muldis Object Notation reserves the use of certain syntaxes for various
@@ -2126,9 +2125,9 @@ possrep is recognized within a Muldis Object Notation artifact:
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
     Pair            | (...:...) without any comma
     Array           | only {} or {...} without any colon
+    Lot             | {...} with >= 1 colon, or prefix 0s followed by EMPTY_LOT
     Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
     locationals     | prefix 0L
-    Lot             | {...} with >= 1 colon
     Interval        | only [] or [...]
     Tuple           | only () or (...) with >= 1 comma
     Nesting         | prefix ::
@@ -2315,6 +2314,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     0s    | singletons             | * indicates a grammar-well-known singleton
           |                        | * prefix for Ignorance literal
+          |                        | * prefix for empty Lot literal
           |                        | * not otherwise currently used by this grammar
     ------+------------------------+---------------------------------------
 ```

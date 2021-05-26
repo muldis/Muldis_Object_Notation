@@ -99,10 +99,11 @@ There are exactly 6 of these:
 A *collective primary possrep* has a strictly recursive definition, and is
 expressed mainly in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single collective item.
-There are exactly 2 of these:
+There are exactly 3 of these:
 
 - **Pair**
 - **Array**
+- **Lot**
 
 A *secondary possrep* is one whose canonical definition has no format of
 its own in any syntax and rather its canonical definition is as one or more
@@ -123,15 +124,13 @@ dedicated simple literal formats or data type values in some syntaxes:
 Some of these 15 more-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
-- Discrete: **Lot**, **Set**, **Bag**, **Mix**
+- Discrete: **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
-- Relational: **Heading**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
+- Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
 - Generic: **Nesting**, **Article**, **Excuse**
 
-These 1 secondary possreps are specifically for defining program source
+These 0 secondary possreps are specifically for defining program source
 code and are not for defining regular data:
-
-- **Renaming**
 
 *More secondary possreps will be added corresponding to program source code.*
 
@@ -256,6 +255,23 @@ less than the count of its members.  An **Array** in the general case may
 have multiple members that are the same value, and any duplicates may or
 may not exist at consecutive ordinal positions.
 
+## Lot
+
+A **Lot** value is characterized by an **Array** value such that every
+*member* value of the latter is any **Pair** value; it is the same as an
+**Array** in every way aside from this member type restriction.
+
+The **Lot** possrep is an idiomatic generalization of a discrete
+homogeneous collection, such that any given MUON syntax can choose to just
+have **Lot** as a fundamental syntax, and then any other possreps for
+discrete homogeneous collections can be represented just as a **Lot** plus
+a plain unary type cast in the form of a **Pair** possrep.
+
+The intended use of the **Lot** possrep is to represent a value expression
+node for selecting at runtime a value of any of the other discrete
+homogeneous collection types where their member values or multiplicities
+are defined by arbitrarily complex sub-expressions.
+
 # LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS
 
 ## Fraction
@@ -373,23 +389,6 @@ and *longitude*, such as whether they are along the surface of the Earth or
 something more specific.
 
 # MORE-COLLECTIVE SECONDARY DATA TYPE POSSREPS
-
-## Lot
-
-A **Lot** value is characterized by an **Array** value such that every
-*member* value of the latter is any **Pair** value; it is the same as an
-**Array** in every way aside from this member type restriction.
-
-The **Lot** possrep is an idiomatic generalization of a discrete
-homogeneous collection, such that any given MUON syntax can choose to just
-have **Lot** as a fundamental syntax, and then any other possreps for
-discrete homogeneous collections can be represented just as a **Lot** plus
-a plain unary type cast in the form of a **Pair** possrep.
-
-The intended use of the **Lot** possrep is to represent a value expression
-node for selecting at runtime a value of any of the other discrete
-homogeneous collection types where their member values or multiplicities
-are defined by arbitrarily complex sub-expressions.
 
 ## Set
 
@@ -522,6 +521,20 @@ A **Heading** value is an arbitrarily-large unordered collection of
 A **Heading** value can be characterized by a **Set** value such that every
 *member* value of the latter is any **Text** value.
 
+## Renaming / Attribute Name Map
+
+A **Renaming** value is an arbitrarily-large
+unordered collection of attribute renaming specifications.
+
+Each attribute renaming specification is a pair of attribute names marked
+with a `->` or a `<-` element; the associated `<attr_name_before>` and
+`<attr_name_after>` indicate the name that an attribute has *before* and
+*after* the renaming operation, respectively.  Iff the renaming
+specification is an `<anon_attr_rename>` then either the *before* or
+*after* name is an ordered attribute name corresponding to the ordinal
+position of the renaming specification element in the
+`<Renaming>`, starting at zero.
+
 ## Tuple / Attribute Set
 
 A **Tuple** value is a general purpose
@@ -650,19 +663,7 @@ these things, but rather just every other kind of externally-defined type.
 
 # SOURCE CODE DEFINING SECONDARY DATA TYPE POSSREPS
 
-## Renaming / Attribute Name Map
-
-A **Renaming** value is an arbitrarily-large
-unordered collection of attribute renaming specifications.
-
-Each attribute renaming specification is a pair of attribute names marked
-with a `->` or a `<-` element; the associated `<attr_name_before>` and
-`<attr_name_after>` indicate the name that an attribute has *before* and
-*after* the renaming operation, respectively.  Iff the renaming
-specification is an `<anon_attr_rename>` then either the *before* or
-*after* name is an ordered attribute name corresponding to the ordinal
-position of the renaming specification element in the
-`<Renaming>`, starting at zero.
+*None yet.*
 
 # EXCLUDED DATA TYPE POSSREPS
 
