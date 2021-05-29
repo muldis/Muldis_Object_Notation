@@ -214,6 +214,69 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Tuple : (
+
+        `Zero attributes.`
+        (),
+
+        `One named attribute.`
+        ("First Name": Joy,),
+
+        `One ordered attribute.`
+        (53,),
+
+        `Same thing.`
+        (0c0: 53,),
+
+        `Same thing.`
+        ("\\<0c0>": 53,),
+
+        `Three named attributes.`
+        (
+            login_name : hartmark,
+            login_pass : letmein,
+            is_special : 0bTRUE,
+        ),
+
+        `Three ordered attributes.`
+        (hello,26,0bTRUE),
+
+        `One of each.`
+        (Jay, age: 10),
+
+        `A non-Latin name.`
+        ("サンプル": "http://example.com",),
+
+        `Two named attributes.`
+        (
+            name : Michelle,
+            age  : 17,
+        ),
+
+        `Five leaf attributes in nested multi-level namespace.`
+        (
+            name: "John Glenn",
+            ::birth_date::year: 1921,
+            comment: "Fly!",
+            ::birth_date::month: 7,
+            ::birth_date::day: 18,
+        ),
+
+        `Same thing.`
+        (
+            name: "John Glenn",
+            birth_date: (
+                year: 1921,
+                month: 7,
+                day: 18,
+            ),
+            comment: "Fly!",
+        ),
+
+    ),
+
+`#########################################################################`
+
     `$$$` Fraction : (
 
         0.0,
@@ -612,7 +675,7 @@ Muldis_Content_Predicate`
         (Renaming:(<-foo,<-bar)),
 
         `Same thing.`
-        (Renaming:(0c0:foo,0c1<-bar)),
+        (Renaming:(0c0<-foo,0c1<-bar)),
 
         `Swap 2 ordered attributes.`
         (Renaming:(0c0->0c1,0c0<-0c1)),
@@ -622,69 +685,6 @@ Muldis_Content_Predicate`
 
         `Some attribute names can only appear quoted.`
         (Renaming:("First Name"->"Last Name")),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Tuple : (
-
-        `Zero attributes.`
-        (),
-
-        `One named attribute.`
-        ("First Name": Joy,),
-
-        `One ordered attribute.`
-        (53,),
-
-        `Same thing.`
-        (0c0: 53,),
-
-        `Same thing.`
-        ("\\<0c0>": 53,),
-
-        `Three named attributes.`
-        (
-            login_name : hartmark,
-            login_pass : letmein,
-            is_special : 0bTRUE,
-        ),
-
-        `Three ordered attributes.`
-        (hello,26,0bTRUE),
-
-        `One of each.`
-        (Jay, age: 10),
-
-        `A non-Latin name.`
-        ("サンプル": "http://example.com",),
-
-        `Two named attributes.`
-        (
-            name : Michelle,
-            age  : 17,
-        ),
-
-        `Five leaf attributes in nested multi-level namespace.`
-        (
-            name: "John Glenn",
-            ::birth_date::year: 1921,
-            comment: "Fly!",
-            ::birth_date::month: 7,
-            ::birth_date::day: 18,
-        ),
-
-        `Same thing.`
-        (
-            name: "John Glenn",
-            birth_date: (
-                year: 1921,
-                month: 7,
-                day: 18,
-            ),
-            comment: "Fly!",
-        ),
 
     ),
 

@@ -94,6 +94,7 @@ Collective Primary:
 - **Pair**
 - **Array**
 - **Lot**
+- **Tuple**
 
 Less-Collective Secondary:
 
@@ -104,7 +105,7 @@ More-Collective Secondary:
 
 - Discrete: **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
-- Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
+- Relational: **Heading**, **Renaming**, **Tuple Array**, **Relation**, **Tuple Bag**
 - Generic: **Nesting**, **Article**, **Excuse**
 
 Source Code Defining Secondary:

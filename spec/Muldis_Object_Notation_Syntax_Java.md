@@ -427,6 +427,27 @@ When its subject is any of the following, the predicate is required:
 **Any** artifact and its `SYS_value` is any **Integer** subject which
 denotes a non-negative integer *multiplicity*.
 
+## Tuple / Attribute Set
+
+A **Tuple** artifact has the predicate `Tuple`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
+`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`%` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` (alias `SYS_attrs_na`) such that its
+`SYS_key` (alias `SYS_attr_name`) is any **Text** subject and its
+`SYS_value` (alias `SYS_attr_asset`) is any **Any** artifact.
+
+* Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
+`SYS_attrs_na`, that member's `SYS_attr_name` is any **Text** subject
+and that member's `SYS_attr_asset` is any **Any** artifact.
+
+*TODO: Consider adding Java anonymous types as an option if feasible.*
+
 ## Fraction
 
 A **Fraction** artifact has the predicate `Fraction`.
@@ -724,27 +745,6 @@ that member's `SYS_value` is the *name after* (any **Text** subject).
 any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is the *name after* (any **Text** subject) and
 that member's `SYS_value` is the *name before* (any **Text** subject).
-
-## Tuple / Attribute Set
-
-A **Tuple** artifact has the predicate `Tuple`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Tuple_Ordered_As_Array` such that for every one of its
-`SYS_attrs_na`, its `SYS_attr_asset` is any **Any** artifact.
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`%` and its `SYS_value` is any `SYS_Array` such that every one of its
-`SYS_members` is a `SYS_Pair_KV` (alias `SYS_attrs_na`) such that its
-`SYS_key` (alias `SYS_attr_name`) is any **Text** subject and its
-`SYS_value` (alias `SYS_attr_asset`) is any **Any** artifact.
-
-* Any `SYS_Tuple_Named_As_Dictionary` such that for every one of its
-`SYS_attrs_na`, that member's `SYS_attr_name` is any **Text** subject
-and that member's `SYS_attr_asset` is any **Any** artifact.
-
-*TODO: Consider adding Java anonymous types as an option if feasible.*
 
 ## Tuple Array
 

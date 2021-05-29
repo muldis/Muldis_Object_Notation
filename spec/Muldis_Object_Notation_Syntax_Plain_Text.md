@@ -292,6 +292,7 @@ Grammar:
           <Pair>
         | <Array>
         | <Lot>
+        | <Tuple>
         | <Set>
         | <Bag>
         | <Mix>
@@ -300,7 +301,6 @@ Grammar:
         | <Interval_Bag>
         | <Heading>
         | <Renaming>
-        | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
@@ -810,6 +810,127 @@ Examples:
         "+" : 10,
         "-",
     }
+```
+
+## Tuple / Attribute Set
+
+A **Tuple** value is represented by `<Tuple>`.
+
+Grammar:
+
+```
+    token Tuple
+    {
+        <Tuple_subject>
+    }
+
+    token Tuple_subject
+    {
+        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
+    }
+
+    token tuple_attrs
+    {
+        <tuple_nullary> | <tuple_unary> | <tuple_nary>
+    }
+
+    token tuple_nullary
+    {
+        ''
+    }
+
+    token tuple_unary
+    {
+          [          <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr>          ]
+    }
+
+    token tuple_nary
+    {
+        [',' <sp>?]?
+        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<sp>? ',']?
+    }
+
+    token tuple_attr
+    {
+        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
+    }
+
+    token attr_asset
+    {
+        <Any>
+    }
+```
+
+The meaning of a `<tuple_attr>` consisting of only an `<attr_asset>` is
+exactly the same as if the former also had an `<attr_name>` of the form
+`0cN` such that `N` is the zero-based ordinal position of the
+`<tuple_attr>` in the `<tuple_attrs>` among all sibling such
+`<tuple_attr>`.  These *attribute name* are determined without regard to
+any explicit *attribute name* that a `<tuple_attrs>` may contain, and it is
+invalid for any explicit names to duplicate any implicit or explicit names.
+
+Examples:
+
+```
+    `Zero attributes.`
+    ()
+
+    `One named attribute.`
+    ("First Name": Joy,)
+
+    `One ordered attribute.`
+    (53,)
+
+    `Same thing.`
+    (0c0: 53,)
+
+    `Same thing.`
+    ("\\<0c0>": 53,)
+
+    `Three named attributes.`
+    (
+        login_name : hartmark,
+        login_pass : letmein,
+        is_special : 0bTRUE,
+    )
+
+    `Three ordered attributes.`
+    (hello,26,0bTRUE)
+
+    `One of each.`
+    (Jay, age: 10)
+
+    `A non-Latin name.`
+    ("サンプル": "http://example.com",)
+
+    `Two named attributes.`
+    (
+        name : Michelle,
+        age  : 17,
+    )
+
+    `Five leaf attributes in nested multi-level namespace.`
+    (
+        name: "John Glenn",
+        ::birth_date::year: 1921,
+        comment: "Fly!",
+        ::birth_date::month: 7,
+        ::birth_date::day: 18,
+    )
+
+    `Same thing.`
+    (
+        name: "John Glenn",
+        birth_date: (
+            year: 1921,
+            month: 7,
+            day: 18,
+        ),
+        comment: "Fly!",
+    )
 ```
 
 ## Fraction
@@ -1639,13 +1760,13 @@ Examples:
     (Renaming:())
 
     `Also a no-op.`
-    (Renaming:(age->age))
+    (Renaming:(age->age,))
 
     `Rename one attribute.`
-    (Renaming:(fname->first_name))
+    (Renaming:(fname->first_name,))
 
     `Same thing.`
-    (Renaming:(first_name:fname))
+    (Renaming:(first_name:fname,))
 
     `Swap 2 named attributes.`
     (Renaming:(foo->bar,foo<-bar))
@@ -1660,7 +1781,7 @@ Examples:
     (Renaming:(<-foo,<-bar))
 
     `Same thing.`
-    (Renaming:(0c0:foo,0c1<-bar))
+    (Renaming:(0c0<-foo,0c1<-bar))
 
     `Swap 2 ordered attributes.`
     (Renaming:(0c0->0c1,0c0<-0c1))
@@ -1669,128 +1790,7 @@ Examples:
     (Renaming:(->0c1,->0c0))
 
     `Some attribute names can only appear quoted.`
-    (Renaming:("First Name"->"Last Name"))
-```
-
-## Tuple / Attribute Set
-
-A **Tuple** value is represented by `<Tuple>`.
-
-Grammar:
-
-```
-    token Tuple
-    {
-        <Tuple_subject>
-    }
-
-    token Tuple_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
-    }
-
-    token tuple_attrs
-    {
-        <tuple_nullary> | <tuple_unary> | <tuple_nary>
-    }
-
-    token tuple_nullary
-    {
-        ''
-    }
-
-    token tuple_unary
-    {
-          [          <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr>          ]
-    }
-
-    token tuple_nary
-    {
-        [',' <sp>?]?
-        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
-        [<sp>? ',']?
-    }
-
-    token tuple_attr
-    {
-        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
-    }
-
-    token attr_asset
-    {
-        <Any>
-    }
-```
-
-The meaning of a `<tuple_attr>` consisting of only an `<attr_asset>` is
-exactly the same as if the former also had an `<attr_name>` of the form
-`0cN` such that `N` is the zero-based ordinal position of the
-`<tuple_attr>` in the `<tuple_attrs>` among all sibling such
-`<tuple_attr>`.  These *attribute name* are determined without regard to
-any explicit *attribute name* that a `<tuple_attrs>` may contain, and it is
-invalid for any explicit names to duplicate any implicit or explicit names.
-
-Examples:
-
-```
-    `Zero attributes.`
-    ()
-
-    `One named attribute.`
-    ("First Name": Joy,)
-
-    `One ordered attribute.`
-    (53,)
-
-    `Same thing.`
-    (0c0: 53,)
-
-    `Same thing.`
-    ("\\<0c0>": 53,)
-
-    `Three named attributes.`
-    (
-        login_name : hartmark,
-        login_pass : letmein,
-        is_special : 0bTRUE,
-    )
-
-    `Three ordered attributes.`
-    (hello,26,0bTRUE)
-
-    `One of each.`
-    (Jay, age: 10)
-
-    `A non-Latin name.`
-    ("サンプル": "http://example.com",)
-
-    `Two named attributes.`
-    (
-        name : Michelle,
-        age  : 17,
-    )
-
-    `Five leaf attributes in nested multi-level namespace.`
-    (
-        name: "John Glenn",
-        ::birth_date::year: 1921,
-        comment: "Fly!",
-        ::birth_date::month: 7,
-        ::birth_date::day: 18,
-    )
-
-    `Same thing.`
-    (
-        name: "John Glenn",
-        birth_date: (
-            year: 1921,
-            month: 7,
-            day: 18,
-        ),
-        comment: "Fly!",
-    )
+    (Renaming:("First Name"->"Last Name",))
 ```
 
 ## Tuple Array
@@ -2126,10 +2126,10 @@ possrep is recognized within a Muldis Object Notation artifact:
     Pair            | (...:...) without any comma
     Array           | only {} or {...} without any colon
     Lot             | {...} with >= 1 colon, or prefix 0s followed by EMPTY_LOT
+    Tuple           | only () or (...) with >= 1 comma
     Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
     locationals     | prefix 0L
     Interval        | only [] or [...]
-    Tuple           | only () or (...) with >= 1 comma
     Nesting         | prefix ::
 ```
 

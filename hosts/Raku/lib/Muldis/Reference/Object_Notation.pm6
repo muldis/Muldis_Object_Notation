@@ -74,6 +74,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
           <Pair>
         | <Array>
         | <Lot>
+        | <Tuple>
         | <Set>
         | <Bag>
         | <Mix>
@@ -82,7 +83,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | <Interval_Bag>
         | <Heading>
         | <Renaming>
-        | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
@@ -280,6 +280,52 @@ grammar Muldis::Reference::Object_Notation::Grammar
             <this_and_that>
             [<sp>? ',' <sp>? [<this> | <this_and_that>]]*
             [<sp>? ',']?
+    }
+
+###########################################################################
+
+    token Tuple
+    {
+        <Tuple_subject>
+    }
+
+    token Tuple_subject
+    {
+        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
+    }
+
+    token tuple_attrs
+    {
+        <tuple_nullary> | <tuple_unary> | <tuple_nary>
+    }
+
+    token tuple_nullary
+    {
+        ''
+    }
+
+    token tuple_unary
+    {
+          [          <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr> <sp>? ',']
+        | [',' <sp>? <tuple_attr>          ]
+    }
+
+    token tuple_nary
+    {
+        [',' <sp>?]?
+        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<sp>? ',']?
+    }
+
+    token tuple_attr
+    {
+        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
+    }
+
+    token attr_asset
+    {
+        <Any>
     }
 
 ###########################################################################
@@ -614,52 +660,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token attr_name_after
     {
         <attr_name>
-    }
-
-###########################################################################
-
-    token Tuple
-    {
-        <Tuple_subject>
-    }
-
-    token Tuple_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
-    }
-
-    token tuple_attrs
-    {
-        <tuple_nullary> | <tuple_unary> | <tuple_nary>
-    }
-
-    token tuple_nullary
-    {
-        ''
-    }
-
-    token tuple_unary
-    {
-          [          <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr>          ]
-    }
-
-    token tuple_nary
-    {
-        [',' <sp>?]?
-        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
-        [<sp>? ',']?
-    }
-
-    token tuple_attr
-    {
-        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
-    }
-
-    token attr_asset
-    {
-        <Any>
     }
 
 ###########################################################################
