@@ -89,11 +89,11 @@ simple system-defined data type corresponding directly to each one.
 A *simple primary possrep* has a strictly non-recursive definition, and
 never is expressed in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single non-collective item.
-There are exactly 6 of these:
+There are exactly 7 of these:
 
 - **Ignorance**
 - **Boolean**
-- **Integer**
+- Numeric: **Integer**, **Fraction**
 - Stringy: **Bits**, **Blob**, **Text**
 
 A *collective primary possrep* has a strictly recursive definition, and is
@@ -114,12 +114,11 @@ artifact which provides a semantic tag for some other
 typically-structure-defining artifact thus giving the latter a different
 interpretation than otherwise.  Each syntax may optionally define extra
 formats specific to any secondary possrep which are more compact, such as
-a dedicated **Fraction** simple literal syntax or system data type value.
+a dedicated **Calendar Time** simple literal syntax or system data type value.
 
-Each of these 5 less-collective-like secondary possreps might have its own
+Each of these 4 less-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
-- **Fraction**
 - Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
 
 Some of these 14 more-collective-like secondary possreps might have its own
@@ -198,6 +197,33 @@ An **Integer** value is a general purpose
 exact integral number of any magnitude, which explicitly does not represent
 any kind of thing in particular, neither cardinal nor ordinal nor nominal.
 It has no minimum or maximum value.
+
+## Fraction
+
+A **Fraction** value is a general purpose
+exact rational number of any magnitude and precision, which explicitly does
+not represent any kind of thing in particular, neither cardinal nor ordinal
+nor nominal.  It has no minimum or maximum value.
+
+A **Fraction** value is characterized by a **Tuple** having a subset of the
+4 attributes of the heading
+{`n|numerator`,`d|denominator`,`r|radix`,`e|exponent`} such that each
+attribute asset is an **Integer**, and {`r|radix`,`e|exponent`} must only
+be given as a pair, and `d|denominator` if given must be non-zero, and
+`r|radix` if given must be at least 2; each of the 4 attributes, if not
+given, respectively have the implicit values {0,1,2,0}.
+
+The intended interpretation of a **Fraction** is as the rational number
+that results from evaluating the given 4 integers as the mathematical
+expression `(n/d)*(r^e)`, such that `/` means divide, `*` means multiply,
+and `^` means exponentiate.
+
+MUON does not require any mathematical normalization of a **Fraction**
+artifact's components in order for it to be a valid artifact; for example,
+the numerator/denominator pair do not need to be coprime.  But typically a
+type system will hide from the user the actual physical representation of
+whatever value a given **Fraction** artifact resolves to, and would
+determine value identity based on the actual logical rational number.
 
 ## Bits
 
@@ -327,33 +353,6 @@ single character attribute name consisting of code point 0 and so on) and
 the member itself defines the attribute asset.
 
 # LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS
-
-## Fraction
-
-A **Fraction** value is a general purpose
-exact rational number of any magnitude and precision, which explicitly does
-not represent any kind of thing in particular, neither cardinal nor ordinal
-nor nominal.  It has no minimum or maximum value.
-
-A **Fraction** value is characterized by a **Tuple** having a subset of the
-4 attributes of the heading
-{`n|numerator`,`d|denominator`,`r|radix`,`e|exponent`} such that each
-attribute asset is an **Integer**, and {`r|radix`,`e|exponent`} must only
-be given as a pair, and `d|denominator` if given must be non-zero, and
-`r|radix` if given must be at least 2; each of the 4 attributes, if not
-given, respectively have the implicit values {0,1,2,0}.
-
-The intended interpretation of a **Fraction** is as the rational number
-that results from evaluating the given 4 integers as the mathematical
-expression `(n/d)*(r^e)`, such that `/` means divide, `*` means multiply,
-and `^` means exponentiate.
-
-MUON does not require any mathematical normalization of a **Fraction**
-artifact's components in order for it to be a valid artifact; for example,
-the numerator/denominator pair do not need to be coprime.  But typically a
-type system will hide from the user the actual physical representation of
-whatever value a given **Fraction** artifact resolves to, and would
-determine value identity based on the actual logical rational number.
 
 ## Calendar Time
 

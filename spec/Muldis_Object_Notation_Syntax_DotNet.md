@@ -381,6 +381,41 @@ When its subject is any of the following, the predicate is optional:
 
 * Any `SYS_Integer_Big`.
 
+## Fraction
+
+A **Fraction** artifact has the predicate `Fraction`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any `SYS_Float_Fixed`.
+
+* Any `SYS_Decimal_Fixed`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Tuple_Ordered_D1` such that the 1 attribute asset is the *significand*.
+
+* Any `SYS_Tuple_Ordered_D2` such that the 2 attribute assets in ascending
+order are the *numerator* and *denominator*.
+
+* Any `SYS_Tuple_Ordered_D3` such that the 3 attribute assets in ascending
+order are the *significand*, *radix*, and *exponent*.
+
+* Any `SYS_Tuple_Ordered_D4` such that the 4 attribute assets in ascending
+order are the *numerator*, *denominator*, *radix*, and *exponent*.
+
+The above components are defined as follows:
+
+* A *significand* is any `SYS_Float_Fixed` or `SYS_Decimal_Fixed` or **Integer** subject.
+
+* A *numerator* is any **Integer** subject.
+
+* A *denominator* is any **Integer** subject which denotes a nonzero integer.
+
+* A *radix* is any **Integer** subject which denotes an integer that is at least 2.
+
+* An *exponent* is any **Integer** subject.
+
 ## Bits
 
 A **Bits** artifact has the predicate `Bits`.
@@ -477,41 +512,6 @@ Not permitted is any of the following, to keep things simpler or more correct:
 * Any object of the .NET class `System.Data.DataRow`.
 
 *TODO: Consider adding .NET anonymous types as an option if feasible.*
-
-## Fraction
-
-A **Fraction** artifact has the predicate `Fraction`.
-
-When its subject is any of the following, the predicate is optional:
-
-* Any `SYS_Float_Fixed`.
-
-* Any `SYS_Decimal_Fixed`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Tuple_Ordered_D1` such that the 1 attribute asset is the *significand*.
-
-* Any `SYS_Tuple_Ordered_D2` such that the 2 attribute assets in ascending
-order are the *numerator* and *denominator*.
-
-* Any `SYS_Tuple_Ordered_D3` such that the 3 attribute assets in ascending
-order are the *significand*, *radix*, and *exponent*.
-
-* Any `SYS_Tuple_Ordered_D4` such that the 4 attribute assets in ascending
-order are the *numerator*, *denominator*, *radix*, and *exponent*.
-
-The above components are defined as follows:
-
-* A *significand* is any `SYS_Float_Fixed` or `SYS_Decimal_Fixed` or **Integer** subject.
-
-* A *numerator* is any **Integer** subject.
-
-* A *denominator* is any **Integer** subject which denotes a nonzero integer.
-
-* A *radix* is any **Integer** subject which denotes an integer that is at least 2.
-
-* An *exponent* is any **Integer** subject.
 
 ## Calendar Time
 

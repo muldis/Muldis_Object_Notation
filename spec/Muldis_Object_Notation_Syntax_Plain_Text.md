@@ -276,10 +276,10 @@ Grammar:
           <Ignorance>
         | <Boolean>
         | <Integer>
+        | <Fraction>
         | <Bits>
         | <Blob>
         | <Text>
-        | <Fraction>
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
@@ -437,6 +437,148 @@ Examples:
     0o644
 
     0b11001001
+```
+
+## Fraction
+
+A **Fraction** value is represented by `<Fraction>`.
+
+Grammar:
+
+```
+    token Fraction
+    {
+        <Fraction_subject>
+    }
+
+    token Fraction_subject
+    {
+        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
+    }
+
+    token significand
+    {
+        <radix_point_sig> | <num_den_sig>
+    }
+
+    token radix_point_sig
+    {
+        <[+-]>? <sp>? <nonsigned_radix_point_sig>
+    }
+
+    token nonsigned_radix_point_sig
+    {
+          [ 0b <sp>?   [[<[ 0..1      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [ 0o <sp>?   [[<[ 0..7      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [[0d <sp>?]? [[<[ 0..9      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [ 0x <sp>?   [[<[ 0..9 A..F ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+    }
+
+    token num_den_sig
+    {
+        <numerator> <sp>? '/' <sp>? <denominator>
+    }
+
+    token numerator
+    {
+        <Integer_subject>
+    }
+
+    token denominator
+    {
+        <Integer_subject_nonsigned>
+    }
+
+    token radix
+    {
+        <Integer_subject_nonsigned>
+    }
+
+    token exponent
+    {
+        <Integer_subject>
+    }
+```
+
+This grammar supports writing **Fraction** literals in any of the numeric
+bases {2,8,10,16}, using conventional syntax.  The literal may optionally
+contain underscore characters (`_`), which exist just to help with visual
+formatting, such as for `20_194/17` or `3.141_59`.
+
+The general form of a **Fraction** literal is `n/d*r^e` such that {n,d,r,e}
+are each integers and the literal represents the rational number that
+results from evaluating the mathematical expression using the following
+implicit order of operations, `(n/d)*(r^e)` such that `/` means divide, `*`
+means multiply, and `^` means exponentiate.
+
+MUON does not require the numerator/denominator pair to be coprime, but
+typically a type system will normalize the pair as such when determining
+value identity.  Similarly, MUON does not require any other kind of
+normalization between the components of a **Fraction** literal.
+
+While the wider general format `n/d*r^e` can represent every rational
+number, as can just the `n/d` portion by itself, the alternate but typical
+format `x.x` can only represent a proper subset of the rational numbers,
+that subset being every rational number that can be represented as a
+terminating decimal number.  Note that every rational number that can be
+represented as a terminating binary or octal or hexadecimal number can also
+be represented as a terminating decimal number.
+
+Note that in order to keep the grammar simpler or more predictable, each
+**Fraction** component {n,d,r,e} must have its numeric base specified
+individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
+be interpreted as base 10.  This keeps behaviour consistent with a parser
+that sees a **Fraction** literal but interprets it as multiple **Integer**
+literals separated by symbolic infix operators, evaluation order aside.
+Also per normal expectations, literals in the format `x.x` only specify the
+base at most once in total, *not* separately for the part after the `.`.
+
+A `<denominator>` is subject to the additional rule that the integer it
+denotes must be nonzero.
+
+A `<radix>` is subject to the additional rule that the integer it denotes
+must be at least 2.
+
+Examples:
+
+```
+    0.0
+
+    1.0
+
+    -4.72
+
+    +4.72
+
+    0/1
+
+    1/1
+
+    5/3
+
+    -472/100
+
+    +472/100
+
+    15_485_863/32_452_843
+
+    `First 101 digits of transcendental number π.`
+    3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
+        58209_74944_59230_78164_06286_20899_86280_34825_34211_70679
+
+    `Mersenne Primes 2^107-1 divided by 2^127-1.`
+    162259276829213363391578010288127
+        /170141183460469231731687303715884105727
+
+    4.5207196*10^37
+
+    0xDEADBEEF.FACE
+
+    -0o35/0o3
+
+    0b1.1
+
+    0b1.011101101*0b10^-0b11011
 ```
 
 ## Bits
@@ -931,148 +1073,6 @@ Examples:
         ),
         comment: "Fly!",
     )
-```
-
-## Fraction
-
-A **Fraction** value is represented by `<Fraction>`.
-
-Grammar:
-
-```
-    token Fraction
-    {
-        <Fraction_subject>
-    }
-
-    token Fraction_subject
-    {
-        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
-    }
-
-    token significand
-    {
-        <radix_point_sig> | <num_den_sig>
-    }
-
-    token radix_point_sig
-    {
-        <[+-]>? <sp>? <nonsigned_radix_point_sig>
-    }
-
-    token nonsigned_radix_point_sig
-    {
-          [ 0b <sp>?   [[<[ 0..1      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [ 0o <sp>?   [[<[ 0..7      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [[0d <sp>?]? [[<[ 0..9      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [ 0x <sp>?   [[<[ 0..9 A..F ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-    }
-
-    token num_den_sig
-    {
-        <numerator> <sp>? '/' <sp>? <denominator>
-    }
-
-    token numerator
-    {
-        <Integer_subject>
-    }
-
-    token denominator
-    {
-        <Integer_subject_nonsigned>
-    }
-
-    token radix
-    {
-        <Integer_subject_nonsigned>
-    }
-
-    token exponent
-    {
-        <Integer_subject>
-    }
-```
-
-This grammar supports writing **Fraction** literals in any of the numeric
-bases {2,8,10,16}, using conventional syntax.  The literal may optionally
-contain underscore characters (`_`), which exist just to help with visual
-formatting, such as for `20_194/17` or `3.141_59`.
-
-The general form of a **Fraction** literal is `n/d*r^e` such that {n,d,r,e}
-are each integers and the literal represents the rational number that
-results from evaluating the mathematical expression using the following
-implicit order of operations, `(n/d)*(r^e)` such that `/` means divide, `*`
-means multiply, and `^` means exponentiate.
-
-MUON does not require the numerator/denominator pair to be coprime, but
-typically a type system will normalize the pair as such when determining
-value identity.  Similarly, MUON does not require any other kind of
-normalization between the components of a **Fraction** literal.
-
-While the wider general format `n/d*r^e` can represent every rational
-number, as can just the `n/d` portion by itself, the alternate but typical
-format `x.x` can only represent a proper subset of the rational numbers,
-that subset being every rational number that can be represented as a
-terminating decimal number.  Note that every rational number that can be
-represented as a terminating binary or octal or hexadecimal number can also
-be represented as a terminating decimal number.
-
-Note that in order to keep the grammar simpler or more predictable, each
-**Fraction** component {n,d,r,e} must have its numeric base specified
-individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
-be interpreted as base 10.  This keeps behaviour consistent with a parser
-that sees a **Fraction** literal but interprets it as multiple **Integer**
-literals separated by symbolic infix operators, evaluation order aside.
-Also per normal expectations, literals in the format `x.x` only specify the
-base at most once in total, *not* separately for the part after the `.`.
-
-A `<denominator>` is subject to the additional rule that the integer it
-denotes must be nonzero.
-
-A `<radix>` is subject to the additional rule that the integer it denotes
-must be at least 2.
-
-Examples:
-
-```
-    0.0
-
-    1.0
-
-    -4.72
-
-    +4.72
-
-    0/1
-
-    1/1
-
-    5/3
-
-    -472/100
-
-    +472/100
-
-    15_485_863/32_452_843
-
-    `First 101 digits of transcendental number π.`
-    3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
-        58209_74944_59230_78164_06286_20899_86280_34825_34211_70679
-
-    `Mersenne Primes 2^107-1 divided by 2^127-1.`
-    162259276829213363391578010288127
-        /170141183460469231731687303715884105727
-
-    4.5207196*10^37
-
-    0xDEADBEEF.FACE
-
-    -0o35/0o3
-
-    0b1.1
-
-    0b1.011101101*0b10^-0b11011
 ```
 
 ## Calendar Time
@@ -2120,6 +2120,7 @@ possrep is recognized within a Muldis Object Notation artifact:
     Ignorance       | prefix 0s followed by IGNORANCE
     Boolean         | prefix 0b followed by FALSE or TRUE
     Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0[L|c] prefix
+    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
@@ -2127,7 +2128,6 @@ possrep is recognized within a Muldis Object Notation artifact:
     Array           | only {} or {...} without any colon
     Lot             | {...} with >= 1 colon, or prefix 0s followed by EMPTY_LOT
     Tuple           | only () or (...) with >= 1 comma
-    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
     locationals     | prefix 0L
     Interval        | only [] or [...]
     Nesting         | prefix ::

@@ -86,7 +86,7 @@ Simple Primary:
 
 - **Ignorance**
 - **Boolean**
-- **Integer**
+- Numeric: **Integer**, **Fraction**
 - Stringy: **Bits**, **Blob**, **Text**
 
 Collective Primary:
@@ -98,7 +98,6 @@ Collective Primary:
 
 Less-Collective Secondary:
 
-- **Fraction**
 - Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
 
 More-Collective Secondary:

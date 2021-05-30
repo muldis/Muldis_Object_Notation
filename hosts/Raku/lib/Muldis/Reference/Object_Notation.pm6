@@ -58,10 +58,10 @@ grammar Muldis::Reference::Object_Notation::Grammar
           <Ignorance>
         | <Boolean>
         | <Integer>
+        | <Fraction>
         | <Bits>
         | <Blob>
         | <Text>
-        | <Fraction>
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
@@ -132,6 +132,61 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | [ 0o <sp>?   [<[ 0..7      ]>+]+ % [_ | <sp>]]
         | [[0d <sp>?]? [<[ 0..9      ]>+]+ % [_ | <sp>]]
         | [ 0x <sp>?   [<[ 0..9 A..F ]>+]+ % [_ | <sp>]]
+    }
+
+###########################################################################
+
+    token Fraction
+    {
+        <Fraction_subject>
+    }
+
+    token Fraction_subject
+    {
+        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
+    }
+
+    token significand
+    {
+        <radix_point_sig> | <num_den_sig>
+    }
+
+    token radix_point_sig
+    {
+        <[+-]>? <sp>? <nonsigned_radix_point_sig>
+    }
+
+    token nonsigned_radix_point_sig
+    {
+          [ 0b <sp>?   [[<[ 0..1      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [ 0o <sp>?   [[<[ 0..7      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [[0d <sp>?]? [[<[ 0..9      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+        | [ 0x <sp>?   [[<[ 0..9 A..F ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+    }
+
+    token num_den_sig
+    {
+        <numerator> <sp>? '/' <sp>? <denominator>
+    }
+
+    token numerator
+    {
+        <Integer_subject>
+    }
+
+    token denominator
+    {
+        <Integer_subject_nonsigned>
+    }
+
+    token radix
+    {
+        <Integer_subject_nonsigned>
+    }
+
+    token exponent
+    {
+        <Integer_subject>
     }
 
 ###########################################################################
@@ -326,61 +381,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token attr_asset
     {
         <Any>
-    }
-
-###########################################################################
-
-    token Fraction
-    {
-        <Fraction_subject>
-    }
-
-    token Fraction_subject
-    {
-        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
-    }
-
-    token significand
-    {
-        <radix_point_sig> | <num_den_sig>
-    }
-
-    token radix_point_sig
-    {
-        <[+-]>? <sp>? <nonsigned_radix_point_sig>
-    }
-
-    token nonsigned_radix_point_sig
-    {
-          [ 0b <sp>?   [[<[ 0..1      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [ 0o <sp>?   [[<[ 0..7      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [[0d <sp>?]? [[<[ 0..9      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [ 0x <sp>?   [[<[ 0..9 A..F ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-    }
-
-    token num_den_sig
-    {
-        <numerator> <sp>? '/' <sp>? <denominator>
-    }
-
-    token numerator
-    {
-        <Integer_subject>
-    }
-
-    token denominator
-    {
-        <Integer_subject_nonsigned>
-    }
-
-    token radix
-    {
-        <Integer_subject_nonsigned>
-    }
-
-    token exponent
-    {
-        <Integer_subject>
     }
 
 ###########################################################################
