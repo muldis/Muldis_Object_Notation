@@ -58,7 +58,7 @@ This document consists of multiple parts:
 
 1. Overview (the current part)
 1. [Semantics](Muldis_Object_Notation_Semantics.md)
-1. Syntax_Abstract
+1. [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md)
 1. [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 1. Syntax_Muldis_Data_Language
 1. Syntax_Raku
