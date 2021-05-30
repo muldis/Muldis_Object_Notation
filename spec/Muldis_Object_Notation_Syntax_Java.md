@@ -23,11 +23,14 @@ This document consists of multiple parts; for a directory to all of the
 parts, see [Overview](Muldis_Object_Notation.md).
 
 This part of the **Muldis Object Notation** document specifies the
-canonical Java hosted syntax of MUON, which expresses a MUON artifact
-in terms of a native in-memory value or object of the Java programming
-language, version 8 (2014) or later,
+canonical concrete Java hosted syntax of MUON,
+which expresses a MUON artifact in terms of a native in-memory value or
+object of the Java programming language, version 8 (2014) or later,
 as a non-cyclic data structure composed only using system-defined types.
-This is derived from and maps with the MUON `Syntax_Plain_Text`.
+
+The MUON `Syntax_Java` is derived from and maps with the MUON
+[Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
+[Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
 The MUON Java-hosted format is semi-lightweight and designed to support
 interchange of source code and data between any 2 environments that do have
@@ -44,14 +47,6 @@ Java source code.  It is fairly easy for machines to parse and generate.
 See also <https://docs.oracle.com/javase/specs/jls/se8/html/index.html>.
 
 See also <https://docs.oracle.com/javase/specs/jls/se11/html/index.html>.
-
-# DATA TYPE POSSREPS
-
-**Muldis Object Notation** is mainly characterized by a set of *data type
-possreps* or *possreps* (*possible representations*) that all *values*
-represented with MUON syntax are characterized by.
-
-See [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
 # HOST NATIVE DATA TYPES
 

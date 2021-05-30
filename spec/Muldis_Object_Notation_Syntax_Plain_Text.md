@@ -23,14 +23,14 @@ its part name is `Syntax_Plain_Text`.
     MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
     Muldis_Content_Predicate`
 
-    (Relation:{
+    (Relation:(Set:{
         (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
             phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
         (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
             phone_numbers : (Set:{})),
         (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
             phone_numbers : (Set:{"+81.9072391679"})),
-    })
+    }))
 ```
 
 # DESCRIPTION
@@ -39,12 +39,15 @@ This document consists of multiple parts; for a directory to all of the
 parts, see [Overview](Muldis_Object_Notation.md).
 
 This part of the **Muldis Object Notation** document specifies the
-canonical plain text syntax of MUON, which expresses a MUON artifact in
-terms of a Unicode character string conforming to a well-defined pattern,
+canonical concrete plain text syntax of MUON,
+which expresses a MUON artifact in terms of a Unicode character string
+conforming to a well-defined pattern,
 which can exist as a raw file in a filesystem or be exchanged over a
 network or exist in memory of any program as a character string value.
-This is the canonical syntax which all other MUON syntaxes are
-derived from and map with.
+
+The MUON `Syntax_Plain_Text` is derived from and maps with the MUON
+[Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
+[Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
 The MUON canonical plain text format is semi-lightweight and designed to
 support interchange of source code and data between any 2 environments that
@@ -62,14 +65,6 @@ files can in fact have any filename extension when there is other context
 to interpret them with.  Filename extensions are more for the benefit of
 the operating system or command shell or users than for a MUON parser or
 generator, the latter just cares about the content of the file.
-
-# DATA TYPE POSSREPS
-
-**Muldis Object Notation** is mainly characterized by a set of *data type
-possreps* or *possreps* (*possible representations*) that all *values*
-represented with MUON syntax are characterized by.
-
-See [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
 # NORMALIZATION
 

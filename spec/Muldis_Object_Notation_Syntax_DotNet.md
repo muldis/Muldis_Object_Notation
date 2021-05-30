@@ -23,12 +23,16 @@ This document consists of multiple parts; for a directory to all of the
 parts, see [Overview](Muldis_Object_Notation.md).
 
 This part of the **Muldis Object Notation** document specifies the
-canonical .NET/C\# hosted syntax of MUON, which expresses a MUON artifact
-in terms of a native in-memory value or object of the .NET/C\# programming
-language, .NET Standard version 2.0 (2017; or Framework 4.0, 2010) or later,
+canonical concrete .NET/C\# hosted syntax of MUON,
+which expresses a MUON artifact in terms of a native in-memory value or
+object of the .NET/C\# programming language, .NET Standard version 2.0
+(2017; or Framework 4.0, 2010) or later,
 as a non-cyclic data structure composed only using system-defined types,
 and specifically the subset that are *CLS-compliant*.
-This is derived from and maps with the MUON `Syntax_Plain_Text`.
+
+The MUON `Syntax_DotNet` is derived from and maps with the MUON
+[Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
+[Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
 The MUON .NET-hosted format is semi-lightweight and designed to support
 interchange of source code and data between any 2 environments that do have
@@ -43,14 +47,6 @@ The format is fairly easy for humans to read and write in terms of plain
 .NET/C\# source code.  It is fairly easy for machines to parse and generate.
 
 See also <https://dotnet.microsoft.com>.
-
-# DATA TYPE POSSREPS
-
-**Muldis Object Notation** is mainly characterized by a set of *data type
-possreps* or *possreps* (*possible representations*) that all *values*
-represented with MUON syntax are characterized by.
-
-See [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
 # HOST NATIVE DATA TYPES
 
