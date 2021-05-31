@@ -61,255 +61,6 @@ rest of the current document part.  The scope of these aliases is strictly
 to `Syntax_DotNet` and other document parts will often be using the
 exact same aliases for cross-part parity that have different definitions.
 
-## SYS_Object
-
-A `SYS_Object` is any of the following:
-
-* Any value of any .NET structure type.
-
-* Any object of any .NET class, in particular `System.Object`,
-which is the common parent class of all .NET classes.
-
-## SYS_Null
-
-A `SYS_Null` is any of the following:
-
-* The special .NET `null` value.
-
-Not permitted is any of the following, to keep things simpler:
-
-* The only object of the .NET singleton class `System.DBNull`.
-
-## SYS_Boolean
-
-A `SYS_Boolean` is any of the following:
-
-* Any value of the .NET structure type `System.Boolean`.
-
-## SYS_Integer_Fixed
-
-A `SYS_Integer_Fixed` is any of the following:
-
-* Any value of any of the .NET structure types `System.Int32`, `System.Int64`.
-
-Not permitted is any of the following, to keep things simpler:
-
-* Any value of any of the .NET structure types `System.Byte`, `System.Int16`.
-
-## SYS_Integer_Big
-
-A `SYS_Integer_Big` is any of the following:
-
-* Any value of the .NET structure type `System.Numerics.BigInteger`.
-
-## SYS_Float_Fixed
-
-A `SYS_Float_Fixed` is any of the following:
-
-* Any finite number or signed zero value of any of the .NET structure types
-`System.Single`, `System.Double`;
-both signed zeroes are treated as the same plain zero.
-
-Not permitted is any of the following, to keep things more correct and simpler:
-
-* Any infinity or NaN value of any of the .NET structure types
-`System.Single`, `System.Double`.
-
-## SYS_Decimal_Fixed
-
-A `SYS_Decimal_Fixed` is any of the following:
-
-* Any value of the .NET structure type `System.Decimal`.
-
-## SYS_Bit_String
-
-A `SYS_Bit_String` is any of the following:
-
-* Any object of the .NET class `System.Collections.BitArray`.
-
-## SYS_Byte_String
-
-A `SYS_Byte_String` is any of the following:
-
-* Any value of the .NET structure type array `System.Byte[]`.
-
-## SYS_Char_String
-
-A `SYS_Char_String` is any of the following:
-
-* Any object of the .NET class `System.String` that is *well formed*.
-
-Not permitted is any of the following, to keep things simpler or more correct:
-
-* Any object of the .NET class `System.String` that is not *well formed*.
-
-* Any value of the .NET structure type `System.Char`.
-
-* Any object of the .NET class `System.Text.StringBuilder`.
-
-* Any raw or internal alternatives such as `Char[]`.
-
-A .NET `System.String` is characterized as a sequence of 0..N `System.Char`
-such that each of the latter is an unsigned 16-bit integer *C*.
-A *well formed* string denotes a Unicode BMP code point with a single *C*
-in the non-surrogate set {0..0xD7FF,0xE000..0xFFFF}
-(`System.Char.IsSurrogate()` is false) and it denotes a Unicode
-non-BMP code point with an ordered pair of *C* each in the surrogate set
-{0xD800..0xDFFF} (`System.Char.IsSurrogate()` is true) and the pair
-is also well formed (`System.Char.IsSurrogatePair()` is true); a
-*well formed* string does not contain any *C* in the surrogate set that
-isn't so paired.
-
-## SYS_Pair_KV
-
-A `SYS_Pair_KV` is any of the following:
-
-* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`;
-the aliases `SYS_key` and `SYS_value` refer to
-its (`SYS_Object` typed) properties `Key` and `Value`.
-
-Not permitted is any of the following, to keep things simpler:
-
-* Any values or objects of N-ary collection types having exactly 2 elements.
-
-## SYS_Array
-
-A `SYS_Array` is any of the following:
-
-* Any object of any .NET array class
-(an array class has a name like `foo[]` and is a class for whom
-the predicate `Type.IsArray()` results in true);
-the alias `SYS_members` refers to its (`SYS_Object` typed) elements;
-the alias `SYS_pairs_opm` refers to its (`SYS_Object` typed) elements
-paired with their corresponding (`SYS_Integer_Fixed` typed) ordinal positions,
-those being referred to with `SYS_pair_member` and `SYS_pair_ord_pos`.
-
-* Any value of any .NET structure type
-that composes the .NET interface `System.Collections.Generic.IList`;
-the alias `SYS_members` refers to its (`SYS_Object` typed) elements;
-the alias `SYS_pairs_opm` refers to its (`SYS_Object` typed) elements
-paired with their corresponding (`SYS_Integer_Fixed` typed) ordinal positions,
-those being referred to with `SYS_pair_member` and `SYS_pair_ord_pos`.
-
-* Any object of any .NET class
-that composes the .NET interface `System.Collections.Generic.IList`;
-the alias `SYS_members` refers to its (`SYS_Object` typed) elements;
-the alias `SYS_pairs_opm` refers to its (`SYS_Object` typed) elements
-paired with their corresponding (`SYS_Integer_Fixed` typed) ordinal positions,
-those being referred to with `SYS_pair_member` and `SYS_pair_ord_pos`.
-
-Note that example composers of `System.Collections.Generic.IList` are:
-`System.Collections.Immutable.ImmutableArray`,
-`System.Collections.Generic.List`,
-`System.Collections.Immutable.ImmutableList`.
-
-## SYS_Set
-
-A `SYS_Set` is any of the following:
-
-* Any object of any .NET class
-that composes the .NET interface `System.Collections.Generic.ISet`;
-the alias `SYS_members` refers to its (`SYS_Object` typed) elements.
-
-Note that example composers of `System.Collections.Generic.ISet` are:
-`System.Collections.Generic.HashSet`,
-`System.Collections.Generic.SortedSet`,
-`System.Collections.Immutable.ImmutableHashSet`.
-`System.Collections.Immutable.ImmutableSortedSet`.
-
-## SYS_Bag
-
-A `SYS_Bag` is any of the following:
-
-* Any object of the .NET class `System.Collections.Concurrent.ConcurrentBag`.
-
-*TODO: Revisit this.*
-
-## SYS_Dictionary
-
-A `SYS_Dictionary` is any of the following:
-
-* Any object of the .NET class `System.Collections.Generic.Dictionary`;
-the alias `SYS_pairs_kv` refers to its (`SYS_Pair_KV` typed) elements.
-
-## SYS_Tuple_Ordered
-
-A `SYS_Tuple_Ordered` is any of the following:
-
-* Any `SYS_Tuple_Ordered_As_Tuple`.
-
-* Any `SYS_Tuple_Ordered_As_Array`.
-
-## SYS_Tuple_Ordered_As_Tuple
-
-A `SYS_Tuple_Ordered_As_Tuple` is any of the following:
-
-* Any value of any .NET structure type
-that composes the .NET interface `System.Runtime.CompilerServices.ITuple`;
-the alias `SYS_attrs_na` refers to its (`SYS_Object` typed) elements paired
-with their corresponding ordinal positions (interpreted as a Unicode code
-point as a `SYS_Char_String`), those being referred to with `SYS_attr_name`
-and `SYS_attr_asset`.
-
-* Any object of any .NET class
-that composes the .NET interface `System.Runtime.CompilerServices.ITuple`;
-the alias `SYS_attrs_na` refers to its (`SYS_Object` typed) elements paired
-with their corresponding ordinal positions (interpreted as a Unicode code
-point as a `SYS_Char_String`), those being referred to with `SYS_attr_name`
-and `SYS_attr_asset`.
-
-Note that example composers of `System.Runtime.CompilerServices.ITuple` are:
-`System.ValueTuple<...>`,
-`System.Tuple<...>`.
-
-## SYS_Tuple_Ordered_As_Array
-
-A `SYS_Tuple_Ordered_As_Array` is any of the following:
-
-* Any `SYS_Array`; the alias `SYS_attrs_na` refers to its `SYS_pairs_opm`,
-such that the aliases `SYS_attr_name` and `SYS_attr_asset` refer in turn to
-each `SYS_pair_ord_pos` (interpreted as a Unicode code point
-as a `SYS_Char_String`) and `SYS_pair_member`.
-
-## SYS_Tuple_Ordered_D1
-
-A `SYS_Tuple_Ordered_D1` is any of the following:
-
-* Any `SYS_Tuple_Ordered` that has exactly 1 attribute.
-
-## SYS_Tuple_Ordered_D2
-
-A `SYS_Tuple_Ordered_D2` is any of the following:
-
-* Any `SYS_Tuple_Ordered` that has exactly 2 attributes.
-
-## SYS_Tuple_Ordered_D3
-
-A `SYS_Tuple_Ordered_D3` is any of the following:
-
-* Any `SYS_Tuple_Ordered` that has exactly 3 attributes.
-
-## SYS_Tuple_Ordered_D4
-
-A `SYS_Tuple_Ordered_D4` is any of the following:
-
-* Any `SYS_Tuple_Ordered` that has exactly 4 attributes.
-
-## SYS_Tuple_Ordered_D6
-
-A `SYS_Tuple_Ordered_D6` is any of the following:
-
-* Any `SYS_Tuple_Ordered` that has exactly 6 attributes.
-
-## SYS_Tuple_Named_As_Dictionary
-
-A `SYS_Tuple_Named_As_Dictionary` is any of the following:
-
-* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`, that
-member's `SYS_key` is a `SYS_Char_String`; the alias `SYS_attrs_na` refers
-to its `SYS_pairs_kv`, such that the aliases `SYS_attr_name` and
-`SYS_attr_asset` refer in turn to each `SYS_key` and `SYS_value`.
-
 # GRAMMAR
 
 Each valid MUON artifact is an instance of a single MUON possrep.  Every
@@ -338,6 +89,13 @@ An **Any** artifact is an artifact that qualifies as any of the other MUON
 artifacts, since the **Any** possrep is characterized by the union of all
 other possreps.  Loosely speaking, it is a `SYS_Object`.
 
+A `SYS_Object` is any of the following:
+
+* Any value of any .NET structure type.
+
+* Any object of any .NET class, in particular `System.Object`,
+which is the common parent class of all .NET classes.
+
 ## None / Empty Type Possrep
 
 A **None** artifact is an artifact that qualifies as none of the other MUON
@@ -353,6 +111,14 @@ When its subject is any of the following, the predicate is optional:
 
 * Any `SYS_Null`.
 
+A `SYS_Null` is any of the following:
+
+* The special .NET `null` value.
+
+Not permitted is any of the following, to keep things simpler:
+
+* The only object of the .NET singleton class `System.DBNull`.
+
 ## Boolean
 
 A **Boolean** artifact has the predicate `Boolean`.
@@ -367,6 +133,10 @@ Not permitted is any of the following, to keep things more correct and simpler:
 
 * Any value of some other type that might represent a boolean.
 
+A `SYS_Boolean` is any of the following:
+
+* Any value of the .NET structure type `System.Boolean`.
+
 ## Integer
 
 An **Integer** artifact has the predicate `Integer`.
@@ -376,6 +146,18 @@ When its subject is any of the following, the predicate is optional:
 * Any `SYS_Integer_Fixed`.
 
 * Any `SYS_Integer_Big`.
+
+A `SYS_Integer_Fixed` is any of the following:
+
+* Any value of any of the .NET structure types `System.Int32`, `System.Int64`.
+
+Not permitted is any of the following, to keep things simpler:
+
+* Any value of any of the .NET structure types `System.Byte`, `System.Int16`.
+
+A `SYS_Integer_Big` is any of the following:
+
+* Any value of the .NET structure type `System.Numerics.BigInteger`.
 
 ## Fraction
 
@@ -412,6 +194,21 @@ The above components are defined as follows:
 
 * An *exponent* is any **Integer** subject.
 
+A `SYS_Float_Fixed` is any of the following:
+
+* Any finite number or signed zero value of any of the .NET structure types
+`System.Single`, `System.Double`;
+both signed zeroes are treated as the same plain zero.
+
+Not permitted is any of the following, to keep things more correct and simpler:
+
+* Any infinity or NaN value of any of the .NET structure types
+`System.Single`, `System.Double`.
+
+A `SYS_Decimal_Fixed` is any of the following:
+
+* Any value of the .NET structure type `System.Decimal`.
+
 ## Bits
 
 A **Bits** artifact has the predicate `Bits`.
@@ -419,6 +216,10 @@ A **Bits** artifact has the predicate `Bits`.
 When its subject is any of the following, the predicate is optional:
 
 * Any `SYS_Bit_String`.
+
+A `SYS_Bit_String` is any of the following:
+
+* Any object of the .NET class `System.Collections.BitArray`.
 
 ## Blob
 
@@ -430,6 +231,10 @@ When its subject is any of the following, the predicate is required:
 
 Note that an unqualified subject of a `SYS_Byte_String` is treated as an **Array**.
 
+A `SYS_Byte_String` is any of the following:
+
+* Any value of the .NET structure type array `System.Byte[]`.
+
 ## Text / Attribute Name
 
 A **Text** artifact has the predicate `Text`.
@@ -437,6 +242,31 @@ A **Text** artifact has the predicate `Text`.
 When its subject is any of the following, the predicate is optional:
 
 * Any `SYS_Char_String`.
+
+A `SYS_Char_String` is any of the following:
+
+* Any object of the .NET class `System.String` that is *well formed*.
+
+Not permitted is any of the following, to keep things simpler or more correct:
+
+* Any object of the .NET class `System.String` that is not *well formed*.
+
+* Any value of the .NET structure type `System.Char`.
+
+* Any object of the .NET class `System.Text.StringBuilder`.
+
+* Any raw or internal alternatives such as `Char[]`.
+
+A .NET `System.String` is characterized as a sequence of 0..N `System.Char`
+such that each of the latter is an unsigned 16-bit integer *C*.
+A *well formed* string denotes a Unicode BMP code point with a single *C*
+in the non-surrogate set {0..0xD7FF,0xE000..0xFFFF}
+(`System.Char.IsSurrogate()` is false) and it denotes a Unicode
+non-BMP code point with an ordered pair of *C* each in the surrogate set
+{0xD800..0xDFFF} (`System.Char.IsSurrogate()` is true) and the pair
+is also well formed (`System.Char.IsSurrogatePair()` is true); a
+*well formed* string does not contain any *C* in the surrogate set that
+isn't so paired.
 
 ## Pair
 
@@ -446,6 +276,16 @@ When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Pair_KV` such that its `SYS_key` is the *this* (any **Any**
 artifact) and its `SYS_value` is the *that* (any **Any** artifact).
+
+A `SYS_Pair_KV` is any of the following:
+
+* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`;
+the aliases `SYS_key` and `SYS_value` refer to
+its (`SYS_Object` typed) properties `Key` and `Value`.
+
+Not permitted is any of the following, to keep things simpler:
+
+* Any values or objects of N-ary collection types having exactly 2 elements.
 
 ## Array
 
@@ -463,6 +303,35 @@ When its subject is any of the following, the predicate is required:
 `SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
 **Any** artifact and its `SYS_value` is any **Integer** subject which
 denotes a non-negative integer *multiplicity*.
+
+A `SYS_Array` is any of the following:
+
+* Any object of any .NET array class
+(an array class has a name like `foo[]` and is a class for whom
+the predicate `Type.IsArray()` results in true);
+the alias `SYS_members` refers to its (`SYS_Object` typed) elements;
+the alias `SYS_pairs_opm` refers to its (`SYS_Object` typed) elements
+paired with their corresponding (`SYS_Integer_Fixed` typed) ordinal positions,
+those being referred to with `SYS_pair_member` and `SYS_pair_ord_pos`.
+
+* Any value of any .NET structure type
+that composes the .NET interface `System.Collections.Generic.IList`;
+the alias `SYS_members` refers to its (`SYS_Object` typed) elements;
+the alias `SYS_pairs_opm` refers to its (`SYS_Object` typed) elements
+paired with their corresponding (`SYS_Integer_Fixed` typed) ordinal positions,
+those being referred to with `SYS_pair_member` and `SYS_pair_ord_pos`.
+
+* Any object of any .NET class
+that composes the .NET interface `System.Collections.Generic.IList`;
+the alias `SYS_members` refers to its (`SYS_Object` typed) elements;
+the alias `SYS_pairs_opm` refers to its (`SYS_Object` typed) elements
+paired with their corresponding (`SYS_Integer_Fixed` typed) ordinal positions,
+those being referred to with `SYS_pair_member` and `SYS_pair_ord_pos`.
+
+Note that example composers of `System.Collections.Generic.IList` are:
+`System.Collections.Immutable.ImmutableArray`,
+`System.Collections.Generic.List`,
+`System.Collections.Immutable.ImmutableList`.
 
 ## Lot
 
@@ -508,6 +377,71 @@ Not permitted is any of the following, to keep things simpler or more correct:
 * Any object of the .NET class `System.Data.DataRow`.
 
 *TODO: Consider adding .NET anonymous types as an option if feasible.*
+
+A `SYS_Dictionary` is any of the following:
+
+* Any object of the .NET class `System.Collections.Generic.Dictionary`;
+the alias `SYS_pairs_kv` refers to its (`SYS_Pair_KV` typed) elements.
+
+A `SYS_Tuple_Ordered` is any of the following:
+
+* Any `SYS_Tuple_Ordered_As_Tuple`.
+
+* Any `SYS_Tuple_Ordered_As_Array`.
+
+A `SYS_Tuple_Ordered_As_Tuple` is any of the following:
+
+* Any value of any .NET structure type
+that composes the .NET interface `System.Runtime.CompilerServices.ITuple`;
+the alias `SYS_attrs_na` refers to its (`SYS_Object` typed) elements paired
+with their corresponding ordinal positions (interpreted as a Unicode code
+point as a `SYS_Char_String`), those being referred to with `SYS_attr_name`
+and `SYS_attr_asset`.
+
+* Any object of any .NET class
+that composes the .NET interface `System.Runtime.CompilerServices.ITuple`;
+the alias `SYS_attrs_na` refers to its (`SYS_Object` typed) elements paired
+with their corresponding ordinal positions (interpreted as a Unicode code
+point as a `SYS_Char_String`), those being referred to with `SYS_attr_name`
+and `SYS_attr_asset`.
+
+Note that example composers of `System.Runtime.CompilerServices.ITuple` are:
+`System.ValueTuple<...>`,
+`System.Tuple<...>`.
+
+A `SYS_Tuple_Ordered_As_Array` is any of the following:
+
+* Any `SYS_Array`; the alias `SYS_attrs_na` refers to its `SYS_pairs_opm`,
+such that the aliases `SYS_attr_name` and `SYS_attr_asset` refer in turn to
+each `SYS_pair_ord_pos` (interpreted as a Unicode code point
+as a `SYS_Char_String`) and `SYS_pair_member`.
+
+A `SYS_Tuple_Ordered_D1` is any of the following:
+
+* Any `SYS_Tuple_Ordered` that has exactly 1 attribute.
+
+A `SYS_Tuple_Ordered_D2` is any of the following:
+
+* Any `SYS_Tuple_Ordered` that has exactly 2 attributes.
+
+A `SYS_Tuple_Ordered_D3` is any of the following:
+
+* Any `SYS_Tuple_Ordered` that has exactly 3 attributes.
+
+A `SYS_Tuple_Ordered_D4` is any of the following:
+
+* Any `SYS_Tuple_Ordered` that has exactly 4 attributes.
+
+A `SYS_Tuple_Ordered_D6` is any of the following:
+
+* Any `SYS_Tuple_Ordered` that has exactly 6 attributes.
+
+A `SYS_Tuple_Named_As_Dictionary` is any of the following:
+
+* Any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`, that
+member's `SYS_key` is a `SYS_Char_String`; the alias `SYS_attrs_na` refers
+to its `SYS_pairs_kv`, such that the aliases `SYS_attr_name` and
+`SYS_attr_asset` refer in turn to each `SYS_key` and `SYS_value`.
 
 ## Calendar Time
 
@@ -616,6 +550,18 @@ When its subject is any of the following, the predicate is required:
 that member's `SYS_key` is any **Any** artifact and
 that member's `SYS_value` is any **Boolean** subject.
 
+A `SYS_Set` is any of the following:
+
+* Any object of any .NET class
+that composes the .NET interface `System.Collections.Generic.ISet`;
+the alias `SYS_members` refers to its (`SYS_Object` typed) elements.
+
+Note that example composers of `System.Collections.Generic.ISet` are:
+`System.Collections.Generic.HashSet`,
+`System.Collections.Generic.SortedSet`,
+`System.Collections.Immutable.ImmutableHashSet`.
+`System.Collections.Immutable.ImmutableSortedSet`.
+
 ## Bag / Multiset
 
 A **Bag** artifact has the predicate `Bag`.
@@ -637,6 +583,12 @@ is any **Integer** subject which denotes a non-negative integer *multiplicity*.
 that member's `SYS_key` is any **Any** artifact and
 that member's `SYS_value` is any **Integer** subject
 which denotes a non-negative integer *multiplicity*.
+
+A `SYS_Bag` is any of the following:
+
+* Any object of the .NET class `System.Collections.Concurrent.ConcurrentBag`.
+
+*TODO: Revisit this.*
 
 ## Mix
 
