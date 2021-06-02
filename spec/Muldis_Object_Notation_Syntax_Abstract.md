@@ -185,7 +185,7 @@ Examples:
 ## Bits
 
 A **Bits** artifact is an arbitrarily-long sequence of *bits* where each
-bit is an integer in the range `0..1`.
+bit is an integer in the set `0..1`.
 
 Examples:
 
@@ -204,7 +204,7 @@ Examples:
 ## Blob
 
 A **Blob** artifact is an arbitrarily-long sequence of *octets* where each
-octet is an integer in the range `0..255`.
+octet is an integer in the set `0..255`.
 
 Examples:
 

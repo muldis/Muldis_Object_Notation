@@ -172,7 +172,7 @@ indicating that a string is binary, not text" and is semantically quite
 appropriate for the task of representing a `Blob` value in Perl land.
 
 Perl can natively represent a `Text` string as a Perl string either
-whose UTF8 flag is true or all of whose octets are in the range 0..127.
+whose UTF8 flag is true or all of whose octets are in the set 0..127.
 
 Perl has a native dedicated unlimited-size-array-of-generic-members type
 such that each array value is natively represented by a Perl

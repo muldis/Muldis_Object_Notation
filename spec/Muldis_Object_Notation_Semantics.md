@@ -159,11 +159,10 @@ the logical complement of **Any**.
 
 ## Ignorance
 
-The singleton **Ignorance** value is
-characterized by an **Excuse** which simply says that an ordinary value for
-any given domain is missing and that there is simply no excuse that has
-been given for this; in other words, something has gone wrong without the
-slightest hint of an explanation.
+The singleton **Ignorance** value is characterized by an **Excuse** which
+simply says that an ordinary value for any given domain is missing and that
+there is simply no excuse that has been given for this; in other words,
+something has gone wrong without the slightest hint of an explanation.
 
 This is conceptually the most generic excuse value there is and it can
 be used by lazy programmers as a fallback for when they don't have even a
@@ -193,17 +192,17 @@ value*, or specifically it is one of the 2 values *false* and *true*.
 
 ## Integer
 
-An **Integer** value is a general purpose
-exact integral number of any magnitude, which explicitly does not represent
-any kind of thing in particular, neither cardinal nor ordinal nor nominal.
+An **Integer** value is a general purpose exact integral number of any
+magnitude, which explicitly does not represent any kind of
+thing in particular, neither cardinal nor ordinal nor nominal.
 It has no minimum or maximum value.
 
 ## Fraction
 
-A **Fraction** value is a general purpose
-exact rational number of any magnitude and precision, which explicitly does
-not represent any kind of thing in particular, neither cardinal nor ordinal
-nor nominal.  It has no minimum or maximum value.
+A **Fraction** value is a general purpose exact rational number of any
+magnitude and precision, which explicitly does not represent any kind of
+thing in particular, neither cardinal nor ordinal nor nominal.
+It has no minimum or maximum value.
 
 A **Fraction** value is characterized by a **Tuple** having a subset of the
 4 attributes of the heading
@@ -227,24 +226,22 @@ determine value identity based on the actual logical rational number.
 
 ## Bits
 
-A **Bits** value is characterized by an
-arbitrarily-long sequence of *bits* where each bit is represented by an
-**Integer** in the range 0..1,
+A **Bits** value is characterized by an arbitrarily-long sequence of
+*bits* where each bit is represented by an **Integer** in the set `0..1`,
 which explicitly does not represent any kind of thing in particular.
 
 ## Blob
 
-A **Blob** value is characterized by an
-arbitrarily-long sequence of *octets* where each octet is represented by an
-**Integer** in the range 0..255,
+A **Blob** value is characterized by an arbitrarily-long sequence of
+*octets* where each octet is represented by an **Integer** in the set `0..255`,
 which explicitly does not represent any kind of thing in particular.
 
 ## Text / Attribute Name
 
-A **Text** value is characterized by an
-arbitrarily-long sequence of **Unicode** 12.1 standard *character
-code points*, where each distinct code point corresponds to a distinct
-integer in the set **{0..0xD7FF,0xE000..0x10FFFF}**,
+A **Text** value is characterized by an arbitrarily-long sequence of
+**Unicode** standard *character code points*, where each distinct code
+point corresponds to a distinct integer in the set
+`{0..0xD7FF,0xE000..0x10FFFF}`,
 which explicitly does not represent any kind of thing in particular.
 
 See also <https://unicode.org>.
@@ -272,15 +269,14 @@ value having exactly 2 "positional" attributes.
 
 ## Array
 
-An **Array** value is a general purpose
-arbitrarily-long ordered sequence of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members.  An **Array** value is dense; iff it has any
-members, then its first-ordered member is at ordinal position **0**, and
-its last-ordinal-positioned member is at the ordinal position that is one
-less than the count of its members.  An **Array** in the general case may
-have multiple members that are the same value, and any duplicates may or
-may not exist at consecutive ordinal positions.
+An **Array** value is a general purpose arbitrarily-long ordered sequence
+of any other, *member* values, which explicitly does not represent any kind
+of thing in particular, and is simply the sum of its members.
+An **Array** in the general case may have multiple members that are the same
+value, and any duplicates may or may not exist at consecutive ordinal positions.
+An **Array** value is dense; iff it has any members, then its first-ordered
+member is at ordinal position **0**, and its last-ordinal-positioned member
+is at the ordinal position that is one less than the count of its members.
 
 ## Lot
 
@@ -301,17 +297,17 @@ are defined by arbitrarily complex sub-expressions.
 
 ## Tuple / Attribute Set
 
-A **Tuple** value is a general purpose
-arbitrarily-large unordered heterogeneous collection of named *attributes*,
-such that no 2 attributes have the same *attribute name*, which explicitly
-does not represent any kind of thing in particular, and is simply the sum
-of its attributes.  An attribute is conceptually a name-asset pair, the
-name being used to look up the attribute in a **Tuple**.  An *attribute
-name* is an unqualified program identifier and is conceptually a character
-string that is not a **Text** value.  In the general case each attribute of
-a tuple is of a distinct data type, though multiple attributes often have
-the same type.  The set of attribute names of a **Tuple** is called its
-*heading*, and the corresponding attribute assets are called its *body*.
+A **Tuple** value is a general purpose arbitrarily-large unordered
+heterogeneous collection of named *attributes*, such that no 2 attributes
+have the same *attribute name*, which explicitly does not represent any
+kind of thing in particular, and is simply the sum of its attributes.
+An attribute is conceptually a name-asset pair, the name being used to look
+up the attribute in a **Tuple**.  An *attribute name* is an unqualified
+program identifier and is conceptually a character string that is not a
+**Text** value.  In the general case each attribute of a tuple is of a
+distinct data type, though multiple attributes often have the same type.
+The set of attribute names of a **Tuple** is called its *heading*, and the
+corresponding attribute assets are called its *body*.
 
 With respect to the relational model of data, a *heading* represents a
 predicate, for which each *attribute name* is a free variable, and a
@@ -356,36 +352,35 @@ the member itself defines the attribute asset.
 
 ## Calendar Time
 
-A **Calendar Time** value is
-characterized by a **Tuple** having any subset of the 6 attributes of the
-heading {`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`}
-such that each attribute asset is a
-**Fraction**, or alternately by an isomorphic **Mix**.  For each of the 6
-attributes, it explicitly distinguishes between the attribute value being
-specified as zero versus being unspecified; omitting the attribute entirely
-means the latter.  Its main intended purpose is to be a more generic common
-element for a variety of other, more specific time-related possreps,
-including ones representing both durations and instants, or for direct use
-with types defined by external data models.  It does *not* specifically
-represent a time of day.
+A **Calendar Time** value is characterized by a **Tuple** having any subset
+of the 6 attributes of the heading
+{`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`} such that each
+attribute asset is a **Fraction**, or alternately by an isomorphic **Mix**.
+For each of the 6 attributes, it explicitly distinguishes between the
+attribute value being specified as zero versus being unspecified; omitting
+the attribute entirely means the latter.  Its main intended purpose is to
+be a more generic common element for a variety of other, more specific
+time-related possreps, including ones representing both durations and
+instants, or for direct use with types defined by external data models.
+It does *not* specifically represent a time of day.
 
 ## Calendar Duration
 
-A **Calendar Duration** value is a
-length of time expressed in terms of the units of a standard civil or
-similar calendar.  It is characterized by a **Calendar Time**.  It is up to
-the context supplied or interpreted by an external data model to give it
-further meaning, such as whether not specifying any smallest units means an
-uncertainty interval versus treating them as zero, and so on.
+A **Calendar Duration** value is a length of time expressed in terms of the
+units of a standard civil or similar calendar.  It is characterized by a
+**Calendar Time**.  It is up to the context supplied or interpreted by an
+external data model to give it further meaning, such as whether not
+specifying any smallest units means an uncertainty interval versus treating
+them as zero, and so on.
 
 ## Calendar Instant
 
-A **Calendar Instant** value is a
-particular moment in time expressed in terms of a standard civil or similar
-calendar.  It is characterized by an *instant base* (characterized by a
-**Calendar Time**) that is either standalone or is paired with an *instant
-offset* (characterized by a **Calendar Duration**) or an *instant zone* (a
-time zone name characterized by a **Text**).
+A **Calendar Instant** value is a particular moment in time expressed in
+terms of a standard civil or similar calendar.  It is characterized by an
+*instant base* (characterized by a **Calendar Time**) that is either
+standalone or is paired with an *instant offset* (characterized by a
+**Calendar Duration**) or an *instant zone* (a time zone name characterized
+by a **Text**).
 
 Alternately, a **Calendar Instant** value is characterized by a **Tuple**
 having a subset of the 3 attributes of the heading {`base`,`offset`,`zone`}
@@ -419,12 +414,12 @@ the existing time zone name support may also indicate this by itself.*
 
 ## Geographic Point
 
-A **Geographic Point** value is a
-particular point location on the Earth's surface characterized by cartesian
-coordinates named *longitude* and *latitude* and *elevation*, where each of
-the latter is characterized by a single **Fraction** value.  Each
-coordinate may be either specified or unspecified; omitting it means the
-latter and providing it, even if zero, means the former.
+A **Geographic Point** value is a particular point location on the Earth's
+surface characterized by cartesian coordinates named *longitude* and
+*latitude* and *elevation*, where each of the latter is characterized by a
+single **Fraction** value.  Each coordinate may be either specified or
+unspecified; omitting it means the latter and providing it, even if zero,
+means the former.
 
 Alternately, a **Geographic Point** value is characterized by a **Tuple**
 having any subset of the 3 attributes of the heading
@@ -456,42 +451,37 @@ something more specific.
 
 ## Set
 
-A **Set** value is a general purpose
-arbitrarily-large unordered collection of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members.  A **Set** ensures that no 2 of its members
-are the same value.
+A **Set** value is a general purpose arbitrarily-large unordered collection
+of any other, *member* values, which explicitly does not represent any kind
+of thing in particular, and is simply the sum of its members.
+A **Set** ensures that no 2 of its members are the same value.
 
 A **Set** value is also characterized by a set of 0..N *multiplied members*
-such that each *multiplied member* is a *member* / *multiplicity* pair such
-that no 2 *member* are the same value and *multiplicity* is 1.
+such that each *multiplied member* is a *member*/*multiplicity* pair such that
+no 2 *member* are the same value and *multiplicity* is 1.
 
 ## Bag / Multiset
 
-A **Bag** value is a general purpose
-arbitrarily-large unordered collection of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members.  A **Bag** in the general case may have
-multiple members that are the same value.
+A **Bag** value is a general purpose arbitrarily-large unordered collection
+of any other, *member* values, which explicitly does not represent any kind
+of thing in particular, and is simply the sum of its members.
+A **Bag** in the general case may have multiple members that are the same value.
 
 A **Bag** value is also characterized by a set of 0..N *multiplied members*
-such that each *multiplied member* is a *member* / *multiplicity* pair such
-that no 2 *member* are the same value and *multiplicity* is a positive
-**Integer**.
+such that each *multiplied member* is a *member*/*multiplicity* pair such that
+no 2 *member* are the same value and *multiplicity* is a positive **Integer**.
 
 ## Mix
 
-A **Mix** value is a general purpose
-arbitrarily-large unordered collection of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members.  A **Mix** in the general case may have
-multiple members that are the same value, and it may have fractions of
-members, and it may have negations of members.
+A **Mix** value is a general purpose arbitrarily-large unordered collection
+of any other, *member* values, which explicitly does not represent any kind
+of thing in particular, and is simply the sum of its members.
+A **Mix** in the general case may have multiple members that are the same value,
+and it may have fractions of members, and it may have negations of members.
 
 A **Mix** value is also characterized by a set of 0..N *multiplied members*
-such that each *multiplied member* is a *member* / *multiplicity* pair such
-that no 2 *member* are the same value and *multiplicity* is a nonzero
-**Fraction**.
+such that each *multiplied member* is a *member*/*multiplicity* pair such that
+no 2 *member* are the same value and *multiplicity* is a nonzero **Fraction**.
 
 The **Mix** possrep is the idiomatic way for an external data model to
 represent the general case of a *measure*, a measurement of some quantity
@@ -508,11 +498,11 @@ See also <http://unitsofmeasure.org/ucum.html>.
 
 ## Interval
 
-An **Interval** value is a general purpose
-arbitrarily-large unordered collection of any other, *member* values, which
-explicitly does not represent any kind of thing in particular, and is
-simply the sum of its members; the count of members may be either finite or
-infinite depending on the external data model or type system in question.
+An **Interval** value is a general purpose arbitrarily-large unordered
+collection of any other, *member* values, which explicitly does not
+represent any kind of thing in particular, and is simply the sum of its
+members; the count of members may be either finite or infinite depending on
+the external data model or type system in question.
 
 In stark contrast to a **Set** value, whose set of members is characterized
 by an enumeration of every member value, an **Interval** value's set of
@@ -552,12 +542,11 @@ MUON itself simply characterizes an **Interval** *as* its endpoints.
 
 ## Interval Set
 
-An **Interval Set** value is
-characterized by a **Set** value such that every member value of the
-**Set** is an **Interval**.  An **Interval Set** is alternately
-characterized by a single **Interval** that is allowed to have
-discontinuities, and is in the typical case characterized by more than 2
-*endpoint* values.
+An **Interval Set** value is characterized by a **Set** value such that
+every member value of the **Set** is an **Interval**.  An **Interval Set**
+is alternately characterized by a single **Interval** that is allowed to
+have discontinuities, and is in the typical case characterized by more than
+2 *endpoint* values.
 
 When reasoning about an interval in terms of defining a set of values by
 endpoints under a total order rather than by enumeration, an **Interval
@@ -572,11 +561,11 @@ meaningful *set absolute complement* operation applicable to it.
 
 ## Interval Bag
 
-An **Interval Bag** value is
-characterized by a generalization of an **Interval Set** that permits
-multiple members to have the same value; an **Interval Bag** is isomorphic
-to a **Bag** in the same way that an **Interval Set** is to a **Set**;
-every possible distinct **Bag** can map to a distinct **Interval Bag**.
+An **Interval Bag** value is characterized by a generalization of an
+**Interval Set** that permits multiple members to have the same value; an
+**Interval Bag** is isomorphic to a **Bag** in the same way that an
+**Interval Set** is to a **Set**; every possible distinct **Bag** can map
+to a distinct **Interval Bag**.
 
 ## Heading / Attribute Name Set
 
@@ -587,8 +576,8 @@ A **Heading** value can be characterized by a **Set** value such that every
 
 ## Renaming / Attribute Name Map
 
-A **Renaming** value is an arbitrarily-large
-unordered collection of attribute renaming specifications.
+A **Renaming** value is an arbitrarily-large unordered collection of
+attribute renaming specifications.
 
 A **Renaming** value is characterized by a **Tuple** such that each
 attribute asset is a **Text**, and no 2 attribute asset values are the same
@@ -598,21 +587,20 @@ renamed of some other attributive value.
 
 ## Tuple Array
 
-A **Tuple Array** value is characterized
-by the pairing of a **Heading** value with an **Array** value, which define
-its *heading* and *body*, respectively.  A **Tuple Array** is isomorphic to
-a **Relation** with the sole exception of being based on an **Array**
-rather than a **Set**.
+A **Tuple Array** value is characterized by the pairing of a **Heading**
+value with an **Array** value, which define its *heading* and *body*,
+respectively.  A **Tuple Array** is isomorphic to a **Relation** with the
+sole exception of being based on an **Array** rather than a **Set**.
 
 ## Relation / Tuple Set
 
-A **Relation** value is characterized
-by the pairing of a **Heading** value with a **Set** value, which define
-its *heading* and *body*, respectively.  A **Relation** ensures that every
-*member* of its *body* is a **Tuple** having the same *heading* (set of
-*attribute names*) as its own *heading*.  A **Relation** is alternately
-characterized by the pairing of a single set of attribute names with a set
-of corresponding attribute assets for each attribute name.
+A **Relation** value is characterized by the pairing of a **Heading**
+value with a **Set** value, which define its *heading* and *body*,
+respectively.  A **Relation** ensures that every *member* of its *body* is
+a **Tuple** having the same *heading* (set of *attribute names*) as its own
+*heading*.  A **Relation** is alternately characterized by the pairing of a
+single set of attribute names with a set of corresponding attribute assets
+for each attribute name.
 
 With respect to the relational model of data, a *heading* represents a
 predicate, for which each *attribute name* is a free variable, and a
@@ -624,11 +612,10 @@ represent any proposition in particular.
 
 ## Tuple Bag
 
-A **Tuple Bag** value is characterized
-by the pairing of a **Heading** value with a **Bag** value, which define
-its *heading* and *body*, respectively.  A **Tuple Bag** is isomorphic to
-a **Relation** with the sole exception of being based on a **Bag**
-rather than a **Set**.
+A **Tuple Bag** value is characterized by the pairing of a **Heading**
+value with a **Bag** value, which define its *heading* and *body*,
+respectively.  A **Tuple Bag** is isomorphic to a **Relation** with the
+sole exception of being based on a **Bag** rather than a **Set**.
 
 ## Nesting / Attribute Name List
 
@@ -667,12 +654,12 @@ actual meaningful name to give it.
 
 ## Excuse
 
-An **Excuse** value is an explicitly stated
-reason for why, given some particular problem domain, a value is not being
-used that is ordinary for that domain.  Alternately, an **Excuse** is
-characterized by an **Article** that has the added semantic of representing
-some kind of error condition, in contrast to an actual **Article** which
-explicitly does *not* represent an error condition in the general case.
+An **Excuse** value is an explicitly stated reason for why, given some
+particular problem domain, a value is not being used that is ordinary for
+that domain.  Alternately, an **Excuse** is characterized by an **Article**
+that has the added semantic of representing some kind of error condition,
+in contrast to an actual **Article** which explicitly does *not* represent
+an error condition in the general case.
 
 For example, the typical integer division operation is not defined to give
 an integer result when the divisor is zero, and so a function for integer
