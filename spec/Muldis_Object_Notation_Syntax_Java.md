@@ -267,7 +267,7 @@ Not permitted is any of the following, to keep things simpler or more correct:
 
 * Any raw or internal alternatives such as `char[]`, `int[]`, `byte[]`.
 
-A Java `java.lang.String` is characterized as a sequence of 0..N `char`
+A Java `java.lang.String` is characterized as an ordered sequence of 0..N `char`
 such that each of the latter is an unsigned 16-bit integer *C*.
 A *well formed* string denotes a Unicode BMP code point with a single *C*
 in the non-surrogate set {0..0xD7FF,0xE000..0xFFFF}
@@ -300,16 +300,14 @@ such as `java.util.AbstractMap.SimpleEntry`.
 
 * Any values or objects of N-ary collection types having exactly 2 elements.
 
-## Array
+## Lot
 
-An **Array** artifact has the predicate `Array`.
+A **Lot** artifact has the predicate `Lot`.
 
-When its subject is any of the following, the predicate is optional:
+When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Array` such that every one of its `SYS_members` is any
 **Any** artifact.
-
-When its subject is any of the following, the predicate is required:
 
 * Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
 `+` and its `SYS_value` is any `SYS_Array` such that every one of its
@@ -338,21 +336,6 @@ Note that example composers of `java.util.List` are:
 `java.util.LinkedList`,
 `java.util.Vector`,
 `java.util.concurrent.CopyOnWriteArrayList`.
-
-## Lot
-
-A **Lot** artifact has the predicate `Lot`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Any** artifact.
-
-* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
-`+` and its `SYS_value` is any `SYS_Array` such that every one of its
-`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
-**Any** artifact and its `SYS_value` is any **Integer** subject which
-denotes a non-negative integer *multiplicity*.
 
 ## Tuple / Attribute Set
 
@@ -515,6 +498,23 @@ its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** s
 * An *elevation* is such that
 its `SYS_attr_name` is the `SYS_Char_String` value `+` and
 its `SYS_attr_asset` is any `SYS_Null` or  **Integer** subject or **Fraction** subject.
+
+## Array
+
+An **Array** artifact has the predicate `Array`.
+
+When its subject is any of the following, the predicate is optional:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Any** artifact.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Pair_KV` such that its `SYS_key` is the `SYS_Char_String` value
+`+` and its `SYS_value` is any `SYS_Array` such that every one of its
+`SYS_members` is a `SYS_Pair_KV` such that its `SYS_key` is any
+**Any** artifact and its `SYS_value` is any **Integer** subject which
+denotes a non-negative integer *multiplicity*.
 
 ## Set
 

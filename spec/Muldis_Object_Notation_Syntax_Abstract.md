@@ -184,7 +184,7 @@ Examples:
 
 ## Bits
 
-A **Bits** artifact is an arbitrarily-long sequence of *bits* where each
+A **Bits** artifact is an arbitrarily-large ordered sequence of *bits* where each
 bit is an integer in the set `0..1`.
 
 Examples:
@@ -203,7 +203,7 @@ Examples:
 
 ## Blob
 
-A **Blob** artifact is an arbitrarily-long sequence of *octets* where each
+A **Blob** artifact is an arbitrarily-large ordered sequence of *octets* where each
 octet is an integer in the set `0..255`.
 
 Examples:
@@ -228,7 +228,7 @@ Examples:
 
 ## Text / Attribute Name
 
-A **Text** artifact is an arbitrarily-long sequence of **Unicode** standard
+A **Text** artifact is an arbitrarily-large ordered sequence of **Unicode** standard
 *character code points* where each code point is an integer in the set
 `{0..0xD7FF,0xE000..0x10FFFF}`.
 
@@ -293,10 +293,13 @@ Examples:
     (y<-x)
 ```
 
-## Array
+## Lot
 
-An **Array** artifact is an arbitrarily-long ordered collection of elements
-each of which in turn is named *member* and is any **Any** artifact.
+A **Lot** artifact is an arbitrarily-large ordered collection of elements
+each of which in turn is named *multiplied member* such that each
+*multiplied member* is an ordered collection having exactly 2 elements
+which in order are named *member* (any **Any** artifact) and *multiplicity*
+(any **Any** artifact but conceptually a real number).
 
 Examples:
 
@@ -305,39 +308,7 @@ Examples:
     {}
 
     `One member.`
-    { "You got it!" }
-
-    `Three members.`
-    {
-        Alphonse,
-        Edward,
-        Winry,
-    }
-
-    `Five members (1 duplicate).`
-    {
-        57,
-        45,
-        63,
-        61,
-        63,
-    }
-```
-
-## Lot
-
-A **Lot** artifact is an arbitrarily-long ordered collection of elements
-each of which in turn is named *member* and is any **Pair** artifact; it is
-the same as an **Array** in every way aside from this member type restriction.
-
-Examples:
-
-```
-    `Zero members.`
-    0sEMPTY_LOT
-
-    `One member.`
-    { "The lonely only.": 1 }
+    { "The lonely only." }
 
     `Four members.`
     {
@@ -346,19 +317,11 @@ Examples:
         Hearts : 10,
         Spades : 20,
     }
-
-    `Four members.`
-    {
-        "/",
-        "*" : 20,
-        "+" : 10,
-        "-",
-    }
 ```
 
 ## Tuple / Attribute Set
 
-A **Tuple** artifact is an arbitrarily-long unordered collection of
+A **Tuple** artifact is an arbitrarily-large unordered collection of
 elements each of which in turn is named *attribute* such that each
 *attribute* is an ordered collection having exactly 2 elements which in
 order are named *name* (any **Text** artifact) and *asset* (any **Any**
@@ -579,18 +542,64 @@ Examples:
 
 # MORE-COLLECTIVE SECONDARY DATA TYPE POSSREPS
 
+## Array
+
+An **Array** artifact has the predicate `Array`.
+
+Its subject is any of the following:
+
+* Any **Lot** artifact such that for every one of its *multiplied members*
+LM, that member denotes a sequence of consecutive identical members AM of
+the **Array**; LM's *member* denotes the value of each AM and LM's
+*multiplicity* is any **Integer** artifact which denotes a non-negative
+integer and indicates how many elements that sequence has.
+
+Examples:
+
+```
+    `Zero members.`
+    (Array:{})
+
+    `One member.`
+    (Array:{ "You got it!" })
+
+    `Three members.`
+    (Array:{
+        Alphonse,
+        Edward,
+        Winry,
+    })
+
+    `Five members (1 duplicate).`
+    (Array:{
+        57,
+        45,
+        63,
+        61,
+        63,
+    })
+
+    `32 members (28 duplicates in 2 runs).`
+    (Array:{
+        "/",
+        "*" : 20,
+        "+" : 10,
+        "-",
+    })
+```
+
 ## Set
 
 A **Set** artifact has the predicate `Set`.
 
 Its subject is any of the following:
 
-* Any **Array** artifact, whose members denote the *members* of the **Set**.
+* Any **Lot** artifact such that for every one of its *multiplied members*,
+that multiplied member's *member* denotes a potential distinct member of
+the **Set** and the multiplied member's *multiplicity* is any **Integer**
+artifact which denotes a non-negative integer *multiplicity*
+(any greater than 1 is treated as 1).
 
-* Any **Lot** artifact such that for every one of its *members*, that
-member's *this* denotes a potential distinct member of the **Set** and the
-first member's *that* is any **Integer** artifact which denotes a
-non-negative integer *multiplicity* (any greater than 1 is treated as 1).
 
 Examples:
 
@@ -632,12 +641,10 @@ A **Bag** artifact has the predicate `Bag`.
 
 Its subject is any of the following:
 
-* Any **Array** artifact, whose members denote the *members* of the **Bag**.
-
-* Any **Lot** artifact such that for every one of its *members*, that
-member's *this* denotes a potential distinct member of the **Bag** and the
-first member's *that* is any **Integer** artifact which denotes a
-non-negative integer *multiplicity*.
+* Any **Lot** artifact such that for every one of its *multiplied members*,
+that multiplied member's *member* denotes a potential distinct member of
+the **Bag** and the multiplied member's *multiplicity* is any **Integer**
+artifact which denotes a non-negative integer *multiplicity*.
 
 Examples:
 
@@ -672,12 +679,10 @@ A **Mix** artifact has the predicate `Mix`.
 
 Its subject is any of the following:
 
-* Any **Array** artifact, whose members denote the *members* of the **Mix**.
-
-* Any **Lot** artifact such that for every one of its *members*, that
-member's *this* denotes a potential distinct member of the **Mix** and the
-first member's *that* is any **Integer** artifact or **Fraction** artifact
-which denotes a nonzero possibly fractional *multiplicity*.
+* Any **Lot** artifact such that for every one of its *multiplied members*,
+that multiplied member's *member* denotes a potential distinct member of
+the **Mix** and the multiplied member's *multiplicity* is any **Fraction**
+artifact which denotes a nonzero possibly fractional *multiplicity*.
 
 Examples:
 
@@ -981,7 +986,7 @@ Examples:
     (Tuple_Array:(Heading:()))
 
     `Zero attributes + one tuple.`
-    (Tuple_Array:{()})
+    (Tuple_Array:(Array:{()}))
 
     `Three named attributes + zero tuples.`
     (Tuple_Array:(Heading:(x,y,z)))
@@ -990,17 +995,17 @@ Examples:
     (Tuple_Array:(Heading:(0c0,0c1,0c2)))
 
     `Two named attributes + three tuples (1 duplicate).`
-    (Tuple_Array:{
+    (Tuple_Array:(Array:{
         (name: Amy     , age: 14),
         (name: Michelle, age: 17),
         (name: Amy     , age: 14),
-    })
+    }))
 
     `Two positional attributes + two tuples.`
-    (Tuple_Array:{
+    (Tuple_Array:(Array:{
         (Michelle, 17),
         (Amy     , 14),
-    })
+    }))
 ```
 
 ## Relation / Tuple Set
@@ -1143,9 +1148,9 @@ A **Nesting** artifact has the predicate `Nesting`.
 
 Its subject is any of the following:
 
-* Any **Array** artifact such that every one of its *members* is a **Text**
+* Any **Lot** artifact such that every one of its *members* is a **Text**
 artifact and the count of its members is at least 1.
-The *members* of the **Array** denote the *members* of the **Nesting**.
+The *members* of the **Lot** denote the *members* of the **Nesting**.
 
 Examples:
 

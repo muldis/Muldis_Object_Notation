@@ -99,10 +99,9 @@ There are exactly 7 of these:
 A *collective primary possrep* has a strictly recursive definition, and is
 expressed mainly in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single collective item.
-There are exactly 4 of these:
+There are exactly 3 of these:
 
 - **Pair**
-- **Array**
 - **Lot**
 - **Tuple**
 
@@ -121,10 +120,10 @@ dedicated simple literal formats or data type values in some syntaxes:
 
 - Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
 
-Some of these 14 more-collective-like secondary possreps might have its own
+Some of these 15 more-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
-- Discrete: **Set**, **Bag**, **Mix**
+- Discrete: **Array**, **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
 - Relational: **Heading**, **Renaming**, **Tuple Array**, **Relation**, **Tuple Bag**
 - Generic: **Nesting**, **Article**, **Excuse**
@@ -226,19 +225,19 @@ determine value identity based on the actual logical rational number.
 
 ## Bits
 
-A **Bits** value is characterized by an arbitrarily-long sequence of
+A **Bits** value is characterized by an arbitrarily-large ordered sequence of
 *bits* where each bit is represented by an **Integer** in the set `0..1`,
 which explicitly does not represent any kind of thing in particular.
 
 ## Blob
 
-A **Blob** value is characterized by an arbitrarily-long sequence of
+A **Blob** value is characterized by an arbitrarily-large ordered sequence of
 *octets* where each octet is represented by an **Integer** in the set `0..255`,
 which explicitly does not represent any kind of thing in particular.
 
 ## Text / Attribute Name
 
-A **Text** value is characterized by an arbitrarily-long sequence of
+A **Text** value is characterized by an arbitrarily-large ordered sequence of
 **Unicode** standard *character code points*, where each distinct code
 point corresponds to a distinct integer in the set
 `{0..0xD7FF,0xE000..0x10FFFF}`,
@@ -267,22 +266,24 @@ collection whose elements in order are *this* and *that*, each of which may
 be any other value.  A **Pair** value is also characterized by a **Tuple**
 value having exactly 2 "positional" attributes.
 
-## Array
-
-An **Array** value is a general purpose arbitrarily-long ordered sequence
-of any other, *member* values, which explicitly does not represent any kind
-of thing in particular, and is simply the sum of its members.
-An **Array** in the general case may have multiple members that are the same
-value, and any duplicates may or may not exist at consecutive ordinal positions.
-An **Array** value is dense; iff it has any members, then its first-ordered
-member is at ordinal position **0**, and its last-ordinal-positioned member
-is at the ordinal position that is one less than the count of its members.
-
 ## Lot
 
-A **Lot** value is characterized by an **Array** value such that every
-*member* value of the latter is any **Pair** value; it is the same as an
-**Array** in every way aside from this member type restriction.
+A **Lot** value is a general purpose arbitrarily-large ordered sequence of
+*multiplied members*, which explicitly does not represent any kind of thing
+in particular, and is simply the sum of its multiplied members.
+A **Lot** in the general case may have multiple multiplied mmembers that are
+the same, and any duplicates may or may not exist at consecutive ordinal positions.
+A **Lot** value is dense; iff it has any multiplied members, then its
+first-ordered multiplied member is at ordinal position `0`, and its
+last-ordinal-positioned multiplied mmember is at the ordinal position that
+is one less than the count of its multiplied mmembers.
+
+A multiplied member is conceptually a *member*/*multiplicity* pair such that
+a *member* is any other value at all and a *multiplicity* is a real number
+indicating how many consecutive instances of the *member* are in the sequence.
+
+Conceptually a **Lot** value is an ordered sequence of *members* that has
+been run-length encoded but that it can also represent fractional instances.
 
 The **Lot** possrep is an idiomatic generalization of a discrete
 homogeneous collection, such that any given MUON syntax can choose to just
@@ -324,29 +325,8 @@ attribute, the name consisting of just the code point 1 would mark the
 second, and so on; this can be repeated up to 32 "positional" names whose
 names would correspond to non-printing Unicode code points and would
 alphabetically sort correctly and prior to any normal text-like attribute
-names like **name** or **age**; said first 32 would likewise be distinct in
+names like `name` or `age`; said first 32 would likewise be distinct in
 appearance from all regular printable numbers used as attribute names.
-
-Alternately, a **Tuple** value is characterized by a **Lot** value such
-that every one of its *members* is such that its *this* is a **Text**
-artifact, and no 2 members' *this* denote the same **Text** value, and the
-order of the members is not significant.  The *members* of the **Lot**
-correspond to the *attributes* of the **Tuple** one to one such that for
-each *member* its *this* defines the attribute name and its *that* defines
-the attribute asset.
-
-Alternately, a **Tuple** value is characterized by a **Pair** value such
-that its *this* and *that* correspond to its *heading* and *body*
-respectively and are each an **Array** having the same count of members and
-the pair of members at each corresponding ordinal position corresponds to
-an attribute.
-
-Alternately, a **Tuple** value might be characterized by an **Array** value.
-The *members* of the **Array** correspond to the *attributes* of the
-**Tuple** one to one such that for each *member* its ordinal position in
-the **Array** defines the positional attribute name (position 0 becomes the
-single character attribute name consisting of code point 0 and so on) and
-the member itself defines the attribute asset.
 
 # LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS
 
@@ -448,6 +428,23 @@ and *longitude*, such as whether they are along the surface of the Earth or
 something more specific.
 
 # MORE-COLLECTIVE SECONDARY DATA TYPE POSSREPS
+
+## Array
+
+An **Array** value is a general purpose arbitrarily-large ordered sequence
+of any other, *member* values, which explicitly does not represent any kind
+of thing in particular, and is simply the sum of its members.
+An **Array** in the general case may have multiple members that are the same
+value, and any duplicates may or may not exist at consecutive ordinal positions.
+An **Array** value is dense; iff it has any members, then its first-ordered
+member is at ordinal position `0`, and its last-ordinal-positioned member
+is at the ordinal position that is one less than the count of its members.
+
+An **Array** value is also characterized by a sequence of 0..N *multiplied members*
+such that each *multiplied member* is a *member*/*multiplicity* pair such that
+any 2 *member* might be the same value and *multiplicity* is a positive **Integer**;
+this characterization is merely a shorthand for the other one that could
+manifest as a more terse run-length encoded syntax.
 
 ## Set
 

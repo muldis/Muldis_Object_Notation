@@ -307,33 +307,16 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
-    token Array
-    {
-        <Array_subject>
-    }
-
-    token Array_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [<Any>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-
-###########################################################################
-
     token Lot
     {
-        0sEMPTY_LOT | <Lot_subject>
+        <Lot_subject>
     }
 
     token Lot_subject
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [<this> <sp>? ',' <sp>?]*
-            <this_and_that>
-            [<sp>? ',' <sp>? [<this> | <this_and_that>]]*
+            [[<this> | <this_and_that>]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 
@@ -471,6 +454,22 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token geo_unit
     {
         <[>^+]>
+    }
+
+###########################################################################
+
+    token Array
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Array <sp>? ':' <sp>? <Array_subject>
+    }
+
+    token Array_subject
+    {
+        ['{' <sp>?] ~ [<sp>? '}']
+            [',' <sp>?]?
+            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
     }
 
 ###########################################################################

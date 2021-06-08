@@ -285,9 +285,9 @@ Grammar:
     token collection
     {
           <Pair>
-        | <Array>
         | <Lot>
         | <Tuple>
+        | <Array>
         | <Set>
         | <Bag>
         | <Mix>
@@ -853,23 +853,23 @@ Examples:
     (y<-x)
 ```
 
-## Array
+## Lot
 
-An **Array** value is represented by `<Array>`.
+An **Lot** value is represented by `<Lot>`.
 
 Grammar:
 
 ```
-    token Array
+    token Lot
     {
-        <Array_subject>
+        <Lot_subject>
     }
 
-    token Array_subject
+    token Lot_subject
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [<Any>* % [<sp>? ',' <sp>?]]
+            [[<this> | <this_and_that>]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 ```
@@ -881,56 +881,7 @@ Examples:
     {}
 
     `One member.`
-    { "You got it!" }
-
-    `Three members.`
-    {
-        Alphonse,
-        Edward,
-        Winry,
-    }
-
-    `Five members (1 duplicate).`
-    {
-        57,
-        45,
-        63,
-        61,
-        63,
-    }
-```
-
-## Lot
-
-An **Lot** value is represented by `<Lot>`.
-
-Grammar:
-
-```
-    token Lot
-    {
-        0sEMPTY_LOT | <Lot_subject>
-    }
-
-    token Lot_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [<this> <sp>? ',' <sp>?]*
-            <this_and_that>
-            [<sp>? ',' <sp>? [<this> | <this_and_that>]]*
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Zero members.`
-    0sEMPTY_LOT
-
-    `One member.`
-    { "The lonely only.": 1 }
+    { "The lonely only." }
 
     `Four members.`
     {
@@ -938,14 +889,6 @@ Examples:
         Diamonds,
         Hearts : 10,
         Spades : 20,
-    }
-
-    `Four members.`
-    {
-        "/",
-        "*" : 20,
-        "+" : 10,
-        "-",
     }
 ```
 
@@ -1276,6 +1219,62 @@ Examples:
 
     `Another place.`
     0Lgp@>-94.746094|^37.483577
+```
+
+## Array
+
+An **Array** value is represented by `<Array>`.
+
+Grammar:
+
+```
+    token Array
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Array <sp>? ':' <sp>? <Array_subject>
+    }
+
+    token Array_subject
+    {
+        ['{' <sp>?] ~ [<sp>? '}']
+            [',' <sp>?]?
+            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
+    }
+```
+
+Examples:
+
+```
+    `Zero members.`
+    (Array:{})
+
+    `One member.`
+    (Array:{ "You got it!" })
+
+    `Three members.`
+    (Array:{
+        Alphonse,
+        Edward,
+        Winry,
+    })
+
+    `Five members (1 duplicate).`
+    (Array:{
+        57,
+        45,
+        63,
+        61,
+        63,
+    })
+
+    `32 members (28 duplicates in 2 runs).`
+    (Array:{
+        "/",
+        "*" : 20,
+        "+" : 10,
+        "-",
+    })
 ```
 
 ## Set
@@ -2120,8 +2119,7 @@ possrep is recognized within a Muldis Object Notation artifact:
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
     Pair            | (...:...) without any comma
-    Array           | only {} or {...} without any colon
-    Lot             | {...} with >= 1 colon, or prefix 0s followed by EMPTY_LOT
+    Lot             | only {} or {...}
     Tuple           | only () or (...) with >= 1 comma
     locationals     | prefix 0L
     Interval        | only [] or [...]
@@ -2216,7 +2214,6 @@ that means they are used in pairs.
     ->    |                        | * separates the 2 parts of a pair
     <-    |                        | * this/that separator in Pair sels
           |                        | * disambiguate Pair sels from generic_group
-          |                        | * disambiguate Lot sels from Array sels
           |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * optional pair separator in Lot/Array/Set/Bag/Mix sels

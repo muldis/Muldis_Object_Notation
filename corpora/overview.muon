@@ -202,41 +202,13 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
-    `$$$` Array : (
+    `$$$` Lot : (
 
         `Zero members.`
         {},
 
         `One member.`
-        { "You got it!" },
-
-        `Three members.`
-        {
-            Alphonse,
-            Edward,
-            Winry,
-        },
-
-        `Five members (1 duplicate).`
-        {
-            57,
-            45,
-            63,
-            61,
-            63,
-        },
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Lot : (
-
-        `Zero members.`
-        0sEMPTY_LOT,
-
-        `One member.`
-        { "The lonely only.": 1 },
+        { "The lonely only." },
 
         `Four members.`
         {
@@ -244,14 +216,6 @@ Muldis_Content_Predicate`
             Diamonds,
             Hearts : 10,
             Spades : 20,
-        },
-
-        `Four members.`
-        {
-            "/",
-            "*" : 20,
-            "+" : 10,
-            "-",
         },
 
     ),
@@ -409,6 +373,42 @@ Muldis_Content_Predicate`
 
         `Another place.`
         0Lgp@>-94.746094|^37.483577,
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Array : (
+
+        `Zero members.`
+        (Array:{}),
+
+        `One member.`
+        (Array:{ "You got it!" }),
+
+        `Three members.`
+        (Array:{
+            Alphonse,
+            Edward,
+            Winry,
+        }),
+
+        `Five members (1 duplicate).`
+        (Array:{
+            57,
+            45,
+            63,
+            61,
+            63,
+        }),
+
+        `32 members (28 duplicates in 2 runs).`
+        (Array:{
+            "/",
+            "*" : 20,
+            "+" : 10,
+            "-",
+        }),
 
     ),
 
