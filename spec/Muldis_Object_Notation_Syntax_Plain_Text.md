@@ -275,11 +275,11 @@ Grammar:
         | <Bits>
         | <Blob>
         | <Text>
+        | <Nesting>
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
         | <Geographic_Point>
-        | <Nesting>
     }
 
     token collection
@@ -798,6 +798,41 @@ Examples:
     "\study, write, study,\n"
         "\do review (each word) if time.\n"
         "\close book. sleep? what's that?\n"
+```
+
+## Nesting / Attribute Name List
+
+A **Nesting** value is represented by `<Nesting>`.
+
+Grammar:
+
+```
+    token Nesting
+    {
+        <Nesting_subject>
+    }
+
+    token Nesting_subject
+    {
+        ['::' <sp>? <attr_name>]+ % <sp>?
+    }
+
+    token attr_name
+    {
+        <Text_subject>
+    }
+```
+
+Examples:
+
+```
+    ::person
+
+    ::person::birth_date
+
+    ::person::birth_date::year
+
+    ::the_db::stats::"samples by order"
 ```
 
 ## Pair
@@ -1961,41 +1996,6 @@ Examples:
         (Michelle, 17),
         (Amy     , 14),
     })
-```
-
-## Nesting / Attribute Name List
-
-A **Nesting** value is represented by `<Nesting>`.
-
-Grammar:
-
-```
-    token Nesting
-    {
-        <Nesting_subject>
-    }
-
-    token Nesting_subject
-    {
-        ['::' <sp>? <attr_name>]+ % <sp>?
-    }
-
-    token attr_name
-    {
-        <Text_subject>
-    }
-```
-
-Examples:
-
-```
-    ::person
-
-    ::person::birth_date
-
-    ::person::birth_date::year
-
-    ::the_db::stats::"samples by order"
 ```
 
 ## Article / Labelled Tuple

@@ -181,6 +181,20 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Nesting : (
+
+        ::person,
+
+        ::person::birth_date,
+
+        ::person::birth_date::year,
+
+        ::the_db::stats::"samples by order",
+
+    ),
+
+`#########################################################################`
+
     `$$$` Pair : (
 
         `Pair of Integer.`
@@ -786,20 +800,6 @@ Muldis_Content_Predicate`
             (Michelle, 17),
             (Amy     , 14),
         }),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Nesting : (
-
-        ::person,
-
-        ::person::birth_date,
-
-        ::person::birth_date::year,
-
-        ::the_db::stats::"samples by order",
 
     ),
 

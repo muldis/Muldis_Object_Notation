@@ -89,12 +89,13 @@ simple system-defined data type corresponding directly to each one.
 A *simple primary possrep* has a strictly non-recursive definition, and
 never is expressed in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single non-collective item.
-There are exactly 7 of these:
+There are exactly 8 of these:
 
 - **Ignorance**
 - **Boolean**
 - Numeric: **Integer**, **Fraction**
 - Stringy: **Bits**, **Blob**, **Text**
+- **Nesting**
 
 A *collective primary possrep* has a strictly recursive definition, and is
 expressed mainly in terms of **Any** components directly or indirectly,
@@ -120,13 +121,13 @@ dedicated simple literal formats or data type values in some syntaxes:
 
 - Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
 
-Some of these 15 more-collective-like secondary possreps might have its own
+Some of these 14 more-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
 - Discrete: **Array**, **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
 - Relational: **Heading**, **Renaming**, **Tuple Array**, **Relation**, **Tuple Bag**
-- Generic: **Nesting**, **Article**, **Excuse**
+- Generic: **Article**, **Excuse**
 
 These 0 secondary possreps are specifically for defining program source
 code and are not for defining regular data:
@@ -256,6 +257,13 @@ may allow isolated/non-paired UTF-16 "surrogate" code points corresponding
 to integers in the set **{0xD800..0xDFFF}**.  MUON forbids the use of any
 such "character strings" using the **Text** possrep.  However, such data can
 still be conveyed using other means such as MUON's **Array**+**Integer**.
+
+## Nesting / Attribute Name List
+
+A **Nesting** value is characterized by an arbitrarily-large ordered
+sequence of *attribute names* (each one a **Text**), that has at least 1
+element, intended for referencing an entity in a multi-level namespace,
+such as nested **Tuple** may implement.
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
@@ -613,14 +621,6 @@ A **Tuple Bag** value is characterized by the pairing of a **Heading**
 value with a **Bag** value, which define its *heading* and *body*,
 respectively.  A **Tuple Bag** is isomorphic to a **Relation** with the
 sole exception of being based on a **Bag** rather than a **Set**.
-
-## Nesting / Attribute Name List
-
-A **Nesting** value is an arbitrarily-large nonempty ordered collection of
-attribute names, intended for referencing an entity in a multi-level
-namespace, such as nested **Tuple** may implement.  A **Nesting** value can
-be characterized by an **Array** value such that every *member* value of
-the latter is any **Text** value and there is at least 1 member.
 
 ## Article / Labelled Tuple
 

@@ -278,6 +278,15 @@ is also well formed (`java.lang.Character.isSurrogatePair()` is true); a
 *well formed* string does not contain any *C* in the surrogate set that
 isn't so paired.
 
+## Nesting / Attribute Name List
+
+A **Nesting** artifact has the predicate `Nesting`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any `SYS_Array` such that every one of its `SYS_members` is any
+**Text** subject.
+
 ## Pair
 
 An **Pair** artifact has the predicate `Pair`.
@@ -771,15 +780,6 @@ any `SYS_Dictionary` such that for every one of its `SYS_pairs_kv`,
 that member's `SYS_key` is any **Tuple** subject and
 that member's `SYS_value` is any **Integer** subject
 which denotes a non-negative integer *multiplicity*.
-
-## Nesting / Attribute Name List
-
-A **Nesting** artifact has the predicate `Nesting`.
-
-When its subject is any of the following, the predicate is required:
-
-* Any `SYS_Array` such that every one of its `SYS_members` is any
-**Text** subject.
 
 ## Article / Labelled Tuple
 

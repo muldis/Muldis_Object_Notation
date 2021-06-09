@@ -62,11 +62,11 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | <Bits>
         | <Blob>
         | <Text>
+        | <Nesting>
         | <Calendar_Time>
         | <Calendar_Duration>
         | <Calendar_Instant>
         | <Geographic_Point>
-        | <Nesting>
     }
 
     token collection
@@ -275,6 +275,23 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | [0co  <[ 0..7      ]>+]
         | [0cd? <[ 0..9      ]>+]
         | [0cx  <[ 0..9 A..F ]>+]
+    }
+
+###########################################################################
+
+    token Nesting
+    {
+        <Nesting_subject>
+    }
+
+    token Nesting_subject
+    {
+        ['::' <sp>? <attr_name>]+ % <sp>?
+    }
+
+    token attr_name
+    {
+        <Text_subject>
     }
 
 ###########################################################################
@@ -722,23 +739,6 @@ grammar Muldis::Reference::Object_Notation::Grammar
             [',' <sp>?]?
             [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
-    }
-
-###########################################################################
-
-    token Nesting
-    {
-        <Nesting_subject>
-    }
-
-    token Nesting_subject
-    {
-        ['::' <sp>? <attr_name>]+ % <sp>?
-    }
-
-    token attr_name
-    {
-        <Text_subject>
     }
 
 ###########################################################################

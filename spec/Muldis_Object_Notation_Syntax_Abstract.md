@@ -266,6 +266,23 @@ Examples:
         "\close book. sleep? what's that?\n"
 ```
 
+## Nesting / Attribute Name List
+
+A **Nesting** artifact is an arbitrarily-large ordered sequence of
+*attribute names* (each one a **Text**), that has at least 1 element.
+
+Examples:
+
+```
+    ::person
+
+    ::person::birth_date
+
+    ::person::birth_date::year
+
+    ::the_db::stats::"samples by order"
+```
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
 ## Pair
@@ -691,20 +708,20 @@ Examples:
     (Mix:{})
 
     `One member; one gram of mass.`
-    (Mix:{(Nesting:{Gram}): 1.0})
+    (Mix:{::Gram: 1.0})
 
     `29.95 members (28.95 duplicates); the cost of a surgery.`
-    (Mix:{(Nesting:{USD}): 29.95})
+    (Mix:{::USD: 29.95})
 
     `9.8 members; acceleration under Earth's gravity.`
-    (Mix:{(Nesting:{Meter_Per_Second_Squared}): 9.8})
+    (Mix:{::Meter_Per_Second_Squared: 9.8})
 
     `0.615 members (fractions of 3 distinct members); recipe.`
     (Mix:{
-        (Nesting:{Butter}) : 0.22,
-        (Nesting:{Sugar})  : 0.1,
-        (Nesting:{Flour})  : 0.275,
-        (Nesting:{Sugar})  : 0.02,
+        ::Butter : 0.22,
+        ::Sugar  : 0.1,
+        ::Flour  : 0.275,
+        ::Sugar  : 0.02,
     })
 
     `4/3 members (fractions of 3 distinct members); this-mix.`
@@ -1142,28 +1159,6 @@ Examples:
     }))
 ```
 
-## Nesting / Attribute Name List
-
-A **Nesting** artifact has the predicate `Nesting`.
-
-Its subject is any of the following:
-
-* Any **Lot** artifact such that every one of its *members* is a **Text**
-artifact and the count of its members is at least 1.
-The *members* of the **Lot** denote the *members* of the **Nesting**.
-
-Examples:
-
-```
-    (Nesting:{person})
-
-    (Nesting:{person,birth_date})
-
-    (Nesting:{person,birth_date,year})
-
-    (Nesting:{the_db,stats,"samples by order"})
-```
-
 ## Article / Labelled Tuple
 
 An **Article** artifact has the predicate `Article`.
@@ -1180,15 +1175,15 @@ and are any **Nesting** artifact and any **Tuple** artifact respectively.
 Examples:
 
 ```
-    (Article:((Nesting:{Point}) : (x : 5, y : 3)))
+    (Article:(::Point : (x : 5, y : 3)))
 
-    (Article:((Nesting:{Float}) : (
+    (Article:(::Float : (
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
     )))
 
-    (Article:((Nesting:{the_db,UTCDateTime}) : (
+    (Article:(::the_db::UTCDateTime : (
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -1197,9 +1192,9 @@ Examples:
         second : 0.0,
     )))
 
-    (Article:(Nesting:{Positive_Infinity}))
+    (Article:::Positive_Infinity)
 
-    (Article:(Nesting:{Negative_Zero}))
+    (Article:::Negative_Zero)
 ```
 
 ## Excuse
@@ -1213,11 +1208,11 @@ Its subject is any of the following:
 Examples:
 
 ```
-    (Excuse:((Nesting:{Input_Field_Wrong}) : (name : "Your Age",)))
+    (Excuse:(::Input_Field_Wrong : (name : "Your Age")))
 
-    (Excuse:(Nesting:{Div_By_Zero}))
+    (Excuse:::Div_By_Zero)
 
-    (Excuse:(Nesting:{No_Such_Attr_Name}))
+    (Excuse:::No_Such_Attr_Name)
 ```
 
 # SOURCE CODE DEFINING SECONDARY DATA TYPE POSSREPS

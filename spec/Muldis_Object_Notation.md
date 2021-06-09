@@ -88,6 +88,7 @@ Simple Primary:
 - **Boolean**
 - Numeric: **Integer**, **Fraction**
 - Stringy: **Bits**, **Blob**, **Text**
+- **Nesting**
 
 Collective Primary:
 
@@ -104,7 +105,7 @@ More-Collective Secondary:
 - Discrete: **Array**, **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
 - Relational: **Heading**, **Renaming**, **Tuple Array**, **Relation**, **Tuple Bag**
-- Generic: **Nesting**, **Article**, **Excuse**
+- Generic: **Article**, **Excuse**
 
 Source Code Defining Secondary:
 
