@@ -336,13 +336,15 @@ Examples:
     }
 ```
 
-## Tuple / Attribute Set
+## Structure / Multi-Level Tuple
 
-A **Tuple** artifact is an arbitrarily-large unordered collection of
-elements each of which in turn is named *attribute* such that each
-*attribute* is an ordered collection having exactly 2 elements which in
-order are named *name* (any **Text** artifact) and *asset* (any **Any**
-artifact), and no 2 attributes' *name* denote the same **Text** value.
+A **Structure** artifact is an arbitrarily-large ordered collection of
+elements each of which in turn is named *multi-level attribute* such that
+each *multi-level attribute* is an ordered collection having exactly 2
+elements which in order are named *name* (any **Nesting** artifact, or any
+**Text** artifact which is interpreted as a single-element **Nesting**
+artifact) and *asset* (any **Any** artifact), such that for any 2 multi-level
+attributes neither's *name* is a leading sub-sequence of the other's.
 
 Examples:
 
@@ -353,6 +355,9 @@ Examples:
     `One named attribute.`
     ("First Name": Joy,)
 
+    `Same thing.`
+    (::"First Name": Joy,)
+
     `One ordered attribute.`
     (53,)
 
@@ -362,11 +367,21 @@ Examples:
     `Same thing.`
     ("\\<0c0>": 53,)
 
+    `Same thing.`
+    (::0c0: 53,)
+
     `Three named attributes.`
     (
         login_name : hartmark,
         login_pass : letmein,
         is_special : 0bTRUE,
+    )
+
+    `Same thing.`
+    (
+        ::login_name : hartmark,
+        ::login_pass : letmein,
+        ::is_special : 0bTRUE,
     )
 
     `Three ordered attributes.`
@@ -378,21 +393,13 @@ Examples:
     `A non-Latin name.`
     ("サンプル": "http://example.com",)
 
-    `Two named attributes.`
-    (
-        name : Michelle,
-        age  : 17,
-    )
-
     `Five leaf attributes in nested multi-level namespace.`
     (
         name: "John Glenn",
-        birth_date: (
-            year: 1921,
-            month: 7,
-            day: 18,
-        ),
+        ::birth_date::year: 1921,
         comment: "Fly!",
+        ::birth_date::month: 7,
+        ::birth_date::day: 18,
     )
 ```
 
@@ -424,7 +431,7 @@ A **Calendar Time** artifact has the predicate `Calendar_Time`.
 
 Its subject is any of the following:
 
-* Any **Tuple** artifact having any subset of the 6 attributes of the
+* Any **Structure** artifact having any subset of the 6 attributes of the
 heading {`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`} such
 that their corresponding attribute assets are {*year*, *month*, *day*,
 *hour*, *minute*, *second*}; each of those 6 is any **Integer** artifact or
@@ -530,7 +537,7 @@ A **Geographic Point** artifact has the predicate `Geographic_Point`.
 
 Its subject is any of the following:
 
-* Any **Tuple** artifact having any subset of the 3 attributes of the
+* Any **Structure** artifact having any subset of the 3 attributes of the
 heading {`">"|longitude`,`"^"|latitude`,`"+"|elevation`} such that their
 corresponding attribute assets are {*longitude*, *latitude*, *elevation*};
 each of those 6 is any **Integer** artifact or **Fraction** artifact.
@@ -899,10 +906,10 @@ A **Heading** artifact has the predicate `Heading`.
 
 Its subject is any of the following:
 
-* Any **Tuple** artifact such that every one of its attribute assets is a
+* Any **Structure** artifact such that every one of its attribute assets is a
 **Text** artifact, and no 2 attribute asset values are the same value (and
 presumably the attribute names are all positional).  The *attribute assets*
-of the **Tuple** denote the *attribute names* of the **Heading**.
+of the **Structure** denote the *attribute names* of the **Heading**.
 
 Examples:
 
@@ -944,7 +951,7 @@ A **Renaming** artifact has the predicate `Renaming`.
 
 Its subject is any of the following:
 
-* Any **Tuple** artifact such that every one of its attribute assets is a
+* Any **Structure** artifact such that every one of its attribute assets is a
 **Text** artifact, and no 2 attribute asset values are the same value; for
 each *attribute*, that attribute's name and asset respectively specify the
 *name before* and *name after* name of some other attribute being renamed
@@ -985,6 +992,70 @@ Examples:
 
     `Some attribute names can only appear quoted.`
     (Renaming:("First Name"->"Last Name",))
+```
+
+## Tuple / Attribute Set
+
+A **Tuple** artifact has the predicate `Tuple`.
+
+Its subject is any of the following:
+
+* Any **Structure** artifact such that every one of its *multi-level
+attribute names* has exactly 1 element.  The *multi-level attributes* of
+the **Structure** define the *attributes* of the **Tuple** one to one, such
+that the single element of the former's *multi-level attribute name*
+defines the latter's *attribute name*, and the former's *asset* defines the
+latter's *asset*.
+
+* Any **Structure** artifact such that any one of its *multi-level
+attribute names* has more than 1 element.  The single **Structure** is then
+interpreted as multiple **Tuple** in a tree arrangement such that any
+2-element names result in 1 sub-level of tuple below the root tuple, and
+all assets are leaves of the tree.
+
+Examples:
+
+```
+    `Zero attributes.`
+    (Tuple:())
+
+    `One named attribute.`
+    (Tuple:("First Name": Joy,))
+
+    `One ordered attribute.`
+    (Tuple:(53,))
+
+    `Three ordered attributes.`
+    (Tuple:(hello,26,0bTRUE))
+
+    `One of each.`
+    (Tuple:(Jay, age: 10))
+
+    `Two named attributes.`
+    (Tuple:(
+        name : Michelle,
+        age  : 17,
+    ))
+
+    `Five leaf attributes in nested multi-level namespace.`
+    (Tuple:(
+        name: "John Glenn",
+        ::birth_date::year: 1921,
+        comment: "Fly!",
+        ::birth_date::month: 7,
+        ::birth_date::day: 18,
+    ))
+
+    `Same thing.`
+    (Tuple:(
+        name: "John Glenn",
+        birth_date: (Tuple:(
+            year: 1921,
+            month: 7,
+            day: 18,
+        )),
+        comment: "Fly!",
+    ))
 ```
 
 ## Tuple Array
@@ -1035,7 +1106,7 @@ Its subject is any of the following:
 **Relation**, and the *body* of the **Relation** has zero tuples.
 This is the idiomatic format for an empty (zero-tuple) **Relation**.
 
-* Any **Set** artifact such that every one of its *members* is a **Tuple**
+* Any **Set** artifact such that every one of its *members* is a **Structure**
 artifact, and the count of its members is at least 1, and no 2 members have
 different *headings*.  The *members* of the **Bag** denote the *body* or
 *members* of the **Relation**, and any one *member* also denotes the
@@ -1167,7 +1238,7 @@ Its subject is any of the following:
 
 * Any **Pair** artifact such that its *this* and *that* correspond to the
 *label* and *attributes* of the new **Article** respectively,
-and are any **Nesting** artifact and any **Tuple** artifact respectively.
+and are any **Nesting** artifact and any **Structure** artifact respectively.
 
 * Any **Nesting** artifact, which specifies the *label* of the new
 **Article** and the latter has zero *attributes*.

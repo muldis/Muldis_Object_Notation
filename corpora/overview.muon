@@ -236,13 +236,16 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
-    `$$$` Tuple : (
+    `$$$` Structure : (
 
         `Zero attributes.`
         (),
 
         `One named attribute.`
         ("First Name": Joy,),
+
+        `Same thing.`
+        (::"First Name": Joy,),
 
         `One ordered attribute.`
         (53,),
@@ -253,11 +256,21 @@ Muldis_Content_Predicate`
         `Same thing.`
         ("\\<0c0>": 53,),
 
+        `Same thing.`
+        (::0c0: 53,),
+
         `Three named attributes.`
         (
             login_name : hartmark,
             login_pass : letmein,
             is_special : 0bTRUE,
+        ),
+
+        `Same thing.`
+        (
+            ::login_name : hartmark,
+            ::login_pass : letmein,
+            ::is_special : 0bTRUE,
         ),
 
         `Three ordered attributes.`
@@ -269,12 +282,6 @@ Muldis_Content_Predicate`
         `A non-Latin name.`
         ("サンプル": "http://example.com",),
 
-        `Two named attributes.`
-        (
-            name : Michelle,
-            age  : 17,
-        ),
-
         `Five leaf attributes in nested multi-level namespace.`
         (
             name: "John Glenn",
@@ -282,17 +289,6 @@ Muldis_Content_Predicate`
             comment: "Fly!",
             ::birth_date::month: 7,
             ::birth_date::day: 18,
-        ),
-
-        `Same thing.`
-        (
-            name: "John Glenn",
-            birth_date: (
-                year: 1921,
-                month: 7,
-                day: 18,
-            ),
-            comment: "Fly!",
         ),
 
     ),
@@ -699,6 +695,53 @@ Muldis_Content_Predicate`
 
         `Some attribute names can only appear quoted.`
         (Renaming:("First Name"->"Last Name")),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Tuple : (
+
+        `Zero attributes.`
+        (Tuple:()),
+
+        `One named attribute.`
+        (Tuple:("First Name": Joy,)),
+
+        `One ordered attribute.`
+        (Tuple:(53,)),
+
+        `Three ordered attributes.`
+        (Tuple:(hello,26,0bTRUE)),
+
+        `One of each.`
+        (Tuple:(Jay, age: 10)),
+
+        `Two named attributes.`
+        (Tuple:(
+            name : Michelle,
+            age  : 17,
+        )),
+
+        `Five leaf attributes in nested multi-level namespace.`
+        (Tuple:(
+            name: "John Glenn",
+            ::birth_date::year: 1921,
+            comment: "Fly!",
+            ::birth_date::month: 7,
+            ::birth_date::day: 18,
+        )),
+
+        `Same thing.`
+        (Tuple:(
+            name: "John Glenn",
+            birth_date: (Tuple:(
+                year: 1921,
+                month: 7,
+                day: 18,
+            )),
+            comment: "Fly!",
+        )),
 
     ),
 

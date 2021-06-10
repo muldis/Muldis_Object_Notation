@@ -286,7 +286,7 @@ Grammar:
     {
           <Pair>
         | <Lot>
-        | <Tuple>
+        | <Structure>
         | <Array>
         | <Set>
         | <Bag>
@@ -296,6 +296,7 @@ Grammar:
         | <Interval_Bag>
         | <Heading>
         | <Renaming>
+        | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
@@ -927,48 +928,48 @@ Examples:
     }
 ```
 
-## Tuple / Attribute Set
+## Structure / Multi-Level Tuple
 
-A **Tuple** value is represented by `<Tuple>`.
+A **Structure** value is represented by `<Structure>`.
 
 Grammar:
 
 ```
-    token Tuple
+    token Structure
     {
-        <Tuple_subject>
+        <Structure_subject>
     }
 
-    token Tuple_subject
+    token Structure_subject
     {
-        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
+        ['(' <sp>?] ~ [<sp>? ')'] <structure_attrs>
     }
 
-    token tuple_attrs
+    token structure_attrs
     {
-        <tuple_nullary> | <tuple_unary> | <tuple_nary>
+        <structure_nullary> | <structure_unary> | <structure_nary>
     }
 
-    token tuple_nullary
+    token structure_nullary
     {
         ''
     }
 
-    token tuple_unary
+    token structure_unary
     {
-          [          <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr>          ]
+          [          <structure_attr> <sp>? ',']
+        | [',' <sp>? <structure_attr> <sp>? ',']
+        | [',' <sp>? <structure_attr>          ]
     }
 
-    token tuple_nary
+    token structure_nary
     {
         [',' <sp>?]?
-        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<structure_attr> ** 2..* % [<sp>? ',' <sp>?]]
         [<sp>? ',']?
     }
 
-    token tuple_attr
+    token structure_attr
     {
         [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
     }
@@ -979,12 +980,12 @@ Grammar:
     }
 ```
 
-The meaning of a `<tuple_attr>` consisting of only an `<attr_asset>` is
+The meaning of a `<structure_attr>` consisting of only an `<attr_asset>` is
 exactly the same as if the former also had an `<attr_name>` of the form
 `0cN` such that `N` is the zero-based ordinal position of the
-`<tuple_attr>` in the `<tuple_attrs>` among all sibling such
-`<tuple_attr>`.  These *attribute name* are determined without regard to
-any explicit *attribute name* that a `<tuple_attrs>` may contain, and it is
+`<structure_attr>` in the `<structure_attrs>` among all sibling such
+`<structure_attr>`.  These *attribute name* are determined without regard to
+any explicit *attribute name* that a `<structure_attrs>` may contain, and it is
 invalid for any explicit names to duplicate any implicit or explicit names.
 
 Examples:
@@ -996,6 +997,9 @@ Examples:
     `One named attribute.`
     ("First Name": Joy,)
 
+    `Same thing.`
+    (::"First Name": Joy,)
+
     `One ordered attribute.`
     (53,)
 
@@ -1005,11 +1009,21 @@ Examples:
     `Same thing.`
     ("\\<0c0>": 53,)
 
+    `Same thing.`
+    (::0c0: 53,)
+
     `Three named attributes.`
     (
         login_name : hartmark,
         login_pass : letmein,
         is_special : 0bTRUE,
+    )
+
+    `Same thing.`
+    (
+        ::login_name : hartmark,
+        ::login_pass : letmein,
+        ::is_special : 0bTRUE,
     )
 
     `Three ordered attributes.`
@@ -1021,12 +1035,6 @@ Examples:
     `A non-Latin name.`
     ("サンプル": "http://example.com",)
 
-    `Two named attributes.`
-    (
-        name : Michelle,
-        age  : 17,
-    )
-
     `Five leaf attributes in nested multi-level namespace.`
     (
         name: "John Glenn",
@@ -1034,17 +1042,6 @@ Examples:
         comment: "Fly!",
         ::birth_date::month: 7,
         ::birth_date::day: 18,
-    )
-
-    `Same thing.`
-    (
-        name: "John Glenn",
-        birth_date: (
-            year: 1921,
-            month: 7,
-            day: 18,
-        ),
-        comment: "Fly!",
     )
 ```
 
@@ -1822,6 +1819,70 @@ Examples:
     (Renaming:("First Name"->"Last Name",))
 ```
 
+## Tuple / Attribute Set
+
+A **Tuple** value is represented by `<Tuple>`.
+
+Grammar:
+
+```
+    token Tuple
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Tuple <sp>? ':' <sp>? <Tuple_subject>
+    }
+
+    token Tuple_subject
+    {
+        <Structure_subject>
+    }
+```
+
+Examples:
+
+```
+    `Zero attributes.`
+    (Tuple:())
+
+    `One named attribute.`
+    (Tuple:("First Name": Joy,))
+
+    `One ordered attribute.`
+    (Tuple:(53,))
+
+    `Three ordered attributes.`
+    (Tuple:(hello,26,0bTRUE))
+
+    `One of each.`
+    (Tuple:(Jay, age: 10))
+
+    `Two named attributes.`
+    (Tuple:(
+        name : Michelle,
+        age  : 17,
+    ))
+
+    `Five leaf attributes in nested multi-level namespace.`
+    (Tuple:(
+        name: "John Glenn",
+        ::birth_date::year: 1921,
+        comment: "Fly!",
+        ::birth_date::month: 7,
+        ::birth_date::day: 18,
+    ))
+
+    `Same thing.`
+    (Tuple:(
+        name: "John Glenn",
+        birth_date: (Tuple:(
+            year: 1921,
+            month: 7,
+            day: 18,
+        )),
+        comment: "Fly!",
+    ))
+```
+
 ## Tuple Array
 
 A **Tuple Array** value is represented by `<Tuple_Array>`.
@@ -1844,7 +1905,7 @@ Grammar:
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Structure> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 ```
@@ -1900,7 +1961,7 @@ Grammar:
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Tuple> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Structure> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 ```
@@ -1965,7 +2026,7 @@ Grammar:
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Structure> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 ```
@@ -2034,7 +2095,7 @@ That `<label>` is subject to the additional rule that the value expression
 it denotes must evaluate to a **Nesting**.
 
 Iff that `<attrs>` is not explicitly defined then it implicitly defines the
-sole nullary **Tuple** `()`.
+sole nullary **Tuple** `(Tuple:())`.
 
 Iff that `<attrs>` is so explicitly defined then it is subject to the
 additional rule that the value expression it denotes must evaluate to a
@@ -2120,7 +2181,7 @@ possrep is recognized within a Muldis Object Notation artifact:
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
     Pair            | (...:...) without any comma
     Lot             | only {} or {...}
-    Tuple           | only () or (...) with >= 1 comma
+    Structure       | only () or (...) with >= 1 comma
     locationals     | prefix 0L
     Interval        | only [] or [...]
     Nesting         | prefix ::
@@ -2197,7 +2258,7 @@ that means they are used in pairs.
     ()    | attribute collections  | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs
           |                        | * delimit Heading literals
-          |                        | * delimit Pair/Tuple/Article/Excuse selectors
+          |                        | * delimit Pair/Structure/Article/Excuse selectors
           |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
           | generic grouping       | * optional delimiters around Any to force a parsing precedence
     ------+------------------------+---------------------------------------
@@ -2214,7 +2275,7 @@ that means they are used in pairs.
     ->    |                        | * separates the 2 parts of a pair
     <-    |                        | * this/that separator in Pair sels
           |                        | * disambiguate Pair sels from generic_group
-          |                        | * optional attr name/asset separator in Tuple/Article/Excuse sels
+          |                        | * optional attr name/asset separator in Structure/Article/Excuse sels
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * optional pair separator in Lot/Array/Set/Bag/Mix sels
           |                        | * optional pair separator in nonempty-TA/Rel/TB sels
@@ -2222,8 +2283,8 @@ that means they are used in pairs.
           |                        | * disambiguate Bag/Mix sels from Set sel
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
-          |                        | * separate attributes in Tuple/Article/Excuse sels
-          |                        | * disambiguate unary named Tuple sels from Pair sels and generic_group
+          |                        | * separate attributes in Structure/Article/Excuse sels
+          |                        | * disambiguate unary named Structure sels from Pair sels and generic_group
           |                        | * separate members in Lot/Array/Set/Bag/Mix sels
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Heading lits

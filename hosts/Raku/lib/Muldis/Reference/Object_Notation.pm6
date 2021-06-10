@@ -72,9 +72,9 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token collection
     {
           <Pair>
-        | <Array>
         | <Lot>
-        | <Tuple>
+        | <Structure>
+        | <Array>
         | <Set>
         | <Bag>
         | <Mix>
@@ -83,6 +83,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | <Interval_Bag>
         | <Heading>
         | <Renaming>
+        | <Tuple>
         | <Tuple_Array>
         | <Relation>
         | <Tuple_Bag>
@@ -339,41 +340,41 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
-    token Tuple
+    token Structure
     {
-        <Tuple_subject>
+        <Structure_subject>
     }
 
-    token Tuple_subject
+    token Structure_subject
     {
-        ['(' <sp>?] ~ [<sp>? ')'] <tuple_attrs>
+        ['(' <sp>?] ~ [<sp>? ')'] <structure_attrs>
     }
 
-    token tuple_attrs
+    token structure_attrs
     {
-        <tuple_nullary> | <tuple_unary> | <tuple_nary>
+        <structure_nullary> | <structure_unary> | <structure_nary>
     }
 
-    token tuple_nullary
+    token structure_nullary
     {
         ''
     }
 
-    token tuple_unary
+    token structure_unary
     {
-          [          <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr> <sp>? ',']
-        | [',' <sp>? <tuple_attr>          ]
+          [          <structure_attr> <sp>? ',']
+        | [',' <sp>? <structure_attr> <sp>? ',']
+        | [',' <sp>? <structure_attr>          ]
     }
 
-    token tuple_nary
+    token structure_nary
     {
         [',' <sp>?]?
-        [<tuple_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<structure_attr> ** 2..* % [<sp>? ',' <sp>?]]
         [<sp>? ',']?
     }
 
-    token tuple_attr
+    token structure_attr
     {
         [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
     }
@@ -676,6 +677,19 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token attr_name_after
     {
         <attr_name>
+    }
+
+###########################################################################
+
+    token Tuple
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Tuple <sp>? ':' <sp>? <Tuple_subject>
+    }
+
+    token Tuple_subject
+    {
+        <Structure_subject>
     }
 
 ###########################################################################

@@ -104,7 +104,7 @@ There are exactly 3 of these:
 
 - **Pair**
 - **Lot**
-- **Tuple**
+- **Structure**
 
 A *secondary possrep* is one whose canonical definition has no format of
 its own in any syntax and rather its canonical definition is as one or more
@@ -121,12 +121,12 @@ dedicated simple literal formats or data type values in some syntaxes:
 
 - Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
 
-Some of these 14 more-collective-like secondary possreps might have its own
+Some of these 15 more-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
 - Discrete: **Array**, **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
-- Relational: **Heading**, **Renaming**, **Tuple Array**, **Relation**, **Tuple Bag**
+- Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
 - Generic: **Article**, **Excuse**
 
 These 0 secondary possreps are specifically for defining program source
@@ -296,45 +296,57 @@ been run-length encoded but that it can also represent fractional instances.
 The **Lot** possrep is an idiomatic generalization of a discrete
 homogeneous collection, such that any given MUON syntax can choose to just
 have **Lot** as a fundamental syntax, and then any other possreps for
-discrete homogeneous collections can be represented just as a **Lot** plus
-a plain unary type cast in the form of a **Pair** possrep.
+discrete homogeneous collections can be represented just as a **Lot**
+plus a plain unary type cast in the form of a **Pair** possrep.
 
-The intended use of the **Lot** possrep is to represent a value expression
-node for selecting at runtime a value of any of the other discrete
-homogeneous collection types where their member values or multiplicities
-are defined by arbitrarily complex sub-expressions.
+The intended use of the **Lot** possrep is to represent a value
+expression node for selecting at runtime a value of any of the other
+discrete homogeneous collection types where their member values or
+multiplicities are defined by arbitrarily complex sub-expressions.
 
-## Tuple / Attribute Set
+A key feature of **Lot** is that it natively preserves the relative
+order of its child nodes even when the value being selected is an unordered
+type, which can be considered essential for round tripping source code that
+better resembles what the programmer wrote.
 
-A **Tuple** value is a general purpose arbitrarily-large unordered
-heterogeneous collection of named *attributes*, such that no 2 attributes
-have the same *attribute name*, which explicitly does not represent any
-kind of thing in particular, and is simply the sum of its attributes.
-An attribute is conceptually a name-asset pair, the name being used to look
-up the attribute in a **Tuple**.  An *attribute name* is an unqualified
-program identifier and is conceptually a character string that is not a
-**Text** value.  In the general case each attribute of a tuple is of a
-distinct data type, though multiple attributes often have the same type.
-The set of attribute names of a **Tuple** is called its *heading*, and the
-corresponding attribute assets are called its *body*.
+## Structure / Multi-Level Tuple
 
-With respect to the relational model of data, a *heading* represents a
-predicate, for which each *attribute name* is a free variable, and a
-**Tuple** as a whole represents a derived proposition, where the
-corresponding attribute asset values substitute for the free variables;
-however, any actual predicate/etc is defined by the context of a
-**Tuple** value and a **Tuple** in isolation explicitly does not
-represent any proposition in particular.
+A **Structure** value is a general purpose arbitrarily-large ordered
+heterogeneous collection of named *multi-level attributes*, such that for
+any 2 multi-level attributes neither's *multi-level attribute name* is a
+leading sub-sequence of the other's, which explicitly does not represent
+any kind of thing in particular, and is simply the sum of its multi-level
+attributes.  A multi-level attribute is conceptually a name-asset pair, the
+name being used to look up the multi-level attribute in a **Structure**.
+A *multi-level attribute name* is a semiqualified program identifier and is
+conceptually a nonempty sequence of character string that is not a
+**Nesting** value.  In the general case each multi-level attribute of a
+structure is of a distinct data type, though multiple multi-level
+attributes often have the same type.
 
-The canonical way to represent the concept of a *tuple* that has ordered
-attributes is to use integral names; to be specific, the attribute name
-consisting of just the character code point 0 would mark the first ordered
-attribute, the name consisting of just the code point 1 would mark the
-second, and so on; this can be repeated up to 32 "positional" names whose
-names would correspond to non-printing Unicode code points and would
-alphabetically sort correctly and prior to any normal text-like attribute
-names like `name` or `age`; said first 32 would likewise be distinct in
-appearance from all regular printable numbers used as attribute names.
+The **Structure** possrep is an idiomatic generalization of a discrete
+heterogeneous collection, such that any given MUON syntax can choose to just
+have **Structure** as a fundamental syntax, and then any other possreps for
+discrete heterogeneous collections can be represented just as a **Structure**
+plus a plain unary type cast in the form of a **Pair** possrep.
+
+The intended use of the **Structure** possrep is to represent a value
+expression node for selecting at runtime a value of any of the other
+discrete heterogeneous collection types where their assets are defined by
+arbitrarily complex sub-expressions.
+
+A key feature of **Structure** is that it natively preserves the relative
+order of its child nodes even when the value being selected is an unordered
+type, which can be considered essential for round tripping source code that
+better resembles what the programmer wrote.
+
+A second key feature of **Structure** is that it natively preserves a
+useful alternative syntax for a tree of nested **Tuple** representing a
+multi-level namespace for declaring program entities, such that the
+entities are declared in a single ordered flat list and each of the entity
+names can be multi-level, which is very conducive to trivial text-editor
+function scanning and navigation menu building logic when you have multiple
+levels of entities declared in the same source file.
 
 # LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS
 
@@ -589,6 +601,38 @@ attribute asset is a **Text**, and no 2 attribute asset values are the same
 value; for each *attribute*, that attribute's name and asset respectively
 specify the *name before* and *name after* of some other attribute being
 renamed of some other attributive value.
+
+## Tuple / Attribute Set
+
+A **Tuple** value is a general purpose arbitrarily-large unordered
+heterogeneous collection of named *attributes*, such that no 2 attributes
+have the same *attribute name*, which explicitly does not represent any
+kind of thing in particular, and is simply the sum of its attributes.
+An attribute is conceptually a name-asset pair, the name being used to look
+up the attribute in a **Tuple**.  An *attribute name* is an unqualified
+program identifier and is conceptually a character string that is not a
+**Text** value.  In the general case each attribute of a tuple is of a
+distinct data type, though multiple attributes often have the same type.
+The set of attribute names of a **Tuple** is called its *heading*, and the
+corresponding attribute assets are called its *body*.
+
+With respect to the relational model of data, a *heading* represents a
+predicate, for which each *attribute name* is a free variable, and a
+**Tuple** as a whole represents a derived proposition, where the
+corresponding attribute asset values substitute for the free variables;
+however, any actual predicate/etc is defined by the context of a
+**Tuple** value and a **Tuple** in isolation explicitly does not
+represent any proposition in particular.
+
+The canonical way to represent the concept of a *tuple* that has ordered
+attributes is to use integral names; to be specific, the attribute name
+consisting of just the character code point 0 would mark the first ordered
+attribute, the name consisting of just the code point 1 would mark the
+second, and so on; this can be repeated up to 32 "positional" names whose
+names would correspond to non-printing Unicode code points and would
+alphabetically sort correctly and prior to any normal text-like attribute
+names like `name` or `age`; said first 32 would likewise be distinct in
+appearance from all regular printable numbers used as attribute names.
 
 ## Tuple Array
 
