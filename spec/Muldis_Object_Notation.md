@@ -81,6 +81,7 @@ Algebraic:
 
 - **Any**
 - **None**
+- **Fractional**
 
 Simple Primary:
 

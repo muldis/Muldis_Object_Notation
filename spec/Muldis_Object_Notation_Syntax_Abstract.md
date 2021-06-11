@@ -78,6 +78,11 @@ artifacts, since the **None** possrep is characterized by the intersection
 of all other possreps.  That is, there are no **None** artifacts at all,
 and this possrep is just mentioned as the logical complement of **Any**.
 
+## Fractional
+
+A **Fractional** artifact is an artifact that qualifies as either any
+**Fraction** artifact or as any **Integer** artifact.
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
 
 ## Ignorance
@@ -434,8 +439,7 @@ Its subject is any of the following:
 * Any **Structure** artifact having any subset of the 6 attributes of the
 heading {`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`} such
 that their corresponding attribute assets are {*year*, *month*, *day*,
-*hour*, *minute*, *second*}; each of those 6 is any **Integer** artifact or
-**Fraction** artifact.
+*hour*, *minute*, *second*}; each of those 6 is any **Fractional** artifact.
 
 Examples:
 
@@ -540,7 +544,7 @@ Its subject is any of the following:
 * Any **Structure** artifact having any subset of the 3 attributes of the
 heading {`">"|longitude`,`"^"|latitude`,`"+"|elevation`} such that their
 corresponding attribute assets are {*longitude*, *latitude*, *elevation*};
-each of those 6 is any **Integer** artifact or **Fraction** artifact.
+each of those 6 is any **Fractional** artifact.
 
 Examples:
 
@@ -705,7 +709,7 @@ Its subject is any of the following:
 
 * Any **Lot** artifact such that for every one of its *multiplied members*,
 that multiplied member's *member* denotes a potential distinct member of
-the **Mix** and the multiplied member's *multiplicity* is any **Fraction**
+the **Mix** and the multiplied member's *multiplicity* is any **Fractional**
 artifact which denotes a nonzero possibly fractional *multiplicity*.
 
 Examples:

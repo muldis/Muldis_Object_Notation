@@ -72,10 +72,11 @@ An *algebraic possrep* has no syntax of its own and just exists as a
 concept defined in terms of the union of 0..N other possreps, and in
 practice any reference to an algebraic possrep is just a shorthand for
 referring to a set of the possreps it is defined in terms of.
-There are exactly 2 of these:
+There are exactly 3 of these:
 
 - **Any**
 - **None**
+- **Fractional**
 
 A *primary possrep* is a member of the reasonable minimum set of MUON
 possreps that bootstraps every syntax.  Each one is of exactly one of these
@@ -154,6 +155,17 @@ the intersection of all other possreps.  It explicitly corresponds to a
 *subtype* of what every other possrep corresponds to, regardless of the
 data model.  No syntax uses **None** at all, it is just mentioned here as
 the logical complement of **Any**.
+
+## Fractional
+
+The **Fractional** possrep is the union of the **Fraction** and **Integer**
+possreps.  It is used when conceptually only a **Fraction** is allowed but
+we want to be more lax in what users are actually allowed to write in the
+very frequent scenarios that allow fractional numbers but users just want
+whole numbers and the **Integer** syntax is more terse.  When a
+**Fractional** artifact is expected, any time an **Integer** artifact is
+given, it is assumed that a typical data model used with MUON will
+interpret that as the **Fraction** artifact with the same numeric value.
 
 # SIMPLE PRIMARY DATA TYPE POSSREPS
 
@@ -355,7 +367,7 @@ levels of entities declared in the same source file.
 A **Calendar Time** value is characterized by a **Tuple** having any subset
 of the 6 attributes of the heading
 {`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`} such that each
-attribute asset is a **Fraction**, or alternately by an isomorphic **Mix**.
+attribute asset is a **Fractional**, or alternately by an isomorphic **Mix**.
 For each of the 6 attributes, it explicitly distinguishes between the
 attribute value being specified as zero versus being unspecified; omitting
 the attribute entirely means the latter.  Its main intended purpose is to
@@ -417,14 +429,14 @@ the existing time zone name support may also indicate this by itself.*
 A **Geographic Point** value is a particular point location on the Earth's
 surface characterized by cartesian coordinates named *longitude* and
 *latitude* and *elevation*, where each of the latter is characterized by a
-single **Fraction** value.  Each coordinate may be either specified or
+single **Fractional** value.  Each coordinate may be either specified or
 unspecified; omitting it means the latter and providing it, even if zero,
 means the former.
 
 Alternately, a **Geographic Point** value is characterized by a **Tuple**
 having any subset of the 3 attributes of the heading
 {`">"|longitude`,`"^"|latitude`,`"+"|elevation`} such that each
-attribute asset is a **Fraction**.
+attribute asset is a **Fractional**.
 
 The coordinates may be specified in any order, and are distinguished by
 their own prefix symbols.  The literal syntax has right-pointing `>` and
@@ -498,7 +510,7 @@ and it may have fractions of members, and it may have negations of members.
 
 A **Mix** value is also characterized by a set of 0..N *multiplied members*
 such that each *multiplied member* is a *member*/*multiplicity* pair such that
-no 2 *member* are the same value and *multiplicity* is a nonzero **Fraction**.
+no 2 *member* are the same value and *multiplicity* is a nonzero **Fractional**.
 
 The **Mix** possrep is the idiomatic way for an external data model to
 represent the general case of a *measure*, a measurement of some quantity
