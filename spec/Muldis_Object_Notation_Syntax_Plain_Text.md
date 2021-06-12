@@ -284,7 +284,7 @@ Grammar:
 
     token collection
     {
-          <Pair>
+          <Duo>
         | <Lot>
         | <Structure>
         | <Array>
@@ -294,6 +294,7 @@ Grammar:
         | <Interval>
         | <Interval_Set>
         | <Interval_Bag>
+        | <Pair>
         | <Heading>
         | <Renaming>
         | <Tuple>
@@ -836,19 +837,19 @@ Examples:
     ::the_db::stats::"samples by order"
 ```
 
-## Pair
+## Duo
 
-A **Pair** value is represented by `<Pair>`.
+A **Duo** value is represented by `<Duo>`.
 
 Grammar:
 
 ```
-    token Pair
+    token Duo
     {
-         <Pair_subject>
+         <Duo_subject>
     }
 
-    token Pair_subject
+    token Duo_subject
     {
         ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
     }
@@ -873,13 +874,13 @@ Grammar:
 Examples:
 
 ```
-    `Pair of Integer.`
+    `Duo of Integer.`
     (5: -3)
 
-    `Pair of Text.`
+    `Duo of Text.`
     ("First Name": Joy)
 
-    `Another Pair.`
+    `Another Duo.`
     (x:y)
 
     `Same thing.`
@@ -1664,6 +1665,44 @@ Examples:
     (Interval_Bag:{1<=*<6,6..10:2,10<*<=15})
 ```
 
+## Pair
+
+A **Pair** value is represented by `<Pair>`.
+
+Grammar:
+
+```
+    token Pair
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Pair <sp>? ':' <sp>? <Pair_subject>
+    }
+
+    token Pair_subject
+    {
+        <Duo_subject>
+    }
+```
+
+Examples:
+
+```
+    `Pair of Integer.`
+    (Pair:(5: -3))
+
+    `Pair of Text.`
+    (Pair:("First Name": Joy))
+
+    `Another Pair.`
+    (Pair:(x:y))
+
+    `Same thing.`
+    (Pair:(x->y))
+
+    `Same thing.`
+    (Pair:(y<-x))
+```
+
 ## Heading / Attribute Name Set
 
 A **Heading** value is represented by `<Heading>`.
@@ -2179,7 +2218,7 @@ possrep is recognized within a Muldis Object Notation artifact:
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
-    Pair            | (...:...) without any comma
+    Duo             | (...:...) without any comma
     Lot             | only {} or {...}
     Structure       | only () or (...) with >= 1 comma
     locationals     | prefix 0L
@@ -2258,7 +2297,7 @@ that means they are used in pairs.
     ()    | attribute collections  | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs
           |                        | * delimit Heading literals
-          |                        | * delimit Pair/Structure/Article/Excuse selectors
+          |                        | * delimit Duo/Structure/Article/Excuse selectors
           |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
           | generic grouping       | * optional delimiters around Any to force a parsing precedence
     ------+------------------------+---------------------------------------
@@ -2273,8 +2312,8 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
     ->    |                        | * separates the 2 parts of a pair
-    <-    |                        | * this/that separator in Pair sels
-          |                        | * disambiguate Pair sels from generic_group
+    <-    |                        | * this/that separator in Duo sels
+          |                        | * disambiguate Duo sels from generic_group
           |                        | * optional attr name/asset separator in Structure/Article/Excuse sels
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * optional pair separator in Lot/Array/Set/Bag/Mix sels
@@ -2284,7 +2323,7 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
           |                        | * separate attributes in Structure/Article/Excuse sels
-          |                        | * disambiguate unary named Structure sels from Pair sels and generic_group
+          |                        | * disambiguate unary named Structure sels from Duo sels and generic_group
           |                        | * separate members in Lot/Array/Set/Bag/Mix sels
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Heading lits

@@ -287,9 +287,9 @@ When its subject is any of the following, the predicate is required:
 * Any `SYS_Array` such that every one of its `SYS_members` is any
 **Text** subject.
 
-## Pair
+## Duo
 
-An **Pair** artifact has the predicate `Pair`.
+A **Duo** artifact has the predicate `Duo`.
 
 When its subject is any of the following, the predicate is required:
 
@@ -659,6 +659,14 @@ is any **Integer** subject which denotes a non-negative integer *multiplicity*.
 that member's `SYS_key` is any **Interval** subject and
 that member's `SYS_value` is any **Integer** subject
 which denotes a non-negative integer *multiplicity*.
+
+## Pair
+
+A **Pair** artifact has the predicate `Pair`.
+
+When its subject is any of the following, the predicate is required:
+
+* Any **Duo** subject.
 
 ## Heading / Attribute Name Set
 

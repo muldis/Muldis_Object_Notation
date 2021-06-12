@@ -290,22 +290,22 @@ Examples:
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
-## Pair
+## Duo
 
-A **Pair** artifact is an ordered collection having exactly 2 elements
+A **Duo** artifact is an ordered collection having exactly 2 elements
 which in order are named *this* (any **Any** artifact) and *that* (any
 **Any** artifact).
 
 Examples:
 
 ```
-    `Pair of Integer.`
+    `Duo of Integer.`
     (5: -3)
 
-    `Pair of Text.`
+    `Duo of Text.`
     ("First Name": Joy)
 
-    `Another Pair.`
+    `Another Duo.`
     (x:y)
 
     `Same thing.`
@@ -416,7 +416,7 @@ There is NOT any abstract MUON secondary possrep that has any alternative
 *unqualified* formats characterized by the *subject* on its own; however,
 the latter is a common option for concrete MUON possreps.
 
-Every (qualified) abstract MUON artifact is a **Pair** artifact;
+Every (qualified) abstract MUON artifact is a **Duo** artifact;
 its *this* is the *predicate* and its *that* is the *subject*.
 
 Every MUON possrep *predicate* is a **Text** artifact,
@@ -501,10 +501,10 @@ Its subject is any of the following:
 
 * Any *instant base*.
 
-* Any **Pair** artifact such that its *this* and *that* respectively are
+* Any **Duo** artifact such that its *this* and *that* respectively are
 the *instant base* and *instant offset*.
 
-* Any **Pair** artifact such that its *this* and *that* respectively are
+* Any **Duo** artifact such that its *this* and *that* respectively are
 the *instant base* and *instant zone*.
 
 The above components are defined as follows:
@@ -758,22 +758,22 @@ Its subject is any of the following:
 
 * The **Text** artifact empty string value; this designates an *empty interval*.
 
-* Any **Pair** artifact such that its *this* is the **Text** artifact empty
+* Any **Duo** artifact such that its *this* is the **Text** artifact empty
 string value and its *that* is any **Any** artifact; this designates a
 *unit interval*, and *that* corresponds to its sole member.
 
-* Any **Pair** artifact such that its *this* is any of the 5 **Text**
+* Any **Duo** artifact such that its *this* is any of the 5 **Text**
 artifacts {`<=*<=`, `<=*<`, `<*<=`, `<*<`, `..`} and its *that* is any
-**Pair** artifact such that its *this* and *that* respectively are each any
+**Duo** artifact such that its *this* and *that* respectively are each any
 **Any** artifact; this designates a *bounded interval*, and the latter
 *this* and *that* correspond respectively to the low and high endpoints.
 
-* Any **Pair** artifact such that its *this* is any of the 2 **Text**
+* Any **Duo** artifact such that its *this* is any of the 2 **Text**
 artifacts {`<=*`, `<*`} and its *that* is any **Any** artifact; this
 designates a *low-bounded, high-unbounded interval*, and *that* corresponds
 to the low endpoint.
 
-* Any **Pair** artifact such that its *this* is any of the 2 **Text**
+* Any **Duo** artifact such that its *this* is any of the 2 **Text**
 artifacts {`*<=`, `*<`} and its *that* is any **Any** artifact; this
 designates a *low-unbounded, high-bounded interval*, and *that* corresponds
 to the high endpoint.
@@ -902,6 +902,34 @@ Examples:
         (Interval:(".."  :( 6:10))):2,
         (Interval:("<*<=":(10:15)))  ,
     }))
+```
+
+## Pair
+
+A **Pair** artifact has the predicate `Pair`.
+
+Its subject is any of the following:
+
+* Any **Duo** artifact such that its *this* and *that* define the same
+elements of the **Pair**.
+
+Examples:
+
+```
+    `Pair of Integer.`
+    (Pair:(5: -3))
+
+    `Pair of Text.`
+    (Pair:("First Name": Joy))
+
+    `Another Pair.`
+    (Pair:(x:y))
+
+    `Same thing.`
+    (Pair:(x->y))
+
+    `Same thing.`
+    (Pair:(y<-x))
 ```
 
 ## Heading / Attribute Name Set
@@ -1118,7 +1146,7 @@ different *headings*.  The *members* of the **Bag** denote the *body* or
 a non-empty (at least one tuple) **Relation** where the attribute names
 repeat for every tuple.
 
-* Any **Pair** artifact such that its *this* and *that* correspond to the
+* Any **Duo** artifact such that its *this* and *that* correspond to the
 *heading* and *body* of the new **Relation** respectively, and its *that*
 is any **Set** artifact per the prior bullet point but that it may have
 zero members, and its *this* is any **Renaming** artifact such that its set
@@ -1240,7 +1268,7 @@ An **Article** artifact has the predicate `Article`.
 
 Its subject is any of the following:
 
-* Any **Pair** artifact such that its *this* and *that* correspond to the
+* Any **Duo** artifact such that its *this* and *that* correspond to the
 *label* and *attributes* of the new **Article** respectively,
 and are any **Nesting** artifact and any **Structure** artifact respectively.
 

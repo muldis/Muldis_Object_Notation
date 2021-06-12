@@ -103,14 +103,14 @@ expressed mainly in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single collective item.
 There are exactly 3 of these:
 
-- **Pair**
+- **Duo**
 - **Lot**
 - **Structure**
 
 A *secondary possrep* is one whose canonical definition has no format of
 its own in any syntax and rather its canonical definition is as one or more
 special cases of some other possrep.  To be specific, an artifact of every
-secondary possrep is canonically expressed in every syntax as a **Pair**
+secondary possrep is canonically expressed in every syntax as a **Duo**
 artifact which provides a semantic tag for some other
 typically-structure-defining artifact thus giving the latter a different
 interpretation than otherwise.  Each syntax may optionally define extra
@@ -122,11 +122,12 @@ dedicated simple literal formats or data type values in some syntaxes:
 
 - Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
 
-Some of these 15 more-collective-like secondary possreps might have its own
+Some of these 16 more-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
 - Discrete: **Array**, **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
+- **Pair**
 - Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
 - Generic: **Article**, **Excuse**
 
@@ -279,12 +280,16 @@ such as nested **Tuple** may implement.
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
-## Pair
+## Duo
 
-A **Pair** value is a general purpose 2-element ordered heterogeneous
+A **Duo** value is a general purpose 2-element ordered heterogeneous
 collection whose elements in order are *this* and *that*, each of which may
-be any other value.  A **Pair** value is also characterized by a **Tuple**
-value having exactly 2 "positional" attributes.
+be any other value.  A **Duo** value is also characterized by a **Pair**.
+
+The intended use of the **Duo** possrep is the many situations where MUON
+secondary possrep artifacts are built in terms of ordered pairs and we want
+to clearly distinguish this from regular user data or source code that is
+logically a generic pair, the latter being what **Pair** is for.
 
 ## Lot
 
@@ -309,7 +314,7 @@ The **Lot** possrep is an idiomatic generalization of a discrete
 homogeneous collection, such that any given MUON syntax can choose to just
 have **Lot** as a fundamental syntax, and then any other possreps for
 discrete homogeneous collections can be represented just as a **Lot**
-plus a plain unary type cast in the form of a **Pair** possrep.
+plus a plain unary type cast in the form of a **Duo** possrep.
 
 The intended use of the **Lot** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
@@ -340,7 +345,7 @@ The **Structure** possrep is an idiomatic generalization of a discrete
 heterogeneous collection, such that any given MUON syntax can choose to just
 have **Structure** as a fundamental syntax, and then any other possreps for
 discrete heterogeneous collections can be represented just as a **Structure**
-plus a plain unary type cast in the form of a **Pair** possrep.
+plus a plain unary type cast in the form of a **Duo** possrep.
 
 The intended use of the **Structure** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
@@ -595,6 +600,13 @@ An **Interval Bag** value is characterized by a generalization of an
 **Interval Bag** is isomorphic to a **Bag** in the same way that an
 **Interval Set** is to a **Set**; every possible distinct **Bag** can map
 to a distinct **Interval Bag**.
+
+## Pair
+
+A **Pair** value is a general purpose 2-element ordered heterogeneous
+collection whose elements in order are *this* and *that*, each of which may
+be any other value.  A **Pair** value is also characterized by a **Tuple**
+value having exactly 2 "positional" attributes.
 
 ## Heading / Attribute Name Set
 

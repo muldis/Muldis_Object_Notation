@@ -71,7 +71,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token collection
     {
-          <Pair>
+          <Duo>
         | <Lot>
         | <Structure>
         | <Array>
@@ -81,6 +81,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
         | <Interval>
         | <Interval_Set>
         | <Interval_Bag>
+        | <Pair>
         | <Heading>
         | <Renaming>
         | <Tuple>
@@ -297,12 +298,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
-    token Pair
+    token Duo
     {
-         <Pair_subject>
+         <Duo_subject>
     }
 
-    token Pair_subject
+    token Duo_subject
     {
         ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
     }
@@ -625,6 +626,19 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
+    token Pair
+    {
+        ['(' <sp>?] ~ [<sp>? ')']
+            Pair <sp>? ':' <sp>? <Pair_subject>
+    }
+
+    token Pair_subject
+    {
+        <Duo_subject>
+    }
+
+###########################################################################
+
     token Heading
     {
         ['(' <sp>?] ~ [<sp>? ')']
@@ -709,7 +723,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Structure> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 
@@ -730,7 +744,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Tuple> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Structure> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 
@@ -751,7 +765,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Tuple> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Structure> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 

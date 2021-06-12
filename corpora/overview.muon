@@ -195,15 +195,15 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
-    `$$$` Pair : (
+    `$$$` Duo : (
 
-        `Pair of Integer.`
+        `Duo of Integer.`
         (5: -3),
 
-        `Pair of Text.`
+        `Duo of Text.`
         ("First Name": Joy),
 
-        `Another Pair.`
+        `Another Duo.`
         (x:y),
 
         `Same thing.`
@@ -617,6 +617,27 @@ Muldis_Content_Predicate`
 
         `Probably same thing, regardless of data model used.`
         (Interval_Bag:{1<=*<6,6..10:2,10<*<=15}),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Pair : (
+
+        `Pair of Integer.`
+        (Pair:(5: -3)),
+
+        `Pair of Text.`
+        (Pair:("First Name": Joy)),
+
+        `Another Pair.`
+        (Pair:(x:y)),
+
+        `Same thing.`
+        (Pair:(x->y)),
+
+        `Same thing.`
+        (Pair:(y<-x)),
 
     ),
 
