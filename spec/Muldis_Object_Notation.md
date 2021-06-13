@@ -95,7 +95,7 @@ Collective Primary:
 
 - **Duo**
 - **Lot**
-- **Structure**
+- **Kit**
 
 Less-Collective Secondary:
 

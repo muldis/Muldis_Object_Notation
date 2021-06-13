@@ -341,9 +341,9 @@ Examples:
     }
 ```
 
-## Structure / Multi-Level Tuple
+## Kit / Multi-Level Tuple
 
-A **Structure** artifact is an arbitrarily-large ordered collection of
+A **Kit** artifact is an arbitrarily-large ordered collection of
 elements each of which in turn is named *multi-level attribute* such that
 each *multi-level attribute* is an ordered collection having exactly 2
 elements which in order are named *name* (any **Nesting** artifact, or any
@@ -436,7 +436,7 @@ A **Calendar Time** artifact has the predicate `Calendar_Time`.
 
 Its subject is any of the following:
 
-* Any **Structure** artifact having any subset of the 6 attributes of the
+* Any **Kit** artifact having any subset of the 6 attributes of the
 heading {`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`} such
 that their corresponding attribute assets are {*year*, *month*, *day*,
 *hour*, *minute*, *second*}; each of those 6 is any **Fractional** artifact.
@@ -541,7 +541,7 @@ A **Geographic Point** artifact has the predicate `Geographic_Point`.
 
 Its subject is any of the following:
 
-* Any **Structure** artifact having any subset of the 3 attributes of the
+* Any **Kit** artifact having any subset of the 3 attributes of the
 heading {`">"|longitude`,`"^"|latitude`,`"+"|elevation`} such that their
 corresponding attribute assets are {*longitude*, *latitude*, *elevation*};
 each of those 6 is any **Fractional** artifact.
@@ -938,10 +938,10 @@ A **Heading** artifact has the predicate `Heading`.
 
 Its subject is any of the following:
 
-* Any **Structure** artifact such that every one of its attribute assets is a
+* Any **Kit** artifact such that every one of its attribute assets is a
 **Text** artifact, and no 2 attribute asset values are the same value (and
 presumably the attribute names are all positional).  The *attribute assets*
-of the **Structure** denote the *attribute names* of the **Heading**.
+of the **Kit** denote the *attribute names* of the **Heading**.
 
 Examples:
 
@@ -983,7 +983,7 @@ A **Renaming** artifact has the predicate `Renaming`.
 
 Its subject is any of the following:
 
-* Any **Structure** artifact such that every one of its attribute assets is a
+* Any **Kit** artifact such that every one of its attribute assets is a
 **Text** artifact, and no 2 attribute asset values are the same value; for
 each *attribute*, that attribute's name and asset respectively specify the
 *name before* and *name after* name of some other attribute being renamed
@@ -1032,15 +1032,15 @@ A **Tuple** artifact has the predicate `Tuple`.
 
 Its subject is any of the following:
 
-* Any **Structure** artifact such that every one of its *multi-level
+* Any **Kit** artifact such that every one of its *multi-level
 attribute names* has exactly 1 element.  The *multi-level attributes* of
-the **Structure** define the *attributes* of the **Tuple** one to one, such
+the **Kit** define the *attributes* of the **Tuple** one to one, such
 that the single element of the former's *multi-level attribute name*
 defines the latter's *attribute name*, and the former's *asset* defines the
 latter's *asset*.
 
-* Any **Structure** artifact such that any one of its *multi-level
-attribute names* has more than 1 element.  The single **Structure** is then
+* Any **Kit** artifact such that any one of its *multi-level
+attribute names* has more than 1 element.  The single **Kit** is then
 interpreted as multiple **Tuple** in a tree arrangement such that any
 2-element names result in 1 sub-level of tuple below the root tuple, and
 all assets are leaves of the tree.
@@ -1138,7 +1138,7 @@ Its subject is any of the following:
 **Relation**, and the *body* of the **Relation** has zero tuples.
 This is the idiomatic format for an empty (zero-tuple) **Relation**.
 
-* Any **Set** artifact such that every one of its *members* is a **Structure**
+* Any **Set** artifact such that every one of its *members* is a **Kit**
 artifact, and the count of its members is at least 1, and no 2 members have
 different *headings*.  The *members* of the **Bag** denote the *body* or
 *members* of the **Relation**, and any one *member* also denotes the
@@ -1270,7 +1270,7 @@ Its subject is any of the following:
 
 * Any **Duo** artifact such that its *this* and *that* correspond to the
 *label* and *attributes* of the new **Article** respectively,
-and are any **Nesting** artifact and any **Structure** artifact respectively.
+and are any **Nesting** artifact and any **Kit** artifact respectively.
 
 * Any **Nesting** artifact, which specifies the *label* of the new
 **Article** and the latter has zero *attributes*.

@@ -286,7 +286,7 @@ Grammar:
     {
           <Duo>
         | <Lot>
-        | <Structure>
+        | <Kit>
         | <Array>
         | <Set>
         | <Bag>
@@ -929,19 +929,19 @@ Examples:
     }
 ```
 
-## Structure / Multi-Level Tuple
+## Kit / Multi-Level Tuple
 
-A **Structure** value is represented by `<Structure>`.
+A **Kit** value is represented by `<Kit>`.
 
 Grammar:
 
 ```
-    token Structure
+    token Kit
     {
-        <Structure_subject>
+        <Kit_subject>
     }
 
-    token Structure_subject
+    token Kit_subject
     {
         ['(' <sp>?] ~ [<sp>? ')'] <structure_attrs>
     }
@@ -1873,7 +1873,7 @@ Grammar:
 
     token Tuple_subject
     {
-        <Structure_subject>
+        <Kit_subject>
     }
 ```
 
@@ -1944,7 +1944,7 @@ Grammar:
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Structure> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Kit> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 ```
@@ -2000,7 +2000,7 @@ Grammar:
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Structure> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Kit> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 ```
@@ -2065,7 +2065,7 @@ Grammar:
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Structure> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Kit> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 ```
@@ -2220,7 +2220,7 @@ possrep is recognized within a Muldis Object Notation artifact:
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
     Duo             | (...:...) without any comma
     Lot             | only {} or {...}
-    Structure       | only () or (...) with >= 1 comma
+    Kit             | only () or (...) with >= 1 comma
     locationals     | prefix 0L
     Interval        | only [] or [...]
     Nesting         | prefix ::
@@ -2297,7 +2297,7 @@ that means they are used in pairs.
     ()    | attribute collections  | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs
           |                        | * delimit Heading literals
-          |                        | * delimit Duo/Structure/Article/Excuse selectors
+          |                        | * delimit Duo/Kit/Article/Excuse selectors
           |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
           | generic grouping       | * optional delimiters around Any to force a parsing precedence
     ------+------------------------+---------------------------------------
@@ -2314,7 +2314,7 @@ that means they are used in pairs.
     ->    |                        | * separates the 2 parts of a pair
     <-    |                        | * this/that separator in Duo sels
           |                        | * disambiguate Duo sels from generic_group
-          |                        | * optional attr name/asset separator in Structure/Article/Excuse sels
+          |                        | * optional attr name/asset separator in Kit/Article/Excuse sels
           |                        | * label/attributes separator in Article/Excuse sels
           |                        | * optional pair separator in Lot/Array/Set/Bag/Mix sels
           |                        | * optional pair separator in nonempty-TA/Rel/TB sels
@@ -2322,8 +2322,8 @@ that means they are used in pairs.
           |                        | * disambiguate Bag/Mix sels from Set sel
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
-          |                        | * separate attributes in Structure/Article/Excuse sels
-          |                        | * disambiguate unary named Structure sels from Duo sels and generic_group
+          |                        | * separate attributes in Kit/Article/Excuse sels
+          |                        | * disambiguate unary named Kit sels from Duo sels and generic_group
           |                        | * separate members in Lot/Array/Set/Bag/Mix sels
           |                        | * separate members in nonempty-TA/Rel/TB sels
           |                        | * separate attributes in Heading lits

@@ -73,7 +73,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
           <Duo>
         | <Lot>
-        | <Structure>
+        | <Kit>
         | <Array>
         | <Set>
         | <Bag>
@@ -341,12 +341,12 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
 ###########################################################################
 
-    token Structure
+    token Kit
     {
-        <Structure_subject>
+        <Kit_subject>
     }
 
-    token Structure_subject
+    token Kit_subject
     {
         ['(' <sp>?] ~ [<sp>? ')'] <structure_attrs>
     }
@@ -703,7 +703,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Tuple_subject
     {
-        <Structure_subject>
+        <Kit_subject>
     }
 
 ###########################################################################
@@ -723,7 +723,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Structure> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Kit> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 
@@ -744,7 +744,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Structure> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Kit> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 
@@ -765,7 +765,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
-            [[<Structure> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
+            [[<Kit> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
 

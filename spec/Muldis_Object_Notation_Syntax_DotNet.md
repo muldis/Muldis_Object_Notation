@@ -340,9 +340,9 @@ Note that example composers of `System.Collections.Generic.IList` are:
 `System.Collections.Generic.List`,
 `System.Collections.Immutable.ImmutableList`.
 
-## Structure / Multi-Level Tuple
+## Kit / Multi-Level Tuple
 
-A **Structure** artifact has the predicate `Structure`.
+A **Kit** artifact has the predicate `Kit`.
 
 When its subject is any of the following, the predicate is optional:
 
@@ -742,7 +742,7 @@ A **Tuple** artifact has the predicate `Tuple`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any **Structure** subject.
+* Any **Kit** subject.
 
 ## Tuple Array
 

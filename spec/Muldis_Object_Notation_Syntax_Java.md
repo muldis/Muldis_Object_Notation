@@ -346,9 +346,9 @@ Note that example composers of `java.util.List` are:
 `java.util.Vector`,
 `java.util.concurrent.CopyOnWriteArrayList`.
 
-## Structure / Multi-Level Tuple
+## Kit / Multi-Level Tuple
 
-A **Structure** artifact has the predicate `Structure`.
+A **Kit** artifact has the predicate `Kit`.
 
 When its subject is any of the following, the predicate is required:
 
@@ -720,7 +720,7 @@ A **Tuple** artifact has the predicate `Tuple`.
 
 When its subject is any of the following, the predicate is optional:
 
-* Any **Structure** subject.
+* Any **Kit** subject.
 
 ## Tuple Array
 

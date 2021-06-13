@@ -105,7 +105,7 @@ There are exactly 3 of these:
 
 - **Duo**
 - **Lot**
-- **Structure**
+- **Kit**
 
 A *secondary possrep* is one whose canonical definition has no format of
 its own in any syntax and rather its canonical definition is as one or more
@@ -326,38 +326,38 @@ order of its child nodes even when the value being selected is an unordered
 type, which can be considered essential for round tripping source code that
 better resembles what the programmer wrote.
 
-## Structure / Multi-Level Tuple
+## Kit / Multi-Level Tuple
 
-A **Structure** value is a general purpose arbitrarily-large ordered
+A **Kit** value is a general purpose arbitrarily-large ordered
 heterogeneous collection of named *multi-level attributes*, such that for
 any 2 multi-level attributes neither's *multi-level attribute name* is a
 leading sub-sequence of the other's, which explicitly does not represent
 any kind of thing in particular, and is simply the sum of its multi-level
 attributes.  A multi-level attribute is conceptually a name-asset pair, the
-name being used to look up the multi-level attribute in a **Structure**.
+name being used to look up the multi-level attribute in a **Kit**.
 A *multi-level attribute name* is a semiqualified program identifier and is
 conceptually a nonempty sequence of character string that is not a
 **Nesting** value.  In the general case each multi-level attribute of a
-structure is of a distinct data type, though multiple multi-level
+**Kit** is of a distinct data type, though multiple multi-level
 attributes often have the same type.
 
-The **Structure** possrep is an idiomatic generalization of a discrete
+The **Kit** possrep is an idiomatic generalization of a discrete
 heterogeneous collection, such that any given MUON syntax can choose to just
-have **Structure** as a fundamental syntax, and then any other possreps for
-discrete heterogeneous collections can be represented just as a **Structure**
+have **Kit** as a fundamental syntax, and then any other possreps for
+discrete heterogeneous collections can be represented just as a **Kit**
 plus a plain unary type cast in the form of a **Duo** possrep.
 
-The intended use of the **Structure** possrep is to represent a value
+The intended use of the **Kit** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
 discrete heterogeneous collection types where their assets are defined by
 arbitrarily complex sub-expressions.
 
-A key feature of **Structure** is that it natively preserves the relative
+A key feature of **Kit** is that it natively preserves the relative
 order of its child nodes even when the value being selected is an unordered
 type, which can be considered essential for round tripping source code that
 better resembles what the programmer wrote.
 
-A second key feature of **Structure** is that it natively preserves a
+A second key feature of **Kit** is that it natively preserves a
 useful alternative syntax for a tree of nested **Tuple** representing a
 multi-level namespace for declaring program entities, such that the
 entities are declared in a single ordered flat list and each of the entity
