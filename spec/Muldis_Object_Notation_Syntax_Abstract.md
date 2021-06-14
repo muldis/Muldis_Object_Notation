@@ -1116,16 +1116,16 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Tuple_Array:(Heading:()))
+    (Tuple_Array:())
 
     `Zero attributes + one tuple.`
     (Tuple_Array:{()})
 
     `Three named attributes + zero tuples.`
-    (Tuple_Array:(Heading:(x,y,z)))
+    (Tuple_Array:(x,y,z))
 
     `Three positional attributes + zero tuples.`
-    (Tuple_Array:(Heading:(0c0,0c1,0c2)))
+    (Tuple_Array:(0c0,0c1,0c2))
 
     `Two named attributes + three tuples (1 duplicate).`
     (Tuple_Array:{
@@ -1151,7 +1151,11 @@ Its subject is any of the following:
 **Relation**, and the *body* of the **Relation** has zero tuples.
 This is the idiomatic format for an empty (zero-tuple) **Relation**.
 
-* Any **Set** artifact such that every one of its *members* is a **Kit**
+* Any **Kit** artifact such that it is implicitly first used as the subject
+of a **Heading** artifact and then the latter is used as the subject of the
+**Relation** artifact per the prior bullet point.
+
+* Any **Set** artifact such that every one of its *members* is a **Tuple**
 artifact, and the count of its members is at least 1, and no 2 members have
 different *headings*.  The *members* of the **Set** denote the *body* or
 *members* of the **Relation**, and any one *member* also denotes the
@@ -1159,9 +1163,15 @@ different *headings*.  The *members* of the **Set** denote the *body* or
 a non-empty (at least one tuple) **Relation** where the attribute names
 repeat for every tuple.
 
+* Any **Set** artifact per the prior bullet point but that for each of its
+*members* that member optionally is any **Kit** artifact in place of the
+specified any **Tuple** artifact; the **Kit** artifact is implicitly first
+used as the subject of a **Tuple** artifact and then the latter is used as
+the *member* of the **Set** artifact.
+
 * Any **Lot** artifact such that it is implicitly first used as the subject
 of a **Set** artifact and then the latter is used as the subject of the
-**Relation** artifact per the prior bullet point.
+**Relation** artifact per either of the prior 2 bullet points.
 
 * Any **Duo** artifact such that its *this* and *that* correspond to the
 *heading* and *body* of the new **Relation** respectively, and its *that*
@@ -1175,26 +1185,32 @@ expected the normal use case of this format is that every **Set**/**Lot**
 member only has positional attributes and the **Renaming** is effectively
 giving them non-positional names.
 
+* Any **Duo** artifact per the prior bullet point but that its *this* is
+any **Kit** artifact in place of the specified any **Renaming** artifact;
+the **Kit** artifact is implicitly first used as the subject of a
+**Renaming** artifact and then the latter is used as the *this* of the
+**Duo** artifact.
+
 Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Relation:(Heading:()))
+    (Relation:())
 
     `Same thing.`
-    (Relation:((Renaming:()):{}))
+    (Relation:(():{}))
 
     `Zero attributes + one tuple.`
     (Relation:{()})
 
     `Same thing.`
-    (Relation:((Renaming:()):{()}))
+    (Relation:(():{()}))
 
     `Three named attributes + zero tuples.`
-    (Relation:(Heading:(x,y,z)))
+    (Relation:(x,y,z))
 
     `Three positional attributes + zero tuples.`
-    (Relation:(Heading:(0c0,0c1,0c2)))
+    (Relation:(0c0,0c1,0c2))
 
     `Two named attributes + two tuples.`
     (Relation:{
@@ -1204,9 +1220,7 @@ Examples:
 
     `Same thing.`
     (Relation:(
-        (Renaming:
             (name    , age)
-        )
         : {
             (Michelle, 17 ),
             (Amy     , 14 ),
@@ -1231,9 +1245,7 @@ Examples:
 
     `Same thing.`
     (Relation:(
-        (Renaming:
             (name          , birth_date                           , phone_numbers)
-        )
         : {
             ("Jane Ives"   , (Calendar_Instant:(y:1971,m:11,d06:)), (Set:{"+1.4045552995", "+1.7705557572"})),
             ("Layla Miller", (Calendar_Instant:(y:1995,m:08,d27:)), (Set:{})),
@@ -1255,16 +1267,16 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Tuple_Bag:(Heading:()))
+    (Tuple_Bag:())
 
     `Zero attributes + one tuple.`
     (Tuple_Bag:{()})
 
     `Three named attributes + zero tuples.`
-    (Tuple_Bag:(Heading:(x,y,z)))
+    (Tuple_Bag:(x,y,z))
 
     `Three positional attributes + zero tuples.`
-    (Tuple_Bag:(Heading:(0c0,0c1,0c2)))
+    (Tuple_Bag:(0c0,0c1,0c2))
 
     `Two named attributes + six tuples (4 duplicates).`
     (Tuple_Bag:{
