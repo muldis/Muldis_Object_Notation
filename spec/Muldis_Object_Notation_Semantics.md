@@ -291,6 +291,19 @@ secondary possrep artifacts are built in terms of ordered pairs and we want
 to clearly distinguish this from regular user data or source code that is
 logically a generic pair, the latter being what **Pair** is for.
 
+As a special exception, for any generic context where an **Any** value is
+permitted, certain otherwise-valid **Duo** values may be either forbidden
+or be interpreted as a value of some other primary possrep rather than as a
+**Duo** value; in such generic contexts, when a prospective **Duo** has a
+*this* which is any *Primary_Possrep_Name*, the prospect will
+never be treated as a valid **Duo** value.
+It is up to each specific concrete syntax in question as to whether each of
+these cases counts as an error or as a value of some other primary possrep.
+
+A *Primary_Possrep_Name* is any of these **Text** values:
+`Ignorance`, `Boolean`, `Integer`, `Fraction`,
+`Bits`, `Blob`, `Text`, `Nesting`, `Duo`, `Lot`, `Kit`.
+
 ## Lot
 
 A **Lot** value is a general purpose arbitrarily-large ordered sequence of
