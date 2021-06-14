@@ -16,14 +16,14 @@ its part name is `Syntax_Abstract`.
 # SYNOPSIS
 
 ```
-    (Relation:(Set:{
+    (Relation:{
         (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d06:)),
             phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
         (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:08,d27:)),
             phone_numbers : (Set:{})),
         (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:07,d:06)),
             phone_numbers : (Set:{"+81.9072391679"})),
-    }))
+    })
 ```
 
 # DESCRIPTION
@@ -131,12 +131,16 @@ Examples:
         44634_59185_54318_33976_56052_12255_96406_61454_55497_72963
         11391_48085_80371_21987_99971_66438_12574_02829_11150_57151
 
+    `Base 10.`
     0d39
 
+    `Base 16.`
     0xDEADBEEF
 
+    `Base 8.`
     0o644
 
+    `Base 2.`
     0b11001001
 ```
 
@@ -176,14 +180,19 @@ Examples:
     162259276829213363391578010288127
         /170141183460469231731687303715884105727
 
+    `Base 10.`
     4.5207196*10^37
 
+    `Base 16.`
     0xDEADBEEF.FACE
 
+    `Base 8.`
     -0o35/0o3
 
+    `Base 2.`
     0b1.1
 
+    `Base 2.`
     0b1.011101101*0b10^-0b11011
 ```
 
@@ -293,8 +302,8 @@ Examples:
 ## Duo
 
 A **Duo** artifact is an ordered collection having exactly 2 elements
-which in order are named *this* (any **Any** artifact) and *that* (any
-**Any** artifact).
+which in order are named *this* (any **Any** artifact)
+and *that* (any **Any** artifact).
 
 Examples:
 
@@ -827,46 +836,50 @@ Its subject is any of the following:
 * Any **Set** artifact such that every one of its *members* is an
 **Interval** artifact.
 
+* Any **Lot** artifact such that it is implicitly first used as the subject
+of a **Set** artifact and then the latter is used as the subject of the
+**Interval Set** artifact per the prior bullet point.
+
 Examples:
 
 ```
     `Empty interval-set (zero members).`
-    (Interval_Set:(Set:{}))
+    (Interval_Set:{})
 
     `Unit interval-set (one member).`
-    (Interval_Set:(Set:{(Interval:("":abc))}))
+    (Interval_Set:{(Interval:("":abc))})
 
     `Probably 10 members, depending on the model used.`
-    (Interval_Set:(Set:{(Interval:("<=*<=":(1:10)))}))
+    (Interval_Set:{(Interval:("<=*<=":(1:10)))})
 
     `Same thing.`
-    (Interval_Set:(Set:{(Interval:("..":(1:10)))}))
+    (Interval_Set:{(Interval:("..":(1:10)))})
 
     `Probably 6 members.`
-    (Interval_Set:(Set:{
+    (Interval_Set:{
         (Interval:("..":(1:3))),
         (Interval:(""  :6    )),
         (Interval:("..":(8:9))),
-    }))
+    })
 
     `Every Integer x except for {4..13,22..28}`
-    (Interval_Set:(Set:{*<=3,(Interval:("..":(14:21))),29<=*}))
+    (Interval_Set:{*<=3,(Interval:("..":(14:21))),29<=*})
 
     `Set of all valid Unicode code points.`
-    (Interval_Set:(Set:{
+    (Interval_Set:{
         (Interval:("..":(     0:  0xD7FF))),
         (Interval:("..":(0xE000:0x10FFFF))),
-    }))
+    })
 
     `Probably 15 members (no duplicates), depending on the model used.`
-    (Interval_Set:(Set:{(Interval:("..":(1:10))),(Interval:("..":(6:15)))}))
+    (Interval_Set:{(Interval:("..":(1:10))),(Interval:("..":(6:15)))})
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Set:(Set:{
+    (Interval_Set:{
         (Interval:("<=*<":( 1: 6)))  ,
         (Interval:(".."  :( 6:10))):2,
         (Interval:("<*<=":(10:15)))  ,
-    }))
+    })
 ```
 
 ## Interval Bag
@@ -875,33 +888,33 @@ An **Interval Bag** artifact has the predicate `Interval_Bag`.
 
 Its subject is any of the following:
 
-* Any **Bag** artifact such that every one of its *members* is an
-**Interval** artifact.
+* Any **Interval Set** subject but that any **Bag** artifact is used in
+place of the specified any **Set** artifact.
 
 Examples:
 
 ```
     `Empty interval-bag (zero members).`
-    (Interval_Bag:(Bag:{}))
+    (Interval_Bag:{})
 
     `Unit interval-bag (one member).`
-    (Interval_Bag:(Bag:{(Interval:("":abc))}))
+    (Interval_Bag:{(Interval:("":abc))})
 
     `Five members (4 duplicates).`
-    (Interval_Bag:(Bag:{(Interval:("":def)):5}))
+    (Interval_Bag:{(Interval:("":def)):5})
 
     `Probably 20 members (5 duplicates), depending on the model used.`
-    (Interval_Bag:(Bag:{(Interval:("<=*<=":(1:10))),(Interval:("<=*<=":(6:15)))}))
+    (Interval_Bag:{(Interval:("<=*<=":(1:10))),(Interval:("<=*<=":(6:15)))})
 
     `Same thing.`
-    (Interval_Bag:(Bag:{(Interval:("..":(1:10))),(Interval:("..":(6:15)))}))
+    (Interval_Bag:{(Interval:("..":(1:10))),(Interval:("..":(6:15)))})
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Bag:(Bag:{
+    (Interval_Bag:{
         (Interval:("<=*<":( 1: 6)))  ,
         (Interval:(".."  :( 6:10))):2,
         (Interval:("<*<=":(10:15)))  ,
-    }))
+    })
 ```
 
 ## Pair
@@ -1096,8 +1109,8 @@ A **Tuple Array** artifact has the predicate `Tuple_Array`.
 
 Its subject is any of the following:
 
-* Any **Relation** subject but that any **Array** artifact is used in place
-of the specified any **Set** artifact.
+* Any **Relation** subject but that any **Array** artifact is used in
+place of the specified any **Set** artifact.
 
 Examples:
 
@@ -1106,7 +1119,7 @@ Examples:
     (Tuple_Array:(Heading:()))
 
     `Zero attributes + one tuple.`
-    (Tuple_Array:(Array:{()}))
+    (Tuple_Array:{()})
 
     `Three named attributes + zero tuples.`
     (Tuple_Array:(Heading:(x,y,z)))
@@ -1115,17 +1128,17 @@ Examples:
     (Tuple_Array:(Heading:(0c0,0c1,0c2)))
 
     `Two named attributes + three tuples (1 duplicate).`
-    (Tuple_Array:(Array:{
+    (Tuple_Array:{
         (name: Amy     , age: 14),
         (name: Michelle, age: 17),
         (name: Amy     , age: 14),
-    }))
+    })
 
     `Two positional attributes + two tuples.`
-    (Tuple_Array:(Array:{
+    (Tuple_Array:{
         (Michelle, 17),
         (Amy     , 14),
-    }))
+    })
 ```
 
 ## Relation / Tuple Set
@@ -1140,23 +1153,27 @@ This is the idiomatic format for an empty (zero-tuple) **Relation**.
 
 * Any **Set** artifact such that every one of its *members* is a **Kit**
 artifact, and the count of its members is at least 1, and no 2 members have
-different *headings*.  The *members* of the **Bag** denote the *body* or
+different *headings*.  The *members* of the **Set** denote the *body* or
 *members* of the **Relation**, and any one *member* also denotes the
 *heading* of the **Relation**.  This is the idiomatic format for specifying
 a non-empty (at least one tuple) **Relation** where the attribute names
 repeat for every tuple.
 
+* Any **Lot** artifact such that it is implicitly first used as the subject
+of a **Set** artifact and then the latter is used as the subject of the
+**Relation** artifact per the prior bullet point.
+
 * Any **Duo** artifact such that its *this* and *that* correspond to the
 *heading* and *body* of the new **Relation** respectively, and its *that*
-is any **Set** artifact per the prior bullet point but that it may have
-zero members, and its *this* is any **Renaming** artifact such that its set
-of *name before* is identical to the set of attribute names in every
-*member* of *that*.  This is the idiomatic format for specifying a
-**Relation** where the attribute names just appear once and are shared for
-every tuple, like in a terse columnar table format; it is expected the
-normal use case of this format is that every **Set** member only has
-positional attributes and the **Renaming** is effectively giving them
-non-positional names.
+is any **Set** artifact or **Lot** artifact per the prior bullet points but
+that it may have zero members, and its *this* is any **Renaming** artifact
+such that its set of *name before* is identical to the set of attribute
+names in every *member* of *that*.  This is the idiomatic format for
+specifying a **Relation** where the attribute names just appear once and
+are shared for every tuple, like in a terse columnar table format; it is
+expected the normal use case of this format is that every **Set**/**Lot**
+member only has positional attributes and the **Renaming** is effectively
+giving them non-positional names.
 
 Examples:
 
@@ -1165,13 +1182,13 @@ Examples:
     (Relation:(Heading:()))
 
     `Same thing.`
-    (Relation:((Renaming:()):(Set:{})))
+    (Relation:((Renaming:()):{}))
 
     `Zero attributes + one tuple.`
-    (Relation:(Set:{()}))
+    (Relation:{()})
 
     `Same thing.`
-    (Relation:((Renaming:()):(Set:{()})))
+    (Relation:((Renaming:()):{()}))
 
     `Three named attributes + zero tuples.`
     (Relation:(Heading:(x,y,z)))
@@ -1180,48 +1197,48 @@ Examples:
     (Relation:(Heading:(0c0,0c1,0c2)))
 
     `Two named attributes + two tuples.`
-    (Relation:(Set:{
+    (Relation:{
         (name: Michelle, age: 17),
         (name: Amy     , age: 14),
-    }))
+    })
 
     `Same thing.`
     (Relation:(
         (Renaming:
             (name    , age)
         )
-        : (Set:{
+        : {
             (Michelle, 17 ),
             (Amy     , 14 ),
-        })
+        }
     ))
 
     `Two positional attributes + two tuples.`
-    (Relation:(Set:{
+    (Relation:{
         (Michelle, 17),
         (Amy     , 14),
-    }))
+    })
 
     `Some people records.`
-    (Relation:(Set:{
+    (Relation:{
         (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d06:)),
             phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
         (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:08,d27:)),
             phone_numbers : (Set:{})),
         (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:07,d:06)),
             phone_numbers : (Set:{"+81.9072391679"})),
-    }))
+    })
 
     `Same thing.`
     (Relation:(
         (Renaming:
             (name          , birth_date                           , phone_numbers)
         )
-        : (Set:{
+        : {
             ("Jane Ives"   , (Calendar_Instant:(y:1971,m:11,d06:)), (Set:{"+1.4045552995", "+1.7705557572"})),
             ("Layla Miller", (Calendar_Instant:(y:1995,m:08,d27:)), (Set:{})),
             ("岩倉 玲音", (Calendar_Instant:(y:1984,m:07,d:06)), (Set:{"+81.9072391679"})),
-        })
+        }
     ))
 ```
 
@@ -1231,8 +1248,8 @@ A **Tuple Bag** artifact has the predicate `Tuple_Bag`.
 
 Its subject is any of the following:
 
-* Any **Relation** subject but that any **Bag** artifact is used in place
-of the specified any **Set** artifact.
+* Any **Relation** subject but that any **Bag** artifact is used in
+place of the specified any **Set** artifact.
 
 Examples:
 
@@ -1241,7 +1258,7 @@ Examples:
     (Tuple_Bag:(Heading:()))
 
     `Zero attributes + one tuple.`
-    (Tuple_Bag:(Bag:{()}))
+    (Tuple_Bag:{()})
 
     `Three named attributes + zero tuples.`
     (Tuple_Bag:(Heading:(x,y,z)))
@@ -1250,16 +1267,16 @@ Examples:
     (Tuple_Bag:(Heading:(0c0,0c1,0c2)))
 
     `Two named attributes + six tuples (4 duplicates).`
-    (Tuple_Bag:(Bag:{
+    (Tuple_Bag:{
         (name: Michelle, age: 17),
         (name: Amy     , age: 14) : 5,
-    }))
+    })
 
     `Two positional attributes + two tuples.`
-    (Tuple_Bag:(Bag:{
+    (Tuple_Bag:{
         (Michelle, 17),
         (Amy     , 14),
-    }))
+    })
 ```
 
 ## Article / Labelled Tuple
