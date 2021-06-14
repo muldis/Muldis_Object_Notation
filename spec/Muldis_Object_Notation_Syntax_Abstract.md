@@ -1299,17 +1299,23 @@ Its subject is any of the following:
 
 * Any **Duo** artifact such that its *this* and *that* correspond to the
 *label* and *attributes* of the new **Article** respectively,
-and are any **Nesting** artifact and any **Kit** artifact respectively.
+and are any **Nesting** artifact and any **Tuple** artifact respectively.
 
 * Any **Nesting** artifact, which specifies the *label* of the new
 **Article** and the latter has zero *attributes*.
 
+* Any variant of either of the 2 prior bullet points where any **Text**
+artifact may be used in place of a **Nesting** artifact or any **Kit**
+artifact may be used in place of a **Tuple** artifact; the replacement
+artifacts are treated as the most directly corresponding artifacts of the
+canonical possreps.
+
 Examples:
 
 ```
-    (Article:(::Point : (x : 5, y : 3)))
+    (Article:(Point : (x : 5, y : 3)))
 
-    (Article:(::Float : (
+    (Article:(Float : (
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
@@ -1324,9 +1330,9 @@ Examples:
         second : 0.0,
     )))
 
-    (Article:::Positive_Infinity)
+    (Article:Positive_Infinity)
 
-    (Article:::Negative_Zero)
+    (Article:Negative_Zero)
 ```
 
 ## Excuse
@@ -1340,11 +1346,11 @@ Its subject is any of the following:
 Examples:
 
 ```
-    (Excuse:(::Input_Field_Wrong : (name : "Your Age")))
+    (Excuse:(Input_Field_Wrong : (name : "Your Age")))
 
-    (Excuse:::Div_By_Zero)
+    (Excuse:Div_By_Zero)
 
-    (Excuse:::No_Such_Attr_Name)
+    (Excuse:No_Such_Attr_Name)
 ```
 
 # SOURCE CODE DEFINING SECONDARY DATA TYPE POSSREPS
