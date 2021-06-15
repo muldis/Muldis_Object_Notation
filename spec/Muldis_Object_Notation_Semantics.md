@@ -72,11 +72,31 @@ An *algebraic possrep* has no syntax of its own and just exists as a
 concept defined in terms of the union of 0..N other possreps, and in
 practice any reference to an algebraic possrep is just a shorthand for
 referring to a set of the possreps it is defined in terms of.
-There are exactly 3 of these:
+
+A *critical algebraic possrep* is one that is of critical universal
+importance in theory and practice to even the simplest possible versions of
+a type system and should always be included, at least if it is a type
+system that has any concept of overlapping or generic types.
+There are exactly 2 of these:
 
 - **Any**
 - **None**
+
+A *folding algebraic possrep* is one that exists to provide a definition
+shorthand where a context may conceptually require an artifact of possrep X
+but, in order to be more terse and friendly for programmers, the context
+would also accept an artifact of possrep Y when it is already the case that
+an artifact of possrep X can optionally be defined wholly in terms of an
+artifact of possrep Y; in that case, an explicit Y by itself is is an
+implicit X that will be produced from Y.
+There are exactly 8 of these:
+
 - **Fractional**
+- **Nesty**
+- Discrete: **Arrayish**, **Setty**, **Baggy**
+- Relational: **Heady**, **Renamey**, **Tupley**
+
+*Some of the above may be renamed to read more nicely.*
 
 A *primary possrep* is a member of the reasonable minimum set of MUON
 possreps that bootstraps every syntax.  Each one is of exactly one of these
@@ -136,7 +156,7 @@ code and are not for defining regular data:
 
 *More secondary possreps will be added corresponding to program source code.*
 
-# ALGEBRAIC DATA TYPE POSSREPS
+# CRITICAL ALGEBRAIC DATA TYPE POSSREPS
 
 ## Any / Universal Type Possrep
 
@@ -157,16 +177,57 @@ the intersection of all other possreps.  It explicitly corresponds to a
 data model.  No syntax uses **None** at all, it is just mentioned here as
 the logical complement of **Any**.
 
+# FOLDING ALGEBRAIC DATA TYPE POSSREPS
+
 ## Fractional
 
 The **Fractional** possrep is the union of the **Fraction** and **Integer**
-possreps.  It is used when conceptually only a **Fraction** is allowed but
-we want to be more lax in what users are actually allowed to write in the
-very frequent scenarios that allow fractional numbers but users just want
-whole numbers and the **Integer** syntax is more terse.  When a
-**Fractional** artifact is expected, any time an **Integer** artifact is
-given, it is assumed that a typical data model used with MUON will
-interpret that as the **Fraction** artifact with the same numeric value.
+possreps.  It is used where a context may conceptually require a **Fraction**
+but it would also accept an **Integer** that would be interpreted as the
+**Fraction** artifact with the same numeric value.
+
+## Nesty
+
+The **Nesty** possrep is the union of the **Nesting** and **Text**
+possreps.  It is used where a context may conceptually require a **Nesting**
+but it would also accept a **Text** that would be interpreted as the
+single-element **Nesting** artifact whose element is that **Text**.
+
+## Arrayish
+
+The **Arrayish** possrep is the union of the **Array** and **Lot**
+possreps.  It is used where a context may conceptually require an **Array**
+but it would also accept a **Lot** that would be interpreted as the former.
+
+## Setty
+
+The **Setty** possrep is the union of the **Set** and **Lot**
+possreps.  It is used where a context may conceptually require a **Set**
+but it would also accept a **Lot** that would be interpreted as the former.
+
+## Baggy
+
+The **Baggy** possrep is the union of the **Bag** and **Lot**
+possreps.  It is used where a context may conceptually require a **Bag**
+but it would also accept a **Lot** that would be interpreted as the former.
+
+## Heady
+
+The **Heady** possrep is the union of the **Heading** and **Kit**
+possreps.  It is used where a context may conceptually require a **Heading**
+but it would also accept a **Kit** that would be interpreted as the former.
+
+## Renamey
+
+The **Renamey** possrep is the union of the **Renaming** and **Kit**
+possreps.  It is used where a context may conceptually require a **Renaming**
+but it would also accept a **Kit** that would be interpreted as the former.
+
+## Tupley
+
+The **Tupley** possrep is the union of the **Tuple** and **Kit**
+possreps.  It is used where a context may conceptually require a **Tuple**
+but it would also accept a **Kit** that would be interpreted as the former.
 
 # SIMPLE PRIMARY DATA TYPE POSSREPS
 

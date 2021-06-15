@@ -63,7 +63,7 @@ This document part provides illustrative example code in the concrete
 [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 but expressly limits itself to the *primary possrep* literal formats.
 
-# ALGEBRAIC DATA TYPE POSSREPS
+# CRITICAL ALGEBRAIC DATA TYPE POSSREPS
 
 ## Any / Universal Type Possrep
 
@@ -78,10 +78,79 @@ artifacts, since the **None** possrep is characterized by the intersection
 of all other possreps.  That is, there are no **None** artifacts at all,
 and this possrep is just mentioned as the logical complement of **Any**.
 
+# FOLDING ALGEBRAIC DATA TYPE POSSREPS
+
 ## Fractional
 
-A **Fractional** artifact is an artifact that qualifies as either any
-**Fraction** artifact or as any **Integer** artifact.
+A **Fractional** artifact is an artifact that qualifies as either
+any **Fraction** artifact or as any **Integer** artifact.
+A context explicitly requiring any **Fractional** artifact implicitly requires
+any **Fraction** artifact; when an **Integer** artifact is instead given,
+then the proper interpretation is as if a **Fraction** artifact was
+actually given whose subject was that **Integer**.
+
+## Nesty
+
+A **Nesty** artifact is an artifact that qualifies as either
+any **Nesting** artifact or as any **Text** artifact.
+A context explicitly requiring any **Nesty** artifact implicitly requires
+any **Nesting** artifact; when a **Text** artifact is instead given,
+then the proper interpretation is as if a **Nesting** artifact was
+actually given whose subject was that **Text**.
+
+## Arrayish
+
+A **Arrayish** artifact is an artifact that qualifies as either
+any **Array** artifact or as any **Lot** artifact.
+A context explicitly requiring any **Arrayish** artifact implicitly requires
+any **Array** artifact; when a **Lot** artifact is instead given,
+then the proper interpretation is as if a **Array** artifact was
+actually given whose subject was that **Lot**.
+
+## Setty
+
+A **Setty** artifact is an artifact that qualifies as either
+any **Set** artifact or as any **Lot** artifact.
+A context explicitly requiring any **Setty** artifact implicitly requires
+any **Set** artifact; when a **Lot** artifact is instead given,
+then the proper interpretation is as if a **Set** artifact was
+actually given whose subject was that **Lot**.
+
+## Baggy
+
+A **Baggy** artifact is an artifact that qualifies as either
+any **Bag** artifact or as any **Lot** artifact.
+A context explicitly requiring any **Baggy** artifact implicitly requires
+any **Bag** artifact; when a **Lot** artifact is instead given,
+then the proper interpretation is as if a **Bag** artifact was
+actually given whose subject was that **Lot**.
+
+## Heady
+
+A **Heady** artifact is an artifact that qualifies as either
+any **Heading** artifact or as any **Kit** artifact.
+A context explicitly requiring any **Heady** artifact implicitly requires
+any **Heading** artifact; when a **Kit** artifact is instead given,
+then the proper interpretation is as if a **Heading** artifact was
+actually given whose subject was that **Kit**.
+
+## Renamey
+
+A **Renamey** artifact is an artifact that qualifies as either
+any **Renaming** artifact or as any **Kit** artifact.
+A context explicitly requiring any **Renamey** artifact implicitly requires
+any **Renaming** artifact; when a **Kit** artifact is instead given,
+then the proper interpretation is as if a **Renaming** artifact was
+actually given whose subject was that **Kit**.
+
+## Tupley
+
+A **Tupley** artifact is an artifact that qualifies as either
+any **Tuple** artifact or as any **Kit** artifact.
+A context explicitly requiring any **Tupley** artifact implicitly requires
+any **Tuple** artifact; when a **Kit** artifact is instead given,
+then the proper interpretation is as if a **Tuple** artifact was
+actually given whose subject was that **Kit**.
 
 # SIMPLE PRIMARY DATA TYPE POSSREPS
 
@@ -833,12 +902,8 @@ An **Interval Set** artifact has the predicate `Interval_Set`.
 
 Its subject is any of the following:
 
-* Any **Set** artifact such that every one of its *members* is an
+* Any **Setty** artifact such that every one of its *members* is an
 **Interval** artifact.
-
-* Any **Lot** artifact such that it is implicitly first used as the subject
-of a **Set** artifact and then the latter is used as the subject of the
-**Interval Set** artifact per the prior bullet point.
 
 Examples:
 
@@ -888,8 +953,8 @@ An **Interval Bag** artifact has the predicate `Interval_Bag`.
 
 Its subject is any of the following:
 
-* Any **Interval Set** subject but that any **Bag** artifact is used in
-place of the specified any **Set** artifact.
+* Any **Interval Set** subject but that any **Baggy** artifact is used in
+place of the specified any **Setty** artifact.
 
 Examples:
 
@@ -1109,8 +1174,8 @@ A **Tuple Array** artifact has the predicate `Tuple_Array`.
 
 Its subject is any of the following:
 
-* Any **Relation** subject but that any **Array** artifact is used in
-place of the specified any **Set** artifact.
+* Any **Relation** subject but that any **Arrayish** artifact is used in
+place of the specified any **Setty** artifact.
 
 Examples:
 
@@ -1147,49 +1212,29 @@ A **Relation** artifact has the predicate `Relation`.
 
 Its subject is any of the following:
 
-* Any **Heading** artifact, which denotes the *heading* of the
+* Any **Heady** artifact, which denotes the *heading* of the
 **Relation**, and the *body* of the **Relation** has zero tuples.
 This is the idiomatic format for an empty (zero-tuple) **Relation**.
 
-* Any **Kit** artifact such that it is implicitly first used as the subject
-of a **Heading** artifact and then the latter is used as the subject of the
-**Relation** artifact per the prior bullet point.
-
-* Any **Set** artifact such that every one of its *members* is a **Tuple**
+* Any **Setty** artifact such that every one of its *members* is a **Tupley**
 artifact, and the count of its members is at least 1, and no 2 members have
-different *headings*.  The *members* of the **Set** denote the *body* or
+different *headings*.  The *members* of the **Setty** denote the *body* or
 *members* of the **Relation**, and any one *member* also denotes the
 *heading* of the **Relation**.  This is the idiomatic format for specifying
 a non-empty (at least one tuple) **Relation** where the attribute names
 repeat for every tuple.
 
-* Any **Set** artifact per the prior bullet point but that for each of its
-*members* that member optionally is any **Kit** artifact in place of the
-specified any **Tuple** artifact; the **Kit** artifact is implicitly first
-used as the subject of a **Tuple** artifact and then the latter is used as
-the *member* of the **Set** artifact.
-
-* Any **Lot** artifact such that it is implicitly first used as the subject
-of a **Set** artifact and then the latter is used as the subject of the
-**Relation** artifact per either of the prior 2 bullet points.
-
 * Any **Duo** artifact such that its *this* and *that* correspond to the
 *heading* and *body* of the new **Relation** respectively, and its *that*
-is any **Set** artifact or **Lot** artifact per the prior bullet points but
-that it may have zero members, and its *this* is any **Renaming** artifact
-such that its set of *name before* is identical to the set of attribute
-names in every *member* of *that*.  This is the idiomatic format for
-specifying a **Relation** where the attribute names just appear once and
-are shared for every tuple, like in a terse columnar table format; it is
-expected the normal use case of this format is that every **Set**/**Lot**
-member only has positional attributes and the **Renaming** is effectively
-giving them non-positional names.
-
-* Any **Duo** artifact per the prior bullet point but that its *this* is
-any **Kit** artifact in place of the specified any **Renaming** artifact;
-the **Kit** artifact is implicitly first used as the subject of a
-**Renaming** artifact and then the latter is used as the *this* of the
-**Duo** artifact.
+is any **Setty** artifact per the prior bullet point but that it may have
+zero members, and its *this* is any **Renamey** artifact such that its set
+of *name before* is identical to the set of attribute names in every
+*member* of *that*.  This is the idiomatic format for specifying a
+**Relation** where the attribute names just appear once and are shared for
+every tuple, like in a terse columnar table format; it is expected the
+normal use case of this format is that every **Setty** member only has
+positional attributes and the **Renaming** is effectively giving them
+non-positional names.
 
 Examples:
 
@@ -1260,8 +1305,8 @@ A **Tuple Bag** artifact has the predicate `Tuple_Bag`.
 
 Its subject is any of the following:
 
-* Any **Relation** subject but that any **Bag** artifact is used in
-place of the specified any **Set** artifact.
+* Any **Relation** subject but that any **Baggy** artifact is used in
+place of the specified any **Setty** artifact.
 
 Examples:
 
@@ -1299,16 +1344,10 @@ Its subject is any of the following:
 
 * Any **Duo** artifact such that its *this* and *that* correspond to the
 *label* and *attributes* of the new **Article** respectively,
-and are any **Nesting** artifact and any **Tuple** artifact respectively.
+and are any **Nesty** artifact and any **Tupley** artifact respectively.
 
-* Any **Nesting** artifact, which specifies the *label* of the new
+* Any **Nesty** artifact, which specifies the *label* of the new
 **Article** and the latter has zero *attributes*.
-
-* Any variant of either of the 2 prior bullet points where any **Text**
-artifact may be used in place of a **Nesting** artifact or any **Kit**
-artifact may be used in place of a **Tuple** artifact; the replacement
-artifacts are treated as the most directly corresponding artifacts of the
-canonical possreps.
 
 Examples:
 
