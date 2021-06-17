@@ -87,7 +87,7 @@ any **Fraction** artifact or as any **Integer** artifact.
 A context explicitly requiring any **Fractional** artifact implicitly requires
 any **Fraction** artifact; when an **Integer** artifact is instead given,
 then the proper interpretation is as if a **Fraction** artifact was
-actually given whose subject was that **Integer**.
+actually given whose numeric value was the same as that **Integer**.
 
 ## Nesty
 
@@ -95,8 +95,8 @@ A **Nesty** artifact is an artifact that qualifies as either
 any **Nesting** artifact or as any **Text** artifact.
 A context explicitly requiring any **Nesty** artifact implicitly requires
 any **Nesting** artifact; when a **Text** artifact is instead given,
-then the proper interpretation is as if a **Nesting** artifact was
-actually given whose subject was that **Text**.
+then the proper interpretation is as if a single-element **Nesting** artifact was
+actually given whose element was the same as that **Text**.
 
 ## Arrayish
 
@@ -424,9 +424,8 @@ Examples:
 A **Kit** artifact is an arbitrarily-large ordered collection of
 elements each of which in turn is named *multi-level attribute* such that
 each *multi-level attribute* is an ordered collection having exactly 2
-elements which in order are named *name* (any **Nesting** artifact, or any
-**Text** artifact which is interpreted as a single-element **Nesting**
-artifact) and *asset* (any **Any** artifact), such that for any 2 multi-level
+elements which in order are named *name* (any **Nesty** artifact)
+and *asset* (any **Any** artifact), such that for any 2 multi-level
 attributes neither's *name* is a leading sub-sequence of the other's.
 
 Examples:

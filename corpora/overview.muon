@@ -51,12 +51,16 @@ Muldis_Content_Predicate`
             44634_59185_54318_33976_56052_12255_96406_61454_55497_72963
             11391_48085_80371_21987_99971_66438_12574_02829_11150_57151,
 
+        `Base 10.`
         0d39,
 
+        `Base 16.`
         0xDEADBEEF,
 
+        `Base 8.`
         0o644,
 
+        `Base 2.`
         0b11001001,
 
     ),
@@ -93,14 +97,19 @@ Muldis_Content_Predicate`
         162259276829213363391578010288127
             /170141183460469231731687303715884105727,
 
+        `Base 10.`
         4.5207196*10^37,
 
+        `Base 16.`
         0xDEADBEEF.FACE,
 
+        `Base 8.`
         -0o35/0o3,
 
+        `Base 2.`
         0b1.1,
 
+        `Base 2.`
         0b1.011101101*0b10^-0b11011,
 
     ),
@@ -298,34 +307,34 @@ Muldis_Content_Predicate`
     `$$$` Calendar_Time : (
 
         `No measurement was taken or specified at all.`
-        0Lct,
+        (Calendar_Time:()),
 
         `Either an unspecified period in 1970 or a duration of 1970 years.`
-        0Lct@y1970,
+        (Calendar_Time:(y:1970,)),
 
         `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
-        0Lct@y2015|m5|d3,
+        (Calendar_Time:(y:2015,m:5,d:3)),
 
         `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
-        0Lct@y1998|d300,
+        (Calendar_Time:(y:1998,d:300)),
 
         `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
-        0Lct@y1776|d42,
+        (Calendar_Time:(y:1776,d:42)),
 
         `Either the first quarter of 1953 or a duration of 1953.25 years.`
-        0Lct@y1953.25,
+        (Calendar_Time:(y:1953.25,)),
 
         `Either high noon on an unspecified day or a duration of 12 hours.`
-        0Lct@h12|i0|s0,
+        (Calendar_Time:(h:12,i:0,s:0)),
 
         `Either a fully specified civil date and time or a 6-part duration.`
-        0Lct@y1884|m10|d17|h20|i55|s30,
+        (Calendar_Time:(y:1884,m:10,d:17,h:20,i:55,s:30)),
 
         `Either an ancient date and time or a negative duration.`
-        0Lct@y-370|m1|d24|h11|i0|s0,
+        (Calendar_Time:(y-370,m:1,d:24,h:11,i:0,s:0)),
 
         `Either a time on some unspecified day or a duration of seconds.`
-        0Lct@s5923.21124603,
+        (Calendar_Time:(s:5923.21124603,)),
 
     ),
 
@@ -334,10 +343,10 @@ Muldis_Content_Predicate`
     `$$$` Calendar_Duration : (
 
         `Addition of 2 years and 3 months.`
-        0Lcd@y2|m3|d0|h0|i0|s0,
+        (Calendar_Duration:(y:2,m:3,d:0,h:0,i:0,s:0)),
 
         `Subtraction of 22 hours.`
-        0Lcd@y0|m0|d0|h-22|i0|s0,
+        (Calendar_Duration:(y:0,m:0,d:0,h-22,i:0,s:0)),
 
     ),
 
@@ -346,19 +355,19 @@ Muldis_Content_Predicate`
     `$$$` Calendar_Instant : (
 
         `The Day The Music Died (if paired with Gregorian calendar).`
-        0Lci@y1959|m2|d3,
+        (Calendar_Instant:(y:1959,m:2,d:3)),
 
         `A time of day when one might have breakfast.`
-        0Lci@h7|i30|s0,
+        (Calendar_Instant:(h:7,i:30,s:0)),
 
         `What was now in the Pacific zone (if paired with Gregorian calendar).`
-        0Lci@y2018|m9|d3|h20|i51|s17@h-8|i0|s0,
+        (Calendar_Instant:((y:2018,m:9,d:3,h:20,i:51,s:17):(h:-8,i:0,s:0))),
 
         `A time of day in the UTC zone on an unspecified day.`
-        0Lci@h9|i25|s0@h0|i0|s0,
+        (Calendar_Instant:((h:9,i:25,s:0):(h:0,i:0,s:0))),
 
         `A specific day and time in the Pacific Standard Time zone.`
-        0Lci@y2001|m4|d16|h20|i1|s44@"PST",
+        (Calendar_Instant:((y:2001,m:4,d:16,h:20,i:1,s:44):"PST")),
 
     ),
 
@@ -367,22 +376,22 @@ Muldis_Content_Predicate`
     `$$$` Geographic_Point : (
 
         `No specified coordinates at all.`
-        0Lgp,
+        (Geographic_Point:()),
 
         `Just an elevation specified.`
-        0Lgp@+920,
+        (Geographic_Point:("+":920,)),
 
         `Geographic surface coordinates of Googleplex; elevation not specified.`
-        0Lgp@>-122.0857017|^37.4218363,
+        (Geographic_Point:(">":-122.0857017,"^":37.4218363)),
 
         `Same thing.`
-        0Lgp@^37.4218363|>-122.0857017,
+        (Geographic_Point:("^":37.4218363,">":-122.0857017)),
 
         `Some location with all coordinates specified.`
-        0Lgp@>-101|^-70|+1000,
+        (Geographic_Point:(">":-101,"^":-70,"+":1000)),
 
         `Another place.`
-        0Lgp@>-94.746094|^37.483577,
+        (Geographic_Point:(">":-94.746094,"^":37.483577)),
 
     ),
 
@@ -450,10 +459,10 @@ Muldis_Content_Predicate`
 
         `Two members.`
         (Set:{
-            21 : 0bTRUE,
-            62 : 0bFALSE,
-            3 : 0bTRUE,
-            101 : 0bFALSE,
+            21 : 1,
+            62 : 0,
+            3 : 1,
+            101 : 0,
         }),
 
     ),
@@ -532,34 +541,37 @@ Muldis_Content_Predicate`
     `$$$` Interval : (
 
         `Empty interval (zero members).`
-        [],
+        (Interval:""),
 
         `Unit interval (one member).`
-        [abc],
+        (Interval:("":abc)),
 
         `Closed interval (probably 10 members, depending on the model used).`
-        [1 <=*<= 10],
+        (Interval:("<=*<=":(1:10))),
 
         `Same thing.`
-        [1..10],
+        (Interval:("..":(1:10))),
 
         `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
-        [2.7 <=*< 9.3],
+        (Interval:("<=*<":(2.7:9.3))),
 
         `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
-        [a <*<= z],
+        (Interval:("<*<=":(a:z))),
 
         `Open interval; time period between Dec 6 and 20 excluding both.`
-        [0Lci@y2002|m12|d6@"UTC" <*< 0Lci@y2002|m12|d20@"UTC"],
+        (Interval:("<*<":(
+              (Calendar_Instant:((y:2002,m:12,d:06):"UTC")),
+            : (Calendar_Instant:((y:2002,m:12,d:20):"UTC")),
+        ))),
 
         `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
-        [*<= 3],
+        (Interval:("*<=":3)),
 
         `Left-closed, right-unbounded interval; every Integer x where 29 <= x.`
-        [29 <=*],
+        (Interval:("<=*":29)),
 
         `Universal interval; unbounded; every value of type system is a member.`
-        [*],
+        (Interval:"*"),
 
     ),
 
@@ -571,28 +583,39 @@ Muldis_Content_Predicate`
         (Interval_Set:{}),
 
         `Unit interval-set (one member).`
-        (Interval_Set:{abc}),
+        (Interval_Set:{(Interval:("":abc))}),
 
         `Probably 10 members, depending on the model used.`
-        (Interval_Set:{1<=*<=10}),
+        (Interval_Set:{(Interval:("<=*<=":(1:10)))}),
 
         `Same thing.`
-        (Interval_Set:{1..10}),
+        (Interval_Set:{(Interval:("..":(1:10)))}),
 
         `Probably 6 members.`
-        (Interval_Set:{1..3,6,8..9}),
+        (Interval_Set:{
+            (Interval:("..":(1:3))),
+            (Interval:(""  :6    )),
+            (Interval:("..":(8:9))),
+        }),
 
         `Every Integer x except for {4..13,22..28}`
-        (Interval_Set:{*<=3,14..21,29<=*}),
+        (Interval_Set:{*<=3,(Interval:("..":(14:21))),29<=*}),
 
         `Set of all valid Unicode code points.`
-        (Interval_Set:{0..0xD7FF,0xE000..0x10FFFF}),
+        (Interval_Set:{
+            (Interval:("..":(     0:  0xD7FF))),
+            (Interval:("..":(0xE000:0x10FFFF))),
+        }),
 
         `Probably 15 members (no duplicates), depending on the model used.`
-        (Interval_Set:{1..10,6..15}),
+        (Interval_Set:{(Interval:("..":(1:10))),(Interval:("..":(6:15)))}),
 
         `Probably same thing, regardless of data model used.`
-        (Interval_Set:{1<=*<6,6..10:2,10<*<=15}),
+        (Interval_Set:{
+            (Interval:("<=*<":( 1: 6)))  ,
+            (Interval:(".."  :( 6:10))):2,
+            (Interval:("<*<=":(10:15)))  ,
+        }),
 
     ),
 
@@ -604,19 +627,23 @@ Muldis_Content_Predicate`
         (Interval_Bag:{}),
 
         `Unit interval-bag (one member).`
-        (Interval_Bag:{abc}),
+        (Interval_Bag:{(Interval:("":abc))}),
 
         `Five members (4 duplicates).`
-        (Interval_Bag:{def:5}),
+        (Interval_Bag:{(Interval:("":def)):5}),
 
         `Probably 20 members (5 duplicates), depending on the model used.`
-        (Interval_Bag:{1<=*<=10,6<=*<=15}),
+        (Interval_Bag:{(Interval:("<=*<=":(1:10))),(Interval:("<=*<=":(6:15)))}),
 
         `Same thing.`
-        (Interval_Bag:{1..10,6..15}),
+        (Interval_Bag:{(Interval:("..":(1:10))),(Interval:("..":(6:15)))}),
 
         `Probably same thing, regardless of data model used.`
-        (Interval_Bag:{1<=*<6,6..10:2,10<*<=15}),
+        (Interval_Bag:{
+            (Interval:("<=*<":( 1: 6)))  ,
+            (Interval:(".."  :( 6:10))):2,
+            (Interval:("<*<=":(10:15)))  ,
+        }),
 
     ),
 
@@ -649,16 +676,16 @@ Muldis_Content_Predicate`
         (Heading:()),
 
         `One named attribute.`
-        (Heading:(sales)),
+        (Heading:(sales,)),
 
         `Same thing.`
-        (Heading:("sales")),
+        (Heading:("sales",)),
 
         `One ordered attribute.`
-        (Heading:(0c0)),
+        (Heading:(0c0,)),
 
         `Same thing.`
-        (Heading:("\\<0c0>")),
+        (Heading:("\\<0c0>",)),
 
         `Three named attributes.`
         (Heading:(region,revenue,qty)),
@@ -670,10 +697,10 @@ Muldis_Content_Predicate`
         (Heading:(0c1,age)),
 
         `Some attribute names can only appear quoted.`
-        (Heading:("Street Address")),
+        (Heading:("Street Address",)),
 
         `A non-Latin name.`
-        (Heading:("サンプル")),
+        (Heading:("サンプル",)),
 
     ),
 
@@ -685,37 +712,34 @@ Muldis_Content_Predicate`
         (Renaming:()),
 
         `Also a no-op.`
-        (Renaming:(age->age)),
+        (Renaming:(age->age,)),
 
         `Rename one attribute.`
-        (Renaming:(fname->first_name)),
+        (Renaming:(fname->first_name,)),
 
         `Same thing.`
-        (Renaming:(first_name:fname)),
+        (Renaming:(first_name:fname,)),
 
         `Swap 2 named attributes.`
         (Renaming:(foo->bar,foo<-bar)),
 
         `Convert ordered names to nonordered.`
-        (Renaming:(->foo,->bar)),
+        (Renaming:(foo,bar)),
 
         `Same thing.`
         (Renaming:(0c0->foo,0c1->bar)),
 
         `Convert nonordered names to ordered.`
-        (Renaming:(<-foo,<-bar)),
-
-        `Same thing.`
         (Renaming:(0c0<-foo,0c1<-bar)),
 
         `Swap 2 ordered attributes.`
         (Renaming:(0c0->0c1,0c0<-0c1)),
 
         `Same thing.`
-        (Renaming:(->0c1,->0c0)),
+        (Renaming:(0c1,0c0)),
 
         `Some attribute names can only appear quoted.`
-        (Renaming:("First Name"->"Last Name")),
+        (Renaming:("First Name"->"Last Name",)),
 
     ),
 
@@ -804,8 +828,14 @@ Muldis_Content_Predicate`
         `Zero attributes + zero tuples.`
         (Relation:()),
 
+        `Same thing.`
+        (Relation:(():{})),
+
         `Zero attributes + one tuple.`
         (Relation:{()}),
+
+        `Same thing.`
+        (Relation:(():{()})),
 
         `Three named attributes + zero tuples.`
         (Relation:(x,y,z)),
@@ -819,21 +849,40 @@ Muldis_Content_Predicate`
             (name: Amy     , age: 14),
         }),
 
+        `Same thing.`
+        (Relation:(
+                (name    , age),
+            : {
+                (Michelle, 17 ),
+                (Amy     , 14 ),
+            },
+        )),
+
         `Two positional attributes + two tuples.`
         (Relation:{
             (Michelle, 17),
             (Amy     , 14),
         }),
 
-       `Some people records.`
+        `Some people records.`
         (Relation:{
-            (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
+            (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d06:)),
                 phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
-            (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
+            (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:08,d27:)),
                 phone_numbers : (Set:{})),
-            (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
+            (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:07,d:06)),
                 phone_numbers : (Set:{"+81.9072391679"})),
         }),
+
+        `Same thing.`
+        (Relation:(
+                (name          , birth_date                           , phone_numbers),
+            : {
+                ("Jane Ives"   , (Calendar_Instant:(y:1971,m:11,d06:)), (Set:{"+1.4045552995", "+1.7705557572"})),
+                ("Layla Miller", (Calendar_Instant:(y:1995,m:08,d27:)), (Set:{})),
+                ("岩倉 玲音", (Calendar_Instant:(y:1984,m:07,d:06)), (Set:{"+81.9072391679"})),
+            },
+        )),
 
     ),
 
@@ -871,9 +920,9 @@ Muldis_Content_Predicate`
 
     `$$$` Article : (
 
-        (Article:(::Point : (x : 5, y : 3))),
+        (Article:(Point : (x : 5, y : 3))),
 
-        (Article:(::Float : (
+        (Article:(Float : (
             significand : 45207196,
             radix       : 10,
             exponent    : 37,
@@ -888,9 +937,9 @@ Muldis_Content_Predicate`
             second : 0.0,
         ))),
 
-        (Article:::Positive_Infinity),
+        (Article:Positive_Infinity),
 
-        (Article:::Negative_Zero),
+        (Article:Negative_Zero),
 
     ),
 
@@ -898,11 +947,11 @@ Muldis_Content_Predicate`
 
     `$$$` Excuse : (
 
-        (Excuse:(::Input_Field_Wrong : (name : "Your Age"))),
+        (Excuse:(Input_Field_Wrong : (name : "Your Age"))),
 
-        (Excuse:::Div_By_Zero),
+        (Excuse:Div_By_Zero),
 
-        (Excuse:::No_Such_Attr_Name),
+        (Excuse:No_Such_Attr_Name),
 
     ),
 

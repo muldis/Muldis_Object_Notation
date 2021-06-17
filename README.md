@@ -9,6 +9,10 @@ See the file
 for that feature document.
 
 See the file
+[spec/MUON_Syntax_Plain_Text_Supplemental.md](spec/MUON_Syntax_Plain_Text_Supplemental.md)
+for that supporting document.
+
+See the file
 [spec/MUON_Feature_Comparison.md](spec/MUON_Feature_Comparison.md)
 for that supporting document.
 

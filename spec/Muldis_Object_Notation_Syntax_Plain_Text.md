@@ -23,14 +23,14 @@ its part name is `Syntax_Plain_Text`.
     MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
     Muldis_Content_Predicate`
 
-    (Relation:(Set:{
-        (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
+    (Relation:{
+        (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d06:)),
             phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
-        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
+        (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:08,d27:)),
             phone_numbers : (Set:{})),
-        (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
+        (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:07,d:06)),
             phone_numbers : (Set:{"+81.9072391679"})),
-    }))
+    })
 ```
 
 # DESCRIPTION
@@ -98,7 +98,7 @@ the input according to the regular MUON grammar.
 Assuming that the MUON parser proper operates logically in terms of the
 input *parsing unit* being a Unicode character string (characterized by a
 sequence of Unicode *character code points*, each corresponding to an
-integer in the set {0..0xD7FF,0xE000..0x10FFFF}), a MUON parser that is
+integer in the set `{0..0xD7FF,0xE000..0x10FFFF}`), a MUON parser that is
 actually given an octet string as input (per a raw file) will need to
 determine which of possibly many possible encoding formats was used to
 encode the character data as octets, and then convert the input as such.
@@ -138,6 +138,11 @@ what script / character encoding was used in its file / octet string form.
 While heuristics (and BOMs) can lead to a strong guess as to what character
 encoding a file is, an explicit MCP declaration makes things more certain.
 
+*The rest of this sub-section about Muldis Content Predicate is obsolete
+and will be updated to say MCP is now more of a meta-standard and the
+specially formatted whitespace comment will be replaced by a dedicated MUON
+possrep resembling a specific tuple.*
+
 A **Muldis Content Predicate** declaration would normally be embedded in a
 MUON *dividing space* quoted comment string, so the regular MUON parser
 needs no special handling grammar/logic to ignore it (unlike a shebang).
@@ -166,9 +171,7 @@ Examples:
     Muldis_Content_Predicate`
 ```
 
-# GRAMMAR
-
-Each valid MUON artifact is an instance of a single MUON possrep.
+# COMMON QUALITIES OF THE GRAMMAR
 
 The syntax and intended interpretation of the grammar itself seen in this
 document should match that of the user-defined grammars feature of the Raku
@@ -183,6 +186,10 @@ See also the bundled actual Raku module
 ../hosts/Raku/lib/Muldis/Reference/Object_Notation.pm6)
 which has an executable copy of the grammar.
 
+# PARSING UNIT
+
+A MUON *parsing unit* is represented in the grammar by `<MUON>`.
+
 Grammar:
 
 ```
@@ -190,7 +197,13 @@ Grammar:
     {
         <sp>? ~ <sp>? <Any>
     }
+```
 
+# DIVIDING SPACE
+
+Grammar:
+
+```
     token sp
     {
         [<whitespace_char> | <quoted_sp_comment_str>]+
@@ -221,6 +234,9 @@ still being well formatted (no extra long lines).
 See the grammar sections for `<Integer>`, `<Fraction>`, `<Bits>`, `<Blob>`,
 `<Text>` for more details on how this specifically applies to them.
 
+*The rest of this sub-section about "entity marker" is obsolete and will be
+updated with an alternative method to accomplish the same goal.*
+
 An *entity marker* is a feature that is optional for a MUON parser or
 generator to support.  It is a special case of a `<quoted_sp_comment_str>`,
 the character string `` `$$$` ``, and would simply be seen as such by a MUON parser
@@ -233,7 +249,7 @@ declare something interesting, such as a package or routine or type
 declaration, so that generic MUON tooling can, say, generate a navigation
 menu to quickly jump around a document to each entity declaration therein.
 The idomatic location for an *entity marker* is immediately before a
-**Tuple** attribute name, assuming that the corresponding attribute value
+**Kit** attribute name, assuming that the corresponding attribute value
 is the construct of interest and the attribute name is used as the name to
 refer to it with in function menus.
 
@@ -241,24 +257,27 @@ Examples:
 
 ```
     (
-        `$$$` My_Func : (Article:(::Function : ...)),
+        `$$$` My_Func : (Article:(Function : ...)),
 
-        `$$$` My_Proc_1 : (Article:(::Procedure : ...)),
+        `$$$` My_Proc_1 : (Article:(Procedure : ...)),
 
-        `$$$` My_Proc_2 : (Article:(::Procedure : ...)),
+        `$$$` My_Proc_2 : (Article:(Procedure : ...)),
     )
 ```
 
+# CRITICAL ALGEBRAIC DATA TYPE POSSREPS
+
 ## Any / Universal Type Possrep
 
-The **Any** possrep is represented by `<Any>`.
+An **Any** artifact has the dedicated concrete literal format
+described by `<Any>`.
 
 Grammar:
 
 ```
     token Any
     {
-        <generic_group> | <opaque> | <collection>
+        <generic_group> | <simple_primary> | <collective_primary>
     }
 
     token generic_group
@@ -266,7 +285,7 @@ Grammar:
         ['(' <sp>?] ~ [<sp>? ')'] <Any>
     }
 
-    token opaque
+    token simple_primary
     {
           <Ignorance>
         | <Boolean>
@@ -276,69 +295,35 @@ Grammar:
         | <Blob>
         | <Text>
         | <Nesting>
-        | <Calendar_Time>
-        | <Calendar_Duration>
-        | <Calendar_Instant>
-        | <Geographic_Point>
     }
 
-    token collection
+    token collective_primary
     {
           <Duo>
         | <Lot>
         | <Kit>
-        | <Array>
-        | <Set>
-        | <Bag>
-        | <Mix>
-        | <Interval>
-        | <Interval_Set>
-        | <Interval_Bag>
-        | <Pair>
-        | <Heading>
-        | <Renaming>
-        | <Tuple>
-        | <Tuple_Array>
-        | <Relation>
-        | <Tuple_Bag>
-        | <Article>
-        | <Excuse>
     }
 ```
-
-An `<Any>` represents a generic value literal that is allowed to be of any
-possrep at all, except where specifically noted otherwise.
 
 A `<generic_group>` is an optional syntactic construct to force a
 particular parsing precedence or otherwise help illustrate an existing one;
 it is not actually needed by MUON itself but can assist a superset grammar.
 
-An `<opaque>` is an `<Any>` that explicitly has no child `<Any>` nodes; in
-conventional terms, one is typically for selecting scalar values, though
-many cases are also simple collections.
-
-A `<collection>` is an `<Any>` that explicitly does have child `<Any>`
-nodes in the general case; in conventional terms, one is for selecting
-values representing collections of other values.
-
 ## None / Empty Type Possrep
 
-The **None** possrep
-has no representation in the grammar, but is mentioned for parity.
+A **None** artifact doesn't exist, but is mentioned for parity.
+
+# SIMPLE PRIMARY DATA TYPE POSSREPS
 
 ## Ignorance
 
-The singleton **Ignorance** value is represented by `<Ignorance>`.
+An **Ignorance** artifact has the dedicated concrete literal format
+described by `<Ignorance>`.
 
 Grammar:
 
 ```
     token Ignorance
-    {
-        <Ignorance_subject>
-    }
-
-    token Ignorance_subject
     {
         0sIGNORANCE
     }
@@ -352,17 +337,13 @@ Examples:
 
 ## Boolean
 
-A **Boolean** value is represented by `<Boolean>`.
+A **Boolean** artifact has the dedicated concrete literal format
+described by `<Boolean>`.
 
 Grammar:
 
 ```
     token Boolean
-    {
-        <Boolean_subject>
-    }
-
-    token Boolean_subject
     {
         0b [FALSE | TRUE]
     }
@@ -378,22 +359,18 @@ Examples:
 
 ## Integer
 
-An **Integer** value is represented by `<Integer>`.
+An **Integer** artifact has the dedicated concrete literal format
+described by `<Integer>`.
 
 Grammar:
 
 ```
     token Integer
     {
-        <Integer_subject>
+        <[+-]>? <sp>? <Integer_nonsigned>
     }
 
-    token Integer_subject
-    {
-        <[+-]>? <sp>? <Integer_subject_nonsigned>
-    }
-
-    token Integer_subject_nonsigned
+    token Integer_nonsigned
     {
           [ 0b <sp>?   [<[ 0..1      ]>+]+ % [_ | <sp>]]
         | [ 0o <sp>?   [<[ 0..7      ]>+]+ % [_ | <sp>]]
@@ -403,9 +380,9 @@ Grammar:
 ```
 
 This grammar supports writing **Integer** literals in any of the numeric
-bases {2,8,10,16}, using conventional syntax.  The literal may optionally
-contain underscore characters (`_`), which exist just to help with visual
-formatting, such as for `10_000_000`.
+bases `{2,8,10,16}`, using conventional syntax.  The literal may
+optionally contain underscore characters (`_`), which exist just to help
+with visual formatting, such as for `10_000_000`.
 
 Examples:
 
@@ -427,28 +404,28 @@ Examples:
         44634_59185_54318_33976_56052_12255_96406_61454_55497_72963
         11391_48085_80371_21987_99971_66438_12574_02829_11150_57151
 
+    `Base 10.`
     0d39
 
+    `Base 16.`
     0xDEADBEEF
 
+    `Base 8.`
     0o644
 
+    `Base 2.`
     0b11001001
 ```
 
 ## Fraction
 
-A **Fraction** value is represented by `<Fraction>`.
+A **Fraction** artifact has the dedicated concrete literal format
+described by `<Fraction>`.
 
 Grammar:
 
 ```
     token Fraction
-    {
-        <Fraction_subject>
-    }
-
-    token Fraction_subject
     {
         <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }
@@ -478,40 +455,35 @@ Grammar:
 
     token numerator
     {
-        <Integer_subject>
+        <Integer>
     }
 
     token denominator
     {
-        <Integer_subject_nonsigned>
+        <Integer_nonsigned>
     }
 
     token radix
     {
-        <Integer_subject_nonsigned>
+        <Integer_nonsigned>
     }
 
     token exponent
     {
-        <Integer_subject>
+        <Integer>
     }
 ```
 
 This grammar supports writing **Fraction** literals in any of the numeric
-bases {2,8,10,16}, using conventional syntax.  The literal may optionally
-contain underscore characters (`_`), which exist just to help with visual
-formatting, such as for `20_194/17` or `3.141_59`.
+bases `{2,8,10,16}`, using conventional syntax.  The literal may
+optionally contain underscore characters (`_`), which exist just to help
+with visual formatting, such as for `20_194/17` or `3.141_59`.
 
-The general form of a **Fraction** literal is `n/d*r^e` such that {n,d,r,e}
-are each integers and the literal represents the rational number that
-results from evaluating the mathematical expression using the following
-implicit order of operations, `(n/d)*(r^e)` such that `/` means divide, `*`
-means multiply, and `^` means exponentiate.
-
-MUON does not require the numerator/denominator pair to be coprime, but
-typically a type system will normalize the pair as such when determining
-value identity.  Similarly, MUON does not require any other kind of
-normalization between the components of a **Fraction** literal.
+The general form of a **Fraction** literal is `n/d*r^e` such that
+`{n,d,r,e}` are each integers and the literal represents the rational
+number that results from evaluating the mathematical expression using the
+following implicit order of operations, `(n/d)*(r^e)` such that `/` means
+divide, `*` means multiply, and `^` means exponentiate.
 
 While the wider general format `n/d*r^e` can represent every rational
 number, as can just the `n/d` portion by itself, the alternate but typical
@@ -522,19 +494,13 @@ represented as a terminating binary or octal or hexadecimal number can also
 be represented as a terminating decimal number.
 
 Note that in order to keep the grammar simpler or more predictable, each
-**Fraction** component {n,d,r,e} must have its numeric base specified
+**Fraction** component `{n,d,r,e}` must have its numeric base specified
 individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
 be interpreted as base 10.  This keeps behaviour consistent with a parser
 that sees a **Fraction** literal but interprets it as multiple **Integer**
 literals separated by symbolic infix operators, evaluation order aside.
 Also per normal expectations, literals in the format `x.x` only specify the
 base at most once in total, *not* separately for the part after the `.`.
-
-A `<denominator>` is subject to the additional rule that the integer it
-denotes must be nonzero.
-
-A `<radix>` is subject to the additional rule that the integer it denotes
-must be at least 2.
 
 Examples:
 
@@ -567,30 +533,31 @@ Examples:
     162259276829213363391578010288127
         /170141183460469231731687303715884105727
 
+    `Base 10.`
     4.5207196*10^37
 
+    `Base 16.`
     0xDEADBEEF.FACE
 
+    `Base 8.`
     -0o35/0o3
 
+    `Base 2.`
     0b1.1
 
+    `Base 2.`
     0b1.011101101*0b10^-0b11011
 ```
 
 ## Bits
 
-A **Bits** value is represented by `<Bits>`.
+A **Bits** artifact has the dedicated concrete literal format
+described by `<Bits>`.
 
 Grammar:
 
 ```
     token Bits
-    {
-        <Bits_subject>
-    }
-
-    token Bits_subject
     {
           [ 0bb <sp>? [<[ 0..1      ]>+]* % [_ | <sp>]]
         | [ 0bo <sp>? [<[ 0..7      ]>+]* % [_ | <sp>]]
@@ -599,9 +566,9 @@ Grammar:
 ```
 
 This grammar supports writing **Bits** literals in any of the numeric
-bases {2,8,16}, using semi-conventional syntax.  The literal may optionally
-contain underscore characters (`_`), which exist just to help with visual
-formatting, such as for `0bb00101110_100010`.
+bases `{2,8,16}`, using semi-conventional syntax.  The literal may
+optionally contain underscore characters (`_`), which exist just to help
+with visual formatting, such as for `0bb00101110_100010`.
 
 Examples:
 
@@ -619,17 +586,13 @@ Examples:
 
 ## Blob
 
-A **Blob** value is represented by `<Blob>`.
+A **Blob** artifact has the dedicated concrete literal format
+described by `<Blob>`.
 
 Grammar:
 
 ```
     token Blob
-    {
-        <Blob_subject>
-    }
-
-    token Blob_subject
     {
           [ 0xb <sp>? [[<[ 0..1      ]> ** 8]+]* % [_ | <sp>]]
         | [ 0xx <sp>? [[<[ 0..9 A..F ]> ** 2]+]* % [_ | <sp>]]
@@ -638,9 +601,9 @@ Grammar:
 ```
 
 This grammar supports writing **Blob** literals in any of the numeric
-bases {2,16,64}, using semi-conventional syntax.  The literal may optionally
-contain underscore characters (`_`), which exist just to help with visual
-formatting, such as for `0xxA705_E416`.
+bases `{2,16,64}`, using semi-conventional syntax.  The literal may
+optionally contain underscore characters (`_`), which exist just to help
+with visual formatting, such as for `0xxA705_E416`.
 
 A `<Blob>` is subject to the additional rule that any `=` characters may
 only appear at the very end of it.
@@ -667,17 +630,13 @@ Examples:
 
 ## Text / Attribute Name
 
-A **Text** value is represented by `<Text>`.
+A **Text** artifact has the dedicated concrete literal format
+described by `<Text>`.
 
 Grammar:
 
 ```
     token Text
-    {
-        <Text_subject>
-    }
-
-    token Text_subject
     {
         <quoted_text> | <nonquoted_alphanumeric_text> | <code_point_text>
     }
@@ -736,7 +695,7 @@ the same characters were surrounded by quotation marks.
 
 A `<code_point_text>` is subject to the additional rule that the
 non-negative integer it denotes must be in the set
-{0..0xD7FF,0xE000..0x10FFFF}.
+`{0..0xD7FF,0xE000..0x10FFFF}`.
 
 The meanings of the simple character escape sequences are:
 
@@ -764,9 +723,9 @@ exactly 1 character whose code point number it denotes.
 Given that **Text** values or syntax serve double duty for not only regular
 user data but also for attribute names of tuples or other kinds of
 identifiers, the `<code_point_text>` variant provides a nicer alternative
-for specifying them in latter contexts; it is
-purposefully like a regular integer for use in situations where we have
-conceptually ordered (rather than conceptually named) attributes.
+for specifying them in latter contexts; it is purposefully like a regular
+integer for use in situations where we have conceptually ordered (rather
+than conceptually named) attributes.
 
 Examples:
 
@@ -804,24 +763,15 @@ Examples:
 
 ## Nesting / Attribute Name List
 
-A **Nesting** value is represented by `<Nesting>`.
+A **Nesting** artifact has the dedicated concrete literal format
+described by `<Nesting>`.
 
 Grammar:
 
 ```
     token Nesting
     {
-        <Nesting_subject>
-    }
-
-    token Nesting_subject
-    {
-        ['::' <sp>? <attr_name>]+ % <sp>?
-    }
-
-    token attr_name
-    {
-        <Text_subject>
+        ['::' <sp>? <Text>]+ % <sp>?
     }
 ```
 
@@ -837,19 +787,17 @@ Examples:
     ::the_db::stats::"samples by order"
 ```
 
+# COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
 ## Duo
 
-A **Duo** value is represented by `<Duo>`.
+A **Duo** artifact has the dedicated concrete literal format
+described by `<Duo>`.
 
 Grammar:
 
 ```
     token Duo
-    {
-         <Duo_subject>
-    }
-
-    token Duo_subject
     {
         ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
     }
@@ -892,17 +840,13 @@ Examples:
 
 ## Lot
 
-An **Lot** value is represented by `<Lot>`.
+A **Lot** artifact has the dedicated concrete literal format
+described by `<Lot>`.
 
 Grammar:
 
 ```
     token Lot
-    {
-        <Lot_subject>
-    }
-
-    token Lot_subject
     {
         ['{' <sp>?] ~ [<sp>? '}']
             [',' <sp>?]?
@@ -931,62 +875,63 @@ Examples:
 
 ## Kit / Multi-Level Tuple
 
-A **Kit** value is represented by `<Kit>`.
+A **Kit** artifact has the dedicated concrete literal format
+described by `<Kit>`.
 
 Grammar:
 
 ```
     token Kit
     {
-        <Kit_subject>
+        ['(' <sp>?] ~ [<sp>? ')'] <kit_ml_attrs>
     }
 
-    token Kit_subject
+    token kit_ml_attrs
     {
-        ['(' <sp>?] ~ [<sp>? ')'] <structure_attrs>
+        <kit_nullary> | <kit_unary> | <kit_nary>
     }
 
-    token structure_attrs
-    {
-        <structure_nullary> | <structure_unary> | <structure_nary>
-    }
-
-    token structure_nullary
+    token kit_nullary
     {
         ''
     }
 
-    token structure_unary
+    token kit_unary
     {
-          [          <structure_attr> <sp>? ',']
-        | [',' <sp>? <structure_attr> <sp>? ',']
-        | [',' <sp>? <structure_attr>          ]
+          [          <kit_ml_attr> <sp>? ',']
+        | [',' <sp>? <kit_ml_attr> <sp>? ',']
+        | [',' <sp>? <kit_ml_attr>          ]
     }
 
-    token structure_nary
+    token kit_nary
     {
         [',' <sp>?]?
-        [<structure_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<kit_ml_attr> ** 2..* % [<sp>? ',' <sp>?]]
         [<sp>? ',']?
     }
 
-    token structure_attr
+    token kit_ml_attr
     {
-        [[<attr_name> | <Nesting_subject>] <sp>? ':' <sp>?]? <attr_asset>
+        [<ml_attr_name> <sp>? ':' <sp>?]? <ml_attr_asset>
     }
 
-    token attr_asset
+    token ml_attr_name
+    {
+        <Nesting> | <Text>
+    }
+
+    token ml_attr_asset
     {
         <Any>
     }
 ```
 
-The meaning of a `<structure_attr>` consisting of only an `<attr_asset>` is
-exactly the same as if the former also had an `<attr_name>` of the form
+The meaning of a `<kit_ml_attr>` consisting of only an `<ml_attr_asset>` is
+exactly the same as if the former also had an `<ml_attr_name>` of the form
 `0cN` such that `N` is the zero-based ordinal position of the
-`<structure_attr>` in the `<structure_attrs>` among all sibling such
-`<structure_attr>`.  These *attribute name* are determined without regard to
-any explicit *attribute name* that a `<structure_attrs>` may contain, and it is
+`<kit_ml_attr>` in the `<kit_ml_attrs>` among all sibling such
+`<kit_ml_attr>`.  These *attribute name* are determined without regard to
+any explicit *attribute name* that a `<kit_ml_attrs>` may contain, and it is
 invalid for any explicit names to duplicate any implicit or explicit names.
 
 Examples:
@@ -1046,1154 +991,6 @@ Examples:
     )
 ```
 
-## Calendar Time
-
-A **Calendar Time** value is represented by `<Calendar_Time>`.
-
-Grammar:
-
-```
-    token Calendar_Time
-    {
-        <Calendar_Time_subject>
-    }
-
-    token Calendar_Time_subject
-    {
-        0Lct [<sp>? '@' <sp>? <time_elements>]?
-    }
-
-    token time_elements
-    {
-        [<time_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
-    }
-
-    token time_unit
-    {
-        <[ymdhis]>
-    }
-
-    token loc_multiplicity
-    {
-        <Integer_subject> | <Fraction_subject>
-    }
-```
-
-A `<time_elements>` is subject to the additional rule that every distinct
-`<time_unit>` may appear at most once.
-
-Examples:
-
-```
-    `No measurement was taken or specified at all.`
-    0Lct
-
-    `Either an unspecified period in 1970 or a duration of 1970 years.`
-    0Lct@y1970
-
-    `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
-    0Lct@y2015|m5|d3
-
-    `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
-    0Lct@y1998|d300
-
-    `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
-    0Lct@y1776|d42
-
-    `Either the first quarter of 1953 or a duration of 1953.25 years.`
-    0Lct@y1953.25
-
-    `Either high noon on an unspecified day or a duration of 12 hours.`
-    0Lct@h12|i0|s0
-
-    `Either a fully specified civil date and time or a 6-part duration.`
-    0Lct@y1884|m10|d17|h20|i55|s30
-
-    `Either an ancient date and time or a negative duration.`
-    0Lct@y-370|m1|d24|h11|i0|s0
-
-    `Either a time on some unspecified day or a duration of seconds.`
-    0Lct@s5923.21124603
-```
-
-## Calendar Duration
-
-A **Calendar Duration** value is represented by `<Calendar_Duration>`.
-
-Grammar:
-
-```
-    token Calendar_Duration
-    {
-        <Calendar_Duration_subject>
-    }
-
-    token Calendar_Duration_subject
-    {
-        0Lcd [<sp>? '@' <sp>? <time_elements>]?
-    }
-```
-
-Examples:
-
-```
-    `Addition of 2 years and 3 months.`
-    0Lcd@y2|m3|d0|h0|i0|s0
-
-    `Subtraction of 22 hours.`
-    0Lcd@y0|m0|d0|h-22|i0|s0
-```
-
-## Calendar Instant
-
-A **Calendar Instant** value is represented by `<Calendar_Instant>`.
-
-Grammar:
-
-```
-    token Calendar_Instant
-    {
-        <Calendar_Instant_subject>
-    }
-
-    token Calendar_Instant_subject
-    {
-        0Lci [<sp>? '@' <sp>? <instant_base>
-            [<sp>? '@' <sp>? [<instant_offset> | <instant_zone>]]?
-        ]?
-    }
-
-    token instant_base
-    {
-        <time_elements>
-    }
-
-    token instant_offset
-    {
-        <time_elements>
-    }
-
-    token instant_zone
-    {
-        <quoted_text_segment>
-    }
-```
-
-An `<instant_offset>` is subject to the additional rule that it may only
-contain `<time_unit>` members of `{h,i,s}` and not `{y,m,d}`.
-
-Examples:
-
-```
-    `The Day The Music Died (if paired with Gregorian calendar).`
-    0Lci@y1959|m2|d3
-
-    `A time of day when one might have breakfast.`
-    0Lci@h7|i30|s0
-
-    `What was now in the Pacific zone (if paired with Gregorian calendar).`
-    0Lci@y2018|m9|d3|h20|i51|s17@h-8|i0|s0
-
-    `A time of day in the UTC zone on an unspecified day.`
-    0Lci@h9|i25|s0@h0|i0|s0
-
-    `A specific day and time in the Pacific Standard Time zone.`
-    0Lci@y2001|m4|d16|h20|i1|s44@"PST"
-```
-
-## Geographic Point
-
-A **Geographic Point** value is represented by `<Geographic_Point>`.
-
-Grammar:
-
-```
-    token Geographic_Point
-    {
-        <Geographic_Point_subject>
-    }
-
-    token Geographic_Point_subject
-    {
-        0Lgp [<sp>? '@' <sp>? <geo_elements>]?
-    }
-
-    token geo_elements
-    {
-        [<geo_unit> <sp>? <loc_multiplicity>]+ % [<sp>? '|' <sp>?]
-    }
-
-    token geo_unit
-    {
-        <[>^+]>
-    }
-```
-
-A `<geo_elements>` is subject to the additional rule that every distinct
-`<geo_unit>` may appear at most once.
-
-Examples:
-
-```
-    `No specified coordinates at all.`
-    0Lgp
-
-    `Just an elevation specified.`
-    0Lgp@+920
-
-    `Geographic surface coordinates of Googleplex; elevation not specified.`
-    0Lgp@>-122.0857017|^37.4218363
-
-    `Same thing.`
-    0Lgp@^37.4218363|>-122.0857017
-
-    `Some location with all coordinates specified.`
-    0Lgp@>-101|^-70|+1000
-
-    `Another place.`
-    0Lgp@>-94.746094|^37.483577
-```
-
-## Array
-
-An **Array** value is represented by `<Array>`.
-
-Grammar:
-
-```
-    token Array
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Array <sp>? ':' <sp>? <Array_subject>
-    }
-
-    token Array_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Zero members.`
-    (Array:{})
-
-    `One member.`
-    (Array:{ "You got it!" })
-
-    `Three members.`
-    (Array:{
-        Alphonse,
-        Edward,
-        Winry,
-    })
-
-    `Five members (1 duplicate).`
-    (Array:{
-        57,
-        45,
-        63,
-        61,
-        63,
-    })
-
-    `32 members (28 duplicates in 2 runs).`
-    (Array:{
-        "/",
-        "*" : 20,
-        "+" : 10,
-        "-",
-    })
-```
-
-## Set
-
-A **Set** value is represented by `<Set>`.
-
-Grammar:
-
-```
-    token Set
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Set <sp>? ':' <sp>? <Set_subject>
-    }
-
-    token Set_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <Boolean_subject>]?]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Zero members.`
-    (Set:{})
-
-    `One member.`
-    (Set:{ "I know this one!" })
-
-    `Four members (no duplicates).`
-    (Set:{
-        Canada,
-        Spain,
-        Jordan,
-        Jordan,
-        Thailand,
-    })
-
-    `Three members.`
-    (Set:{
-        3,
-        16,
-        85,
-    })
-
-    `Two members.`
-    (Set:{
-        21 : 0bTRUE,
-        62 : 0bFALSE,
-        3 : 0bTRUE,
-        101 : 0bFALSE,
-    })
-```
-
-## Bag / Multiset
-
-A **Bag** value is represented by `<Bag>`.
-
-Grammar:
-
-```
-    token Bag
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Bag <sp>? ':' <sp>? <Bag_subject>
-    }
-
-    token Bag_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-
-    token int_multiplicity
-    {
-        <Integer_subject_nonsigned>
-    }
-```
-
-Examples:
-
-```
-    `Zero members.`
-    (Bag:{})
-
-    `One member.`
-    (Bag:{ "I hear that!": 1 })
-
-    `1200 members (1197 duplicates).`
-    (Bag:{
-        Apple  : 500,
-        Orange : 300,
-        Banana : 400,
-    })
-
-    `Six members (2 duplicates).`
-    (Bag:{
-        Foo : 1,
-        Quux : 1,
-        Foo : 1,
-        Bar : 1,
-        Baz : 1,
-        Baz : 1,
-    })
-```
-
-## Mix
-
-A **Mix** value is represented by `<Mix>`.
-
-Grammar:
-
-```
-    token Mix
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Mix <sp>? ':' <sp>? <Mix_subject>
-    }
-
-    token Mix_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<Any> [<sp>? ':' <sp>? <frac_multiplicity>]?]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-
-    token frac_multiplicity
-    {
-        <Fraction_subject>
-    }
-```
-
-Examples:
-
-```
-    `Zero members; we measured zero of nothing in particular.`
-    (Mix:{})
-
-    `One member; one gram of mass.`
-    (Mix:{::Gram: 1.0})
-
-    `29.95 members (28.95 duplicates); the cost of a surgery.`
-    (Mix:{::USD: 29.95})
-
-    `9.8 members; acceleration under Earth's gravity.`
-    (Mix:{::Meter_Per_Second_Squared: 9.8})
-
-    `0.615 members (fractions of 3 distinct members); recipe.`
-    (Mix:{
-        ::Butter : 0.22,
-        ::Sugar  : 0.1,
-        ::Flour  : 0.275,
-        ::Sugar  : 0.02,
-    })
-
-    `4/3 members (fractions of 3 distinct members); this-mix.`
-    (Mix:{
-        Sugar: 1/3,
-        Spice: 1/4,
-        All_Things_Nice: 3/4,
-    })
-
-    `-1.5 members; adjustment for recipe.`
-    (Mix:{
-        Rice: +4.0,
-        Beans: -5.7,
-        Carrots: +0.2,
-    })
-```
-
-## Interval
-
-An **Interval** value is represented by `<Interval>`.
-
-Grammar:
-
-```
-    token Interval
-    {
-         <Interval_subject>
-    }
-
-    token Interval_subject
-    {
-        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
-    }
-
-    token interval_members
-    {
-        <interval_empty> | <interval_single> | <interval_range>
-    }
-
-    token interval_empty
-    {
-        ''
-    }
-
-    token interval_single
-    {
-        <Any>
-    }
-
-    token interval_range
-    {
-          [[<interval_low> <sp>? '<' '='?]? '*'  ['<' '='? <sp>? <interval_high>]?]
-        | [ <interval_low> <sp>?            '..'           <sp>? <interval_high>  ]
-    }
-
-    token interval_low
-    {
-        <Any>
-    }
-
-    token interval_high
-    {
-        <Any>
-    }
-```
-
-Examples:
-
-```
-    `Empty interval (zero members).`
-    []
-
-    `Unit interval (one member).`
-    [abc]
-
-    `Closed interval (probably 10 members, depending on the model used).`
-    [1 <=*<= 10]
-
-    `Same thing.`
-    [1..10]
-
-    `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
-    [2.7 <=*< 9.3]
-
-    `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
-    [a <*<= z]
-
-    `Open interval; time period between Dec 6 and 20 excluding both.`
-    [0Lci@y2002|m12|d6@"UTC" <*< 0Lci@y2002|m12|d20@"UTC"]
-
-    `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
-    [*<= 3]
-
-    `Left-closed, right-unbounded interval; every Integer x where 29 <= x.`
-    [29 <=*]
-
-    `Universal interval; unbounded; every value of type system is a member.`
-    [*]
-```
-
-## Interval Set
-
-An **Interval Set** value is represented by `<Interval_Set>`.
-
-Grammar:
-
-```
-    token Interval_Set
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Interval_Set <sp>? ':' <sp>? <Interval_Set_subject>
-    }
-
-    token Interval_Set_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<interval_members> [<sp>? ':' <sp>? <Boolean_subject>]?]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Empty interval-set (zero members).`
-    (Interval_Set:{})
-
-    `Unit interval-set (one member).`
-    (Interval_Set:{abc})
-
-    `Probably 10 members, depending on the model used.`
-    (Interval_Set:{1<=*<=10})
-
-    `Same thing.`
-    (Interval_Set:{1..10})
-
-    `Probably 6 members.`
-    (Interval_Set:{1..3,6,8..9})
-
-    `Every Integer x except for {4..13,22..28}`
-    (Interval_Set:{*<=3,14..21,29<=*})
-
-    `Set of all valid Unicode code points.`
-    (Interval_Set:{0..0xD7FF,0xE000..0x10FFFF})
-
-    `Probably 15 members (no duplicates), depending on the model used.`
-    (Interval_Set:{1..10,6..15})
-
-    `Probably same thing, regardless of data model used.`
-    (Interval_Set:{1<=*<6,6..10:2,10<*<=15})
-```
-
-## Interval Bag
-
-An **Interval Bag** value is represented by `<Interval_Bag>`.
-
-Grammar:
-
-```
-    token Interval_Bag
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Interval_Bag <sp>? ':' <sp>? <Interval_Bag_subject>
-    }
-
-    token Interval_Bag_subject
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<interval_members> [<sp>? ':' <sp>? <int_multiplicity>]?]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Empty interval-bag (zero members).`
-    (Interval_Bag:{})
-
-    `Unit interval-bag (one member).`
-    (Interval_Bag:{abc})
-
-    `Five members (4 duplicates).`
-    (Interval_Bag:{def:5})
-
-    `Probably 20 members (5 duplicates), depending on the model used.`
-    (Interval_Bag:{1<=*<=10,6<=*<=15})
-
-    `Same thing.`
-    (Interval_Bag:{1..10,6..15})
-
-    `Probably same thing, regardless of data model used.`
-    (Interval_Bag:{1<=*<6,6..10:2,10<*<=15})
-```
-
-## Pair
-
-A **Pair** value is represented by `<Pair>`.
-
-Grammar:
-
-```
-    token Pair
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Pair <sp>? ':' <sp>? <Pair_subject>
-    }
-
-    token Pair_subject
-    {
-        <Duo_subject>
-    }
-```
-
-Examples:
-
-```
-    `Pair of Integer.`
-    (Pair:(5: -3))
-
-    `Pair of Text.`
-    (Pair:("First Name": Joy))
-
-    `Another Pair.`
-    (Pair:(x:y))
-
-    `Same thing.`
-    (Pair:(x->y))
-
-    `Same thing.`
-    (Pair:(y<-x))
-```
-
-## Heading / Attribute Name Set
-
-A **Heading** value is represented by `<Heading>`.
-
-Grammar:
-
-```
-    token Heading
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Heading <sp>? ':' <sp>? <heading_attr_names>
-    }
-
-    token heading_attr_names
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            [',' <sp>?]?
-            [<attr_name>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Zero attributes.`
-    (Heading:())
-
-    `One named attribute.`
-    (Heading:(sales))
-
-    `Same thing.`
-    (Heading:("sales"))
-
-    `One ordered attribute.`
-    (Heading:(0c0))
-
-    `Same thing.`
-    (Heading:("\\<0c0>"))
-
-    `Three named attributes.`
-    (Heading:(region,revenue,qty))
-
-    `Three ordered attributes.`
-    (Heading:(0c0,0c1,0c2))
-
-    `One of each.`
-    (Heading:(0c1,age))
-
-    `Some attribute names can only appear quoted.`
-    (Heading:("Street Address"))
-
-    `A non-Latin name.`
-    (Heading:("サンプル"))
-```
-
-## Renaming / Attribute Name Map
-
-A **Renaming** value is represented by `<Renaming>`.
-
-Grammar:
-
-```
-    token Renaming
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Renaming <sp>? ':' <sp>? <Renaming_subject>
-    }
-
-    token Renaming_subject
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            [',' <sp>?]?
-            [[<anon_attr_rename> | <named_attr_rename>]* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-
-    token anon_attr_rename
-    {
-          ['->' <sp>? <attr_name_after>]
-        | [<attr_name_after> <sp>? '<-']
-        | [<attr_name_before> <sp>? '->']
-        | ['<-' <sp>? <attr_name_before>]
-    }
-
-    token named_attr_rename
-    {
-          [<attr_name_before> <sp>? '->' <sp>? <attr_name_after>]
-        | [<attr_name_after> <sp>? '<-' <sp>? <attr_name_before>]
-    }
-
-    token attr_name_before
-    {
-        <attr_name>
-    }
-
-    token attr_name_after
-    {
-        <attr_name>
-    }
-```
-
-Each attribute renaming specification is a pair of attribute names marked
-with a `->` or a `<-` element; the associated `<attr_name_before>` and
-`<attr_name_after>` indicate the name that an attribute has *before* and
-*after* the renaming operation, respectively.  Iff the renaming
-specification is an `<anon_attr_rename>` then either the *before* or
-*after* name is an ordered attribute name corresponding to the ordinal
-position of the renaming specification element in the
-`<Renaming>`, starting at zero.
-
-A `<Renaming>` is subject to the additional rule that no 2
-`<attr_name_before>` may be the same attribute name and that no 2
-`<attr_name_after>` may be the same attribute name.
-
-Examples:
-
-```
-    `Zero renamings, a no-op.`
-    (Renaming:())
-
-    `Also a no-op.`
-    (Renaming:(age->age,))
-
-    `Rename one attribute.`
-    (Renaming:(fname->first_name,))
-
-    `Same thing.`
-    (Renaming:(first_name:fname,))
-
-    `Swap 2 named attributes.`
-    (Renaming:(foo->bar,foo<-bar))
-
-    `Convert ordered names to nonordered.`
-    (Renaming:(->foo,->bar))
-
-    `Same thing.`
-    (Renaming:(0c0->foo,0c1->bar))
-
-    `Convert nonordered names to ordered.`
-    (Renaming:(<-foo,<-bar))
-
-    `Same thing.`
-    (Renaming:(0c0<-foo,0c1<-bar))
-
-    `Swap 2 ordered attributes.`
-    (Renaming:(0c0->0c1,0c0<-0c1))
-
-    `Same thing.`
-    (Renaming:(->0c1,->0c0))
-
-    `Some attribute names can only appear quoted.`
-    (Renaming:("First Name"->"Last Name",))
-```
-
-## Tuple / Attribute Set
-
-A **Tuple** value is represented by `<Tuple>`.
-
-Grammar:
-
-```
-    token Tuple
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Tuple <sp>? ':' <sp>? <Tuple_subject>
-    }
-
-    token Tuple_subject
-    {
-        <Kit_subject>
-    }
-```
-
-Examples:
-
-```
-    `Zero attributes.`
-    (Tuple:())
-
-    `One named attribute.`
-    (Tuple:("First Name": Joy,))
-
-    `One ordered attribute.`
-    (Tuple:(53,))
-
-    `Three ordered attributes.`
-    (Tuple:(hello,26,0bTRUE))
-
-    `One of each.`
-    (Tuple:(Jay, age: 10))
-
-    `Two named attributes.`
-    (Tuple:(
-        name : Michelle,
-        age  : 17,
-    ))
-
-    `Five leaf attributes in nested multi-level namespace.`
-    (Tuple:(
-        name: "John Glenn",
-        ::birth_date::year: 1921,
-        comment: "Fly!",
-        ::birth_date::month: 7,
-        ::birth_date::day: 18,
-    ))
-
-    `Same thing.`
-    (Tuple:(
-        name: "John Glenn",
-        birth_date: (Tuple:(
-            year: 1921,
-            month: 7,
-            day: 18,
-        )),
-        comment: "Fly!",
-    ))
-```
-
-## Tuple Array
-
-A **Tuple Array** value is represented by `<Tuple_Array>`.
-
-Grammar:
-
-```
-    token Tuple_Array
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Tuple_Array <sp>? ':' <sp>? <Tuple_Array_subject>
-    }
-
-    token Tuple_Array_subject
-    {
-        <heading_attr_names> | <tuple_array_nonempty>
-    }
-
-    token tuple_array_nonempty
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<Kit> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Zero attributes + zero tuples.`
-    (Tuple_Array:())
-
-    `Zero attributes + one tuple.`
-    (Tuple_Array:{()})
-
-    `Three named attributes + zero tuples.`
-    (Tuple_Array:(x,y,z))
-
-    `Three positional attributes + zero tuples.`
-    (Tuple_Array:(0c0,0c1,0c2))
-
-    `Two named attributes + three tuples (1 duplicate).`
-    (Tuple_Array:{
-        (name: Amy     , age: 14),
-        (name: Michelle, age: 17),
-        (name: Amy     , age: 14),
-    })
-
-    `Two positional attributes + two tuples.`
-    (Tuple_Array:{
-        (Michelle, 17),
-        (Amy     , 14),
-    })
-```
-
-## Relation / Tuple Set
-
-A **Relation** value is represented by `<Relation>`.
-
-Grammar:
-
-```
-    token Relation
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Relation <sp>? ':' <sp>? <Relation_subject>
-    }
-
-    token Relation_subject
-    {
-        <heading_attr_names> | <relation_nonempty>
-    }
-
-    token relation_nonempty
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<Kit> [<sp>? ':' <sp>? <Boolean_subject>]?]+ % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Zero attributes + zero tuples.`
-    (Relation:())
-
-    `Zero attributes + one tuple.`
-    (Relation:{()})
-
-    `Three named attributes + zero tuples.`
-    (Relation:(x,y,z))
-
-    `Three positional attributes + zero tuples.`
-    (Relation:(0c0,0c1,0c2))
-
-    `Two named attributes + two tuples.`
-    (Relation:{
-        (name: Michelle, age: 17),
-        (name: Amy     , age: 14),
-    })
-
-    `Two positional attributes + two tuples.`
-    (Relation:{
-        (Michelle, 17),
-        (Amy     , 14),
-    })
-
-    `Some people records.`
-    (Relation:{
-        (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-            phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
-        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
-            phone_numbers : (Set:{})),
-        (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-            phone_numbers : (Set:{"+81.9072391679"})),
-    })
-```
-
-## Tuple Bag
-
-A **Tuple Bag** value is represented by `<Tuple_Bag>`.
-
-Grammar:
-
-```
-    token Tuple_Bag
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Tuple_Bag <sp>? ':' <sp>? <Tuple_Bag_subject>
-    }
-
-    token Tuple_Bag_subject
-    {
-        <heading_attr_names> | <tuple_bag_nonempty>
-    }
-
-    token tuple_bag_nonempty
-    {
-        ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [[<Kit> [<sp>? ':' <sp>? <int_multiplicity>]?]+ % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
-    }
-```
-
-Examples:
-
-```
-    `Zero attributes + zero tuples.`
-    (Tuple_Bag:())
-
-    `Zero attributes + one tuple.`
-    (Tuple_Bag:{()})
-
-    `Three named attributes + zero tuples.`
-    (Tuple_Bag:(x,y,z))
-
-    `Three positional attributes + zero tuples.`
-    (Tuple_Bag:(0c0,0c1,0c2))
-
-    `Two named attributes + six tuples (4 duplicates).`
-    (Tuple_Bag:{
-        (name: Michelle, age: 17),
-        (name: Amy     , age: 14) : 5,
-    })
-
-    `Two positional attributes + two tuples.`
-    (Tuple_Bag:{
-        (Michelle, 17),
-        (Amy     , 14),
-    })
-```
-
-## Article / Labelled Tuple
-
-An **Article** value is represented by `<Article>`.
-
-Grammar:
-
-```
-    token Article
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Article <sp>? ':' <sp>? <Article_subject>
-    }
-
-    token Article_subject
-    {
-        <label_with_attrs> | <label_as_nesting>
-    }
-
-    token label_with_attrs
-    {
-        <Pair_subject>
-    }
-
-    token label_as_nesting
-    {
-        <Nesting_subject>
-    }
-```
-
-Within the direct context of an `<Article_subject>`, `<this>` and `<that>`
-have the aliases `<label>` and `<attrs>` respectively.
-
-That `<label>` is subject to the additional rule that the value expression
-it denotes must evaluate to a **Nesting**.
-
-Iff that `<attrs>` is not explicitly defined then it implicitly defines the
-sole nullary **Tuple** `(Tuple:())`.
-
-Iff that `<attrs>` is so explicitly defined then it is subject to the
-additional rule that the value expression it denotes must evaluate to a
-**Tuple**.
-
-Examples:
-
-```
-    (Article:(::Point : (x : 5, y : 3)))
-
-    (Article:(::Float : (
-        significand : 45207196,
-        radix       : 10,
-        exponent    : 37,
-    )))
-
-    (Article:(::the_db::UTCDateTime : (
-        year   : 2003,
-        month  : 10,
-        day    : 26,
-        hour   : 1,
-        minute : 30,
-        second : 0.0,
-    )))
-
-    (Article:::Positive_Infinity)
-
-    (Article:::Negative_Zero)
-```
-
-## Excuse
-
-An **Excuse** value is represented by `<Excuse>`.
-
-Grammar:
-
-```
-    token Excuse
-    {
-        ['(' <sp>?] ~ [<sp>? ')']
-            Excuse <sp>? ':' <sp>? <Excuse_subject>
-    }
-
-    token Excuse_subject
-    {
-        <Article_subject>
-    }
-```
-
-Examples:
-
-```
-    (Excuse:(::Input_Field_Wrong : (name : "Your Age")))
-
-    (Excuse:::Div_By_Zero)
-
-    (Excuse:::No_Such_Attr_Name)
-```
-
 # RESERVED UNUSED SYNTAX
 
 Muldis Object Notation reserves the use of certain syntaxes for various
@@ -2205,7 +1002,7 @@ grammars to define their own meanings.
 
 ## Possrep Heuristics
 
-The following table indicates the basic heuristics for how each fundamental
+The following table indicates the basic heuristics for how each primary
 possrep is recognized within a Muldis Object Notation artifact:
 
 ```
@@ -2213,17 +1010,15 @@ possrep is recognized within a Muldis Object Notation artifact:
     ----------------+---------------------------------------------
     Ignorance       | prefix 0s followed by IGNORANCE
     Boolean         | prefix 0b followed by FALSE or TRUE
-    Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0[L|c] prefix
-    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0L or 0xy prefix
+    Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0c prefix
+    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy prefix
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
+    Nesting         | prefix ::
     Duo             | (...:...) without any comma
     Lot             | only {} or {...}
     Kit             | only () or (...) with >= 1 comma
-    locationals     | prefix 0L
-    Interval        | only [] or [...]
-    Nesting         | prefix ::
 ```
 
 ## Features Reserved For Superset Grammars
@@ -2233,21 +1028,35 @@ namespaces* in order to leave as much useful syntax as possible for
 superset grammars, such as ones defining a more full featured programming
 language, a co-developed example being **Muldis Data Language**.
 
-MUON doesn't use any generic-context symbolic barewords, but if it did then
-it would group them into a single namespace
-defined by a leading `\` which frees up all other possible symbol sequences
-to be defined by the superset; as it isn't typical for any languages to use
-a `\` for their symbolic operator names, the languages can be natural.
+MUON doesn't use any generic-context alphanumeric barewords to mean
+anything besides simple literal values of enumerated or numeric or stringy
+types.  It has no alpha keywords or reserved words.
 
-While MUON also has some free `.+-*/^@|>`, those only appear adjacent to
+MUON *always* defines enumerated literals or numeric literals or
+non-character string literals to begin with a digit, in some cases with the
+sole exception of a `-` or `+` symbol.  It *always* defines character
+string literals to start with a simple letter or underscore, or that
+literal is double-quoted, with the sole exception of `0cN` literals.
+
+MUON doesn't use any generic-context symbolic barewords, but if it did then
+it would group them into a single namespace defined by a leading `\` which
+frees up all other possible symbol sequences to be defined by the superset;
+as it isn't typical for any languages to use a `\` for their symbolic
+operator names, the languages can be natural.
+
+While MUON also has some free `.+-*/^`, those only appear adjacent to
 numeric barewords and are considered part of those numeric literals, and so
 shouldn't interfere with a superset using those for regular operators.
 
-Likewise, any uses of `:` or `,` are only used by MUON within various kinds
-of bracketing pairs and a superset should be able to also use them.
+Likewise, any uses of `:` or `->` or `<-` or `,` are only used by MUON
+within various kinds of bracketing pairs and a superset should be able to
+also use them.
 
 MUON does not use the single-quote string delimiter character `'` for
 anything, and leaves it reserved for a superset to use as it sees fit.
+
+MUON does not use the square bracket collection delimiters `[` and `]` for
+anything, and leaves them reserved for a superset to use as it sees fit.
 
 MUON does not use the semicolon `;` for anything, so a superset grammar can
 use it for things like separating statements and thus disambiguating its
@@ -2259,6 +1068,9 @@ MUON declares that all alpha barewords are **Text** literals,
 meaning any bareword like `foo` is interpreted as if it were `"foo"`.
 This syntactic feature is intended to make the common cases of **Nesting**
 or attribute names or similar more pleasant to manually write or read.
+There are intentionally no special edge cases that could cause confusion or
+bugs; for example `FALSE` is a **Text**, not a **Boolean**; to get the
+latter you must prefix `0b` for a leading digit.
 
 MUON assumes that a superset grammar may wish to override that general
 interpretation such as to be reserved words or refer to infix or prefix etc
@@ -2278,17 +1090,14 @@ are more about shared traits with other languages.
 The following table enumerates and explains the syntactic character
 mnemonics that Muldis Object Notation itself has specific knowledge of and
 ascribes specific meanings to; where multiple characters are shown together
-that means they are used in pairs.
+that means they are used either in pairs or as contiguous sequences.
 
 ```
     Chars | Generic Meaning        | Specific Use Cases
     ------+------------------------+---------------------------------------
-    ""    | stringy data and names | * delimit quoted opaque regular literals
-          |                        | * delimit all quoted-Text literals
-          |                        | * delimit quoted code identifiers/names
-          |                        | * delimit quoted Calendar-Instant zone names
-    ------+------------------------+---------------------------------------
     ``    | stringy comments       | * delimit expendable dividing space comments
+    ------+------------------------+---------------------------------------
+    ""    | stringy data and names | * delimit all quoted-Text/identifier literals
     ------+------------------------+---------------------------------------
     \     | escaped characters     | * first char inside a quoted string
           |                        |   to indicate it has escaped characters
@@ -2296,92 +1105,49 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     ()    | attribute collections  | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs
-          |                        | * delimit Heading literals
-          |                        | * delimit Duo/Kit/Article/Excuse selectors
-          |                        | * delimit empty-Tuple-Array/Relation/Tuple-Bag lits
+          |                        | * delimit Duo/Kit selectors
           | generic grouping       | * optional delimiters around Any to force a parsing precedence
     ------+------------------------+---------------------------------------
     {}    | discrete collections   | * delimit homogeneous discrete collections
           |                        |   of members, concept asset+cardinal pairs
-          |                        | * delimit Lot/Array/Set/Bag/Mix selectors
-          |                        | * delimit nonempty-Tuple-Array/Relation/Tuple-Bag sels
-    ------+------------------------+---------------------------------------
-    []    | interval collections   | * delimit homogeneous continuous collections
-          |                        |   of members, concept interval low+high endpoint pairs
-          |                        | * delimit Interval selectors
+          |                        | * delimit Lot selectors
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
     ->    |                        | * separates the 2 parts of a pair
     <-    |                        | * this/that separator in Duo sels
+          |                        | * optional attr name/asset separator in Kit sels
           |                        | * disambiguate Duo sels from generic_group
-          |                        | * optional attr name/asset separator in Kit/Article/Excuse sels
-          |                        | * label/attributes separator in Article/Excuse sels
-          |                        | * optional pair separator in Lot/Array/Set/Bag/Mix sels
-          |                        | * optional pair separator in nonempty-TA/Rel/TB sels
-          |                        | * before/after separator in Renaming sels
-          |                        | * disambiguate Bag/Mix sels from Set sel
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
-          |                        | * separate attributes in Kit/Article/Excuse sels
+          |                        | * separate attributes in Kit sels
           |                        | * disambiguate unary named Kit sels from Duo sels and generic_group
-          |                        | * separate members in Lot/Array/Set/Bag/Mix sels
-          |                        | * separate members in nonempty-TA/Rel/TB sels
-          |                        | * separate attributes in Heading lits
+          |                        | * separate members in Lot sels
     ------+------------------------+---------------------------------------
     ::    | nestings               | * prefix each element of a Nesting literal
           |                        | * disambiguate Nesting from Text
     ------+------------------------+---------------------------------------
-    ~     | sequences/stitching    | * indicates a sequencing context
-          |                        | * not currently used by this grammar
+    +     | addition               | * optional indicates positive-Integer/Fraction literal
     ------+------------------------+---------------------------------------
-    ?     | qualifications/is?/so  | * indicates a qualifying/yes-or-no context
-          |                        | * not currently used by this grammar
+    -     | subtraction            | * indicates negative-Integer/Fraction literal
     ------+------------------------+---------------------------------------
-    +     | quantifications/count  | * indicates an integral quantifying/count context
-          |                        | * indicates elevation in Geographic-Point literals
-          | addition               | * optional indicates positive-Integer/Fraction literal
+    .     | radix point            | * disambiguate Fraction lit from Integer lit
     ------+------------------------+---------------------------------------
     /     | fractions/measures     | * indicates a fractional quantifying/count context
           | division               | * disambiguate Fraction lit from Integer lit
           |                        | * numerator/denominator separator in Fraction literals
     ------+------------------------+---------------------------------------
-    @     | at/locators/when/where | * indicates temporals/spatials are featured
-          |                        | * prefix/main separator for Calendar-*, Geographic-* literals
-          |                        | * base/offset/zone separator in Calendar-Instant lits
-    ------+------------------------+---------------------------------------
-    |     | simple collections     | * separate elements in Calendar-*, Geographic-* lits
-    ------+------------------------+---------------------------------------
-    %     | tuples/heterogeneous   | * indicates that tuples are featured
-          |                        | * not currently used by this grammar
-    ------+------------------------+---------------------------------------
-    <=    | intervals/ranges       | * indicates an interval context
-    <     |                        | * pair separator or partial in Interval/Ivl-Set/Ivl-Bag selectors
-    ..    |                        |
-    ------+------------------------+---------------------------------------
-    *     | generics/whatever      | * indicates a generic type context
-          |                        | * indicates unbounded endpoint in Interval selectors
-          |                        | * pair separator partial in Interval/Ivl-Set/Ivl-Bag selectors
-          | multiplication         | * significand/radix separator in Fraction literals
-    ------+------------------------+---------------------------------------
-    !     | excuses/but/not        | * indicates that excuses are featured
-          |                        | * not currently used by this grammar
-    ------+------------------------+---------------------------------------
-    $     | identifiers/names      | * indicates identifiers/names are featured
-          |                        | * a triple of this indicates an entity marker
-    ------+------------------------+---------------------------------------
-    -     | subtraction            | * indicates negative-Integer/Fraction literal
-          |                        | * indicates open endpoint in Interval selectors
-    ------+------------------------+---------------------------------------
-    .     | radix point            | * disambiguate Fraction lit from Integer lit
+    *     | multiplication         | * significand/radix separator in Fraction literals
     ------+------------------------+---------------------------------------
     ^     | exponentiation         | * radix/exponent separator in Fraction literals
-          | up-pointing-arrow      | * indicates latitude in Geographic-Point literals
     ------+------------------------+---------------------------------------
-    >     | right-pointing-arrow   | * indicates longitude in Geographic-Point literals
+    $     | identifiers/names      | * a triple of this indicates an entity marker
     ------+------------------------+---------------------------------------
-    digit | number                 | * first char 0..9 in bareword indicates is number/code-point/Bits/Blob/locational
+    digit | number/enumeration     | * first char 0..9 in bareword indicates is number/code-point/Bits/Blob/enumeration
     ------+------------------------+---------------------------------------
-    alpha | identifier             | * first char a..z/etc in bareword indicates is identifier
+    alpha | identifier             | * first char a..z/etc in bareword indicates is Text/identifier
+    ------+------------------------+---------------------------------------
+    0s    | singletons             | * indicates a grammar-well-known singleton
+          |                        | * prefix for Ignorance literal
     ------+------------------------+---------------------------------------
     0b    | boolean                | * prefix for Boolean literal
           | base-2                 | * indicates base-2/binary notation
@@ -2400,14 +1166,6 @@ that means they are used in pairs.
     ------+------------------------+---------------------------------------
     0c    | character code point   | * indicates a Unicode character code point
           |                        | * prefix for code-point-Text lit; 0cb/0co/0cd/0cx means in base-2/8/10/16
-    ------+------------------------+---------------------------------------
-    0L    | locator                | * indicates a temporal or spatial value
-          |                        | * prefix for Calendar-*, Geographic-* literals; 0Lct/0Lcd/0Lci/0Lgp
-    ------+------------------------+---------------------------------------
-    0s    | singletons             | * indicates a grammar-well-known singleton
-          |                        | * prefix for Ignorance literal
-          |                        | * prefix for empty Lot literal
-          |                        | * not otherwise currently used by this grammar
     ------+------------------------+---------------------------------------
 ```
 
@@ -2439,8 +1197,11 @@ the whole MUON grammar, and a valid MUON artifact will only have zero or an
 exact positive multiple of 2 of grave accent characters.  A MUON parser
 would logically isolate all `<quoted_sp_comment_str>` as their own tokens
 first, and then the entire remainder of the grammar would apply as if each
-of those tokens was replaced by a single space character in the original
-artifact.
+of those tokens was simply not present in the original artifact and any
+characters immediately before/after it were instead adjacent.
+(A superset grammar might wish to instead treat the remainder of the
+grammar as if the before/after were instead separated by a single space
+character, if that is necessary to properly parse the superset.)
 
 A `<quoted_text>`, that is, a pair of quotation marks `"` with a run of any
 other (except grave accent) characters between them, has the second highest
@@ -2458,34 +1219,16 @@ bareword or numeric-format literal; when any of these sequences overlap,
 longest token always wins:
 
 ```
+    ::
     (
     )
     {
     }
-    [
-    ]
     :
     ->
     <-
     ,
-    ::
-    <=*<=
-    <=*<
-    <*<=
-    <*<
-    <=*
-    <*
-    *<=
-    *<
-    *
-    ..
 ```
-
-As a special case, where a `+` symbol would otherwise parse as part of a
-numeric-format literal, it will instead parse as its own token when it is
-leading a list item inside a `<Geographic_Point>`; that is, any place where
-a `+` could possibly be interpreted as an *elevation*, that
-interpretation will take precedence over all other interpretations.
 
 ## Barewords and Numeric-Format Literals
 
