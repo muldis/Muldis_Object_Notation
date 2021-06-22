@@ -298,6 +298,12 @@ type system will hide from the user the actual physical representation of
 whatever value a given **Fraction** artifact resolves to, and would
 determine value identity based on the actual logical rational number.
 
+Where any MUON syntax makes reference to a `s|sig|significand` as a part of
+a **Fraction** artifact, that means a rational number that takes the place
+of the numerator/denominator pair.  Examples of *significand* are literals
+with radix points like `3.14` and host language values that are already the
+general case of a rational.
+
 ## Bits
 
 A **Bits** value is characterized by an arbitrarily-large ordered sequence of
