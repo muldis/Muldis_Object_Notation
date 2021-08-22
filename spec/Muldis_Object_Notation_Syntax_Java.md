@@ -299,6 +299,14 @@ Note that example composers of `java.util.Map` are:
 `java.util.TreeMap`,
 `java.util.LinkedHashMap`.
 
+## Article / Labelled Tuple
+
+*TODO.*
+
+## Excuse
+
+*TODO.*
+
 # ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
 
 ## Calendar Duration

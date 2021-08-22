@@ -1002,6 +1002,14 @@ Examples:
     )
 ```
 
+## Article / Labelled Tuple
+
+*TODO.*
+
+## Excuse
+
+*TODO.*
+
 # RESERVED UNUSED SYNTAX
 
 Muldis Object Notation reserves the use of certain syntaxes for various

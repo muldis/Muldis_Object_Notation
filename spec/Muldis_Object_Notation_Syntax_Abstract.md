@@ -485,6 +485,62 @@ Examples:
     )
 ```
 
+## Article / Labelled Tuple
+
+An **Article** artifact has the predicate `Article`.
+
+Its subject is any of the following:
+
+* Any **Duo** artifact such that its *this* and *that* correspond to the
+*label* and *attributes* of the new **Article** respectively,
+and are any **Nesty** artifact and any **Tupley** artifact respectively.
+
+* Any **Nesty** artifact, which specifies the *label* of the new
+**Article** and the latter has zero *attributes*.
+
+Examples:
+
+```
+    (Article:(Point : (x : 5, y : 3)))
+
+    (Article:(Float : (
+        significand : 45207196,
+        radix       : 10,
+        exponent    : 37,
+    )))
+
+    (Article:(the_db::UTC_Date_Time : (
+        year   : 2003,
+        month  : 10,
+        day    : 26,
+        hour   : 1,
+        minute : 30,
+        second : 0.0,
+    )))
+
+    (Article:Positive_Infinity)
+
+    (Article:Negative_Zero)
+```
+
+## Excuse
+
+An **Excuse** artifact has the predicate `Excuse`.
+
+Its subject is any of the following:
+
+* Any **Article** subject.
+
+Examples:
+
+```
+    (Excuse:(Input_Field_Wrong : (name : "Your Age")))
+
+    (Excuse:Div_By_Zero)
+
+    (Excuse:No_Such_Attr_Name)
+```
+
 # COMMON QUALITIES OF ABSTRACT SECONDARY DATA TYPE POSSREPS
 
 Every abstract MUON *secondary possrep* has one or more general *qualified*
@@ -1333,62 +1389,6 @@ Examples:
         (Michelle, 17),
         (Amy     , 14),
     })
-```
-
-## Article / Labelled Tuple
-
-An **Article** artifact has the predicate `Article`.
-
-Its subject is any of the following:
-
-* Any **Duo** artifact such that its *this* and *that* correspond to the
-*label* and *attributes* of the new **Article** respectively,
-and are any **Nesty** artifact and any **Tupley** artifact respectively.
-
-* Any **Nesty** artifact, which specifies the *label* of the new
-**Article** and the latter has zero *attributes*.
-
-Examples:
-
-```
-    (Article:(Point : (x : 5, y : 3)))
-
-    (Article:(Float : (
-        significand : 45207196,
-        radix       : 10,
-        exponent    : 37,
-    )))
-
-    (Article:(the_db::UTC_Date_Time : (
-        year   : 2003,
-        month  : 10,
-        day    : 26,
-        hour   : 1,
-        minute : 30,
-        second : 0.0,
-    )))
-
-    (Article:Positive_Infinity)
-
-    (Article:Negative_Zero)
-```
-
-## Excuse
-
-An **Excuse** artifact has the predicate `Excuse`.
-
-Its subject is any of the following:
-
-* Any **Article** subject.
-
-Examples:
-
-```
-    (Excuse:(Input_Field_Wrong : (name : "Your Age")))
-
-    (Excuse:Div_By_Zero)
-
-    (Excuse:No_Such_Attr_Name)
 ```
 
 # SOURCE CODE DEFINING SECONDARY DATA TYPE POSSREPS

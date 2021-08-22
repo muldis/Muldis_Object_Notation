@@ -304,6 +304,45 @@ Muldis_Content_Predicate`
 
 `#########################################################################`
 
+    `$$$` Article : (
+
+        (Article:(Point : (x : 5, y : 3))),
+
+        (Article:(Float : (
+            significand : 45207196,
+            radix       : 10,
+            exponent    : 37,
+        ))),
+
+        (Article:(the_db::UTC_Date_Time : (
+            year   : 2003,
+            month  : 10,
+            day    : 26,
+            hour   : 1,
+            minute : 30,
+            second : 0.0,
+        ))),
+
+        (Article:Positive_Infinity),
+
+        (Article:Negative_Zero),
+
+    ),
+
+`#########################################################################`
+
+    `$$$` Excuse : (
+
+        (Excuse:(Input_Field_Wrong : (name : "Your Age"))),
+
+        (Excuse:Div_By_Zero),
+
+        (Excuse:No_Such_Attr_Name),
+
+    ),
+
+`#########################################################################`
+
     `$$$` Calendar_Time : (
 
         `No measurement was taken or specified at all.`
@@ -913,45 +952,6 @@ Muldis_Content_Predicate`
             (Michelle, 17),
             (Amy     , 14),
         }),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Article : (
-
-        (Article:(Point : (x : 5, y : 3))),
-
-        (Article:(Float : (
-            significand : 45207196,
-            radix       : 10,
-            exponent    : 37,
-        ))),
-
-        (Article:(the_db::UTC_Date_Time : (
-            year   : 2003,
-            month  : 10,
-            day    : 26,
-            hour   : 1,
-            minute : 30,
-            second : 0.0,
-        ))),
-
-        (Article:Positive_Infinity),
-
-        (Article:Negative_Zero),
-
-    ),
-
-`#########################################################################`
-
-    `$$$` Excuse : (
-
-        (Excuse:(Input_Field_Wrong : (name : "Your Age"))),
-
-        (Excuse:Div_By_Zero),
-
-        (Excuse:No_Such_Attr_Name),
 
     ),
 

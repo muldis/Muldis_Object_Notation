@@ -306,6 +306,14 @@ Not permitted for a **Kit** is any of the following, to keep things simpler:
 
 * Any object of the .NET class `System.Data.DataRow`.
 
+## Article / Labelled Tuple
+
+*TODO.*
+
+## Excuse
+
+*TODO.*
+
 # ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
 
 ## Calendar Duration
