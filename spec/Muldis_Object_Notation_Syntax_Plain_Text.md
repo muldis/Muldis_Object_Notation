@@ -771,7 +771,18 @@ Grammar:
 ```
     token Nesting
     {
-        ['::' <sp>? <Text>]+ % <sp>?
+        <nesting_unary> | <nesting_nary>
+    }
+
+    token nesting_unary
+    {
+        ['::' <sp>? <Text>]
+    }
+
+    token nesting_nary
+    {
+        ['::' <sp>?]?
+        [<Text> ** 2..* % [<sp>? '::' <sp>?]]
     }
 ```
 
@@ -780,11 +791,11 @@ Examples:
 ```
     ::person
 
-    ::person::birth_date
+    person::birth_date
 
-    ::person::birth_date::year
+    person::birth_date::year
 
-    ::the_db::stats::"samples by order"
+    the_db::stats::"samples by order"
 ```
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
@@ -984,10 +995,10 @@ Examples:
     `Five leaf attributes in nested multi-level namespace.`
     (
         name: "John Glenn",
-        ::birth_date::year: 1921,
+        birth_date::year: 1921,
         comment: "Fly!",
-        ::birth_date::month: 7,
-        ::birth_date::day: 18,
+        birth_date::month: 7,
+        birth_date::day: 18,
     )
 ```
 
@@ -1015,7 +1026,7 @@ possrep is recognized within a Muldis Object Notation artifact:
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
-    Nesting         | prefix ::
+    Nesting         | leading ::, or :: between 2 of, what otherwise is Text
     Duo             | (...:...) without any comma
     Lot             | only {} or {...}
     Kit             | only () or (...) with >= 1 comma
@@ -1123,7 +1134,7 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * disambiguate unary named Kit sels from Duo sels and generic_group
           |                        | * separate members in Lot sels
     ------+------------------------+---------------------------------------
-    ::    | nestings               | * prefix each element of a Nesting literal
+    ::    | nestings               | * prefix or separate elements of a Nesting literal
           |                        | * disambiguate Nesting from Text
     ------+------------------------+---------------------------------------
     +     | addition               | * optional indicates positive-Integer/Fraction literal

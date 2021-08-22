@@ -359,11 +359,11 @@ Examples:
 ```
     ::person
 
-    ::person::birth_date
+    person::birth_date
 
-    ::person::birth_date::year
+    person::birth_date::year
 
-    ::the_db::stats::"samples by order"
+    the_db::stats::"samples by order"
 ```
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
@@ -478,10 +478,10 @@ Examples:
     `Five leaf attributes in nested multi-level namespace.`
     (
         name: "John Glenn",
-        ::birth_date::year: 1921,
+        birth_date::year: 1921,
         comment: "Fly!",
-        ::birth_date::month: 7,
-        ::birth_date::day: 18,
+        birth_date::month: 7,
+        birth_date::day: 18,
     )
 ```
 
@@ -1149,10 +1149,10 @@ Examples:
     `Five leaf attributes in nested multi-level namespace.`
     (Tuple:(
         name: "John Glenn",
-        ::birth_date::year: 1921,
+        birth_date::year: 1921,
         comment: "Fly!",
-        ::birth_date::month: 7,
-        ::birth_date::day: 18,
+        birth_date::month: 7,
+        birth_date::day: 18,
     ))
 
     `Same thing.`
@@ -1359,7 +1359,7 @@ Examples:
         exponent    : 37,
     )))
 
-    (Article:(::the_db::UTC_Date_Time : (
+    (Article:(the_db::UTC_Date_Time : (
         year   : 2003,
         month  : 10,
         day    : 26,

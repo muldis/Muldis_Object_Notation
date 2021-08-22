@@ -230,7 +230,18 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Nesting
     {
-        ['::' <sp>? <Text>]+ % <sp>?
+        <nesting_unary> | <nesting_nary>
+    }
+
+    token nesting_unary
+    {
+        ['::' <sp>? <Text>]
+    }
+
+    token nesting_nary
+    {
+        ['::' <sp>?]?
+        [<Text> ** 2..* % [<sp>? '::' <sp>?]]
     }
 
 ###########################################################################
