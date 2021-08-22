@@ -72,6 +72,8 @@ grammar Muldis::Reference::Object_Notation::Grammar
           <Duo>
         | <Lot>
         | <Kit>
+        | <Article>
+        | <Excuse>
     }
 
 ###########################################################################
@@ -321,6 +323,30 @@ grammar Muldis::Reference::Object_Notation::Grammar
     token ml_attr_asset
     {
         <Any>
+    }
+
+###########################################################################
+
+    token Article
+    {
+        <label> <sp>? '::' <sp>? <attrs>
+    }
+
+    token label
+    {
+        <Nesting> | <Text>
+    }
+
+    token attrs
+    {
+        <Kit>
+    }
+
+###########################################################################
+
+    token Excuse
+    {
+        <label> <sp>? '!!' <sp>? <attrs>
     }
 
 ###########################################################################

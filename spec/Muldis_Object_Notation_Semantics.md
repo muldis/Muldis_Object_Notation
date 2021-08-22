@@ -370,7 +370,8 @@ these cases counts as an error or as a value of some other primary possrep.
 
 A *Primary_Possrep_Name* is any of these **Text** values:
 `Ignorance`, `Boolean`, `Integer`, `Fraction`,
-`Bits`, `Blob`, `Text`, `Nesting`, `Duo`, `Lot`, `Kit`.
+`Bits`, `Blob`, `Text`, `Nesting`,
+`Duo`, `Lot`, `Kit`, `Article`, `Excuse`.
 
 ## Lot
 
@@ -450,7 +451,7 @@ levels of entities declared in the same source file.
 
 An **Article** value is characterized by the pairing of a *label*, which is
 a **Nesting** value, with a set of 0..N *attributes*, where that set is a
-**Tuple** value.
+**Kit** value whose attributes are each only a single level.
 
 The **Article** possrep is the idiomatic way for an external data model to
 represent "new" types of a nominal type system in a consistent way.  The
@@ -467,7 +468,7 @@ represented using an **Article** but rather with the structurally identical
 
 The idiomatic way to represent a singleton type value is as an **Article**
 where the *label* is the singleton type name and the *attributes* is the
-**Tuple** with zero attributes.
+**Kit** with zero attributes.
 
 The idiomatic default attribute name for a single-attribute **Article** is
 `0` (the first conceptually ordered attribute name) when there isn't an

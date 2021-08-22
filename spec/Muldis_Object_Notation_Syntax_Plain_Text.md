@@ -257,11 +257,11 @@ Examples:
 
 ```
     (
-        `$$$` My_Func : (Article:(Function : ...)),
+        `$$$` My_Func : Function::(...),
 
-        `$$$` My_Proc_1 : (Article:(Procedure : ...)),
+        `$$$` My_Proc_1 : Procedure::(...),
 
-        `$$$` My_Proc_2 : (Article:(Procedure : ...)),
+        `$$$` My_Proc_2 : Procedure::(...),
     )
 ```
 
@@ -302,6 +302,8 @@ Grammar:
           <Duo>
         | <Lot>
         | <Kit>
+        | <Article>
+        | <Excuse>
     }
 ```
 
@@ -1004,11 +1006,76 @@ Examples:
 
 ## Article / Labelled Tuple
 
-*TODO.*
+A **Article** artifact has the dedicated concrete literal format
+described by `<Article>`.
+
+Grammar:
+
+```
+    token Article
+    {
+        <label> <sp>? '::' <sp>? <attrs>
+    }
+
+    token label
+    {
+        <Nesting> | <Text>
+    }
+
+    token attrs
+    {
+        <Kit>
+    }
+```
+
+Examples:
+
+```
+    Point::(x : 5, y : 3)
+
+    Float::(
+        significand : 45207196,
+        radix       : 10,
+        exponent    : 37,
+    )
+
+    the_db::UTC_Date_Time::(
+        year   : 2003,
+        month  : 10,
+        day    : 26,
+        hour   : 1,
+        minute : 30,
+        second : 0.0,
+    )
+
+    Positive_Infinity::()
+
+    Negative_Zero::()
+```
 
 ## Excuse
 
-*TODO.*
+A **Excuse** artifact has the dedicated concrete literal format
+described by `<Excuse>`.
+
+Grammar:
+
+```
+    token Excuse
+    {
+        <label> <sp>? '!!' <sp>? <attrs>
+    }
+```
+
+Examples:
+
+```
+    Input_Field_Wrong!!(name : "Your Age")
+
+    Div_By_Zero!!()
+
+    No_Such_Attr_Name!!()
+```
 
 # RESERVED UNUSED SYNTAX
 
@@ -1035,9 +1102,11 @@ possrep is recognized within a Muldis Object Notation artifact:
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
     Nesting         | leading ::, or :: between 2 of, what otherwise is Text
-    Duo             | (...:...) without any comma
+    Duo             | (...:...) or (...->...) or (...<-...) without any comma
     Lot             | only {} or {...}
     Kit             | only () or (...) with >= 1 comma
+    Article         | :: between a Nesting|Text and a Kit in that order
+    Excuse          | !! between a Nesting|Text and a Kit in that order
 ```
 
 ## Features Reserved For Superset Grammars
@@ -1144,6 +1213,9 @@ that means they are used either in pairs or as contiguous sequences.
     ------+------------------------+---------------------------------------
     ::    | nestings               | * prefix or separate elements of a Nesting literal
           |                        | * disambiguate Nesting from Text
+          | articles               | * separates the 2 parts of an Article selector
+    ------+------------------------+---------------------------------------
+    !!    | excuses                | * separates the 2 parts of an Excuse selector
     ------+------------------------+---------------------------------------
     +     | addition               | * optional indicates positive-Integer/Fraction literal
     ------+------------------------+---------------------------------------
@@ -1238,7 +1310,6 @@ bareword or numeric-format literal; when any of these sequences overlap,
 longest token always wins:
 
 ```
-    ::
     (
     )
     {
@@ -1247,6 +1318,8 @@ longest token always wins:
     ->
     <-
     ,
+    ::
+    !!
 ```
 
 ## Barewords and Numeric-Format Literals

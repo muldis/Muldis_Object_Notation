@@ -301,11 +301,23 @@ Note that example composers of `java.util.Map` are:
 
 ## Article / Labelled Tuple
 
-*TODO.*
+An **Article** artifact is any of the following:
+
+* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Article`
+and its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *label*
+(any **Nesty** artifact) and its *SYS_that* is *attributes* (any **Kit**
+artifact such that every one of its *multi-level attribute names* has
+exactly 1 element).
 
 ## Excuse
 
-*TODO.*
+An **Excuse** artifact is any of the following:
+
+* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Excuse`
+and its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *label*
+(any **Nesty** artifact) and its *SYS_that* is *attributes* (any **Kit**
+artifact such that every one of its *multi-level attribute names* has
+exactly 1 element).
 
 # ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
 
