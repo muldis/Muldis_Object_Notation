@@ -374,10 +374,10 @@ Grammar:
 
     token Integer_nonsigned
     {
-          [ 0b <sp>?   [<[ 0..1      ]>+]+ % [_ | <sp>]]
-        | [ 0o <sp>?   [<[ 0..7      ]>+]+ % [_ | <sp>]]
-        | [[0d <sp>?]? [<[ 0..9      ]>+]+ % [_ | <sp>]]
-        | [ 0x <sp>?   [<[ 0..9 A..F ]>+]+ % [_ | <sp>]]
+          [ 0b <sp>?   [0 | [   1            [[_ | <sp>]? <[ 0..1      ]>+]*]]]
+        | [ 0o <sp>?   [0 | [<[ 1..7      ]> [[_ | <sp>]? <[ 0..7      ]>+]*]]]
+        | [[0d <sp>?]? [0 | [<[ 1..9      ]> [[_ | <sp>]? <[ 0..9      ]>+]*]]]
+        | [ 0x <sp>?   [0 | [<[ 1..9 A..F ]> [[_ | <sp>]? <[ 0..9 A..F ]>+]*]]]
     }
 ```
 
@@ -385,6 +385,12 @@ This grammar supports writing **Integer** literals in any of the numeric
 bases `{2,8,10,16}`, using conventional syntax.  The literal may
 optionally contain underscore characters (`_`), which exist just to help
 with visual formatting, such as for `10_000_000`.
+
+This grammar explicitly forbids leading zeros in the main body of non-zero
+**Integer** literals as a precaution against subtle security flaws or
+other bugs resulting from users copying literals with leading zeros between
+MUON and some other language/format that differ in whether or not they
+consider a leading zero to signify octal/base-8 notation.
 
 Examples:
 
@@ -444,10 +450,30 @@ Grammar:
 
     token nonsigned_radix_point_sig
     {
-          [ 0b <sp>?   [[<[ 0..1      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [ 0o <sp>?   [[<[ 0..7      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [[0d <sp>?]? [[<[ 0..9      ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
-        | [ 0x <sp>?   [[<[ 0..9 A..F ]>+]+ % [_ | <sp>]] ** 2 % [<sp>? '.' <sp>?]]
+          [
+            0b <sp>?
+            [0 | [1 [[_ | <sp>]? <[ 0..1 ]>+]*]]
+            [_ | <sp>]? '.'
+            [[_ | <sp>]? <[ 0..1 ]>+]+
+          ]
+        | [
+            0o <sp>?
+            [0 | [<[ 1..7 ]> [[_ | <sp>]? <[ 0..7 ]>+]*]]
+            [_ | <sp>]? '.'
+            [[_ | <sp>]? <[ 0..7 ]>+]+
+          ]
+        | [
+            [0d <sp>?]?
+            [0 | [<[ 1..9 ]> [[_ | <sp>]? <[ 0..9 ]>+]*]]
+            [_ | <sp>]? '.'
+            [[_ | <sp>]? <[ 0..9 ]>+]+
+          ]
+        | [
+            0x <sp>?
+            [0 | [<[ 1..9 A..F ]> [[_ | <sp>]? <[ 0..9 A..F ]>+]*]]
+            [_ | <sp>]? '.'
+            [[_ | <sp>]? <[ 0..9 A..F ]>+]+
+          ]
     }
 
     token num_den_sig
@@ -480,6 +506,12 @@ This grammar supports writing **Fraction** literals in any of the numeric
 bases `{2,8,10,16}`, using conventional syntax.  The literal may
 optionally contain underscore characters (`_`), which exist just to help
 with visual formatting, such as for `20_194/17` or `3.141_59`.
+
+This grammar explicitly forbids leading zeros in the main body of non-zero
+**Fraction** literals as a precaution against subtle security flaws or
+other bugs resulting from users copying literals with leading zeros between
+MUON and some other language/format that differ in whether or not they
+consider a leading zero to signify octal/base-8 notation.
 
 The general form of a **Fraction** literal is `n/d*r^e` such that
 `{n,d,r,e}` are each integers and the literal represents the rational
