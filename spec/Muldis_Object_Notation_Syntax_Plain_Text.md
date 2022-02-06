@@ -682,22 +682,7 @@ Grammar:
 
     token quoted_text_segment
     {
-        '"' ~ '"' <text_content>
-    }
-
-    token text_content
-    {
-        <text_nonescaped_content> | <text_escaped_content>
-    }
-
-    token text_nonescaped_content
-    {
-        [[<restricted_inside_char> & <-[\\]>] <restricted_inside_char>*]?
-    }
-
-    token text_escaped_content
-    {
-        '\\' [[<restricted_inside_char> & <-[\\]>] | <escaped_char>]*
+        '"' ~ '"' [<restricted_inside_char> | <escaped_char>]*
     }
 
     token restricted_inside_char
@@ -773,9 +758,9 @@ Examples:
 
     "サンプル"
 
-    "\This isn't not escaped.\n"
+    "This isn't not escaped.\n"
 
-    "\\<0tx263A>\<0t65>"
+    "\<0tx263A>\<0t65>"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
@@ -790,12 +775,12 @@ Examples:
     0t0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\\<0t0>"
+    "\<0t0>"
 
     `From a graduate student (in finals week), the following haiku:`
-    "\study, write, study,\n"
-        "\do review (each word) if time.\n"
-        "\close book. sleep? what's that?\n"
+    "study, write, study,\n"
+        "do review (each word) if time.\n"
+        "close book. sleep? what's that?\n"
 ```
 
 ## Nesting / Attribute Name List
@@ -1001,7 +986,7 @@ Examples:
     (0t0: 53,)
 
     `Same thing.`
-    ("\\<0t0>": 53,)
+    ("\<0t0>": 53,)
 
     `Same thing.`
     (::0t0: 53,)
@@ -1222,9 +1207,7 @@ that means they are used either in pairs or as contiguous sequences.
     ------+------------------------+---------------------------------------
     ""    | stringy data and names | * delimit all quoted-Text/identifier literals
     ------+------------------------+---------------------------------------
-    \     | escaped characters     | * first char inside a quoted string
-          |                        |   to indicate it has escaped characters
-          |                        | * prefix for each escaped char in quoted string
+    \     | escaped characters     | * prefix for each escaped char in quoted string
     ------+------------------------+---------------------------------------
     ()    | attribute collections  | * delimit heterogeneous aordered collections
           |                        |   of attributes, concept nominal+asset pairs

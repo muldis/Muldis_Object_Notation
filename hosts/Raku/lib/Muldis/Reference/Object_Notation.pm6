@@ -207,22 +207,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token quoted_text_segment
     {
-        '"' ~ '"' <text_content>
-    }
-
-    token text_content
-    {
-        <text_nonescaped_content> | <text_escaped_content>
-    }
-
-    token text_nonescaped_content
-    {
-        [[<restricted_inside_char> & <-[\\]>] <restricted_inside_char>*]?
-    }
-
-    token text_escaped_content
-    {
-        '\\' [[<restricted_inside_char> & <-[\\]>] | <escaped_char>]*
+        '"' ~ '"' [<restricted_inside_char> | <escaped_char>]*
     }
 
     token restricted_inside_char
