@@ -257,7 +257,7 @@ Darren Duncan - darren@DarrenDuncan.net
 This file is part of the formal specification named
 **Muldis Object Notation** (**MUON**).
 
-MUON is Copyright © 2002-2021, Muldis Data Systems, Inc.
+MUON is Copyright © 2002-2022, Muldis Data Systems, Inc.
 
 <https://muldis.com>
 
