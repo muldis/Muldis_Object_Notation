@@ -717,15 +717,18 @@ Grammar:
 
     token code_point_text
     {
-          [0tb  <[ 0..1      ]>+]
-        | [0to  <[ 0..7      ]>+]
-        | [0td? <[ 0..9      ]>+]
-        | [0tx  <[ 0..9 A..F ]>+]
+          [0tb  [0 | [   1            <[ 0..1      ]>+]]]
+        | [0to  [0 | [<[ 1..7      ]> <[ 0..7      ]>+]]]
+        | [0td? [0 | [<[ 1..9      ]> <[ 0..9      ]>+]]]
+        | [0tx  [0 | [<[ 1..9 A..F ]> <[ 0..9 A..F ]>+]]]
     }
 ```
 
 The meaning of `<nonquoted_alphanumeric_text>` is exactly the same as if
 the same characters were surrounded by quotation marks.
+
+This grammar explicitly forbids leading zeros in the main body of non-zero
+`<code_point_text>` for consistency with **Integer** literals.
 
 A `<code_point_text>` is subject to the additional rule that the
 non-negative integer it denotes must be in the set
