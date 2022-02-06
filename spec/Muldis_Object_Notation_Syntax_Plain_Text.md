@@ -717,10 +717,10 @@ Grammar:
 
     token code_point_text
     {
-          [0cb  <[ 0..1      ]>+]
-        | [0co  <[ 0..7      ]>+]
-        | [0cd? <[ 0..9      ]>+]
-        | [0cx  <[ 0..9 A..F ]>+]
+          [0tb  <[ 0..1      ]>+]
+        | [0to  <[ 0..7      ]>+]
+        | [0td? <[ 0..9      ]>+]
+        | [0tx  <[ 0..9 A..F ]>+]
     }
 ```
 
@@ -772,7 +772,7 @@ Examples:
 
     "\This isn't not escaped.\n"
 
-    "\\<0cx263A>\<0c65>"
+    "\\<0tx263A>\<0t65>"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
@@ -784,10 +784,10 @@ Examples:
     "First Name"
 
     `One ordered nonquoted Text (or, one ordered attribute).`
-    0c0
+    0t0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\\<0c0>"
+    "\\<0t0>"
 
     `From a graduate student (in finals week), the following haiku:`
     "\study, write, study,\n"
@@ -973,7 +973,7 @@ Grammar:
 
 The meaning of a `<kit_ml_attr>` consisting of only an `<ml_attr_asset>` is
 exactly the same as if the former also had an `<ml_attr_name>` of the form
-`0cN` such that `N` is the zero-based ordinal position of the
+`0tN` such that `N` is the zero-based ordinal position of the
 `<kit_ml_attr>` in the `<kit_ml_attrs>` among all sibling such
 `<kit_ml_attr>`.  These *attribute name* are determined without regard to
 any explicit *attribute name* that a `<kit_ml_attrs>` may contain, and it is
@@ -995,13 +995,13 @@ Examples:
     (53,)
 
     `Same thing.`
-    (0c0: 53,)
+    (0t0: 53,)
 
     `Same thing.`
-    ("\\<0c0>": 53,)
+    ("\\<0t0>": 53,)
 
     `Same thing.`
-    (::0c0: 53,)
+    (::0t0: 53,)
 
     `Three named attributes.`
     (
@@ -1128,11 +1128,11 @@ possrep is recognized within a Muldis Object Notation artifact:
     ----------------+---------------------------------------------
     Ignorance       | prefix 0s followed by IGNORANCE
     Boolean         | prefix 0b followed by FALSE or TRUE
-    Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0c prefix
+    Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0t prefix
     Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy prefix
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
-    Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0c
+    Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0t
     Nesting         | leading ::, or :: between 2 of, what otherwise is Text
     Duo             | (...:...) or (...->...) or (...<-...) without any comma
     Lot             | only {} or {...}
@@ -1156,7 +1156,7 @@ MUON *always* defines enumerated literals or numeric literals or
 non-character string literals to begin with a digit, in some cases with the
 sole exception of a `-` or `+` symbol.  It *always* defines character
 string literals to start with a simple letter or underscore, or that
-literal is double-quoted, with the sole exception of `0cN` literals.
+literal is double-quoted, with the sole exception of `0tN` literals.
 
 MUON doesn't use any generic-context symbolic barewords, but if it did then
 it would group them into a single namespace defined by a leading `\` which
@@ -1287,8 +1287,8 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * prefix for Integer or Fraction-part in base-16
           | octet string           | * prefix for Blob literals; 0xb/0xx/0xy means in base-2/16/64
     ------+------------------------+---------------------------------------
-    0c    | character code point   | * indicates a Unicode character code point
-          |                        | * prefix for code-point-Text lit; 0cb/0co/0cd/0cx means in base-2/8/10/16
+    0t    | character code point   | * indicates a Unicode character code point
+          |                        | * prefix for code-point-Text lit; 0tb/0to/0td/0tx means in base-2/8/10/16
     ------+------------------------+---------------------------------------
 ```
 

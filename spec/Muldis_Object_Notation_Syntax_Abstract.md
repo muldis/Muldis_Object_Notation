@@ -326,7 +326,7 @@ Examples:
 
     "\This isn't not escaped.\n"
 
-    "\\<0cx263A>\<0c65>"
+    "\\<0tx263A>\<0t65>"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
@@ -338,10 +338,10 @@ Examples:
     "First Name"
 
     `One ordered nonquoted Text (or, one ordered attribute).`
-    0c0
+    0t0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\\<0c0>"
+    "\\<0t0>"
 
     `From a graduate student (in finals week), the following haiku:`
     "\study, write, study,\n"
@@ -444,13 +444,13 @@ Examples:
     (53,)
 
     `Same thing.`
-    (0c0: 53,)
+    (0t0: 53,)
 
     `Same thing.`
-    ("\\<0c0>": 53,)
+    ("\\<0t0>": 53,)
 
     `Same thing.`
-    (::0c0: 53,)
+    (::0t0: 53,)
 
     `Three named attributes.`
     (
@@ -1082,19 +1082,19 @@ Examples:
     (Heading:("sales",))
 
     `One ordered attribute.`
-    (Heading:(0c0,))
+    (Heading:(0t0,))
 
     `Same thing.`
-    (Heading:("\\<0c0>",))
+    (Heading:("\\<0t0>",))
 
     `Three named attributes.`
     (Heading:(region,revenue,qty))
 
     `Three ordered attributes.`
-    (Heading:(0c0,0c1,0c2))
+    (Heading:(0t0,0t1,0t2))
 
     `One of each.`
-    (Heading:(0c1,age))
+    (Heading:(0t1,age))
 
     `Some attribute names can only appear quoted.`
     (Heading:("Street Address",))
@@ -1137,16 +1137,16 @@ Examples:
     (Renaming:(foo,bar))
 
     `Same thing.`
-    (Renaming:(0c0->foo,0c1->bar))
+    (Renaming:(0t0->foo,0t1->bar))
 
     `Convert nonordered names to ordered.`
-    (Renaming:(0c0<-foo,0c1<-bar))
+    (Renaming:(0t0<-foo,0t1<-bar))
 
     `Swap 2 ordered attributes.`
-    (Renaming:(0c0->0c1,0c0<-0c1))
+    (Renaming:(0t0->0t1,0t0<-0t1))
 
     `Same thing.`
-    (Renaming:(0c1,0c0))
+    (Renaming:(0t1,0t0))
 
     `Some attribute names can only appear quoted.`
     (Renaming:("First Name"->"Last Name",))
@@ -1238,7 +1238,7 @@ Examples:
     (Tuple_Array:(x,y,z))
 
     `Three positional attributes + zero tuples.`
-    (Tuple_Array:(0c0,0c1,0c2))
+    (Tuple_Array:(0t0,0t1,0t2))
 
     `Two named attributes + three tuples (1 duplicate).`
     (Tuple_Array:{
@@ -1303,7 +1303,7 @@ Examples:
     (Relation:(x,y,z))
 
     `Three positional attributes + zero tuples.`
-    (Relation:(0c0,0c1,0c2))
+    (Relation:(0t0,0t1,0t2))
 
     `Two named attributes + two tuples.`
     (Relation:{
@@ -1369,7 +1369,7 @@ Examples:
     (Tuple_Bag:(x,y,z))
 
     `Three positional attributes + zero tuples.`
-    (Tuple_Bag:(0c0,0c1,0c2))
+    (Tuple_Bag:(0t0,0t1,0t2))
 
     `Two named attributes + six tuples (4 duplicates).`
     (Tuple_Bag:{
