@@ -495,15 +495,15 @@ and *attributes* (any **Kit** artifact such that every one of its
 Examples:
 
 ```
-    Point::(x : 5, y : 3)
+    Point*(x : 5, y : 3)
 
-    Float::(
+    Float*(
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
     )
 
-    the_db::UTC_Date_Time::(
+    the_db::UTC_Date_Time*(
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -512,9 +512,9 @@ Examples:
         second : 0.0,
     )
 
-    Positive_Infinity::()
+    Positive_Infinity*()
 
-    Negative_Zero::()
+    Negative_Zero*()
 ```
 
 ## Excuse
@@ -527,11 +527,11 @@ and *attributes* (any **Kit** artifact such that every one of its
 Examples:
 
 ```
-    Input_Field_Wrong!!(name : "Your Age")
+    Input_Field_Wrong!(name : "Your Age")
 
-    Div_By_Zero!!()
+    Div_By_Zero!()
 
-    No_Such_Attr_Name!!()
+    No_Such_Attr_Name!()
 ```
 
 # COMMON QUALITIES OF ABSTRACT SECONDARY DATA TYPE POSSREPS

@@ -257,11 +257,11 @@ Examples:
 
 ```
     (
-        `$$$` My_Func : Function::(...),
+        `$$$` My_Func : Function*(...),
 
-        `$$$` My_Proc_1 : Procedure::(...),
+        `$$$` My_Proc_1 : Procedure*(...),
 
-        `$$$` My_Proc_2 : Procedure::(...),
+        `$$$` My_Proc_2 : Procedure*(...),
     )
 ```
 
@@ -1034,7 +1034,7 @@ Grammar:
 ```
     token Article
     {
-        <label> <sp>? '::' <sp>? <attrs>
+        <label> <sp>? '*' <sp>? <attrs>
     }
 
     token label
@@ -1051,15 +1051,15 @@ Grammar:
 Examples:
 
 ```
-    Point::(x : 5, y : 3)
+    Point*(x : 5, y : 3)
 
-    Float::(
+    Float*(
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
     )
 
-    the_db::UTC_Date_Time::(
+    the_db::UTC_Date_Time*(
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -1068,9 +1068,9 @@ Examples:
         second : 0.0,
     )
 
-    Positive_Infinity::()
+    Positive_Infinity*()
 
-    Negative_Zero::()
+    Negative_Zero*()
 ```
 
 ## Excuse
@@ -1083,18 +1083,18 @@ Grammar:
 ```
     token Excuse
     {
-        <label> <sp>? '!!' <sp>? <attrs>
+        <label> <sp>? '!' <sp>? <attrs>
     }
 ```
 
 Examples:
 
 ```
-    Input_Field_Wrong!!(name : "Your Age")
+    Input_Field_Wrong!(name : "Your Age")
 
-    Div_By_Zero!!()
+    Div_By_Zero!()
 
-    No_Such_Attr_Name!!()
+    No_Such_Attr_Name!()
 ```
 
 # RESERVED UNUSED SYNTAX
@@ -1129,8 +1129,8 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Duo             | (...:...) or (...->...) or (...<-...) without any comma
     Lot             | only {} or {...}
     Kit             | only () or (...) with >= 1 comma
-    Article         | :: between a Nesting|Text and a Kit in that order
-    Excuse          | !! between a Nesting|Text and a Kit in that order
+    Article         | * between a Nesting|Text and a Kit in that order
+    Excuse          | ! between a Nesting|Text and a Kit in that order
 ```
 
 ## Features Reserved For Superset Grammars
@@ -1235,9 +1235,12 @@ that means they are used either in pairs or as contiguous sequences.
     ------+------------------------+---------------------------------------
     ::    | nestings               | * prefix or separate elements of a Nesting literal
           |                        | * disambiguate Nesting from Text
-          | articles               | * separates the 2 parts of an Article selector
     ------+------------------------+---------------------------------------
-    !!    | excuses                | * separates the 2 parts of an Excuse selector
+    *     | generics/whatever      | * indicates a generic type context
+          | articles               | * separates the 2 parts of an Article selector
+          | multiplication         | * significand/radix separator in Fraction literals
+    ------+------------------------+---------------------------------------
+    !     | excuses                | * separates the 2 parts of an Excuse selector
     ------+------------------------+---------------------------------------
     +     | addition               | * optional indicates positive-Integer/Fraction literal
     ------+------------------------+---------------------------------------
@@ -1248,8 +1251,6 @@ that means they are used either in pairs or as contiguous sequences.
     /     | fractions/measures     | * indicates a fractional quantifying/count context
           | division               | * disambiguate Fraction lit from Integer lit
           |                        | * numerator/denominator separator in Fraction literals
-    ------+------------------------+---------------------------------------
-    *     | multiplication         | * significand/radix separator in Fraction literals
     ------+------------------------+---------------------------------------
     ^     | exponentiation         | * radix/exponent separator in Fraction literals
     ------+------------------------+---------------------------------------
@@ -1327,8 +1328,8 @@ remainder of the grammar would apply outside of those tokens.
 
 Anywhere outside of a quoted string that these specific symbolic sequences
 appear, each one is its own indivisible token that is not part of any
-bareword or numeric-format literal; when any of these sequences overlap,
-longest token always wins:
+bareword or (except for the case of `*`) numeric-format literal;
+when any of these sequences overlap, longest token always wins:
 
 ```
     (
@@ -1340,7 +1341,8 @@ longest token always wins:
     <-
     ,
     ::
-    !!
+    *
+    !
 ```
 
 ## Barewords and Numeric-Format Literals

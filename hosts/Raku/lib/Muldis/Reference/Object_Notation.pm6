@@ -334,7 +334,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Article
     {
-        <label> <sp>? '::' <sp>? <attrs>
+        <label> <sp>? '*' <sp>? <attrs>
     }
 
     token label
@@ -351,7 +351,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Excuse
     {
-        <label> <sp>? '!!' <sp>? <attrs>
+        <label> <sp>? '!' <sp>? <attrs>
     }
 
 ###########################################################################
