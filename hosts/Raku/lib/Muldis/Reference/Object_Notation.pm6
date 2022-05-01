@@ -80,7 +80,7 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token Ignorance
     {
-        0sIGNORANCE
+        0iIGNORANCE
     }
 
 ###########################################################################

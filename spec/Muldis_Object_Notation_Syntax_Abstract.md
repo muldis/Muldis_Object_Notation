@@ -161,7 +161,7 @@ An **Ignorance** artifact is a singleton.
 Examples:
 
 ```
-    0sIGNORANCE
+    0iIGNORANCE
 ```
 
 ## Boolean

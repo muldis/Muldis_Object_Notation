@@ -327,14 +327,14 @@ Grammar:
 ```
     token Ignorance
     {
-        0sIGNORANCE
+        0iIGNORANCE
     }
 ```
 
 Examples:
 
 ```
-    0sIGNORANCE
+    0iIGNORANCE
 ```
 
 ## Boolean
@@ -1109,15 +1109,19 @@ grammars to define their own meanings.
 ## Possrep Heuristics
 
 The following table indicates the basic heuristics for how each primary
-possrep is recognized within a Muldis Object Notation artifact:
+possrep is recognized within a valid Muldis Object Notation artifact:
 
 ```
     Possrep/partial | Possrep Instead Identified By
     ----------------+---------------------------------------------
-    Ignorance       | prefix 0s followed by IGNORANCE
+    Ignorance       | prefix 0i followed by IGNORANCE
     Boolean         | prefix 0b followed by FALSE or TRUE
-    Integer         | leading 0..9 without any ./*^ and no 0b[F|T] or 0t prefix
-    Fraction        | leading 0..9 with at least 1 of ./*^ and no 0xy prefix
+    Integer         | optional prefix +|-
+                    |     and leading 0..9 without any ./*^
+                    |     and no prefix 0[i|t] or 0b[F|T] or 0[b|x][a..z]
+    Fraction        | optional prefix +|-
+                    |     and leading 0..9 with at least 1 of ./*^
+                    |     and no prefix 0xy
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0t
@@ -1255,8 +1259,7 @@ that means they are used either in pairs or as contiguous sequences.
     ------+------------------------+---------------------------------------
     alpha | identifier             | * first char a..z/etc in bareword indicates is Text/identifier
     ------+------------------------+---------------------------------------
-    0s    | singletons             | * indicates a grammar-well-known singleton
-          |                        | * prefix for Ignorance literal
+    0i    | ignorance              | * prefix for Ignorance literal
     ------+------------------------+---------------------------------------
     0b    | boolean                | * prefix for Boolean literal
           | base-2                 | * indicates base-2/binary notation
