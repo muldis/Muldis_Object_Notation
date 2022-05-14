@@ -182,8 +182,8 @@ Any references like `<foo>` in either the grammar itself or in the written
 documentation specifically refer to the corresponding grammar token `foo`.
 
 See also the bundled actual Raku module
-[hosts/Raku/lib/Muldis/Reference/Object_Notation.pm6](
-../hosts/Raku/lib/Muldis/Reference/Object_Notation.pm6)
+[hosts/Raku/lib/Muldis/Reference/Object_Notation.rakumod](
+../hosts/Raku/lib/Muldis/Reference/Object_Notation.rakumod)
 which has an executable copy of the grammar.
 
 # PARSING UNIT
