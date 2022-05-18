@@ -152,6 +152,14 @@ dedicated simple literal formats or data type values in some syntaxes:
 - **Pair**
 - Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
 
+These 3 secondary possreps are specifically for signatures or explicit
+declarations that are used alongside or embedded in data to declare more
+unambiguously how the latter was intended by its authors to be interpreted:
+
+- **Script**
+- **Syntax**
+- **Model**
+
 These 0 secondary possreps are specifically for defining program source
 code and are not for defining regular data:
 
@@ -823,6 +831,74 @@ A **Tuple Bag** value is characterized by the pairing of a **Heading**
 value with a **Bag** value, which define its *heading* and *body*,
 respectively.  A **Tuple Bag** is isomorphic to a **Relation** with the
 sole exception of being based on a **Bag** rather than a **Set**.
+
+# SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS
+
+*This whole section is quite rough and will be rewritten at some future time.*
+
+## Script
+
+A **Script** value is characterized by the pairing of a *script predicate*
+value with a *script subject* value, such that the former describes the latter.
+
+A *script predicate* is a declaration of the primary *script* of (typically)
+the *value* as a whole, meaning its character repertoire and/or character
+encoding and/or character normalization.  Under the assumption that a
+parser might be reading the *value* as binary data or otherwise as
+unnormalized character data, declaring the **Script** makes it completely
+unambiguous as to what characters it is to be treating the input as.
+
+For a simple example, a **Script** of `ASCII` says every literal source
+code character is a 7-bit ASCII character (and representing any non-ASCII
+characters is being done with escape sequences), and this is recommended
+for any file that doesn't need to be something else. For various legacy
+8-bit formats the **Script** can tell us if we're using `Latin1` or
+`CP1252` or `EBCDIC` etc.  For Unicode the **Script** would have multiple
+parts, such as `Unicode 2.1 UTF-8 canon`, indicating expected repertoire,
+and encoding (useful more with ones lacking BOMs); but at the very least it
+is useful with normalization; if `compat` is declared then the source code
+is folded before it is parsed so possibly distinct literal characters in
+the original code are seen as identical character strings by the main
+parser, while `canon` would not do this folding.
+
+A parser would possibly scan through the same source code multiple times
+filtering by a variety of text encodings until it can read a **Script**
+declaring the same encoding that the **Script** is itself written in, and
+then from that point it would expect the whole file to be that declared
+encoding or it would consider the source code invalid.
+
+There may be multiple **Script**; when this is the case,
+it means the *value* conforms to every one of those scripts,
+typically because only the common subsets of said were used.
+
+## Syntax
+
+A **Syntax** value is characterized by the pairing of a *syntax predicate*
+value with a *syntax subject* value, such that the former describes the latter.
+
+A *syntax predicate* consists of, in order, the *syntax base name*,
+*authority* and *version number* of the fully-qualified name of the
+language syntax specification, or faked stand-in name,
+that the *syntax subject*, or the *value* as a whole, conforms to.
+
+There may be multiple **Syntax**; when this is the case,
+it means the *value* conforms to every one of those syntaxes,
+typically because only the lowest common denominators of said were used.
+
+## Model
+
+A **Model** value is characterized by the pairing of a *model predicate*
+value with a *model subject* value, such that the former describes the latter.
+
+A *model predicate* consists of, in order, the *data model base name*,
+*authority* and *version number* of the fully-qualified name of the
+data model or type system specification, or faked stand-in name,
+that the *model subject*, or the *value* as a whole, represents values of,
+and influences what specific data types a parser maps data to.
+
+There may be multiple **Model**; when this is the case,
+it means the *value* conforms to every one of those data models,
+typically because only the lowest common denominators of said were used.
 
 # SOURCE CODE DEFINING SECONDARY DATA TYPE POSSREPS
 

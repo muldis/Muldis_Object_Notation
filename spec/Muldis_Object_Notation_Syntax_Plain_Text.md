@@ -16,21 +16,23 @@ its part name is `Syntax_Plain_Text`.
 # SYNOPSIS
 
 ```
-    `Muldis_Content_Predicate
-    MCP version https://muldis.com 0.300.0 MCP
-    MCP script Unicode 2.1 UTF-8 MCP
-    MCP syntax Muldis_Object_Notation https://muldis.com 0.300.0 MCP
-    MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
-    Muldis_Content_Predicate`
-
-    (Relation:{
-        (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:06)),
-            phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
-        (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:08,d:27)),
-            phone_numbers : (Set:{})),
-        (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:07,d:06)),
-            phone_numbers : (Set:{"+81.9072391679"})),
-    })
+    (Script:(
+        {Unicode, 2.1, "UTF-8"},
+        (Syntax:(
+            {Muldis_Object_Notation, "https://muldis.com", {0,300,0}},
+            (Model:(
+                {Muldis_Data_Language, "https://muldis.com", {0,300,0}},
+                (Relation:{
+                    (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:06)),
+                        phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
+                    (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:08,d:27)),
+                        phone_numbers : (Set:{})),
+                    (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:07,d:06)),
+                        phone_numbers : (Set:{"+81.9072391679"})),
+                }),
+            )),
+        )),
+    ))
 ```
 
 # DESCRIPTION
@@ -129,6 +131,9 @@ This also means applications using them don't have to concern themselves as
 much with explicit character decoding or encoding, and can simply feed or
 output a file or network stream etc.
 
+*The rest of this sub-section about Muldis Content Predicate is quite rough
+and will be rewritten at some future time.*
+
 It is strongly recommended but not mandatory for a MUON parser or generator
 to support the externally defined standard **Muldis Content Predicate**
 (**MCP**) format for source code metadata.  The MCP standard was
@@ -138,38 +143,21 @@ what script / character encoding was used in its file / octet string form.
 While heuristics (and BOMs) can lead to a strong guess as to what character
 encoding a file is, an explicit MCP declaration makes things more certain.
 
-*The rest of this sub-section about Muldis Content Predicate is obsolete
-and will be updated to say MCP is now more of a meta-standard and the
-specially formatted whitespace comment will be replaced by a dedicated MUON
-possrep resembling a specific tuple.*
+A **Muldis Content Predicate** declaration is expressly supported by
+**Muldis Object Notation** in the form of the latter's
+**SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS**,
+which are the possreps: **Script**, **Syntax**, **Model**.
 
-A **Muldis Content Predicate** declaration would normally be embedded in a
-MUON *dividing space* quoted comment string, so the regular MUON parser
-needs no special handling grammar/logic to ignore it (unlike a shebang).
-
-If a MUON parser supports scanning a *parsing unit* for a MCP *parsing unit
+If a MUON parser supports scanning a *parsing unit* for a *script
 predicate*, then it is mandatory for any scan to look through the lesser of
 the first 1000 characters, the first 2000 octets, or the entirety, of the
-*parsing unit*, before it gives up on trying to find a *parsing unit
-predicate*; giving up after that point is recommended.  To be specific,
-only the entire first `Muldis_Content_Predicate` token needs to be found in
-that scan area, and the rest of the *predicate* may extend past it.  This
-means that any *predicate* needs to be located near the start of the
+*parsing unit*, before it gives up on trying to find a *script
+predicate*; giving up after that point is recommended.  This
+means that any *script predicate* needs to be located near the start of the
 *parsing unit* if it has any expectation of being seen.  This requirement
 exists to aid performance of a MUON parser by invalidating pathological
 cases, so a parser doesn't have to scan a large *parsing unit* just in case
-it might have a buried *predicate* that most likely isn't there at all.
-
-Examples:
-
-```
-    `Muldis_Content_Predicate
-    MCP version https://muldis.com 0.300.0 MCP
-    MCP script Unicode 2.1 UTF-8 MCP
-    MCP syntax Muldis_Object_Notation https://muldis.com 0.300.0 MCP
-    MCP model Muldis_Data_Language https://muldis.com 0.300.0 MCP
-    Muldis_Content_Predicate`
-```
+it might have a buried *script predicate* that most likely isn't there at all.
 
 # COMMON QUALITIES OF THE GRAMMAR
 
@@ -687,7 +675,7 @@ Grammar:
 
     token restricted_inside_char
     {
-        <-[ \x[0]..\x[1F] "` \x[80]..\x[9F] ]>
+        <-[ \x[0]..\x[1F] "` \x[7F] \x[80]..\x[9F] ]>
     }
 
     token escaped_char
