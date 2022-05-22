@@ -95,6 +95,11 @@ The `#!` is a magic number and the shebang continues until the first
 linebreak; the parser should discard that line and then process the rest of
 the input according to the regular MUON grammar.
 
+It is mandatory for every MUON parser to support recognition of an optional
+*shebang line* and to handle it gracefully, such that it is not an error
+for a *parsing unit* to either have or not have one, and any otherwise
+valid MUON following one is handled properly.
+
 ## Script / Character Encoding
 
 Assuming that the MUON parser proper operates logically in terms of the
@@ -117,7 +122,7 @@ Both the UTF-8 variants with and without the leading Byte Order Mark (BOM)
 character must be supported.
 
 It is recommended but not mandatory for a MUON parser or generator to also
-support other commonly used character formats, particularly UTF-16BE and
+support other commonly used character formats, for example UTF-16BE and
 UTF-16LE (both with and without a BOM), either legacy or modern.
 
 It is strongly recommended but not mandatory for a MUON parser or generator
@@ -138,10 +143,10 @@ It is strongly recommended but not mandatory for a MUON parser or generator
 to support the externally defined standard **Muldis Content Predicate**
 (**MCP**) format for source code metadata.  The MCP standard was
 co-developed with the MUON standard as a recommended way to make a MUON
-*parsing unit* more strongly typed, in particular to explicitly declare
+*parsing unit* more strongly typed, for example to explicitly declare
 what script / character encoding was used in its file / octet string form.
 While heuristics (and BOMs) can lead to a strong guess as to what character
-encoding a file is, an explicit MCP declaration makes things more certain.
+encoding a file is, an explicit MCP declaration can make things more certain.
 
 A **Muldis Content Predicate** declaration is expressly supported by
 **Muldis Object Notation** in the form of the latter's
@@ -158,6 +163,101 @@ means that any *script predicate* needs to be located near the start of the
 exists to aid performance of a MUON parser by invalidating pathological
 cases, so a parser doesn't have to scan a large *parsing unit* just in case
 it might have a buried *script predicate* that most likely isn't there at all.
+
+## Aggregate Self-Synchronization Mark
+
+It is mandatory for every MUON parser to recognize the simple aggregation
+of multiple mutually independent *parsing unit* into a *parsing unit
+aggregate* such that each pair of consecutive components is separated by an
+*aggregate self-synchronization mark* (*assm*), which is this literal text:
+
+```
+    `Muldis_Object_Notation_Sync_Mark`
+```
+
+In self-defining terms, an *assm* is a special case of a
+`<quoted_sp_comment_str>`, the exact character string
+`` `Muldis_Object_Notation_Sync_Mark` `` including the delimiting grave
+accent characters and having no internal whitespace.  Notably, the
+alphanumeric string `Muldis_Object_Notation_Sync_Mark` by itself is *not*
+an *assm*; only with immediately adjacent grave accent delimiters is it one.
+
+There is *no* requirement that an *assm* is on its own line, however doing
+so is strongly recommended.
+
+It is mandatory for every MUON parser that, no matter where it appears, any
+*assm* is treated as a hard boundary between two *parsing unit*, which no
+single *parsing unit* crosses over.  It is as if the *assm* is the end of a
+file, or the start of a file, respectively.
+
+It is mandatory for every MUON parser that, within the context of a single
+input **Text** or **Blob** that represents a *parsing unit aggregate*,
+there is more than one *parsing unit* if and only if each one is separated
+from each of its neighbors by an *assm*.  While in many common cases it is
+conceivable that one could suss out consecutive separate top-level MUON
+possreps without an *assm* separator, that isn't true in all cases, and
+supporting this would place a significantly higher complexity burden on the
+parsers proper, as well as on human readers, and so it is disallowed.
+
+It is optional, but recommended, for every MUON parser to support actually
+acquiring multiple *parsing unit* when they are present.  Otherwise, the
+parser can choose to simply acquire just the first *parsing unit* it finds,
+and then on encountering an *assm* treat it as if it were the end of the
+file and ignore anything after it.  It is recommended that a MUON parser
+supports both modes such that the user can choose depending on context.
+
+As to the rationale of supporting *parsing unit* aggregation as a distinct
+feature from using a single larger collection-typed MUON artifact whose
+elements are the otherwise-distinct artifacts, there are several.
+
+A primary rationale is to better support open-ended streaming for temporal
+or other log-like data where a producer, either single or aggregate, is
+continually sending messages in a single octet stream or rolling file, and
+one or more consumers may be starting to read this stream at potentially
+any position in the middle, not necessarily from the start, and may stop
+and resume reading at different times.  Each *assm* is a clear signal to
+each consumer for where each message starts, so it can be properly
+interpreted, and errors from trying to parse from the middle of a MUON
+artifact as if it was the start is avoided.  This is the same concept but
+higher level of other codes supporting self-synchonization such as UTF-8.
+
+Another rationale is to better support multi-part requests or responses in
+client-server communications such that the individual parts are mutually
+asynchronous or independent but are moved as a batch for efficiency.
+
+Another rationale is to better support scaling to handle larger amounts of
+data by dividing it up into discrete chunks that can each be parsed and
+digested independently, because the entire data set doesn't need to be
+specially started or ended with a delimiter pair designating a collection
+value having everything.  That is, a direct analogy to SQL dumps is
+supported, which tends to be a sequence of discrete statements rather than
+a collection literal.
+
+Another rationale is to support a simple alternate archive format for
+combining what may otherwise be multiple file system files into one file.
+A special case is supporting multi-versioning of a data structure in a
+single append-only file where the changes of each new version is just
+appended to the file as a new *parsing unit*.
+
+Examples:
+
+```
+    "The first artifact"
+    `Muldis_Object_Notation_Sync_Mark`
+    42
+    `Muldis_Object_Notation_Sync_Mark`
+    {
+        1,
+        2,
+        3,
+    }
+    `Muldis_Object_Notation_Sync_Mark`
+    "Some text "
+        "literal spread "
+        "over several lines"
+    `Muldis_Object_Notation_Sync_Mark`
+    "The fifth artifact"
+```
 
 # COMMON QUALITIES OF THE GRAMMAR
 
