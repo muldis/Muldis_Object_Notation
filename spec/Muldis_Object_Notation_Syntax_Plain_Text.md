@@ -16,22 +16,17 @@ its part name is `Syntax_Plain_Text`.
 # SYNOPSIS
 
 ```
-    (Script:(
-        {Unicode, 2.1, "UTF-8"},
-        (Syntax:(
-            {Muldis_Object_Notation, "https://muldis.com", {0,300,0}},
-            (Model:(
-                {Muldis_Data_Language, "https://muldis.com", {0,300,0}},
-                (Relation:{
-                    (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:06)),
-                        phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
-                    (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:08,d:27)),
-                        phone_numbers : (Set:{})),
-                    (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:07,d:06)),
-                        phone_numbers : (Set:{"+81.9072391679"})),
-                }),
-            )),
-        )),
+    (Syntax:({Muldis_Object_Notation, "https://muldis.com", {0,300,0}}:
+        (Model:({Muldis_Data_Language, "https://muldis.com", {0,300,0}}:
+            (Relation:{
+                (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:06)),
+                    phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
+                (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:08,d:27)),
+                    phone_numbers : (Set:{})),
+                (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:07,d:06)),
+                    phone_numbers : (Set:{"+81.9072391679"})),
+            })
+        ))
     ))
 ```
 
@@ -102,18 +97,18 @@ valid MUON following one is handled properly.
 
 ## Script / Character Encoding
 
-Assuming that the MUON parser proper operates logically in terms of the
-input *parsing unit* being a Unicode character string (characterized by a
-sequence of Unicode *character code points*, each corresponding to an
-integer in the set `{0..0xD7FF,0xE000..0x10FFFF}`), a MUON parser that is
-actually given an octet string as input (per a raw file) will need to
-determine which of possibly many possible encoding formats was used to
-encode the character data as octets, and then convert the input as such.
+The MUON parser proper operates logically in terms of the input *parsing
+unit* being a Unicode character string (characterized by a sequence of
+Unicode *character code points*, each corresponding to an integer in the
+set `{0..0xD7FF,0xE000..0x10FFFF}`).  In self-defining terms, the MUON
+parser proper expects a **Text** value as input.
 
-In self-defining terms, the regular MUON parser expects a **Text** value
-as input, but a raw file is directly characterized by a **Blob** value,
-so a normalization function would need to map from the latter value to the
-former, a process typically known as *character decoding*.
+Actual MUON parser input, however, is given as an octet string (per a raw
+file), which represents the character data in some encoding format.  In
+self-describing terms, the actual input or raw file is directly
+characterized by a **Blob** value, so a normalization function would need
+to map from the latter value to the former, a process typically known as
+*character decoding*.
 
 It is mandatory for every MUON parser and generator to support the UTF-8
 character format associated with the **Unicode** standard version 2.1 and
@@ -121,48 +116,58 @@ later; the proper subset 7-bit ASCII character format is also mandatory.
 Both the UTF-8 variants with and without the leading Byte Order Mark (BOM)
 character must be supported.
 
-It is recommended but not mandatory for a MUON parser or generator to also
-support other commonly used character formats, for example UTF-16BE and
-UTF-16LE (both with and without a BOM), either legacy or modern.
+It is mandatory for MUON that takes the form of an octet string or **Blob**
+value to be encoded as well-formed UTF-8 (or ASCII), with or without a BOM.
+No other character encoding formats are allowed for well-formed MUON.
 
-It is strongly recommended but not mandatory for a MUON parser or generator
-to natively accept or return both **Text** and **Blob** values directly.
-Typically this means providing 2 parsing or generating functions that
-differ only in accepting or returning a **Text** or a **Blob**.
-This can make the parsing or generating operations use less memory or time
-by avoiding extra intermediate copies or conversions of the data; it should
-be quite straightforward to parse or generate MUON octet streams directly.
-This also means applications using them don't have to concern themselves as
-much with explicit character decoding or encoding, and can simply feed or
-output a file or network stream etc.
+It is mandatory for every MUON parser and generator to preserve the
+original Unicode character code points, and to *not* perform any automatic
+transformation to any Unicode Normal Forms (such as NFD, NFC, NFKD, NFKC).
+If users wish to have any such normalization performed, they must perform
+it explicitly as a separate operation from the MUON parsing.
 
-*The rest of this sub-section about Muldis Content Predicate is quite rough
-and will be rewritten at some future time.*
+It is mandatory for every MUON parser to reject input, and for every MUON
+generator to not produce output, that has character code points
+corresponding to integers outside the set `{0..0xD7FF,0xE000..0x10FFFF}`.
 
-It is strongly recommended but not mandatory for a MUON parser or generator
-to support the externally defined standard **Muldis Content Predicate**
-(**MCP**) format for source code metadata.  The MCP standard was
-co-developed with the MUON standard as a recommended way to make a MUON
-*parsing unit* more strongly typed, for example to explicitly declare
-what script / character encoding was used in its file / octet string form.
-While heuristics (and BOMs) can lead to a strong guess as to what character
-encoding a file is, an explicit MCP declaration can make things more certain.
+However, as an exception to the prior rules, every MUON parser must instead
+automatically normalize/correct situations with input where logical Unicode
+non-BMP code points are represented by a well-formed ordered pair of
+Unicode surrogate code points corresponding to integers in the set
+`{0xD800..0xDFFF}`, replacing each pair with the appropriate non-BMP single
+code point.  But any surrogate code points that aren't part of such a pair
+are still an error and must be rejected.  And every MUON generator still
+must not output any Unicode surrogate codepoints even within such a pair.
 
-A **Muldis Content Predicate** declaration is expressly supported by
-**Muldis Object Notation** in the form of the latter's
-**SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS**,
-which are the possreps: **Script**, **Syntax**, **Model**.
+It is mandatory for every MUON parser to *not* automatically replace
+non-well-formed characters or octets with the Unicode Replacement Character
+`0xFFFD`, and they must instead reject that input.
+If users wish to have any such substitutions performed, they must perform
+it explicitly as a separate operation from the MUON parsing.
+However, a MUON parser is allowed to support optional user-configuration
+where users can specify how such substitutions are performed, which then is
+the behavior instead of rejecting the input.  However, in the absense of
+users providing this optional configuration, rejection must be the default.
 
-If a MUON parser supports scanning a *parsing unit* for a *script
-predicate*, then it is mandatory for any scan to look through the lesser of
-the first 1000 characters, the first 2000 octets, or the entirety, of the
-*parsing unit*, before it gives up on trying to find a *script
-predicate*; giving up after that point is recommended.  This
-means that any *script predicate* needs to be located near the start of the
-*parsing unit* if it has any expectation of being seen.  This requirement
-exists to aid performance of a MUON parser by invalidating pathological
-cases, so a parser doesn't have to scan a large *parsing unit* just in case
-it might have a buried *script predicate* that most likely isn't there at all.
+While MUON conceivably could be represented using a wide-variety of
+character encodings, for example variants of UTF-16 or Latin1, the
+rationale for forbidding these is mainly to help keep MUON parser/generator
+implementations simpler, and because MUON became officially finalized
+during a time period where UTF-8 already is widely supported and any first
+implementations of a MUON parser/generator should have no excuse in not
+supporting UTF-8.
+
+This means that a MUON parser does not need to have logic to detect which
+of several character encodings are in use in order to pick one for correct
+interpretation of the *parsing unit*, and instead it only has to try
+treating the input as UTF-8 and fail if it isn't.  This likewise means that
+the MUON specification document doesn't need to define special syntax for
+explicit declarations of what character encoding is in use to help parsers.
+
+Strictly speaking the door is not closed for a future version of the MUON
+specification to support character encoding declarations, or for a future
+MUON parser to natively support other character encoding formats, but in
+the foreseeable future, forbidding this best satisfies YAGNI and KISS.
 
 ## Aggregate Self-Synchronization Mark
 

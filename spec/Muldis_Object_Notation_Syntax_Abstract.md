@@ -1388,37 +1388,6 @@ Examples:
 
 *This whole section is quite rough and will be rewritten at some future time.*
 
-## Script
-
-A **Script** artifact has the predicate `Script`.
-
-Its subject is any of the following:
-
-* Any **Duo** artifact such that its *this* and *that*
-are the *script predicate* and *script subject* respectively;
-the *script subject* is any **Any** artifact;
-the *script predicate* is any **Lot** artifact
-that typically consists of 3 **Text** artifacts.
-
-Examples:
-
-```
-    (Script:(
-        {ASCII},
-        42,
-    ))
-
-    (Script:(
-        {Unicode, 2.1, "UTF-8"},
-        42,
-    ))
-
-    (Script:(
-        {Unicode, 2.1, "UTF-8", canon},
-        42,
-    ))
-```
-
 ## Syntax
 
 A **Syntax** artifact has the predicate `Syntax`.
@@ -1434,14 +1403,12 @@ that typically consists of 3 **Text** artifacts.
 Examples:
 
 ```
-    (Syntax:(
-        {Muldis_Object_Notation, "https://muldis.com", {0,300,0}},
-        42,
+    (Syntax:({Muldis_Object_Notation, "https://muldis.com", {0,300,0}}:
+        42
     ))
 
-    (Syntax:(
-        {Muldis_Object_Notation, "https://example.com", 42},
-        42,
+    (Syntax:({Muldis_Object_Notation, "https://example.com", 42}:
+        42
     ))
 ```
 
@@ -1460,29 +1427,24 @@ that typically consists of 3 **Text** artifacts.
 Examples:
 
 ```
-    (Model:(
-        {Muldis_Data_Language, "https://muldis.com", {0,300,0}},
-        42,
+    (Model:({Muldis_Data_Language, "https://muldis.com", {0,300,0}}:
+        42
     ))
 
-    (Model:(
-        {Muldis_Data_Language, "https://example.com", 42},
-        42,
+    (Model:({Muldis_Data_Language, "https://example.com", 42}:
+        42
     ))
 
-    (Model:(
-        {SQL, "https://postgresql.org", {14,3}},
-        42,
+    (Model:({SQL, "https://postgresql.org", {14,3}}:
+        42
     ))
 
-    (Model:(
-        {SQL, "https://sqlite.org", {3,38,5}},
-        42,
+    (Model:({SQL, "https://sqlite.org", {3,38,5}}:
+        42
     ))
 
-    (Model:(
-        {Perl, "https://perlfoundation.org", {5,36,0}},
-        42,
+    (Model:({Perl, "https://perlfoundation.org", {5,36,0}}:
+        42
     ))
 ```
 
