@@ -327,37 +327,6 @@ still being well formatted (no extra long lines).
 See the grammar sections for `<Integer>`, `<Fraction>`, `<Bits>`, `<Blob>`,
 `<Text>` for more details on how this specifically applies to them.
 
-*The rest of this sub-section about "entity marker" is obsolete and will be
-updated with an alternative method to accomplish the same goal.*
-
-An *entity marker* is a feature that is optional for a MUON parser or
-generator to support.  It is a special case of a `<quoted_sp_comment_str>`,
-the character string `` `$$$` ``, and would simply be seen as such by a MUON parser
-that didn't specifically know about it.  An *entity marker* is intended
-as a trivial annotation for some MUON construct that immediately follows
-it.  This is so that naive development tools that know about MUON
-specifically but not about any source code defining data models layered
-over it can be expressly pointed to the parts of the MUON document that
-declare something interesting, such as a package or routine or type
-declaration, so that generic MUON tooling can, say, generate a navigation
-menu to quickly jump around a document to each entity declaration therein.
-The idomatic location for an *entity marker* is immediately before a
-**Kit** attribute name, assuming that the corresponding attribute value
-is the construct of interest and the attribute name is used as the name to
-refer to it with in function menus.
-
-Examples:
-
-```
-    (
-        `$$$` My_Func : Function*(...),
-
-        `$$$` My_Proc_1 : Procedure*(...),
-
-        `$$$` My_Proc_2 : Procedure*(...),
-    )
-```
-
 # CRITICAL ALGEBRAIC DATA TYPE POSSREPS
 
 ## Any / Universal Type Possrep
@@ -1346,8 +1315,6 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * numerator/denominator separator in Fraction literals
     ------+------------------------+---------------------------------------
     ^     | exponentiation         | * radix/exponent separator in Fraction literals
-    ------+------------------------+---------------------------------------
-    $     | identifiers/names      | * a triple of this indicates an entity marker
     ------+------------------------+---------------------------------------
     digit | number/enumeration     | * first char 0..9 in bareword indicates is number/code-point/Bits/Blob/enumeration
     ------+------------------------+---------------------------------------

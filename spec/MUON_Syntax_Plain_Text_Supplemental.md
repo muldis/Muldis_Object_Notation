@@ -360,6 +360,43 @@ Examples:
     ))
 ```
 
+## Naive Entity Marker
+
+This document section used to be additional content of the
+**DIVIDING SPACE** section of
+[Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
+but was removed from there when MUON was simplified to exclude this
+semi-obsolete optional feature.
+An alternative method to accomplish the same goal will be added later.
+
+An *entity marker* is a feature that is optional for a MUON parser or
+generator to support.  It is a special case of a `<quoted_sp_comment_str>`,
+the character string `` `$$$` ``, and would simply be seen as such by a MUON parser
+that didn't specifically know about it.  An *entity marker* is intended
+as a trivial annotation for some MUON construct that immediately follows
+it.  This is so that naive development tools that know about MUON
+specifically but not about any source code defining data models layered
+over it can be expressly pointed to the parts of the MUON document that
+declare something interesting, such as a package or routine or type
+declaration, so that generic MUON tooling can, say, generate a navigation
+menu to quickly jump around a document to each entity declaration therein.
+The idomatic location for an *entity marker* is immediately before a
+**Kit** attribute name, assuming that the corresponding attribute value
+is the construct of interest and the attribute name is used as the name to
+refer to it with in function menus.
+
+Examples:
+
+```
+    (
+        `$$$` My_Func : Function*(...),
+
+        `$$$` My_Proc_1 : Procedure*(...),
+
+        `$$$` My_Proc_2 : Procedure*(...),
+    )
+```
+
 ## Signature Declaring Secondary Data Type Possrep Script - Semantics
 
 This document section used to be the content of the
