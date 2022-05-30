@@ -744,7 +744,12 @@ Grammar:
 
     token quoted_text_segment
     {
-        '"' ~ '"' [<restricted_inside_char> | <escaped_char>]*
+        '"' ~ '"'
+            [
+                <restricted_inside_char>
+              | <escaped_char_simple>
+              | <escaped_char_cpt_seq>
+            ]*
     }
 
     token restricted_inside_char
@@ -752,9 +757,14 @@ Grammar:
         <-[ \x[0]..\x[1F] "` \x[7F] \x[80]..\x[9F] ]>
     }
 
-    token escaped_char
+    token escaped_char_simple
     {
-        '\\' [<[qgbtnr]> | ['<' ~ '>' <code_point_text>]]
+        '\\' <[qgbtnr]>
+    }
+
+    token escaped_char_cpt_seq
+    {
+        '\\' ['{' ~ '}' [<code_point_text>* % ',']]
     }
 
     token nonquoted_alphanumeric_text
@@ -791,15 +801,17 @@ The meanings of the simple character escape sequences are:
     \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
     \b  | 0x5C    93 | REVERSE SOLIDUS | \   | no special meaning in non-escaped
     \t  | 0x9      9 | CHAR... TAB...  |     | control char horizontal tab
-    \n  | 0xA     10 | LINE FEED (LF)  |     | ctrl char line feed / newline
+    \n  | 0xA     10 | LINE FEED (LF)  |     | control char line feed / newline
     \r  | 0xD     13 | CARR. RET. (CR) |     | control char carriage return
 ```
 
-There is just one complex escape sequence, of the format `\<...>`, that
+There is just one complex escape sequence, of the format `\{...}`, that
 supports specifying characters in terms of their Unicode code point number.
 One reason for this feature is to empower more elegant passing of
 Unicode-savvy MUON through a communications channel that is more limited,
 such as to 7-bit ASCII.
+This format also supports specifying a sequence of multiple characters at
+once, rather than just one, to aid brevity when there are a lot.
 
 A `<code_point_text>` is a specialized shorthand for a **Text** of
 exactly 1 character whose code point number it denotes.
@@ -822,7 +834,7 @@ Examples:
 
     "This isn't not escaped.\n"
 
-    "\<0tx263A>\<0t65>"
+    "\{0tx263A,0t65}"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
@@ -837,7 +849,7 @@ Examples:
     0t0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\<0t0>"
+    "\{0t0}"
 
     `From a graduate student (in finals week), the following haiku:`
     "study, write, study,\n"
@@ -1048,7 +1060,7 @@ Examples:
     (0t0: 53,)
 
     `Same thing.`
-    ("\<0t0>": 53,)
+    ("\{0t0}": 53,)
 
     `Same thing.`
     (::0t0: 53,)

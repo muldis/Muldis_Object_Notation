@@ -326,7 +326,7 @@ Examples:
 
     "This isn't not escaped.\n"
 
-    "\<0tx263A>\<0t65>"
+    "\{0tx263A,0t65}"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
@@ -341,7 +341,7 @@ Examples:
     0t0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\<0t0>"
+    "\{0t0}"
 
     `From a graduate student (in finals week), the following haiku:`
     "study, write, study,\n"
@@ -447,7 +447,7 @@ Examples:
     (0t0: 53,)
 
     `Same thing.`
-    ("\<0t0>": 53,)
+    ("\{0t0}": 53,)
 
     `Same thing.`
     (::0t0: 53,)
@@ -1085,7 +1085,7 @@ Examples:
     (Heading:(0t0,))
 
     `Same thing.`
-    (Heading:("\<0t0>",))
+    (Heading:("\{0t0}",))
 
     `Three named attributes.`
     (Heading:(region,revenue,qty))

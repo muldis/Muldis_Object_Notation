@@ -207,17 +207,27 @@ grammar Muldis::Reference::Object_Notation::Grammar
 
     token quoted_text_segment
     {
-        '"' ~ '"' [<restricted_inside_char> | <escaped_char>]*
+        '"' ~ '"'
+            [
+                <restricted_inside_char>
+              | <escaped_char_simple>
+              | <escaped_char_cpt_seq>
+            ]*
     }
 
     token restricted_inside_char
     {
-        <-[ \x[0]..\x[1F] "` \x[80]..\x[9F] ]>
+        <-[ \x[0]..\x[1F] "` \x[7F] \x[80]..\x[9F] ]>
     }
 
-    token escaped_char
+    token escaped_char_simple
     {
-        '\\' [<[qgbtnr]> | ['<' ~ '>' <code_point_text>]]
+        '\\' <[qgbtnr]>
+    }
+
+    token escaped_char_cpt_seq
+    {
+        '\\' ['{' ~ '}' [<code_point_text>* % ',']]
     }
 
     token nonquoted_alphanumeric_text
