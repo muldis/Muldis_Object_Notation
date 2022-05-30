@@ -1403,11 +1403,11 @@ that typically consists of 3 **Text** artifacts.
 Examples:
 
 ```
-    (Syntax:({Muldis_Object_Notation, "https://muldis.com", {0,300,0}}:
+    (Syntax:({Muldis_Object_Notation, "https://muldis.com", "0.300.0"}:
         42
     ))
 
-    (Syntax:({Muldis_Object_Notation, "https://example.com", 42}:
+    (Syntax:({Muldis_Object_Notation, "https://example.com", "42"}:
         42
     ))
 ```
@@ -1427,23 +1427,23 @@ that typically consists of 3 **Text** artifacts.
 Examples:
 
 ```
-    (Model:({Muldis_Data_Language, "https://muldis.com", {0,300,0}}:
+    (Model:({Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
         42
     ))
 
-    (Model:({Muldis_Data_Language, "https://example.com", 42}:
+    (Model:({Muldis_Data_Language, "https://example.com", "42"}:
         42
     ))
 
-    (Model:({SQL, "https://postgresql.org", {14,3}}:
+    (Model:({SQL, "https://postgresql.org", "14.3"}:
         42
     ))
 
-    (Model:({SQL, "https://sqlite.org", {3,38,5}}:
+    (Model:({SQL, "https://sqlite.org", "3.38.5"}:
         42
     ))
 
-    (Model:({Perl, "https://perlfoundation.org", {5,36,0}}:
+    (Model:({Perl, "https://perlfoundation.org", "5.36.0"}:
         42
     ))
 ```

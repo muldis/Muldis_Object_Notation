@@ -16,8 +16,8 @@ its part name is `Syntax_Plain_Text`.
 # SYNOPSIS
 
 ```
-    (Syntax:({Muldis_Object_Notation, "https://muldis.com", {0,300,0}}:
-        (Model:({Muldis_Data_Language, "https://muldis.com", {0,300,0}}:
+    (Syntax:({Muldis_Object_Notation, "https://muldis.com", "0.300.0"}:
+        (Model:({Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
             (Relation:{
                 (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
                     phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
