@@ -15,7 +15,41 @@ its part name is `Syntax_DotNet`.
 
 # SYNOPSIS
 
-*TODO.*
+```
+    new KeyValuePair<String, Object>("Syntax", new KeyValuePair<String[], Object>(
+        new String[]{"Muldis_Object_Notation", "https://muldis.com", "0.300.0"},
+        new KeyValuePair<String, Object>("Model", new KeyValuePair<String[], Object>(
+            new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
+            new KeyValuePair<String, Object[]>("Relation", new Object[]{
+                new Dictionary<String, Object>(){
+                    {"name", "Jane Ives"},
+                    {"birth_date", new KeyValuePair<String, Object>("Calendar_Instant",
+                        new Dictionary<String, Int32>(){{"y", 1971}, {"m", 11}, {"d", 6}}
+                    )},
+                    {"phone_numbers", new KeyValuePair<String, Object[]>("Set",
+                        new String[]{"+1.4045552995", "+1.7705557572"}
+                    )}
+                },
+                new Dictionary<String, Object>(){
+                    {"name", "Layla Miller"},
+                    {"birth_date", new KeyValuePair<String, Object>("Calendar_Instant",
+                        new Dictionary<String, Int32>(){{"y", 1995}, {"m", 8}, {"d", 27}}
+                    )},
+                    {"phone_numbers", new KeyValuePair<String, Object[]>("Set", new String[]{})}
+                },
+                new Dictionary<String, Object>(){
+                    {"name", "岩倉 玲音"},
+                    {"birth_date", new KeyValuePair<String, Object>("Calendar_Instant",
+                        new Dictionary<String, Int32>(){{"y", 1984}, {"m", 7}, {"d", 6}}
+                    )},
+                    {"phone_numbers", new KeyValuePair<String, Object[]>("Set",
+                        new String[]{"+81.9072391679"}
+                    )}
+                },
+            })
+        ))
+    ))
+```
 
 # DESCRIPTION
 
