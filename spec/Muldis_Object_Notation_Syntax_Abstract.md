@@ -1396,9 +1396,9 @@ Its subject is any of the following:
 
 * Any **Duo** artifact such that its *this* and *that*
 are the *syntax predicate* and *syntax subject* respectively;
-the *syntax subject* is any **Any** artifact;
-the *syntax predicate* is any **Lot** artifact
-that typically consists of 3 **Text** artifacts.
+the *syntax predicate* is any **Arrayish** artifact
+that typically consists of 3 **Text** artifacts;
+the *syntax subject* is any **Any** artifact.
 
 Examples:
 
@@ -1420,9 +1420,9 @@ Its subject is any of the following:
 
 * Any **Duo** artifact such that its *this* and *that*
 are the *model predicate* and *model subject* respectively;
-the *model subject* is any **Any** artifact;
-the *model predicate* is any **Lot** artifact
-that typically consists of 3 **Text** artifacts.
+the *model predicate* is any **Arrayish** artifact
+that typically consists of 3 **Text** artifacts;
+the *model subject* is any **Any** artifact.
 
 Examples:
 
