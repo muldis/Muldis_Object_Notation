@@ -15,7 +15,41 @@ its part name is `Syntax_Java`.
 
 # SYNOPSIS
 
-*TODO.*
+```
+    new AbstractMap.SimpleEntry<String, Object>("Syntax", new AbstractMap.SimpleEntry<String[], Object>(
+        new String[]{"Muldis_Object_Notation", "https://muldis.com", "0.300.0"},
+        new AbstractMap.SimpleEntry<String, Object>("Model", new AbstractMap.SimpleEntry<String[], Object>(
+            new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
+            new AbstractMap.SimpleEntry<String, Object[]>("Relation", new Object[]{
+                Map.of(
+                   "name", "Jane Ives",
+                   "birth_date", new AbstractMap.SimpleEntry<String, Object>("Calendar_Instant",
+                       Map.of("y", 1971, "m", 11, "d", 6)
+                   ),
+                   "phone_numbers", new AbstractMap.SimpleEntry<String, Object[]>("Set",
+                        new String[]{"+1.4045552995", "+1.7705557572"}
+                    )
+                ),
+                Map.of(
+                    "name", "Layla Miller",
+                    "birth_date", new AbstractMap.SimpleEntry<String, Object>("Calendar_Instant",
+                        Map.of("y", 1995, "m", 8, "d", 27)
+                    ),
+                    "phone_numbers", new AbstractMap.SimpleEntry<String, Object[]>("Set", new String[]{})
+                ),
+                Map.of(
+                    "name", "岩倉 玲音",
+                    "birth_date", new AbstractMap.SimpleEntry<String, Object>("Calendar_Instant",
+                        Map.of("y", 1984, "m", 7, "d", 6)
+                    ),
+                    "phone_numbers", new AbstractMap.SimpleEntry<String, Object[]>("Set",
+                        new String[]{"+81.9072391679"}
+                    )
+                ),
+            })
+        ))
+    ))
+```
 
 # DESCRIPTION
 
