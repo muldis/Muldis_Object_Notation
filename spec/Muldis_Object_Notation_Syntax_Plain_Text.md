@@ -9,7 +9,7 @@ The fully-qualified name of this document is
 
 # PART
 
-This artifact is part 4 of 14 of the document
+This artifact is part 4 of 15 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_Plain_Text`.
 
@@ -53,15 +53,19 @@ machine processes written in different programming languages, or because
 they are on distinct machines, or because they are mediated by a network or
 disk file.  The format is fairly easy for humans to read and write.  It is
 fairly easy for machines to parse and generate.  The MUON plain text format
-that is completely language independent but uses conventions that are
+is completely language independent but uses conventions that are
 familiar to programmers of many other languages.
 
-The prescribed standard filename extension for files featuring a MUON
-parsing unit is `.muon`, though as per standard UNIX conventions, such MUON
-files can in fact have any filename extension when there is other context
-to interpret them with.  Filename extensions are more for the benefit of
-the operating system or command shell or users than for a MUON parser or
-generator, the latter just cares about the content of the file.
+Note that the machine-only readable/writable MUON
+[Syntax_Plain_Blob](Muldis_Object_Notation_Syntax_Plain_Blob.md)
+exists as an alternative to the MUON `Syntax_Plain_Text`.
+
+The prescribed standard filename extension for files featuring a MUON Plain
+Text parsing unit is `.muon`, though as per standard UNIX conventions,
+such MUON files can in fact have any filename extension when there is other
+context to interpret them with.  Filename extensions are more for the
+benefit of the operating system or command shell or users than for a MUON
+parser or generator, the latter just cares about the content of the file.
 
 # NORMALIZATION
 
