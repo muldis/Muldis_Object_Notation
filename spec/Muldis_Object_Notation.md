@@ -60,7 +60,7 @@ This document consists of multiple parts:
 1. [Syntax_Plain_Blob](Muldis_Object_Notation_Syntax_Plain_Blob.md)
 1. Syntax_Muldis_Data_Language
 1. [Syntax_Raku](Muldis_Object_Notation_Syntax_Raku.md)
-1. Syntax_Perl
+1. [Syntax_Perl](Muldis_Object_Notation_Syntax_Perl.md)
 1. [Syntax_Java](Muldis_Object_Notation_Syntax_Java.md)
 1. [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 1. Syntax_Swift
