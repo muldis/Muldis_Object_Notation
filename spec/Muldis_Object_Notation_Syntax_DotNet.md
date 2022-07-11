@@ -90,7 +90,7 @@ An **Ignorance** artifact is any of the following:
 
 * The special .NET `null` value.
 
-Not permitted is any of the following, to keep things simpler:
+Not permitted is any of the following, to keep things more correct and simpler:
 
 * The only object of the .NET singleton class `System.DBNull`.
 
@@ -102,7 +102,7 @@ A **Boolean** artifact is any of the following:
 
 Not permitted is any of the following, to keep things more correct and simpler:
 
-* Any numeric type such that zero/one represents false/true.
+* Any value of any numeric type such that zero/one represents false/true.
 
 * Any value of some other type that might represent a boolean.
 
@@ -114,7 +114,7 @@ An **Integer** artifact is any of the following:
 
 * Any value of the .NET structure type `System.Numerics.BigInteger`.
 
-Not permitted is any of the following, to keep things simpler:
+Not permitted is any of the following, to keep things more correct and simpler:
 
 * Any value of any of the .NET structure types `System.Byte`, `System.Int16`.
 
@@ -194,7 +194,7 @@ A **Text** artifact is any of the following:
 
 * Any object of the .NET class `System.String` that is *well formed*.
 
-Not permitted is any of the following, to keep things simpler or more correct:
+Not permitted is any of the following, to keep things more correct and simpler:
 
 * Any object of the .NET class `System.String` that is not *well formed*.
 
@@ -251,7 +251,8 @@ A *SYS_Duo* is any of the following:
 * Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`
 such that its `Key` property is *SYS_this* and its `Value` property is *SYS_that*.
 
-Not permitted for a *SYS_Duo* is any of the following, to keep things simpler:
+Not permitted for a *SYS_Duo* is any of the following,
+to keep things more correct and simpler:
 
 * Any values or objects of N-ary collection types having exactly 2 elements.
 
@@ -291,7 +292,7 @@ A **Kit** artifact is any of the following:
 
 * Any *SYS_Dictionary* such that each of its elements in turn is
 *multi-level attribute* whose element key is *name* (any **Nesty** artifact)
-and whose element key is *asset* (any **Any** artifact);
+and whose element value is *asset* (any **Any** artifact);
 this is the simplest format for the general case of any **Kit** having
 named attributes for which we *don't* need the system to persist the
 literal order of attributes in the source code.
@@ -320,6 +321,10 @@ the system to persist the literal order of attributes in the source code.
 
 *TODO: Consider adding .NET anonymous types as an option if feasible.*
 
+Not permitted is any of the following, to prevent ambiguity and simplify things:
+
+* Any object of the .NET class `System.Data.DataRow`.
+
 A *SYS_Dictionary* is any of the following:
 
 * Any object of the .NET class `System.Collections.Generic.Dictionary`.
@@ -335,10 +340,6 @@ that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
 Note that example composers of `System.Runtime.CompilerServices.ITuple` are:
 `System.ValueTuple<...>`,
 `System.Tuple<...>`.
-
-Not permitted for a **Kit** is any of the following, to keep things simpler:
-
-* Any object of the .NET class `System.Data.DataRow`.
 
 ## Article / Labelled Tuple
 

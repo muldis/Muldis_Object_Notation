@@ -99,7 +99,7 @@ A **Boolean** artifact is any of the following:
 
 Not permitted is any of the following, to keep things more correct and simpler:
 
-* Any numeric type such that zero/one represents false/true.
+* Any value of any numeric type such that zero/one represents false/true.
 
 * Any value of some other type that might represent a boolean.
 
@@ -113,7 +113,7 @@ An **Integer** artifact is any of the following:
 
 * Any object of the Java class `java.math.BigInteger`.
 
-Not permitted is any of the following, to keep things simpler:
+Not permitted is any of the following, to keep things more correct and simpler:
 
 * Any value of any of the Java primitive types `byte`, `short`.
 
@@ -200,7 +200,7 @@ A **Text** artifact is any of the following:
 
 * Any object of the Java class `java.lang.String` that is *well formed*.
 
-Not permitted is any of the following, to keep things simpler or more correct:
+Not permitted is any of the following, to keep things more correct and simpler:
 
 * Any object of the Java class `java.lang.String` that is not *well formed*.
 
@@ -264,7 +264,8 @@ Note that example composers of `java.util.Map.Entry` are:
 `java.util.AbstractMap.SimpleImmutableEntry`,
 `java.util.AbstractMap.SimpleEntry`.
 
-Not permitted for a *SYS_Duo* is any of the following, to keep things simpler:
+Not permitted for a *SYS_Duo* is any of the following,
+to keep things more correct and simpler:
 
 * Any values or objects of N-ary collection types having exactly 2 elements.
 
@@ -301,7 +302,7 @@ A **Kit** artifact is any of the following:
 
 * Any *SYS_Dictionary* such that each of its elements in turn is
 *multi-level attribute* whose element key is *name* (any **Nesty** artifact)
-and whose element key is *asset* (any **Any** artifact);
+and whose element value is *asset* (any **Any** artifact);
 this is the simplest format for the general case of any **Kit** having
 named attributes for which we *don't* need the system to persist the
 literal order of attributes in the source code.

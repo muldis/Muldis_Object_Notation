@@ -209,16 +209,17 @@ members are any **Integer** artifacts.
 
 A **Text** artifact is any of the following:
 
-* Any object of the Raku class `Str`.
+* Any object of the Raku class `Str` that is *well formed*.
 
 * Any object of the Raku class `Uni` that is *well formed*.
 
-*It is currently understood that Raku would throw an exception on any
-attempt to create an invalid `Str` such as that has UTF-16 surrogate code
-points, and so all `Str` can be assumed to be valid; if this turns out not
-to be true, this section will need to be updated to forbid bad `Str`.*
+Note that *well formed* means there are no UTF-16 surrogate code points
+defined in it that aren't in valid surrogate pairs.
 
 Not permitted is any of the following, to keep things more correct and simpler:
+
+* Any object of the Raku class `Str` that is not *well formed*,
+if such a thing exists.
 
 * Any object of the Raku class `Uni` that is not *well formed*,
 if such a thing exists.
@@ -231,7 +232,7 @@ or of any other allomorphic class.
 A **Nesting** artifact is any of the following:
 
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Nesting`
-and its *SYS_that* is any object of the Raku class `List`
+and its *SYS_that* is any *SYS_Array*
 such that every element is any **Text** artifact.
 
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Nesting`
@@ -293,7 +294,7 @@ A **Kit** artifact is any of the following:
 
 * Any *SYS_Dictionary* such that each of its elements in turn is
 *multi-level attribute* whose element key is *name* (any **Nesty** artifact)
-and whose element key is *asset* (any **Any** artifact);
+and whose element value is *asset* (any **Any** artifact);
 this is the simplest format for the general case of any **Kit** having
 named attributes for which we *don't* need the system to persist the
 literal order of attributes in the source code.
@@ -328,7 +329,8 @@ of `Map` and so their objects can be used anywhere `Map` objects can be used.
 Note that a *SYS_Dictionary* is actually limited such that it can only have
 single-level attributes, because its keys can only be **Text**, not **Nesting**.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a *SYS_Dictionary* is any of the following,
+to keep things more correct and simpler:
 
 * Any object of any Raku class that composes the Raku role `Associative`
 besides `Map`.  This is because many Raku classes compose this role and we

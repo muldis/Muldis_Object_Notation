@@ -122,9 +122,3 @@ in contrast, MUON provides the generic extensible **Excuse** concept, as
 well as other tools, so that reasons can be specified.
 
 *TODO.*
-
-## ECMAScript / JavaScript
-
-<https://www.ecma-international.org/publications/standards/Ecma-262.htm>
-
-*TODO.*

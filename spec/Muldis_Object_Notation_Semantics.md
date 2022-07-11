@@ -886,8 +886,8 @@ defined in terms of being a scaled integer or fixed-denominator fraction.
 While **Mix** is characterized by a generalization of a **Bag**, there are
 currently no possreps defined like **Interval Mix** or **Tuple Mix**,
 because there doesn't seem to be a use case for them.  However, if it turns
-out that either would have a practical use, there is appropriate syntax
-already reserved for them, as described in the Syntax Plain Text section.
+out that either would have a practical use, then it should be easy enough
+to extend the pattern established with **Set** and **Bag**.
 
 Dictionary types in the general case are excluded because the relational
 types should be able to represent all their variations (eg, unordered,
@@ -928,7 +928,8 @@ data model layered over top of MUON and they are both complex and highly
 variable.  Only a few source code types have dedicated MUON syntax because
 they specifically benefit from that and conceptually they are simple even
 if they may vary greatly in implementation, such as unqualified identifiers
-(via **Text**) and **Nesting**, **Heading**, **Renaming**.
+(via **Text**) and **Nesting**, **Heading**, **Renaming**.  However it is
+planned for MUON to be extended with many more source code defining possreps.
 
 Generic foreign serialization types such as JSON and XML are excluded
 because MUON as a whole is supposed to natively handle everything they can
