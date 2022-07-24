@@ -57,7 +57,7 @@ is completely language independent but uses conventions that are
 familiar to programmers of many other languages.
 
 Note that the machine-only readable/writable MUON
-[Syntax_Plain_Blob](Muldis_Object_Notation_Syntax_Plain_Blob.md)
+[Syntax_Packed_Plain_Text](Muldis_Object_Notation_Syntax_Packed_Plain_Text.md)
 exists as an alternative to the MUON `Syntax_Plain_Text`.
 
 The prescribed standard filename extension for files featuring a MUON Plain
