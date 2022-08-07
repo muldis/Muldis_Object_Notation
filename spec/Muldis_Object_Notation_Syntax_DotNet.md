@@ -128,19 +128,19 @@ A **Fraction** artifact is any of the following:
 and its *SYS_that* is the *significand*.
 
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Fraction`
-and its *SYS_that* is any *SYS_Array* having exactly 1 element which
+and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 1 element which
 is the *significand*.
 
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Fraction`
-and its *SYS_that* is any *SYS_Array* having exactly 2 elements which in
+and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 2 elements which in
 ascending order are the *numerator* and *denominator*.
 
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Fraction`
-and its *SYS_that* is any *SYS_Array* having exactly 3 elements which in
+and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 3 elements which in
 ascending order are the *significand*, *radix*, and *exponent*.
 
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Fraction`
-and its *SYS_that* is any *SYS_Array* having exactly 4 elements which in
+and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
 A *significand* is any *SYS_Fraction* or any **Integer** artifact.
@@ -297,22 +297,17 @@ this is the simplest format for the general case of any **Kit** having
 named attributes for which we *don't* need the system to persist the
 literal order of attributes in the source code.
 
-* Any *SYS_Tuple_Ordered* such that each of its elements in turn is
-*attribute asset* (any **Any** artifact) and its corresponding *attribute
-name* is the ordinal position of that element; this is one simplest format,
-and the most canonical, for a **Kit** having only normalized ordered
-attributes and with no special handling for nested tuples.
+* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Kit` and
+its *SYS_that* is any *SYS_Tuple_Ordered* such that each of its elements
+in turn is *attribute asset* (any **Any** artifact) and its corresponding
+*attribute name* is the ordinal position of that element;
+this is the simplest format for a **Kit** having only normalized ordered
+attributes and with no special handling for nested tuples;
+but this format only handles up to 7 attributes,
+so to specify 8 or more attributes, one of the other formats must be used.
 
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Kit` and
-its *SYS_that* is any *SYS_Array* such that each of its elements in turn is
-*attribute asset* (any **Any** artifact) and its corresponding *attribute
-name* is the ordinal position of that element; this is another simplest
-format, and less canonical, for a **Kit** having only normalized ordered
-attributes and with no special handling for nested tuples.
-
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Kit` and
-its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is the **Text**
-artifact `named` and its *SYS_that* is any *SYS_Array* such that each of
+its *SYS_that* is any *SYS_Array* such that each of
 its elements in turn is *multi-level attribute*, which is any *SYS_Duo*
 such that its *SYS_this* is *name* (any **Nesty** artifact) and its
 *SYS_that* is *asset* (any **Any** artifact); this is the format for the
@@ -331,15 +326,15 @@ A *SYS_Dictionary* is any of the following:
 
 A *SYS_Tuple_Ordered* is any of the following:
 
-* Any value of any .NET structure type
-that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
+* Any value of the .NET structure type `System.ValueTuple`.
 
-* Any object of any .NET class
-that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
+Not permitted for a *SYS_Tuple_Ordered* is any of the following,
+to keep things more correct and simpler:
 
-Note that example composers of `System.Runtime.CompilerServices.ITuple` are:
-`System.ValueTuple<...>`,
-`System.Tuple<...>`.
+* Any object of the .NET class `System.Tuple`.
+
+* Any other value of any .NET structure type, or object of any .NET class,
+that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
 
 ## Article / Labelled Tuple
 
