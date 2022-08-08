@@ -16,35 +16,26 @@ its part name is `Syntax_DotNet`.
 # SYNOPSIS
 
 ```
-    new KeyValuePair<String, Object>("Syntax", new KeyValuePair<String[], Object>(
-        new String[]{"Muldis_Object_Notation", "https://muldis.com", "0.300.0"},
-        new KeyValuePair<String, Object>("Model", new KeyValuePair<String[], Object>(
-            new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
-            new KeyValuePair<String, Object[]>("Relation", new Object[]{
-                new Dictionary<String, Object>(){
-                    {"name", "Jane Ives"},
-                    {"birth_date", new KeyValuePair<String, Object>("Calendar_Instant",
-                        new Dictionary<String, Int32>(){{"y", 1971}, {"m", 11}, {"d", 6}}
-                    )},
-                    {"phone_numbers", new KeyValuePair<String, Object[]>("Set",
-                        new String[]{"+1.4045552995", "+1.7705557572"}
-                    )}
+    ("Syntax",(new String[]{"Muldis_Object_Notation", "https://muldis.com", "0.300.0"},
+        ("Model",(new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
+            ("Relation",new Object[]{
+                new Dictionary<String,Object>{
+                    ["name"] = "Jane Ives",
+                    ["birth_date"] = ("Calendar_Instant",
+                        new Dictionary<String,Int32>{["y"]=1971,["m"]=11,["d"]=6}),
+                    ["phone_numbers"] = new HashSet<String>{"+1.4045552995", "+1.7705557572"},
                 },
-                new Dictionary<String, Object>(){
-                    {"name", "Layla Miller"},
-                    {"birth_date", new KeyValuePair<String, Object>("Calendar_Instant",
-                        new Dictionary<String, Int32>(){{"y", 1995}, {"m", 8}, {"d", 27}}
-                    )},
-                    {"phone_numbers", new KeyValuePair<String, Object[]>("Set", new String[]{})}
+                new Dictionary<String,Object>{
+                    ["name"] = "Layla Miller",
+                    ["birth_date"] = ("Calendar_Instant",
+                        new Dictionary<String,Int32>{["y"]=1995,["m"]=8,["d"]=27}),
+                    ["phone_numbers"] = new HashSet<String>{},
                 },
-                new Dictionary<String, Object>(){
-                    {"name", "岩倉 玲音"},
-                    {"birth_date", new KeyValuePair<String, Object>("Calendar_Instant",
-                        new Dictionary<String, Int32>(){{"y", 1984}, {"m", 7}, {"d", 6}}
-                    )},
-                    {"phone_numbers", new KeyValuePair<String, Object[]>("Set",
-                        new String[]{"+81.9072391679"}
-                    )}
+                new Dictionary<String,Object>{
+                    ["name"] = "岩倉 玲音",
+                    ["birth_date"] = ("Calendar_Instant",
+                        new Dictionary<String,Int32>{["y"]=1984,["m"]=7,["d"]=6}),
+                    ["phone_numbers"] = new HashSet<String>{"+81.9072391679"},
                 },
             })
         ))
@@ -117,6 +108,9 @@ An **Integer** artifact is any of the following:
 Not permitted is any of the following, to keep things more correct and simpler:
 
 * Any value of any of the .NET structure types `System.Byte`, `System.Int16`.
+
+* Any value of any of the .NET structure types (which are not *CLS-compliant*)
+`System.UInt16`, `System.UInt32`, `System.UInt64`.
 
 ## Fraction
 
@@ -248,13 +242,26 @@ its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *this* (any
 
 A *SYS_Duo* is any of the following:
 
-* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`
-such that its `Key` property is *SYS_this* and its `Value` property is *SYS_that*.
+* Any *SYS_Tuple_Ordered* having exactly 2 elements
+such that its `Item1` field is *SYS_this* and its `Item2` field is *SYS_that*.
 
 Not permitted for a *SYS_Duo* is any of the following,
 to keep things more correct and simpler:
 
-* Any values or objects of N-ary collection types having exactly 2 elements.
+* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`.
+
+* Any values or objects of N-ary collection types,
+except for `System.ValueTuple`, having exactly 2 elements.
+
+Important note:  While a `System.Collections.Generic.KeyValuePair` value is
+conceptually the most direct analogy in .NET to a **Duo** or **Pair**
+artifact, MUON uses `System.ValueTuple` instead, because the literal syntax
+for the latter, `(this,that)`, is *much* less verbose than for the former,
+`new KeyValuePair<This,That>(this,that)`.  Given how **Duo** is
+conceptually one of the simplest possreps *and* it is one of the most
+frequently used in typical MUON artifacts, this choice is a huge win for
+brevity and usability, despite the trade-off that a common positional
+format of **Kit** or **Tuple** are somewhat more verbose as a result.
 
 ## Lot
 
@@ -379,7 +386,7 @@ A **Geographic Point** artifact is additionally any of the following:
 * Any coordinate-specifying object of the .NET class
 `System.Data.Spatial.DbGeography`.
 
-*TODO: Check if DbGeography is actually in .NET 5+ or not.*
+*Note: DbGeography is only in .NET Framework; it is not in .NET 6.*
 
 ## Set
 
@@ -403,6 +410,14 @@ A **Bag** artifact is additionally any of the following:
 such that each of its elements in turn is *member* (any **Any** artifact).
 
 *TODO: Revisit this.*
+
+## Pair
+
+A **Pair** artifact is additionally any of the following:
+
+* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`
+such that its `Key` property is *this* (any **Any** artifact)
+and its `Value` property is *that* (any **Any** artifact).
 
 # SEE ALSO
 
