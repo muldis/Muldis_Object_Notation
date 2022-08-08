@@ -349,7 +349,7 @@ still be conveyed using other means such as MUON's **Array**+**Integer**.
 ## Nesting / Attribute Name List
 
 A **Nesting** value is characterized by an arbitrarily-large ordered
-sequence of *attribute names* (each one a **Text**), that has at least 1
+sequence of *attribute names* (each one a **Text**), having at least 1
 element, intended for referencing an entity in a multi-level namespace,
 such as nested **Tuple** may implement.
 

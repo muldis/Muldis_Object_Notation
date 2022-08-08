@@ -173,19 +173,19 @@ A **Fraction** artifact is any of the following:
 and its *SYS_that* is the *significand*.
 
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Array* having exactly 1 element which
+and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 1 element which
 is the *significand*.
 
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Array* having exactly 2 elements which in
+and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 2 elements which in
 ascending order are the *numerator* and *denominator*.
 
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Array* having exactly 3 elements which in
+and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 3 elements which in
 ascending order are the *significand*, *radix*, and *exponent*.
 
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Array* having exactly 4 elements which in
+and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
 A *significand* is any *SYS_Fraction* or any *SYS_Integer* value.
@@ -335,13 +335,13 @@ its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *this* (any
 
 A *SYS_Duo* is any of the following:
 
-* Any *SYS_Array* having exactly 2 elements
-such that its 2 elements in ascending order are *SYS_this* and *SYS_that*.
+* Any *SYS_Tuple_Ordered* having exactly 2 elements
+such that its first element is *SYS_this* and its second element is *SYS_that*.
 
 A *SYS_Duo_Over_Dictionary* is any of the following:
 
-* Any *SYS_Dictionary* having exactly 1 element such that this element's
-key and value respectively are *SYS_this* and *SYS_that*.
+* Any *SYS_Dictionary* having exactly 1 element
+such that this element's key is *SYS_this* and its value is *SYS_that*.
 
 ## Lot
 
@@ -382,8 +382,8 @@ named attributes for which we *don't* need the system to persist the
 literal order of attributes in the source code.
 
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Kit` and
-its *SYS_that* is any *SYS_Array* such that each of its elements in turn is
-*attribute asset* (any **Any** artifact) and its corresponding
+its *SYS_that* is any *SYS_Tuple_Ordered* such that each of its elements
+in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
 this is the simplest format for a **Kit** having only normalized ordered
 attributes and with no special handling for nested tuples.
@@ -411,6 +411,10 @@ to keep things more correct and simpler:
 * Any Perl blessed hash-reference value.
 
 * Any Perl typeglob-reference value.
+
+A *SYS_Tuple_Ordered* is any of the following:
+
+* Any *SYS_Array*.
 
 ## Article / Labelled Tuple
 

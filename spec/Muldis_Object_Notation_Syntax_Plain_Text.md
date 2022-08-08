@@ -271,8 +271,8 @@ Examples:
 # COMMON QUALITIES OF THE GRAMMAR
 
 The syntax and intended interpretation of the grammar itself seen in this
-document should match that of the user-defined grammars feature of the Raku
-language, which is described by
+document part should match that of the user-defined grammars feature of the
+Raku language, which is described by
 <https://docs.raku.org/language/grammars>.
 
 Any references like `<foo>` in either the grammar itself or in the written

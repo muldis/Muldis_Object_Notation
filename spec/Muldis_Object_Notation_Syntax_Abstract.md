@@ -356,7 +356,7 @@ Examples:
 ## Nesting / Attribute Name List
 
 A **Nesting** artifact is an arbitrarily-large ordered sequence of
-*attribute names* (each one a **Text**), that has at least 1 element.
+*attribute names* (each one a **Text**), having at least 1 element.
 
 Examples:
 
