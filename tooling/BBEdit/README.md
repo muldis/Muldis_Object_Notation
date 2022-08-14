@@ -1,10 +1,10 @@
 # README
 
-**BBEdit_LM_Muldis_Object_Notation.plist** -
-BBEdit Codeless Language Module for Muldis Object Notation (MUON).
+**BBEdit_LM_Muldis_Object_Notation_Plain_Text.plist** -
+BBEdit Codeless Language Module for Muldis Object Notation (MUON) Plain Text.
 
-The XML/plain-text file [BBEdit_LM_Muldis_Object_Notation.plist](
-BBEdit_LM_Muldis_Object_Notation.plist) is a Codeless Language
+The XML/plain-text file [BBEdit_LM_Muldis_Object_Notation_Plain_Text.plist](
+BBEdit_LM_Muldis_Object_Notation_Plain_Text.plist) is a Codeless Language
 Module for the Mac OS text editor BBEdit
 <https://www.barebones.com/products/bbedit/>.
 

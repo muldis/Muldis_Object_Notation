@@ -1,6 +1,6 @@
 {
     "perl" : "6.c",
-    "name" : "Muldis::Reference::Object_Notation",
+    "name" : "Muldis::Reference::Object_Notation_Plain_Text",
     "auth" : "github:muldis",
     "api" : "0.300",
     "version" : "0.300.0",
@@ -8,7 +8,7 @@
     "authors" : [ "Darren Duncan" ],
     "license" : "Apache-2.0",
     "provides" : {
-        "Muldis::Reference::Object_Notation" : "lib/Muldis/Reference/Object_Notation.rakumod",
+        "Muldis::Reference::Object_Notation_Plain_Text" : "lib/Muldis/Reference/Object_Notation_Plain_Text.rakumod",
     },
     "depends" : [ ],
     "build-depends" : [ ],

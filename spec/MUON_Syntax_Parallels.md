@@ -7,7 +7,7 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ## [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 
 ```
-    (Syntax:({Muldis_Object_Notation, "https://muldis.com", "0.300.0"}:
+    (Syntax:({Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"}:
         (Model:({Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
             (Relation:{
                 (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
@@ -24,7 +24,7 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ## [Syntax_Raku](Muldis_Object_Notation_Syntax_Raku.md)
 
 ```
-    :Syntax(("Muldis_Object_Notation", "https://muldis.com", "0.300.0") =>
+    :Syntax(("Muldis_Object_Notation_Raku", "https://muldis.com", "0.300.0") =>
         :Model(("Muldis_Data_Language", "https://muldis.com", "0.300.0") =>
             :Relation(Set.new(
                 {name => "Jane Ives", birth_date => :Calendar_Instant({y=>1971,m=>11,d=>6}),
@@ -41,7 +41,7 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ## [Syntax_Perl](Muldis_Object_Notation_Syntax_Perl.md)
 
 ```
-    [Syntax=>[[Lot=>["Muldis_Object_Notation", "https://muldis.com", "0.300.0"]] =>
+    [Syntax=>[[Lot=>["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]] =>
         [Model=>[[Lot=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]] =>
             [Relation=>[Lot=>[
                 {name => "Jane Ives", birth_date => [Calendar_Instant=>{y=>1971,m=>11,d=>6}],
@@ -59,7 +59,7 @@ mutually alternative MUON concrete syntaxes compare with each other.
 
 ```
     new AbstractMap.SimpleEntry<String, Object>("Syntax", new AbstractMap.SimpleEntry<String[], Object>(
-        new String[]{"Muldis_Object_Notation", "https://muldis.com", "0.300.0"},
+        new String[]{"Muldis_Object_Notation_Java", "https://muldis.com", "0.300.0"},
         new AbstractMap.SimpleEntry<String, Object>("Model", new AbstractMap.SimpleEntry<String[], Object>(
             new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
             new AbstractMap.SimpleEntry<String, Object[]>("Relation", new Object[]{
@@ -96,7 +96,7 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
 ```
-    ("Syntax",(new String[]{"Muldis_Object_Notation", "https://muldis.com", "0.300.0"},
+    ("Syntax",(new String[]{"Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0"},
         ("Model",(new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
             ("Relation",new Object[]{
                 new Dictionary<String,Object>{
@@ -128,7 +128,7 @@ mutually alternative MUON concrete syntaxes compare with each other.
     <?xml version="1.0" encoding="UTF-8"?>
     <MUON>
         <Duo this="Syntax"><Duo>
-            <this><Lot><m>Muldis_Object_Notation</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot></this>
+            <this><Lot><m>Muldis_Object_Notation_XML</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot></this>
             <that><Duo this="Model"><Duo>
                 <this><Lot><m>Muldis_Data_Language</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot></this>
                 <that><Duo this="Relation"><Lot>

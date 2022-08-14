@@ -16,7 +16,7 @@ its part name is `Syntax_Plain_Text`.
 # SYNOPSIS
 
 ```
-    (Syntax:({Muldis_Object_Notation, "https://muldis.com", "0.300.0"}:
+    (Syntax:({Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"}:
         (Model:({Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
             (Relation:{
                 (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
@@ -59,6 +59,9 @@ familiar to programmers of many other languages.
 Note that the machine-only readable/writable MUON
 [Syntax_Packed_Plain_Text](Muldis_Object_Notation_Syntax_Packed_Plain_Text.md)
 exists as an alternative to the MUON `Syntax_Plain_Text`.
+
+The prescribed standard *syntax predicate* of a **Syntax** signature for a
+MUON Plain Text artifact is `Muldis_Object_Notation_Plain_Text`.
 
 The prescribed standard filename extension for files featuring a MUON Plain
 Text parsing unit is `.muon`, though as per standard UNIX conventions,
@@ -279,8 +282,8 @@ Any references like `<foo>` in either the grammar itself or in the written
 documentation specifically refer to the corresponding grammar token `foo`.
 
 See also the bundled actual Raku module
-[hosts/Raku/lib/Muldis/Reference/Object_Notation.rakumod](
-../hosts/Raku/lib/Muldis/Reference/Object_Notation.rakumod)
+[hosts/Raku/lib/Muldis/Reference/Object_Notation_Plain_Text.rakumod](
+../hosts/Raku/lib/Muldis/Reference/Object_Notation_Plain_Text.rakumod)
 which has an executable copy of the grammar.
 
 # PARSING UNIT

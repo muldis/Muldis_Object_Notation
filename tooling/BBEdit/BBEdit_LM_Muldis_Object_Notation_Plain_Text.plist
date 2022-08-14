@@ -6,7 +6,7 @@
   <key>BBEditDocumentType</key>
   <string>CodelessLanguageModule</string>
   <key>BBLMLanguageDisplayName</key>
-  <string>Muldis Object Notation (MUON)</string>
+  <string>Muldis Object Notation (MUON) Plain Text</string>
   <key>BBLMLanguageCode</key>
   <string>MUON</string>
   <key>BBLMSuffixMap</key>

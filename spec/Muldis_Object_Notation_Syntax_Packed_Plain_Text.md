@@ -47,6 +47,9 @@ under the theory that the former may be more performant for machines to
 parse and generate, or may occupy fewer resources (network bandwidth,
 working memory, disk space) than the latter.
 
+The prescribed standard *syntax predicate* of a **Syntax** signature for a
+MUON Packed Plain Text artifact is `Muldis_Object_Notation_Packed_Plain_Text`.
+
 The prescribed standard filename extension for files featuring a MUON Packed Plain
 Text parsing unit is `.muonppt`, though as per standard UNIX conventions,
 such MUON files can in fact have any filename extension when there is other

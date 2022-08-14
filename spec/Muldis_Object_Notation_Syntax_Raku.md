@@ -16,7 +16,7 @@ its part name is `Syntax_Raku`.
 # SYNOPSIS
 
 ```
-    :Syntax(("Muldis_Object_Notation", "https://muldis.com", "0.300.0") =>
+    :Syntax(("Muldis_Object_Notation_Raku", "https://muldis.com", "0.300.0") =>
         :Model(("Muldis_Data_Language", "https://muldis.com", "0.300.0") =>
             :Relation(Set.new(
                 {name => "Jane Ives", birth_date => :Calendar_Instant({y=>1971,m=>11,d=>6}),
@@ -57,6 +57,9 @@ standard library classes.  Another typical use case is the bridge format of
 a Raku library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 Raku source code.  It is fairly easy for machines to parse and generate.
+
+The prescribed standard *syntax predicate* of a **Syntax** signature for a
+MUON Raku-hosted artifact is `Muldis_Object_Notation_Raku`.
 
 See also <https://raku.org>.
 

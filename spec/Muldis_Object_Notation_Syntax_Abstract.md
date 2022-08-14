@@ -16,7 +16,7 @@ its part name is `Syntax_Abstract`.
 # SYNOPSIS
 
 ```
-    (Syntax:({Muldis_Object_Notation, "https://muldis.com", "0.300.0"}:
+    (Syntax:({Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"}:
         (Model:({Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
             (Relation:{
                 (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
@@ -1407,11 +1407,11 @@ the *syntax subject* is any **Any** artifact.
 Examples:
 
 ```
-    (Syntax:({Muldis_Object_Notation, "https://muldis.com", "0.300.0"}:
+    (Syntax:({Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"}:
         42
     ))
 
-    (Syntax:({Muldis_Object_Notation, "https://example.com", "42"}:
+    (Syntax:({Muldis_Object_Notation_Plain_Text, "https://example.com", "42"}:
         42
     ))
 ```
