@@ -249,8 +249,7 @@ or of any other allomorphic class.
 A **Nesting** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
-and its *SYS_that* is any *SYS_Array*
-such that every element is any *SYS_Text* value.
+and its *SYS_that* is any *SYS_Array_T*.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any *SYS_Text* value.
@@ -258,9 +257,12 @@ and its *SYS_that* is any *SYS_Text* value.
 Not permitted for a **Nesting** is any of the following,
 to prevent ambiguity and simplify things:
 
-* Any object of the Raku class `List` whose elements are *SYS_Text* values.
-This is because that would be interpreted as a **Lot** artifact all of whose
-members are any *SYS_Text* values.
+* Any *SYS_Array_T*.  This is because that would be interpreted as
+a **Lot** artifact all of whose members are any **Text** artifacts.
+
+A *SYS_Array_T* is any of the following:
+
+* Any *SYS_Array_A* such that each of its elements is any *SYS_Text*.
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
@@ -294,16 +296,16 @@ to keep things more correct and simpler:
 
 A **Lot** artifact is any of the following:
 
-* Any *SYS_Array* such that each of its elements in turn is *member*
+* Any *SYS_Array_A* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot` and
-its *SYS_that* is any *SYS_Array* such that each of its elements in turn is
+its *SYS_that* is any *SYS_Array_A* such that each of its elements in turn is
 *multiplied member*, which is any *SYS_Duo_AA* such that its
 *SYS_this* is *member* (any **Any** artifact) and its *SYS_that* is
 *multiplicity* (any **Any** artifact but conceptually a real number).
 
-A *SYS_Array* is any of the following:
+A *SYS_Array_A* is any of the following:
 
 * Any object of the Raku class `List`.
 
@@ -330,7 +332,7 @@ attributes and with no special handling for nested tuples.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit` and
 its *SYS_that* is any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text*
-value `named` and its *SYS_that* is any *SYS_Array* such that each of
+value `named` and its *SYS_that* is any *SYS_Array_A* such that each of
 its elements in turn is *attribute*, which is any *SYS_Duo_AA*
 such that its *SYS_this* is *name* (any *SYS_Text* value) and its
 *SYS_that* is *asset* (any **Any** artifact); this is the format for the
@@ -357,7 +359,7 @@ want to avoid matching other classes as **Kit** that we don't mean to.
 
 A *SYS_Tuple_Ordered* is any of the following:
 
-* Any *SYS_Array*.
+* Any *SYS_Array_A*.
 
 Note that an object of the Raku class `Capture` is a direct `Kit`/`Tuple`
 analogy which extends to the fact that a primary purpose of both is to

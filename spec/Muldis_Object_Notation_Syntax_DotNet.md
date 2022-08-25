@@ -230,8 +230,7 @@ isn't so paired.
 A **Nesting** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
-and its *SYS_that* is any value of the .NET structure type array `System.String[]`
-such that every element is any *SYS_Text* value.
+and its *SYS_that* is any *SYS_Array_T*.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any *SYS_Text* value.
@@ -239,9 +238,13 @@ and its *SYS_that* is any *SYS_Text* value.
 Not permitted for a **Nesting** is any of the following,
 to prevent ambiguity and simplify things:
 
-* Any value of the .NET structure type array `System.String[]`.
-This is because that would be interpreted as a **Lot** artifact all of whose
-members are any *SYS_Text* values.
+* Any *SYS_Array_T*.  This is because that would be interpreted as
+a **Lot** artifact all of whose members are any **Text** artifacts.
+
+A *SYS_Array_T* is any of the following:
+
+* Any *SYS_Array_A* such that each of its elements is any *SYS_Text*;
+for example, any value of the .NET structure type array `System.String[]`.
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
@@ -288,16 +291,16 @@ format of **Kit** or **Tuple** are somewhat more verbose as a result.
 
 A **Lot** artifact is any of the following:
 
-* Any *SYS_Array* such that each of its elements in turn is *member*
+* Any *SYS_Array_A* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot` and
-its *SYS_that* is any *SYS_Array* such that each of its elements in turn is
+its *SYS_that* is any *SYS_Array_A* such that each of its elements in turn is
 *multiplied member*, which is any *SYS_Duo_AA* such that its
 *SYS_this* is *member* (any **Any** artifact) and its *SYS_that* is
 *multiplicity* (any **Any** artifact but conceptually a real number).
 
-A *SYS_Array* is any of the following:
+A *SYS_Array_A* is any of the following:
 
 * Any object of any .NET array class
 (an array class has a name like `foo[]` and is a class for whom
@@ -335,7 +338,7 @@ but this format only handles up to 7 attributes,
 so to specify 8 or more attributes, one of the other formats must be used.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit` and
-its *SYS_that* is any *SYS_Array* such that each of
+its *SYS_that* is any *SYS_Array_A* such that each of
 its elements in turn is *attribute*, which is any *SYS_Duo_AA*
 such that its *SYS_this* is *name* (any *SYS_Text* value) and its
 *SYS_that* is *asset* (any **Any** artifact); this is the format for the

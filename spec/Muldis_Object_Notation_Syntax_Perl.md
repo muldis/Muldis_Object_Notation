@@ -224,7 +224,7 @@ This is because that would typically be interpreted as a **Text** artifact.
 A **Bits** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Bits`
-and its *SYS_that* is any *SYS_Array*
+and its *SYS_that* is any *SYS_Array_A*
 such that every element is either of the 2 *SYS_Integer* values `0`, `1`.
 
 ## Blob
@@ -298,8 +298,7 @@ to keep things more correct and simpler:
 A **Nesting** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
-and its *SYS_that* is any *SYS_Array*
-such that every element is any *SYS_Text* value.
+and its *SYS_that* is any *SYS_Array_T*.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any *SYS_Text* value.
@@ -307,9 +306,13 @@ and its *SYS_that* is any *SYS_Text* value.
 Not permitted for a **Nesting** is any of the following,
 to prevent ambiguity and simplify things:
 
-* Any *SYS_Array* whose elements are *SYS_Text* values.
-This is because that would be interpreted as a **Duo** artifact all of whose
-members are any *SYS_Text* values, or as something invalid.
+* Any *SYS_Array_T*.  This is because that would be interpreted as
+a **Duo** artifact all of whose members are any **Text** artifacts,
+or as something invalid.
+
+A *SYS_Array_T* is any of the following:
+
+* Any *SYS_Array_A* such that each of its elements is any *SYS_Text*.
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
@@ -344,22 +347,22 @@ such that this element's key is *SYS_this* and its value is *SYS_that*.
 A **Lot** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot` and
-its *SYS_that* is any *SYS_Array* such that each of its elements in turn is
+its *SYS_that* is any *SYS_Array_A* such that each of its elements in turn is
 *member* (any **Any** artifact) and its corresponding *multiplicity* is 1.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot` and
 its *SYS_that* is any *SYS_Duo_Over_Dictionary*
 such that its *SYS_this* is the *SYS_Text* value `multiplied` and
-its *SYS_that* is any *SYS_Array* such that each of its elements in turn is
+its *SYS_that* is any *SYS_Array_A* such that each of its elements in turn is
 *multiplied member*, which is any *SYS_Duo_AA* such that its
 *SYS_this* is *member* (any **Any** artifact) and its *SYS_that* is
 *multiplicity* (any **Any** artifact but conceptually a real number).
 
-A *SYS_Array* is any of the following:
+A *SYS_Array_A* is any of the following:
 
 * Any Perl non-blessed array-reference value.
 
-Not permitted for a *SYS_Array* is any of the following,
+Not permitted for a *SYS_Array_A* is any of the following,
 to keep things more correct and simpler:
 
 * Any Perl blessed array-reference value.
@@ -387,7 +390,7 @@ attributes and with no special handling for nested tuples.
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit` and
 its *SYS_that* is any *SYS_Duo_Over_Dictionary*
 such that its *SYS_this* is the *SYS_Text*
-value `named` and its *SYS_that* is any *SYS_Array* such that each of
+value `named` and its *SYS_that* is any *SYS_Array_A* such that each of
 its elements in turn is *attribute*, which is any *SYS_Duo_AA*
 such that its *SYS_this* is *name* (any *SYS_Text* value) and its
 *SYS_that* is *asset* (any **Any** artifact); this is the format for the
@@ -407,7 +410,7 @@ to keep things more correct and simpler:
 
 A *SYS_Tuple_Ordered* is any of the following:
 
-* Any *SYS_Array*.
+* Any *SYS_Array_A*.
 
 ## Article / Labelled Tuple
 
