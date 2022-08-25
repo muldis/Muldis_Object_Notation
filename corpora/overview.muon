@@ -287,15 +287,6 @@
         `A non-Latin name.`
         ("サンプル": "http://example.com",),
 
-        `Five leaf attributes in nested multi-level namespace.`
-        (
-            name: "John Glenn",
-            birth_date::year: 1921,
-            comment: "Fly!",
-            birth_date::month: 7,
-            birth_date::day: 18,
-        ),
-
     ),
 
 `#########################################################################`
@@ -801,26 +792,6 @@
         (Tuple:(
             name : Michelle,
             age  : 17,
-        )),
-
-        `Five leaf attributes in nested multi-level namespace.`
-        (Tuple:(
-            name: "John Glenn",
-            birth_date::year: 1921,
-            comment: "Fly!",
-            birth_date::month: 7,
-            birth_date::day: 18,
-        )),
-
-        `Same thing.`
-        (Tuple:(
-            name: "John Glenn",
-            birth_date: (Tuple:(
-                year: 1921,
-                month: 7,
-                day: 18,
-            )),
-            comment: "Fly!",
         )),
 
     ),

@@ -316,12 +316,12 @@ Note that example composers of `java.util.List` are:
 `java.util.Vector`,
 `java.util.concurrent.CopyOnWriteArrayList`.
 
-## Kit / Multi-Level Tuple
+## Kit
 
 A **Kit** artifact is any of the following:
 
 * Any *SYS_Dictionary* such that each of its elements in turn is
-*multi-level attribute* whose element key is *name* (any **Nesty** artifact)
+*attribute* whose element key is *name* (any *SYS_Text* value)
 and whose element value is *asset* (any **Any** artifact);
 this is the simplest format for the general case of any **Kit** having
 named attributes for which we *don't* need the system to persist the
@@ -337,8 +337,8 @@ attributes and with no special handling for nested tuples.
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit` and
 its *SYS_that* is any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text*
 value `named` and its *SYS_that* is any *SYS_Array* such that each of
-its elements in turn is *multi-level attribute*, which is any *SYS_Duo_AA*
-such that its *SYS_this* is *name* (any **Nesty** artifact) and its
+its elements in turn is *attribute*, which is any *SYS_Duo_AA*
+such that its *SYS_this* is *name* (any *SYS_Text* value) and its
 *SYS_that* is *asset* (any **Any** artifact); this is the format for the
 general case of any **Kit** having named attributes for which we *do* need
 the system to persist the literal order of attributes in the source code.
@@ -364,9 +364,8 @@ An **Article** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Article`
 and its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *label*
-(any **Nesty** artifact) and its *SYS_that* is *attributes* (any **Kit**
-artifact such that every one of its *multi-level attribute names* has
-exactly 1 element).
+(any **Nesty** artifact) and its *SYS_that* is *attributes*
+(any **Kit** artifact).
 
 ## Excuse
 
@@ -374,9 +373,8 @@ An **Excuse** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Excuse`
 and its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *label*
-(any **Nesty** artifact) and its *SYS_that* is *attributes* (any **Kit**
-artifact such that every one of its *multi-level attribute names* has
-exactly 1 element).
+(any **Nesty** artifact) and its *SYS_that* is *attributes*
+(any **Kit** artifact).
 
 # ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
 

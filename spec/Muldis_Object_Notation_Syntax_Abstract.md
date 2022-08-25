@@ -423,14 +423,14 @@ Examples:
     }
 ```
 
-## Kit / Multi-Level Tuple
+## Kit
 
-A **Kit** artifact is an arbitrarily-large ordered collection of
-elements each of which in turn is named *multi-level attribute* such that
-each *multi-level attribute* is an ordered collection having exactly 2
-elements which in order are named *name* (any **Nesty** artifact)
-and *asset* (any **Any** artifact), such that for any 2 multi-level
-attributes neither's *name* is a leading sub-sequence of the other's.
+A **Kit** artifact is an arbitrarily-large ordered collection of elements
+each of which in turn is named *attribute* such that each
+*attribute* is an ordered collection having exactly 2 elements
+which in order are named *name* (any **Text** artifact) and *asset*
+(any **Any** artifact),
+such that no 2 attributes have the same *attribute name*.
 
 Examples:
 
@@ -478,23 +478,13 @@ Examples:
 
     `A non-Latin name.`
     ("サンプル": "http://example.com",)
-
-    `Five leaf attributes in nested multi-level namespace.`
-    (
-        name: "John Glenn",
-        birth_date::year: 1921,
-        comment: "Fly!",
-        birth_date::month: 7,
-        birth_date::day: 18,
-    )
 ```
 
 ## Article / Labelled Tuple
 
 An **Article** artifact is an ordered collection having exactly 2 elements
 which in order are named *label* (any **Nesty** artifact)
-and *attributes* (any **Kit** artifact such that every one of its
-*multi-level attribute names* has exactly 1 element).
+and *attributes* (any **Kit** artifact).
 
 Examples:
 
@@ -525,8 +515,7 @@ Examples:
 
 An **Excuse** artifact is an ordered collection having exactly 2 elements
 which in order are named *label* (any **Nesty** artifact)
-and *attributes* (any **Kit** artifact such that every one of its
-*multi-level attribute names* has exactly 1 element).
+and *attributes* (any **Kit** artifact).
 
 Examples:
 
@@ -1162,18 +1151,8 @@ A **Tuple** artifact has the predicate `Tuple`.
 
 Its subject is any of the following:
 
-* Any **Kit** artifact such that every one of its *multi-level
-attribute names* has exactly 1 element.  The *multi-level attributes* of
-the **Kit** define the *attributes* of the **Tuple** one to one, such
-that the single element of the former's *multi-level attribute name*
-defines the latter's *attribute name*, and the former's *asset* defines the
-latter's *asset*.
-
-* Any **Kit** artifact such that any one of its *multi-level
-attribute names* has more than 1 element.  The single **Kit** is then
-interpreted as multiple **Tuple** in a tree arrangement such that any
-2-element names result in 1 sub-level of tuple below the root tuple, and
-all assets are leaves of the tree.
+* Any **Kit** artifact such that its *attributes* define the same
+*attributes* of the **Tuple**.
 
 Examples:
 
@@ -1197,26 +1176,6 @@ Examples:
     (Tuple:(
         name : Michelle,
         age  : 17,
-    ))
-
-    `Five leaf attributes in nested multi-level namespace.`
-    (Tuple:(
-        name: "John Glenn",
-        birth_date::year: 1921,
-        comment: "Fly!",
-        birth_date::month: 7,
-        birth_date::day: 18,
-    ))
-
-    `Same thing.`
-    (Tuple:(
-        name: "John Glenn",
-        birth_date: (Tuple:(
-            year: 1921,
-            month: 7,
-            day: 18,
-        )),
-        comment: "Fly!",
     ))
 ```
 

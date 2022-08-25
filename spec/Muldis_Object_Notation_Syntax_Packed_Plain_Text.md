@@ -101,7 +101,7 @@ parser or generator, the latter just cares about the content of the file.
 
 *TODO.*
 
-## Kit / Multi-Level Tuple
+## Kit
 
 *TODO.*
 

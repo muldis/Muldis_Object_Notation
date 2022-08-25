@@ -298,10 +298,10 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token Kit
     {
-        ['(' <sp>?] ~ [<sp>? ')'] <kit_ml_attrs>
+        ['(' <sp>?] ~ [<sp>? ')'] <kit_attrs>
     }
 
-    token kit_ml_attrs
+    token kit_attrs
     {
         <kit_nullary> | <kit_unary> | <kit_nary>
     }
@@ -313,29 +313,29 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token kit_unary
     {
-          [          <kit_ml_attr> <sp>? ',']
-        | [',' <sp>? <kit_ml_attr> <sp>? ',']
-        | [',' <sp>? <kit_ml_attr>          ]
+          [          <kit_attr> <sp>? ',']
+        | [',' <sp>? <kit_attr> <sp>? ',']
+        | [',' <sp>? <kit_attr>          ]
     }
 
     token kit_nary
     {
         [',' <sp>?]?
-        [<kit_ml_attr> ** 2..* % [<sp>? ',' <sp>?]]
+        [<kit_attr> ** 2..* % [<sp>? ',' <sp>?]]
         [<sp>? ',']?
     }
 
-    token kit_ml_attr
+    token kit_attr
     {
-        [<ml_attr_name> <sp>? ':' <sp>?]? <ml_attr_asset>
+        [<attr_name> <sp>? ':' <sp>?]? <attr_asset>
     }
 
-    token ml_attr_name
+    token attr_name
     {
-        <Nesting> | <Text>
+        <Text>
     }
 
-    token ml_attr_asset
+    token attr_asset
     {
         <Any>
     }

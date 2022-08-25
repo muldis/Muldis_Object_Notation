@@ -415,20 +415,20 @@ order of its child nodes even when the value being selected is an unordered
 type, which can be considered essential for round tripping source code that
 better resembles what the programmer wrote.
 
-## Kit / Multi-Level Tuple
+## Kit
 
 A **Kit** value is a general purpose arbitrarily-large ordered
-heterogeneous collection of named *multi-level attributes*, such that for
-any 2 multi-level attributes neither's *multi-level attribute name* is a
-leading sub-sequence of the other's, which explicitly does not represent
-any kind of thing in particular, and is simply the sum of its multi-level
-attributes.  A multi-level attribute is conceptually a name-asset pair, the
-name being used to look up the multi-level attribute in a **Kit**.
-A *multi-level attribute name* is a semiqualified program identifier and is
-conceptually a nonempty sequence of character string that is not a
-**Nesting** value.  In the general case each multi-level attribute of a
-**Kit** is of a distinct data type, though multiple multi-level
-attributes often have the same type.
+heterogeneous collection of named *attributes*, such that no 2 attributes
+have the same *attribute name*, which explicitly does not represent any
+kind of thing in particular, and is simply the sum of its attributes.
+An attribute is conceptually a name-asset pair, the name being used to look
+up the attribute in a **Kit**.  An *attribute name* is an unqualified
+program identifier and is conceptually a character string that is not a
+**Text** value.  In the general case each attribute of a **Kit** is of a
+distinct data type, though multiple attributes often have the same type.
+
+A **Duo** value is also characterized by a **Tuple**
+but that its collection of attributes is ordered rather than unordered.
 
 The **Kit** possrep is an idiomatic generalization of a discrete
 heterogeneous collection, such that any given MUON syntax can choose to just
@@ -446,19 +446,11 @@ order of its child nodes even when the value being selected is an unordered
 type, which can be considered essential for round tripping source code that
 better resembles what the programmer wrote.
 
-A second key feature of **Kit** is that it natively preserves a
-useful alternative syntax for a tree of nested **Tuple** representing a
-multi-level namespace for declaring program entities, such that the
-entities are declared in a single ordered flat list and each of the entity
-names can be multi-level, which is very conducive to trivial text-editor
-function scanning and navigation menu building logic when you have multiple
-levels of entities declared in the same source file.
-
 ## Article / Labelled Tuple
 
 An **Article** value is characterized by the pairing of a *label*, which is
 a **Nesting** value, with a set of 0..N *attributes*, where that set is a
-**Kit** value whose attributes are each only a single level.
+**Kit** value.
 
 The **Article** possrep is the idiomatic way for an external data model to
 represent "new" types of a nominal type system in a consistent way.  The
@@ -478,7 +470,7 @@ where the *label* is the singleton type name and the *attributes* is the
 **Kit** with zero attributes.
 
 The idiomatic default attribute name for a single-attribute **Article** is
-`0` (the first conceptually ordered attribute name) when there isn't an
+`0t0` (the first conceptually ordered attribute name) when there isn't an
 actual meaningful name to give it.
 
 ## Excuse

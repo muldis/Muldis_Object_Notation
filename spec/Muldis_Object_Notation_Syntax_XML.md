@@ -116,7 +116,7 @@ See also <https://www.w3.org/XML>.
 
 *TODO.*
 
-## Kit / Multi-Level Tuple
+## Kit
 
 *TODO.*
 
