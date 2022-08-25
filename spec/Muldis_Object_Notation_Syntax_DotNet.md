@@ -230,16 +230,19 @@ isn't so paired.
 A **Nesting** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
-and its *SYS_that* is any *SYS_Array_T*.
-
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
-and its *SYS_that* is any *SYS_Text* value.
+and its *SYS_that* is any *SYS_Nesting*.
 
 Not permitted for a **Nesting** is any of the following,
 to prevent ambiguity and simplify things:
 
 * Any *SYS_Array_T*.  This is because that would be interpreted as
 a **Lot** artifact all of whose members are any **Text** artifacts.
+
+A *SYS_Nesting* is any of the following:
+
+* Any *SYS_Array_T*.
+
+* Any *SYS_Text*.
 
 A *SYS_Array_T* is any of the following:
 
@@ -373,18 +376,18 @@ that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
 An **Article** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Article`
-and its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *label*
-(any **Nesty** artifact) and its *SYS_that* is *attributes*
-(any **Kit** artifact).
+and its *SYS_that* is any *SYS_Duo_AA* such that
+its *SYS_this* is *label* (any *SYS_Nesting*) and
+its *SYS_that* is *attributes* (any **Kit** artifact).
 
 ## Excuse
 
 An **Excuse** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Excuse`
-and its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *label*
-(any **Nesty** artifact) and its *SYS_that* is *attributes*
-(any **Kit** artifact).
+and its *SYS_that* is any *SYS_Duo_AA* such that
+its *SYS_this* is *label* (any *SYS_Nesting*) and
+its *SYS_that* is *attributes* (any **Kit** artifact).
 
 # ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
 
