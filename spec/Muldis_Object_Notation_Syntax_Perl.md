@@ -77,7 +77,7 @@ A **Boolean** artifact is any of the following:
 
 * Any *SYS_Boolean_as_of_536*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Boolean`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Boolean`
 and its *SYS_that* is any *SYS_Boolean_as_of_536* or *SYS_Boolean_before_536*.
 
 A *SYS_Boolean_as_of_536* is any of the following:
@@ -113,7 +113,7 @@ when running under Perl versions prior to 5.36.
 boolean value, given any Perl source code that defines MUON `Syntax_Perl`
 artifacts and that is intended to execute under both older and newer Perl
 versions, all **Boolean** artifacts therein should use the fully-qualified
-form based on *SYS_Duo* to be portable.  If you use the unqualified form,
+form based on *SYS_Duo_TA* to be portable.  If you use the unqualified form,
 then the exact same Perl logic may produce values that are interpreted as
 **Boolean** artifacts on higher Perl versions and as either **Text** or
 **Integer** artifacts on lower Perl versions.
@@ -124,7 +124,7 @@ An **Integer** artifact is any of the following:
 
 * Any *SYS_Integer*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Integer`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Integer`
 and its *SYS_that* is any *SYS_Integer*.
 
 A *SYS_Integer* is any of the following:
@@ -148,7 +148,7 @@ a Perl boolean or float or string or anything else besides an integer value.
 sequence of digits or anything else resembles a numeric literal.
 This is because that would be interpreted as a **Text** artifact.
 
-Note that the fully-qualified (via *SYS_Duo*) form of an **Integer**
+Note that the fully-qualified (via *SYS_Duo_TA*) form of an **Integer**
 artifact could theoretically also support some formats of numeric-looking
 character strings (via *SYS_Text*), but we currently disallow this to keep
 things simpler and avoid possibly non-deterministic interpretation in the
@@ -163,22 +163,22 @@ A **Fraction** artifact is any of the following:
 
 * Any *SYS_Fraction*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is the *significand*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 1 element which
 is the *significand*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 2 elements which in
 ascending order are the *numerator* and *denominator*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 3 elements which in
 ascending order are the *significand*, *radix*, and *exponent*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
@@ -223,7 +223,7 @@ This is because that would typically be interpreted as a **Text** artifact.
 
 A **Bits** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Bits`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Bits`
 and its *SYS_that* is any *SYS_Array*
 such that every element is either of the 2 *SYS_Integer* values `0`, `1`.
 
@@ -231,7 +231,7 @@ such that every element is either of the 2 *SYS_Integer* values `0`, `1`.
 
 A **Blob** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Blob` and
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Blob` and
 its *SYS_that* is any *SYS_String* whose UTF8 flag is false.
 
 Not permitted for a **Blob** is any of the following,
@@ -240,7 +240,7 @@ to prevent ambiguity and simplify things:
 * Any *SYS_String*.
 This is because that would be interpreted as a **Text** artifact if not invalid.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Blob` and
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Blob` and
 its *SYS_that* is any *SYS_String* whose UTF8 flag is true.
 
 ## Text / Attribute Name
@@ -249,7 +249,7 @@ A **Text** artifact is any of the following:
 
 * Any *SYS_Text*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Text` and
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Text` and
 its *SYS_that* is any *SYS_Text*.
 
 A *SYS_Text* is any of the following:
@@ -297,11 +297,11 @@ to keep things more correct and simpler:
 
 A **Nesting** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Nesting`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any *SYS_Array*
 such that every element is any *SYS_Text* value.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Nesting`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any *SYS_Text* value.
 
 Not permitted for a **Nesting** is any of the following,
@@ -317,15 +317,19 @@ members are any *SYS_Text* values, or as something invalid.
 
 A **Duo** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is *this* (any **Any** artifact
+* Any *SYS_Duo_AA* such that its *SYS_this* is *this* (any **Any** artifact
 except for any *Primary_Possrep_Name*) and its *SYS_that* is *that* (any
 **Any** artifact).
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Duo` and
-its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *this* (any
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo` and
+its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *this* (any
 **Any** artifact) and its *SYS_that* is *that* (any **Any** artifact).
 
-A *SYS_Duo* is any of the following:
+A *SYS_Duo_TA* is any of the following:
+
+* Any *SYS_Duo_AA* such that its *SYS_this* is any *SYS_Text* value.
+
+A *SYS_Duo_AA* is any of the following:
 
 * Any *SYS_Tuple_Ordered* having exactly 2 elements
 such that its first element is *SYS_this* and its second element is *SYS_that*.
@@ -339,15 +343,15 @@ such that this element's key is *SYS_this* and its value is *SYS_that*.
 
 A **Lot** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Lot` and
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot` and
 its *SYS_that* is any *SYS_Array* such that each of its elements in turn is
 *member* (any **Any** artifact) and its corresponding *multiplicity* is 1.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Lot` and
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot` and
 its *SYS_that* is any *SYS_Duo_Over_Dictionary*
 such that its *SYS_this* is the *SYS_Text* value `multiplied` and
 its *SYS_that* is any *SYS_Array* such that each of its elements in turn is
-*multiplied member*, which is any *SYS_Duo* such that its
+*multiplied member*, which is any *SYS_Duo_AA* such that its
 *SYS_this* is *member* (any **Any** artifact) and its *SYS_that* is
 *multiplicity* (any **Any** artifact but conceptually a real number).
 
@@ -373,18 +377,18 @@ this is the simplest format for the general case of any **Kit** having
 named attributes for which we *don't* need the system to persist the
 literal order of attributes in the source code.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Kit` and
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit` and
 its *SYS_that* is any *SYS_Tuple_Ordered* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
 this is the simplest format for a **Kit** having only normalized ordered
 attributes and with no special handling for nested tuples.
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Kit` and
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit` and
 its *SYS_that* is any *SYS_Duo_Over_Dictionary*
 such that its *SYS_this* is the *SYS_Text*
 value `named` and its *SYS_that* is any *SYS_Array* such that each of
-its elements in turn is *multi-level attribute*, which is any *SYS_Duo*
+its elements in turn is *multi-level attribute*, which is any *SYS_Duo_AA*
 such that its *SYS_this* is *name* (any **Nesty** artifact) and its
 *SYS_that* is *asset* (any **Any** artifact); this is the format for the
 general case of any **Kit** having named attributes for which we *do* need
@@ -412,8 +416,8 @@ A *SYS_Tuple_Ordered* is any of the following:
 
 An **Article** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Article`
-and its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *label*
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Article`
+and its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *label*
 (any **Nesty** artifact) and its *SYS_that* is *attributes* (any **Kit**
 artifact such that every one of its *multi-level attribute names* has
 exactly 1 element).
@@ -422,8 +426,8 @@ exactly 1 element).
 
 An **Excuse** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Excuse`
-and its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *label*
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Excuse`
+and its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *label*
 (any **Nesty** artifact) and its *SYS_that* is *attributes* (any **Kit**
 artifact such that every one of its *multi-level attribute names* has
 exactly 1 element).
