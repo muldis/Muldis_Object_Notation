@@ -71,7 +71,8 @@ An **Ignorance** artifact is any of the following:
 
 * The only object of the Raku singleton class `Nil`.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for an **Ignorance** is any of the following,
+to keep things more correct and simpler:
 
 * Any *undefined* value of some other type.
 
@@ -81,7 +82,8 @@ A **Boolean** artifact is any of the following:
 
 * Any value of the Raku enum `Bool`.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for a **Boolean** is any of the following,
+to keep things more correct and simpler:
 
 * Any value of any numeric type such that zero/one represents false/true.
 
@@ -102,7 +104,8 @@ An **Integer** artifact is any of the following:
 
 Note that `UInt` is a Raku subset of `Int`.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for an **Integer** is any of the following,
+to keep things more correct and simpler:
 
 * Any object of any of the Raku classes `byte`, `int8`, `uint8`, `int16`, `uint16`.
 
@@ -188,7 +191,8 @@ A **Bits** artifact is any of the following:
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Bits`
 and its *SYS_that* is any object of any Raku class that composes the Raku role `Blob`.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Bits** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any object of any Raku class that composes the Raku role `Blob`.
 This is because that would be interpreted as a **Blob** artifact.
@@ -202,7 +206,8 @@ A **Blob** artifact is any of the following:
 Note that the Raku role `Buf` composes the Raku role `Blob` and so objects
 of classes that compose the latter also compose the former.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Blob** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any object of the Raku class `List` whose elements are **Integer** artifacts.
 This is because that would be interpreted as a **Lot** artifact all of whose
@@ -219,7 +224,8 @@ A **Text** artifact is any of the following:
 Note that *well formed* means there are no UTF-16 surrogate code points
 defined in it that aren't in valid surrogate pairs.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for a **Text** is any of the following,
+to keep things more correct and simpler:
 
 * Any object of the Raku class `Str` that is not *well formed*,
 if such a thing exists.
@@ -241,7 +247,8 @@ such that every element is any **Text** artifact.
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Nesting`
 and its *SYS_that* is any **Text** artifact.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Nesting** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any object of the Raku class `List` whose elements are **Text** artifacts.
 This is because that would be interpreted as a **Lot** artifact all of whose

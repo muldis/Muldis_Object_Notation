@@ -100,7 +100,8 @@ A **Boolean** artifact is any of the following:
 
 * Any object of the Java class `java.lang.Boolean`.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for a **Boolean** is any of the following,
+to keep things more correct and simpler:
 
 * Any value of any numeric type such that zero/one represents false/true.
 
@@ -116,7 +117,8 @@ An **Integer** artifact is any of the following:
 
 * Any object of the Java class `java.math.BigInteger`.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for an **Integer** is any of the following,
+to keep things more correct and simpler:
 
 * Any value of any of the Java primitive types `byte`, `short`.
 
@@ -189,7 +191,8 @@ A **Blob** artifact is any of the following:
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Blob`
 and its *SYS_that* is any value of the Java primitive type array `byte[]`.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Blob** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any value of the Java primitive type array `byte[]`.
 This is because to keep things simple we treat all standalone Java array
@@ -203,7 +206,8 @@ A **Text** artifact is any of the following:
 
 * Any object of the Java class `java.lang.String` that is *well formed*.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for a **Text** is any of the following,
+to keep things more correct and simpler:
 
 * Any object of the Java class `java.lang.String` that is not *well formed*.
 
@@ -238,7 +242,8 @@ such that every element is any **Text** artifact.
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Nesting`
 and its *SYS_that* is any **Text** artifact.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Nesting** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any value of the Java primitive type array `String[]`.
 This is because that would be interpreted as a **Lot** artifact all of whose

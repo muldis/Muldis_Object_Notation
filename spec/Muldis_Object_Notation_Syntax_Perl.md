@@ -80,7 +80,8 @@ A **Boolean** artifact is any of the following:
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Boolean`
 and its *SYS_that* is any *SYS_Boolean_as_of_536* or *SYS_Boolean_before_536*.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for a **Boolean** is any of the following,
+to keep things more correct and simpler:
 
 * Any Perl value that is not a *SYS_Boolean_as_of_536*,
 even if it could be coerced to one.
@@ -132,7 +133,8 @@ An **Integer** artifact is any of the following:
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Integer`
 and its *SYS_that* is any *SYS_Integer*.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for an **Integer** is any of the following,
+to keep things more correct and simpler:
 
 * Any Perl value that is not a *SYS_Integer*, even if it could be coerced to one.
 
@@ -243,7 +245,8 @@ A **Blob** artifact is any of the following:
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Blob` and
 its *SYS_that* is any *SYS_String* whose UTF8 flag is false.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Blob** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any *SYS_String*.
 This is because that would be interpreted as a **Text** artifact if not invalid.
@@ -260,7 +263,8 @@ A **Text** artifact is any of the following:
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Text` and
 its *SYS_that* is any *SYS_Text*.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for a **Text** is any of the following,
+to keep things more correct and simpler:
 
 * Any Perl value that is not a *SYS_Text*, even if it could be coerced to one.
 
@@ -316,7 +320,8 @@ such that every element is any *SYS_Text* value.
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any *SYS_Text* value.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Nesting** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any *SYS_Array* whose elements are *SYS_Text* values.
 This is because that would be interpreted as a **Duo** artifact all of whose

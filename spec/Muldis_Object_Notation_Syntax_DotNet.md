@@ -84,7 +84,8 @@ An **Ignorance** artifact is any of the following:
 
 * The special .NET `null` value.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for an **Ignorance** is any of the following,
+to keep things more correct and simpler:
 
 * The only object of the .NET singleton class `System.DBNull`.
 
@@ -94,7 +95,8 @@ A **Boolean** artifact is any of the following:
 
 * Any value of the .NET structure type `System.Boolean`.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for a **Boolean** is any of the following,
+to keep things more correct and simpler:
 
 * Any value of any numeric type such that zero/one represents false/true.
 
@@ -108,7 +110,8 @@ An **Integer** artifact is any of the following:
 
 * Any value of the .NET structure type `System.Numerics.BigInteger`.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for an **Integer** is any of the following,
+to keep things more correct and simpler:
 
 * Any value of any of the .NET structure types `System.Byte`, `System.Int16`.
 
@@ -177,7 +180,8 @@ A **Blob** artifact is any of the following:
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Blob`
 and its *SYS_that* is any value of the .NET structure type array `System.Byte[]`.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Blob** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any value of the .NET structure type array `System.Byte[]`.
 This is because to keep things simple we treat all standalone .NET array
@@ -191,7 +195,8 @@ A **Text** artifact is any of the following:
 
 * Any object of the .NET class `System.String` that is *well formed*.
 
-Not permitted is any of the following, to keep things more correct and simpler:
+Not permitted for a **Text** is any of the following,
+to keep things more correct and simpler:
 
 * Any object of the .NET class `System.String` that is not *well formed*.
 
@@ -223,7 +228,8 @@ such that every element is any **Text** artifact.
 * Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Nesting`
 and its *SYS_that* is any **Text** artifact.
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Nesting** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any value of the .NET structure type array `System.String[]`.
 This is because that would be interpreted as a **Lot** artifact all of whose
@@ -326,7 +332,8 @@ the system to persist the literal order of attributes in the source code.
 
 *TODO: Consider adding .NET anonymous types as an option if feasible.*
 
-Not permitted is any of the following, to prevent ambiguity and simplify things:
+Not permitted for a **Kit** is any of the following,
+to prevent ambiguity and simplify things:
 
 * Any object of the .NET class `System.Data.DataRow`.
 
