@@ -106,11 +106,15 @@ to keep things more correct and simpler:
 
 An **Integer** artifact is any of the following:
 
+* Any *SYS_Integer*.
+
+A *SYS_Integer* is any of the following:
+
 * Any value of any of the .NET structure types `System.Int32`, `System.Int64`.
 
 * Any value of the .NET structure type `System.Numerics.BigInteger`.
 
-Not permitted for an **Integer** is any of the following,
+Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:
 
 * Any value of any of the .NET structure types `System.Byte`, `System.Int16`.
@@ -124,34 +128,34 @@ A **Fraction** artifact is any of the following:
 
 * Any *SYS_Fraction*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Fraction`
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is the *significand*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Fraction`
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 1 element which
 is the *significand*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Fraction`
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 2 elements which in
 ascending order are the *numerator* and *denominator*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Fraction`
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 3 elements which in
 ascending order are the *significand*, *radix*, and *exponent*.
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Fraction`
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
-A *significand* is any *SYS_Fraction* or any **Integer** artifact.
+A *significand* is any *SYS_Fraction* or any *SYS_Integer* value.
 
-A *numerator* is any **Integer** artifact.
+A *numerator* is any *SYS_Integer* value.
 
-A *denominator* is any **Integer** artifact which denotes a nonzero integer.
+A *denominator* is any *SYS_Integer* value which denotes a nonzero integer.
 
-A *radix* is any **Integer** artifact which denotes an integer that is at least 2.
+A *radix* is any *SYS_Integer* value which denotes an integer that is at least 2.
 
-An *exponent* is any **Integer** artifact.
+An *exponent* is any *SYS_Integer* value.
 
 A *SYS_Fraction* is any of the following:
 
@@ -177,7 +181,7 @@ A **Bits** artifact is any of the following:
 
 A **Blob** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Blob`
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Blob`
 and its *SYS_that* is any value of the .NET structure type array `System.Byte[]`.
 
 Not permitted for a **Blob** is any of the following,
@@ -193,9 +197,13 @@ in case it is all `Byte` elements.
 
 A **Text** artifact is any of the following:
 
+* Any *SYS_Text*.
+
+A *SYS_Text* is any of the following:
+
 * Any object of the .NET class `System.String` that is *well formed*.
 
-Not permitted for a **Text** is any of the following,
+Not permitted for a *SYS_Text* is any of the following,
 to keep things more correct and simpler:
 
 * Any object of the .NET class `System.String` that is not *well formed*.
@@ -221,19 +229,19 @@ isn't so paired.
 
 A **Nesting** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Nesting`
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any value of the .NET structure type array `System.String[]`
-such that every element is any **Text** artifact.
+such that every element is any *SYS_Text* value.
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Nesting`
-and its *SYS_that* is any **Text** artifact.
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Nesting`
+and its *SYS_that* is any *SYS_Text* value.
 
 Not permitted for a **Nesting** is any of the following,
 to prevent ambiguity and simplify things:
 
 * Any value of the .NET structure type array `System.String[]`.
 This is because that would be interpreted as a **Lot** artifact all of whose
-members are any **Text** artifacts.
+members are any *SYS_Text* values.
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
@@ -245,7 +253,7 @@ A **Duo** artifact is any of the following:
 except for any *Primary_Possrep_Name*) and its *SYS_that* is *that* (any
 **Any** artifact).
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Duo` and
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Duo` and
 its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *this* (any
 **Any** artifact) and its *SYS_that* is *that* (any **Any** artifact).
 
@@ -279,7 +287,7 @@ A **Lot** artifact is any of the following:
 * Any *SYS_Array* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1.
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Lot` and
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Lot` and
 its *SYS_that* is any *SYS_Array* such that each of its elements in turn is
 *multiplied member*, which is any *SYS_Duo* such that its
 *SYS_this* is *member* (any **Any** artifact) and its *SYS_that* is
@@ -313,7 +321,7 @@ this is the simplest format for the general case of any **Kit** having
 named attributes for which we *don't* need the system to persist the
 literal order of attributes in the source code.
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Kit` and
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Kit` and
 its *SYS_that* is any *SYS_Tuple_Ordered* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
@@ -322,7 +330,7 @@ attributes and with no special handling for nested tuples;
 but this format only handles up to 7 attributes,
 so to specify 8 or more attributes, one of the other formats must be used.
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Kit` and
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Kit` and
 its *SYS_that* is any *SYS_Array* such that each of
 its elements in turn is *multi-level attribute*, which is any *SYS_Duo*
 such that its *SYS_this* is *name* (any **Nesty** artifact) and its
@@ -357,7 +365,7 @@ that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
 
 An **Article** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Article`
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Article`
 and its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *label*
 (any **Nesty** artifact) and its *SYS_that* is *attributes* (any **Kit**
 artifact such that every one of its *multi-level attribute names* has
@@ -367,7 +375,7 @@ exactly 1 element).
 
 An **Excuse** artifact is any of the following:
 
-* Any *SYS_Duo* such that its *SYS_this* is the **Text** artifact `Excuse`
+* Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Excuse`
 and its *SYS_that* is any *SYS_Duo* such that its *SYS_this* is *label*
 (any **Nesty** artifact) and its *SYS_that* is *attributes* (any **Kit**
 artifact such that every one of its *multi-level attribute names* has

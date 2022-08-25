@@ -80,12 +80,6 @@ A **Boolean** artifact is any of the following:
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Boolean`
 and its *SYS_that* is any *SYS_Boolean_as_of_536* or *SYS_Boolean_before_536*.
 
-Not permitted for a **Boolean** is any of the following,
-to keep things more correct and simpler:
-
-* Any Perl value that is not a *SYS_Boolean_as_of_536*,
-even if it could be coerced to one.
-
 A *SYS_Boolean_as_of_536* is any of the following:
 
 * Any *SYS_Scalar* that is canonically or "originally"
@@ -132,11 +126,6 @@ An **Integer** artifact is any of the following:
 
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Integer`
 and its *SYS_that* is any *SYS_Integer*.
-
-Not permitted for an **Integer** is any of the following,
-to keep things more correct and simpler:
-
-* Any Perl value that is not a *SYS_Integer*, even if it could be coerced to one.
 
 A *SYS_Integer* is any of the following:
 
@@ -262,11 +251,6 @@ A **Text** artifact is any of the following:
 
 * Any *SYS_Duo* such that its *SYS_this* is the *SYS_Text* value `Text` and
 its *SYS_that* is any *SYS_Text*.
-
-Not permitted for a **Text** is any of the following,
-to keep things more correct and simpler:
-
-* Any Perl value that is not a *SYS_Text*, even if it could be coerced to one.
 
 A *SYS_Text* is any of the following:
 
@@ -411,7 +395,7 @@ A *SYS_Dictionary* is any of the following:
 * Any Perl non-blessed hash-reference value.
 
 Note that a *SYS_Dictionary* is actually limited such that it can only have
-single-level attributes, because its keys can only be **Text**, not **Nesting**.
+single-level attributes, because its keys can only be *SYS_Text*, not **Nesting**.
 
 Not permitted for a *SYS_Dictionary* is any of the following,
 to keep things more correct and simpler:
