@@ -153,15 +153,15 @@ ascending order are the *significand*, *radix*, and *exponent*.
 and its *SYS_that* is any *SYS_Tuple_Ordered* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
-A *significand* is any *SYS_Fraction* or any *SYS_Integer* value.
+A *significand* is any *SYS_Fraction* or any *SYS_Integer*.
 
-A *numerator* is any *SYS_Integer* value.
+A *numerator* is any *SYS_Integer*.
 
-A *denominator* is any *SYS_Integer* value which denotes a nonzero integer.
+A *denominator* is any *SYS_Integer* which denotes a nonzero integer.
 
-A *radix* is any *SYS_Integer* value which denotes an integer that is at least 2.
+A *radix* is any *SYS_Integer* which denotes an integer that is at least 2.
 
-An *exponent* is any *SYS_Integer* value.
+An *exponent* is any *SYS_Integer*.
 
 A *SYS_Fraction* is any of the following:
 
@@ -279,7 +279,7 @@ its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *this* (any
 
 A *SYS_Duo_TA* is any of the following:
 
-* Any *SYS_Duo_AA* such that its *SYS_this* is any *SYS_Text* value.
+* Any *SYS_Duo_AA* such that its *SYS_this* is any *SYS_Text*.
 
 A *SYS_Duo_AA* is any of the following:
 
@@ -327,7 +327,7 @@ Note that example composers of `java.util.List` are:
 A **Kit** artifact is any of the following:
 
 * Any *SYS_Dictionary* such that each of its elements in turn is
-*attribute* whose element key is *name* (any *SYS_Text* value)
+*attribute* whose element key is *name* (any *SYS_Text*)
 and whose element value is *asset* (any **Any** artifact);
 this is the simplest format for the general case of any **Kit** having
 named attributes for which we *don't* need the system to persist the
@@ -344,7 +344,7 @@ attributes and with no special handling for nested tuples.
 its *SYS_that* is any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text*
 value `named` and its *SYS_that* is any *SYS_Array_A* such that each of
 its elements in turn is *attribute*, which is any *SYS_Duo_AA*
-such that its *SYS_this* is *name* (any *SYS_Text* value) and its
+such that its *SYS_this* is *name* (any *SYS_Text*) and its
 *SYS_that* is *asset* (any **Any** artifact); this is the format for the
 general case of any **Kit** having named attributes for which we *do* need
 the system to persist the literal order of attributes in the source code.
