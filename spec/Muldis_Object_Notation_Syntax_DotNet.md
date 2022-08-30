@@ -23,19 +23,19 @@ its part name is `Syntax_DotNet`.
                     ["name"] = "Jane Ives",
                     ["birth_date"] = ("Calendar_Instant",
                         new Dictionary<String,Int32>{["y"]=1971,["m"]=11,["d"]=6}),
-                    ["phone_numbers"] = new HashSet<String>{"+1.4045552995", "+1.7705557572"},
+                    ["phone_numbers"] = ("Set",new String[]{"+1.4045552995", "+1.7705557572"}),
                 },
                 new Dictionary<String,Object>{
                     ["name"] = "Layla Miller",
                     ["birth_date"] = ("Calendar_Instant",
                         new Dictionary<String,Int32>{["y"]=1995,["m"]=8,["d"]=27}),
-                    ["phone_numbers"] = new HashSet<String>{},
+                    ["phone_numbers"] = ("Set",new String[]{}),
                 },
                 new Dictionary<String,Object>{
                     ["name"] = "岩倉 玲音",
                     ["birth_date"] = ("Calendar_Instant",
                         new Dictionary<String,Int32>{["y"]=1984,["m"]=7,["d"]=6}),
-                    ["phone_numbers"] = new HashSet<String>{"+81.9072391679"},
+                    ["phone_numbers"] = ("Set",new String[]{"+81.9072391679"}),
                 },
             })
         ))
@@ -412,29 +412,6 @@ A **Geographic Point** artifact is additionally any of the following:
 `System.Data.Spatial.DbGeography`.
 
 *Note: DbGeography is only in .NET Framework; it is not in .NET 6.*
-
-## Set
-
-A **Set** artifact is additionally any of the following:
-
-* Any object of any .NET class
-that composes the .NET interface `System.Collections.Generic.ISet`
-such that each of its elements in turn is *member* (any **Any** artifact).
-
-Note that example composers of `System.Collections.Generic.ISet` are:
-`System.Collections.Generic.HashSet`,
-`System.Collections.Generic.SortedSet`,
-`System.Collections.Immutable.ImmutableHashSet`.
-`System.Collections.Immutable.ImmutableSortedSet`.
-
-## Bag / Multiset
-
-A **Bag** artifact is additionally any of the following:
-
-* Any object of the .NET class `System.Collections.Concurrent.ConcurrentBag`
-such that each of its elements in turn is *member* (any **Any** artifact).
-
-*TODO: Revisit this.*
 
 ## Pair
 

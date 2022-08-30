@@ -26,13 +26,13 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ```
     :Syntax(("Muldis_Object_Notation_Raku", "https://muldis.com", "0.300.0") =>
         :Model(("Muldis_Data_Language", "https://muldis.com", "0.300.0") =>
-            :Relation(Set.new(
+            :Relation(:Set(
                 {name => "Jane Ives", birth_date => :Calendar_Instant({y=>1971,m=>11,d=>6}),
-                    phone_numbers => Set.new("+1.4045552995", "+1.7705557572")},
+                    phone_numbers => :Set("+1.4045552995", "+1.7705557572")},
                 {name => "Layla Miller", birth_date => :Calendar_Instant({y=>1995,m=>8,d=>27}),
-                    phone_numbers => Set.new()},
+                    phone_numbers => :Set()},
                 {name => "岩倉 玲音", birth_date => :Calendar_Instant({y=>1984,m=>7,d=>6}),
-                    phone_numbers => Set.new("+81.9072391679")},
+                    phone_numbers => :Set("+81.9072391679",)},
             ))
         )
     )
@@ -103,19 +103,19 @@ mutually alternative MUON concrete syntaxes compare with each other.
                     ["name"] = "Jane Ives",
                     ["birth_date"] = ("Calendar_Instant",
                         new Dictionary<String,Int32>{["y"]=1971,["m"]=11,["d"]=6}),
-                    ["phone_numbers"] = new HashSet<String>{"+1.4045552995", "+1.7705557572"},
+                    ["phone_numbers"] = ("Set",new String[]{"+1.4045552995", "+1.7705557572"}),
                 },
                 new Dictionary<String,Object>{
                     ["name"] = "Layla Miller",
                     ["birth_date"] = ("Calendar_Instant",
                         new Dictionary<String,Int32>{["y"]=1995,["m"]=8,["d"]=27}),
-                    ["phone_numbers"] = new HashSet<String>{},
+                    ["phone_numbers"] = ("Set",new String[]{}),
                 },
                 new Dictionary<String,Object>{
                     ["name"] = "岩倉 玲音",
                     ["birth_date"] = ("Calendar_Instant",
                         new Dictionary<String,Int32>{["y"]=1984,["m"]=7,["d"]=6}),
-                    ["phone_numbers"] = new HashSet<String>{"+81.9072391679"},
+                    ["phone_numbers"] = ("Set",new String[]{"+81.9072391679"}),
                 },
             })
         ))

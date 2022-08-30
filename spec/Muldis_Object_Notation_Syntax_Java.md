@@ -413,19 +413,6 @@ A **Calendar Instant** artifact is additionally any of the following:
 
 *TODO: Consider removing some of the above options.*
 
-## Set
-
-A **Set** artifact is additionally any of the following:
-
-* Any object of any Java class that composes the Java interface `java.util.Set`
-such that each of its elements in turn is *member* (any **Any** artifact).
-
-Note that example composers of `java.util.Set` are:
-`java.util.HashSet`,
-`java.util.TreeSet`,
-`java.util.concurrent.ConcurrentSkipListSet`,
-`java.util.concurrent.CopyOnWriteArraySet`.
-
 # SEE ALSO
 
 *TODO.*
