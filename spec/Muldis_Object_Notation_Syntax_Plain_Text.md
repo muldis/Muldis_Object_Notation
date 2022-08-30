@@ -1057,9 +1057,6 @@ Examples:
     `One named attribute.`
     ("First Name": Joy,)
 
-    `Same thing.`
-    (::"First Name": Joy,)
-
     `One ordered attribute.`
     (53,)
 
@@ -1069,21 +1066,11 @@ Examples:
     `Same thing.`
     ("\{0t0}": 53,)
 
-    `Same thing.`
-    (::0t0: 53,)
-
     `Three named attributes.`
     (
         login_name : hartmark,
         login_pass : letmein,
         is_special : 0bTRUE,
-    )
-
-    `Same thing.`
-    (
-        ::login_name : hartmark,
-        ::login_pass : letmein,
-        ::is_special : 0bTRUE,
     )
 
     `Three ordered attributes.`

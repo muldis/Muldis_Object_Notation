@@ -428,8 +428,8 @@ Examples:
 A **Kit** artifact is an arbitrarily-large ordered collection of elements
 each of which in turn is named *attribute* such that each
 *attribute* is an ordered collection having exactly 2 elements
-which in order are named *name* (any **Text** artifact) and *asset*
-(any **Any** artifact),
+which in order are named *attribute name* (any **Text** artifact)
+and *attribute asset* (any **Any** artifact),
 such that no 2 attributes have the same *attribute name*.
 
 Examples:
@@ -441,9 +441,6 @@ Examples:
     `One named attribute.`
     ("First Name": Joy,)
 
-    `Same thing.`
-    (::"First Name": Joy,)
-
     `One ordered attribute.`
     (53,)
 
@@ -453,21 +450,11 @@ Examples:
     `Same thing.`
     ("\{0t0}": 53,)
 
-    `Same thing.`
-    (::0t0: 53,)
-
     `Three named attributes.`
     (
         login_name : hartmark,
         login_pass : letmein,
         is_special : 0bTRUE,
-    )
-
-    `Same thing.`
-    (
-        ::login_name : hartmark,
-        ::login_pass : letmein,
-        ::is_special : 0bTRUE,
     )
 
     `Three ordered attributes.`
@@ -746,7 +733,6 @@ that multiplied member's *member* denotes a potential distinct member of
 the **Set** and the multiplied member's *multiplicity* is any **Integer**
 artifact which denotes a non-negative integer *multiplicity*
 (any greater than 1 is treated as 1).
-
 
 Examples:
 

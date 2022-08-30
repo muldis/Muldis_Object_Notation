@@ -335,8 +335,7 @@ literal order of attributes in the source code.
 its *SYS_that* is any *SYS_Tuple_Ordered* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
-this is the simplest format for a **Kit** having only normalized ordered
-attributes and with no special handling for nested tuples;
+this is the simplest format for a **Kit** having only normalized ordered attributes;
 but this format only handles up to 7 attributes,
 so to specify 8 or more attributes, one of the other formats must be used.
 
