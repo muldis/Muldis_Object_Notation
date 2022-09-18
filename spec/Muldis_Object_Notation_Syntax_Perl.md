@@ -16,15 +16,27 @@ its part name is `Syntax_Perl`.
 # SYNOPSIS
 
 ```
-    [Syntax=>[[Lot=>["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]] =>
-        [Model=>[[Lot=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]] =>
+    [Syntax=>[[Lot=>["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]]=>
+        [Model=>[[Lot=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]]=>
             [Relation=>[Lot=>[
-                {name => "Jane Ives", birth_date => [Calendar_Instant=>{y=>1971,m=>11,d=>6}],
-                    phone_numbers => [Set=>[Lot=>["+1.4045552995", "+1.7705557572"]]]},
-                {name => "Layla Miller", birth_date => [Calendar_Instant=>{y=>1995,m=>8,d=>27}],
-                    phone_numbers => [Set=>[Lot=>[]]]},
-                {name => "岩倉 玲音", birth_date => [Calendar_Instant=>{y=>1984,m=>7,d=>6}],
-                    phone_numbers => [Set=>[Lot=>["+81.9072391679"]]]},
+                [Kit=>[named=>[
+                    [name => "Jane Ives"],
+                    [birth_date => [Calendar_Instant=>
+                        [Kit=>[named=>[[y=>1971],[m=>11],[d=>6]]]]]],
+                    [phone_numbers => [Set=>[Lot=>["+1.4045552995", "+1.7705557572"]]]],
+                ]]],
+                [Kit=>[named=>[
+                    [name => "Layla Miller"],
+                    [birth_date => [Calendar_Instant=>
+                        [Kit=>[named=>[[y=>1995],[m=>8],[d=>27]]]]]],
+                    [phone_numbers => [Set=>[Lot=>[]]]],
+                ]]],
+                [Kit=>[named=>[
+                    [name => "岩倉 玲音"],
+                    [birth_date => [Calendar_Instant=>
+                        [Kit=>[named=>[[y=>1984],[m=>7],[d=>6]]]]]],
+                    [phone_numbers => [Set=>[Lot=>["+81.9072391679"]]]],
+                ]]],
             ]]]
         ]]
     ]]
@@ -323,13 +335,15 @@ A *SYS_Array_T* is any of the following:
 
 A **Duo** artifact is any of the following:
 
-* Any *SYS_Duo_AA* such that its *SYS_this* is *this* (any **Any** artifact
-except for any *Primary_Possrep_Name*) and its *SYS_that* is *that* (any
-**Any** artifact).
+* Any *SYS_Duo_AA* such that its *SYS_this* is *this*
+(any **Any** artifact except for any *Primary_Possrep_Name*
+and except for the *SYS_Text* values `multiplied` and `named`)
+and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
-and its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *this* (any
-**Any** artifact) and its *SYS_that* is *that* (any **Any** artifact).
+and its *SYS_that* is
+any *SYS_Duo_AA* such that its *SYS_this* is *this* (any **Any** artifact)
+and its *SYS_that* is *that* (any **Any** artifact).
 
 A *SYS_Duo_TA* is any of the following:
 
@@ -340,26 +354,37 @@ A *SYS_Duo_AA* is any of the following:
 * Any *SYS_Ordered_Tuple_A* having exactly 2 elements
 such that its first element is *SYS_this* and its second element is *SYS_that*.
 
-A *SYS_Duo_Over_Dictionary* is any of the following:
-
-* Any *SYS_Dictionary* having exactly 1 element
-such that this element's key is *SYS_this* and its value is *SYS_that*.
-
 ## Lot
 
 A **Lot** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot`
-and its *SYS_that* is any *SYS_Array_A* such that each of its elements in turn is
-*member* (any **Any** artifact) and its corresponding *multiplicity* is 1.
+and its *SYS_that* is any *SYS_Non_Qualified_Lot*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot`
-and its *SYS_that* is any *SYS_Duo_Over_Dictionary*
-such that its *SYS_this* is the *SYS_Text* value `multiplied`
-and its *SYS_that* is any *SYS_Array_A* such that each of its elements in turn is
-*multiplied member*, which is any *SYS_Duo_AA* such that its
-*SYS_this* is *member* (any **Any** artifact) and its *SYS_that* is
-*multiplicity* (any **Any** artifact but conceptually a real number).
+A *SYS_Non_Qualified_Lot* is any of the following:
+
+* Any *SYS_Non_Qualified_Array_Lot*.
+
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `multiplied`
+and its *SYS_that* is
+any *SYS_Array_DAA* such that each of its elements in turn is
+*multiplied member* whose *SYS_this* is *member* (any **Any** artifact)
+and whose *SYS_that* is *multiplicity*
+(any **Any** artifact but conceptually a real number);
+this format can express every possible **Lot**,
+such that an explicit multiplicity is specified for each member as a number
+rather than by repeating the member value for each instance.
+
+A *SYS_Non_Qualified_Array_Lot* is any of the following:
+
+* Any *SYS_Array_A* such that each of its elements in turn is *member*
+(any **Any** artifact) and its corresponding *multiplicity* is 1;
+this format can express every possible **Lot**,
+such that each distinct member repeats per instance.
+
+A *SYS_Array_DAA* is any of the following:
+
+* Any *SYS_Array_A* such that each of its elements is any *SYS_Duo_AA*.
 
 A *SYS_Array_A* is any of the following:
 
@@ -376,39 +401,30 @@ to keep things more correct and simpler:
 
 A **Kit** artifact is any of the following:
 
-* Any *SYS_Dictionary* such that each of its elements in turn is
-*attribute* whose element key is *name* (any *SYS_Text*)
-and whose element value is *asset* (any **Any** artifact);
-this is the simplest format for the general case of any **Kit** having
-named attributes for which we *don't* need the system to persist the
-literal order of attributes in the source code.
-
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit`
-and its *SYS_that* is any *SYS_Ordered_Tuple_A* such that each of its elements
+and its *SYS_that* is any *SYS_Non_Qualified_Kit*.
+
+A *SYS_Non_Qualified_Kit* is any of the following:
+
+* Any *SYS_Array_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
-this is the simplest format for a **Kit** having only normalized ordered attributes.
+this format can express any **Kit** which has only normalized ordered attributes;
+this format is more concise than the general format.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit`
-and its *SYS_that* is any *SYS_Duo_Over_Dictionary*
-such that its *SYS_this* is the *SYS_Text*
-value `named` and its *SYS_that* is any *SYS_Array_A* such that each of
-its elements in turn is *attribute*, which is any *SYS_Duo_AA*
-such that its *SYS_this* is *name* (any *SYS_Text*) and its
-*SYS_that* is *asset* (any **Any** artifact); this is the format for the
-general case of any **Kit** having named attributes for which we *do* need
-the system to persist the literal order of attributes in the source code.
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `named`
+and its *SYS_that* is any *SYS_Non_Qualified_Named_Kit*.
 
-A *SYS_Dictionary* is any of the following:
+A *SYS_Non_Qualified_Named_Kit* is any of the following:
 
-* Any Perl non-blessed hash-reference value.
+* Any *SYS_Array_DAA* such that each of its elements in turn is
+*attribute* whose *SYS_this* is *attribute name* (any *SYS_Text*)
+and whose *SYS_that* is *attribute asset* (any **Any** artifact);
+this format can express every possible **Kit**.
 
-Not permitted for a *SYS_Dictionary* is any of the following,
-to keep things more correct and simpler:
-
-* Any Perl blessed hash-reference value.
-
-* Any Perl typeglob-reference value.
+Note that Perl non-blessed hash-reference values
+are not used to represent collections of pairs because they are
+unordered collections, and Perl doesn't provide any ordered analogy.
 
 A *SYS_Ordered_Tuple_A* is any of the following:
 
@@ -421,7 +437,7 @@ An **Article** artifact is any of the following:
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Article`
 and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
-its *SYS_that* is *attributes* (any **Kit** artifact).
+its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
 ## Excuse
 
@@ -430,7 +446,7 @@ An **Excuse** artifact is any of the following:
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Excuse`
 and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
-its *SYS_that* is *attributes* (any **Kit** artifact).
+its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
 # SEE ALSO
 

@@ -50,15 +50,27 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ## [Syntax_Perl](Muldis_Object_Notation_Syntax_Perl.md)
 
 ```
-    [Syntax=>[[Lot=>["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]] =>
-        [Model=>[[Lot=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]] =>
+    [Syntax=>[[Lot=>["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]]=>
+        [Model=>[[Lot=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]]=>
             [Relation=>[Lot=>[
-                {name => "Jane Ives", birth_date => [Calendar_Instant=>{y=>1971,m=>11,d=>6}],
-                    phone_numbers => [Set=>[Lot=>["+1.4045552995", "+1.7705557572"]]]},
-                {name => "Layla Miller", birth_date => [Calendar_Instant=>{y=>1995,m=>8,d=>27}],
-                    phone_numbers => [Set=>[Lot=>[]]]},
-                {name => "岩倉 玲音", birth_date => [Calendar_Instant=>{y=>1984,m=>7,d=>6}],
-                    phone_numbers => [Set=>[Lot=>["+81.9072391679"]]]},
+                [Kit=>[named=>[
+                    [name => "Jane Ives"],
+                    [birth_date => [Calendar_Instant=>
+                        [Kit=>[named=>[[y=>1971],[m=>11],[d=>6]]]]]],
+                    [phone_numbers => [Set=>[Lot=>["+1.4045552995", "+1.7705557572"]]]],
+                ]]],
+                [Kit=>[named=>[
+                    [name => "Layla Miller"],
+                    [birth_date => [Calendar_Instant=>
+                        [Kit=>[named=>[[y=>1995],[m=>8],[d=>27]]]]]],
+                    [phone_numbers => [Set=>[Lot=>[]]]],
+                ]]],
+                [Kit=>[named=>[
+                    [name => "岩倉 玲音"],
+                    [birth_date => [Calendar_Instant=>
+                        [Kit=>[named=>[[y=>1984],[m=>7],[d=>6]]]]]],
+                    [phone_numbers => [Set=>[Lot=>["+81.9072391679"]]]],
+                ]]],
             ]]]
         ]]
     ]]
