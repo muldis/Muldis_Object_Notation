@@ -380,6 +380,12 @@ A *Primary_Possrep_Name* is any of these **Text** values:
 `Bits`, `Blob`, `Text`, `Nesting`,
 `Duo`, `Lot`, `Kit`, `Article`, `Excuse`.
 
+As a further special exception, each specific concrete syntax may designate
+additional values for a prospect's *this* that it treats as special in
+certain contexts and thus such a prospect will also not be treated as its
+own **Duo** value.  Potential examples are these **Text** values:
+`multiplied`, `named`.
+
 ## Lot
 
 A **Lot** value is a general purpose arbitrarily-large ordered sequence of
