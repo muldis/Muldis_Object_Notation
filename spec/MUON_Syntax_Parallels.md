@@ -117,28 +117,28 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
 ```
-    ("Syntax",(new String[]{"Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0"},
-        ("Model",(new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
-            ("Relation",new OrderedDictionary[]{
+    ("Syntax",(("Lot",("Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0")),
+        ("Model",(("Lot",("Muldis_Data_Language", "https://muldis.com", "0.300.0")),
+            ("Relation",("Lot",(
                 new OrderedDictionary{
                     ["name"] = "Jane Ives",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}),
-                    ["phone_numbers"] = ("Set",new String[]{"+1.4045552995", "+1.7705557572"}),
+                    ["phone_numbers"] = ("Set",("Lot",("+1.4045552995", "+1.7705557572"))),
                 },
                 new OrderedDictionary{
                     ["name"] = "Layla Miller",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}),
-                    ["phone_numbers"] = ("Set",new String[]{}),
+                    ["phone_numbers"] = ("Set",("Lot",ValueTuple.Create())),
                 },
                 new OrderedDictionary{
                     ["name"] = "岩倉 玲音",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}),
-                    ["phone_numbers"] = ("Set",new String[]{"+81.9072391679"}),
-                },
-            })
+                    ["phone_numbers"] = ("Set",("Lot",ValueTuple.Create("+81.9072391679"))),
+                }
+            )))
         ))
     ))
 ```

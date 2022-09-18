@@ -16,28 +16,28 @@ its part name is `Syntax_DotNet`.
 # SYNOPSIS
 
 ```
-    ("Syntax",(new String[]{"Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0"},
-        ("Model",(new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
-            ("Relation",new OrderedDictionary[]{
+    ("Syntax",(("Lot",("Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0")),
+        ("Model",(("Lot",("Muldis_Data_Language", "https://muldis.com", "0.300.0")),
+            ("Relation",("Lot",(
                 new OrderedDictionary{
                     ["name"] = "Jane Ives",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}),
-                    ["phone_numbers"] = ("Set",new String[]{"+1.4045552995", "+1.7705557572"}),
+                    ["phone_numbers"] = ("Set",("Lot",("+1.4045552995", "+1.7705557572"))),
                 },
                 new OrderedDictionary{
                     ["name"] = "Layla Miller",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}),
-                    ["phone_numbers"] = ("Set",new String[]{}),
+                    ["phone_numbers"] = ("Set",("Lot",ValueTuple.Create())),
                 },
                 new OrderedDictionary{
                     ["name"] = "岩倉 玲音",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}),
-                    ["phone_numbers"] = ("Set",new String[]{"+81.9072391679"}),
-                },
-            })
+                    ["phone_numbers"] = ("Set",("Lot",ValueTuple.Create("+81.9072391679"))),
+                }
+            )))
         ))
     ))
 ```
@@ -240,6 +240,8 @@ a **Lot** artifact all of whose members are any **Text** artifacts.
 
 A *SYS_Nesting* is any of the following:
 
+* Any *SYS_Ordered_Tuple_A* such that each of its elements is any *SYS_Text*.
+
 * Any *SYS_Array_T*.
 
 * Any *SYS_Text*.
@@ -304,7 +306,7 @@ A *SYS_Non_Qualified_Lot* is any of the following:
 
 * Any *SYS_Ordered_Tuple_A* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1;
-this format can express any **Lot** which has up to 7 members,
+this format can express any **Lot** which has 0..7 members,
 so to specify 8 or more members, one of the other formats must be used.
 
 * Any *SYS_Non_Qualified_Array_Lot*.
@@ -356,7 +358,7 @@ A *SYS_Non_Qualified_Kit* is any of the following:
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
 this format can express any **Kit** which has only normalized ordered attributes
-and which has up to 7 attributes,
+and which has 0..7 attributes,
 so to specify 8 or more attributes, one of the other formats must be used;
 this format is even more concise than the other ordered-specific format.
 
@@ -389,10 +391,16 @@ because its collection of elements is unordered.
 
 A *SYS_Ordered_Tuple_A* is any of the following:
 
-* Any value of the .NET structure type `System.ValueTuple`.
+* Any value of the .NET structure type `System.ValueTuple`
+that has 0..7 components.
 
 Not permitted for a *SYS_Ordered_Tuple_A* is any of the following,
 to keep things more correct and simpler:
+
+* Any value of the .NET structure type `System.ValueTuple`
+that has 8 or more conceptual components,
+because the 8th and higher are faked by using another `System.ValueTuple`
+as the 8th actual component, recursively as needed.
 
 * Any object of the .NET class `System.Tuple`.
 
