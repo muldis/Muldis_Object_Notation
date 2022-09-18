@@ -18,23 +18,23 @@ its part name is `Syntax_DotNet`.
 ```
     ("Syntax",(new String[]{"Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0"},
         ("Model",(new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
-            ("Relation",new Object[]{
-                new Dictionary<String,Object>{
+            ("Relation",new OrderedDictionary[]{
+                new OrderedDictionary{
                     ["name"] = "Jane Ives",
                     ["birth_date"] = ("Calendar_Instant",
-                        new Dictionary<String,Int32>{["y"]=1971,["m"]=11,["d"]=6}),
+                        new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}),
                     ["phone_numbers"] = ("Set",new String[]{"+1.4045552995", "+1.7705557572"}),
                 },
-                new Dictionary<String,Object>{
+                new OrderedDictionary{
                     ["name"] = "Layla Miller",
                     ["birth_date"] = ("Calendar_Instant",
-                        new Dictionary<String,Int32>{["y"]=1995,["m"]=8,["d"]=27}),
+                        new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}),
                     ["phone_numbers"] = ("Set",new String[]{}),
                 },
-                new Dictionary<String,Object>{
+                new OrderedDictionary{
                     ["name"] = "岩倉 玲音",
                     ["birth_date"] = ("Calendar_Instant",
-                        new Dictionary<String,Int32>{["y"]=1984,["m"]=7,["d"]=6}),
+                        new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}),
                     ["phone_numbers"] = ("Set",new String[]{"+81.9072391679"}),
                 },
             })
@@ -324,7 +324,7 @@ Note that example composers of `System.Collections.Generic.IList` are:
 
 A **Kit** artifact is any of the following:
 
-* Any *SYS_Dictionary* such that each of its elements in turn is
+* Any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
 *attribute* whose element key is *name* (any *SYS_Text*)
 and whose element value is *asset* (any **Any** artifact);
 this is the simplest format for the general case of any **Kit** having
@@ -347,16 +347,17 @@ such that its *SYS_this* is *name* (any *SYS_Text*) and its
 general case of any **Kit** having named attributes for which we *do* need
 the system to persist the literal order of attributes in the source code.
 
-*TODO: Consider adding .NET anonymous types as an option if feasible.*
+A *SYS_Ordered_Dictionary_AA* is any of the following:
 
-Not permitted for a **Kit** is any of the following,
+* Any object of the .NET class `System.Collections.Specialized.OrderedDictionary`.
+
+Not permitted for a *SYS_Ordered_Dictionary_AA* is any of the following,
 to prevent ambiguity and simplify things:
 
+* Any object of the .NET class `System.Collections.Generic.Dictionary`,
+because its collection of elements is unordered.
+
 * Any object of the .NET class `System.Data.DataRow`.
-
-A *SYS_Dictionary* is any of the following:
-
-* Any object of the .NET class `System.Collections.Generic.Dictionary`.
 
 A *SYS_Ordered_Tuple_A* is any of the following:
 
@@ -367,7 +368,8 @@ to keep things more correct and simpler:
 
 * Any object of the .NET class `System.Tuple`.
 
-* Any other value of any .NET structure type, or object of any .NET class,
+* Any value of any .NET structure type, except for `System.ValueTuple`,
+or object of any .NET class,
 that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
 
 ## Article / Labelled Tuple

@@ -58,36 +58,36 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ## [Syntax_Java](Muldis_Object_Notation_Syntax_Java.md)
 
 ```
-    new AbstractMap.SimpleEntry<String, Object>("Syntax", new AbstractMap.SimpleEntry<String[], Object>(
+    new AbstractMap.SimpleEntry("Syntax", new AbstractMap.SimpleEntry(
         new String[]{"Muldis_Object_Notation_Java", "https://muldis.com", "0.300.0"},
-        new AbstractMap.SimpleEntry<String, Object>("Model", new AbstractMap.SimpleEntry<String[], Object>(
+        new AbstractMap.SimpleEntry("Model", new AbstractMap.SimpleEntry(
             new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
-            new AbstractMap.SimpleEntry<String, Object[]>("Relation", new Object[]{
-                Map.of(
-                   "name", "Jane Ives",
-                   "birth_date", new AbstractMap.SimpleEntry<String, Object>("Calendar_Instant",
-                       Map.of("y", 1971, "m", 11, "d", 6)
-                   ),
-                   "phone_numbers", new AbstractMap.SimpleEntry<String, Object[]>("Set",
+            new AbstractMap.SimpleEntry("Relation", new LinkedHashMap[]{
+                new LinkedHashMap(){{
+                    put("name", "Jane Ives");
+                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                        new LinkedHashMap(){{put("y",1971); put("m",11); put("d",6);}}
+                    ));
+                    put("phone_numbers", new AbstractMap.SimpleEntry("Set",
                         new String[]{"+1.4045552995", "+1.7705557572"}
-                    )
-                ),
-                Map.of(
-                    "name", "Layla Miller",
-                    "birth_date", new AbstractMap.SimpleEntry<String, Object>("Calendar_Instant",
-                        Map.of("y", 1995, "m", 8, "d", 27)
-                    ),
-                    "phone_numbers", new AbstractMap.SimpleEntry<String, Object[]>("Set", new String[]{})
-                ),
-                Map.of(
-                    "name", "岩倉 玲音",
-                    "birth_date", new AbstractMap.SimpleEntry<String, Object>("Calendar_Instant",
-                        Map.of("y", 1984, "m", 7, "d", 6)
-                    ),
-                    "phone_numbers", new AbstractMap.SimpleEntry<String, Object[]>("Set",
+                    ));
+                }},
+                new LinkedHashMap(){{
+                    put("name", "Layla Miller");
+                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                        new LinkedHashMap(){{put("y",1995); put("m",8); put("d",27);}}
+                    ));
+                    put("phone_numbers", new AbstractMap.SimpleEntry("Set", new String[]{}));
+                }},
+                new LinkedHashMap(){{
+                    put("name", "岩倉 玲音");
+                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                        new LinkedHashMap(){{put("y",1984); put("m",7); put("d",6);}}
+                    ));
+                    put("phone_numbers", new AbstractMap.SimpleEntry("Set",
                         new String[]{"+81.9072391679"}
-                    )
-                ),
+                    ));
+                }},
             })
         ))
     ))
@@ -98,23 +98,23 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ```
     ("Syntax",(new String[]{"Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0"},
         ("Model",(new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
-            ("Relation",new Object[]{
-                new Dictionary<String,Object>{
+            ("Relation",new OrderedDictionary[]{
+                new OrderedDictionary{
                     ["name"] = "Jane Ives",
                     ["birth_date"] = ("Calendar_Instant",
-                        new Dictionary<String,Int32>{["y"]=1971,["m"]=11,["d"]=6}),
+                        new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}),
                     ["phone_numbers"] = ("Set",new String[]{"+1.4045552995", "+1.7705557572"}),
                 },
-                new Dictionary<String,Object>{
+                new OrderedDictionary{
                     ["name"] = "Layla Miller",
                     ["birth_date"] = ("Calendar_Instant",
-                        new Dictionary<String,Int32>{["y"]=1995,["m"]=8,["d"]=27}),
+                        new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}),
                     ["phone_numbers"] = ("Set",new String[]{}),
                 },
-                new Dictionary<String,Object>{
+                new OrderedDictionary{
                     ["name"] = "岩倉 玲音",
                     ["birth_date"] = ("Calendar_Instant",
-                        new Dictionary<String,Int32>{["y"]=1984,["m"]=7,["d"]=6}),
+                        new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}),
                     ["phone_numbers"] = ("Set",new String[]{"+81.9072391679"}),
                 },
             })

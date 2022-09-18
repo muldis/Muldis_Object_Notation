@@ -16,36 +16,36 @@ its part name is `Syntax_Java`.
 # SYNOPSIS
 
 ```
-    new AbstractMap.SimpleEntry<String, Object>("Syntax", new AbstractMap.SimpleEntry<String[], Object>(
+    new AbstractMap.SimpleEntry("Syntax", new AbstractMap.SimpleEntry(
         new String[]{"Muldis_Object_Notation_Java", "https://muldis.com", "0.300.0"},
-        new AbstractMap.SimpleEntry<String, Object>("Model", new AbstractMap.SimpleEntry<String[], Object>(
+        new AbstractMap.SimpleEntry("Model", new AbstractMap.SimpleEntry(
             new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
-            new AbstractMap.SimpleEntry<String, Object[]>("Relation", new Object[]{
-                Map.of(
-                   "name", "Jane Ives",
-                   "birth_date", new AbstractMap.SimpleEntry<String, Object>("Calendar_Instant",
-                       Map.of("y", 1971, "m", 11, "d", 6)
-                   ),
-                   "phone_numbers", new AbstractMap.SimpleEntry<String, Object[]>("Set",
+            new AbstractMap.SimpleEntry("Relation", new LinkedHashMap[]{
+                new LinkedHashMap(){{
+                    put("name", "Jane Ives");
+                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                        new LinkedHashMap(){{put("y",1971); put("m",11); put("d",6);}}
+                    ));
+                    put("phone_numbers", new AbstractMap.SimpleEntry("Set",
                         new String[]{"+1.4045552995", "+1.7705557572"}
-                    )
-                ),
-                Map.of(
-                    "name", "Layla Miller",
-                    "birth_date", new AbstractMap.SimpleEntry<String, Object>("Calendar_Instant",
-                        Map.of("y", 1995, "m", 8, "d", 27)
-                    ),
-                    "phone_numbers", new AbstractMap.SimpleEntry<String, Object[]>("Set", new String[]{})
-                ),
-                Map.of(
-                    "name", "岩倉 玲音",
-                    "birth_date", new AbstractMap.SimpleEntry<String, Object>("Calendar_Instant",
-                        Map.of("y", 1984, "m", 7, "d", 6)
-                    ),
-                    "phone_numbers", new AbstractMap.SimpleEntry<String, Object[]>("Set",
+                    ));
+                }},
+                new LinkedHashMap(){{
+                    put("name", "Layla Miller");
+                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                        new LinkedHashMap(){{put("y",1995); put("m",8); put("d",27);}}
+                    ));
+                    put("phone_numbers", new AbstractMap.SimpleEntry("Set", new String[]{}));
+                }},
+                new LinkedHashMap(){{
+                    put("name", "岩倉 玲音");
+                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                        new LinkedHashMap(){{put("y",1984); put("m",7); put("d",6);}}
+                    ));
+                    put("phone_numbers", new AbstractMap.SimpleEntry("Set",
                         new String[]{"+81.9072391679"}
-                    )
-                ),
+                    ));
+                }},
             })
         ))
     ))
@@ -326,7 +326,7 @@ Note that example composers of `java.util.List` are:
 
 A **Kit** artifact is any of the following:
 
-* Any *SYS_Dictionary* such that each of its elements in turn is
+* Any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
 *attribute* whose element key is *name* (any *SYS_Text*)
 and whose element value is *asset* (any **Any** artifact);
 this is the simplest format for the general case of any **Kit** having
@@ -348,16 +348,16 @@ such that its *SYS_this* is *name* (any *SYS_Text*) and its
 general case of any **Kit** having named attributes for which we *do* need
 the system to persist the literal order of attributes in the source code.
 
-*TODO: Consider adding Java anonymous types as an option if feasible.*
+A *SYS_Ordered_Dictionary_AA* is any of the following:
 
-A *SYS_Dictionary* is any of the following:
+* Any object of the Java class `java.util.LinkedHashMap`.
 
-* Any object of any Java class that composes the Java interface `java.util.Map`.
+Not permitted for a *SYS_Ordered_Dictionary_AA* is any of the following,
+to prevent ambiguity and simplify things:
 
-Note that example composers of `java.util.Map` are:
-`java.util.HashMap`,
-`java.util.TreeMap`,
-`java.util.LinkedHashMap`.
+* Any object of any Java class, except for `java.util.LinkedHashMap`,
+that composes the Java interface `java.util.Map`,
+because its collection of elements is likely to be unordered.
 
 A *SYS_Ordered_Tuple_A* is any of the following:
 
