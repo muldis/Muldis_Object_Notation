@@ -269,13 +269,14 @@ for example, any value of the Java primitive type array `String[]`.
 
 A **Duo** artifact is any of the following:
 
-* Any *SYS_Duo_AA* such that its *SYS_this* is *this* (any **Any** artifact
-except for any *Primary_Possrep_Name*) and its *SYS_that* is *that* (any
-**Any** artifact).
+* Any *SYS_Duo_AA* such that its *SYS_this* is *this*
+(any **Any** artifact except for any *Primary_Possrep_Name*)
+and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
-and its *SYS_that* is any *SYS_Duo_AA* such that its *SYS_this* is *this* (any
-**Any** artifact) and its *SYS_that* is *that* (any **Any** artifact).
+and its *SYS_that* is
+any *SYS_Duo_AA* such that its *SYS_this* is *this* (any **Any** artifact)
+and its *SYS_that* is *that* (any **Any** artifact).
 
 A *SYS_Duo_TA* is any of the following:
 
@@ -299,14 +300,29 @@ to keep things more correct and simpler:
 
 A **Lot** artifact is any of the following:
 
-* Any *SYS_Array_A* such that each of its elements in turn is *member*
-(any **Any** artifact) and its corresponding *multiplicity* is 1.
+* Any *SYS_Non_Qualified_Array_Lot*.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot`
-and its *SYS_that* is any *SYS_Array_A* such that each of its elements in turn is
-*multiplied member*, which is any *SYS_Duo_AA* such that its
-*SYS_this* is *member* (any **Any** artifact) and its *SYS_that* is
-*multiplicity* (any **Any** artifact but conceptually a real number).
+and its *SYS_that* is any *SYS_Non_Qualified_Lot*.
+
+A *SYS_Non_Qualified_Lot* is any of the following:
+
+* Any *SYS_Non_Qualified_Array_Lot*.
+
+* Any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
+*multiplied member* whose element key is *member* (any **Any** artifact)
+and whose element value is *multiplicity*
+(any **Any** artifact but conceptually a real number);
+this format can express every possible **Lot**,
+such that an explicit multiplicity is specified for each member as a number
+rather than by repeating the member value for each instance.
+
+A *SYS_Non_Qualified_Array_Lot* is any of the following:
+
+* Any *SYS_Array_A* such that each of its elements in turn is *member*
+(any **Any** artifact) and its corresponding *multiplicity* is 1;
+this format can express every possible **Lot**,
+such that each distinct member repeats per instance.
 
 A *SYS_Array_A* is any of the following:
 
@@ -326,27 +342,27 @@ Note that example composers of `java.util.List` are:
 
 A **Kit** artifact is any of the following:
 
-* Any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
-*attribute* whose element key is *name* (any *SYS_Text*)
-and whose element value is *asset* (any **Any** artifact);
-this is the simplest format for the general case of any **Kit** having
-named attributes for which we *don't* need the system to persist the
-literal order of attributes in the source code.
+* Any *SYS_Non_Qualified_Named_Kit*.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit`
-and its *SYS_that* is any *SYS_Ordered_Tuple_A* such that each of its elements
+and its *SYS_that* is any *SYS_Non_Qualified_Kit*.
+
+A *SYS_Non_Qualified_Kit* is any of the following:
+
+* Any *SYS_Array_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
-this is the simplest format for a **Kit** having only normalized ordered attributes.
+this format can express any **Kit** which has only normalized ordered attributes;
+this format is more concise than the general format.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit`
-and its *SYS_that* is any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text*
-value `named` and its *SYS_that* is any *SYS_Array_A* such that each of
-its elements in turn is *attribute*, which is any *SYS_Duo_AA*
-such that its *SYS_this* is *name* (any *SYS_Text*) and its
-*SYS_that* is *asset* (any **Any** artifact); this is the format for the
-general case of any **Kit** having named attributes for which we *do* need
-the system to persist the literal order of attributes in the source code.
+* Any *SYS_Non_Qualified_Named_Kit*.
+
+A *SYS_Non_Qualified_Named_Kit* is any of the following:
+
+* Any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
+*attribute* whose element key is *attribute name* (any *SYS_Text*)
+and whose element value is *attribute asset* (any **Any** artifact);
+this format can express every possible **Kit**.
 
 A *SYS_Ordered_Dictionary_AA* is any of the following:
 
@@ -370,7 +386,7 @@ An **Article** artifact is any of the following:
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Article`
 and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
-its *SYS_that* is *attributes* (any **Kit** artifact).
+its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
 ## Excuse
 
@@ -379,7 +395,7 @@ An **Excuse** artifact is any of the following:
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Excuse`
 and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
-its *SYS_that* is *attributes* (any **Kit** artifact).
+its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
 # ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
 
