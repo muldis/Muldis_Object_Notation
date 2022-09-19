@@ -7,7 +7,7 @@ and other data formats or programming languages used for similar purposes.
 
 ## JSON - JavaScript Object Notation
 
-<https://www.json.org>
+<https://json.org>
 
 JSON is one of the most direct counterpart languages to MUON both in form
 and in function; MUON is intended to compete for all of the same use cases.
@@ -73,7 +73,7 @@ which is apparently not true for JSON, which is much more loosely specified
 or leaves important details unspecified, and has multiple competing
 definitions.
 See
-<http://seriot.ch/parsing_json.php> and
+<https://seriot.ch/parsing_json.php> and
 <https://github.com/nst/JSONTestSuite> for more about this.
 So reliability and consistency could also be a primary benefit of MUON over
 JSON, and a key reason to adopt it over JSON.
@@ -83,7 +83,7 @@ This paragraph will be fleshed out more.
 
 ## XML - Extensible Markup Language
 
-<https://www.w3.org/XML>
+<https://w3.org/XML>
 
 XML is, after JSON particularly, one of the most direct counterpart
 languages to MUON both somewhat in form and in function; MUON is intended
@@ -96,7 +96,7 @@ typed and, like JSON, in being much less verbose.
 
 ## SQL: ISO/IEC 9075 - Structured Query Language
 
-<https://www.iso.org/standard/63555.html>
+<https://iso.org/standard/63555.html>
 
 SQL is, in parallel to JSON, one of the most direct counterpart languages
 to MUON both in form and in function; MUON is intended to compete for all

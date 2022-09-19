@@ -70,7 +70,7 @@ fairly easy for machines to parse and generate.
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
 MUON XML-hosted artifact is `Muldis_Object_Notation_XML`.
 
-See also <https://www.w3.org/XML>.
+See also <https://w3.org/XML>.
 
 # SIMPLE PRIMARY DATA TYPE POSSREPS
 

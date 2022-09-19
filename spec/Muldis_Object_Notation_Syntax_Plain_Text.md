@@ -1080,7 +1080,7 @@ Examples:
     (Jay, age: 10)
 
     `A non-Latin name.`
-    ("サンプル": "http://example.com",)
+    ("サンプル": "https://example.com",)
 ```
 
 ## Article / Labelled Tuple

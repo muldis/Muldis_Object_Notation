@@ -6,7 +6,7 @@ BBEdit Codeless Language Module for Muldis Object Notation (MUON) Plain Text.
 The XML/plain-text file [BBEdit_LM_Muldis_Object_Notation_Plain_Text.plist](
 BBEdit_LM_Muldis_Object_Notation_Plain_Text.plist) is a Codeless Language
 Module for the Mac OS text editor BBEdit
-<https://www.barebones.com/products/bbedit/>.
+<https://barebones.com/products/bbedit>.
 
 To use it, simply copy that file into this directory (which you might have
 to create):
@@ -27,5 +27,5 @@ extension ".muon" but you can apply it to any file.
 This CLM should be considered beta quality and may not handle some corner
 case syntax.
 
-See also <https://www.barebones.com/support/develop/clm.html> for a CLM reference,
+See also <https://barebones.com/support/develop/clm.html> for a CLM reference,
 should you want to improve on this CLM or make other ones.

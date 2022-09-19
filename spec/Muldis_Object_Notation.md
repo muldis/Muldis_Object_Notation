@@ -249,7 +249,7 @@ markers of such can either be omitted or be based on other standards.
 However, a major version of zero should be considered either pre-production
 or that the authority expects frequent upcoming backwards-incompatible changes.*
 
-See also <http://design.raku.org/S11.html#Versioning> which was the primary
+See also <https://design.raku.org/S11.html#Versioning> which was the primary
 influence for the versioning scheme described above.
 
 # SEE ALSO
@@ -272,10 +272,10 @@ MUON is Copyright © 2002-2022, Muldis Data Systems, Inc.
 MUON is free documentation for software;
 you can redistribute it and/or modify it under the terms of the Apache
 License, Version 2.0 (AL2) as published by the Apache Software Foundation
-(<https://www.apache.org>).  You should have received a copy of the
+(<https://apache.org>).  You should have received a copy of the
 AL2 as part of the MUON distribution, in the file
 [LICENSE/Apache-2.0.txt](../LICENSE/Apache-2.0.txt); if not, see
-<https://www.apache.org/licenses/LICENSE-2.0>.
+<https://apache.org/licenses/LICENSE-2.0>.
 
 Any versions of MUON that you modify and distribute must carry prominent
 notices stating that you changed the files and the date of any changes, in

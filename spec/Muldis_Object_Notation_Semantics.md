@@ -667,7 +667,7 @@ allows each *member* to have any possrep, in practice the **Nesting** and
 **Text** possreps are the most common, or an external data model might have
 a dedicated type to represent a unit definition.
 
-See also <http://unitsofmeasure.org/ucum.html>.
+See also <https://unitsofmeasure.org/ucum.html>.
 
 ## Interval
 
