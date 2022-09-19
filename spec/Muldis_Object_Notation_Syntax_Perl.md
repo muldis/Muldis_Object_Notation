@@ -237,7 +237,7 @@ A **Bits** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Bits`
 and its *SYS_that* is any *SYS_Array_A*
-such that every element is either of the 2 *SYS_Integer* values `0`, `1`.
+such that every element is any *SYS_Integer* in `0..1`.
 
 ## Blob
 

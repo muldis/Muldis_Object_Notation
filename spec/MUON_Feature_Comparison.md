@@ -30,22 +30,39 @@ MUON and JSON are equal in expressivity regarding logical boolean values,
 as each provides distinct *false* and *true* literals that are distinct
 values from numbers and strings and anything else.
 
-MUON is more expressive than JSON regarding numeric literals.
+MUON and JSON are equal in expressivity regarding integer values, to the
+extent that each can denote any integer of any magnitude, and their integer
+literals are distinct from booleans and strings and non-numerics.
+
+MUON is more expressive than JSON regarding numeric literals in general.
+MUON natively supports distinct syntaxes for integers and the general case
+of rational numbers, such that `1` and `1.0` are distinct, helping preserve
+intended data types for applications that care about the distinction,
+while JSON only has a single numeric syntax and can't distinguish the two.
+MUON natively supports exact rational numeric values that are *not*
+terminating in base 10, so for example `1/3` can be conveyed losslessly,
+while JSON only natively supports exact rational numeric values that *are*
+terminating in base 10.
+Both MUON and JSON support scientific notation for numeric literals, though
+their exact syntax differs, `4.263*10^15` and `4.263e15` respectively.
 MUON supports 4 numeric bases (2,8,10,16) for all numeric literals,
 while JSON only supports base 10 for all numeric literals.
 (This is merely a syntactic convenience given that all rational values that
 are terminating in base 2/8/16 are also terminating in base 10.)
-MUON also natively supports exact rational numeric literals that are *not*
-terminating in base 10, using its **Fraction** syntax, while JSON does not.
-Both MUON and JSON support scientific notation for numeric literals, though
-their exact syntax differs, `4.263*10^15` and `4.263e15` respectively.
 
-MUON is more expressive than JSON regarding character string literals.
-MUON directly supports expression of all 17 **Unicode** planes, that is all
-of the code points up to 0x10FFFF, while JSON only directly supports the
-BMP, that is only the code points up to 0xFFFF.  Users of JSON must
-explicitly use pairs of UTF-16 surrogate code points to represent code points
-on the other 16 planes, which is a separate data model layer above the JSON.
+MUON and JSON are equal in expressivity regarding character string values,
+to the extent that each can denote any **Unicode** character string, of any
+string length, using any code points up to `0x10FFFF` (all 17 planes), and
+all code points can be denoted natively as themselves, save for a small
+handful forbidden to appear literally that must be denoted in escaped form.
+
+MUON is more expressive than JSON regarding character string literals, in
+that it can natively express all **Unicode** code points as single numeric
+escape sequences without using any UTF-16 surrogate code points, while JSON
+can only natively denote code points up to `0xFFFF` (the BMP) as single
+numeric escape sequences.  Users of JSON must explicitly use pairs of
+UTF-16 surrogate code points to represent code points on the other 16
+planes, which is a separate data model layer above the JSON.
 
 MUON uses the same string delimiters `"` as JSON but MUON is easier to
 parse because the escape sequence for said delimiter is `\q` in MUON versus
@@ -56,6 +73,14 @@ MUON has distinct Array/Set/Bag collections so it is clear whether the
 ordinal position and or the multiplicity of members is significant or not;
 in contrast, JSON provides no native way to distinguish these factors.
 
+MUON explicitly preserves the element order of all collection literals, and
+so it can losslessly pass through any collection literals that are
+conceptually program source code, and typically programmers consider the
+element order of their source code to be intentional and worth preserving,
+even if conceptually the collection is logically an unordered one, while in
+contrast JSON's `object` collection is expressly unordered and so can't
+preserve a very significant in practice aspect of program source code.
+
 JSON has no native support for parser-ignorable (treated like insignificant
 whitespace) comments, as an intentional difference from JavaScript, while
 MUON does support such comments.
@@ -63,7 +88,7 @@ MUON does support such comments.
 MUON provides an explicit possrep/syntax **Article** to indicate that a
 particular user-defined collection denotes a value or object of some
 user-defined type or class, while those using JSON tend to overload the
-meaning of the elements of an *object* to indicate either object type or
+meaning of the elements of a JSON `object` to indicate either object type or
 object attributes/properties, and this is done ad-hoc by an overlaid extra
 type system layer; MUON types and attributes are clearly distinguished.
 
