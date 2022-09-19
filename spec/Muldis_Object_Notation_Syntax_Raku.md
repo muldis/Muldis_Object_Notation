@@ -136,22 +136,22 @@ A **Fraction** artifact is any of the following:
 * Any *SYS_Fraction*.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is the *significand*.
+and its *SYS_that* is any *SYS_Non_Qualified_Fraction*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Ordered_Tuple_A* having exactly 1 element which
+A *SYS_Non_Qualified_Fraction* is any of the following:
+
+* Any *significand*.
+
+* Any *SYS_Ordered_Tuple_A* having exactly 1 element which
 is the *significand*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Ordered_Tuple_A* having exactly 2 elements which in
+* Any *SYS_Ordered_Tuple_A* having exactly 2 elements which in
 ascending order are the *numerator* and *denominator*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Ordered_Tuple_A* having exactly 3 elements which in
+* Any *SYS_Ordered_Tuple_A* having exactly 3 elements which in
 ascending order are the *significand*, *radix*, and *exponent*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Ordered_Tuple_A* having exactly 4 elements which in
+* Any *SYS_Ordered_Tuple_A* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
 A *significand* is any *SYS_Fraction* or any *SYS_Integer*.
