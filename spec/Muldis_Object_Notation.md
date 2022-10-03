@@ -9,7 +9,7 @@ The fully-qualified name of this document is
 
 # PART
 
-This artifact is part 1 of 15 of the document
+This artifact is part 1 of 19 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Overview`.
 
@@ -64,7 +64,11 @@ This document consists of multiple parts:
 1. [Syntax_Java](Muldis_Object_Notation_Syntax_Java.md)
 1. [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 1. Syntax_Swift
+1. Syntax_Rust
+1. Syntax_Go
 1. [Syntax_ECMAScript](Muldis_Object_Notation_Syntax_ECMAScript.md)
+1. Syntax_Ruby
+1. Syntax_Python
 1. [Syntax_PHP](Muldis_Object_Notation_Syntax_PHP.md)
 1. [Syntax_JSON](Muldis_Object_Notation_Syntax_JSON.md)
 1. [Syntax_XML](Muldis_Object_Notation_Syntax_XML.md)
