@@ -64,7 +64,7 @@ This document consists of multiple parts:
 1. [Syntax_Java](Muldis_Object_Notation_Syntax_Java.md)
 1. [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 1. Syntax_Swift
-1. Syntax_ECMAScript
+1. [Syntax_ECMAScript](Muldis_Object_Notation_Syntax_ECMAScript.md)
 1. [Syntax_PHP](Muldis_Object_Notation_Syntax_PHP.md)
 1. [Syntax_JSON](Muldis_Object_Notation_Syntax_JSON.md)
 1. [Syntax_XML](Muldis_Object_Notation_Syntax_XML.md)

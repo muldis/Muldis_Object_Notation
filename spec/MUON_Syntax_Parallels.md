@@ -143,6 +143,35 @@ mutually alternative MUON concrete syntaxes compare with each other.
     ))
 ```
 
+## [Syntax_ECMAScript](Muldis_Object_Notation_Syntax_ECMAScript.md)
+
+```
+    ["Syntax",[["Lot",["Muldis_Object_Notation_ECMAScript", "https://muldis.com", "0.300.0"]],
+        ["Model",[["Lot",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+            ["Relation",["Lot",[
+                ["Kit",["named",[
+                    ["name", "Jane Ives"],
+                    ["birth_date", ["Calendar_Instant",
+                        ["Kit",["named",[["y",1971],["m",11],["d",6]]]]]],
+                    ["phone_numbers", ["Set",["Lot",["+1.4045552995", "+1.7705557572"]]]]
+                ]]],
+                ["Kit",["named",[
+                    ["name", "Layla Miller"],
+                    ["birth_date", ["Calendar_Instant",
+                        ["Kit",["named",[["y",1995],["m",8],["d",27]]]]]],
+                    ["phone_numbers", ["Set",["Lot",[]]]]
+                ]]],
+                ["Kit",["named",[
+                    ["name", "岩倉 玲音"],
+                    ["birth_date", ["Calendar_Instant",
+                        ["Kit",["named",[["y",1984],["m",7],["d",6]]]]]],
+                    ["phone_numbers", ["Set",["Lot",["+81.9072391679"]]]]
+                ]]]
+            ]]]
+        ]]
+    ]]
+```
+
 ## [Syntax_PHP](Muldis_Object_Notation_Syntax_PHP.md)
 
 ```
@@ -172,7 +201,7 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ## [Syntax_JSON](Muldis_Object_Notation_Syntax_JSON.md)
 
 ```
-    ["Syntax",[["Lot",["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]],
+    ["Syntax",[["Lot",["Muldis_Object_Notation_JSON", "https://muldis.com", "0.300.0"]],
         ["Model",[["Lot",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
             ["Relation",["Lot",[
                 ["Kit",["named",[
