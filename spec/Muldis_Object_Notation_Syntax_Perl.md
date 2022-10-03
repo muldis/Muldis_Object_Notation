@@ -145,7 +145,7 @@ A *SYS_Integer* is any of the following:
 a Perl integer value and only a integer value.
 
 * Any object of the Perl class `Math::BigInt`
-that represents a finite number or signed zero value;
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Integer* is any of the following,
@@ -154,7 +154,8 @@ to keep things more correct and simpler:
 * Any *SYS_Scalar* that is canonically or "originally"
 a Perl boolean or float or string or anything else besides an integer value.
 
-* Any object of the Perl class `Math::BigInt` that represents an infinity or NaN.
+* Any object of the Perl class `Math::BigInt`
+that represents an infinity or NaN.
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
@@ -210,11 +211,11 @@ A *SYS_Fraction* is any of the following:
 a Perl float value and only a float value.
 
 * Any object of the Perl class `Math::BigRat`
-that represents a finite number or signed zero value;
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 * Any object of the Perl class `Math::BigFloat`
-that represents a finite number or signed zero value;
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Fraction* is any of the following,
@@ -223,9 +224,11 @@ to keep things more correct and simpler:
 * Any *SYS_Scalar* that is canonically or "originally"
 a Perl boolean or integer or string or anything else besides a float value.
 
-* Any object of the Perl class `Math::BigRat` that represents an infinity or NaN.
+* Any object of the Perl class `Math::BigRat`
+that represents an infinity or NaN.
 
-* Any object of the Perl class `Math::BigFloat` that represents an infinity or NaN.
+* Any object of the Perl class `Math::BigFloat`
+that represents an infinity or NaN.
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
@@ -236,8 +239,8 @@ This is because that would typically be interpreted as a **Text** artifact.
 A **Bits** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Bits`
-and its *SYS_that* is any *SYS_Array_A*
-such that every element is any *SYS_Integer* in `0..1`.
+and its *SYS_that* is any *SYS_String* whose UTF8 flag is false
+such that every octet is in the set `0..1`.
 
 ## Blob
 

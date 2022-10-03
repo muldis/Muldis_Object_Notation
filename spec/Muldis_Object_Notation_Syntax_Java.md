@@ -165,11 +165,12 @@ An *exponent* is any *SYS_Integer*.
 
 A *SYS_Fraction* is any of the following:
 
-* Any finite number value of any of the Java primitive types `float`, `double`;
+* Any value of any of the Java primitive types `float`, `double`
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
-* Any finite number or signed zero object of any of the Java classes
-`java.lang.Float`, `java.lang.Double`;
+* Any object of any of the Java classes `java.lang.Float`, `java.lang.Double`
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 * Any object of the Java class `java.math.BigDecimal`.
@@ -177,10 +178,11 @@ both signed zeroes are treated as the same plain zero.
 Not permitted for a *SYS_Fraction* is any of the following,
 to keep things more correct and simpler:
 
-* Any infinity or NaN value of any of the Java primitive types `float`, `double`.
+* Any value of any of the Java primitive types `float`, `double`
+that represents an infinity or NaN.
 
-* Any infinity or NaN object of any of the Java classes
-`java.lang.Float`, `java.lang.Double`.
+* Any object of any of the Java classes `java.lang.Float`, `java.lang.Double`
+that represents an infinity or NaN.
 
 ## Bits
 

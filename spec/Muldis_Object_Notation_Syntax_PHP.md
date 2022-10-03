@@ -103,13 +103,14 @@ A *SYS_Integer* is any of the following:
 * Any value of the PHP type `int`.
 
 * Any object of the PHP class `GMP`
-that represents a finite number or signed zero value;
-both signed zeroes are treated as the same plain zero..
+that represents a finite number or signed zero;
+both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:
 
-* Any object of the PHP class `GMP` that represents an infinity or NaN.
+* Any object of the PHP class `GMP`
+that represents an infinity or NaN.
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
@@ -158,13 +159,15 @@ An *exponent* is any *SYS_Integer*.
 
 A *SYS_Fraction* is any of the following:
 
-* Any finite number value of the PHP type `float`;
+* Any value of the PHP type `float`
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Fraction* is any of the following,
 to keep things more correct and simpler:
 
-* Any infinity or NaN value of the PHP type `float`.
+* Any value of the PHP type `float`
+that represents an infinity or NaN.
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
@@ -175,8 +178,8 @@ This is because that would typically be interpreted as a **Text** artifact.
 A **Bits** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Bits`
-and its *SYS_that* is any *SYS_Array_A*
-such that every element is any *SYS_Integer* in `0..1`.
+and its *SYS_that* is any *SYS_String*
+such that every octet is in the set `0..1`.
 
 ## Blob
 
@@ -195,7 +198,7 @@ A *SYS_String* is any of the following:
 
 * Any value of the PHP type `string`.
 
-Note that the PHP `string` value is officially a generic octet sequence
+Note that a PHP `string` value is officially a generic octet sequence
 with no further native semantics.  One is treated as a character string
 only by convention, and different PHP functions or other contexts may
 expect that it represents characters in a particular character encoding and

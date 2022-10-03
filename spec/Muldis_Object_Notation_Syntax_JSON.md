@@ -188,14 +188,15 @@ An *exponent* is any *SYS_or_embedded_Integer*.
 
 A *SYS_Fraction* is any of the following:
 
-* Any JSON `number` value
-that represents a finite number or signed zero value;
+* Any value of the JSON type `number`
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Fraction* is any of the following,
 to keep things more correct and simpler:
 
-* Any JSON `number` value that represents an infinity or NaN.
+* Any value of the JSON type `number`
+that represents an infinity or NaN.
 
 An *embedded_MUON_PT_Fraction* is any of the following:
 
@@ -243,7 +244,7 @@ A **Text** artifact is any of the following:
 
 A *SYS_Text* is any of the following:
 
-* Any JSON `string` value that is *well formed*.
+* Any value of the JSON type `string` that is *well formed*.
 
 Note that *well formed* means all octet sequences are valid Unicode UTF-8
 and there are no UTF-16 surrogate code points
@@ -332,7 +333,7 @@ A *SYS_Array_DAA* is any of the following:
 
 A *SYS_Array_A* is any of the following:
 
-* Any JSON `array` value.
+* Any value of the JSON type `array`.
 
 ## Kit
 

@@ -171,11 +171,11 @@ A *SYS_Fraction* is any of the following:
 * Any object of the Raku class `FatRat` whose denominator is non-zero.
 
 * Any object of the Raku class `Num`
-that represents a finite number or signed zero value;
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 * Any object of any of the Raku classes `num`, `num32`, `num64`
-that represents a finite number or signed zero value;
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Fraction* is any of the following,
@@ -186,7 +186,8 @@ to keep things more correct and simpler:
 * Any object of any Raku class that composes the Raku role `Rational`
 besides `Rat` and `FatRat`.
 
-* Any object of the Raku class `Num` that represents an infinity or NaN.
+* Any object of the Raku class `Num`
+that represents an infinity or NaN.
 
 * Any object of any of the Raku classes `num`, `num32`, `num64`
 that represents an infinity or NaN.

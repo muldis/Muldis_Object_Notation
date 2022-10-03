@@ -122,6 +122,10 @@ to keep things more correct and simpler:
 * Any value of any of the .NET structure types (which are not *CLS-compliant*)
 `System.UInt16`, `System.UInt32`, `System.UInt64`.
 
+Note that the type `System.Numerics.BigInteger` is only part of .NET starting
+with .NET Framework version 4.0 (2010), so that represents the minimum
+required to support MUON for the general case of unlimited size numbers.
+
 ## Fraction
 
 A **Fraction** artifact is any of the following:
@@ -159,8 +163,8 @@ An *exponent* is any *SYS_Integer*.
 
 A *SYS_Fraction* is any of the following:
 
-* Any finite number or signed zero value of any of the .NET structure types
-`System.Single`, `System.Double`;
+* Any value of any of the .NET structure types `System.Single`, `System.Double`
+that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 * Any value of the .NET structure type `System.Decimal`.
@@ -168,8 +172,8 @@ both signed zeroes are treated as the same plain zero.
 Not permitted for a *SYS_Fraction* is any of the following,
 to keep things more correct and simpler:
 
-* Any infinity or NaN value of any of the .NET structure types
-`System.Single`, `System.Double`.
+* Any value of any of the .NET structure types `System.Single`, `System.Double`
+that represents an infinity or NaN.
 
 ## Bits
 
