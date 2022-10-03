@@ -21,6 +21,23 @@ mutually alternative MUON concrete syntaxes compare with each other.
     ))
 ```
 
+## [Syntax_Muldis_Data_Language](Muldis_Object_Notation_Syntax_Muldis_Data_Language.md)
+
+```
+    (Syntax:({Muldis_Object_Notation_Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
+        (Model:({Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
+            (Relation:{
+                (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
+                    phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
+                (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:8,d:27)),
+                    phone_numbers : (Set:{})),
+                (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:7,d:6)),
+                    phone_numbers : (Set:{"+81.9072391679"})),
+            })
+        ))
+    ))
+```
+
 ## [Syntax_Raku](Muldis_Object_Notation_Syntax_Raku.md)
 
 ```

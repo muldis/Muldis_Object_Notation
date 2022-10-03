@@ -58,7 +58,7 @@ This document consists of multiple parts:
 1. [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md)
 1. [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 1. [Syntax_Packed_Plain_Text](Muldis_Object_Notation_Syntax_Packed_Plain_Text.md)
-1. Syntax_Muldis_Data_Language
+1. [Syntax_Muldis_Data_Language](Muldis_Object_Notation_Syntax_Muldis_Data_Language.md)
 1. [Syntax_Raku](Muldis_Object_Notation_Syntax_Raku.md)
 1. [Syntax_Perl](Muldis_Object_Notation_Syntax_Perl.md)
 1. [Syntax_Java](Muldis_Object_Notation_Syntax_Java.md)
