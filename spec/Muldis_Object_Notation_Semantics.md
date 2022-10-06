@@ -288,11 +288,11 @@ It has no minimum or maximum value.
 
 A **Fraction** value is characterized by a **Tuple** having a subset of the
 4 attributes of the heading
-{`n|numerator`,`d|denominator`,`r|radix`,`e|exponent`} such that each
-attribute asset is an **Integer**, and {`r|radix`,`e|exponent`} must only
+[`n|numerator`,`d|denominator`,`r|radix`,`e|exponent`] such that each
+attribute asset is an **Integer**, and [`r|radix`,`e|exponent`] must only
 be given as a pair, and `d|denominator` if given must be non-zero, and
 `r|radix` if given must be at least 2; each of the 4 attributes, if not
-given, respectively have the implicit values {0,1,2,0}.
+given, respectively have the implicit values [0,1,2,0].
 
 The intended interpretation of a **Fraction** is as the rational number
 that results from evaluating the given 4 integers as the mathematical
@@ -329,7 +329,7 @@ which explicitly does not represent any kind of thing in particular.
 A **Text** value is characterized by an arbitrarily-large ordered sequence of
 **Unicode** standard *character code points*, where each distinct code
 point corresponds to a distinct integer in the set
-`{0..0xD7FF,0xE000..0x10FFFF}`,
+`[0..0xD7FF,0xE000..0x10FFFF]`,
 which explicitly does not represent any kind of thing in particular.
 
 See also <https://unicode.org>.
@@ -342,7 +342,7 @@ Note that some programming languages or execution environments support a
 "Unicode character string" concept that is less strict than the **Unicode**
 standard, and thus allow malformed character strings.  For example, some
 may allow isolated/non-paired UTF-16 "surrogate" code points corresponding
-to integers in the set **{0xD800..0xDFFF}**.  MUON forbids the use of any
+to integers in the set **[0xD800..0xDFFF]**.  MUON forbids the use of any
 such "character strings" using the **Text** possrep.  However, such data can
 still be conveyed using other means such as MUON's **Array**+**Integer**.
 
@@ -510,7 +510,7 @@ these things, but rather just every other kind of externally-defined type.
 
 A **Calendar Time** value is characterized by a **Tuple** having any subset
 of the 6 attributes of the heading
-{`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`} such that each
+[`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`] such that each
 attribute asset is a **Fractional**, or alternately by an isomorphic **Mix**.
 For each of the 6 attributes, it explicitly distinguishes between the
 attribute value being specified as zero versus being unspecified; omitting
@@ -539,8 +539,8 @@ standalone or is paired with an *instant offset* (characterized by a
 by a **Text**).
 
 Alternately, a **Calendar Instant** value is characterized by a **Tuple**
-having a subset of the 3 attributes of the heading {`base`,`offset`,`zone`}
-such that `base` must always be given, and at most one of {`offset`,`zone`}
+having a subset of the 3 attributes of the heading [`base`,`offset`,`zone`]
+such that `base` must always be given, and at most one of [`offset`,`zone`]
 may be given.
 
 When a **Calendar Instant** consists only of an *instant base*, it
@@ -579,7 +579,7 @@ means the former.
 
 Alternately, a **Geographic Point** value is characterized by a **Tuple**
 having any subset of the 3 attributes of the heading
-{`">"|longitude`,`"^"|latitude`,`"+"|elevation`} such that each
+[`">"|longitude`,`"^"|latitude`,`"+"|elevation`] such that each
 attribute asset is a **Fractional**.
 
 The coordinates may be specified in any order, and are distinguished by

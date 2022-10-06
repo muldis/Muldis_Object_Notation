@@ -16,16 +16,16 @@ its part name is `Syntax_Abstract`.
 # SYNOPSIS
 
 ```
-    (Syntax:({Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"}:
-        (Model:({Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
-            (Relation:{
+    (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
+        (Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
+            (Relation:[
                 (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
-                    phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
+                    phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])),
                 (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:8,d:27)),
-                    phone_numbers : (Set:{})),
+                    phone_numbers : (Set:[])),
                 (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:7,d:6)),
-                    phone_numbers : (Set:{"+81.9072391679"})),
-            })
+                    phone_numbers : (Set:["+81.9072391679"])),
+            ])
         ))
     ))
 ```
@@ -317,7 +317,7 @@ Examples:
 
 A **Text** artifact is an arbitrarily-large ordered sequence of **Unicode** standard
 *character code points* where each code point is an integer in the set
-`{0..0xD7FF,0xE000..0x10FFFF}`.
+`[0..0xD7FF,0xE000..0x10FFFF]`.
 
 Examples:
 
@@ -330,7 +330,7 @@ Examples:
 
     "This isn't not escaped.\n"
 
-    "\{0tx263A,0t65}"
+    "\[0tx263A,0t65]"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
@@ -345,7 +345,7 @@ Examples:
     0t0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\{0t0}"
+    "\[0t0]"
 
     `From a graduate student (in finals week), the following haiku:`
     "study, write, study,\n"
@@ -409,18 +409,18 @@ Examples:
 
 ```
     `Zero members.`
-    {}
+    []
 
     `One member.`
-    { "The lonely only." }
+    [ "The lonely only." ]
 
     `Four members.`
-    {
+    [
         Clubs  :  5,
         Diamonds,
         Hearts : 10,
         Spades : 20,
-    }
+    ]
 ```
 
 ## Kit
@@ -448,7 +448,7 @@ Examples:
     (0t0: 53,)
 
     `Same thing.`
-    ("\{0t0}": 53,)
+    ("\[0t0]": 53,)
 
     `Three named attributes.`
     (
@@ -543,9 +543,9 @@ A **Calendar Time** artifact has the predicate `Calendar_Time`.
 Its subject is any of the following:
 
 * Any **Kit** artifact having any subset of the 6 attributes of the
-heading {`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`} such
-that their corresponding attribute assets are {*year*, *month*, *day*,
-*hour*, *minute*, *second*}; each of those 6 is any **Fractional** artifact.
+heading [`y|year`,`m|month`,`d|day`,`h|hour`,`i|minute`,`s|second`] such
+that their corresponding attribute assets are [*year*, *month*, *day*,
+*hour*, *minute*, *second*]; each of those 6 is any **Fractional** artifact.
 
 Examples:
 
@@ -618,7 +618,7 @@ The above components are defined as follows:
 * An *instant base* is any **Calendar Time** subject.
 
 * An *instant offset* is any **Calendar Time** subject
-such that it is restricted to a subset of {*hour*, *minute*, *second*}.
+such that it is restricted to a subset of [*hour*, *minute*, *second*].
 
 * An *instant zone* is any **Text** artifact.
 
@@ -648,8 +648,8 @@ A **Geographic Point** artifact has the predicate `Geographic_Point`.
 Its subject is any of the following:
 
 * Any **Kit** artifact having any subset of the 3 attributes of the
-heading {`">"|longitude`,`"^"|latitude`,`"+"|elevation`} such that their
-corresponding attribute assets are {*longitude*, *latitude*, *elevation*};
+heading [`">"|longitude`,`"^"|latitude`,`"+"|elevation`] such that their
+corresponding attribute assets are [*longitude*, *latitude*, *elevation*];
 each of those 6 is any **Fractional** artifact.
 
 Examples:
@@ -692,34 +692,34 @@ Examples:
 
 ```
     `Zero members.`
-    (Array:{})
+    (Array:[])
 
     `One member.`
-    (Array:{ "You got it!" })
+    (Array:[ "You got it!" ])
 
     `Three members.`
-    (Array:{
+    (Array:[
         Alphonse,
         Edward,
         Winry,
-    })
+    ])
 
     `Five members (1 duplicate).`
-    (Array:{
+    (Array:[
         57,
         45,
         63,
         61,
         63,
-    })
+    ])
 
     `32 members (28 duplicates in 2 runs).`
-    (Array:{
+    (Array:[
         "/",
         "*" : 20,
         "+" : 10,
         "-",
-    })
+    ])
 ```
 
 ## Set
@@ -738,34 +738,34 @@ Examples:
 
 ```
     `Zero members.`
-    (Set:{})
+    (Set:[])
 
     `One member.`
-    (Set:{ "I know this one!" })
+    (Set:[ "I know this one!" ])
 
     `Four members (no duplicates).`
-    (Set:{
+    (Set:[
         Canada,
         Spain,
         Jordan,
         Jordan,
         Thailand,
-    })
+    ])
 
     `Three members.`
-    (Set:{
+    (Set:[
         3,
         16,
         85,
-    })
+    ])
 
     `Two members.`
-    (Set:{
+    (Set:[
         21 : 1,
         62 : 0,
         3 : 1,
         101 : 0,
-    })
+    ])
 ```
 
 ## Bag / Multiset
@@ -783,27 +783,27 @@ Examples:
 
 ```
     `Zero members.`
-    (Bag:{})
+    (Bag:[])
 
     `One member.`
-    (Bag:{ "I hear that!": 1 })
+    (Bag:[ "I hear that!": 1 ])
 
     `1200 members (1197 duplicates).`
-    (Bag:{
+    (Bag:[
         Apple  : 500,
         Orange : 300,
         Banana : 400,
-    })
+    ])
 
     `Six members (2 duplicates).`
-    (Bag:{
+    (Bag:[
         Foo : 1,
         Quux : 1,
         Foo : 1,
         Bar : 1,
         Baz : 1,
         Baz : 1,
-    })
+    ])
 ```
 
 ## Mix
@@ -821,38 +821,38 @@ Examples:
 
 ```
     `Zero members; we measured zero of nothing in particular.`
-    (Mix:{})
+    (Mix:[])
 
     `One member; one gram of mass.`
-    (Mix:{::Gram: 1.0})
+    (Mix:[::Gram: 1.0])
 
     `29.95 members (28.95 duplicates); the cost of a surgery.`
-    (Mix:{::USD: 29.95})
+    (Mix:[::USD: 29.95])
 
     `9.8 members; acceleration under Earth's gravity.`
-    (Mix:{::Meter_Per_Second_Squared: 9.8})
+    (Mix:[::Meter_Per_Second_Squared: 9.8])
 
     `0.615 members (fractions of 3 distinct members); recipe.`
-    (Mix:{
+    (Mix:[
         ::Butter : 0.22,
         ::Sugar  : 0.1,
         ::Flour  : 0.275,
         ::Sugar  : 0.02,
-    })
+    ])
 
     `4/3 members (fractions of 3 distinct members); this-mix.`
-    (Mix:{
+    (Mix:[
         Sugar: 1/3,
         Spice: 1/4,
         All_Things_Nice: 3/4,
-    })
+    ])
 
     `-1.5 members; adjustment for recipe.`
-    (Mix:{
+    (Mix:[
         Rice: +4.0,
         Beans: -5.7,
         Carrots: +0.2,
-    })
+    ])
 ```
 
 ## Interval
@@ -868,18 +868,18 @@ string value and its *that* is any **Any** artifact; this designates a
 *unit interval*, and *that* corresponds to its sole member.
 
 * Any **Duo** artifact such that its *this* is any of the 5 **Text**
-artifacts {`<=*<=`, `<=*<`, `<*<=`, `<*<`, `..`} and its *that* is any
+artifacts [`<=*<=`, `<=*<`, `<*<=`, `<*<`, `..`] and its *that* is any
 **Duo** artifact such that its *this* and *that* respectively are each any
 **Any** artifact; this designates a *bounded interval*, and the latter
 *this* and *that* correspond respectively to the low and high endpoints.
 
 * Any **Duo** artifact such that its *this* is any of the 2 **Text**
-artifacts {`<=*`, `<*`} and its *that* is any **Any** artifact; this
+artifacts [`<=*`, `<*`] and its *that* is any **Any** artifact; this
 designates a *low-bounded, high-unbounded interval*, and *that* corresponds
 to the low endpoint.
 
 * Any **Duo** artifact such that its *this* is any of the 2 **Text**
-artifacts {`*<=`, `*<`} and its *that* is any **Any** artifact; this
+artifacts [`*<=`, `*<`] and its *that* is any **Any** artifact; this
 designates a *low-unbounded, high-bounded interval*, and *that* corresponds
 to the high endpoint.
 
@@ -936,42 +936,42 @@ Examples:
 
 ```
     `Empty interval-set (zero members).`
-    (Interval_Set:{})
+    (Interval_Set:[])
 
     `Unit interval-set (one member).`
-    (Interval_Set:{(Interval:("":abc))})
+    (Interval_Set:[(Interval:("":abc))])
 
     `Probably 10 members, depending on the model used.`
-    (Interval_Set:{(Interval:("<=*<=":(1:10)))})
+    (Interval_Set:[(Interval:("<=*<=":(1:10)))])
 
     `Same thing.`
-    (Interval_Set:{(Interval:("..":(1:10)))})
+    (Interval_Set:[(Interval:("..":(1:10)))])
 
     `Probably 6 members.`
-    (Interval_Set:{
+    (Interval_Set:[
         (Interval:("..":(1:3))),
         (Interval:(""  :6    )),
         (Interval:("..":(8:9))),
-    })
+    ])
 
-    `Every Integer x except for {4..13,22..28}`
-    (Interval_Set:{*<=3,(Interval:("..":(14:21))),29<=*})
+    `Every Integer x except for [4..13,22..28]`
+    (Interval_Set:[*<=3,(Interval:("..":(14:21))),29<=*])
 
     `Set of all valid Unicode code points.`
-    (Interval_Set:{
+    (Interval_Set:[
         (Interval:("..":(     0:  0xD7FF))),
         (Interval:("..":(0xE000:0x10FFFF))),
-    })
+    ])
 
     `Probably 15 members (no duplicates), depending on the model used.`
-    (Interval_Set:{(Interval:("..":(1:10))),(Interval:("..":(6:15)))})
+    (Interval_Set:[(Interval:("..":(1:10))),(Interval:("..":(6:15)))])
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Set:{
+    (Interval_Set:[
         (Interval:("<=*<":( 1: 6)))  ,
         (Interval:(".."  :( 6:10))):2,
         (Interval:("<*<=":(10:15)))  ,
-    })
+    ])
 ```
 
 ## Interval Bag
@@ -987,26 +987,26 @@ Examples:
 
 ```
     `Empty interval-bag (zero members).`
-    (Interval_Bag:{})
+    (Interval_Bag:[])
 
     `Unit interval-bag (one member).`
-    (Interval_Bag:{(Interval:("":abc))})
+    (Interval_Bag:[(Interval:("":abc))])
 
     `Five members (4 duplicates).`
-    (Interval_Bag:{(Interval:("":def)):5})
+    (Interval_Bag:[(Interval:("":def)):5])
 
     `Probably 20 members (5 duplicates), depending on the model used.`
-    (Interval_Bag:{(Interval:("<=*<=":(1:10))),(Interval:("<=*<=":(6:15)))})
+    (Interval_Bag:[(Interval:("<=*<=":(1:10))),(Interval:("<=*<=":(6:15)))])
 
     `Same thing.`
-    (Interval_Bag:{(Interval:("..":(1:10))),(Interval:("..":(6:15)))})
+    (Interval_Bag:[(Interval:("..":(1:10))),(Interval:("..":(6:15)))])
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Bag:{
+    (Interval_Bag:[
         (Interval:("<=*<":( 1: 6)))  ,
         (Interval:(".."  :( 6:10))):2,
         (Interval:("<*<=":(10:15)))  ,
-    })
+    ])
 ```
 
 ## Pair
@@ -1064,7 +1064,7 @@ Examples:
     (Heading:(0t0,))
 
     `Same thing.`
-    (Heading:("\{0t0}",))
+    (Heading:("\[0t0]",))
 
     `Three named attributes.`
     (Heading:(region,revenue,qty))
@@ -1181,7 +1181,7 @@ Examples:
     (Tuple_Array:())
 
     `Zero attributes + one tuple.`
-    (Tuple_Array:{()})
+    (Tuple_Array:[()])
 
     `Three named attributes + zero tuples.`
     (Tuple_Array:(x,y,z))
@@ -1190,17 +1190,17 @@ Examples:
     (Tuple_Array:(0t0,0t1,0t2))
 
     `Two named attributes + three tuples (1 duplicate).`
-    (Tuple_Array:{
+    (Tuple_Array:[
         (name: Amy     , age: 14),
         (name: Michelle, age: 17),
         (name: Amy     , age: 14),
-    })
+    ])
 
     `Two positional attributes + two tuples.`
-    (Tuple_Array:{
+    (Tuple_Array:[
         (Michelle, 17),
         (Amy     , 14),
-    })
+    ])
 ```
 
 ## Relation / Tuple Set
@@ -1240,13 +1240,13 @@ Examples:
     (Relation:())
 
     `Same thing.`
-    (Relation:(():{}))
+    (Relation:(():[]))
 
     `Zero attributes + one tuple.`
-    (Relation:{()})
+    (Relation:[()])
 
     `Same thing.`
-    (Relation:(():{()}))
+    (Relation:(():[()]))
 
     `Three named attributes + zero tuples.`
     (Relation:(x,y,z))
@@ -1255,44 +1255,44 @@ Examples:
     (Relation:(0t0,0t1,0t2))
 
     `Two named attributes + two tuples.`
-    (Relation:{
+    (Relation:[
         (name: Michelle, age: 17),
         (name: Amy     , age: 14),
-    })
+    ])
 
     `Same thing.`
     (Relation:(
             (name    , age)
-        : {
+        : [
             (Michelle, 17 ),
             (Amy     , 14 ),
-        }
+        ]
     ))
 
     `Two positional attributes + two tuples.`
-    (Relation:{
+    (Relation:[
         (Michelle, 17),
         (Amy     , 14),
-    })
+    ])
 
     `Some people records.`
-    (Relation:{
+    (Relation:[
         (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
-            phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
+            phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])),
         (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:8,d:27)),
-            phone_numbers : (Set:{})),
+            phone_numbers : (Set:[])),
         (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:7,d:6)),
-            phone_numbers : (Set:{"+81.9072391679"})),
-    })
+            phone_numbers : (Set:["+81.9072391679"])),
+    ])
 
     `Same thing.`
     (Relation:(
             (name          , birth_date                           , phone_numbers)
-        : {
-            ("Jane Ives"   , (Calendar_Instant:(y:1971,m:11,d:6)), (Set:{"+1.4045552995", "+1.7705557572"})),
-            ("Layla Miller", (Calendar_Instant:(y:1995,m:8,d:27)), (Set:{})),
-            ("岩倉 玲音", (Calendar_Instant:(y:1984,m:7,d:6)), (Set:{"+81.9072391679"})),
-        }
+        : [
+            ("Jane Ives"   , (Calendar_Instant:(y:1971,m:11,d:6)), (Set:["+1.4045552995", "+1.7705557572"])),
+            ("Layla Miller", (Calendar_Instant:(y:1995,m:8,d:27)), (Set:[])),
+            ("岩倉 玲音", (Calendar_Instant:(y:1984,m:7,d:6)), (Set:["+81.9072391679"])),
+        ]
     ))
 ```
 
@@ -1312,7 +1312,7 @@ Examples:
     (Tuple_Bag:())
 
     `Zero attributes + one tuple.`
-    (Tuple_Bag:{()})
+    (Tuple_Bag:[()])
 
     `Three named attributes + zero tuples.`
     (Tuple_Bag:(x,y,z))
@@ -1321,16 +1321,16 @@ Examples:
     (Tuple_Bag:(0t0,0t1,0t2))
 
     `Two named attributes + six tuples (4 duplicates).`
-    (Tuple_Bag:{
+    (Tuple_Bag:[
         (name: Michelle, age: 17),
         (name: Amy     , age: 14) : 5,
-    })
+    ])
 
     `Two positional attributes + two tuples.`
-    (Tuple_Bag:{
+    (Tuple_Bag:[
         (Michelle, 17),
         (Amy     , 14),
-    })
+    ])
 ```
 
 # SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS
@@ -1352,11 +1352,11 @@ the *syntax subject* is any **Any** artifact.
 Examples:
 
 ```
-    (Syntax:({Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"}:
+    (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
         42
     ))
 
-    (Syntax:({Muldis_Object_Notation_Plain_Text, "https://example.com", "42"}:
+    (Syntax:([Muldis_Object_Notation_Plain_Text, "https://example.com", "42"]:
         42
     ))
 ```
@@ -1376,23 +1376,23 @@ the *model subject* is any **Any** artifact.
 Examples:
 
 ```
-    (Model:({Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
+    (Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
         42
     ))
 
-    (Model:({Muldis_Data_Language, "https://example.com", "42"}:
+    (Model:([Muldis_Data_Language, "https://example.com", "42"]:
         42
     ))
 
-    (Model:({SQL, "https://postgresql.org", "14.3"}:
+    (Model:([SQL, "https://postgresql.org", "14.3"]:
         42
     ))
 
-    (Model:({SQL, "https://sqlite.org", "3.38.5"}:
+    (Model:([SQL, "https://sqlite.org", "3.38.5"]:
         42
     ))
 
-    (Model:({Perl, "https://perlfoundation.org", "5.36.0"}:
+    (Model:([Perl, "https://perlfoundation.org", "5.36.0"]:
         42
     ))
 ```

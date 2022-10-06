@@ -16,16 +16,16 @@ its part name is `Syntax_Plain_Text`.
 # SYNOPSIS
 
 ```
-    (Syntax:({Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"}:
-        (Model:({Muldis_Data_Language, "https://muldis.com", "0.300.0"}:
-            (Relation:{
+    (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
+        (Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
+            (Relation:[
                 (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
-                    phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
+                    phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])),
                 (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:8,d:27)),
-                    phone_numbers : (Set:{})),
+                    phone_numbers : (Set:[])),
                 (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:7,d:6)),
-                    phone_numbers : (Set:{"+81.9072391679"})),
-            })
+                    phone_numbers : (Set:["+81.9072391679"])),
+            ])
         ))
     ))
 ```
@@ -107,7 +107,7 @@ valid MUON following one is handled properly.
 The MUON parser proper operates logically in terms of the input *parsing
 unit* being a Unicode character string (characterized by a sequence of
 Unicode *character code points*, each corresponding to an integer in the
-set `{0..0xD7FF,0xE000..0x10FFFF}`).  In self-defining terms, the MUON
+set `[0..0xD7FF,0xE000..0x10FFFF]`).  In self-defining terms, the MUON
 parser proper expects a **Text** value as input.
 
 Actual MUON parser input, however, is given as an octet string (per a raw
@@ -135,13 +135,13 @@ it explicitly as a separate operation from the MUON parsing.
 
 It is mandatory for every MUON parser to reject input, and for every MUON
 generator to not produce output, that has character code points
-corresponding to integers outside the set `{0..0xD7FF,0xE000..0x10FFFF}`.
+corresponding to integers outside the set `[0..0xD7FF,0xE000..0x10FFFF]`.
 
 However, as an exception to the prior rules, every MUON parser must instead
 automatically normalize/correct situations with input where logical Unicode
 non-BMP code points are represented by a well-formed ordered pair of
 Unicode surrogate code points corresponding to integers in the set
-`{0xD800..0xDFFF}`, replacing each pair with the appropriate non-BMP single
+`[0xD800..0xDFFF]`, replacing each pair with the appropriate non-BMP single
 code point.  But any surrogate code points that aren't part of such a pair
 are still an error and must be rejected.  And every MUON generator still
 must not output any Unicode surrogate codepoints even within such a pair.
@@ -258,11 +258,11 @@ Examples:
     `Muldis_Object_Notation_Sync_Mark`
     42
     `Muldis_Object_Notation_Sync_Mark`
-    {
+    [
         1,
         2,
         3,
-    }
+    ]
     `Muldis_Object_Notation_Sync_Mark`
     "Some text "
         "literal spread "
@@ -451,7 +451,7 @@ Grammar:
 ```
 
 This grammar supports writing **Integer** literals in any of the numeric
-bases `{2,8,10,16}`, using conventional syntax.  The literal may
+bases `[2,8,10,16]`, using conventional syntax.  The literal may
 optionally contain underscore characters (`_`), which exist just to help
 with visual formatting, such as for `10_000_000`.
 
@@ -572,7 +572,7 @@ Grammar:
 ```
 
 This grammar supports writing **Fraction** literals in any of the numeric
-bases `{2,8,10,16}`, using conventional syntax.  The literal may
+bases `[2,8,10,16]`, using conventional syntax.  The literal may
 optionally contain underscore characters (`_`), which exist just to help
 with visual formatting, such as for `20_194/17` or `3.141_59`.
 
@@ -583,7 +583,7 @@ MUON and some other language/format that differ in whether or not they
 consider a leading zero to signify octal/base-8 notation.
 
 The general form of a **Fraction** literal is `n/d*r^e` such that
-`{n,d,r,e}` are each integers and the literal represents the rational
+`[n,d,r,e]` are each integers and the literal represents the rational
 number that results from evaluating the mathematical expression using the
 following implicit order of operations, `(n/d)*(r^e)` such that `/` means
 divide, `*` means multiply, and `^` means exponentiate.
@@ -597,8 +597,8 @@ represented as a terminating binary or octal or hexadecimal number can also
 be represented as a terminating decimal number.
 
 Note that in order to keep the grammar simpler or more predictable, each
-**Fraction** component `{n,d,r,e}` must have its numeric base specified
-individually, and so any component without a {`0b`,`0o`,`0x`} prefix will
+**Fraction** component `[n,d,r,e]` must have its numeric base specified
+individually, and so any component without a [`0b`,`0o`,`0x`] prefix will
 be interpreted as base 10.  This keeps behaviour consistent with a parser
 that sees a **Fraction** literal but interprets it as multiple **Integer**
 literals separated by symbolic infix operators, evaluation order aside.
@@ -669,7 +669,7 @@ Grammar:
 ```
 
 This grammar supports writing **Bits** literals in any of the numeric
-bases `{2,8,16}`, using semi-conventional syntax.  The literal may
+bases `[2,8,16]`, using semi-conventional syntax.  The literal may
 optionally contain underscore characters (`_`), which exist just to help
 with visual formatting, such as for `0bb00101110_100010`.
 
@@ -704,7 +704,7 @@ Grammar:
 ```
 
 This grammar supports writing **Blob** literals in any of the numeric
-bases `{2,16,64}`, using semi-conventional syntax.  The literal may
+bases `[2,16,64]`, using semi-conventional syntax.  The literal may
 optionally contain underscore characters (`_`), which exist just to help
 with visual formatting, such as for `0xxA705_E416`.
 
@@ -771,7 +771,7 @@ Grammar:
 
     token escaped_char_cpt_seq
     {
-        '\\' ['{' ~ '}' [<code_point_text>* % ',']]
+        '\\' ['[' ~ ']' [<code_point_text>* % ',']]
     }
 
     token nonquoted_alphanumeric_text
@@ -796,7 +796,7 @@ This grammar explicitly forbids leading zeros in the main body of non-zero
 
 A `<code_point_text>` is subject to the additional rule that the
 non-negative integer it denotes must be in the set
-`{0..0xD7FF,0xE000..0x10FFFF}`.
+`[0..0xD7FF,0xE000..0x10FFFF]`.
 
 The meanings of the simple character escape sequences are:
 
@@ -812,7 +812,7 @@ The meanings of the simple character escape sequences are:
     \r  | 0xD     13 | CARR. RET. (CR) |     | control char carriage return
 ```
 
-There is just one complex escape sequence, of the format `\{...}`, that
+There is just one complex escape sequence, of the format `\[...]`, that
 supports specifying characters in terms of their Unicode code point number.
 One reason for this feature is to empower more elegant passing of
 Unicode-savvy MUON through a communications channel that is more limited,
@@ -841,7 +841,7 @@ Examples:
 
     "This isn't not escaped.\n"
 
-    "\{0tx263A,0t65}"
+    "\[0tx263A,0t65]"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"
@@ -856,7 +856,7 @@ Examples:
     0t0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\{0t0}"
+    "\[0t0]"
 
     `From a graduate student (in finals week), the following haiku:`
     "study, write, study,\n"
@@ -962,7 +962,7 @@ Grammar:
 ```
     token Lot
     {
-        ['{' <sp>?] ~ [<sp>? '}']
+        ['[' <sp>?] ~ [<sp>? ']']
             [',' <sp>?]?
             [[<this> | <this_and_that>]* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
@@ -973,18 +973,18 @@ Examples:
 
 ```
     `Zero members.`
-    {}
+    []
 
     `One member.`
-    { "The lonely only." }
+    [ "The lonely only." ]
 
     `Four members.`
-    {
+    [
         Clubs  :  5,
         Diamonds,
         Hearts : 10,
         Spades : 20,
-    }
+    ]
 ```
 
 ## Kit
@@ -1064,7 +1064,7 @@ Examples:
     (0t0: 53,)
 
     `Same thing.`
-    ("\{0t0}": 53,)
+    ("\[0t0]": 53,)
 
     `Three named attributes.`
     (
@@ -1186,7 +1186,7 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0t
     Nesting         | leading ::, or :: between 2 of, what otherwise is Text
     Duo             | (...:...) or (...->...) or (...<-...) without any comma
-    Lot             | only {} or {...}
+    Lot             | only [] or [...]
     Kit             | only () or (...) with >= 1 comma
     Article         | * between a Nesting|Text and a Kit in that order
     Excuse          | ! between a Nesting|Text and a Kit in that order
@@ -1226,7 +1226,7 @@ also use them.
 MUON does not use the single-quote string delimiter character `'` for
 anything, and leaves it reserved for a superset to use as it sees fit.
 
-MUON does not use the square bracket collection delimiters `[` and `]` for
+MUON does not use the curly brace collection delimiters `{` and `}` for
 anything, and leaves them reserved for a superset to use as it sees fit.
 
 MUON does not use the semicolon `;` for anything, so a superset grammar can
@@ -1277,7 +1277,7 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * delimit Duo/Kit selectors
           | generic grouping       | * optional delimiters around Any to force a parsing precedence
     ------+------------------------+---------------------------------------
-    {}    | discrete collections   | * delimit homogeneous discrete collections
+    []    | discrete collections   | * delimit homogeneous discrete collections
           |                        |   of members, concept asset+cardinal pairs
           |                        | * delimit Lot selectors
     ------+------------------------+---------------------------------------
@@ -1391,8 +1391,8 @@ when any of these sequences overlap, longest token always wins:
 ```
     (
     )
-    {
-    }
+    [
+    ]
     :
     ->
     <-

@@ -214,7 +214,7 @@ Grammar:
 ```
     token Interval
     {
-        ['[' <sp>?] ~ [<sp>? ']'] <interval_members>
+        ['{' <sp>?] ~ [<sp>? '}'] <interval_members>
     }
 
     token interval_members
@@ -253,110 +253,110 @@ Examples:
 
 ```
     `Empty interval (zero members).`
-    []
+    {}
 
     `Unit interval (one member).`
-    [abc]
+    {abc}
 
     `Closed interval (probably 10 members, depending on the model used).`
-    [1 <=*<= 10]
+    {1 <=*<= 10}
 
     `Same thing.`
-    [1..10]
+    {1..10}
 
-    `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
-    [2.7 <=*< 9.3]
+    `Left-closed, right-open interval; every Fraction x in {2.7<=x<9.3}.`
+    {2.7 <=*< 9.3}
 
-    `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
-    [a <*<= z]
+    `Left-open, right-closed interval; every Text x ordered in {a<x<=z}.`
+    {a <*<= z}
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
-    [0Lci@y2002|m12|d6@"UTC" <*< 0Lci@y2002|m12|d20@"UTC"]
+    {0Lci@y2002|m12|d6@"UTC" <*< 0Lci@y2002|m12|d20@"UTC"}
 
     `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
-    [*<= 3]
+    {*<= 3}
 
     `Left-closed, right-unbounded interval; every Integer x where 29 <= x.`
-    [29 <=*]
+    {29 <=*}
 
     `Universal interval; unbounded; every value of type system is a member.`
-    [*]
+    {*}
 ```
 
 ## More Compact Examples of Interval Set
 
 ```
     `Empty interval-set (zero members).`
-    (Interval_Set:{})
+    (Interval_Set:[])
 
     `Unit interval-set (one member).`
-    (Interval_Set:{[abc]})
+    (Interval_Set:[{abc}])
 
     `Probably 10 members, depending on the model used.`
-    (Interval_Set:{[1<=*<=10]})
+    (Interval_Set:[{1<=*<=10}])
 
     `Same thing.`
-    (Interval_Set:{[1..10]})
+    (Interval_Set:[{1..10}])
 
     `Probably 6 members.`
-    (Interval_Set:{[1..3],[6],[8..9]})
+    (Interval_Set:[{1..3},{6},{8..9}])
 
-    `Every Integer x except for {4..13,22..28}`
-    (Interval_Set:{[*<=3],[14..21],[29<=*]})
+    `Every Integer x except for [4..13,22..28]`
+    (Interval_Set:[{*<=3},{14..21},{29<=*}])
 
     `Set of all valid Unicode code points.`
-    (Interval_Set:{[0..0xD7FF],[0xE000..0x10FFFF]})
+    (Interval_Set:[{0..0xD7FF},{0xE000..0x10FFFF}])
 
     `Probably 15 members (no duplicates), depending on the model used.`
-    (Interval_Set:{[1..10],[6..15]})
+    (Interval_Set:[{1..10},{6..15}])
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Set:{[1<=*<6],[6..10]:2,[10<*<=15]})
+    (Interval_Set:[{1<=*<6},{6..10}:2,{10<*<=15}])
 ```
 
 ## More Compact Examples of Interval Bag
 
 ```
     `Empty interval-bag (zero members).`
-    (Interval_Bag:{})
+    (Interval_Bag:[])
 
     `Unit interval-bag (one member).`
-    (Interval_Bag:{[abc]})
+    (Interval_Bag:[{abc}])
 
     `Five members (4 duplicates).`
-    (Interval_Bag:{[def]:5})
+    (Interval_Bag:[{def}:5])
 
     `Probably 20 members (5 duplicates), depending on the model used.`
-    (Interval_Bag:{[1<=*<=10],[6<=*<=15]})
+    (Interval_Bag:[{1<=*<=10},{6<=*<=15}])
 
     `Same thing.`
-    (Interval_Bag:{[1..10],[6..15]})
+    (Interval_Bag:[{1..10},{6..15}])
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Bag:{[1<=*<6],[6..10]:2,[10<*<=15]})
+    (Interval_Bag:[{1<=*<6},{6..10}:2,{10<*<=15}])
 ```
 
 ## More Compact Examples of Relation
 
 ```
     `Some people records.`
-    (Relation:{
+    (Relation:[
         (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-            phone_numbers : (Set:{"+1.4045552995", "+1.7705557572"})),
+            phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])),
         (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
-            phone_numbers : (Set:{})),
+            phone_numbers : (Set:[])),
         (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-            phone_numbers : (Set:{"+81.9072391679"})),
-    })
+            phone_numbers : (Set:["+81.9072391679"])),
+    ])
 
     `Same thing.`
     (Relation:(
             (name          , birth_date        , phone_numbers)
-        : {
-            ("Jane Ives"   , 0Lci@y1971|m11|d06, (Set:{"+1.4045552995", "+1.7705557572"})),
-            ("Layla Miller", 0Lci@y1995|m08|d27, (Set:{})),
-            ("岩倉 玲音", 0Lci@y1984|m07|d06, (Set:{"+81.9072391679"})),
-        }
+        : [
+            ("Jane Ives"   , 0Lci@y1971|m11|d06, (Set:["+1.4045552995", "+1.7705557572"])),
+            ("Layla Miller", 0Lci@y1995|m08|d27, (Set:[])),
+            ("岩倉 玲音", 0Lci@y1984|m07|d06, (Set:["+81.9072391679"])),
+        ]
     ))
 ```
 
@@ -461,15 +461,15 @@ that typically consists of 3 **Text** artifacts.
 Examples:
 
 ```
-    (Script:({ASCII}:
+    (Script:([ASCII]:
         42
     ))
 
-    (Script:({Unicode, 2.1, "UTF-8"}:
+    (Script:([Unicode, 2.1, "UTF-8"]:
         42
     ))
 
-    (Script:({Unicode, 2.1, "UTF-8", canon}:
+    (Script:([Unicode, 2.1, "UTF-8", canon]:
         42
     ))
 ```
@@ -486,7 +486,7 @@ and its **Script** secondary data type possrep was deleted.
 Assuming that the MUON parser proper operates logically in terms of the
 input *parsing unit* being a Unicode character string (characterized by a
 sequence of Unicode *character code points*, each corresponding to an
-integer in the set `{0..0xD7FF,0xE000..0x10FFFF}`), a MUON parser that is
+integer in the set `[0..0xD7FF,0xE000..0x10FFFF]`), a MUON parser that is
 actually given an octet string as input (per a raw file) will need to
 determine which of possibly many possible encoding formats was used to
 encode the character data as octets, and then convert the input as such.

@@ -221,10 +221,10 @@ to keep things more correct and simpler:
 A .NET `System.String` is characterized as an ordered sequence of 0..N `System.Char`
 such that each of the latter is an unsigned 16-bit integer *C*.
 A *well formed* string denotes a Unicode BMP code point with a single *C*
-in the non-surrogate set `{0..0xD7FF,0xE000..0xFFFF}`
+in the non-surrogate set `[0..0xD7FF,0xE000..0xFFFF]`
 (`System.Char.IsSurrogate()` is false) or it denotes a Unicode
 non-BMP code point with an ordered pair of *C* each in the surrogate set
-`{0xD800..0xDFFF}` (`System.Char.IsSurrogate()` is true) and the pair
+`[0xD800..0xDFFF]` (`System.Char.IsSurrogate()` is true) and the pair
 is also well formed (`System.Char.IsSurrogatePair()` is true); a
 *well formed* string does not contain any *C* in the surrogate set that
 isn't so paired.
