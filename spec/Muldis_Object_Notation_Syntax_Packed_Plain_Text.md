@@ -39,13 +39,22 @@ do not have a common working memory, such as because they are distinct
 machine processes written in different programming languages, or because
 they are on distinct machines, or because they are mediated by a network or
 disk file.  The format is fairly easy for machines to parse and generate.
-It is *not* intended for humans to read and write.
+It is *not* intended for humans to easily read and write but has aids for that.
 
 The MUON `Syntax_Packed_Plain_Text` exists as an alternative to the MUON
 [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 under the theory that the former may be more performant for machines to
 parse and generate, or may occupy fewer resources (network bandwidth,
 working memory, disk space) than the latter.
+
+The MUON Packed Plain Text format is fundamentally the same as the MUON
+Plain Text format, both in what it can represent and how it represents
+those things, but that it has certain key differences.  These differences
+allow MUON artifacts to be represented much more compactly, using
+considerably fewer octets, with the trade-off that many of those octets
+don't correspond to ASCII printable characters, or to different ones.
+Some design choices are such that Packed Plain Text is at least partially
+human readable or writeable, but on the whole it isn't intended for that.
 
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
 MUON Packed Plain Text artifact is `Muldis_Object_Notation_Packed_Plain_Text`.
@@ -112,6 +121,129 @@ parser or generator, the latter just cares about the content of the file.
 ## Excuse
 
 *TODO.*
+
+# GLOSSARY OF OCTETS
+
+The following table enumerates the 256 octets in ascending numerical order
+and their intended interpretations within MUON Packed Plain Text artifacts
+usually in the context of their being the first octet of an artifact.
+
+```
+    PPT | PPT | Plain Text  | Meaning
+    Oct | Chr | Literal     |
+    ----+-----+-------------+----------------------------------------------
+    00  |     | 0t0         | Text artifact or first "positional" Tuple/etc attribute name
+    01  |     | 0t1         | Text artifact or second "positional" Tuple/etc attribute name
+    ...
+    1F  |     | 0t31        | Text artifact or 32nd "positional" Tuple/etc attribute name
+    ----+-----+-------------+----------------------------------------------
+    20  |     |             | (unassigned)
+    ----+-----+-------------+----------------------------------------------
+    21  | !   | 0bFALSE     | Boolean artifact false
+    22  | "   |             | delimit quoted octet string
+    23  | #   |             | (unassigned)
+    24  | $   |             | (unassigned)
+    25  | %   |             | (unassigned)
+    26  | &   |             | (unassigned)
+    27  | '   |             | (unassigned)
+    28  | (   |             | delimit-start 2-ary/4-ary collection element list (Fraction/Duo/Article/Excuse)
+    29  | )   |             | delimit-end 2-ary/4-ary collection element list (Fraction/Duo/Article/Excuse)
+    2A  | *   |             | (unassigned)
+    2B  | +   |             | Integer artifact prefix general case positive number
+    2C  | ,   |             | separates N-ary collection list elements (Nesting/Lot/Kit)
+    2D  | -   |             | Integer artifact prefix general case negative number
+    2E  | .   | -1          | Integer artifact negative one
+    2F  | /   |             | Fraction artifact prefix general case [numerator,denominator] pair
+    ----+-----+-------------+----------------------------------------------
+    30  | 0   | 0           | Integer artifact zero
+    31  | 1   | 1           | Integer artifact positive one or Lot member multiplicity one
+    ...
+    39  | 9   | 9           | Integer artifact positive nine or Lot member multiplicity nine
+    ----+-----+-------------+----------------------------------------------
+    3A  | :   |             | separate the 2 parts of a pair in a Duo/Lot/Kit/Article/Excuse
+    3B  | ;   |             | (unassigned)
+    3C  | <   | -1.0        | Fraction artifact negative one
+    3D  | =   | 0.0         | Fraction artifact zero
+    3E  | >   | 1.0         | Fraction artifact positive one
+    3F  | ?   | 0bTRUE      | Boolean artifact true
+    40  | @   |             | (unassigned)
+    ----+-----+-------------+----------------------------------------------
+    41  | A   |             | Article artifact prefix general case
+    42  | B   |             | Blob artifact prefix general case quoted string with N octets
+    43  | C   |             | (unassigned)
+    44  | D   |             | Duo artifact prefix general case
+    45  | E   |             | Excuse artifact prefix general case
+    46  | F   |             | (unassigned)
+    47  | G   |             | (unassigned)
+    48  | H   |             | (unassigned)
+    49  | I   |             | (unassigned)
+    4A  | J   |             | (unassigned)
+    4B  | K   |             | Kit artifact prefix general case with N attributes
+    4C  | L   |             | Lot artifact prefix general case with N members
+    4D  | M   |             | (unassigned)
+    4E  | N   |             | Nesting artifact prefix general case with N elements
+    4F  | O   |             | (unassigned)
+    50  | P   |             | (unassigned)
+    51  | Q   |             | (unassigned)
+    52  | R   |             | (unassigned)
+    53  | S   |             | Bits artifact prefix general case quoted string with N octets / N bits
+    54  | T   |             | Text artifact prefix general case quoted UTF-8 string with N octets / N characters
+    55  | U   |             | (unassigned)
+    56  | V   |             | (unassigned)
+    57  | W   |             | (unassigned)
+    58  | X   |             | (unassigned)
+    59  | Y   |             | (unassigned)
+    5A  | Z   |             | (unassigned)
+    ----+-----+-------------+----------------------------------------------
+    5B  | [   |             | delimit-start N-ary collection element list (Nesting/Lot/Kit)
+    5C  | \   |             | escape sequence prefix within quoted octet string
+    5D  | ]   |             | delimit-end N-ary collection element list (Nesting/Lot/Kit)
+    5E  | ^   |             | Fraction artifact prefix general case [numerator,denominator,radix,exponent] 4-tuple
+    5F  | _   | 0iIGNORANCE | Ignorance artifact singleton
+    60  | `   |             | delimit Self-Synchronization Mark or expendable padding/comments
+    ----+-----+-------------+----------------------------------------------
+    61  | a   |             | Kit artifact prefix special case with exactly 1 attribute
+    62  | b   | 0xx         | Blob artifact empty string
+    ----+-----+-------------+----------------------------------------------
+    63  | c   |             | Integer artifact prefix fixed width big-endian unsigned 1 octet
+    64  | d   |             | Integer artifact prefix fixed width big-endian two's complement signed 1 octet
+    65  | e   |             | Integer artifact prefix fixed width big-endian unsigned 2 octets
+    66  | f   |             | Integer artifact prefix fixed width big-endian two's complement signed 2 octets
+    67  | g   |             | Integer artifact prefix fixed width big-endian unsigned 4 octets
+    68  | h   |             | Integer artifact prefix fixed width big-endian two's complement signed 4 octets
+    69  | i   |             | Integer artifact prefix fixed width big-endian unsigned 8 octets
+    6A  | j   |             | Integer artifact prefix fixed width big-endian two's complement signed 8 octets
+    ----+-----+-------------+----------------------------------------------
+    6B  | k   | ()          | Kit artifact with zero attributes
+    6C  | l   | []          | Lot artifact with zero members
+    6D  | m   |             | Lot artifact prefix special case with exactly 1 member (implicit multiplicity of 1)
+    6E  | n   |             | Nesting artifact prefix special case with exactly 1 element
+    6F  | o   |             | Blob artifact prefix special case string with exactly 1 octet element
+    70  | p   |             | (unassigned)
+    71  | q   |             | (unassigned)
+    72  | r   |             | (unassigned)
+    73  | s   | 0bb         | Bits artifact empty string
+    74  | t   | ""          | Text artifact empty string
+    ----+-----+-------------+----------------------------------------------
+    75  | u   |             | Text artifact prefix special case UTF-8 string with exactly 1 octet / 1 ASCII character
+    76  | v   |             | Text artifact prefix special case UTF-8 string with exactly 2 octets
+    77  | w   |             | Text artifact prefix special case UTF-8 string with exactly 3 octets
+    78  | x   |             | Text artifact prefix special case UTF-8 string with exactly 4 octets / 1 non-BMP Unicode character
+    79  | y   |             | Text artifact prefix special case UTF-8 string with exactly 5 octets
+    7A  | z   |             | Text artifact prefix special case UTF-8 string with exactly 6 octets
+    ----+-----+-------------+----------------------------------------------
+    7B  | {   |             | (unassigned)
+    7C  | |   |             | (unassigned)
+    7D  | }   |             | (unassigned)
+    7E  | ~   |             | (unassigned)
+    ----+-----+-------------+----------------------------------------------
+    7F  |     |             | (unassigned)
+    ----+-----+-------------+----------------------------------------------
+    80  |     |             | (unassigned)
+    ...
+    FF  |     |             | (unassigned)
+    ----+-----+-------------+----------------------------------------------
+```
 
 # SEE ALSO
 
