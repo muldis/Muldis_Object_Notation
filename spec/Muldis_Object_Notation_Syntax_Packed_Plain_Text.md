@@ -233,13 +233,21 @@ Grammar:
 ```
     token Ignorance
     {
-        TODO
+        _
     }
 ```
 
+An **Ignorance** artifact unconditionally uses just 1 octet.
+
+Its single octet corresponds to the ASCII/UTF-8 *LOW LINE* character `_`
+which visually resembles a blank space without being actual whitespace.
+
 Examples:
 
-*TODO.*
+```
+    `Ignorance singleton (1 octet).`
+    _
+```
 
 ## Boolean
 
@@ -251,13 +259,37 @@ Grammar:
 ```
     token Boolean
     {
-        TODO
+        <Boolean_false> | <Boolean_true>
+    }
+
+    token Boolean_false
+    {
+        '!'
+    }
+
+    token Boolean_true
+    {
+        '?'
     }
 ```
 
+A **Boolean** artifact unconditionally uses just 1 octet.
+
+Its single octet for *false* corresponds to the ASCII/UTF-8 *EXCLAMATION MARK*
+character `!` which has a common mnemonic of logical "not".
+
+Its single octet for *true* corresponds to the ASCII/UTF-8 *QUESTION MARK*
+character `?` which has a common mnemonic of logical "so".
+
 Examples:
 
-*TODO.*
+```
+    `Boolean false (1 octet).`
+    !
+
+    `Boolean true (1 octet).`
+    ?
+```
 
 ## Integer
 
@@ -269,13 +301,195 @@ Grammar:
 ```
     token Integer
     {
-        TODO
+          <Integer_zero>
+        | <Integer_positive_one_thru_nine>
+        | <Integer_negative_one>
+        | <Integer_unlimited_positive>
+        | <Integer_unlimited_negative>
+        | <Integer_limited_nonsigned_1_octet>
+        | <Integer_limited_signed_1_octet>
+        | <Integer_limited_nonsigned_2_octets>
+        | <Integer_limited_signed_2_octets>
+        | <Integer_limited_nonsigned_4_octets>
+        | <Integer_limited_signed_4_octets>
+        | <Integer_limited_nonsigned_8_octets>
+        | <Integer_limited_signed_8_octets>
+    }
+
+    token Integer_zero
+    {
+        0
+    }
+
+    token Integer_positive_one_thru_nine
+    {
+        <[ 1..9 ]>
+    }
+
+    token Integer_negative_one
+    {
+        '.'
+    }
+
+    token Integer_unlimited_positive
+    {
+        '+' <quoted_octet_string>
+    }
+
+    token Integer_unlimited_negative
+    {
+        '-' <quoted_octet_string>
+    }
+
+    token Integer_limited_nonsigned_1_octet
+    {
+        c <aescaped_octet>
+    }
+
+    token Integer_limited_signed_1_octet
+    {
+        d <aescaped_octet>
+    }
+
+    token Integer_limited_nonsigned_2_octets
+    {
+        e <aescaped_octet> ** 2
+    }
+
+    token Integer_limited_signed_2_octets
+    {
+        f <aescaped_octet> ** 2
+    }
+
+    token Integer_limited_nonsigned_4_octets
+    {
+        g <aescaped_octet> ** 4
+    }
+
+    token Integer_limited_signed_4_octets
+    {
+        h <aescaped_octet> ** 4
+    }
+
+    token Integer_limited_nonsigned_8_octets
+    {
+        i <aescaped_octet> ** 8
+    }
+
+    token Integer_limited_signed_8_octets
+    {
+        j <aescaped_octet> ** 8
     }
 ```
 
+An **Integer** artifact uses just 1 octet to canonically represent the most
+commonly used integers `[-1,0,1]` as well as `[2..9]`.  There are also
+other formats for each of these integers, but they all take more octets.
+
+The single canonical octet for each of `[0..9]` corresponds to the
+ASCII/UTF-8 *DIGIT ZERO* thru *DIGIT NINE* characters `0` thru `9` so it
+is visually represented by its corresponding numeric base 10 literal,
+which is also identical to its canonical MUON Plain Text representation.
+
+Its single canonical octet for `-1` corresponds to the ASCII/UTF-8
+*FULL STOP* character `.` which doesn't have a related common mnemonic
+aside from use in real number literals.
+
+An **Integer** artifact uses 3..N octets to represent the general case of
+any integer as a single sign-denoting octet followed by an unlimited length
+big-endian ordered nonsigned integer literal in the numeric base 256, so
+the octets `[\00..\FF]` represent `[0..255]` in each position respectively.
+The octet for negative and positive sign respectively corresponds to the
+ASCII/UTF-8 *HYPHEN-MINUS* and *PLUS SIGN* characters `-` and `+` so it
+is visually represented as is typical in math.
+The nonsigned integer literal consists of 2 delimiter octets plus 0..N base
+256 positions.
+Each delimiter octet corresponds to the ASCII/UTF-8 *QUOTATION MARK*
+character `"` which has a common mnemonic for string quoting.
+Most position octets represent themselves, but a few of the possible 256
+values are instead represented by escape sequences of 2 different octets
+each, so no delimiter octets appear literally in the string they delimit.
+A position string allows leading zero valued octets.
+An empty position string is logically equivalent to a string consisting of
+exactly one zero valued octet.
+
+An **Integer** artifact uses [2..3,3..5,5..9,9..17] octets respectively to
+represent any commonly used integer as a single length-denoting octet
+followed by a limited length big-endian ordered nonsigned or signed integer
+literal in the numeric base 256.
+The integer literal consists of [1,2,4,8] base positions and no delimiters.
+All position octets are as per the unlimited length integer formats.
+The octet for a big-endian nonsigned [1,2,4,8] octet integer
+corresponds to the ASCII/UTF-8 *LATIN SMALL LETTER [C,E,G,I]* character
+[`c`,`e`,`g`,`i`].
+The octet for a big-endian two's complement signed [1,2,4,8] octet integer
+corresponds to the ASCII/UTF-8 *LATIN SMALL LETTER [D,F,H,J]* character
+[`d`,`f`,`h`,`j`].
+
 Examples:
 
-*TODO.*
+```
+    `Zero (1 octet).`
+    0
+
+    `Same thing (3 octets).`
+    +""
+
+    `Same thing (4 octets).`
+    +"\00"
+
+    `Same thing (3 octets).`
+    -""
+
+    `Same thing (2 octets).`
+    d\00
+
+    `Positive one (1 octet).`
+    1
+
+    `Same thing (4 octets).`
+    +"\01"
+
+    `Same thing (2 octets).`
+    d\01
+
+    `Positive three (1 octet).`
+    3
+
+    `Same thing (4 octets).`
+    +"\03"
+
+    `Same thing (2 octets).`
+    d\03
+
+    `Negative one (1 octet).`
+    .
+
+    `Same thing (4 octets).`
+    -"\01"
+
+    `Same thing (2 octets).`
+    d\FF
+
+    `Negative three (4 octets).`
+    -"\03"
+
+    `Same thing (2 octets).`
+    d\FD
+
+    `Positive forty-two (4 octets).`
+    +"*"
+
+    `Same thing (2 octets).`
+    d*
+
+    `USA national debt in US dollars close to midnight of 2017 Dec 31`
+    `(9 octets); also known as 20_597_460_196_915.`
+    +"\12\BB\B8L^3"
+
+    `Same thing (9 octets).`
+    j\00\00\12\BB\B8L^3
+```
 
 ## Fraction
 
@@ -325,6 +539,37 @@ Grammar:
     {
         TODO
     }
+
+    token quoted_octet_string
+    {
+        '"' ~ '"' <aescaped_octet>*
+    }
+
+    token aescaped_octet
+    {
+        <nonescaped_octet> | <escaped_octet>
+    }
+
+    token nonescaped_octet
+    {
+        <[ \x[0]..\x[FF] ] - [ "`\\ ]>
+    }
+
+    token escaped_octet
+    {
+        '\\' <[qgb]>
+    }
+```
+
+The meanings of the octet escape sequences are:
+
+```
+    Esc | Unicode    | Unicode         | Chr | Literal character used
+    Seq | Code Point | Character Name  | Lit | for when not escaped
+    ----+------------+-----------------+-----+-----------------------------
+    \q  | 0x22    34 | QUOTATION MARK  | "   | delimit quoted octet string
+    \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit Self-Synchronization Mark
+    \b  | 0x5C    93 | REVERSE SOLIDUS | \   | no special meaning in non-escaped
 ```
 
 Examples:
