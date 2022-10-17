@@ -66,37 +66,299 @@ context to interpret them with.  Filename extensions are more for the
 benefit of the operating system or command shell or users than for a MUON
 parser or generator, the latter just cares about the content of the file.
 
+# NORMALIZATION
+
+The grammar comprising most of this document assumes that the MUON *parsing
+unit* it takes as input has already been through some basic normalization,
+which this section describes.  Said normalization is expected to be
+performed by a MUON parser natively as its first step.
+
+## UNIX Shebang Interpreter Directive
+
+<https://en.wikipedia.org/wiki/Shebang_(Unix)>
+
+Since a MUON file may typically define an executable program that could be
+directly invoked in the typical manner of a UNIX script, MUON officially
+supports the option of a *shebang line* at the start of a *parsing unit*.
+The shebang line tells the program loader what interpreter to invoke to run
+the MUON file and what other additional arguments it should be given.
+
+Examples:
+
+```
+    #!/usr/bin/env muldisre
+```
+
+The `#!` is a magic number and the shebang continues until the first
+linebreak; the parser should discard that line and then process the rest of
+the input according to the regular MUON grammar.
+
+It is mandatory for every MUON parser to support recognition of an optional
+*shebang line* and to handle it gracefully, such that it is not an error
+for a *parsing unit* to either have or not have one, and any otherwise
+valid MUON following one is handled properly.
+
+## Script / Character Encoding
+
+The MUON parser proper operates logically in terms of the input *parsing
+unit* being an octet string (characterized by a sequence of
+octets, each corresponding to an integer in the
+set `[0..0xFF]`).  In self-defining terms, the MUON
+parser proper expects a **Blob** value as input.
+
+For the purpose of illustration, however, the grammar of this document part
+treats the input *parsing unit* as if it were an ISO Latin-1 character
+string; or to be specific, any octets `[0x20..0x7E]` which correspond to
+printable ASCII characters or SPACE in the ISO Latin-1 encoding will appear
+as the same character literals in the grammar, while the other octets
+`[0..0x1F,0x7F..0xFF]` will be expressed as those integers.
+
+Note that in any artifact examples, the format `\NN` is used to represent
+octets that don't correspond to printable ASCII characters or SPACE; the
+`NN` is a padded base-16 notation integer between `00` and `FF`; all other
+appearances of `\` are followed by a letter and represent themselves.
+
+## Aggregate Self-Synchronization Mark
+
+It is mandatory for every MUON parser to recognize the simple aggregation
+of multiple mutually independent *parsing unit* into a *parsing unit
+aggregate* such that each pair of consecutive components is separated by an
+*aggregate self-synchronization mark* (*assm*), which is this literal text:
+
+```
+    `Muldis_Object_Notation_Sync_Mark`
+```
+
+See the corresponding section of the MUON Syntax Plain Text documentation
+for rationale, which will not be repeated here.
+
+Examples:
+
+*TODO.*
+
+# COMMON QUALITIES OF THE GRAMMAR
+
+The syntax and intended interpretation of the grammar itself seen in this
+document part should match that of the user-defined grammars feature of the
+Raku language, which is described by
+<https://docs.raku.org/language/grammars>.
+
+Any references like `<foo>` in either the grammar itself or in the written
+documentation specifically refer to the corresponding grammar token `foo`.
+
+# PARSING UNIT
+
+A MUON *parsing unit* is represented in the grammar by
+`<Muldis_Object_Notation_Packed_Plain_Text>`.
+
+Grammar:
+
+```
+    token Muldis_Object_Notation_Packed_Plain_Text
+    {
+        <sp>? ~ <sp>? <Any>
+    }
+```
+
+# DIVIDING SPACE
+
+Grammar:
+
+```
+    token sp
+    {
+        '`' ~ '`' <[ \x[0]..\x[FF] ] - [`]>*
+    }
+```
+
+A `<sp>` represents *dividing space* that may be used to embed extra octet
+sequences in MUON parsing units that are expendable and don't change its
+meaning, such as for use as padding or limited formatting or comments.
+
+# CRITICAL ALGEBRAIC DATA TYPE POSSREPS
+
+## Any / Universal Type Possrep
+
+An **Any** artifact has the dedicated concrete literal format
+described by `<Any>`.
+
+Grammar:
+
+```
+    token Any
+    {
+        <simple_primary> | <collective_primary>
+    }
+
+    token simple_primary
+    {
+          <Ignorance>
+        | <Boolean>
+        | <Integer>
+        | <Fraction>
+        | <Bits>
+        | <Blob>
+        | <Text>
+        | <Nesting>
+    }
+
+    token collective_primary
+    {
+          <Duo>
+        | <Lot>
+        | <Kit>
+        | <Article>
+        | <Excuse>
+    }
+```
+
+## None / Empty Type Possrep
+
+A **None** artifact doesn't exist, but is mentioned for parity.
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
 
 ## Ignorance
+
+An **Ignorance** artifact has the dedicated concrete literal format
+described by `<Ignorance>`.
+
+Grammar:
+
+```
+    token Ignorance
+    {
+        TODO
+    }
+```
+
+Examples:
 
 *TODO.*
 
 ## Boolean
 
+A **Boolean** artifact has the dedicated concrete literal format
+described by `<Boolean>`.
+
+Grammar:
+
+```
+    token Boolean
+    {
+        TODO
+    }
+```
+
+Examples:
+
 *TODO.*
 
 ## Integer
+
+An **Integer** artifact has the dedicated concrete literal format
+described by `<Integer>`.
+
+Grammar:
+
+```
+    token Integer
+    {
+        TODO
+    }
+```
+
+Examples:
 
 *TODO.*
 
 ## Fraction
 
+A **Fraction** artifact has the dedicated concrete literal format
+described by `<Fraction>`.
+
+Grammar:
+
+```
+    token Fraction
+    {
+        TODO
+    }
+```
+
+Examples:
+
 *TODO.*
 
 ## Bits
+
+A **Bits** artifact has the dedicated concrete literal format
+described by `<Bits>`.
+
+Grammar:
+
+```
+    token Bits
+    {
+        TODO
+    }
+```
+
+Examples:
 
 *TODO.*
 
 ## Blob
 
+A **Blob** artifact has the dedicated concrete literal format
+described by `<Blob>`.
+
+Grammar:
+
+```
+    token Blob
+    {
+        TODO
+    }
+```
+
+Examples:
+
 *TODO.*
 
 ## Text / Attribute Name
 
+A **Text** artifact has the dedicated concrete literal format
+described by `<Text>`.
+
+Grammar:
+
+```
+    token Text
+    {
+        TODO
+    }
+```
+
+Examples:
+
 *TODO.*
 
 ## Nesting / Attribute Name List
+
+A **Nesting** artifact has the dedicated concrete literal format
+described by `<Nesting>`.
+
+Grammar:
+
+```
+    token Nesting
+    {
+        TODO
+    }
+```
+
+Examples:
 
 *TODO.*
 
@@ -104,21 +366,91 @@ parser or generator, the latter just cares about the content of the file.
 
 ## Duo
 
+A **Duo** artifact has the dedicated concrete literal format
+described by `<Duo>`.
+
+Grammar:
+
+```
+    token Duo
+    {
+        TODO
+    }
+```
+
+Examples:
+
 *TODO.*
 
 ## Lot
+
+A **Lot** artifact has the dedicated concrete literal format
+described by `<Lot>`.
+
+Grammar:
+
+```
+    token Lot
+    {
+        TODO
+    }
+```
+
+Examples:
 
 *TODO.*
 
 ## Kit
 
+A **Kit** artifact has the dedicated concrete literal format
+described by `<Kit>`.
+
+Grammar:
+
+```
+    token Kit
+    {
+        TODO
+    }
+```
+
+Examples:
+
 *TODO.*
 
 ## Article / Labelled Tuple
 
+A **Article** artifact has the dedicated concrete literal format
+described by `<Article>`.
+
+Grammar:
+
+```
+    token Article
+    {
+        TODO
+    }
+```
+
+Examples:
+
 *TODO.*
 
 ## Excuse
+
+A **Excuse** artifact has the dedicated concrete literal format
+described by `<Excuse>`.
+
+Grammar:
+
+```
+    token Excuse
+    {
+        TODO
+    }
+```
+
+Examples:
 
 *TODO.*
 
@@ -205,13 +537,13 @@ usually in the context of their being the first octet of an artifact.
     61  | a   |             | Kit artifact prefix special case with exactly 1 attribute
     62  | b   | 0xx         | Blob artifact empty string
     ----+-----+-------------+----------------------------------------------
-    63  | c   |             | Integer artifact prefix fixed width big-endian unsigned 1 octet
+    63  | c   |             | Integer artifact prefix fixed width big-endian nonsigned 1 octet
     64  | d   |             | Integer artifact prefix fixed width big-endian two's complement signed 1 octet
-    65  | e   |             | Integer artifact prefix fixed width big-endian unsigned 2 octets
+    65  | e   |             | Integer artifact prefix fixed width big-endian nonsigned 2 octets
     66  | f   |             | Integer artifact prefix fixed width big-endian two's complement signed 2 octets
-    67  | g   |             | Integer artifact prefix fixed width big-endian unsigned 4 octets
+    67  | g   |             | Integer artifact prefix fixed width big-endian nonsigned 4 octets
     68  | h   |             | Integer artifact prefix fixed width big-endian two's complement signed 4 octets
-    69  | i   |             | Integer artifact prefix fixed width big-endian unsigned 8 octets
+    69  | i   |             | Integer artifact prefix fixed width big-endian nonsigned 8 octets
     6A  | j   |             | Integer artifact prefix fixed width big-endian two's complement signed 8 octets
     ----+-----+-------------+----------------------------------------------
     6B  | k   | ()          | Kit artifact with zero attributes
