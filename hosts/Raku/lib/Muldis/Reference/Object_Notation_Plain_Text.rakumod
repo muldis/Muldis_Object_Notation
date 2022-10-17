@@ -21,7 +21,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
 ###########################################################################
 
-    token MUON
+    token Muldis_Object_Notation_Plain_Text
     {
         <sp>? ~ <sp>? <Any>
     }

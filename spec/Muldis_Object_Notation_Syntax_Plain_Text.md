@@ -288,12 +288,13 @@ which has an executable copy of the grammar.
 
 # PARSING UNIT
 
-A MUON *parsing unit* is represented in the grammar by `<MUON>`.
+A MUON *parsing unit* is represented in the grammar by
+`<Muldis_Object_Notation_Plain_Text>`.
 
 Grammar:
 
 ```
-    token MUON
+    token Muldis_Object_Notation_Plain_Text
     {
         <sp>? ~ <sp>? <Any>
     }
