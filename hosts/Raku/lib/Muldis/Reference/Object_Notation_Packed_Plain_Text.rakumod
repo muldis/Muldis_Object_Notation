@@ -91,6 +91,7 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
     {
           <Integer_zero>
         | <Integer_positive_one_thru_nine>
+        | <Integer_positive_ten>
         | <Integer_negative_one>
         | <Integer_unlimited_positive>
         | <Integer_unlimited_negative>
@@ -114,9 +115,14 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
         <[ 1..9 ]>
     }
 
+    token Integer_positive_ten
+    {
+        '$'
+    }
+
     token Integer_negative_one
     {
-        '.'
+        '#'
     }
 
     token Integer_unlimited_positive
@@ -192,7 +198,7 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token quoted_octet_string
     {
-        '"' ~ '"' <aescaped_octet>*
+        '"' ~ '"' [<aescaped_octet> | <sp>]*
     }
 
     token aescaped_octet

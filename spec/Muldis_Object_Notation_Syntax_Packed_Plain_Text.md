@@ -303,6 +303,7 @@ Grammar:
     {
           <Integer_zero>
         | <Integer_positive_one_thru_nine>
+        | <Integer_positive_ten>
         | <Integer_negative_one>
         | <Integer_unlimited_positive>
         | <Integer_unlimited_negative>
@@ -326,9 +327,14 @@ Grammar:
         <[ 1..9 ]>
     }
 
+    token Integer_positive_ten
+    {
+        '$'
+    }
+
     token Integer_negative_one
     {
-        '.'
+        '#'
     }
 
     token Integer_unlimited_positive
@@ -383,7 +389,7 @@ Grammar:
 ```
 
 An **Integer** artifact uses just 1 octet to canonically represent the most
-commonly used integers `[-1,0,1]` as well as `[2..9]`.  There are also
+commonly used integers `[-1,0,1]` as well as `[2..10]`.  There are also
 other formats for each of these integers, but they all take more octets.
 
 The single canonical octet for each of `[0..9]` corresponds to the
@@ -391,9 +397,11 @@ ASCII/UTF-8 *DIGIT ZERO* thru *DIGIT NINE* characters `0` thru `9` so it
 is visually represented by its corresponding numeric base 10 literal,
 which is also identical to its canonical MUON Plain Text representation.
 
+Its single canonical octet for `10` corresponds to the ASCII/UTF-8
+*DOLLAR SIGN* character `$`.
+
 Its single canonical octet for `-1` corresponds to the ASCII/UTF-8
-*FULL STOP* character `.` which doesn't have a related common mnemonic
-aside from use in real number literals.
+*NUMBER SIGN* character `#`.
 
 An **Integer** artifact uses 3..N octets to represent the general case of
 any integer as a single sign-denoting octet followed by an unlimited length
@@ -462,8 +470,17 @@ Examples:
     `Same thing (2 octets).`
     d\03
 
+    `Positive ten (1 octet).`
+    $
+
+    `Same thing (4 octets).`
+    +"\0A"
+
+    `Same thing (2 octets).`
+    d\0A
+
     `Negative one (1 octet).`
-    .
+    #
 
     `Same thing (4 octets).`
     -"\01"
@@ -542,7 +559,7 @@ Grammar:
 
     token quoted_octet_string
     {
-        '"' ~ '"' <aescaped_octet>*
+        '"' ~ '"' [<aescaped_octet> | <sp>]*
     }
 
     token aescaped_octet
@@ -568,7 +585,7 @@ The meanings of the octet escape sequences are:
     Seq | Code Point | Character Name  | Lit | for when not escaped
     ----+------------+-----------------+-----+-----------------------------
     \q  | 0x22    34 | QUOTATION MARK  | "   | delimit quoted octet string
-    \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit Self-Synchronization Mark
+    \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit Self-Sync Mark or expendables
     \b  | 0x5C    93 | REVERSE SOLIDUS | \   | no special meaning in non-escaped
 ```
 
@@ -723,18 +740,18 @@ usually in the context of their being the first octet of an artifact.
     ----+-----+-------------+----------------------------------------------
     21  | !   | 0bFALSE     | Boolean artifact false
     22  | "   |             | delimit quoted octet string
-    23  | #   |             | (unassigned)
-    24  | $   |             | (unassigned)
+    23  | #   | -1          | Integer artifact negative one
+    24  | $   | 10          | Integer artifact positive ten or Lot member multiplicity ten
     25  | %   |             | (unassigned)
     26  | &   |             | (unassigned)
     27  | '   |             | (unassigned)
-    28  | (   |             | delimit-start 2-ary/4-ary collection element list (Fraction/Duo/Article/Excuse)
-    29  | )   |             | delimit-end 2-ary/4-ary collection element list (Fraction/Duo/Article/Excuse)
+    28  | (   |             | (unassigned)
+    29  | )   |             | (unassigned)
     2A  | *   |             | (unassigned)
     2B  | +   |             | Integer artifact prefix general case positive number
-    2C  | ,   |             | separates N-ary collection list elements (Nesting/Lot/Kit)
+    2C  | ,   |             | (unassigned)
     2D  | -   |             | Integer artifact prefix general case negative number
-    2E  | .   | -1          | Integer artifact negative one
+    2E  | .   |             | (unassigned)
     2F  | /   |             | Fraction artifact prefix general case [numerator,denominator] pair
     ----+-----+-------------+----------------------------------------------
     30  | 0   | 0           | Integer artifact zero
@@ -742,7 +759,7 @@ usually in the context of their being the first octet of an artifact.
     ...
     39  | 9   | 9           | Integer artifact positive nine or Lot member multiplicity nine
     ----+-----+-------------+----------------------------------------------
-    3A  | :   |             | separate the 2 parts of a pair in a Duo/Lot/Kit/Article/Excuse
+    3A  | :   |             | (unassigned)
     3B  | ;   |             | (unassigned)
     3C  | <   | -1.0        | Fraction artifact negative one
     3D  | =   | 0.0         | Fraction artifact zero
@@ -821,9 +838,9 @@ usually in the context of their being the first octet of an artifact.
     ----+-----+-------------+----------------------------------------------
     7F  |     |             | (unassigned)
     ----+-----+-------------+----------------------------------------------
-    80  |     |             | (unassigned)
+    80  |     |             | reserved for users to declare reusable Any artifact factor
     ...
-    FF  |     |             | (unassigned)
+    FF  |     |             | reserved for users to declare reusable Any artifact factor
     ----+-----+-------------+----------------------------------------------
 ```
 
