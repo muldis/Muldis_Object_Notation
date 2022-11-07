@@ -965,10 +965,30 @@ Grammar:
     {
         ['[' <sp>?] ~ [<sp>? ']']
             [',' <sp>?]?
-            [[<this> | <this_and_that>]* % [<sp>? ',' <sp>?]]
+            [<multiplied_member>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
     }
+
+    token multiplied_member
+    {
+          [<member>       <sp>? [':'|'->'] <sp>? <multiplicity>]
+        | [<multiplicity> <sp>?      '<-'  <sp>? <member>      ]
+        | <member>
+    }
+
+    token member
+    {
+        <Any>
+    }
+
+    token multiplicity
+    {
+        <Any>
+    }
 ```
+
+The meaning of a `<multiplied_member>` consisting of only a `<member>` is
+exactly the same as if the former also had a `<multiplicity>` of 1.
 
 Examples:
 
@@ -1027,7 +1047,9 @@ Grammar:
 
     token kit_attr
     {
-        [<attr_name> <sp>? ':' <sp>?]? <attr_asset>
+          [<attr_name>  <sp>? [':'|'->'] <sp>? <attr_asset>]
+        | [<attr_asset> <sp>?      '<-'  <sp>? <attr_name> ]
+        | <attr_asset>
     }
 
     token attr_name

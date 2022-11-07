@@ -1103,11 +1103,17 @@ Examples:
     `Also a no-op.`
     (Renaming:(age->age,))
 
+    `Also a no-op.`
+    (Renaming:(0t0,))
+
     `Rename one attribute.`
     (Renaming:(fname->first_name,))
 
     `Same thing.`
-    (Renaming:(first_name:fname,))
+    (Renaming:(fname:first_name,))
+
+    `Same thing.`
+    (Renaming:(first_name<-fname,))
 
     `Swap 2 named attributes.`
     (Renaming:(foo->bar,foo<-bar))

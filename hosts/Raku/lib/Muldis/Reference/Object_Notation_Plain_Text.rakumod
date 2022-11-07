@@ -290,8 +290,25 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
     {
         ['[' <sp>?] ~ [<sp>? ']']
             [',' <sp>?]?
-            [[<this> | <this_and_that>]* % [<sp>? ',' <sp>?]]
+            [<multiplied_member>* % [<sp>? ',' <sp>?]]
             [<sp>? ',']?
+    }
+
+    token multiplied_member
+    {
+          [<member>       <sp>? [':'|'->'] <sp>? <multiplicity>]
+        | [<multiplicity> <sp>?      '<-'  <sp>? <member>      ]
+        | <member>
+    }
+
+    token member
+    {
+        <Any>
+    }
+
+    token multiplicity
+    {
+        <Any>
     }
 
 ###########################################################################
@@ -327,7 +344,9 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token kit_attr
     {
-        [<attr_name> <sp>? ':' <sp>?]? <attr_asset>
+          [<attr_name>  <sp>? [':'|'->'] <sp>? <attr_asset>]
+        | [<attr_asset> <sp>?      '<-'  <sp>? <attr_name> ]
+        | <attr_asset>
     }
 
     token attr_name
