@@ -119,7 +119,12 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Integer_positive_one_thru_nine
     {
-        <[ 1..9 ]>
+        <Integer_positive_one_thru_eight> | 9
+    }
+
+    token Integer_positive_one_thru_eight
+    {
+        <[ 1..8 ]>
     }
 
     token Integer_positive_ten
@@ -252,14 +257,49 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Bits
     {
-        TODO
+        <Bits_zero> | <Bits_unlimited> | <Bits_limited_1_octet>
+    }
+
+    token Bits_zero
+    {
+        s
+    }
+
+    token Bits_unlimited
+    {
+        S <sp>? <significant_final_octet_bits_count> <sp>? <quoted_octet_string>
+    }
+
+    token Bits_limited_1_octet
+    {
+        p <significant_final_octet_bits_count> <aescaped_octet>
+    }
+
+    token significant_final_octet_bits_count
+    {
+        <Integer_positive_one_thru_eight>
     }
 
 ###########################################################################
 
     token Blob
     {
-        TODO
+        <Blob_zero> | <Blob_unlimited> | <Blob_limited_1_octet>
+    }
+
+    token Blob_zero
+    {
+        b
+    }
+
+    token Blob_unlimited
+    {
+        B <sp>? <quoted_octet_string>
+    }
+
+    token Blob_limited_1_octet
+    {
+        o <aescaped_octet>
     }
 
     token quoted_octet_string
@@ -286,49 +326,191 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Text
     {
-        TODO
+          <Text_zero>
+        | <Text_unlimited>
+        | <Text_limited_1_octet>
+        | <Text_limited_2_octets>
+        | <Text_limited_3_octets>
+        | <Text_limited_4_octets>
+        | <Text_limited_5_octets>
+        | <Text_limited_6_octets>
+    }
+
+    token Text_zero
+    {
+        t
+    }
+
+    token Text_unlimited
+    {
+        T <sp>? <quoted_octet_string>
+    }
+
+    token Text_limited_1_octet
+    {
+        u <aescaped_octet>
+    }
+
+    token Text_limited_2_octets
+    {
+        v <aescaped_octet> ** 2
+    }
+
+    token Text_limited_3_octets
+    {
+        w <aescaped_octet> ** 3
+    }
+
+    token Text_limited_4_octets
+    {
+        x <aescaped_octet> ** 4
+    }
+
+    token Text_limited_5_octets
+    {
+        y <aescaped_octet> ** 5
+    }
+
+    token Text_limited_6_octets
+    {
+        z <aescaped_octet> ** 6
     }
 
 ###########################################################################
 
     token Nesting
     {
-        TODO
+        <Nesting_unlimited> | <Nesting_limited_1_element>
+    }
+
+    token Nesting_unlimited
+    {
+        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>*]
+    }
+
+    token Nesting_limited_1_element
+    {
+        n <Text>
     }
 
 ###########################################################################
 
     token Duo
     {
-        TODO
+        D <sp>? <this_and_that>
+    }
+
+    token this_and_that
+    {
+        <this> <sp>? <that>
+    }
+
+    token this
+    {
+        <Any>
+    }
+
+    token that
+    {
+        <Any>
     }
 
 ###########################################################################
 
     token Lot
     {
-        TODO
+        <Lot_zero> | <Lot_unlimited> | <Lot_limited_1_member>
+    }
+
+    token Lot_zero
+    {
+        l
+    }
+
+    token Lot_unlimited
+    {
+        L <sp>? [['[' <sp>?] ~ [<sp>? ']'] <multiplied_member>*]
+    }
+
+    token Lot_limited_1_member
+    {
+        m <member>
+    }
+
+    token multiplied_member
+    {
+        <member> <sp>? <multiplicity>
+    }
+
+    token member
+    {
+        <Any>
+    }
+
+    token multiplicity
+    {
+        <Any>
     }
 
 ###########################################################################
 
     token Kit
     {
-        TODO
+        <Kit_zero> | <Kit_unlimited> | <Kit_limited_1_attr>
+    }
+
+    token Kit_zero
+    {
+        k
+    }
+
+    token Kit_unlimited
+    {
+        K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr>*]
+    }
+
+    token Kit_limited_1_attr
+    {
+        a <kit_attr>
+    }
+
+    token kit_attr
+    {
+        <attr_name> <sp>? <attr_asset>
+    }
+
+    token attr_name
+    {
+        <Text>
+    }
+
+    token attr_asset
+    {
+        <Any>
     }
 
 ###########################################################################
 
     token Article
     {
-        TODO
+        A <sp>? <label> <sp>? <attrs>
+    }
+
+    token label
+    {
+        <Nesting> | <Text>
+    }
+
+    token attrs
+    {
+        <Kit>
     }
 
 ###########################################################################
 
     token Excuse
     {
-        TODO
+        E <sp>? <label> <sp>? <attrs>
     }
 
 ###########################################################################
