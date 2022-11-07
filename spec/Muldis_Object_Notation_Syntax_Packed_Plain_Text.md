@@ -301,20 +301,27 @@ Grammar:
 ```
     token Integer
     {
+          <Integer_nonsigned>
+        | <Integer_negative_one>
+        | <Integer_unlimited_negative>
+        | <Integer_limited_signed_1_octet>
+        | <Integer_limited_signed_2_octets>
+        | <Integer_limited_signed_4_octets>
+        | <Integer_limited_signed_8_octets>
+    }
+
+    token Integer_nonsigned
+    {
           <Integer_zero>
         | <Integer_positive_one_thru_nine>
         | <Integer_positive_ten>
-        | <Integer_negative_one>
+        | <Integer_positive_one_hundred>
+        | <Integer_positive_one_thousand>
         | <Integer_unlimited_positive>
-        | <Integer_unlimited_negative>
         | <Integer_limited_nonsigned_1_octet>
-        | <Integer_limited_signed_1_octet>
         | <Integer_limited_nonsigned_2_octets>
-        | <Integer_limited_signed_2_octets>
         | <Integer_limited_nonsigned_4_octets>
-        | <Integer_limited_signed_4_octets>
         | <Integer_limited_nonsigned_8_octets>
-        | <Integer_limited_signed_8_octets>
     }
 
     token Integer_zero
@@ -332,6 +339,16 @@ Grammar:
         '$'
     }
 
+    token Integer_positive_one_hundred
+    {
+        '%'
+    }
+
+    token Integer_positive_one_thousand
+    {
+        '&'
+    }
+
     token Integer_negative_one
     {
         '#'
@@ -339,12 +356,12 @@ Grammar:
 
     token Integer_unlimited_positive
     {
-        '+' <quoted_octet_string>
+        '+' <sp>? <quoted_octet_string>
     }
 
     token Integer_unlimited_negative
     {
-        '-' <quoted_octet_string>
+        '-' <sp>? <quoted_octet_string>
     }
 
     token Integer_limited_nonsigned_1_octet
@@ -389,7 +406,7 @@ Grammar:
 ```
 
 An **Integer** artifact uses just 1 octet to canonically represent the most
-commonly used integers `[-1,0,1]` as well as `[2..10]`.  There are also
+commonly used integers `[-1,0,1]` as well as `[2..10,100,1000]`.  There are also
 other formats for each of these integers, but they all take more octets.
 
 The single canonical octet for each of `[0..9]` corresponds to the
@@ -399,6 +416,13 @@ which is also identical to its canonical MUON Plain Text representation.
 
 Its single canonical octet for `10` corresponds to the ASCII/UTF-8
 *DOLLAR SIGN* character `$`.
+
+Its single canonical octet for `100` corresponds to the ASCII/UTF-8
+*PERCENT SIGN* character `%` which has a common mnemonic for percentages
+which a fractions with a denominator of 100.
+
+Its single canonical octet for `1000` corresponds to the ASCII/UTF-8
+*AMPERSAND SIGN* character `&`.
 
 Its single canonical octet for `-1` corresponds to the ASCII/UTF-8
 *NUMBER SIGN* character `#`.
@@ -433,6 +457,11 @@ corresponds to the ASCII/UTF-8 *LATIN SMALL LETTER [C,E,G,I]* character
 The octet for a big-endian two's complement signed [1,2,4,8] octet integer
 corresponds to the ASCII/UTF-8 *LATIN SMALL LETTER [D,F,H,J]* character
 [`d`,`f`,`h`,`j`].
+
+Note that making special cases of single-octet representations for 100 and
+1000 is rationalized by their frequent use in decimalised currencies, where
+hundredths denominations are very common and thousanths are also used;
+this efficiency mainly is for the benefit of 2-tuple **Fraction** artifacts.
 
 Examples:
 
@@ -479,6 +508,24 @@ Examples:
     `Same thing (2 octets).`
     d\0A
 
+    `Positive one-hundred (1 octet).`
+    %
+
+    `Same thing (4 octets).`
+    +"d"
+
+    `Same thing (2 octets).`
+    dd
+
+    `Positive one-thousand (1 octet).`
+    &
+
+    `Same thing (5 octets).`
+    +"\03\E8"
+
+    `Same thing (3 octets).`
+    f\03\E8
+
     `Negative one (1 octet).`
     #
 
@@ -506,6 +553,9 @@ Examples:
 
     `Same thing (9 octets).`
     j\00\00\12\BB\B8L^3
+
+    `Dead Beef (5 octets); also known as 0xDEADBEEF.`
+    g\DE\AD\BE\EF
 ```
 
 ## Fraction
@@ -518,13 +568,171 @@ Grammar:
 ```
     token Fraction
     {
-        TODO
+          <Fraction_zero>
+        | <Fraction_positive_one>
+        | <Fraction_negative_one>
+        | <Fraction_2_tuple_numerator_denominator>
+        | <Fraction_4_tuple_num_den_radix_exponent>
+    }
+
+    token Fraction_zero
+    {
+        '='
+    }
+
+    token Fraction_positive_one
+    {
+       '>'
+    }
+
+    token Fraction_negative_one
+    {
+        '<'
+    }
+
+    token Fraction_2_tuple_numerator_denominator
+    {
+        '/' <sp>? <numerator> <sp>? <denominator>
+    }
+
+    token Fraction_4_tuple_num_den_radix_exponent
+    {
+        '^' <sp>? <numerator> <sp>? <denominator> <sp>? <radix> <sp>? <exponent>
+    }
+
+    token numerator
+    {
+        <Integer>
+    }
+
+    token denominator
+    {
+        <Integer_nonsigned>
+    }
+
+    token radix
+    {
+        <Integer_nonsigned>
+    }
+
+    token exponent
+    {
+        <Integer>
     }
 ```
 
+A **Fraction** artifact uses just 1 octet to canonically represent the most
+commonly used fractions `[-1.0,0.0,1.0]`.  There are also
+other formats for each of these fractions, but they all take more octets.
+
+Its single canonical octet for `0.0` corresponds to the ASCII/UTF-8
+*EQUALS SIGN* character `=`.
+
+Its single canonical octet for `1.0` corresponds to the ASCII/UTF-8
+*GREATER-THAN SIGN* character `>`.
+
+Its single canonical octet for `-1.0` corresponds to the ASCII/UTF-8
+*LESS-THAN SIGN* character `<`.
+
+A **Fraction** artifact uses 3..N octets to represent the general case of
+any fraction as a 2-tuple-denoting octet, which corresponds to the
+ASCII/UTF-8 *SOLIDUS* character `/` which has a common mnemonic
+of numeric division or fractions, followed by 2 **Integer** artifacts which
+represent in order a numerator and denominator.
+
+A **Fraction** artifact uses 5..N octets to represent the general case of
+any fraction as a 4-tuple-denoting octet, which corresponds to the
+ASCII/UTF-8 *CIRCUMFLEX ACCENT* character `^` which has a common mnemonic
+of numeric exponentiation, followed by 4 **Integer** artifacts which
+represent in order a numerator, denominator, radix, and exponent.
+
 Examples:
 
-*TODO.*
+```
+    `Zero (1 octet).`
+    =
+
+    `Same thing (3 octets); also known as 0/1.`
+    /01
+
+    `Same thing (5 octets); also known as 0/1.`
+    /d\00d\01
+
+    `Same thing (9 octets); also known as 0/1.`
+    /+"\00"+"\01"
+
+    `Same thing (5 octets); also known as 0/1*2^0.`
+    ^0120
+
+    `Same thing (9 octets); also known as 0/1*2^0.`
+    ^d\00d\01d\02d\00
+
+    `Same thing (5 octets); also known as 0/1*10^0.`
+    ^01$0
+
+    `Positive one (1 octet).`
+    >
+
+    `Same thing (3 octets); also known as 1/1.`
+    /11
+
+    `Same thing (5 octets); also known as 1/1*2^0.`
+    ^1120
+
+    `Negative one (1 octet).`
+    <
+
+    `Same thing (3 octets); also known as -1/1.`
+    /#1
+
+    `Same thing (5 octets); also known as -1/1*2^0.`
+    ^#120
+
+    `Positive five-thirds (3 octets); also known as 5/3.`
+    /53
+
+    `Same thing (5 octets); also known as 5/1*3^-1.`
+    ^513#
+
+    `Ten (3 octets); also known as 10/1.`
+    /$1
+
+    `One tenth (3 octets); also known as 1/10.`
+    /1$
+
+    `One hundred (3 octets); also known as 100/1.`
+    /%1
+
+    `One hundredth (3 octets); also known as 1/100.`
+    /1%
+
+    `One thousand (3 octets); also known as 1000/1.`
+    /&1
+
+    `One thousandth (3 octets); also known as 1/1000.`
+    /1&
+
+    `Negative 472-hundredths (7 octets); also known as -472/100.`
+    /-"\01\D8"%
+
+    `Same thing (5 octets); also known as -472/100.`
+    /f\FE(%
+
+    `Same thing (6 octets); also known as -472/100.`
+    /f\FE(dd
+
+    `Same thing (7 octets); also known as -472/100.`
+    /f\FE(f\00d
+
+    `Same thing (8 octets); also known as -472/1*10^-2.`
+    ^f\01\D81$d\FE
+
+    `Some larger number (11 octets); also known as 4.5207196*10^37.`
+    ^h\02\B1\CE\9C1$d\1E
+
+    `Dead Beef Face (13 octets); also known as 0xDEADBEEF.FACE.`
+    /i\00\00\DE\AD\BE\EF\FA\CEf'\10
+```
 
 ## Bits
 
@@ -742,8 +950,8 @@ usually in the context of their being the first octet of an artifact.
     22  | "   |             | delimit quoted octet string
     23  | #   | -1          | Integer artifact negative one
     24  | $   | 10          | Integer artifact positive ten or Lot member multiplicity ten
-    25  | %   |             | (unassigned)
-    26  | &   |             | (unassigned)
+    25  | %   | 100         | Integer artifact positive one-hundred or Lot member multiplicity one-hundred
+    26  | &   | 1000        | Integer artifact positive one-thousand or Lot member multiplicity one-thousand
     27  | '   |             | (unassigned)
     28  | (   |             | (unassigned)
     29  | )   |             | (unassigned)
@@ -752,7 +960,7 @@ usually in the context of their being the first octet of an artifact.
     2C  | ,   |             | (unassigned)
     2D  | -   |             | Integer artifact prefix general case negative number
     2E  | .   |             | (unassigned)
-    2F  | /   |             | Fraction artifact prefix general case [numerator,denominator] pair
+    2F  | /   |             | Fraction artifact prefix general case [numerator,denominator] 2-tuple/pair
     ----+-----+-------------+----------------------------------------------
     30  | 0   | 0           | Integer artifact zero
     31  | 1   | 1           | Integer artifact positive one or Lot member multiplicity one

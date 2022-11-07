@@ -89,20 +89,27 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Integer
     {
+          <Integer_nonsigned>
+        | <Integer_negative_one>
+        | <Integer_unlimited_negative>
+        | <Integer_limited_signed_1_octet>
+        | <Integer_limited_signed_2_octets>
+        | <Integer_limited_signed_4_octets>
+        | <Integer_limited_signed_8_octets>
+    }
+
+    token Integer_nonsigned
+    {
           <Integer_zero>
         | <Integer_positive_one_thru_nine>
         | <Integer_positive_ten>
-        | <Integer_negative_one>
+        | <Integer_positive_one_hundred>
+        | <Integer_positive_one_thousand>
         | <Integer_unlimited_positive>
-        | <Integer_unlimited_negative>
         | <Integer_limited_nonsigned_1_octet>
-        | <Integer_limited_signed_1_octet>
         | <Integer_limited_nonsigned_2_octets>
-        | <Integer_limited_signed_2_octets>
         | <Integer_limited_nonsigned_4_octets>
-        | <Integer_limited_signed_4_octets>
         | <Integer_limited_nonsigned_8_octets>
-        | <Integer_limited_signed_8_octets>
     }
 
     token Integer_zero
@@ -120,6 +127,16 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
         '$'
     }
 
+    token Integer_positive_one_hundred
+    {
+        '%'
+    }
+
+    token Integer_positive_one_thousand
+    {
+        '&'
+    }
+
     token Integer_negative_one
     {
         '#'
@@ -127,12 +144,12 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Integer_unlimited_positive
     {
-        '+' <quoted_octet_string>
+        '+' <sp>? <quoted_octet_string>
     }
 
     token Integer_unlimited_negative
     {
-        '-' <quoted_octet_string>
+        '-' <sp>? <quoted_octet_string>
     }
 
     token Integer_limited_nonsigned_1_octet
@@ -179,7 +196,56 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Fraction
     {
-        TODO
+          <Fraction_zero>
+        | <Fraction_positive_one>
+        | <Fraction_negative_one>
+        | <Fraction_2_tuple_numerator_denominator>
+        | <Fraction_4_tuple_num_den_radix_exponent>
+    }
+
+    token Fraction_zero
+    {
+        '='
+    }
+
+    token Fraction_positive_one
+    {
+       '>'
+    }
+
+    token Fraction_negative_one
+    {
+        '<'
+    }
+
+    token Fraction_2_tuple_numerator_denominator
+    {
+        '/' <sp>? <numerator> <sp>? <denominator>
+    }
+
+    token Fraction_4_tuple_num_den_radix_exponent
+    {
+        '^' <sp>? <numerator> <sp>? <denominator> <sp>? <radix> <sp>? <exponent>
+    }
+
+    token numerator
+    {
+        <Integer>
+    }
+
+    token denominator
+    {
+        <Integer_nonsigned>
+    }
+
+    token radix
+    {
+        <Integer_nonsigned>
+    }
+
+    token exponent
+    {
+        <Integer>
     }
 
 ###########################################################################
