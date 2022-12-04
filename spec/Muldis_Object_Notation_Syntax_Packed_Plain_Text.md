@@ -117,6 +117,8 @@ Note that in any artifact examples, the format `\NN` is used to represent
 octets that don't correspond to printable ASCII characters or SPACE; the
 `NN` is a padded base-16 notation integer between `00` and `FF`; all other
 appearances of `\` are followed by a letter and represent themselves.
+Note that the use of `\NN` format may also be used in examples even where
+not required, as sometimes using it consistently actually aids readability.
 
 ## Aggregate Self-Synchronization Mark
 
@@ -484,7 +486,7 @@ Examples:
     -""
 
     `Same thing (2 octets).`
-    d\00
+    c\00
 
     `Positive one (1 octet).`
     1
@@ -493,7 +495,7 @@ Examples:
     +"\01"
 
     `Same thing (2 octets).`
-    d\01
+    c\01
 
     `Positive three (1 octet).`
     3
@@ -502,7 +504,7 @@ Examples:
     +"\03"
 
     `Same thing (2 octets).`
-    d\03
+    c\03
 
     `Positive ten (1 octet).`
     $
@@ -511,16 +513,16 @@ Examples:
     +"\0A"
 
     `Same thing (2 octets).`
-    d\0A
+    c\0A
 
     `Positive one-hundred (1 octet).`
     %
 
     `Same thing (4 octets).`
-    +"d"
+    +"\64"
 
     `Same thing (2 octets).`
-    dd
+    c\64
 
     `Positive one-thousand (1 octet).`
     &
@@ -529,7 +531,7 @@ Examples:
     +"\03\E8"
 
     `Same thing (3 octets).`
-    f\03\E8
+    e\03\E8
 
     `Negative one (1 octet).`
     #
@@ -547,17 +549,17 @@ Examples:
     d\FD
 
     `Positive forty-two (4 octets).`
-    +"*"
+    +"\2A"
 
     `Same thing (2 octets).`
-    d*
+    c\2A
 
     `USA national debt in US dollars close to midnight of 2017 Dec 31`
     `(9 octets); also known as 20_597_460_196_915.`
-    +"\12\BB\B8L^3"
+    +"\12\BB\B8\4C\5E\33"
 
     `Same thing (9 octets).`
-    j\00\00\12\BB\B8L^3
+    i\00\00\12\BB\B8\4C\5E\33
 
     `Dead Beef (5 octets); also known as 0xDEADBEEF.`
     g\DE\AD\BE\EF
@@ -661,7 +663,7 @@ Examples:
     /01
 
     `Same thing (5 octets); also known as 0/1.`
-    /d\00d\01
+    /c\00c\01
 
     `Same thing (9 octets); also known as 0/1.`
     /+"\00"+"\01"
@@ -670,7 +672,7 @@ Examples:
     ^0120
 
     `Same thing (9 octets); also known as 0/1*2^0.`
-    ^d\00d\01d\02d\00
+    ^c\00c\01c\02c\00
 
     `Same thing (5 octets); also known as 0/1*10^0.`
     ^01$0
@@ -721,22 +723,22 @@ Examples:
     /-"\01\D8"%
 
     `Same thing (5 octets); also known as -472/100.`
-    /f\FE(%
+    /f\FE\28%
 
     `Same thing (6 octets); also known as -472/100.`
-    /f\FE(dd
+    /f\FE\28c\64
 
     `Same thing (7 octets); also known as -472/100.`
-    /f\FE(f\00d
+    /f\FE\28e\00\64
 
     `Same thing (8 octets); also known as -472/1*10^-2.`
-    ^f\01\D81$d\FE
+    ^f\FE\281$d\FE
 
-    `Some larger number (11 octets); also known as 4.5207196*10^37.`
-    ^h\02\B1\CE\9C1$d\1E
+    `The fraction 4.5207196*10^37 (11 octets); also known as 45207196/1*10^30.`
+    ^g\02\B1\CE\9C1$c\1E
 
-    `Dead Beef Face (13 octets); also known as 0xDEADBEEF.FACE.`
-    /i\00\00\DE\AD\BE\EF\FA\CEf'\10
+    `Dead Beef Face (15 octets); also known as 0xDEADBEEF.FACE.`
+    /i\00\00\DE\AD\BE\EF\FA\CEg\00\01\00\00
 ```
 
 ## Bits
