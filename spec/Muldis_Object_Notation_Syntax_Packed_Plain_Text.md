@@ -734,6 +734,9 @@ Examples:
     `Same thing (8 octets); also known as -472/1*10^-2.`
     ^f\FE\281$d\FE
 
+    `The fraction 15_485_863/32_452_843 (11 octets).`
+    /g\00\EC\4B\A7g\01\EF\30\EB
+
     `The fraction 4.5207196*10^37 (11 octets); also known as 45207196/1*10^30.`
     ^g\02\B1\CE\9C1$c\1E
 
@@ -775,9 +778,74 @@ Grammar:
     }
 ```
 
+A **Bits** artifact uses just 1 octet to canonically represent the empty
+bit string.  This single canonical octet corresponds to the ASCII/UTF-8
+*LATIN SMALL LETTER S* character `s` so it is visually represented by the
+*smaller* version of the last letter of the possrep name `Bits`.  There
+is also another format for this, but it takes more octets.
+
+A **Bits** artifact uses 4..N octets to represent the general case of any
+bit string as a single format-denoting octet, which corresponds to the
+ASCII/UTF-8 *LATIN CAPITAL LETTER S* character `S` so it is visually
+represented by the *larger* version of the last letter of the possrep name
+`Bits`, followed by a length-denoting octet, followed by an unlimited
+length bit string literal.
+The bit string literal consists of 2 delimiter octets plus 0..N bit-defining octets.
+Each delimiter octet corresponds to the ASCII/UTF-8 *QUOTATION MARK*
+character `"` which has a common mnemonic for string quoting.
+Every bit-defining octet except the very last one represents a sequence of
+exactly 8 bits, while that last one instead represents a sequence of 1..8
+bits, because in the general case the count of bits in a bit string isn't
+an exact multiple of 8, and so only the highest order N bits of the last
+octet are considered to define bits of the artifact, while the others
+aren't.  The number of significant bits N in the last octet are declared by
+the length-denoting octet, which must be an integer in 1..8 in the
+canonical most compact form for such integers, meaning they take the form
+of the ASCII/UTF-8 *DIGIT ZERO* thru *DIGIT EIGHT* characters.
+All non-significant bits in the final octet must be zero valued, so that
+octet sequences that are logically the same are also physically the same.
+The artifact in this format representing the empty bit string must have the
+integer 8 as its length-denoting octet.
+Most bit-defining octets represent themselves, but a few of the possible 256
+values are instead represented by escape sequences of 2 different octets
+each, so no delimiter octets appear literally in the string they delimit.
+
+A **Bits** artifact uses 3..4 octets to represent any 1..8-bit bit string
+as a single format-denoting octet, which corresponds to the ASCII/UTF-8
+*LATIN SMALL LETTER P* character `p`, followed by a length-denoting octet,
+followed by a single bit-defining octet, where the latter usually
+represents itself except in a few special cases where it is escaped.
+
 Examples:
 
-*TODO.*
+```
+    `Empty bit string (1 octet); also known as 0bb.`
+    s
+
+    `Same thing (4 octets).`
+    S8""
+
+    `One zero bit (3 octets); also known as 0bb0.`
+    p1\00
+
+    `Same thing (5 octets).`
+    S1"\00"
+
+    `One one bit (3 octets); also known as 0bb1.`
+    p1\80
+
+    `Same thing (5 octets).`
+    S1"\80"
+
+    `The 14-bit string 0bb00101110_100010 (6 octets).`
+    S6"\2E\88"
+
+    `The 9-bit string 0bo644 (6 octets).`
+    S1"\D2\00"
+
+    `The 20-bit string 0bxA705E (7 octets).`
+    S4"\A7\05\E0"
+```
 
 ## Blob
 
@@ -828,7 +896,32 @@ Grammar:
     }
 ```
 
-The meanings of the octet escape sequences are:
+A **Blob** artifact uses just 1 octet to canonically represent the empty
+octet string.  This single canonical octet corresponds to the ASCII/UTF-8
+*LATIN SMALL LETTER B* character `b` so it is visually represented by the
+*smaller* version of the first letter of the possrep name `Blob`.  There
+is also another format for this, but it takes more octets.
+
+A **Blob** artifact uses 3..N octets to represent the general case of any
+octet string as a single format-denoting octet, which corresponds to the
+ASCII/UTF-8 *LATIN CAPITAL LETTER B* character `B` so it is visually
+represented by the *larger* version of the first letter of the possrep name
+`Blob`, followed by an unlimited length octet string literal.
+The octet string literal consists of 2 delimiter octets plus 0..N octet literals.
+Each delimiter octet corresponds to the ASCII/UTF-8 *QUOTATION MARK*
+character `"` which has a common mnemonic for string quoting.
+Most literal octets represent themselves, but a few of the possible 256
+values are instead represented by escape sequences of 2 different octets
+each, so no delimiter octets appear literally in the string they delimit.
+
+A **Blob** artifact uses 2..3 octets to represent any single-octet octet
+string as a single format-denoting octet, which corresponds to the
+ASCII/UTF-8 *LATIN SMALL LETTER O* character `o` so it is visually
+represented by the *smaller* version of the first letter of the word
+`octet`, followed by a single octet literal, where the latter usually
+represents itself except in a few special cases where it is escaped.
+
+The meanings of the octet escape sequences, which apply to all possreps, are:
 
 ```
     Esc | Unicode    | Unicode         | Chr | Literal character used
@@ -841,7 +934,43 @@ The meanings of the octet escape sequences are:
 
 Examples:
 
-*TODO.*
+```
+    `Empty octet string (1 octet); also known as 0xx.`
+    b
+
+    `Same thing (3 octets).`
+    B""
+
+    `One zero octet (2 octets); also known as 0xx0.`
+    o\00
+
+    `Same thing (4 octets).`
+    B"\00"
+
+    `One one octet (2 octets); also known as 0xx1.`
+    o\01
+
+    `Same thing (4 octets).`
+    B"\01"
+
+    `The 1-octet string 0xx22 (3 octets).`
+    o\q
+
+    `Same thing (5 octets).`
+    B"\q"
+
+    `The 1-octet string 0xx60 (3 octets).`
+    o\g
+
+    `The 1-octet string 0xx5C (3 octets).`
+    o\b
+
+    `The 4-octet string 0xxA705_E416 (7 octets).`
+    B"\A7\05\E4\16"
+
+    `The 2-octet string 0xb00101110_10001011 (7 octets).`
+    B"\2E\8B"
+```
 
 ## Text / Attribute Name
 
