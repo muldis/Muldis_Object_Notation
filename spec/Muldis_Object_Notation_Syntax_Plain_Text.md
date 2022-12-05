@@ -144,7 +144,7 @@ Unicode surrogate code points corresponding to integers in the set
 `[0xD800..0xDFFF]`, replacing each pair with the appropriate non-BMP single
 code point.  But any surrogate code points that aren't part of such a pair
 are still an error and must be rejected.  And every MUON generator still
-must not output any Unicode surrogate codepoints even within such a pair.
+must not output any Unicode surrogate code points even within such a pair.
 
 It is mandatory for every MUON parser to *not* automatically replace
 non-well-formed characters or octets with the Unicode Replacement Character
@@ -852,7 +852,18 @@ Examples:
 ```
     ""
 
+    `One ordered nonquoted Text (or, the first ordered attribute).`
+    0t0
+
+    `Same Text value (or, one ordered attr written in format of a named).`
+    "\[0t0]"
+
+    `Another ordered nonquoted Text (or, the second ordered attribute).`
+    0t1
+
     Ceres
+
+    "⨝"
 
     "サンプル"
 
@@ -868,12 +879,6 @@ Examples:
 
     `One attribute name with a space in it.`
     "First Name"
-
-    `One ordered nonquoted Text (or, one ordered attribute).`
-    0t0
-
-    `Same Text value (or, one ordered attr written in format of a named).`
-    "\[0t0]"
 
     `From a graduate student (in finals week), the following haiku:`
     "study, write, study,\n"

@@ -1033,9 +1033,84 @@ Grammar:
     }
 ```
 
+A **Text** artifact uses just 1 octet to canonically represent the empty
+character string.  This single canonical octet corresponds to the ASCII/UTF-8
+*LATIN SMALL LETTER T* character `t` so it is visually represented by the
+*smaller* version of the first letter of the possrep name `Text`.  There
+is also another format for this, but it takes more octets.
+
+A **Text** artifact uses 3..N octets to represent the general case of any
+character string as a single format-denoting octet, which corresponds to the
+ASCII/UTF-8 *LATIN CAPITAL LETTER T* character `T` so it is visually
+represented by the *larger* version of the first letter of the possrep name
+`Text`, followed by an unlimited length character string literal.
+The character string literal consists of 2 delimiter octets plus 0..N character literals.
+Each delimiter octet corresponds to the ASCII/UTF-8 *QUOTATION MARK*
+character `"` which has a common mnemonic for string quoting.
+Each character literal consists of 1..4 UTF-8 octet literals.
+Most UTF-8 octet defining octets represent themselves, but a few of the possible 256
+values are instead represented by escape sequences of 2 different octets
+each, so no delimiter octets appear literally in the string they delimit.
+
+A **Text** artifact uses [2..3,3..5,4..7,5..9,6..11,7..13] octets
+respectively to represent any shorter character string as a single
+length-denoting octet followed by a limited length character string literal.
+The character string literal consists of [1,2,3,4,5,6] UTF-8 octets and no delimiters.
+All UTF-8 octets are as per the unlimited length character string format.
+The octet for a character string consisting of [1,2,3,4,5,6] UTF-8 octets
+corresponds to the ASCII/UTF-8 *LATIN SMALL LETTER [U,V,W,X,Y,Z]* character
+[`u`,`v`,`w`,`x`,`y`,`z`].
+
 Examples:
 
-*TODO.*
+```
+    `Empty character UTF-8 string (1 octet); also known as "".`
+    t
+
+    `Same thing (3 octets).`
+    T""
+
+    `The 1-character UTF-8 string 0t0 or "\[0t0]" (2 octets);`
+    `also known as the first ordered attribute name.`
+    u\00
+
+    `Same thing (4 octets).`
+    T"\00"
+
+    `The 1-character UTF-8 string 0t1 or "\[0t1]" (2 octets);`
+    `also known as the second ordered attribute name.`
+    u\01
+
+    `Same thing (4 octets).`
+    T"\01"
+
+    `The 5-character UTF-8 string "Ceres" (6 octets).`
+    yCeres
+
+    `Same thing (8 octets).`
+    T"Ceres"
+
+    `The 1-character UTF-8 string "⨝" (4 octets).`
+    w\E2\A8\9D
+
+    `Same thing (6 octets).`
+    T"\E2\A8\9D"
+
+    `The 4-character UTF-8 string "サンプル" (15 octets).`
+    T"\E3\82\B5\E3\83\B3\E3\83\97\E3\83\AB"
+
+    `A 24 character UTF-8 string (27 octets).`
+    T"This isn't not escaped.\0A"
+
+    `The 2-character UTF-8 string "\[0tx263A,0t65]" (5 octets).`
+    x\E2\98\BA\65
+
+    `Same thing (7 octets).`
+    T"\E2\98\BA\65"
+
+    `A 10-character UTF-8 string (13 octets).`
+    T"First Name"
+```
 
 ## Nesting / Attribute Name List
 

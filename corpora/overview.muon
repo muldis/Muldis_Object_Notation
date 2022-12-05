@@ -122,7 +122,18 @@
 `Muldis_Object_Notation_Sync_Mark`
     ""
 `Muldis_Object_Notation_Sync_Mark`
+    `One ordered nonquoted Text (or, the first ordered attribute).`
+    0t0
+`Muldis_Object_Notation_Sync_Mark`
+    `Same Text value (or, one ordered attr written in format of a named).`
+    "\[0t0]"
+`Muldis_Object_Notation_Sync_Mark`
+    `Another ordered nonquoted Text (or, the second ordered attribute).`
+    0t1
+`Muldis_Object_Notation_Sync_Mark`
     Ceres
+`Muldis_Object_Notation_Sync_Mark`
+    "⨝"
 `Muldis_Object_Notation_Sync_Mark`
     "サンプル"
 `Muldis_Object_Notation_Sync_Mark`
@@ -138,12 +149,6 @@
 `Muldis_Object_Notation_Sync_Mark`
     `One attribute name with a space in it.`
     "First Name"
-`Muldis_Object_Notation_Sync_Mark`
-    `One ordered nonquoted Text (or, one ordered attribute).`
-    0t0
-`Muldis_Object_Notation_Sync_Mark`
-    `Same Text value (or, one ordered attr written in format of a named).`
-    "\[0t0]"
 `Muldis_Object_Notation_Sync_Mark`
     `From a graduate student (in finals week), the following haiku:`
     "study, write, study,\n"

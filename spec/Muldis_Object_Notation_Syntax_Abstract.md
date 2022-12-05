@@ -340,7 +340,18 @@ Examples:
 ```
     ""
 
+    `One ordered nonquoted Text (or, the first ordered attribute).`
+    0t0
+
+    `Same Text value (or, one ordered attr written in format of a named).`
+    "\[0t0]"
+
+    `Another ordered nonquoted Text (or, the second ordered attribute).`
+    0t1
+
     Ceres
+
+    "⨝"
 
     "サンプル"
 
@@ -356,12 +367,6 @@ Examples:
 
     `One attribute name with a space in it.`
     "First Name"
-
-    `One ordered nonquoted Text (or, one ordered attribute).`
-    0t0
-
-    `Same Text value (or, one ordered attr written in format of a named).`
-    "\[0t0]"
 
     `From a graduate student (in finals week), the following haiku:`
     "study, write, study,\n"
