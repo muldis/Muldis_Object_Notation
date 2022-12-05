@@ -629,6 +629,12 @@
         age  : 17,
     ))
 `Muldis_Object_Notation_Sync_Mark`
+    `Same thing.`
+    (Tuple:(
+          (name    , age)
+        : (Michelle, 17 )
+    ))
+`Muldis_Object_Notation_Sync_Mark`
     `Zero attributes + zero tuples.`
     (Tuple_Array:())
 `Muldis_Object_Notation_Sync_Mark`

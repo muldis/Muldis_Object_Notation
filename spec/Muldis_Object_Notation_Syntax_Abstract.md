@@ -1160,7 +1160,16 @@ A **Tuple** artifact has the predicate `Tuple`.
 Its subject is any of the following:
 
 * Any **Kit** artifact such that its *attributes* define the same
-*attributes* of the **Tuple**.
+*attributes* of the **Tuple**.  This is the idiomatic format for specifying
+a **Tuple** where the attribute names and assets appear interleaved.
+
+* Any **Duo** artifact such that its *this* and *that* correspond to the
+*heading* and *body* of the new **Tuple** respectively, and its *that* is
+any **Tupley** artifact, and its *this* is any **Renamey** artifact such
+that its set of *name before* is identical to the set of attribute names of
+*that*.  This is the idiomatic format for specifying a **Tuple** where all
+the attribute names appear first and then all the corresponding attribute
+assets appear second, like in a terse columnar format with a single data row.
 
 Examples:
 
@@ -1184,6 +1193,12 @@ Examples:
     (Tuple:(
         name : Michelle,
         age  : 17,
+    ))
+
+    `Same thing.`
+    (Tuple:(
+          (name    , age)
+        : (Michelle, 17 )
     ))
 ```
 
