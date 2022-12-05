@@ -10,7 +10,7 @@
 `Muldis_Object_Notation_Sync_Mark`
     1
 `Muldis_Object_Notation_Sync_Mark`
-    -3
+    -1
 `Muldis_Object_Notation_Sync_Mark`
     +42
 `Muldis_Object_Notation_Sync_Mark`
@@ -37,21 +37,33 @@
 `Muldis_Object_Notation_Sync_Mark`
     0.0
 `Muldis_Object_Notation_Sync_Mark`
-    1.0
-`Muldis_Object_Notation_Sync_Mark`
-    -4.72
-`Muldis_Object_Notation_Sync_Mark`
-    +4.72
-`Muldis_Object_Notation_Sync_Mark`
     0/1
+`Muldis_Object_Notation_Sync_Mark`
+    0/1*2^0
+`Muldis_Object_Notation_Sync_Mark`
+    0/1*10^0
+`Muldis_Object_Notation_Sync_Mark`
+    1.0
 `Muldis_Object_Notation_Sync_Mark`
     1/1
 `Muldis_Object_Notation_Sync_Mark`
+    1/1*2^0
+`Muldis_Object_Notation_Sync_Mark`
+    -1.0
+`Muldis_Object_Notation_Sync_Mark`
+    -1/1
+`Muldis_Object_Notation_Sync_Mark`
+    -1/1*2^0
+`Muldis_Object_Notation_Sync_Mark`
     5/3
+`Muldis_Object_Notation_Sync_Mark`
+    5/1*3^-1
+`Muldis_Object_Notation_Sync_Mark`
+    -4.72
 `Muldis_Object_Notation_Sync_Mark`
     -472/100
 `Muldis_Object_Notation_Sync_Mark`
-    +472/100
+    -472/1*10^-2
 `Muldis_Object_Notation_Sync_Mark`
     15_485_863/32_452_843
 `Muldis_Object_Notation_Sync_Mark`
@@ -80,7 +92,9 @@
 `Muldis_Object_Notation_Sync_Mark`
     0bb
 `Muldis_Object_Notation_Sync_Mark`
-    0bb00101110100010
+    0bb0
+`Muldis_Object_Notation_Sync_Mark`
+    0bb1
 `Muldis_Object_Notation_Sync_Mark`
     0bb00101110_100010
 `Muldis_Object_Notation_Sync_Mark`
@@ -90,7 +104,9 @@
 `Muldis_Object_Notation_Sync_Mark`
     0xx
 `Muldis_Object_Notation_Sync_Mark`
-    0xxA705E416
+    0xx0
+`Muldis_Object_Notation_Sync_Mark`
+    0xx1
 `Muldis_Object_Notation_Sync_Mark`
     0xxA705_E416
 `Muldis_Object_Notation_Sync_Mark`
