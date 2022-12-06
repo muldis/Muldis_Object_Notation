@@ -1127,7 +1127,7 @@ Grammar:
 
     token Nesting_unlimited
     {
-        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>*]
+        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+]
     }
 
     token Nesting_limited_1_element
@@ -1136,9 +1136,57 @@ Grammar:
     }
 ```
 
+A **Nesting** artifact uses 4..N octets to represent the general case of any
+attribute name sequence as a single format-denoting octet, which corresponds to the
+ASCII/UTF-8 *LATIN CAPITAL LETTER N* character `N` so it is visually
+represented by the *larger* version of the first letter of the possrep name
+`Nesting`, followed by an unlimited length attribute name sequence literal.
+The attribute name sequence literal consists of 2 delimiter octets plus 1..N element.
+The leading delimiter octet corresponds to the ASCII/UTF-8 *LEFT SQUARE BRACKET*
+character `[` which has a common mnemonic for delimiting an ordered list.
+The trailing delimiter octet corresponds to the ASCII/UTF-8 *RIGHT SQUARE BRACKET*
+character `]` which has a common mnemonic for delimiting an ordered list.
+Each element is any **Text** artifact.
+
+A **Nesting** artifact uses 2..N octets to represent any single-element attribute
+name sequence as a single format-denoting octet, which corresponds to the
+ASCII/UTF-8 *LATIN SMALL LETTER N* character `n` so it is visually
+represented by the *smaller* version of the first letter of the possrep name
+`Nesting`, followed by single element that is any **Text** artifact.
+
 Examples:
 
-*TODO.*
+```
+    `The Nesting with exactly 1 element that is the empty character UTF-8`
+    `string (2 octets); also known as ::"".`
+    nt
+
+    `Same thing (4 octets).`
+    N[t]
+
+    `The Nesting with exactly 1 element that is the first ordered`
+    `attribute name (3 octets); also known as ::0t0.`
+    nu\00
+
+    `Same thing (5 octets).`
+    N[u\00]
+
+    `The Nesting with exactly 1 element that is the 6-charater UTF-8
+    `string "person" (8 octets); also known as ::person.`
+    nzperson
+
+    `Same thing (10 octets).`
+    N[zperson]
+
+    `The 2-element Nesting person::birth_date (23 octets).`
+    N[zpersonT"birth_date"]
+
+    `The 3-element Nesting person::birth_date::year (28 octets).`
+    N[zpersonT"birth_date"xyear]
+
+    `The 3-element Nesting the_db::stats::"samples by order" (35 octets).`
+    N[zthe_dbystatsT"samples by order"]
+```
 
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
 
@@ -1171,9 +1219,28 @@ Grammar:
     }
 ```
 
+A **Duo** artifact uses 3..N octets to represent the general case of
+any pair as a single format-denoting octet, which corresponds to the
+ASCII/UTF-8 *LATIN CAPITAL LETTER D* character `D` so it is visually
+represented by the *larger* version of the first letter of the possrep name
+`Duo`, followed by typically-any 2 **Any** artifacts which
+represent in order the pair's *this* and *that*.
+
 Examples:
 
-*TODO.*
+```
+    `Duo of Ignorance (3 octets); also known as (0iIGNORANCE: 0iIGNORANCE).`
+    D__
+
+    `Duo of Integer (4 octets); also known as (5: -3).`
+    D5d\FD
+
+    `Duo of Text (18 octets); also known as ("First Name": Joy).`
+    DT"First Name"wJoy
+
+    `Another Duo (5 octets); also known as (x:y).`
+    Duxuy
+```
 
 ## Lot
 

@@ -155,6 +155,10 @@
         "do review (each word) if time.\n"
         "close book. sleep? what's that?\n"
 `Muldis_Object_Notation_Sync_Mark`
+    ::""
+`Muldis_Object_Notation_Sync_Mark`
+    ::0t0
+`Muldis_Object_Notation_Sync_Mark`
     ::person
 `Muldis_Object_Notation_Sync_Mark`
     person::birth_date
@@ -162,6 +166,9 @@
     person::birth_date::year
 `Muldis_Object_Notation_Sync_Mark`
     the_db::stats::"samples by order"
+`Muldis_Object_Notation_Sync_Mark`
+    `Duo of Ignorance.`
+    (0iIGNORANCE: 0iIGNORANCE)
 `Muldis_Object_Notation_Sync_Mark`
     `Duo of Integer.`
     (5: -3)

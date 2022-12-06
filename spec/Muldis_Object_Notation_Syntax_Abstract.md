@@ -382,6 +382,10 @@ A **Nesting** artifact is an arbitrarily-large ordered sequence of
 Examples:
 
 ```
+    ::""
+
+    ::0t0
+
     ::person
 
     person::birth_date
@@ -402,6 +406,9 @@ and *that* (any **Any** artifact).
 Examples:
 
 ```
+    `Duo of Ignorance.`
+    (0iIGNORANCE: 0iIGNORANCE)
+
     `Duo of Integer.`
     (5: -3)
 

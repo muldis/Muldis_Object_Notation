@@ -385,7 +385,7 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Nesting_unlimited
     {
-        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>*]
+        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+]
     }
 
     token Nesting_limited_1_element

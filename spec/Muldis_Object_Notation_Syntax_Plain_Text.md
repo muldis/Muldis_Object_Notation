@@ -914,6 +914,10 @@ Grammar:
 Examples:
 
 ```
+    ::""
+
+    ::0t0
+
     ::person
 
     person::birth_date
@@ -958,6 +962,9 @@ Grammar:
 Examples:
 
 ```
+    `Duo of Ignorance.`
+    (0iIGNORANCE: 0iIGNORANCE)
+
     `Duo of Integer.`
     (5: -3)
 
