@@ -327,6 +327,7 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
     token Text
     {
           <Text_zero>
+        | <Text_positional_attr_name_zero_thru_thirty_one>
         | <Text_unlimited>
         | <Text_limited_1_octet>
         | <Text_limited_2_octets>
@@ -339,6 +340,11 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
     token Text_zero
     {
         t
+    }
+
+    token Text_positional_attr_name_zero_thru_thirty_one
+    {
+        <[ \x[0]..\x[1F] ]>
     }
 
     token Text_unlimited

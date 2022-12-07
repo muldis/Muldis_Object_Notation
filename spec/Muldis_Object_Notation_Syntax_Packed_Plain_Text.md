@@ -983,6 +983,7 @@ Grammar:
     token Text
     {
           <Text_zero>
+        | <Text_positional_attr_name_zero_thru_thirty_one>
         | <Text_unlimited>
         | <Text_limited_1_octet>
         | <Text_limited_2_octets>
@@ -995,6 +996,11 @@ Grammar:
     token Text_zero
     {
         t
+    }
+
+    token Text_positional_attr_name_zero_thru_thirty_one
+    {
+        <[ \x[0]..\x[1F] ]>
     }
 
     token Text_unlimited
@@ -1039,6 +1045,13 @@ character string.  This single canonical octet corresponds to the ASCII/UTF-8
 *smaller* version of the first letter of the possrep name `Text`.  There
 is also another format for this, but it takes more octets.
 
+A **Text** artifact uses just 1 octet to canonically represent the first 32
+"positional" **Kit**/**Tuple**/etc attribute names.  The single canonical
+octet for each of `[0t0..0t31]` corresponds to each of the ASCII/UTF-8 code
+points `0x0..0x1F` respectively, so each one is represented by itself in
+UTF-8 format with no extra metadata octets.  There are also other formats
+for each of these character strings, but they all take more octets.
+
 A **Text** artifact uses 3..N octets to represent the general case of any
 character string as a single format-denoting octet, which corresponds to the
 ASCII/UTF-8 *LATIN CAPITAL LETTER T* character `T` so it is visually
@@ -1070,15 +1083,21 @@ Examples:
     `Same thing (3 octets).`
     T""
 
-    `The 1-character UTF-8 string 0t0 or "\[0t0]" (2 octets);`
+    `The 1-character UTF-8 string 0t0 or "\[0t0]" (1 octet);`
     `also known as the first ordered attribute name.`
+    \00
+
+    `Same thing (2 octets).`
     u\00
 
     `Same thing (4 octets).`
     T"\00"
 
-    `The 1-character UTF-8 string 0t1 or "\[0t1]" (2 octets);`
+    `The 1-character UTF-8 string 0t1 or "\[0t1]" (1 octet);`
     `also known as the second ordered attribute name.`
+    \01
+
+    `Same thing (2 octets).`
     u\01
 
     `Same thing (4 octets).`
@@ -1165,11 +1184,11 @@ Examples:
     N[t]
 
     `The Nesting with exactly 1 element that is the first ordered`
-    `attribute name (3 octets); also known as ::0t0.`
-    nu\00
+    `attribute name (2 octets); also known as ::0t0.`
+    n\00
 
-    `Same thing (5 octets).`
-    N[u\00]
+    `Same thing (4 octets).`
+    N[\00]
 
     `The Nesting with exactly 1 element that is the 6-charater UTF-8
     `string "person" (8 octets); also known as ::person.`
