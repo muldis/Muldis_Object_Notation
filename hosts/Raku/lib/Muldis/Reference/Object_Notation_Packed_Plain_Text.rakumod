@@ -425,7 +425,10 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Lot
     {
-        <Lot_zero> | <Lot_unlimited> | <Lot_limited_1_member>
+          <Lot_zero>
+        | <Lot_unlimited>
+        | <Lot_unlimited_non_multiplied>
+        | <Lot_limited_1_member>
     }
 
     token Lot_zero
@@ -436,6 +439,11 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
     token Lot_unlimited
     {
         L <sp>? [['[' <sp>?] ~ [<sp>? ']'] <multiplied_member>*]
+    }
+
+    token Lot_unlimited_non_multiplied
+    {
+        M <sp>? [['[' <sp>?] ~ [<sp>? ']'] <member>*]
     }
 
     token Lot_limited_1_member
@@ -462,7 +470,10 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Kit
     {
-        <Kit_zero> | <Kit_unlimited> | <Kit_limited_1_attr>
+          <Kit_zero>
+        | <Kit_unlimited>
+        | <Kit_unlimited_positional>
+        | <Kit_limited_1_attr>
     }
 
     token Kit_zero
@@ -473,6 +484,11 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
     token Kit_unlimited
     {
         K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr>*]
+    }
+
+    token Kit_unlimited_positional
+    {
+        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <attr_asset>*]
     }
 
     token Kit_limited_1_attr

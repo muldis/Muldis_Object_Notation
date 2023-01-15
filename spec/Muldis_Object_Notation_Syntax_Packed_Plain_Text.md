@@ -1271,7 +1271,10 @@ Grammar:
 ```
     token Lot
     {
-        <Lot_zero> | <Lot_unlimited> | <Lot_limited_1_member>
+          <Lot_zero>
+        | <Lot_unlimited>
+        | <Lot_unlimited_non_multiplied>
+        | <Lot_limited_1_member>
     }
 
     token Lot_zero
@@ -1282,6 +1285,11 @@ Grammar:
     token Lot_unlimited
     {
         L <sp>? [['[' <sp>?] ~ [<sp>? ']'] <multiplied_member>*]
+    }
+
+    token Lot_unlimited_non_multiplied
+    {
+        M <sp>? [['[' <sp>?] ~ [<sp>? ']'] <member>*]
     }
 
     token Lot_limited_1_member
@@ -1319,7 +1327,10 @@ Grammar:
 ```
     token Kit
     {
-        <Kit_zero> | <Kit_unlimited> | <Kit_limited_1_attr>
+          <Kit_zero>
+        | <Kit_unlimited>
+        | <Kit_unlimited_positional>
+        | <Kit_limited_1_attr>
     }
 
     token Kit_zero
@@ -1330,6 +1341,11 @@ Grammar:
     token Kit_unlimited
     {
         K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr>*]
+    }
+
+    token Kit_unlimited_positional
+    {
+        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <attr_asset>*]
     }
 
     token Kit_limited_1_attr
@@ -1458,10 +1474,10 @@ usually in the context of their being the first octet of an artifact.
     47  | G   |             | (unassigned)
     48  | H   |             | (unassigned)
     49  | I   |             | (unassigned)
-    4A  | J   |             | (unassigned)
+    4A  | J   |             | Kit artifact prefix special case with N positional attributes
     4B  | K   |             | Kit artifact prefix general case with N attributes
     4C  | L   |             | Lot artifact prefix general case with N members
-    4D  | M   |             | (unassigned)
+    4D  | M   |             | Lot artifact prefix special case with N non-multiplied members
     4E  | N   |             | Nesting artifact prefix general case with N elements
     4F  | O   |             | (unassigned)
     50  | P   |             | (unassigned)
