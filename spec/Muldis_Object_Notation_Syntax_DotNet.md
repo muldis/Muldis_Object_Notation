@@ -9,7 +9,7 @@ The fully-qualified name of this document is
 
 # PART
 
-This artifact is part 11 of 20 of the document
+This artifact is part 10 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_DotNet`.
 
