@@ -316,7 +316,17 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token quoted_octet_string
     {
-        '"' ~ '"' [<aescaped_octet> | <sp>]*
+        <single_segment_quoted_octet_string> | <multi_segment_quoted_octet_string>
+    }
+
+    token multi_segment_quoted_octet_string
+    {
+        ['[' <sp>?] ~ [<sp>? ']'] <single_segment_quoted_octet_string>+ % <sp>?
+    }
+
+    token single_segment_quoted_octet_string
+    {
+        '"' ~ '"' <aescaped_octet>*
     }
 
     token aescaped_octet
@@ -403,7 +413,7 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Nesting_unlimited
     {
-        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+]
+        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+ % <sp>?]
     }
 
     token Nesting_limited_1_element
@@ -450,12 +460,12 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Lot_unlimited
     {
-        L <sp>? [['[' <sp>?] ~ [<sp>? ']'] <multiplied_member>*]
+        L <sp>? [['[' <sp>?] ~ [<sp>? ']'] <multiplied_member>* % <sp>?]
     }
 
     token Lot_unlimited_non_multiplied
     {
-        M <sp>? [['[' <sp>?] ~ [<sp>? ']'] <member>*]
+        M <sp>? [['[' <sp>?] ~ [<sp>? ']'] <member>* % <sp>?]
     }
 
     token Lot_limited_1_member
@@ -495,12 +505,12 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Kit_unlimited
     {
-        K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr>*]
+        K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr>* % <sp>?]
     }
 
     token Kit_unlimited_positional
     {
-        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <attr_asset>*]
+        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <attr_asset>* % <sp>?]
     }
 
     token Kit_limited_1_attr

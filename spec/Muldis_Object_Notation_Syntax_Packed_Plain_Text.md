@@ -910,7 +910,17 @@ Grammar:
 
     token quoted_octet_string
     {
-        '"' ~ '"' [<aescaped_octet> | <sp>]*
+        <single_segment_quoted_octet_string> | <multi_segment_quoted_octet_string>
+    }
+
+    token multi_segment_quoted_octet_string
+    {
+        ['[' <sp>?] ~ [<sp>? ']'] <single_segment_quoted_octet_string>+ % <sp>?
+    }
+
+    token single_segment_quoted_octet_string
+    {
+        '"' ~ '"' <aescaped_octet>*
     }
 
     token aescaped_octet
@@ -1184,7 +1194,7 @@ Grammar:
 
     token Nesting_unlimited
     {
-        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+]
+        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+ % <sp>?]
     }
 
     token Nesting_limited_1_element
@@ -1322,12 +1332,12 @@ Grammar:
 
     token Lot_unlimited
     {
-        L <sp>? [['[' <sp>?] ~ [<sp>? ']'] <multiplied_member>*]
+        L <sp>? [['[' <sp>?] ~ [<sp>? ']'] <multiplied_member>* % <sp>?]
     }
 
     token Lot_unlimited_non_multiplied
     {
-        M <sp>? [['[' <sp>?] ~ [<sp>? ']'] <member>*]
+        M <sp>? [['[' <sp>?] ~ [<sp>? ']'] <member>* % <sp>?]
     }
 
     token Lot_limited_1_member
@@ -1378,12 +1388,12 @@ Grammar:
 
     token Kit_unlimited
     {
-        K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr>*]
+        K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr>* % <sp>?]
     }
 
     token Kit_unlimited_positional
     {
-        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <attr_asset>*]
+        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <attr_asset>* % <sp>?]
     }
 
     token Kit_limited_1_attr
@@ -1538,9 +1548,9 @@ usually in the context of their being the first octet of an artifact.
     59  | Y   |             | (unassigned)
     5A  | Z   |             | (unassigned)
     ----+-----+-------------+----------------------------------------------
-    5B  | [   |             | delimit-start N-ary collection element list (Nesting/Lot/Kit)
+    5B  | [   |             | delimit-start N-ary collection element list (Nesting/Lot/Kit) or multi-segment quoted octet string
     5C  | \   |             | escape sequence prefix within quoted octet string
-    5D  | ]   |             | delimit-end N-ary collection element list (Nesting/Lot/Kit)
+    5D  | ]   |             | delimit-end N-ary collection element list (Nesting/Lot/Kit) or multi-segment quoted octet string
     5E  | ^   |             | Fraction artifact prefix general case [numerator,denominator,radix,exponent] 4-tuple
     5F  | _   | 0iIGNORANCE | Ignorance artifact singleton
     60  | `   |             | delimit Self-Synchronization Mark or expendable padding/comments
