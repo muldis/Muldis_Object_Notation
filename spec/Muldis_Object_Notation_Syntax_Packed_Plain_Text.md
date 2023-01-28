@@ -317,6 +317,8 @@ Grammar:
           <Integer_zero>
         | <Integer_positive_one_thru_nine>
         | <Integer_positive_ten>
+        | <Integer_positive_eleven>
+        | <Integer_positive_twelve>
         | <Integer_positive_one_hundred>
         | <Integer_positive_one_thousand>
         | <Integer_unlimited_positive>
@@ -344,6 +346,16 @@ Grammar:
     token Integer_positive_ten
     {
         '$'
+    }
+
+    token Integer_positive_eleven
+    {
+        q
+    }
+
+    token Integer_positive_twelve
+    {
+        r
     }
 
     token Integer_positive_one_hundred
@@ -413,7 +425,7 @@ Grammar:
 ```
 
 An **Integer** artifact uses just 1 octet to canonically represent the most
-commonly used integers `[-1,0,1]` as well as `[2..10,100,1000]`.  There are also
+commonly used integers `[-1,0,1]` as well as `[2..12,100,1000]`.  There are also
 other formats for each of these integers, but they all take more octets.
 
 The single canonical octet for each of `[0..9]` corresponds to the
@@ -423,6 +435,9 @@ which is also identical to its canonical MUON Plain Text representation.
 
 Its single canonical octet for `10` corresponds to the ASCII/UTF-8
 *DOLLAR SIGN* character `$`.
+
+Its single canonical octet for [`11`,`12`] corresponds to the ASCII/UTF-8
+*LATIN SMALL LETTER [Q,R]* character [`q`,`r`].
 
 Its single canonical octet for `100` corresponds to the ASCII/UTF-8
 *PERCENT SIGN* character `%` which has a common mnemonic for percentages
@@ -514,6 +529,24 @@ Examples:
 
     `Same thing (2 octets).`
     c\0A
+
+    `Positive eleven (1 octet).`
+    q
+
+    `Same thing (4 octets).`
+    +"\0B"
+
+    `Same thing (2 octets).`
+    c\0B
+
+    `Positive twelve (1 octet).`
+    r
+
+    `Same thing (4 octets).`
+    +"\0C"
+
+    `Same thing (2 octets).`
+    c\0C
 
     `Positive one-hundred (1 octet).`
     %
@@ -1530,8 +1563,8 @@ usually in the context of their being the first octet of an artifact.
     6E  | n   |             | Nesting artifact prefix special case with exactly 1 element
     6F  | o   |             | Blob artifact prefix special case string with exactly 1 octet element
     70  | p   |             | Bits artifact prefix special case string with exactly 1..8 bit elements
-    71  | q   |             | (unassigned)
-    72  | r   |             | (unassigned)
+    71  | q   | 11          | Integer artifact positive eleven or Lot member multiplicity eleven
+    72  | r   | 12          | Integer artifact positive twelve or Lot member multiplicity twelve
     73  | s   | 0bb         | Bits artifact empty string
     74  | t   | ""          | Text artifact empty string
     ----+-----+-------------+----------------------------------------------

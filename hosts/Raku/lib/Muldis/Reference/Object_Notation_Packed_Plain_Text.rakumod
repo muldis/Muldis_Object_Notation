@@ -103,6 +103,8 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
           <Integer_zero>
         | <Integer_positive_one_thru_nine>
         | <Integer_positive_ten>
+        | <Integer_positive_eleven>
+        | <Integer_positive_twelve>
         | <Integer_positive_one_hundred>
         | <Integer_positive_one_thousand>
         | <Integer_unlimited_positive>
@@ -130,6 +132,16 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
     token Integer_positive_ten
     {
         '$'
+    }
+
+    token Integer_positive_eleven
+    {
+        q
+    }
+
+    token Integer_positive_twelve
+    {
+        r
     }
 
     token Integer_positive_one_hundred
