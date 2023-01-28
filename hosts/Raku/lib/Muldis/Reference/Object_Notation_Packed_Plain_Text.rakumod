@@ -344,7 +344,7 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token Text_positional_attr_name_zero_thru_thirty_one
     {
-        <[ \x[0]..\x[1F] ]>
+        <[ \x[0]..\x[1F] ] - [ \t\n\r ] + [ ,;: ]>
     }
 
     token Text_unlimited
