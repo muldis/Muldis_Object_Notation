@@ -15,6 +15,8 @@ its part name is `Syntax_Packed_Plain_Text`.
 
 # SYNOPSIS
 
+Common **Relation** "named" format with attribute names repeating per tuple.
+
 ```
     D zSyntax D M[T"Muldis_Object_Notation_Plain_Text" T"https://muldis.com" T"0.300.0"]
         D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.300.0"]
@@ -29,6 +31,27 @@ its part name is `Syntax_Packed_Plain_Text`.
                     T"birth_date" D T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
                     T"phone_numbers" D wSet M[T"+81.9072391679"]]
             ]
+```
+
+Alternate **Relation** "positional" format with attribute names declared
+once between all tuples.
+
+```
+    D zSyntax D M[T"Muldis_Object_Notation_Plain_Text" T"https://muldis.com" T"0.300.0"]
+        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.300.0"]
+            D T"Relation" D
+                    J[xname T"birth_date" T"phone_numbers"]
+                M[
+                    J[T"Jane Ives"
+                        D T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                        D wSet M[T"+1.4045552995" T"+1.7705557572"]]
+                    J[T"Layla Miller"
+                        D T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                        D wSet l]
+                    J[T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
+                        D T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                        D wSet M[T"+81.9072391679"]]
+                ]
 ```
 
 # DESCRIPTION
