@@ -40,7 +40,11 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token quoted_sp_comment_str
     {
-        '`' ~ '`' <-[`]>*
+        '`'
+        <!before Muldis_Object_Notation_Sync_Mark '`'>
+        <-[`]>*
+        '`'
+        <!before Muldis_Object_Notation_Sync_Mark '`'>
     }
 
 ###########################################################################

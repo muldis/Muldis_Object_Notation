@@ -317,7 +317,11 @@ Grammar:
 
     token quoted_sp_comment_str
     {
-        '`' ~ '`' <-[`]>*
+        '`'
+        <!before Muldis_Object_Notation_Sync_Mark '`'>
+        <-[`]>*
+        '`'
+        <!before Muldis_Object_Notation_Sync_Mark '`'>
     }
 ```
 
@@ -326,6 +330,15 @@ MUON for readability (with line breaks and line indentation), or to embed
 comments, without changing its meaning.  A superset of the MUON grammar
 might require *dividing space* to disambiguate the boundaries of
 otherwise-consecutive grammar tokens, but plain MUON does not.
+
+As a special case, a MUON *parsing unit* is expressly forbidden from
+containing anywhere the exact character string
+`` `Muldis_Object_Notation_Sync_Mark` `` (but the ASCII alphanumeric string
+`Muldis_Object_Notation_Sync_Mark` without bounding `` ` `` is ok).
+This is because that string is reserved for use as a MUON *aggregate
+self-synchronization mark* (*assm*) that marks any boundary of a *parsing
+unit* within a *parsing unit aggregate*, a boundary which a *parsing unit*
+by definition would never cross over, and therefore can not contain.
 
 A special feature of MUON is that any unrestrained-length literal or
 identifier may be split into multiple segments

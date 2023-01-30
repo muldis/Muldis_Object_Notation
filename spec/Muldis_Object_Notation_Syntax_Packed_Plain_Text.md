@@ -184,7 +184,11 @@ Grammar:
 
     token quoted_sp_comment_str
     {
-        '`' ~ '`' <[ \x[0]..\x[FF] ] - [`]>*
+        '`'
+        <!before Muldis_Object_Notation_Sync_Mark '`'>
+        <-[`]>*
+        '`'
+        <!before Muldis_Object_Notation_Sync_Mark '`'>
     }
 ```
 
@@ -192,6 +196,15 @@ A `<sp>` represents *dividing space* that may be used to visually format
 MUON for readability (with line breaks and line indentation), such as that
 makes sense in a binary format, or to pad it, or to embed extra octet
 sequences such as ASCII comments, without changing its meaning.
+
+As a special case, a MUON *parsing unit* is expressly forbidden from
+containing anywhere the exact octet string
+`` `Muldis_Object_Notation_Sync_Mark` `` (but the ASCII alphanumeric string
+`Muldis_Object_Notation_Sync_Mark` without bounding `` ` `` is ok).
+This is because that string is reserved for use as a MUON *aggregate
+self-synchronization mark* (*assm*) that marks any boundary of a *parsing
+unit* within a *parsing unit aggregate*, a boundary which a *parsing unit*
+by definition would never cross over, and therefore can not contain.
 
 A special feature of MUON is that any unrestrained-length literal or
 identifier may be split into multiple segments
