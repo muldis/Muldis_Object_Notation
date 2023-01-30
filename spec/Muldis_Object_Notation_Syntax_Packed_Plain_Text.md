@@ -15,7 +15,21 @@ its part name is `Syntax_Packed_Plain_Text`.
 
 # SYNOPSIS
 
-*TODO.*
+```
+    D zSyntax D M[T"Muldis_Object_Notation_Plain_Text" T"https://muldis.com" T"0.300.0"]
+        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.300.0"]
+            D T"Relation" M[
+                K[xname T"Jane Ives"
+                    T"birth_date" D T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                    T"phone_numbers" D wSet M[T"+1.4045552995" T"+1.7705557572"]]
+                K[xname T"Layla Miller"
+                    T"birth_date" D T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                    T"phone_numbers" D wSet l]
+                K[xname T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
+                    T"birth_date" D T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                    T"phone_numbers" D wSet M[T"+81.9072391679"]]
+            ]
+```
 
 # DESCRIPTION
 
