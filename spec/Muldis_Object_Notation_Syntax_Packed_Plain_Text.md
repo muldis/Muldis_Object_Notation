@@ -174,13 +174,30 @@ Grammar:
 ```
     token sp
     {
+        [<whitespace_char> | <quoted_sp_comment_str>]+
+    }
+
+    token whitespace_char
+    {
+        <[ \t \n \r \x[20] ]>
+    }
+
+    token quoted_sp_comment_str
+    {
         '`' ~ '`' <[ \x[0]..\x[FF] ] - [`]>*
     }
 ```
 
-A `<sp>` represents *dividing space* that may be used to embed extra octet
-sequences in MUON parsing units that are expendable and don't change its
-meaning, such as for use as padding or limited formatting or comments.
+A `<sp>` represents *dividing space* that may be used to visually format
+MUON for readability (with line breaks and line indentation), such as that
+makes sense in a binary format, or to pad it, or to embed extra octet
+sequences such as ASCII comments, without changing its meaning.
+
+A special feature of MUON is that any unrestrained-length literal or
+identifier may be split into multiple segments
+separated by dividing space.  This segmenting ability is provided to
+support code that contains very long numeric or stringy literals while
+still being well formatted (no extra long lines).
 
 # CRITICAL ALGEBRAIC DATA TYPE POSSREPS
 
@@ -1481,16 +1498,16 @@ usually in the context of their being the first octet of an artifact.
     01  |     | 0t1         | Text artifact or 2nd "positional" Tuple/etc attribute name
     ...
     08  |     | 0t8         | Text artifact or 9th "positional" Tuple/etc attribute name
-    09  |     |             | (unassigned)
-    0A  |     |             | (unassigned)
+    09  |     |             | dividing space for visual formatting with CHARACTER TABULATION
+    0A  |     |             | dividing space for visual formatting with LINE FEED (LF)
     0B  |     | 0t11        | Text artifact or 12th "positional" Tuple/etc attribute name
     0C  |     | 0t12        | Text artifact or 13th "positional" Tuple/etc attribute name
-    0D  |     |             | (unassigned)
+    0D  |     |             | dividing space for visual formatting with CARRIAGE RETURN (CR)
     0E  |     | 0t14        | Text artifact or 15th "positional" Tuple/etc attribute name
     ...
     1F  |     | 0t31        | Text artifact or 32nd "positional" Tuple/etc attribute name
     ----+-----+-------------+----------------------------------------------
-    20  |     |             | (unassigned)
+    20  |     |             | dividing space for visual formatting with SPACE
     ----+-----+-------------+----------------------------------------------
     21  | !   | 0bFALSE     | Boolean artifact false
     22  | "   |             | delimit quoted octet string
@@ -1553,7 +1570,7 @@ usually in the context of their being the first octet of an artifact.
     5D  | ]   |             | delimit-end N-ary collection element list (Nesting/Lot/Kit) or multi-segment quoted octet string
     5E  | ^   |             | Fraction artifact prefix general case [numerator,denominator,radix,exponent] 4-tuple
     5F  | _   | 0iIGNORANCE | Ignorance artifact singleton
-    60  | `   |             | delimit Self-Synchronization Mark or expendable padding/comments
+    60  | `   |             | delimit dividing space for embedding arbitrary octet strings or ASCII comments
     ----+-----+-------------+----------------------------------------------
     61  | a   |             | Kit artifact prefix special case with exactly 1 attribute
     62  | b   | 0xx         | Blob artifact empty string

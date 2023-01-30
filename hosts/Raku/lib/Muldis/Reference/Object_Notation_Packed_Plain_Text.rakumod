@@ -30,6 +30,16 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token sp
     {
+        [<whitespace_char> | <quoted_sp_comment_str>]+
+    }
+
+    token whitespace_char
+    {
+        <[ \t \n \r \x[20] ]>
+    }
+
+    token quoted_sp_comment_str
+    {
         '`' ~ '`' <[ \x[0]..\x[FF] ] - [`]>*
     }
 
