@@ -345,17 +345,26 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token aescaped_octet
     {
-        <nonescaped_octet> | <escaped_octet>
+          <restricted_nonescaped_octet>
+        | <escaped_octet_simple>
+        | <restricted_escaped_octet_base_16_pair>
     }
 
-    token nonescaped_octet
+    token restricted_nonescaped_octet
     {
-        <[ \x[0]..\x[FF] ] - [ "`\\ ]>
+        <[ \x[0]..\x[FF] ] - [ \t \n \r " \\ ` ]>
     }
 
-    token escaped_octet
+    token escaped_octet_simple
     {
-        '\\' <[qgb]>
+        '\\' <[tnrqbg]>
+    }
+
+    token restricted_escaped_octet_base_16_pair
+    {
+        '\\'
+        <!before [09|0A|0D|22|5C|60]>
+        <[ 0..9 A..F ]> ** 2
     }
 
 ###########################################################################

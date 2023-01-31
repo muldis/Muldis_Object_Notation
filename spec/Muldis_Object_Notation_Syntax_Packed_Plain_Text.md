@@ -146,9 +146,9 @@ parser proper expects a **Blob** value as input.
 For the purpose of illustration, however, the grammar of this document part
 treats the input *parsing unit* as if it were an ISO Latin-1 character
 string; or to be specific, any octets `[0x20..0x7E]` which correspond to
-printable ASCII characters or SPACE in the ISO Latin-1 encoding will appear
-as the same character literals in the grammar, while the other octets
-`[0..0x1F,0x7F..0xFF]` will be expressed as those integers.
+printable ASCII characters or SPACE in the ISO Latin-1 encoding will
+typically appear as the same character literals in the grammar, while the
+other octets `[0..0x1F,0x7F..0xFF]` will be expressed as those integers.
 
 Note that in any artifact examples, the format `\NN` is used to represent
 octets that don't correspond to printable ASCII characters or SPACE; the
@@ -223,7 +223,7 @@ Grammar:
     {
         '`'
         <!before Muldis_Object_Notation_Sync_Mark '`'>
-        <-[`]>*
+        <[ \x[0]..\x[FF] ] - [`]>*
         '`'
         <!before Muldis_Object_Notation_Sync_Mark '`'>
     }
@@ -534,7 +534,7 @@ A position string allows leading zero valued octets.
 An empty position string is logically equivalent to a string consisting of
 exactly one zero valued octet.
 
-An **Integer** artifact uses [2..3,3..5,5..9,9..17] octets respectively to
+An **Integer** artifact uses [2..4,3..7,5..13,9..25] octets respectively to
 represent any commonly used integer as a single length-denoting octet
 followed by a limited length big-endian ordered nonsigned or signed integer
 literal in the numeric base 256.
@@ -910,7 +910,7 @@ Most bit-defining octets represent themselves, but a few of the possible 256
 values are instead represented by escape sequences of 2 different octets
 each, so no delimiter octets appear literally in the string they delimit.
 
-A **Bits** artifact uses 3..4 octets to represent any 1..8-bit bit string
+A **Bits** artifact uses 3..5 octets to represent any 1..8-bit bit string
 as a single format-denoting octet, which corresponds to the ASCII/UTF-8
 *LATIN SMALL LETTER P* character `p`, followed by a length-denoting octet,
 followed by a single bit-defining octet, where the latter usually
@@ -992,17 +992,26 @@ Grammar:
 
     token aescaped_octet
     {
-        <nonescaped_octet> | <escaped_octet>
+          <restricted_nonescaped_octet>
+        | <escaped_octet_simple>
+        | <restricted_escaped_octet_base_16_pair>
     }
 
-    token nonescaped_octet
+    token restricted_nonescaped_octet
     {
-        <[ \x[0]..\x[FF] ] - [ "`\\ ]>
+        <[ \x[0]..\x[FF] ] - [ \t \n \r " \\ ` ]>
     }
 
-    token escaped_octet
+    token escaped_octet_simple
     {
-        '\\' <[qgb]>
+        '\\' <[tnrqbg]>
+    }
+
+    token restricted_escaped_octet_base_16_pair
+    {
+        '\\'
+        <!before [09|0A|0D|22|5C|60]>
+        <[ 0..9 A..F ]> ** 2
     }
 ```
 
@@ -1024,23 +1033,45 @@ Most literal octets represent themselves, but a few of the possible 256
 values are instead represented by escape sequences of 2 different octets
 each, so no delimiter octets appear literally in the string they delimit.
 
-A **Blob** artifact uses 2..3 octets to represent any single-octet octet
+A **Blob** artifact uses 2..4 octets to represent any single-octet octet
 string as a single format-denoting octet, which corresponds to the
 ASCII/UTF-8 *LATIN SMALL LETTER O* character `o` so it is visually
 represented by the *smaller* version of the first letter of the word
 `octet`, followed by a single octet literal, where the latter usually
 represents itself except in a few special cases where it is escaped.
 
-The meanings of the octet escape sequences, which apply to all possreps, are:
+The meanings of the simple octet escape sequences, which apply to all possreps, are:
 
 ```
     Esc | Unicode    | Unicode         | Chr | Literal character used
     Seq | Code Point | Character Name  | Lit | for when not escaped
     ----+------------+-----------------+-----+-----------------------------
+    \t  | 0x9      9 | CHAR... TAB...  |     | dividing space horizontal tab
+    \n  | 0xA     10 | LINE FEED (LF)  |     | dividing space line feed / newline
+    \r  | 0xD     13 | CARR. RET. (CR) |     | dividing space carriage return
     \q  | 0x22    34 | QUOTATION MARK  | "   | delimit quoted octet string
-    \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit Self-Sync Mark or expendables
-    \b  | 0x5C    93 | REVERSE SOLIDUS | \   | no special meaning in non-escaped
+    \b  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
+    \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
 ```
+
+There is just one complex escape sequence, of the format `\NN` such that
+the `NN` is a padded base-16 notation integer between `00` and `FF`.
+It is the exact same 250 octets that are allowed to exist literally in a
+quoted octet string and that are allowed to be represented by the `\NN`
+format; the complimentary 6 octets are only allowed to be represented by
+the simple one-letter format.
+
+The primary reason that the `\NN` option exists is to support documentation
+examples of MUON artifacts that are both easy for humans to read as
+documentation, because some octets correspond to otherwise nonprintable
+ASCII characters, and likewise don't get corrupted when passed through
+binary-unsafe text channels, while still being valid binary MUON data as
+is, without having to be pre-processed into the actual octets to be treated
+as the binary MUON.
+
+However, it is expected that normal use cases for the binary MUON will use
+the actual octets and not `\NN` because in general that is necessary to
+reap a key benefit of using binary MUON over text MUON, its compactness.
 
 Examples:
 
@@ -1180,7 +1211,7 @@ Most UTF-8 octet defining octets represent themselves, but a few of the possible
 values are instead represented by escape sequences of 2 different octets
 each, so no delimiter octets appear literally in the string they delimit.
 
-A **Text** artifact uses [2..3,3..5,4..7,5..9,6..11,7..13] octets
+A **Text** artifact uses [2..4,3..7,4..10,5..13,6..16,7..19] octets
 respectively to represent any shorter character string as a single
 length-denoting octet followed by a limited length character string literal.
 The character string literal consists of [1,2,3,4,5,6] UTF-8 octets and no delimiters.

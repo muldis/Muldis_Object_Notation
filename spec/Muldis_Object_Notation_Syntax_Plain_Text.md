@@ -804,22 +804,24 @@ Grammar:
 
     token quoted_text_segment
     {
-        '"' ~ '"'
-            [
-                <restricted_inside_char>
-              | <escaped_char_simple>
-              | <escaped_char_cpt_seq>
-            ]*
+        '"' ~ '"' <aescaped_char>*
     }
 
-    token restricted_inside_char
+    token aescaped_char
     {
-        <-[ \x[0]..\x[1F] "` \x[7F] \x[80]..\x[9F] ]>
+          <restricted_nonescaped_char>
+        | <escaped_char_simple>
+        | <escaped_char_cpt_seq>
+    }
+
+    token restricted_nonescaped_char
+    {
+        <-[ \x[0]..\x[1F] " ` \\ \x[7F] \x[80]..\x[9F] ]>
     }
 
     token escaped_char_simple
     {
-        '\\' <[qgbtnr]>
+        '\\' <[tnrqbg]>
     }
 
     token escaped_char_cpt_seq
@@ -857,12 +859,12 @@ The meanings of the simple character escape sequences are:
     Esc | Unicode    | Unicode         | Chr | Literal character used
     Seq | Code Point | Character Name  | Lit | for when not escaped
     ----+------------+-----------------+-----+-----------------------------
+    \t  | 0x9      9 | CHAR... TAB...  |     | dividing space horizontal tab
+    \n  | 0xA     10 | LINE FEED (LF)  |     | dividing space line feed / newline
+    \r  | 0xD     13 | CARR. RET. (CR) |     | dividing space carriage return
     \q  | 0x22    34 | QUOTATION MARK  | "   | delimit Text/opaque literals
+    \b  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
     \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
-    \b  | 0x5C    93 | REVERSE SOLIDUS | \   | no special meaning in non-escaped
-    \t  | 0x9      9 | CHAR... TAB...  |     | control char horizontal tab
-    \n  | 0xA     10 | LINE FEED (LF)  |     | control char line feed / newline
-    \r  | 0xD     13 | CARR. RET. (CR) |     | control char carriage return
 ```
 
 There is just one complex escape sequence, of the format `\[...]`, that
