@@ -39,7 +39,7 @@ This part of the **Muldis Object Notation** document specifies the
 canonical concrete Muldis Data Language (MDL) hosted syntax of MUON,
 which expresses a MUON artifact in terms of a native in-memory value or
 object of the MDL programming language,
-authority `https://muldis.com`, version 0.300.0 (2022) or later,
+authority `https://muldis.com`, version 0.300.0 (2023) or later,
 as a non-cyclic data structure composed only using system-defined types.
 
 The MUON `Syntax_Muldis_Data_Language` is derived from and maps with the MUON
@@ -184,7 +184,7 @@ Darren Duncan - darren@DarrenDuncan.net
 This file is part of the formal specification named
 **Muldis Object Notation** (**MUON**).
 
-MUON is Copyright © 2002-2022, Muldis Data Systems, Inc.
+MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
