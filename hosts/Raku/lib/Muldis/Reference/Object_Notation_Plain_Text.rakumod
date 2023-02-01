@@ -223,7 +223,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token restricted_nonescaped_char
     {
-        <-[ \x[0]..\x[1F] " ` \\ \x[7F] \x[80]..\x[9F] ]>
+        <-[ \x[0]..\x[1F] " \\ ` \x[7F] \x[80]..\x[9F] ]>
     }
 
     token escaped_char_simple
