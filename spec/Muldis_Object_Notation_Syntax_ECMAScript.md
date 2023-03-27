@@ -75,24 +75,31 @@ MUON ECMAScript-hosted artifact is `Muldis_Object_Notation_ECMAScript`.
 
 See also <https://ecma-international.org/publications-and-standards/standards/ecma-262>.
 
+Note that a few details in this document part may not be specific to
+ECMAScript per se but instead to JavaScript (or TypeScript).
+To be specific, the type system duality of unboxed and unboxed versions
+of the same primitives might not be in ECMAScript itself.
+For examples, `boolean` plus `Boolean` and `string` plus `String`.
+More tweaking will likely need to be done regarding these things.
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
 
 ## Ignorance
 
 An **Ignorance** artifact is any of the following:
 
-* The only value of the ECMAScript singleton type `Null`.
+* The only value of the ECMAScript singleton type `null`.
 
 Not permitted for an **Ignorance** is any of the following,
 to keep things more correct and simpler:
 
-* The only value of the ECMAScript singleton type `Undefined`.
+* The only value of the ECMAScript singleton type `undefined`.
 
 ## Boolean
 
 A **Boolean** artifact is any of the following:
 
-* Any value of the ECMAScript type `Boolean`.
+* Any value of any of the ECMAScript types `boolean`, `Boolean`.
 
 Not permitted for a **Boolean** is any of the following,
 to keep things more correct and simpler:
@@ -121,16 +128,16 @@ A *SYS_Integer* is any of the following:
 
 * Any *SYS_Fraction* that represents a whole number.
 
-* Any value of the ECMAScript type `BigInt`.
+* Any value of any of the ECMAScript types `bigint`, `BigInt`.
 
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:
 
 * Any *SYS_Fraction* that doesn't represent a whole number.
 
-Note that the type `BigInt` is only part of ECMAScript starting with
-version 11 (2020), so that represents the minimum required to support MUON
-for the general case of unlimited size numbers.
+Note that the types `bigint`, `BigInt` are only part of ECMAScript starting
+with version 11 (2020), so that represents the minimum required to support
+MUON for the general case of unlimited size numbers.
 
 ## Fraction
 
@@ -177,14 +184,14 @@ An *exponent* is any *SYS_Integer*.
 
 A *SYS_Fraction* is any of the following:
 
-* Any value of the ECMAScript type `Number`
+* Any value of any of the ECMAScript types `number`, `Number`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Fraction* is any of the following,
 to keep things more correct and simpler:
 
-* Any value of the ECMAScript type `Number`
+* Any value of any of the ECMAScript types `number`, `Number`
 that represents an infinity or NaN;
 note that ECMAScript has exactly 3 of these special values in total,
 which have the literals `-Infinity`, `+Infinity` (or `Infinity`), `NaN`.
@@ -232,7 +239,7 @@ aren't in valid surrogate pairs.
 
 A *SYS_String* is any of the following:
 
-* Any value of the ECMAScript type `String`.
+* Any value of any of the ECMAScript types `string`, `String`.
 
 ## Nesting / Attribute Name List
 
