@@ -1,4 +1,4 @@
-#!/usr/bin/env muldisre
+#!/usr/bin/env muldisder
 `Muldis_Object_Notation_Sync_Mark`
 0iIGNORANCE
 `Muldis_Object_Notation_Sync_Mark`
@@ -251,7 +251,7 @@ Positive_Infinity*()
 `Muldis_Object_Notation_Sync_Mark`
 Negative_Zero*()
 `Muldis_Object_Notation_Sync_Mark`
-Input_Field_Wrong!(name : "Your Age")
+Input_Field_Wrong!(name : "Your Age",)
 `Muldis_Object_Notation_Sync_Mark`
 Div_By_Zero!()
 `Muldis_Object_Notation_Sync_Mark`

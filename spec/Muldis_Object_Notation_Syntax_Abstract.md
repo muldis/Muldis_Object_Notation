@@ -535,7 +535,7 @@ and *attributes* (any **Kit** artifact).
 Examples:
 
 ```
-    Input_Field_Wrong!(name : "Your Age")
+    Input_Field_Wrong!(name : "Your Age",)
 
     Div_By_Zero!()
 

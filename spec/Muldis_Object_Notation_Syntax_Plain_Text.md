@@ -113,7 +113,7 @@ the MUON file and what other additional arguments it should be given.
 Examples:
 
 ```
-    #!/usr/bin/env muldisre
+    #!/usr/bin/env muldisder
 ```
 
 The `#!` is a magic number and the shebang continues until the first
@@ -1238,7 +1238,7 @@ Grammar:
 Examples:
 
 ```
-    Input_Field_Wrong!(name : "Your Age")
+    Input_Field_Wrong!(name : "Your Age",)
 
     Div_By_Zero!()
 
