@@ -282,7 +282,7 @@ No_Such_Attr_Name!()
 (Calendar_Time:(y:1884,m:10,d:17,h:20,i:55,s:30))
 `Muldis_Object_Notation_Sync_Mark`
 `Either an ancient date and time or a negative duration.`
-(Calendar_Time:(y-370,m:1,d:24,h:11,i:0,s:0))
+(Calendar_Time:(y:-370,m:1,d:24,h:11,i:0,s:0))
 `Muldis_Object_Notation_Sync_Mark`
 `Either a time on some unspecified day or a duration of seconds.`
 (Calendar_Time:(s:5923.21124603,))
