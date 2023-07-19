@@ -351,7 +351,7 @@ Examples:
 
     `Same thing.`
     (Relation:(
-            (name          , birth_date        , phone_numbers)
+            {name          , birth_date        , phone_numbers}
         : [
             ("Jane Ives"   , 0Lci@y1971|m11|d06, (Set:["+1.4045552995", "+1.7705557572"])),
             ("Layla Miller", 0Lci@y1995|m08|d27, (Set:[])),

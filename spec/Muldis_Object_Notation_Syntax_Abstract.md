@@ -19,11 +19,11 @@ its part name is `Syntax_Abstract`.
     (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
         (Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
             (Relation:[
-                (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
+                (name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
                     phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])),
-                (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:8,d:27)),
+                (name : "Layla Miller", birth_date : (Calendar_Instant:{y:1995,m:8,d:27}),
                     phone_numbers : (Set:[])),
-                (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:7,d:6)),
+                (name : "岩倉 玲音", birth_date : (Calendar_Instant:{y:1984,m:7,d:6}),
                     phone_numbers : (Set:["+81.9072391679"])),
             ])
         ))
@@ -479,17 +479,17 @@ Examples:
     {"\[0t0]": 53}
 
     `Three named attributes.`
-    (
+    {
         login_name : hartmark,
         login_pass : letmein,
         is_special : 0bTRUE,
-    )
+    }
 
     `Three ordered attributes.`
-    (hello,26,0bTRUE)
+    {hello,26,0bTRUE}
 
     `One of each.`
-    (Jay, age: 10)
+    {Jay, age: 10}
 
     `A non-Latin name.`
     {"サンプル": "https://example.com"}
@@ -504,22 +504,22 @@ and *attributes* (any **Kit** artifact).
 Examples:
 
 ```
-    Point*(x : 5, y : 3)
+    Point*{x : 5, y : 3}
 
-    Float*(
+    Float*{
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
-    )
+    }
 
-    the_db::UTC_Date_Time*(
+    the_db::UTC_Date_Time*{
         year   : 2003,
         month  : 10,
         day    : 26,
         hour   : 1,
         minute : 30,
         second : 0.0,
-    )
+    }
 
     Positive_Infinity*{}
 
@@ -585,25 +585,25 @@ Examples:
     (Calendar_Time:{y:1970})
 
     `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
-    (Calendar_Time:(y:2015,m:5,d:3))
+    (Calendar_Time:{y:2015,m:5,d:3})
 
     `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
-    (Calendar_Time:(y:1998,d:300))
+    (Calendar_Time:{y:1998,d:300})
 
     `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
-    (Calendar_Time:(y:1776,d:42))
+    (Calendar_Time:{y:1776,d:42})
 
     `Either the first quarter of 1953 or a duration of 1953.25 years.`
     (Calendar_Time:{y:1953.25})
 
     `Either high noon on an unspecified day or a duration of 12 hours.`
-    (Calendar_Time:(h:12,i:0,s:0))
+    (Calendar_Time:{h:12,i:0,s:0})
 
     `Either a fully specified civil date and time or a 6-part duration.`
-    (Calendar_Time:(y:1884,m:10,d:17,h:20,i:55,s:30))
+    (Calendar_Time:{y:1884,m:10,d:17,h:20,i:55,s:30})
 
     `Either an ancient date and time or a negative duration.`
-    (Calendar_Time:(y:-370,m:1,d:24,h:11,i:0,s:0))
+    (Calendar_Time:{y:-370,m:1,d:24,h:11,i:0,s:0})
 
     `Either a time on some unspecified day or a duration of seconds.`
     (Calendar_Time:{s:5923.21124603})
@@ -621,10 +621,10 @@ Examples:
 
 ```
     `Addition of 2 years and 3 months.`
-    (Calendar_Duration:(y:2,m:3,d:0,h:0,i:0,s:0))
+    (Calendar_Duration:{y:2,m:3,d:0,h:0,i:0,s:0})
 
     `Subtraction of 22 hours.`
-    (Calendar_Duration:(y:0,m:0,d:0,h-22,i:0,s:0))
+    (Calendar_Duration:{y:0,m:0,d:0,h-22,i:0,s:0})
 ```
 
 ## Calendar Instant
@@ -654,19 +654,19 @@ Examples:
 
 ```
     `The Day The Music Died (if paired with Gregorian calendar).`
-    (Calendar_Instant:(y:1959,m:2,d:3))
+    (Calendar_Instant:{y:1959,m:2,d:3})
 
     `A time of day when one might have breakfast.`
-    (Calendar_Instant:(h:7,i:30,s:0))
+    (Calendar_Instant:{h:7,i:30,s:0})
 
     `What was now in the Pacific zone (if paired with Gregorian calendar).`
-    (Calendar_Instant:((y:2018,m:9,d:3,h:20,i:51,s:17):(h:-8,i:0,s:0)))
+    (Calendar_Instant:({y:2018,m:9,d:3,h:20,i:51,s:17}:{h:-8,i:0,s:0}))
 
     `A time of day in the UTC zone on an unspecified day.`
-    (Calendar_Instant:((h:9,i:25,s:0):(h:0,i:0,s:0)))
+    (Calendar_Instant:({h:9,i:25,s:0}:{h:0,i:0,s:0}))
 
     `A specific day and time in the Pacific Standard Time zone.`
-    (Calendar_Instant:((y:2001,m:4,d:16,h:20,i:1,s:44):"PST"))
+    (Calendar_Instant:({y:2001,m:4,d:16,h:20,i:1,s:44}:"PST"))
 ```
 
 ## Geographic Point
@@ -690,16 +690,16 @@ Examples:
     (Geographic_Point:{"+":920})
 
     `Geographic surface coordinates of Googleplex; elevation not specified.`
-    (Geographic_Point:(">":-122.0857017,"^":37.4218363))
+    (Geographic_Point:{">":-122.0857017,"^":37.4218363})
 
     `Same thing.`
-    (Geographic_Point:("^":37.4218363,">":-122.0857017))
+    (Geographic_Point:{"^":37.4218363,">":-122.0857017})
 
     `Some location with all coordinates specified.`
-    (Geographic_Point:(">":-101,"^":-70,"+":1000))
+    (Geographic_Point:{">":-101,"^":-70,"+":1000})
 
     `Another place.`
-    (Geographic_Point:(">":-94.746094,"^":37.483577))
+    (Geographic_Point:{">":-94.746094,"^":37.483577})
 ```
 
 # MORE-COLLECTIVE SECONDARY DATA TYPE POSSREPS
@@ -937,8 +937,8 @@ Examples:
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
     (Interval:("<*<":(
-          (Calendar_Instant:((y:2002,m:12,d: 6):"UTC"))
-        : (Calendar_Instant:((y:2002,m:12,d:20):"UTC"))
+          (Calendar_Instant:({y:2002,m:12,d: 6}:"UTC"))
+        : (Calendar_Instant:({y:2002,m:12,d:20}:"UTC"))
     )))
 
     `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
@@ -1095,13 +1095,13 @@ Examples:
     (Heading:{"\[0t0]"})
 
     `Three named attributes.`
-    (Heading:(region,revenue,qty))
+    (Heading:{region,revenue,qty})
 
     `Three ordered attributes.`
-    (Heading:(0t0,0t1,0t2))
+    (Heading:{0t0,0t1,0t2})
 
     `One of each.`
-    (Heading:(0t1,age))
+    (Heading:{0t1,age})
 
     `Some attribute names can only appear quoted.`
     (Heading:{"Street Address"})
@@ -1144,22 +1144,22 @@ Examples:
     (Renaming:{first_name<-fname})
 
     `Swap 2 named attributes.`
-    (Renaming:(foo->bar,foo<-bar))
+    (Renaming:{foo->bar,foo<-bar})
 
     `Convert ordered names to nonordered.`
-    (Renaming:(foo,bar))
+    (Renaming:{foo,bar})
 
     `Same thing.`
-    (Renaming:(0t0->foo,0t1->bar))
+    (Renaming:{0t0->foo,0t1->bar})
 
     `Convert nonordered names to ordered.`
-    (Renaming:(0t0<-foo,0t1<-bar))
+    (Renaming:{0t0<-foo,0t1<-bar})
 
     `Swap 2 ordered attributes.`
-    (Renaming:(0t0->0t1,0t0<-0t1))
+    (Renaming:{0t0->0t1,0t0<-0t1})
 
     `Same thing.`
-    (Renaming:(0t1,0t0))
+    (Renaming:{0t1,0t0})
 
     `Some attribute names can only appear quoted.`
     (Renaming:{"First Name"->"Last Name"})
@@ -1196,21 +1196,21 @@ Examples:
     (Tuple:{53})
 
     `Three ordered attributes.`
-    (Tuple:(hello,26,0bTRUE))
+    (Tuple:{hello,26,0bTRUE})
 
     `One of each.`
-    (Tuple:(Jay, age: 10))
+    (Tuple:{Jay, age: 10})
 
     `Two named attributes.`
-    (Tuple:(
+    (Tuple:{
         name : Michelle,
         age  : 17,
-    ))
+    })
 
     `Same thing.`
     (Tuple:(
-          (name    , age)
-        : (Michelle, 17 )
+          {name    , age}
+        : {Michelle, 17 }
     ))
 ```
 
@@ -1233,22 +1233,22 @@ Examples:
     (Tuple_Array:[{}])
 
     `Three named attributes + zero tuples.`
-    (Tuple_Array:(x,y,z))
+    (Tuple_Array:{x,y,z})
 
     `Three positional attributes + zero tuples.`
-    (Tuple_Array:(0t0,0t1,0t2))
+    (Tuple_Array:{0t0,0t1,0t2})
 
     `Two named attributes + three tuples (1 duplicate).`
     (Tuple_Array:[
-        (name: Amy     , age: 14),
-        (name: Michelle, age: 17),
-        (name: Amy     , age: 14),
+        {name: Amy     , age: 14},
+        {name: Michelle, age: 17},
+        {name: Amy     , age: 14},
     ])
 
     `Two positional attributes + two tuples.`
     (Tuple_Array:[
-        (Michelle, 17),
-        (Amy     , 14),
+        {Michelle, 17},
+        {Amy     , 14},
     ])
 ```
 
@@ -1298,49 +1298,49 @@ Examples:
     (Relation:({}:[{}]))
 
     `Three named attributes + zero tuples.`
-    (Relation:(x,y,z))
+    (Relation:{x,y,z})
 
     `Three positional attributes + zero tuples.`
-    (Relation:(0t0,0t1,0t2))
+    (Relation:{0t0,0t1,0t2})
 
     `Two named attributes + two tuples.`
     (Relation:[
-        (name: Michelle, age: 17),
-        (name: Amy     , age: 14),
+        {name: Michelle, age: 17},
+        {name: Amy     , age: 14},
     ])
 
     `Same thing.`
     (Relation:(
-            (name    , age)
+            {name    , age}
         : [
-            (Michelle, 17 ),
-            (Amy     , 14 ),
+            {Michelle, 17 },
+            {Amy     , 14 },
         ]
     ))
 
     `Two positional attributes + two tuples.`
     (Relation:[
-        (Michelle, 17),
-        (Amy     , 14),
+        {Michelle, 17},
+        {Amy     , 14},
     ])
 
     `Some people records.`
     (Relation:[
-        (name : "Jane Ives", birth_date : (Calendar_Instant:(y:1971,m:11,d:6)),
+        (name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
             phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])),
-        (name : "Layla Miller", birth_date : (Calendar_Instant:(y:1995,m:8,d:27)),
+        (name : "Layla Miller", birth_date : (Calendar_Instant:{y:1995,m:8,d:27}),
             phone_numbers : (Set:[])),
-        (name : "岩倉 玲音", birth_date : (Calendar_Instant:(y:1984,m:7,d:6)),
+        (name : "岩倉 玲音", birth_date : (Calendar_Instant:{y:1984,m:7,d:6}),
             phone_numbers : (Set:["+81.9072391679"])),
     ])
 
     `Same thing.`
     (Relation:(
-            (name          , birth_date                           , phone_numbers)
+            {name          , birth_date                           , phone_numbers}
         : [
-            ("Jane Ives"   , (Calendar_Instant:(y:1971,m:11,d:6)), (Set:["+1.4045552995", "+1.7705557572"])),
-            ("Layla Miller", (Calendar_Instant:(y:1995,m:8,d:27)), (Set:[])),
-            ("岩倉 玲音", (Calendar_Instant:(y:1984,m:7,d:6)), (Set:["+81.9072391679"])),
+            ("Jane Ives"   , (Calendar_Instant:{y:1971,m:11,d:6}), (Set:["+1.4045552995", "+1.7705557572"])),
+            ("Layla Miller", (Calendar_Instant:{y:1995,m:8,d:27}), (Set:[])),
+            ("岩倉 玲音", (Calendar_Instant:{y:1984,m:7,d:6}), (Set:["+81.9072391679"])),
         ]
     ))
 ```
@@ -1364,21 +1364,21 @@ Examples:
     (Tuple_Bag:[{}])
 
     `Three named attributes + zero tuples.`
-    (Tuple_Bag:(x,y,z))
+    (Tuple_Bag:{x,y,z})
 
     `Three positional attributes + zero tuples.`
-    (Tuple_Bag:(0t0,0t1,0t2))
+    (Tuple_Bag:{0t0,0t1,0t2})
 
     `Two named attributes + six tuples (4 duplicates).`
     (Tuple_Bag:[
-        (name: Michelle, age: 17),
-        (name: Amy     , age: 14) : 5,
+        {name: Michelle, age: 17},
+        {name: Amy     , age: 14} : 5,
     ])
 
     `Two positional attributes + two tuples.`
     (Tuple_Bag:[
-        (Michelle, 17),
-        (Amy     , 14),
+        {Michelle, 17},
+        {Amy     , 14},
     ])
 ```
 
