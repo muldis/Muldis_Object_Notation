@@ -1123,16 +1123,16 @@ Examples:
     {}
 
     `One named attribute.`
-    ("First Name": Joy,)
+    {"First Name": Joy}
 
     `One ordered attribute.`
-    (53,)
+    {53}
 
     `Same thing.`
-    (0t0: 53,)
+    {0t0: 53}
 
     `Same thing.`
-    ("\[0t0]": 53,)
+    {"\[0t0]": 53}
 
     `Three named attributes.`
     (
@@ -1148,7 +1148,7 @@ Examples:
     (Jay, age: 10)
 
     `A non-Latin name.`
-    ("サンプル": "https://example.com",)
+    {"サンプル": "https://example.com"}
 ```
 
 ## Article / Labelled Tuple
@@ -1217,7 +1217,7 @@ Grammar:
 Examples:
 
 ```
-    Input_Field_Wrong!(name : "Your Age",)
+    Input_Field_Wrong!{name : "Your Age"}
 
     Div_By_Zero!{}
 

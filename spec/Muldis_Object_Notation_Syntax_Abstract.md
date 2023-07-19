@@ -467,16 +467,16 @@ Examples:
     {}
 
     `One named attribute.`
-    ("First Name": Joy,)
+    {"First Name": Joy}
 
     `One ordered attribute.`
-    (53,)
+    {53}
 
     `Same thing.`
-    (0t0: 53,)
+    {0t0: 53}
 
     `Same thing.`
-    ("\[0t0]": 53,)
+    {"\[0t0]": 53}
 
     `Three named attributes.`
     (
@@ -492,7 +492,7 @@ Examples:
     (Jay, age: 10)
 
     `A non-Latin name.`
-    ("サンプル": "https://example.com",)
+    {"サンプル": "https://example.com"}
 ```
 
 ## Article / Labelled Tuple
@@ -535,7 +535,7 @@ and *attributes* (any **Kit** artifact).
 Examples:
 
 ```
-    Input_Field_Wrong!(name : "Your Age",)
+    Input_Field_Wrong!{name : "Your Age"}
 
     Div_By_Zero!{}
 
@@ -582,7 +582,7 @@ Examples:
     (Calendar_Time:{})
 
     `Either an unspecified period in 1970 or a duration of 1970 years.`
-    (Calendar_Time:(y:1970,))
+    (Calendar_Time:{y:1970})
 
     `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
     (Calendar_Time:(y:2015,m:5,d:3))
@@ -594,7 +594,7 @@ Examples:
     (Calendar_Time:(y:1776,d:42))
 
     `Either the first quarter of 1953 or a duration of 1953.25 years.`
-    (Calendar_Time:(y:1953.25,))
+    (Calendar_Time:{y:1953.25})
 
     `Either high noon on an unspecified day or a duration of 12 hours.`
     (Calendar_Time:(h:12,i:0,s:0))
@@ -606,7 +606,7 @@ Examples:
     (Calendar_Time:(y:-370,m:1,d:24,h:11,i:0,s:0))
 
     `Either a time on some unspecified day or a duration of seconds.`
-    (Calendar_Time:(s:5923.21124603,))
+    (Calendar_Time:{s:5923.21124603})
 ```
 
 ## Calendar Duration
@@ -687,7 +687,7 @@ Examples:
     (Geographic_Point:{})
 
     `Just an elevation specified.`
-    (Geographic_Point:("+":920,))
+    (Geographic_Point:{"+":920})
 
     `Geographic surface coordinates of Googleplex; elevation not specified.`
     (Geographic_Point:(">":-122.0857017,"^":37.4218363))
@@ -1083,16 +1083,16 @@ Examples:
     (Heading:{})
 
     `One named attribute.`
-    (Heading:(sales,))
+    (Heading:{sales})
 
     `Same thing.`
-    (Heading:("sales",))
+    (Heading:{"sales"})
 
     `One ordered attribute.`
-    (Heading:(0t0,))
+    (Heading:{0t0})
 
     `Same thing.`
-    (Heading:("\[0t0]",))
+    (Heading:{"\[0t0]"})
 
     `Three named attributes.`
     (Heading:(region,revenue,qty))
@@ -1104,10 +1104,10 @@ Examples:
     (Heading:(0t1,age))
 
     `Some attribute names can only appear quoted.`
-    (Heading:("Street Address",))
+    (Heading:{"Street Address"})
 
     `A non-Latin name.`
-    (Heading:("サンプル",))
+    (Heading:{"サンプル"})
 ```
 
 ## Renaming / Attribute Name Map
@@ -1129,19 +1129,19 @@ Examples:
     (Renaming:{})
 
     `Also a no-op.`
-    (Renaming:(age->age,))
+    (Renaming:{age->age})
 
     `Also a no-op.`
-    (Renaming:(0t0,))
+    (Renaming:{0t0})
 
     `Rename one attribute.`
-    (Renaming:(fname->first_name,))
+    (Renaming:{fname->first_name})
 
     `Same thing.`
-    (Renaming:(fname:first_name,))
+    (Renaming:{fname:first_name})
 
     `Same thing.`
-    (Renaming:(first_name<-fname,))
+    (Renaming:{first_name<-fname})
 
     `Swap 2 named attributes.`
     (Renaming:(foo->bar,foo<-bar))
@@ -1162,7 +1162,7 @@ Examples:
     (Renaming:(0t1,0t0))
 
     `Some attribute names can only appear quoted.`
-    (Renaming:("First Name"->"Last Name",))
+    (Renaming:{"First Name"->"Last Name"})
 ```
 
 ## Tuple / Attribute Set
@@ -1190,10 +1190,10 @@ Examples:
     (Tuple:{})
 
     `One named attribute.`
-    (Tuple:("First Name": Joy,))
+    (Tuple:{"First Name": Joy})
 
     `One ordered attribute.`
-    (Tuple:(53,))
+    (Tuple:{53})
 
     `Three ordered attributes.`
     (Tuple:(hello,26,0bTRUE))

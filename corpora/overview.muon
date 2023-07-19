@@ -203,16 +203,16 @@ the_db::stats::"samples by order"
 {}
 `Muldis_Object_Notation_Sync_Mark`
 `One named attribute.`
-("First Name": Joy,)
+{"First Name": Joy}
 `Muldis_Object_Notation_Sync_Mark`
 `One ordered attribute.`
-(53,)
+{53}
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(0t0: 53,)
+{0t0: 53}
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-("\[0t0]": 53,)
+{"\[0t0]": 53}
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes.`
 (
@@ -228,7 +228,7 @@ the_db::stats::"samples by order"
 (Jay, age: 10)
 `Muldis_Object_Notation_Sync_Mark`
 `A non-Latin name.`
-("サンプル": "https://example.com",)
+{"サンプル": "https://example.com"}
 `Muldis_Object_Notation_Sync_Mark`
 Point*(x : 5, y : 3)
 `Muldis_Object_Notation_Sync_Mark`
@@ -251,7 +251,7 @@ Positive_Infinity*{}
 `Muldis_Object_Notation_Sync_Mark`
 Negative_Zero*{}
 `Muldis_Object_Notation_Sync_Mark`
-Input_Field_Wrong!(name : "Your Age",)
+Input_Field_Wrong!{name : "Your Age"}
 `Muldis_Object_Notation_Sync_Mark`
 Div_By_Zero!{}
 `Muldis_Object_Notation_Sync_Mark`
@@ -261,7 +261,7 @@ No_Such_Attr_Name!{}
 (Calendar_Time:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Either an unspecified period in 1970 or a duration of 1970 years.`
-(Calendar_Time:(y:1970,))
+(Calendar_Time:{y:1970})
 `Muldis_Object_Notation_Sync_Mark`
 `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
 (Calendar_Time:(y:2015,m:5,d:3))
@@ -273,7 +273,7 @@ No_Such_Attr_Name!{}
 (Calendar_Time:(y:1776,d:42))
 `Muldis_Object_Notation_Sync_Mark`
 `Either the first quarter of 1953 or a duration of 1953.25 years.`
-(Calendar_Time:(y:1953.25,))
+(Calendar_Time:{y:1953.25})
 `Muldis_Object_Notation_Sync_Mark`
 `Either high noon on an unspecified day or a duration of 12 hours.`
 (Calendar_Time:(h:12,i:0,s:0))
@@ -285,7 +285,7 @@ No_Such_Attr_Name!{}
 (Calendar_Time:(y:-370,m:1,d:24,h:11,i:0,s:0))
 `Muldis_Object_Notation_Sync_Mark`
 `Either a time on some unspecified day or a duration of seconds.`
-(Calendar_Time:(s:5923.21124603,))
+(Calendar_Time:{s:5923.21124603})
 `Muldis_Object_Notation_Sync_Mark`
 `Addition of 2 years and 3 months.`
 (Calendar_Duration:(y:2,m:3,d:0,h:0,i:0,s:0))
@@ -312,7 +312,7 @@ No_Such_Attr_Name!{}
 (Geographic_Point:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Just an elevation specified.`
-(Geographic_Point:("+":920,))
+(Geographic_Point:{"+":920})
 `Muldis_Object_Notation_Sync_Mark`
 `Geographic surface coordinates of Googleplex; elevation not specified.`
 (Geographic_Point:(">":-122.0857017,"^":37.4218363))
@@ -555,16 +555,16 @@ No_Such_Attr_Name!{}
 (Heading:{})
 `Muldis_Object_Notation_Sync_Mark`
 `One named attribute.`
-(Heading:(sales,))
+(Heading:{sales})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Heading:("sales",))
+(Heading:{"sales"})
 `Muldis_Object_Notation_Sync_Mark`
 `One ordered attribute.`
-(Heading:(0t0,))
+(Heading:{0t0})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Heading:("\[0t0]",))
+(Heading:{"\[0t0]"})
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes.`
 (Heading:(region,revenue,qty))
@@ -576,28 +576,28 @@ No_Such_Attr_Name!{}
 (Heading:(0t1,age))
 `Muldis_Object_Notation_Sync_Mark`
 `Some attribute names can only appear quoted.`
-(Heading:("Street Address",))
+(Heading:{"Street Address"})
 `Muldis_Object_Notation_Sync_Mark`
 `A non-Latin name.`
-(Heading:("サンプル",))
+(Heading:{"サンプル"})
 `Muldis_Object_Notation_Sync_Mark`
 `Zero renamings, a no-op.`
 (Renaming:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Also a no-op.`
-(Renaming:(age->age,))
+(Renaming:{age->age})
 `Muldis_Object_Notation_Sync_Mark`
 `Also a no-op.`
-(Renaming:(0t0,))
+(Renaming:{0t0})
 `Muldis_Object_Notation_Sync_Mark`
 `Rename one attribute.`
-(Renaming:(fname->first_name,))
+(Renaming:{fname->first_name})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Renaming:(fname:first_name,))
+(Renaming:{fname:first_name})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Renaming:(first_name<-fname,))
+(Renaming:{first_name<-fname})
 `Muldis_Object_Notation_Sync_Mark`
 `Swap 2 named attributes.`
 (Renaming:(foo->bar,foo<-bar))
@@ -618,16 +618,16 @@ No_Such_Attr_Name!{}
 (Renaming:(0t1,0t0))
 `Muldis_Object_Notation_Sync_Mark`
 `Some attribute names can only appear quoted.`
-(Renaming:("First Name"->"Last Name",))
+(Renaming:{"First Name"->"Last Name"})
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes.`
 (Tuple:{})
 `Muldis_Object_Notation_Sync_Mark`
 `One named attribute.`
-(Tuple:("First Name": Joy,))
+(Tuple:{"First Name": Joy})
 `Muldis_Object_Notation_Sync_Mark`
 `One ordered attribute.`
-(Tuple:(53,))
+(Tuple:{53})
 `Muldis_Object_Notation_Sync_Mark`
 `Three ordered attributes.`
 (Tuple:(hello,26,0bTRUE))
