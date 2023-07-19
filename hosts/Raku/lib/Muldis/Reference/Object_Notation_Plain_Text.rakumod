@@ -321,31 +321,10 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token Kit
     {
-        ['(' <sp>?] ~ [<sp>? ')'] <kit_attrs>
-    }
-
-    token kit_attrs
-    {
-        <kit_nullary> | <kit_unary> | <kit_nary>
-    }
-
-    token kit_nullary
-    {
-        ''
-    }
-
-    token kit_unary
-    {
-          [          <kit_attr> <sp>? ',']
-        | [',' <sp>? <kit_attr> <sp>? ',']
-        | [',' <sp>? <kit_attr>          ]
-    }
-
-    token kit_nary
-    {
-        [',' <sp>?]?
-        [<kit_attr> ** 2..* % [<sp>? ',' <sp>?]]
-        [<sp>? ',']?
+        ['{' <sp>?] ~ [<sp>? '}']
+            [',' <sp>?]?
+            [<kit_attr>* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
     }
 
     token kit_attr

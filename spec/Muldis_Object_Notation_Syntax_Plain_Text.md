@@ -1084,31 +1084,10 @@ Grammar:
 ```
     token Kit
     {
-        ['(' <sp>?] ~ [<sp>? ')'] <kit_attrs>
-    }
-
-    token kit_attrs
-    {
-        <kit_nullary> | <kit_unary> | <kit_nary>
-    }
-
-    token kit_nullary
-    {
-        ''
-    }
-
-    token kit_unary
-    {
-          [          <kit_attr> <sp>? ',']
-        | [',' <sp>? <kit_attr> <sp>? ',']
-        | [',' <sp>? <kit_attr>          ]
-    }
-
-    token kit_nary
-    {
-        [',' <sp>?]?
-        [<kit_attr> ** 2..* % [<sp>? ',' <sp>?]]
-        [<sp>? ',']?
+        ['{' <sp>?] ~ [<sp>? '}']
+            [',' <sp>?]?
+            [<kit_attr>* % [<sp>? ',' <sp>?]]
+            [<sp>? ',']?
     }
 
     token kit_attr
@@ -1276,7 +1255,7 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Nesting         | leading ::, or :: between 2 of, what otherwise is Text
     Duo             | (...:...) or (...->...) or (...<-...) without any comma
     Lot             | only [] or [...]
-    Kit             | only () or (...) with >= 1 comma
+    Kit             | only {} or {...}
     Article         | * between a Nesting|Text and a Kit in that order
     Excuse          | ! between a Nesting|Text and a Kit in that order
 ```
@@ -1314,9 +1293,6 @@ also use them.
 
 MUON does not use the single-quote string delimiter character `'` for
 anything, and leaves it reserved for a superset to use as it sees fit.
-
-MUON does not use the curly brace collection delimiters `{` and `}` for
-anything, and leaves them reserved for a superset to use as it sees fit.
 
 MUON does not use the semicolon `;` for anything, so a superset grammar can
 use it for things like separating statements and thus disambiguating its
@@ -1361,14 +1337,16 @@ that means they are used either in pairs or as contiguous sequences.
     ------+------------------------+---------------------------------------
     \     | escaped characters     | * prefix for each escaped char in quoted string
     ------+------------------------+---------------------------------------
-    ()    | attribute collections  | * delimit heterogeneous aordered collections
-          |                        |   of attributes, concept nominal+asset pairs
-          |                        | * delimit Duo/Kit selectors
+    ()    | pair collections       | * delimit Duo selectors
           | generic grouping       | * optional delimiters around Any to force a parsing precedence
     ------+------------------------+---------------------------------------
     []    | discrete collections   | * delimit homogeneous discrete collections
           |                        |   of members, concept asset+cardinal pairs
           |                        | * delimit Lot selectors
+    ------+------------------------+---------------------------------------
+    {}    | attribute collections  | * delimit heterogeneous aordered collections
+          |                        |   of attributes, concept nominal+asset pairs
+          |                        | * delimit Kit selectors
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
     ->    |                        | * separates the 2 parts of a pair
@@ -1377,9 +1355,8 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * disambiguate Duo sels from generic_group
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
-          |                        | * separate attributes in Kit sels
-          |                        | * disambiguate unary named Kit sels from Duo sels and generic_group
           |                        | * separate members in Lot sels
+          |                        | * separate attributes in Kit sels
     ------+------------------------+---------------------------------------
     ::    | nestings               | * prefix or separate elements of a Nesting literal
           |                        | * disambiguate Nesting from Text
@@ -1482,6 +1459,8 @@ when any of these sequences overlap, longest token always wins:
     )
     [
     ]
+    {
+    }
     :
     ->
     <-

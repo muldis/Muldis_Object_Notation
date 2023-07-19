@@ -1665,7 +1665,7 @@ usually in the context of their being the first octet of an artifact.
     69  | i   |             | Integer artifact prefix fixed width big-endian nonsigned 8 octets
     6A  | j   |             | Integer artifact prefix fixed width big-endian two's complement signed 8 octets
     ----+-----+-------------+----------------------------------------------
-    6B  | k   | ()          | Kit artifact with zero attributes
+    6B  | k   | {}          | Kit artifact with zero attributes
     6C  | l   | []          | Lot artifact with zero members
     6D  | m   |             | Lot artifact prefix special case with exactly 1 member (implicit multiplicity of 1)
     6E  | n   |             | Nesting artifact prefix special case with exactly 1 element
