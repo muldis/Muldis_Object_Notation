@@ -464,7 +464,7 @@ Examples:
 
 ```
     `Zero attributes.`
-    ()
+    {}
 
     `One named attribute.`
     ("First Name": Joy,)
@@ -521,9 +521,9 @@ Examples:
         second : 0.0,
     )
 
-    Positive_Infinity*()
+    Positive_Infinity*{}
 
-    Negative_Zero*()
+    Negative_Zero*{}
 ```
 
 ## Excuse
@@ -537,9 +537,9 @@ Examples:
 ```
     Input_Field_Wrong!(name : "Your Age",)
 
-    Div_By_Zero!()
+    Div_By_Zero!{}
 
-    No_Such_Attr_Name!()
+    No_Such_Attr_Name!{}
 ```
 
 # COMMON QUALITIES OF ABSTRACT SECONDARY DATA TYPE POSSREPS
@@ -579,7 +579,7 @@ Examples:
 
 ```
     `No measurement was taken or specified at all.`
-    (Calendar_Time:())
+    (Calendar_Time:{})
 
     `Either an unspecified period in 1970 or a duration of 1970 years.`
     (Calendar_Time:(y:1970,))
@@ -684,7 +684,7 @@ Examples:
 
 ```
     `No specified coordinates at all.`
-    (Geographic_Point:())
+    (Geographic_Point:{})
 
     `Just an elevation specified.`
     (Geographic_Point:("+":920,))
@@ -1080,7 +1080,7 @@ Examples:
 
 ```
     `Zero attributes.`
-    (Heading:())
+    (Heading:{})
 
     `One named attribute.`
     (Heading:(sales,))
@@ -1126,7 +1126,7 @@ Examples:
 
 ```
     `Zero renamings, a no-op.`
-    (Renaming:())
+    (Renaming:{})
 
     `Also a no-op.`
     (Renaming:(age->age,))
@@ -1187,7 +1187,7 @@ Examples:
 
 ```
     `Zero attributes.`
-    (Tuple:())
+    (Tuple:{})
 
     `One named attribute.`
     (Tuple:("First Name": Joy,))
@@ -1227,10 +1227,10 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Tuple_Array:())
+    (Tuple_Array:{})
 
     `Zero attributes + one tuple.`
-    (Tuple_Array:[()])
+    (Tuple_Array:[{}])
 
     `Three named attributes + zero tuples.`
     (Tuple_Array:(x,y,z))
@@ -1286,16 +1286,16 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Relation:())
+    (Relation:{})
 
     `Same thing.`
-    (Relation:(():[]))
+    (Relation:({}:[]))
 
     `Zero attributes + one tuple.`
-    (Relation:[()])
+    (Relation:[{}])
 
     `Same thing.`
-    (Relation:(():[()]))
+    (Relation:({}:[{}]))
 
     `Three named attributes + zero tuples.`
     (Relation:(x,y,z))
@@ -1358,10 +1358,10 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Tuple_Bag:())
+    (Tuple_Bag:{})
 
     `Zero attributes + one tuple.`
-    (Tuple_Bag:[()])
+    (Tuple_Bag:[{}])
 
     `Three named attributes + zero tuples.`
     (Tuple_Bag:(x,y,z))

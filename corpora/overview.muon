@@ -200,7 +200,7 @@ the_db::stats::"samples by order"
 ]
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes.`
-()
+{}
 `Muldis_Object_Notation_Sync_Mark`
 `One named attribute.`
 ("First Name": Joy,)
@@ -247,18 +247,18 @@ the_db::UTC_Date_Time*(
     second : 0.0,
 )
 `Muldis_Object_Notation_Sync_Mark`
-Positive_Infinity*()
+Positive_Infinity*{}
 `Muldis_Object_Notation_Sync_Mark`
-Negative_Zero*()
+Negative_Zero*{}
 `Muldis_Object_Notation_Sync_Mark`
 Input_Field_Wrong!(name : "Your Age",)
 `Muldis_Object_Notation_Sync_Mark`
-Div_By_Zero!()
+Div_By_Zero!{}
 `Muldis_Object_Notation_Sync_Mark`
-No_Such_Attr_Name!()
+No_Such_Attr_Name!{}
 `Muldis_Object_Notation_Sync_Mark`
 `No measurement was taken or specified at all.`
-(Calendar_Time:())
+(Calendar_Time:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Either an unspecified period in 1970 or a duration of 1970 years.`
 (Calendar_Time:(y:1970,))
@@ -309,7 +309,7 @@ No_Such_Attr_Name!()
 (Calendar_Instant:((y:2001,m:4,d:16,h:20,i:1,s:44):"PST"))
 `Muldis_Object_Notation_Sync_Mark`
 `No specified coordinates at all.`
-(Geographic_Point:())
+(Geographic_Point:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Just an elevation specified.`
 (Geographic_Point:("+":920,))
@@ -552,7 +552,7 @@ No_Such_Attr_Name!()
 (Pair:(y<-x))
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes.`
-(Heading:())
+(Heading:{})
 `Muldis_Object_Notation_Sync_Mark`
 `One named attribute.`
 (Heading:(sales,))
@@ -582,7 +582,7 @@ No_Such_Attr_Name!()
 (Heading:("サンプル",))
 `Muldis_Object_Notation_Sync_Mark`
 `Zero renamings, a no-op.`
-(Renaming:())
+(Renaming:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Also a no-op.`
 (Renaming:(age->age,))
@@ -621,7 +621,7 @@ No_Such_Attr_Name!()
 (Renaming:("First Name"->"Last Name",))
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes.`
-(Tuple:())
+(Tuple:{})
 `Muldis_Object_Notation_Sync_Mark`
 `One named attribute.`
 (Tuple:("First Name": Joy,))
@@ -648,10 +648,10 @@ No_Such_Attr_Name!()
 ))
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes + zero tuples.`
-(Tuple_Array:())
+(Tuple_Array:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes + one tuple.`
-(Tuple_Array:[()])
+(Tuple_Array:[{}])
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes + zero tuples.`
 (Tuple_Array:(x,y,z))
@@ -673,16 +673,16 @@ No_Such_Attr_Name!()
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes + zero tuples.`
-(Relation:())
+(Relation:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Relation:(():[]))
+(Relation:({}:[]))
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes + one tuple.`
-(Relation:[()])
+(Relation:[{}])
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Relation:(():[()]))
+(Relation:({}:[{}]))
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes + zero tuples.`
 (Relation:(x,y,z))
@@ -732,10 +732,10 @@ No_Such_Attr_Name!()
 ))
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes + zero tuples.`
-(Tuple_Bag:())
+(Tuple_Bag:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes + one tuple.`
-(Tuple_Bag:[()])
+(Tuple_Bag:[{}])
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes + zero tuples.`
 (Tuple_Bag:(x,y,z))

@@ -1120,7 +1120,7 @@ Examples:
 
 ```
     `Zero attributes.`
-    ()
+    {}
 
     `One named attribute.`
     ("First Name": Joy,)
@@ -1195,9 +1195,9 @@ Examples:
         second : 0.0,
     )
 
-    Positive_Infinity*()
+    Positive_Infinity*{}
 
-    Negative_Zero*()
+    Negative_Zero*{}
 ```
 
 ## Excuse
@@ -1219,9 +1219,9 @@ Examples:
 ```
     Input_Field_Wrong!(name : "Your Age",)
 
-    Div_By_Zero!()
+    Div_By_Zero!{}
 
-    No_Such_Attr_Name!()
+    No_Such_Attr_Name!{}
 ```
 
 # RESERVED UNUSED SYNTAX
