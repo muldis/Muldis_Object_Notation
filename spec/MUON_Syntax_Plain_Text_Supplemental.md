@@ -341,21 +341,21 @@ Examples:
 ```
     `Some people records.`
     (Relation:[
-        (name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-            phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])),
-        (name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
-            phone_numbers : (Set:[])),
-        (name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-            phone_numbers : (Set:["+81.9072391679"])),
+        {name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
+            phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
+        {name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
+            phone_numbers : (Set:[])},
+        {name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
+            phone_numbers : (Set:["+81.9072391679"])},
     ])
 
     `Same thing.`
     (Relation:(
             {name          , birth_date        , phone_numbers}
         : [
-            ("Jane Ives"   , 0Lci@y1971|m11|d06, (Set:["+1.4045552995", "+1.7705557572"])),
-            ("Layla Miller", 0Lci@y1995|m08|d27, (Set:[])),
-            ("岩倉 玲音", 0Lci@y1984|m07|d06, (Set:["+81.9072391679"])),
+            {"Jane Ives"   , 0Lci@y1971|m11|d06, (Set:["+1.4045552995", "+1.7705557572"])},
+            {"Layla Miller", 0Lci@y1995|m08|d27, (Set:[])},
+            {"岩倉 玲音", 0Lci@y1984|m07|d06, (Set:["+81.9072391679"])},
         ]
     ))
 ```
