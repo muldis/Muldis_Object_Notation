@@ -8,6 +8,22 @@ mutually alternative MUON concrete syntaxes compare with each other.
 
 ## CONTENTS
 
+- [Syntax_Plain_Text](#Syntax_Plain_Text)
+- [Syntax_Packed_Plain_Text](#Syntax_Packed_Plain_Text)
+- [Syntax_Muldis_Data_Language](#Syntax_Muldis_Data_Language)
+- [Syntax_Raku](#Syntax_Raku)
+- [Syntax_Perl](#Syntax_Perl)
+- [Syntax_DotNet](#Syntax_DotNet)
+- [Syntax_Java](#Syntax_Java)
+- [Syntax_Swift](#Syntax_Swift)
+- [Syntax_Rust](#Syntax_Rust)
+- [Syntax_Go](#Syntax_Go)
+- [Syntax_ECMAScript](#Syntax_ECMAScript)
+- [Syntax_Ruby](#Syntax_Ruby)
+- [Syntax_Python](#Syntax_Python)
+- [Syntax_PHP](#Syntax_PHP)
+- [Syntax_JSON](#Syntax_JSON)
+- [Syntax_XML](#Syntax_XML)
 
 [RETURN](#TOP)
 

@@ -9,6 +9,9 @@ and other data formats or programming languages used for similar purposes.
 
 ## CONTENTS
 
+- [JSON - JavaScript Object Notation](#JSON---JavaScript-Object-Notation)
+- [XML - Extensible Markup Language](#XML---Extensible-Markup-Language)
+- [SQL: ISO/IEC 9075 - Structured Query Language](#SQL--ISO-IEC-9075---Structured-Query-Language)
 
 [RETURN](#TOP)
 

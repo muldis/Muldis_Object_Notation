@@ -17,6 +17,31 @@ its part name is `Syntax_Java`.
 
 # CONTENTS
 
+- [SYNOPSIS](#SYNOPSIS)
+- [DESCRIPTION](#DESCRIPTION)
+- [SIMPLE PRIMARY DATA TYPE POSSREPS](#SIMPLE-PRIMARY-DATA-TYPE-POSSREPS)
+    - [Ignorance](#Ignorance)
+    - [Boolean](#Boolean)
+    - [Integer](#Integer)
+    - [Fraction](#Fraction)
+    - [Bits](#Bits)
+    - [Blob](#Blob)
+    - [Text / Attribute Name](#Text---Attribute-Name)
+    - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
+- [COLLECTIVE PRIMARY DATA TYPE POSSREPS](#COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS)
+    - [Duo](#Duo)
+    - [Lot](#Lot)
+    - [Kit](#Kit)
+    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
+    - [Excuse](#Excuse)
+- [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
+    - [Calendar Duration](#Calendar-Duration)
+    - [Calendar Instant](#Calendar-Instant)
+- [SEE ALSO](#SEE-ALSO)
+- [AUTHOR](#AUTHOR)
+- [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
+- [TRADEMARK POLICY](#TRADEMARK-POLICY)
+- [ACKNOWLEDGEMENTS](#ACKNOWLEDGEMENTS)
 
 [RETURN](#TOP)
 

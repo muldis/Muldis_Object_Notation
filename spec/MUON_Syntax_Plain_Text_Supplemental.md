@@ -9,6 +9,19 @@ possible superset of the MUON grammar rather than as part of MUON proper.
 
 ## CONTENTS
 
+- [Expansion of Possrep Any](#Expansion-of-Possrep-Any)
+- [Added Dedicated Format for Calendar Time](#Added-Dedicated-Format-for-Calendar-Time)
+- [Added Dedicated Format for Calendar Duration](#Added-Dedicated-Format-for-Calendar-Duration)
+- [Added Dedicated Format for Calendar Instant](#Added-Dedicated-Format-for-Calendar-Instant)
+- [Added Dedicated Format for Geographic Point](#Added-Dedicated-Format-for-Geographic-Point)
+- [Added Dedicated Format for Interval](#Added-Dedicated-Format-for-Interval)
+- [More Compact Examples of Interval Set](#More-Compact-Examples-of-Interval-Set)
+- [More Compact Examples of Interval Bag](#More-Compact-Examples-of-Interval-Bag)
+- [More Compact Examples of Relation](#More-Compact-Examples-of-Relation)
+- [Naive Entity Marker](#Naive-Entity-Marker)
+- [Signature Declaring Secondary Data Type Possrep Script - Semantics](#Signature-Declaring-Secondary-Data-Type-Possrep-Script---Semantics)
+- [Signature Declaring Secondary Data Type Possrep Script - Syntax Abstract](#Signature-Declaring-Secondary-Data-Type-Possrep-Script---Syntax-Abstract)
+- [Signature Declaring Secondary Data Type Possrep Script - Syntax Plain Text](#Signature-Declaring-Secondary-Data-Type-Possrep-Script---Syntax-Plain-Text)
 
 [RETURN](#TOP)
 
