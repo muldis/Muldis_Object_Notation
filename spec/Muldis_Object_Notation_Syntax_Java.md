@@ -1,3 +1,5 @@
+<a name="TOP"></a>
+
 # NAME
 
 Muldis Object Notation (MUON) - Source code and data interchange format
@@ -12,6 +14,13 @@ The fully-qualified name of this document is
 This artifact is part 11 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_Java`.
+
+# CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="SYNOPSIS"></a>
 
 # SYNOPSIS
 
@@ -51,6 +60,10 @@ its part name is `Syntax_Java`.
     ))
 ```
 
+[RETURN](#TOP)
+
+<a name="DESCRIPTION"></a>
+
 # DESCRIPTION
 
 This document consists of multiple parts; for a directory to all of the
@@ -84,13 +97,25 @@ MUON Java-hosted artifact is `Muldis_Object_Notation_Java`.
 
 See also <https://docs.oracle.com/javase/specs/index.html>.
 
+[RETURN](#TOP)
+
+<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
 
 ## Ignorance
 
 An **Ignorance** artifact is any of the following:
 
 * The special Java `null` value.
+
+[RETURN](#TOP)
+
+<a name="Boolean"></a>
 
 ## Boolean
 
@@ -106,6 +131,10 @@ to keep things more correct and simpler:
 * Any value of any numeric type such that zero/one represents false/true.
 
 * Any value of some other type that might represent a boolean.
+
+[RETURN](#TOP)
+
+<a name="Integer"></a>
 
 ## Integer
 
@@ -127,6 +156,10 @@ to keep things more correct and simpler:
 * Any value of any of the Java primitive types `byte`, `short`.
 
 * Any object of any of the Java classes `java.lang.Byte`, `java.lang.Short`.
+
+[RETURN](#TOP)
+
+<a name="Fraction"></a>
 
 ## Fraction
 
@@ -184,11 +217,19 @@ that represents an infinity or NaN.
 * Any object of any of the Java classes `java.lang.Float`, `java.lang.Double`
 that represents an infinity or NaN.
 
+[RETURN](#TOP)
+
+<a name="Bits"></a>
+
 ## Bits
 
 A **Bits** artifact is any of the following:
 
 * Any object of the Java class `java.util.BitSet`.
+
+[RETURN](#TOP)
+
+<a name="Blob"></a>
 
 ## Blob
 
@@ -205,6 +246,10 @@ This is because to keep things simple we treat all standalone Java array
 values as being attempts at **Lot** artifacts, so we can succeed at
 interpreting possreps or fail fast rather than having to scan a whole one
 in case it is all `byte` elements.
+
+[RETURN](#TOP)
+
+<a name="Text---Attribute-Name"></a>
 
 ## Text / Attribute Name
 
@@ -241,6 +286,10 @@ is also well formed (`java.lang.Character.isSurrogatePair()` is true); a
 *well formed* string does not contain any *C* in the surrogate set that
 isn't so paired.
 
+[RETURN](#TOP)
+
+<a name="Nesting---Attribute-Name-List"></a>
+
 ## Nesting / Attribute Name List
 
 A **Nesting** artifact is any of the following:
@@ -265,7 +314,15 @@ A *SYS_Array_T* is any of the following:
 * Any *SYS_Array_A* such that each of its elements is any *SYS_Text*;
 for example, any value of the Java primitive type array `String[]`.
 
+[RETURN](#TOP)
+
+<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
 
 ## Duo
 
@@ -297,6 +354,10 @@ Not permitted for a *SYS_Duo_AA* is any of the following,
 to keep things more correct and simpler:
 
 * Any values or objects of N-ary collection types having exactly 2 elements.
+
+[RETURN](#TOP)
+
+<a name="Lot"></a>
 
 ## Lot
 
@@ -340,6 +401,10 @@ Note that example composers of `java.util.List` are:
 `java.util.Vector`,
 `java.util.concurrent.CopyOnWriteArrayList`.
 
+[RETURN](#TOP)
+
+<a name="Kit"></a>
+
 ## Kit
 
 A **Kit** artifact is any of the following:
@@ -381,6 +446,10 @@ A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
 
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
 ## Article / Labelled Tuple
 
 An **Article** artifact is any of the following:
@@ -389,6 +458,10 @@ An **Article** artifact is any of the following:
 and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
 its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
+
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
 
 ## Excuse
 
@@ -399,7 +472,15 @@ and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
 its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
+[RETURN](#TOP)
+
+<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
+
 # ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
+
+[RETURN](#TOP)
+
+<a name="Calendar-Duration"></a>
 
 ## Calendar Duration
 
@@ -410,6 +491,10 @@ A **Calendar Duration** artifact is additionally any of the following:
 `java.time.Period`.
 
 *TODO: Consider removing some of the above options.*
+
+[RETURN](#TOP)
+
+<a name="Calendar-Instant"></a>
 
 ## Calendar Instant
 
@@ -431,13 +516,25 @@ A **Calendar Instant** artifact is additionally any of the following:
 
 *TODO: Consider removing some of the above options.*
 
+[RETURN](#TOP)
+
+<a name="SEE-ALSO"></a>
+
 # SEE ALSO
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="AUTHOR"></a>
+
 # AUTHOR
 
 Darren Duncan - darren@DarrenDuncan.net
+
+[RETURN](#TOP)
+
+<a name="LICENSE-AND-COPYRIGHT"></a>
 
 # LICENSE AND COPYRIGHT
 
@@ -448,9 +545,17 @@ MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
+[RETURN](#TOP)
+
+<a name="TRADEMARK-POLICY"></a>
+
 # TRADEMARK POLICY
 
 The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
+
+[RETURN](#TOP)
+
+<a name="ACKNOWLEDGEMENTS"></a>
 
 # ACKNOWLEDGEMENTS
 

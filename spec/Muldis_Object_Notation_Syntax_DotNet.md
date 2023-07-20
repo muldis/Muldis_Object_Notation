@@ -1,3 +1,5 @@
+<a name="TOP"></a>
+
 # NAME
 
 Muldis Object Notation (MUON) - Source code and data interchange format
@@ -12,6 +14,13 @@ The fully-qualified name of this document is
 This artifact is part 10 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_DotNet`.
+
+# CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="SYNOPSIS"></a>
 
 # SYNOPSIS
 
@@ -41,6 +50,10 @@ its part name is `Syntax_DotNet`.
         ))
     ))
 ```
+
+[RETURN](#TOP)
+
+<a name="DESCRIPTION"></a>
 
 # DESCRIPTION
 
@@ -76,7 +89,15 @@ MUON .NET-hosted artifact is `Muldis_Object_Notation_DotNet`.
 
 See also <https://dotnet.microsoft.com>.
 
+[RETURN](#TOP)
+
+<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
 
 ## Ignorance
 
@@ -88,6 +109,10 @@ Not permitted for an **Ignorance** is any of the following,
 to keep things more correct and simpler:
 
 * The only object of the .NET singleton class `System.DBNull`.
+
+[RETURN](#TOP)
+
+<a name="Boolean"></a>
 
 ## Boolean
 
@@ -101,6 +126,10 @@ to keep things more correct and simpler:
 * Any value of any numeric type such that zero/one represents false/true.
 
 * Any value of some other type that might represent a boolean.
+
+[RETURN](#TOP)
+
+<a name="Integer"></a>
 
 ## Integer
 
@@ -125,6 +154,10 @@ to keep things more correct and simpler:
 Note that the type `System.Numerics.BigInteger` is only part of .NET starting
 with .NET Framework version 4.0 (2010), so that represents the minimum
 required to support MUON for the general case of unlimited size numbers.
+
+[RETURN](#TOP)
+
+<a name="Fraction"></a>
 
 ## Fraction
 
@@ -175,11 +208,19 @@ to keep things more correct and simpler:
 * Any value of any of the .NET structure types `System.Single`, `System.Double`
 that represents an infinity or NaN.
 
+[RETURN](#TOP)
+
+<a name="Bits"></a>
+
 ## Bits
 
 A **Bits** artifact is any of the following:
 
 * Any object of the .NET class `System.Collections.BitArray`.
+
+[RETURN](#TOP)
+
+<a name="Blob"></a>
 
 ## Blob
 
@@ -196,6 +237,10 @@ This is because to keep things simple we treat all standalone .NET array
 values as being attempts at **Lot** artifacts, so we can succeed at
 interpreting possreps or fail fast rather than having to scan a whole one
 in case it is all `Byte` elements.
+
+[RETURN](#TOP)
+
+<a name="Text---Attribute-Name"></a>
 
 ## Text / Attribute Name
 
@@ -229,6 +274,10 @@ is also well formed (`System.Char.IsSurrogatePair()` is true); a
 *well formed* string does not contain any *C* in the surrogate set that
 isn't so paired.
 
+[RETURN](#TOP)
+
+<a name="Nesting---Attribute-Name-List"></a>
+
 ## Nesting / Attribute Name List
 
 A **Nesting** artifact is any of the following:
@@ -255,7 +304,15 @@ A *SYS_Array_T* is any of the following:
 * Any *SYS_Array_A* such that each of its elements is any *SYS_Text*;
 for example, any value of the .NET structure type array `System.String[]`.
 
+[RETURN](#TOP)
+
+<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
 
 ## Duo
 
@@ -296,6 +353,10 @@ conceptually one of the simplest possreps *and* it is one of the most
 frequently used in typical MUON artifacts, this choice is a huge win for
 brevity and usability, despite the trade-off that a common positional
 format of **Kit** or **Tuple** are somewhat more verbose as a result.
+
+[RETURN](#TOP)
+
+<a name="Lot"></a>
 
 ## Lot
 
@@ -346,6 +407,10 @@ Note that example composers of `System.Collections.Generic.IList` are:
 `System.Collections.Immutable.ImmutableArray`,
 `System.Collections.Generic.List`,
 `System.Collections.Immutable.ImmutableList`.
+
+[RETURN](#TOP)
+
+<a name="Kit"></a>
 
 ## Kit
 
@@ -412,6 +477,10 @@ as the 8th actual component, recursively as needed.
 or object of any .NET class,
 that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
 
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
 ## Article / Labelled Tuple
 
 An **Article** artifact is any of the following:
@@ -420,6 +489,10 @@ An **Article** artifact is any of the following:
 and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
 its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
+
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
 
 ## Excuse
 
@@ -430,13 +503,25 @@ and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
 its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
+[RETURN](#TOP)
+
+<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
+
 # ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
+
+[RETURN](#TOP)
+
+<a name="Calendar-Duration"></a>
 
 ## Calendar Duration
 
 A **Calendar Duration** artifact is additionally any of the following:
 
 * Any value of the .NET structure type `System.TimeSpan`.
+
+[RETURN](#TOP)
+
+<a name="Calendar-Instant"></a>
 
 ## Calendar Instant
 
@@ -445,6 +530,10 @@ A **Calendar Instant** artifact is additionally any of the following:
 * Any value of any of the .NET structure types
 `System.DateTime`,
 `System.DateTimeOffset`.
+
+[RETURN](#TOP)
+
+<a name="Geographic-Point"></a>
 
 ## Geographic Point
 
@@ -455,6 +544,10 @@ A **Geographic Point** artifact is additionally any of the following:
 
 *Note: DbGeography is only in .NET Framework; it is not in .NET 6.*
 
+[RETURN](#TOP)
+
+<a name="Pair"></a>
+
 ## Pair
 
 A **Pair** artifact is additionally any of the following:
@@ -463,13 +556,25 @@ A **Pair** artifact is additionally any of the following:
 such that its `Key` property is *this* (any **Any** artifact)
 and its `Value` property is *that* (any **Any** artifact).
 
+[RETURN](#TOP)
+
+<a name="SEE-ALSO"></a>
+
 # SEE ALSO
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="AUTHOR"></a>
+
 # AUTHOR
 
 Darren Duncan - darren@DarrenDuncan.net
+
+[RETURN](#TOP)
+
+<a name="LICENSE-AND-COPYRIGHT"></a>
 
 # LICENSE AND COPYRIGHT
 
@@ -480,9 +585,17 @@ MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
+[RETURN](#TOP)
+
+<a name="TRADEMARK-POLICY"></a>
+
 # TRADEMARK POLICY
 
 The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
+
+[RETURN](#TOP)
+
+<a name="ACKNOWLEDGEMENTS"></a>
 
 # ACKNOWLEDGEMENTS
 

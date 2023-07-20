@@ -1,9 +1,18 @@
+<a name="TOP"></a>
+
 # Muldis Object Notation (MUON) Syntax_Plain_Text Supplemental
 
 This document features supplemental material that used to be part of
 [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 but was removed from there as it was deemed to fit better as part of a
 possible superset of the MUON grammar rather than as part of MUON proper.
+
+## CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="Expansion-of-Possrep-Any"></a>
 
 ## Expansion of Possrep Any
 
@@ -20,6 +29,10 @@ Grammar:
         | <Interval>
     }
 ```
+
+[RETURN](#TOP)
+
+<a name="Added-Dedicated-Format-for-Calendar-Time"></a>
 
 ## Added Dedicated Format for Calendar Time
 
@@ -84,6 +97,10 @@ Examples:
     0Lct@s5923.21124603
 ```
 
+[RETURN](#TOP)
+
+<a name="Added-Dedicated-Format-for-Calendar-Duration"></a>
+
 ## Added Dedicated Format for Calendar Duration
 
 A **Calendar Duration** artifact has the dedicated concrete literal format
@@ -107,6 +124,10 @@ Examples:
     `Subtraction of 22 hours.`
     0Lcd@y0|m0|d0|h-22|i0|s0
 ```
+
+[RETURN](#TOP)
+
+<a name="Added-Dedicated-Format-for-Calendar-Instant"></a>
 
 ## Added Dedicated Format for Calendar Instant
 
@@ -158,6 +179,10 @@ Examples:
     0Lci@y2001|m4|d16|h20|i1|s44@"PST"
 ```
 
+[RETURN](#TOP)
+
+<a name="Added-Dedicated-Format-for-Geographic-Point"></a>
+
 ## Added Dedicated Format for Geographic Point
 
 A **Geographic Point** artifact has the dedicated concrete literal format
@@ -203,6 +228,10 @@ Examples:
     `Another place.`
     0Lgp@>-94.746094|^37.483577
 ```
+
+[RETURN](#TOP)
+
+<a name="Added-Dedicated-Format-for-Interval"></a>
 
 ## Added Dedicated Format for Interval
 
@@ -283,6 +312,10 @@ Examples:
     (:*:)
 ```
 
+[RETURN](#TOP)
+
+<a name="More-Compact-Examples-of-Interval-Set"></a>
+
 ## More Compact Examples of Interval Set
 
 ```
@@ -314,6 +347,10 @@ Examples:
     (Interval_Set:[(:1<=*<6:),(:6..10:):2,(:10<*<=15:)])
 ```
 
+[RETURN](#TOP)
+
+<a name="More-Compact-Examples-of-Interval-Bag"></a>
+
 ## More Compact Examples of Interval Bag
 
 ```
@@ -335,6 +372,10 @@ Examples:
     `Probably same thing, regardless of data model used.`
     (Interval_Bag:[(:1<=*<6:),(:6..10:):2,(:10<*<=15:)])
 ```
+
+[RETURN](#TOP)
+
+<a name="More-Compact-Examples-of-Relation"></a>
 
 ## More Compact Examples of Relation
 
@@ -359,6 +400,10 @@ Examples:
         ]
     ))
 ```
+
+[RETURN](#TOP)
+
+<a name="Naive-Entity-Marker"></a>
 
 ## Naive Entity Marker
 
@@ -396,6 +441,10 @@ Examples:
         `$$$` My_Proc_2 : Procedure*(...),
     )
 ```
+
+[RETURN](#TOP)
+
+<a name="Signature-Declaring-Secondary-Data-Type-Possrep-Script---Semantics"></a>
 
 ## Signature Declaring Secondary Data Type Possrep Script - Semantics
 
@@ -439,6 +488,10 @@ There may be multiple **Script**; when this is the case,
 it means the *value* conforms to every one of those scripts,
 typically because only the common subsets of said were used.
 
+[RETURN](#TOP)
+
+<a name="Signature-Declaring-Secondary-Data-Type-Possrep-Script---Syntax-Abstract"></a>
+
 ## Signature Declaring Secondary Data Type Possrep Script - Syntax Abstract
 
 This document section used to be the content of the
@@ -473,6 +526,10 @@ Examples:
         42
     ))
 ```
+
+[RETURN](#TOP)
+
+<a name="Signature-Declaring-Secondary-Data-Type-Possrep-Script---Syntax-Plain-Text"></a>
 
 ## Signature Declaring Secondary Data Type Possrep Script - Syntax Plain Text
 

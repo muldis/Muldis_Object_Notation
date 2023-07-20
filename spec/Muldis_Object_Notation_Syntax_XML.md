@@ -1,3 +1,5 @@
+<a name="TOP"></a>
+
 # NAME
 
 Muldis Object Notation (MUON) - Source code and data interchange format
@@ -12,6 +14,13 @@ The fully-qualified name of this document is
 This artifact is part 20 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_XML`.
+
+# CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="SYNOPSIS"></a>
 
 # SYNOPSIS
 
@@ -44,6 +53,10 @@ its part name is `Syntax_XML`.
     </MUON>
 ```
 
+[RETURN](#TOP)
+
+<a name="DESCRIPTION"></a>
+
 # DESCRIPTION
 
 This document consists of multiple parts; for a directory to all of the
@@ -72,69 +85,141 @@ MUON XML-hosted artifact is `Muldis_Object_Notation_XML`.
 
 See also <https://w3.org/XML>.
 
+[RETURN](#TOP)
+
+<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
 
 ## Ignorance
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Boolean"></a>
+
 ## Boolean
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="Integer"></a>
 
 ## Integer
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Fraction"></a>
+
 ## Fraction
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="Bits"></a>
 
 ## Bits
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Blob"></a>
+
 ## Blob
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="Text---Attribute-Name"></a>
 
 ## Text / Attribute Name
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Nesting---Attribute-Name-List"></a>
+
 ## Nesting / Attribute Name List
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
 
 ## Duo
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Lot"></a>
+
 ## Lot
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="Kit"></a>
 
 ## Kit
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
 ## Article / Labelled Tuple
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
 
 ## Excuse
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="SEE-ALSO"></a>
+
 # SEE ALSO
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="AUTHOR"></a>
+
 # AUTHOR
 
 Darren Duncan - darren@DarrenDuncan.net
+
+[RETURN](#TOP)
+
+<a name="LICENSE-AND-COPYRIGHT"></a>
 
 # LICENSE AND COPYRIGHT
 
@@ -145,9 +230,17 @@ MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
+[RETURN](#TOP)
+
+<a name="TRADEMARK-POLICY"></a>
+
 # TRADEMARK POLICY
 
 The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
+
+[RETURN](#TOP)
+
+<a name="ACKNOWLEDGEMENTS"></a>
 
 # ACKNOWLEDGEMENTS
 

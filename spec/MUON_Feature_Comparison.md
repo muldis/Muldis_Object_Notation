@@ -1,9 +1,18 @@
+<a name="TOP"></a>
+
 # Muldis Object Notation (MUON) Feature Comparison
 
 This document features a comparison between Muldis Object Notation (MUON)
 and other data formats or programming languages used for similar purposes.
 
 *Each section below is an unordered set of notes until otherwise finished.*
+
+## CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="JSON---JavaScript-Object-Notation"></a>
 
 ## JSON - JavaScript Object Notation
 
@@ -106,6 +115,10 @@ This paragraph will be fleshed out more.
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="XML---Extensible-Markup-Language"></a>
+
 ## XML - Extensible Markup Language
 
 <https://w3.org/XML>
@@ -118,6 +131,10 @@ MUON competes as an XML alternative primarily by being both more strongly
 typed and, like JSON, in being much less verbose.
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="SQL--ISO-IEC-9075---Structured-Query-Language"></a>
 
 ## SQL: ISO/IEC 9075 - Structured Query Language
 

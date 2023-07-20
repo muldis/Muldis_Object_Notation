@@ -1,8 +1,17 @@
+<a name="TOP"></a>
+
 # Muldis Object Notation (MUON) Syntax Parallels
 
 This document has extra copies of the SYNOPSIS sections of each part of the
 actual MUON spec documents, making it easier to see at a glance how the
 mutually alternative MUON concrete syntaxes compare with each other.
+
+## CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="Syntax_Plain_Text"></a>
 
 ## [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 
@@ -43,6 +52,10 @@ once between all tuples.
         ))
     ))
 ```
+
+[RETURN](#TOP)
+
+<a name="Syntax_Packed_Plain_Text"></a>
 
 ## [Syntax_Packed_Plain_Text](Muldis_Object_Notation_Syntax_Packed_Plain_Text.md)
 
@@ -85,6 +98,10 @@ once between all tuples.
                 ]
 ```
 
+[RETURN](#TOP)
+
+<a name="Syntax_Muldis_Data_Language"></a>
+
 ## [Syntax_Muldis_Data_Language](Muldis_Object_Notation_Syntax_Muldis_Data_Language.md)
 
 ```
@@ -101,6 +118,10 @@ once between all tuples.
         ))
     ))
 ```
+
+[RETURN](#TOP)
+
+<a name="Syntax_Raku"></a>
 
 ## [Syntax_Raku](Muldis_Object_Notation_Syntax_Raku.md)
 
@@ -127,6 +148,10 @@ once between all tuples.
         )
     )
 ```
+
+[RETURN](#TOP)
+
+<a name="Syntax_Perl"></a>
 
 ## [Syntax_Perl](Muldis_Object_Notation_Syntax_Perl.md)
 
@@ -157,6 +182,10 @@ once between all tuples.
     ]]
 ```
 
+[RETURN](#TOP)
+
+<a name="Syntax_DotNet"></a>
+
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
 ```
@@ -185,6 +214,10 @@ once between all tuples.
         ))
     ))
 ```
+
+[RETURN](#TOP)
+
+<a name="Syntax_Java"></a>
 
 ## [Syntax_Java](Muldis_Object_Notation_Syntax_Java.md)
 
@@ -224,17 +257,33 @@ once between all tuples.
     ))
 ```
 
+[RETURN](#TOP)
+
+<a name="Syntax_Swift"></a>
+
 ## Syntax_Swift
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="Syntax_Rust"></a>
 
 ## Syntax_Rust
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Syntax_Go"></a>
+
 ## Syntax_Go
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="Syntax_ECMAScript"></a>
 
 ## [Syntax_ECMAScript](Muldis_Object_Notation_Syntax_ECMAScript.md)
 
@@ -265,13 +314,25 @@ once between all tuples.
     ]]
 ```
 
+[RETURN](#TOP)
+
+<a name="Syntax_Ruby"></a>
+
 ## Syntax_Ruby
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Syntax_Python"></a>
+
 ## Syntax_Python
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="Syntax_PHP"></a>
 
 ## [Syntax_PHP](Muldis_Object_Notation_Syntax_PHP.md)
 
@@ -298,6 +359,10 @@ once between all tuples.
         ]]
     ]]
 ```
+
+[RETURN](#TOP)
+
+<a name="Syntax_JSON"></a>
 
 ## [Syntax_JSON](Muldis_Object_Notation_Syntax_JSON.md)
 
@@ -327,6 +392,10 @@ once between all tuples.
         ]]
     ]]
 ```
+
+[RETURN](#TOP)
+
+<a name="Syntax_XML"></a>
 
 ## [Syntax_XML](Muldis_Object_Notation_Syntax_XML.md)
 

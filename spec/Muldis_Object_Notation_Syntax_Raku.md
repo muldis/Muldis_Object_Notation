@@ -1,3 +1,5 @@
+<a name="TOP"></a>
+
 # NAME
 
 Muldis Object Notation (MUON) - Source code and data interchange format
@@ -12,6 +14,13 @@ The fully-qualified name of this document is
 This artifact is part 8 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_Raku`.
+
+# CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="SYNOPSIS"></a>
 
 # SYNOPSIS
 
@@ -38,6 +47,10 @@ its part name is `Syntax_Raku`.
         )
     )
 ```
+
+[RETURN](#TOP)
+
+<a name="DESCRIPTION"></a>
 
 # DESCRIPTION
 
@@ -72,7 +85,15 @@ MUON Raku-hosted artifact is `Muldis_Object_Notation_Raku`.
 
 See also <https://raku.org>.
 
+[RETURN](#TOP)
+
+<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
 
 ## Ignorance
 
@@ -84,6 +105,10 @@ Not permitted for an **Ignorance** is any of the following,
 to keep things more correct and simpler:
 
 * Any *undefined* value of some other type.
+
+[RETURN](#TOP)
+
+<a name="Boolean"></a>
 
 ## Boolean
 
@@ -100,6 +125,10 @@ to keep things more correct and simpler:
 
 * Any value of some other type such that a Raku operator like `?` or `so`
 would coerce it to a `Bool`.
+
+[RETURN](#TOP)
+
+<a name="Integer"></a>
 
 ## Integer
 
@@ -128,6 +157,10 @@ to keep things more correct and simpler:
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
+
+[RETURN](#TOP)
+
+<a name="Fraction"></a>
 
 ## Fraction
 
@@ -198,6 +231,10 @@ or of any other allomorphic class.
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
 
+[RETURN](#TOP)
+
+<a name="Bits"></a>
+
 ## Bits
 
 A **Bits** artifact is any of the following:
@@ -210,6 +247,10 @@ to prevent ambiguity and simplify things:
 
 * Any object of any Raku class that composes the Raku role `Blob`.
 This is because that would be interpreted as a **Blob** artifact.
+
+[RETURN](#TOP)
+
+<a name="Blob"></a>
 
 ## Blob
 
@@ -226,6 +267,10 @@ to prevent ambiguity and simplify things:
 * Any object of the Raku class `List` whose elements are **Integer** artifacts.
 This is because that would be interpreted as a **Lot** artifact all of whose
 members are any **Integer** artifacts.
+
+[RETURN](#TOP)
+
+<a name="Text---Attribute-Name"></a>
 
 ## Text / Attribute Name
 
@@ -254,6 +299,10 @@ if such a thing exists.
 * Any object of any of the Raku classes `IntStr` or `RatStr` or `NumStr`
 or of any other allomorphic class.
 
+[RETURN](#TOP)
+
+<a name="Nesting---Attribute-Name-List"></a>
+
 ## Nesting / Attribute Name List
 
 A **Nesting** artifact is any of the following:
@@ -277,7 +326,15 @@ A *SYS_Array_T* is any of the following:
 
 * Any *SYS_Array_A* such that each of its elements is any *SYS_Text*.
 
+[RETURN](#TOP)
+
+<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
 
 ## Duo
 
@@ -306,6 +363,10 @@ Not permitted for a *SYS_Duo_AA* is any of the following,
 to keep things more correct and simpler:
 
 * Any values or objects of N-ary collection types having exactly 2 elements.
+
+[RETURN](#TOP)
+
+<a name="Lot"></a>
 
 ## Lot
 
@@ -348,6 +409,10 @@ A *SYS_Array_A* is any of the following:
 Note that the Raku classes `Array` and `Slip` are subtypes of `List` and
 so their objects can be used anywhere `List` objects can be used.
 
+[RETURN](#TOP)
+
+<a name="Kit"></a>
+
 ## Kit
 
 A **Kit** artifact is any of the following:
@@ -385,6 +450,10 @@ A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
 
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
 ## Article / Labelled Tuple
 
 An **Article** artifact is any of the following:
@@ -393,6 +462,10 @@ An **Article** artifact is any of the following:
 and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
 its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
+
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
 
 ## Excuse
 
@@ -405,7 +478,15 @@ its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
 Note that an object of the Raku class `Failure` is a direct `Excuse` analogy.
 
+[RETURN](#TOP)
+
+<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
+
 # ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
+
+[RETURN](#TOP)
+
+<a name="Calendar-Duration"></a>
 
 ## Calendar Duration
 
@@ -413,11 +494,19 @@ A **Calendar Duration** artifact is additionally any of the following:
 
 * Any object of the Raku class `Duration`.
 
+[RETURN](#TOP)
+
+<a name="Calendar-Instant"></a>
+
 ## Calendar Instant
 
 A **Calendar Instant** artifact is additionally any of the following:
 
 * Any object of any of the Raku classes `Date`, `DateTime`, `Instant`.
+
+[RETURN](#TOP)
+
+<a name="Interval"></a>
 
 ## Interval
 
@@ -426,13 +515,25 @@ An **Interval** artifact is additionally any of the following:
 * Any object of the Raku class `Range`
 such that each of its `min` and `max` properties is any **Any** artifact.
 
+[RETURN](#TOP)
+
+<a name="SEE-ALSO"></a>
+
 # SEE ALSO
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="AUTHOR"></a>
+
 # AUTHOR
 
 Darren Duncan - darren@DarrenDuncan.net
+
+[RETURN](#TOP)
+
+<a name="LICENSE-AND-COPYRIGHT"></a>
 
 # LICENSE AND COPYRIGHT
 
@@ -443,9 +544,17 @@ MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
+[RETURN](#TOP)
+
+<a name="TRADEMARK-POLICY"></a>
+
 # TRADEMARK POLICY
 
 The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
+
+[RETURN](#TOP)
+
+<a name="ACKNOWLEDGEMENTS"></a>
 
 # ACKNOWLEDGEMENTS
 

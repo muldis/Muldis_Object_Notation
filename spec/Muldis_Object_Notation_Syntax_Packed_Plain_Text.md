@@ -1,3 +1,5 @@
+<a name="TOP"></a>
+
 # NAME
 
 Muldis Object Notation (MUON) - Source code and data interchange format
@@ -12,6 +14,13 @@ The fully-qualified name of this document is
 This artifact is part 6 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_Packed_Plain_Text`.
+
+# CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="SYNOPSIS"></a>
 
 # SYNOPSIS
 
@@ -53,6 +62,10 @@ once between all tuples.
                         D wSet M[T"+81.9072391679"]]
                 ]
 ```
+
+[RETURN](#TOP)
+
+<a name="DESCRIPTION"></a>
 
 # DESCRIPTION
 
@@ -103,12 +116,20 @@ context to interpret them with.  Filename extensions are more for the
 benefit of the operating system or command shell or users than for a MUON
 parser or generator, the latter just cares about the content of the file.
 
+[RETURN](#TOP)
+
+<a name="NORMALIZATION"></a>
+
 # NORMALIZATION
 
 The grammar comprising most of this document assumes that the MUON *parsing
 unit* it takes as input has already been through some basic normalization,
 which this section describes.  Said normalization is expected to be
 performed by a MUON parser natively as its first step.
+
+[RETURN](#TOP)
+
+<a name="UNIX-Shebang-Interpreter-Directive"></a>
 
 ## UNIX Shebang Interpreter Directive
 
@@ -135,6 +156,10 @@ It is mandatory for every MUON parser to support recognition of an optional
 for a *parsing unit* to either have or not have one, and any otherwise
 valid MUON following one is handled properly.
 
+[RETURN](#TOP)
+
+<a name="Script---Character-Encoding"></a>
+
 ## Script / Character Encoding
 
 The MUON parser proper operates logically in terms of the input *parsing
@@ -157,6 +182,10 @@ appearances of `\` are followed by a letter and represent themselves.
 Note that the use of `\NN` format may also be used in examples even where
 not required, as sometimes using it consistently actually aids readability.
 
+[RETURN](#TOP)
+
+<a name="Aggregate-Self-Synchronization-Mark"></a>
+
 ## Aggregate Self-Synchronization Mark
 
 It is mandatory for every MUON parser to recognize the simple aggregation
@@ -175,6 +204,10 @@ Examples:
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="COMMON-QUALITIES-OF-THE-GRAMMAR"></a>
+
 # COMMON QUALITIES OF THE GRAMMAR
 
 The syntax and intended interpretation of the grammar itself seen in this
@@ -190,6 +223,10 @@ See also the bundled actual Raku module
 ../hosts/Raku/lib/Muldis/Reference/Object_Notation_Packed_Plain_Text.rakumod)
 which has an executable copy of the grammar.
 
+[RETURN](#TOP)
+
+<a name="PARSING-UNIT"></a>
+
 # PARSING UNIT
 
 A MUON *parsing unit* is represented in the grammar by
@@ -203,6 +240,10 @@ Grammar:
         <sp>? ~ <sp>? <Any>
     }
 ```
+
+[RETURN](#TOP)
+
+<a name="DIVIDING-SPACE"></a>
 
 # DIVIDING SPACE
 
@@ -249,7 +290,15 @@ separated by dividing space.  This segmenting ability is provided to
 support code that contains very long numeric or stringy literals while
 still being well formatted (no extra long lines).
 
+[RETURN](#TOP)
+
+<a name="CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
+
 # CRITICAL ALGEBRAIC DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Any---Universal-Type-Possrep"></a>
 
 ## Any / Universal Type Possrep
 
@@ -286,11 +335,23 @@ Grammar:
     }
 ```
 
+[RETURN](#TOP)
+
+<a name="None---Empty-Type-Possrep"></a>
+
 ## None / Empty Type Possrep
 
 A **None** artifact doesn't exist, but is mentioned for parity.
 
+[RETURN](#TOP)
+
+<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
 
 ## Ignorance
 
@@ -317,6 +378,10 @@ Examples:
     `Ignorance singleton (1 octet).`
     _
 ```
+
+[RETURN](#TOP)
+
+<a name="Boolean"></a>
 
 ## Boolean
 
@@ -359,6 +424,10 @@ Examples:
     `Boolean true (1 octet).`
     ?
 ```
+
+[RETURN](#TOP)
+
+<a name="Integer"></a>
 
 ## Integer
 
@@ -665,6 +734,10 @@ Examples:
     g\DE\AD\BE\EF
 ```
 
+[RETURN](#TOP)
+
+<a name="Fraction"></a>
+
 ## Fraction
 
 A **Fraction** artifact has the dedicated concrete literal format
@@ -844,6 +917,10 @@ Examples:
     /i\00\00\DE\AD\BE\EF\FA\CEg\00\01\00\00
 ```
 
+[RETURN](#TOP)
+
+<a name="Bits"></a>
+
 ## Bits
 
 A **Bits** artifact has the dedicated concrete literal format
@@ -946,6 +1023,10 @@ Examples:
     `The 20-bit string 0bxA705E (7 octets).`
     S4"\A7\05\E0"
 ```
+
+[RETURN](#TOP)
+
+<a name="Blob"></a>
 
 ## Blob
 
@@ -1113,6 +1194,10 @@ Examples:
     B"\2E\8B"
 ```
 
+[RETURN](#TOP)
+
+<a name="Text---Attribute-Name"></a>
+
 ## Text / Attribute Name
 
 A **Text** artifact has the dedicated concrete literal format
@@ -1277,6 +1362,10 @@ Examples:
     T"First Name"
 ```
 
+[RETURN](#TOP)
+
+<a name="Nesting---Attribute-Name-List"></a>
+
 ## Nesting / Attribute Name List
 
 A **Nesting** artifact has the dedicated concrete literal format
@@ -1353,7 +1442,15 @@ Examples:
     N[zthe_dbystatsT"samples by order"]
 ```
 
+[RETURN](#TOP)
+
+<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
 
 ## Duo
 
@@ -1406,6 +1503,10 @@ Examples:
     `Another Duo (5 octets); also known as (x:y).`
     Duxuy
 ```
+
+[RETURN](#TOP)
+
+<a name="Lot"></a>
 
 ## Lot
 
@@ -1463,6 +1564,10 @@ Examples:
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Kit"></a>
+
 ## Kit
 
 A **Kit** artifact has the dedicated concrete literal format
@@ -1519,6 +1624,10 @@ Examples:
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
 ## Article / Labelled Tuple
 
 A **Article** artifact has the dedicated concrete literal format
@@ -1547,6 +1656,10 @@ Examples:
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
+
 ## Excuse
 
 A **Excuse** artifact has the dedicated concrete literal format
@@ -1564,6 +1677,10 @@ Grammar:
 Examples:
 
 *TODO.*
+
+[RETURN](#TOP)
+
+<a name="GLOSSARY-OF-OCTETS"></a>
 
 # GLOSSARY OF OCTETS
 
@@ -1696,13 +1813,25 @@ usually in the context of their being the first octet of an artifact.
     ----+-----+-------------+----------------------------------------------
 ```
 
+[RETURN](#TOP)
+
+<a name="SEE-ALSO"></a>
+
 # SEE ALSO
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="AUTHOR"></a>
+
 # AUTHOR
 
 Darren Duncan - darren@DarrenDuncan.net
+
+[RETURN](#TOP)
+
+<a name="LICENSE-AND-COPYRIGHT"></a>
 
 # LICENSE AND COPYRIGHT
 
@@ -1713,9 +1842,17 @@ MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
+[RETURN](#TOP)
+
+<a name="TRADEMARK-POLICY"></a>
+
 # TRADEMARK POLICY
 
 The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
+
+[RETURN](#TOP)
+
+<a name="ACKNOWLEDGEMENTS"></a>
 
 # ACKNOWLEDGEMENTS
 

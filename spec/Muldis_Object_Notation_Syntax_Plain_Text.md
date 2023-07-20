@@ -1,3 +1,5 @@
+<a name="TOP"></a>
+
 # NAME
 
 Muldis Object Notation (MUON) - Source code and data interchange format
@@ -12,6 +14,13 @@ The fully-qualified name of this document is
 This artifact is part 5 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_Plain_Text`.
+
+# CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="SYNOPSIS"></a>
 
 # SYNOPSIS
 
@@ -53,6 +62,10 @@ once between all tuples.
     ))
 ```
 
+[RETURN](#TOP)
+
+<a name="DESCRIPTION"></a>
+
 # DESCRIPTION
 
 This document consists of multiple parts; for a directory to all of the
@@ -93,12 +106,20 @@ context to interpret them with.  Filename extensions are more for the
 benefit of the operating system or command shell or users than for a MUON
 parser or generator, the latter just cares about the content of the file.
 
+[RETURN](#TOP)
+
+<a name="NORMALIZATION"></a>
+
 # NORMALIZATION
 
 The grammar comprising most of this document assumes that the MUON *parsing
 unit* it takes as input has already been through some basic normalization,
 which this section describes.  Said normalization is expected to be
 performed by a MUON parser natively as its first step.
+
+[RETURN](#TOP)
+
+<a name="UNIX-Shebang-Interpreter-Directive"></a>
 
 ## UNIX Shebang Interpreter Directive
 
@@ -124,6 +145,10 @@ It is mandatory for every MUON parser to support recognition of an optional
 *shebang line* and to handle it gracefully, such that it is not an error
 for a *parsing unit* to either have or not have one, and any otherwise
 valid MUON following one is handled properly.
+
+[RETURN](#TOP)
+
+<a name="Script---Character-Encoding"></a>
 
 ## Script / Character Encoding
 
@@ -198,6 +223,10 @@ Strictly speaking the door is not closed for a future version of the MUON
 specification to support character encoding declarations, or for a future
 MUON parser to natively support other character encoding formats, but in
 the foreseeable future, forbidding this best satisfies YAGNI and KISS.
+
+[RETURN](#TOP)
+
+<a name="Aggregate-Self-Synchronization-Mark"></a>
 
 ## Aggregate Self-Synchronization Mark
 
@@ -294,6 +323,10 @@ Examples:
     "The fifth artifact"
 ```
 
+[RETURN](#TOP)
+
+<a name="COMMON-QUALITIES-OF-THE-GRAMMAR"></a>
+
 # COMMON QUALITIES OF THE GRAMMAR
 
 The syntax and intended interpretation of the grammar itself seen in this
@@ -309,6 +342,10 @@ See also the bundled actual Raku module
 ../hosts/Raku/lib/Muldis/Reference/Object_Notation_Plain_Text.rakumod)
 which has an executable copy of the grammar.
 
+[RETURN](#TOP)
+
+<a name="PARSING-UNIT"></a>
+
 # PARSING UNIT
 
 A MUON *parsing unit* is represented in the grammar by
@@ -322,6 +359,10 @@ Grammar:
         <sp>? ~ <sp>? <Any>
     }
 ```
+
+[RETURN](#TOP)
+
+<a name="DIVIDING-SPACE"></a>
 
 # DIVIDING SPACE
 
@@ -371,7 +412,15 @@ still being well formatted (no extra long lines).
 See the grammar sections for `<Integer>`, `<Fraction>`, `<Bits>`, `<Blob>`,
 `<Text>` for more details on how this specifically applies to them.
 
+[RETURN](#TOP)
+
+<a name="CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
+
 # CRITICAL ALGEBRAIC DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Any---Universal-Type-Possrep"></a>
 
 ## Any / Universal Type Possrep
 
@@ -417,11 +466,23 @@ A `<generic_group>` is an optional syntactic construct to force a
 particular parsing precedence or otherwise help illustrate an existing one;
 it is not actually needed by MUON itself but can assist a superset grammar.
 
+[RETURN](#TOP)
+
+<a name="None---Empty-Type-Possrep"></a>
+
 ## None / Empty Type Possrep
 
 A **None** artifact doesn't exist, but is mentioned for parity.
 
+[RETURN](#TOP)
+
+<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
 
 ## Ignorance
 
@@ -442,6 +503,10 @@ Examples:
 ```
     0iIGNORANCE
 ```
+
+[RETURN](#TOP)
+
+<a name="Boolean"></a>
 
 ## Boolean
 
@@ -464,6 +529,10 @@ Examples:
 
     0bTRUE
 ```
+
+[RETURN](#TOP)
+
+<a name="Integer"></a>
 
 ## Integer
 
@@ -530,6 +599,10 @@ Examples:
     `Base 2.`
     0b11001001
 ```
+
+[RETURN](#TOP)
+
+<a name="Fraction"></a>
 
 ## Fraction
 
@@ -701,6 +774,10 @@ Examples:
     0b1.011101101*0b10^-0b11011
 ```
 
+[RETURN](#TOP)
+
+<a name="Bits"></a>
+
 ## Bits
 
 A **Bits** artifact has the dedicated concrete literal format
@@ -737,6 +814,10 @@ Examples:
 
     0bxA705E
 ```
+
+[RETURN](#TOP)
+
+<a name="Blob"></a>
 
 ## Blob
 
@@ -783,6 +864,10 @@ Examples:
         dWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRo
         ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=
 ```
+
+[RETURN](#TOP)
+
+<a name="Text---Attribute-Name"></a>
 
 ## Text / Attribute Name
 
@@ -924,6 +1009,10 @@ Examples:
         "close book. sleep? what's that?\n"
 ```
 
+[RETURN](#TOP)
+
+<a name="Nesting---Attribute-Name-List"></a>
+
 ## Nesting / Attribute Name List
 
 A **Nesting** artifact has the dedicated concrete literal format
@@ -965,7 +1054,15 @@ Examples:
     the_db::stats::"samples by order"
 ```
 
+[RETURN](#TOP)
+
+<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
 
 ## Duo
 
@@ -1018,6 +1115,10 @@ Examples:
     `Same thing.`
     (y<-x)
 ```
+
+[RETURN](#TOP)
+
+<a name="Lot"></a>
 
 ## Lot
 
@@ -1073,6 +1174,10 @@ Examples:
         Spades : 20,
     ]
 ```
+
+[RETURN](#TOP)
+
+<a name="Kit"></a>
 
 ## Kit
 
@@ -1151,6 +1256,10 @@ Examples:
     {"サンプル": "https://example.com"}
 ```
 
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
 ## Article / Labelled Tuple
 
 A **Article** artifact has the dedicated concrete literal format
@@ -1200,6 +1309,10 @@ Examples:
     Negative_Zero*{}
 ```
 
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
+
 ## Excuse
 
 A **Excuse** artifact has the dedicated concrete literal format
@@ -1224,6 +1337,10 @@ Examples:
     No_Such_Attr_Name!{}
 ```
 
+[RETURN](#TOP)
+
+<a name="RESERVED-UNUSED-SYNTAX"></a>
+
 # RESERVED UNUSED SYNTAX
 
 Muldis Object Notation reserves the use of certain syntaxes for various
@@ -1232,6 +1349,10 @@ prevent other superset grammars of MUON from defining their own meanings,
 regardless of whether MUON might use them in the future itself.  In other
 cases it doesn't use those syntaxes expressly in order to empower superset
 grammars to define their own meanings.
+
+[RETURN](#TOP)
+
+<a name="Possrep-Heuristics"></a>
 
 ## Possrep Heuristics
 
@@ -1259,6 +1380,10 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Article         | * between a Nesting|Text and a Kit in that order
     Excuse          | ! between a Nesting|Text and a Kit in that order
 ```
+
+[RETURN](#TOP)
+
+<a name="Features-Reserved-For-Superset-Grammars"></a>
 
 ## Features Reserved For Superset Grammars
 
@@ -1298,6 +1423,10 @@ MUON does not use the semicolon `;` for anything, so a superset grammar can
 use it for things like separating statements and thus disambiguating its
 own uses of bracketing characters to define statement or expression groups.
 
+[RETURN](#TOP)
+
+<a name="Features-Shared-With-Superset-Grammars"></a>
+
 ## Features Shared With Superset Grammars
 
 MUON declares that all alpha barewords are **Text** literals,
@@ -1314,6 +1443,10 @@ operator or routine invocations or to refer to variable names or whatever;
 in that case, any contexts that could be interpreted either as a **Text**
 literal or as something else will be interpreted as the latter, and one can
 use the quoted form of **Text** to force that meaning.
+
+[RETURN](#TOP)
+
+<a name="SYNTACTIC-MNEMONICS"></a>
 
 # SYNTACTIC MNEMONICS
 
@@ -1408,6 +1541,10 @@ that means they are used either in pairs or as contiguous sequences.
 Some of the above mnemonics also carry additional meanings in a wider
 **Muldis Data Language** context, but those are not described here.
 
+[RETURN](#TOP)
+
+<a name="NESTING-PRECEDENCE-RULES"></a>
+
 # NESTING PRECEDENCE RULES
 
 Muldis Object Notation is explicitly designed to avoid parsing complexities
@@ -1421,6 +1558,10 @@ Secondarily this is due to the static MUON syntax having a small count of
 basic rules so understanding how to parse it shouldn't take much effort.
 The rest of this document section enumerates or gives examples of those,
 generally arranged from tightest precedence at the top to loosest at the bottom.
+
+[RETURN](#TOP)
+
+<a name="Quoted-Strings"></a>
 
 ## Quoted Strings
 
@@ -1447,6 +1588,10 @@ outside of a `<quoted_sp_comment_str>`.  A MUON parser would logically
 isolate all `<quoted_text>` as their own tokens second, and then the
 remainder of the grammar would apply outside of those tokens.
 
+[RETURN](#TOP)
+
+<a name="Symbolic-Delimiters-Separators-Indicators"></a>
+
 ## Symbolic Delimiters/Separators/Indicators
 
 Anywhere outside of a quoted string that these specific symbolic sequences
@@ -1469,6 +1614,10 @@ when any of these sequences overlap, longest token always wins:
     *
     !
 ```
+
+[RETURN](#TOP)
+
+<a name="Barewords-and-Numeric-Format-Literals"></a>
 
 ## Barewords and Numeric-Format Literals
 
@@ -1495,13 +1644,25 @@ of MUON's will also keep this precedence over any actual prefix/infix/etc
 operators they may have, which in some case may require `<generic_group>`
 parenthesis to disambiguate that they want those operator calls instead.
 
+[RETURN](#TOP)
+
+<a name="SEE-ALSO"></a>
+
 # SEE ALSO
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="AUTHOR"></a>
+
 # AUTHOR
 
 Darren Duncan - darren@DarrenDuncan.net
+
+[RETURN](#TOP)
+
+<a name="LICENSE-AND-COPYRIGHT"></a>
 
 # LICENSE AND COPYRIGHT
 
@@ -1512,9 +1673,17 @@ MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
+[RETURN](#TOP)
+
+<a name="TRADEMARK-POLICY"></a>
+
 # TRADEMARK POLICY
 
 The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
+
+[RETURN](#TOP)
+
+<a name="ACKNOWLEDGEMENTS"></a>
 
 # ACKNOWLEDGEMENTS
 

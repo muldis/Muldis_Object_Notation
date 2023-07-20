@@ -1,3 +1,5 @@
+<a name="TOP"></a>
+
 # NAME
 
 Muldis Object Notation (MUON) - Source code and data interchange format
@@ -12,6 +14,13 @@ The fully-qualified name of this document is
 This artifact is part 4 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_Abstract`.
+
+# CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="SYNOPSIS"></a>
 
 # SYNOPSIS
 
@@ -30,6 +39,10 @@ its part name is `Syntax_Abstract`.
     ))
 ```
 
+[RETURN](#TOP)
+
+<a name="DESCRIPTION"></a>
+
 # DESCRIPTION
 
 This document consists of multiple parts; for a directory to all of the
@@ -40,6 +53,10 @@ fundamental abstract syntax of MUON, which expresses a MUON artifact in
 terms of a few kinds of simple generic data structures such as integers and
 ordered lists.  This abstract syntax is what all concrete MUON syntaxes are
 designed to satisfy the requirements of and map with.
+
+[RETURN](#TOP)
+
+<a name="OVERVIEW-OF-ABSTRACT-DATA-TYPE-POSSREPS"></a>
 
 # OVERVIEW OF ABSTRACT DATA TYPE POSSREPS
 
@@ -67,13 +84,25 @@ This document part provides illustrative example code in the concrete
 [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 but expressly limits itself to the *primary possrep* literal formats.
 
+[RETURN](#TOP)
+
+<a name="CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
+
 # CRITICAL ALGEBRAIC DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Any---Universal-Type-Possrep"></a>
 
 ## Any / Universal Type Possrep
 
 An **Any** artifact is an artifact that qualifies as any of the other MUON
 artifacts, since the **Any** possrep is characterized by the union of all
 other possreps.
+
+[RETURN](#TOP)
+
+<a name="None---Empty-Type-Possrep"></a>
 
 ## None / Empty Type Possrep
 
@@ -82,7 +111,15 @@ artifacts, since the **None** possrep is characterized by the intersection
 of all other possreps.  That is, there are no **None** artifacts at all,
 and this possrep is just mentioned as the logical complement of **Any**.
 
+[RETURN](#TOP)
+
+<a name="FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
+
 # FOLDING ALGEBRAIC DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Fractional"></a>
 
 ## Fractional
 
@@ -93,6 +130,10 @@ any **Fraction** artifact; when an **Integer** artifact is instead given,
 then the proper interpretation is as if a **Fraction** artifact was
 actually given whose numeric value was the same as that **Integer**.
 
+[RETURN](#TOP)
+
+<a name="Nesty"></a>
+
 ## Nesty
 
 A **Nesty** artifact is an artifact that qualifies as either
@@ -101,6 +142,10 @@ A context explicitly requiring any **Nesty** artifact implicitly requires
 any **Nesting** artifact; when a **Text** artifact is instead given,
 then the proper interpretation is as if a single-element **Nesting** artifact was
 actually given whose element was the same as that **Text**.
+
+[RETURN](#TOP)
+
+<a name="Arrayish"></a>
 
 ## Arrayish
 
@@ -111,6 +156,10 @@ any **Array** artifact; when a **Lot** artifact is instead given,
 then the proper interpretation is as if a **Array** artifact was
 actually given whose subject was that **Lot**.
 
+[RETURN](#TOP)
+
+<a name="Setty"></a>
+
 ## Setty
 
 A **Setty** artifact is an artifact that qualifies as either
@@ -119,6 +168,10 @@ A context explicitly requiring any **Setty** artifact implicitly requires
 any **Set** artifact; when a **Lot** artifact is instead given,
 then the proper interpretation is as if a **Set** artifact was
 actually given whose subject was that **Lot**.
+
+[RETURN](#TOP)
+
+<a name="Baggy"></a>
 
 ## Baggy
 
@@ -129,6 +182,10 @@ any **Bag** artifact; when a **Lot** artifact is instead given,
 then the proper interpretation is as if a **Bag** artifact was
 actually given whose subject was that **Lot**.
 
+[RETURN](#TOP)
+
+<a name="Heady"></a>
+
 ## Heady
 
 A **Heady** artifact is an artifact that qualifies as either
@@ -137,6 +194,10 @@ A context explicitly requiring any **Heady** artifact implicitly requires
 any **Heading** artifact; when a **Kit** artifact is instead given,
 then the proper interpretation is as if a **Heading** artifact was
 actually given whose subject was that **Kit**.
+
+[RETURN](#TOP)
+
+<a name="Renamey"></a>
 
 ## Renamey
 
@@ -147,6 +208,10 @@ any **Renaming** artifact; when a **Kit** artifact is instead given,
 then the proper interpretation is as if a **Renaming** artifact was
 actually given whose subject was that **Kit**.
 
+[RETURN](#TOP)
+
+<a name="Tupley"></a>
+
 ## Tupley
 
 A **Tupley** artifact is an artifact that qualifies as either
@@ -156,7 +221,15 @@ any **Tuple** artifact; when a **Kit** artifact is instead given,
 then the proper interpretation is as if a **Tuple** artifact was
 actually given whose subject was that **Kit**.
 
+[RETURN](#TOP)
+
+<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
 
 ## Ignorance
 
@@ -167,6 +240,10 @@ Examples:
 ```
     0iIGNORANCE
 ```
+
+[RETURN](#TOP)
+
+<a name="Boolean"></a>
 
 ## Boolean
 
@@ -179,6 +256,10 @@ Examples:
 
     0bTRUE
 ```
+
+[RETURN](#TOP)
+
+<a name="Integer"></a>
 
 ## Integer
 
@@ -216,6 +297,10 @@ Examples:
     `Base 2.`
     0b11001001
 ```
+
+[RETURN](#TOP)
+
+<a name="Fraction"></a>
 
 ## Fraction
 
@@ -281,6 +366,10 @@ Examples:
     0b1.011101101*0b10^-0b11011
 ```
 
+[RETURN](#TOP)
+
+<a name="Bits"></a>
+
 ## Bits
 
 A **Bits** artifact is an arbitrarily-large ordered sequence of *bits* where each
@@ -301,6 +390,10 @@ Examples:
 
     0bxA705E
 ```
+
+[RETURN](#TOP)
+
+<a name="Blob"></a>
 
 ## Blob
 
@@ -328,6 +421,10 @@ Examples:
         dWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRo
         ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=
 ```
+
+[RETURN](#TOP)
+
+<a name="Text---Attribute-Name"></a>
 
 ## Text / Attribute Name
 
@@ -374,6 +471,10 @@ Examples:
         "close book. sleep? what's that?\n"
 ```
 
+[RETURN](#TOP)
+
+<a name="Nesting---Attribute-Name-List"></a>
+
 ## Nesting / Attribute Name List
 
 A **Nesting** artifact is an arbitrarily-large ordered sequence of
@@ -395,7 +496,15 @@ Examples:
     the_db::stats::"samples by order"
 ```
 
+[RETURN](#TOP)
+
+<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
 
 ## Duo
 
@@ -425,6 +534,10 @@ Examples:
     (y<-x)
 ```
 
+[RETURN](#TOP)
+
+<a name="Lot"></a>
+
 ## Lot
 
 A **Lot** artifact is an arbitrarily-large ordered collection of elements
@@ -450,6 +563,10 @@ Examples:
         Spades : 20,
     ]
 ```
+
+[RETURN](#TOP)
+
+<a name="Kit"></a>
 
 ## Kit
 
@@ -495,6 +612,10 @@ Examples:
     {"サンプル": "https://example.com"}
 ```
 
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
 ## Article / Labelled Tuple
 
 An **Article** artifact is an ordered collection having exactly 2 elements
@@ -526,6 +647,10 @@ Examples:
     Negative_Zero*{}
 ```
 
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
+
 ## Excuse
 
 An **Excuse** artifact is an ordered collection having exactly 2 elements
@@ -541,6 +666,10 @@ Examples:
 
     No_Such_Attr_Name!{}
 ```
+
+[RETURN](#TOP)
+
+<a name="COMMON-QUALITIES-OF-ABSTRACT-SECONDARY-DATA-TYPE-POSSREPS"></a>
 
 # COMMON QUALITIES OF ABSTRACT SECONDARY DATA TYPE POSSREPS
 
@@ -562,7 +691,15 @@ The general case of every MUON possrep *subject* is, loosely speaking, an
 **Any** artifact, though strictly speaking, the validity of a *subject* is
 constrained to those enumerated by the MUON possreps.
 
+[RETURN](#TOP)
+
+<a name="LESS-COLLECTIVE-SECONDARY-DATA-TYPE-POSSREPS"></a>
+
 # LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Calendar-Time"></a>
 
 ## Calendar Time
 
@@ -609,6 +746,10 @@ Examples:
     (Calendar_Time:{s:5923.21124603})
 ```
 
+[RETURN](#TOP)
+
+<a name="Calendar-Duration"></a>
+
 ## Calendar Duration
 
 A **Calendar Duration** artifact has the predicate `Calendar_Duration`.
@@ -626,6 +767,10 @@ Examples:
     `Subtraction of 22 hours.`
     (Calendar_Duration:{y:0,m:0,d:0,h-22,i:0,s:0})
 ```
+
+[RETURN](#TOP)
+
+<a name="Calendar-Instant"></a>
 
 ## Calendar Instant
 
@@ -669,6 +814,10 @@ Examples:
     (Calendar_Instant:({y:2001,m:4,d:16,h:20,i:1,s:44}:"PST"))
 ```
 
+[RETURN](#TOP)
+
+<a name="Geographic-Point"></a>
+
 ## Geographic Point
 
 A **Geographic Point** artifact has the predicate `Geographic_Point`.
@@ -702,7 +851,15 @@ Examples:
     (Geographic_Point:{">":-94.746094,"^":37.483577})
 ```
 
+[RETURN](#TOP)
+
+<a name="MORE-COLLECTIVE-SECONDARY-DATA-TYPE-POSSREPS"></a>
+
 # MORE-COLLECTIVE SECONDARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Array"></a>
 
 ## Array
 
@@ -750,6 +907,10 @@ Examples:
     ])
 ```
 
+[RETURN](#TOP)
+
+<a name="Set"></a>
+
 ## Set
 
 A **Set** artifact has the predicate `Set`.
@@ -796,6 +957,10 @@ Examples:
     ])
 ```
 
+[RETURN](#TOP)
+
+<a name="Bag---Multiset"></a>
+
 ## Bag / Multiset
 
 A **Bag** artifact has the predicate `Bag`.
@@ -833,6 +998,10 @@ Examples:
         Baz : 1,
     ])
 ```
+
+[RETURN](#TOP)
+
+<a name="Mix"></a>
 
 ## Mix
 
@@ -882,6 +1051,10 @@ Examples:
         Carrots: +0.2,
     ])
 ```
+
+[RETURN](#TOP)
+
+<a name="Interval"></a>
 
 ## Interval
 
@@ -951,6 +1124,10 @@ Examples:
     (Interval:"*")
 ```
 
+[RETURN](#TOP)
+
+<a name="Interval-Set"></a>
+
 ## Interval Set
 
 An **Interval Set** artifact has the predicate `Interval_Set`.
@@ -1002,6 +1179,10 @@ Examples:
     ])
 ```
 
+[RETURN](#TOP)
+
+<a name="Interval-Bag"></a>
+
 ## Interval Bag
 
 An **Interval Bag** artifact has the predicate `Interval_Bag`.
@@ -1037,6 +1218,10 @@ Examples:
     ])
 ```
 
+[RETURN](#TOP)
+
+<a name="Pair"></a>
+
 ## Pair
 
 A **Pair** artifact has the predicate `Pair`.
@@ -1064,6 +1249,10 @@ Examples:
     `Same thing.`
     (Pair:(y<-x))
 ```
+
+[RETURN](#TOP)
+
+<a name="Heading---Attribute-Name-Set"></a>
 
 ## Heading / Attribute Name Set
 
@@ -1109,6 +1298,10 @@ Examples:
     `A non-Latin name.`
     (Heading:{"サンプル"})
 ```
+
+[RETURN](#TOP)
+
+<a name="Renaming---Attribute-Name-Map"></a>
 
 ## Renaming / Attribute Name Map
 
@@ -1165,6 +1358,10 @@ Examples:
     (Renaming:{"First Name"->"Last Name"})
 ```
 
+[RETURN](#TOP)
+
+<a name="Tuple---Attribute-Set"></a>
+
 ## Tuple / Attribute Set
 
 A **Tuple** artifact has the predicate `Tuple`.
@@ -1214,6 +1411,10 @@ Examples:
     ))
 ```
 
+[RETURN](#TOP)
+
+<a name="Tuple-Array"></a>
+
 ## Tuple Array
 
 A **Tuple Array** artifact has the predicate `Tuple_Array`.
@@ -1251,6 +1452,10 @@ Examples:
         {Amy     , 14},
     ])
 ```
+
+[RETURN](#TOP)
+
+<a name="Relation---Tuple-Set"></a>
 
 ## Relation / Tuple Set
 
@@ -1345,6 +1550,10 @@ Examples:
     ))
 ```
 
+[RETURN](#TOP)
+
+<a name="Tuple-Bag"></a>
+
 ## Tuple Bag
 
 A **Tuple Bag** artifact has the predicate `Tuple_Bag`.
@@ -1382,9 +1591,17 @@ Examples:
     ])
 ```
 
+[RETURN](#TOP)
+
+<a name="SIGNATURE-DECLARING-SECONDARY-DATA-TYPE-POSSREPS"></a>
+
 # SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS
 
 *This whole section is quite rough and will be rewritten at some future time.*
+
+[RETURN](#TOP)
+
+<a name="Syntax"></a>
 
 ## Syntax
 
@@ -1409,6 +1626,10 @@ Examples:
         42
     ))
 ```
+
+[RETURN](#TOP)
+
+<a name="Model"></a>
 
 ## Model
 
@@ -1446,17 +1667,33 @@ Examples:
     ))
 ```
 
+[RETURN](#TOP)
+
+<a name="SOURCE-CODE-DEFINING-SECONDARY-DATA-TYPE-POSSREPS"></a>
+
 # SOURCE CODE DEFINING SECONDARY DATA TYPE POSSREPS
 
 *None yet.*
+
+[RETURN](#TOP)
+
+<a name="SEE-ALSO"></a>
 
 # SEE ALSO
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="AUTHOR"></a>
+
 # AUTHOR
 
 Darren Duncan - darren@DarrenDuncan.net
+
+[RETURN](#TOP)
+
+<a name="LICENSE-AND-COPYRIGHT"></a>
 
 # LICENSE AND COPYRIGHT
 
@@ -1467,9 +1704,17 @@ MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
+[RETURN](#TOP)
+
+<a name="TRADEMARK-POLICY"></a>
+
 # TRADEMARK POLICY
 
 The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
+
+[RETURN](#TOP)
+
+<a name="ACKNOWLEDGEMENTS"></a>
 
 # ACKNOWLEDGEMENTS
 

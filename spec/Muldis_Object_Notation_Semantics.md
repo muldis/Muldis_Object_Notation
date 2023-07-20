@@ -1,3 +1,5 @@
+<a name="TOP"></a>
+
 # NAME
 
 Muldis Object Notation (MUON) - Source code and data interchange format
@@ -13,6 +15,13 @@ This artifact is part 2 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Semantics`.
 
+# CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="DESCRIPTION"></a>
+
 # DESCRIPTION
 
 This document consists of multiple parts; for a directory to all of the
@@ -20,6 +29,10 @@ parts, see [Overview](Muldis_Object_Notation.md).
 
 This part of the **Muldis Object Notation** document specifies the
 general semantics of MUON that apply in common to all of its syntaxes.
+
+[RETURN](#TOP)
+
+<a name="OVERVIEW-OF-DATA-TYPE-POSSREPS"></a>
 
 # OVERVIEW OF DATA TYPE POSSREPS
 
@@ -164,7 +177,15 @@ code and are not for defining regular data:
 
 *More secondary possreps will be added corresponding to program source code.*
 
+[RETURN](#TOP)
+
+<a name="CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
+
 # CRITICAL ALGEBRAIC DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Any---Universal-Type-Possrep"></a>
 
 ## Any / Universal Type Possrep
 
@@ -176,6 +197,10 @@ regardless of the data model.  When a syntax uses **Any** somewhere,
 typically as an element of a generic collection, it means that potentially
 any other possrep may be used there.
 
+[RETURN](#TOP)
+
+<a name="None---Empty-Type-Possrep"></a>
+
 ## None / Empty Type Possrep
 
 The **None** possrep corresponds to the *empty type*, which is the minimal
@@ -185,7 +210,15 @@ the intersection of all other possreps.  It explicitly corresponds to a
 data model.  No syntax uses **None** at all, it is just mentioned here as
 the logical complement of **Any**.
 
+[RETURN](#TOP)
+
+<a name="FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
+
 # FOLDING ALGEBRAIC DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Fractional"></a>
 
 ## Fractional
 
@@ -194,6 +227,10 @@ possreps.  It is used where a context may conceptually require a **Fraction**
 but it would also accept an **Integer** that would be interpreted as the
 **Fraction** artifact with the same numeric value.
 
+[RETURN](#TOP)
+
+<a name="Nesty"></a>
+
 ## Nesty
 
 The **Nesty** possrep is the union of the **Nesting** and **Text**
@@ -201,11 +238,19 @@ possreps.  It is used where a context may conceptually require a **Nesting**
 but it would also accept a **Text** that would be interpreted as the
 single-element **Nesting** artifact whose element is that **Text**.
 
+[RETURN](#TOP)
+
+<a name="Arrayish"></a>
+
 ## Arrayish
 
 The **Arrayish** possrep is the union of the **Array** and **Lot**
 possreps.  It is used where a context may conceptually require an **Array**
 but it would also accept a **Lot** that would be interpreted as the former.
+
+[RETURN](#TOP)
+
+<a name="Setty"></a>
 
 ## Setty
 
@@ -213,11 +258,19 @@ The **Setty** possrep is the union of the **Set** and **Lot**
 possreps.  It is used where a context may conceptually require a **Set**
 but it would also accept a **Lot** that would be interpreted as the former.
 
+[RETURN](#TOP)
+
+<a name="Baggy"></a>
+
 ## Baggy
 
 The **Baggy** possrep is the union of the **Bag** and **Lot**
 possreps.  It is used where a context may conceptually require a **Bag**
 but it would also accept a **Lot** that would be interpreted as the former.
+
+[RETURN](#TOP)
+
+<a name="Heady"></a>
 
 ## Heady
 
@@ -225,11 +278,19 @@ The **Heady** possrep is the union of the **Heading** and **Kit**
 possreps.  It is used where a context may conceptually require a **Heading**
 but it would also accept a **Kit** that would be interpreted as the former.
 
+[RETURN](#TOP)
+
+<a name="Renamey"></a>
+
 ## Renamey
 
 The **Renamey** possrep is the union of the **Renaming** and **Kit**
 possreps.  It is used where a context may conceptually require a **Renaming**
 but it would also accept a **Kit** that would be interpreted as the former.
+
+[RETURN](#TOP)
+
+<a name="Tupley"></a>
 
 ## Tupley
 
@@ -237,7 +298,15 @@ The **Tupley** possrep is the union of the **Tuple** and **Kit**
 possreps.  It is used where a context may conceptually require a **Tuple**
 but it would also accept a **Kit** that would be interpreted as the former.
 
+[RETURN](#TOP)
+
+<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
 
 ## Ignorance
 
@@ -267,10 +336,18 @@ dialect of SQL.  Whereas, for external data models that distinguish the
 reasons for why a regular value may be missing, **Ignorance** should NOT be
 used and instead other more applicable **Excuse** values should instead.
 
+[RETURN](#TOP)
+
+<a name="Boolean"></a>
+
 ## Boolean
 
 A **Boolean** value is a general purpose 2-valued logic boolean or *truth
 value*, or specifically it is one of the 2 values *false* and *true*.
+
+[RETURN](#TOP)
+
+<a name="Integer"></a>
 
 ## Integer
 
@@ -278,6 +355,10 @@ An **Integer** value is a general purpose exact integral number of any
 magnitude, which explicitly does not represent any kind of
 thing in particular, neither cardinal nor ordinal nor nominal.
 It has no minimum or maximum value.
+
+[RETURN](#TOP)
+
+<a name="Fraction"></a>
 
 ## Fraction
 
@@ -312,17 +393,29 @@ of the numerator/denominator pair.  Examples of *significand* are literals
 with radix points like `3.14` and host language values that are already the
 general case of a rational.
 
+[RETURN](#TOP)
+
+<a name="Bits"></a>
+
 ## Bits
 
 A **Bits** value is characterized by an arbitrarily-large ordered sequence of
 *bits* where each bit is represented by an **Integer** in the set `0..1`,
 which explicitly does not represent any kind of thing in particular.
 
+[RETURN](#TOP)
+
+<a name="Blob"></a>
+
 ## Blob
 
 A **Blob** value is characterized by an arbitrarily-large ordered sequence of
 *octets* where each octet is represented by an **Integer** in the set `0..255`,
 which explicitly does not represent any kind of thing in particular.
+
+[RETURN](#TOP)
+
+<a name="Text---Attribute-Name"></a>
 
 ## Text / Attribute Name
 
@@ -346,6 +439,10 @@ to integers in the set **[0xD800..0xDFFF]**.  MUON forbids the use of any
 such "character strings" using the **Text** possrep.  However, such data can
 still be conveyed using other means such as MUON's **Array**+**Integer**.
 
+[RETURN](#TOP)
+
+<a name="Nesting---Attribute-Name-List"></a>
+
 ## Nesting / Attribute Name List
 
 A **Nesting** value is characterized by an arbitrarily-large ordered
@@ -353,7 +450,15 @@ sequence of *attribute names* (each one a **Text**), having at least 1
 element, intended for referencing an entity in a multi-level namespace,
 such as nested **Tuple** may implement.
 
+[RETURN](#TOP)
+
+<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
 
 ## Duo
 
@@ -385,6 +490,10 @@ additional values for a prospect's *this* that it treats as special in
 certain contexts and thus such a prospect will also not be treated as its
 own **Duo** value.  Potential examples are these **Text** values:
 `multiplied`, `named`.
+
+[RETURN](#TOP)
+
+<a name="Lot"></a>
 
 ## Lot
 
@@ -421,6 +530,10 @@ order of its child nodes even when the value being selected is an unordered
 type, which can be considered essential for round tripping source code that
 better resembles what the programmer wrote.
 
+[RETURN](#TOP)
+
+<a name="Kit"></a>
+
 ## Kit
 
 A **Kit** value is a general purpose arbitrarily-large ordered
@@ -452,6 +565,10 @@ order of its child nodes even when the value being selected is an unordered
 type, which can be considered essential for round tripping source code that
 better resembles what the programmer wrote.
 
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
 ## Article / Labelled Tuple
 
 An **Article** value is characterized by the pairing of a *label*, which is
@@ -479,6 +596,10 @@ The idiomatic default attribute name for a single-attribute **Article** is
 `0t0` (the first conceptually ordered attribute name) when there isn't an
 actual meaningful name to give it.
 
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
+
 ## Excuse
 
 An **Excuse** value is an explicitly stated reason for why, given some
@@ -504,7 +625,15 @@ represent "new" *error* or *exception* types of a nominal type system in a
 consistent way.  The counterpart **Article** possrep should *not* be used for
 these things, but rather just every other kind of externally-defined type.
 
+[RETURN](#TOP)
+
+<a name="LESS-COLLECTIVE-SECONDARY-DATA-TYPE-POSSREPS"></a>
+
 # LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Calendar-Time"></a>
 
 ## Calendar Time
 
@@ -520,6 +649,10 @@ time-related possreps, including ones representing both durations and
 instants, or for direct use with types defined by external data models.
 It does *not* specifically represent a time of day.
 
+[RETURN](#TOP)
+
+<a name="Calendar-Duration"></a>
+
 ## Calendar Duration
 
 A **Calendar Duration** value is a length of time expressed in terms of the
@@ -528,6 +661,10 @@ units of a standard civil or similar calendar.  It is characterized by a
 external data model to give it further meaning, such as whether not
 specifying any smallest units means an uncertainty interval versus treating
 them as zero, and so on.
+
+[RETURN](#TOP)
+
+<a name="Calendar-Instant"></a>
 
 ## Calendar Instant
 
@@ -568,6 +705,10 @@ savings time observence or similar things, which might be satisfied by
 permitting both an instant offset and zone name to be given together;
 the existing time zone name support may also indicate this by itself.*
 
+[RETURN](#TOP)
+
+<a name="Geographic-Point"></a>
+
 ## Geographic Point
 
 A **Geographic Point** value is a particular point location on the Earth's
@@ -603,7 +744,15 @@ The external data model also gives the more specific meanings of *latitude*
 and *longitude*, such as whether they are along the surface of the Earth or
 something more specific.
 
+[RETURN](#TOP)
+
+<a name="MORE-COLLECTIVE-SECONDARY-DATA-TYPE-POSSREPS"></a>
+
 # MORE-COLLECTIVE SECONDARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Array"></a>
 
 ## Array
 
@@ -622,6 +771,10 @@ any 2 *member* might be the same value and *multiplicity* is a positive **Intege
 this characterization is merely a shorthand for the other one that could
 manifest as a more terse run-length encoded syntax.
 
+[RETURN](#TOP)
+
+<a name="Set"></a>
+
 ## Set
 
 A **Set** value is a general purpose arbitrarily-large unordered collection
@@ -633,6 +786,10 @@ A **Set** value is also characterized by a set of 0..N *multiplied members*
 such that each *multiplied member* is a *member*/*multiplicity* pair such that
 no 2 *member* are the same value and *multiplicity* is 1.
 
+[RETURN](#TOP)
+
+<a name="Bag---Multiset"></a>
+
 ## Bag / Multiset
 
 A **Bag** value is a general purpose arbitrarily-large unordered collection
@@ -643,6 +800,10 @@ A **Bag** in the general case may have multiple members that are the same value.
 A **Bag** value is also characterized by a set of 0..N *multiplied members*
 such that each *multiplied member* is a *member*/*multiplicity* pair such that
 no 2 *member* are the same value and *multiplicity* is a positive **Integer**.
+
+[RETURN](#TOP)
+
+<a name="Mix"></a>
 
 ## Mix
 
@@ -668,6 +829,10 @@ allows each *member* to have any possrep, in practice the **Nesting** and
 a dedicated type to represent a unit definition.
 
 See also <https://unitsofmeasure.org/ucum.html>.
+
+[RETURN](#TOP)
+
+<a name="Interval"></a>
 
 ## Interval
 
@@ -713,6 +878,10 @@ character string collations in common use, and it would require context or
 the external data model to declare which to use for **Text** members.
 MUON itself simply characterizes an **Interval** *as* its endpoints.
 
+[RETURN](#TOP)
+
+<a name="Interval-Set"></a>
+
 ## Interval Set
 
 An **Interval Set** value is characterized by a **Set** value such that
@@ -732,6 +901,10 @@ only a proper subset of the former can map to an **Interval**.  The
 Unlike with the **Set** type, the **Interval Set** type also has a
 meaningful *set absolute complement* operation applicable to it.
 
+[RETURN](#TOP)
+
+<a name="Interval-Bag"></a>
+
 ## Interval Bag
 
 An **Interval Bag** value is characterized by a generalization of an
@@ -740,6 +913,10 @@ An **Interval Bag** value is characterized by a generalization of an
 **Interval Set** is to a **Set**; every possible distinct **Bag** can map
 to a distinct **Interval Bag**.
 
+[RETURN](#TOP)
+
+<a name="Pair"></a>
+
 ## Pair
 
 A **Pair** value is a general purpose 2-element ordered heterogeneous
@@ -747,12 +924,20 @@ collection whose elements in order are *this* and *that*, each of which may
 be any other value.  A **Pair** value is also characterized by a **Tuple**
 value having exactly 2 "positional" attributes.
 
+[RETURN](#TOP)
+
+<a name="Heading---Attribute-Name-Set"></a>
+
 ## Heading / Attribute Name Set
 
 A **Heading** value is an arbitrarily-large unordered collection of
 *attribute names*, such that no 2 attribute names are the same.
 A **Heading** value can be characterized by a **Set** value such that every
 *member* value of the latter is any **Text** value.
+
+[RETURN](#TOP)
+
+<a name="Renaming---Attribute-Name-Map"></a>
 
 ## Renaming / Attribute Name Map
 
@@ -764,6 +949,10 @@ attribute asset is a **Text**, and no 2 attribute asset values are the same
 value; for each *attribute*, that attribute's name and asset respectively
 specify the *name before* and *name after* of some other attribute being
 renamed of some other attributive value.
+
+[RETURN](#TOP)
+
+<a name="Tuple---Attribute-Set"></a>
 
 ## Tuple / Attribute Set
 
@@ -797,12 +986,20 @@ alphabetically sort correctly and prior to any normal text-like attribute
 names like `name` or `age`; said first 32 would likewise be distinct in
 appearance from all regular printable numbers used as attribute names.
 
+[RETURN](#TOP)
+
+<a name="Tuple-Array"></a>
+
 ## Tuple Array
 
 A **Tuple Array** value is characterized by the pairing of a **Heading**
 value with an **Array** value, which define its *heading* and *body*,
 respectively.  A **Tuple Array** is isomorphic to a **Relation** with the
 sole exception of being based on an **Array** rather than a **Set**.
+
+[RETURN](#TOP)
+
+<a name="Relation---Tuple-Set"></a>
 
 ## Relation / Tuple Set
 
@@ -822,6 +1019,10 @@ however, any actual predicate/etc is defined by the context of a
 **Relation** value and a **Relation** in isolation explicitly does not
 represent any proposition in particular.
 
+[RETURN](#TOP)
+
+<a name="Tuple-Bag"></a>
+
 ## Tuple Bag
 
 A **Tuple Bag** value is characterized by the pairing of a **Heading**
@@ -829,9 +1030,17 @@ value with a **Bag** value, which define its *heading* and *body*,
 respectively.  A **Tuple Bag** is isomorphic to a **Relation** with the
 sole exception of being based on a **Bag** rather than a **Set**.
 
+[RETURN](#TOP)
+
+<a name="SIGNATURE-DECLARING-SECONDARY-DATA-TYPE-POSSREPS"></a>
+
 # SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS
 
 *This whole section is quite rough and will be rewritten at some future time.*
+
+[RETURN](#TOP)
+
+<a name="Syntax"></a>
 
 ## Syntax
 
@@ -846,6 +1055,10 @@ that the *syntax subject*, or the *value* as a whole, conforms to.
 There may be multiple **Syntax**; when this is the case,
 it means the *value* conforms to every one of those syntaxes,
 typically because only the lowest common denominators of said were used.
+
+[RETURN](#TOP)
+
+<a name="Model"></a>
 
 ## Model
 
@@ -862,9 +1075,17 @@ There may be multiple **Model**; when this is the case,
 it means the *value* conforms to every one of those data models,
 typically because only the lowest common denominators of said were used.
 
+[RETURN](#TOP)
+
+<a name="SOURCE-CODE-DEFINING-SECONDARY-DATA-TYPE-POSSREPS"></a>
+
 # SOURCE CODE DEFINING SECONDARY DATA TYPE POSSREPS
 
 *None yet.*
+
+[RETURN](#TOP)
+
+<a name="EXCLUDED-DATA-TYPE-POSSREPS"></a>
 
 # EXCLUDED DATA TYPE POSSREPS
 
@@ -933,13 +1154,25 @@ Generic foreign serialization types such as JSON and XML are excluded
 because MUON as a whole is supposed to natively handle everything they can
 represent but better; otherwise one can still use **Text** to embed those.
 
+[RETURN](#TOP)
+
+<a name="SEE-ALSO"></a>
+
 # SEE ALSO
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="AUTHOR"></a>
+
 # AUTHOR
 
 Darren Duncan - darren@DarrenDuncan.net
+
+[RETURN](#TOP)
+
+<a name="LICENSE-AND-COPYRIGHT"></a>
 
 # LICENSE AND COPYRIGHT
 
@@ -950,9 +1183,17 @@ MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
+[RETURN](#TOP)
+
+<a name="TRADEMARK-POLICY"></a>
+
 # TRADEMARK POLICY
 
 The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
+
+[RETURN](#TOP)
+
+<a name="ACKNOWLEDGEMENTS"></a>
 
 # ACKNOWLEDGEMENTS
 

@@ -1,3 +1,5 @@
+<a name="TOP"></a>
+
 # NAME
 
 Muldis Object Notation (MUON) - Source code and data interchange format
@@ -12,6 +14,13 @@ The fully-qualified name of this document is
 This artifact is part 19 of 20 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_JSON`.
+
+# CONTENTS
+
+
+[RETURN](#TOP)
+
+<a name="SYNOPSIS"></a>
 
 # SYNOPSIS
 
@@ -41,6 +50,10 @@ its part name is `Syntax_JSON`.
         ]]
     ]]
 ```
+
+[RETURN](#TOP)
+
+<a name="DESCRIPTION"></a>
 
 # DESCRIPTION
 
@@ -79,13 +92,25 @@ MUON JSON-hosted artifact is `Muldis_Object_Notation_JSON`.
 
 See also <https://json.org>.
 
+[RETURN](#TOP)
+
+<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # SIMPLE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
 
 ## Ignorance
 
 An **Ignorance** artifact is any of the following:
 
 * The special JSON `null` value.
+
+[RETURN](#TOP)
+
+<a name="Boolean"></a>
 
 ## Boolean
 
@@ -99,6 +124,10 @@ to keep things more correct and simpler:
 * Any value of any numeric type such that zero/one represents false/true.
 
 * Any value of some other type that might represent a boolean.
+
+[RETURN](#TOP)
+
+<a name="Integer"></a>
 
 ## Integer
 
@@ -140,6 +169,10 @@ An *embedded_MUON_PT_parsing_unit* is any of the following:
 * Any *SYS_Text* that can be successfully interpreted as a
 `Muldis_Object_Notation_Plain_Text` parsing unit consisting of a single
 **Integer** or **Fraction** or **Bits** or **Blob** artifact.
+
+[RETURN](#TOP)
+
+<a name="Fraction"></a>
 
 ## Fraction
 
@@ -202,6 +235,10 @@ An *embedded_MUON_PT_Fraction* is any of the following:
 
 * Any *embedded_MUON_PT_parsing_unit* that denotes any **Fraction** artifact.
 
+[RETURN](#TOP)
+
+<a name="Bits"></a>
+
 ## Bits
 
 A **Bits** artifact is any of the following:
@@ -218,6 +255,10 @@ A *SYS_Non_Qualified_Bits* is any of the following:
 An *embedded_MUON_PT_Bits* is any of the following:
 
 * Any *embedded_MUON_PT_parsing_unit* that denotes any **Bits** artifact.
+
+[RETURN](#TOP)
+
+<a name="Blob"></a>
 
 ## Blob
 
@@ -236,6 +277,10 @@ An *embedded_MUON_PT_Blob* is any of the following:
 
 * Any *embedded_MUON_PT_parsing_unit* that denotes any **Blob** artifact.
 
+[RETURN](#TOP)
+
+<a name="Text---Attribute-Name"></a>
+
 ## Text / Attribute Name
 
 A **Text** artifact is any of the following:
@@ -249,6 +294,10 @@ A *SYS_Text* is any of the following:
 Note that *well formed* means all octet sequences are valid Unicode UTF-8
 and there are no UTF-16 surrogate code points
 defined in it that aren't in valid surrogate pairs.
+
+[RETURN](#TOP)
+
+<a name="Nesting---Attribute-Name-List"></a>
 
 ## Nesting / Attribute Name List
 
@@ -274,7 +323,15 @@ A *SYS_Array_T* is any of the following:
 
 * Any *SYS_Array_A* such that each of its elements is any *SYS_Text*.
 
+[RETURN](#TOP)
+
+<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+
 # COLLECTIVE PRIMARY DATA TYPE POSSREPS
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
 
 ## Duo
 
@@ -298,6 +355,10 @@ A *SYS_Duo_AA* is any of the following:
 
 * Any *SYS_Ordered_Tuple_A* having exactly 2 elements
 such that its first element is *SYS_this* and its second element is *SYS_that*.
+
+[RETURN](#TOP)
+
+<a name="Lot"></a>
 
 ## Lot
 
@@ -335,6 +396,10 @@ A *SYS_Array_A* is any of the following:
 
 * Any value of the JSON type `array`.
 
+[RETURN](#TOP)
+
+<a name="Kit"></a>
+
 ## Kit
 
 A **Kit** artifact is any of the following:
@@ -368,6 +433,10 @@ A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
 
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
 ## Article / Labelled Tuple
 
 An **Article** artifact is any of the following:
@@ -376,6 +445,10 @@ An **Article** artifact is any of the following:
 and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
 its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
+
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
 
 ## Excuse
 
@@ -386,13 +459,25 @@ and its *SYS_that* is any *SYS_Duo_AA* such that
 its *SYS_this* is *label* (any *SYS_Nesting*) and
 its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
+[RETURN](#TOP)
+
+<a name="SEE-ALSO"></a>
+
 # SEE ALSO
 
 *TODO.*
 
+[RETURN](#TOP)
+
+<a name="AUTHOR"></a>
+
 # AUTHOR
 
 Darren Duncan - darren@DarrenDuncan.net
+
+[RETURN](#TOP)
+
+<a name="LICENSE-AND-COPYRIGHT"></a>
 
 # LICENSE AND COPYRIGHT
 
@@ -403,9 +488,17 @@ MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
 
+[RETURN](#TOP)
+
+<a name="TRADEMARK-POLICY"></a>
+
 # TRADEMARK POLICY
 
 The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
+
+[RETURN](#TOP)
+
+<a name="ACKNOWLEDGEMENTS"></a>
 
 # ACKNOWLEDGEMENTS
 
