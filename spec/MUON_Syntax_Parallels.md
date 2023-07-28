@@ -9,6 +9,7 @@ mutually alternative MUON concrete syntaxes compare with each other.
 ## CONTENTS
 
 - [Syntax_Plain_Text](#Syntax_Plain_Text)
+- [Syntax_Plain_Text_Lax](#Syntax_Plain_Text_Lax)
 - [Syntax_Packed_Plain_Text](#Syntax_Packed_Plain_Text)
 - [Syntax_Muldis_Data_Language](#Syntax_Muldis_Data_Language)
 - [Syntax_Raku](#Syntax_Raku)
@@ -68,6 +69,14 @@ once between all tuples.
         ))
     ))
 ```
+
+[RETURN](#TOP)
+
+<a name="Syntax_Plain_Text_Lax"></a>
+
+## Syntax_Plain_Text_Lax
+
+*TODO.*
 
 [RETURN](#TOP)
 
