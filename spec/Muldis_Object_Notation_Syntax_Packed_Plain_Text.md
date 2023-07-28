@@ -60,7 +60,7 @@ its part name is `Syntax_Packed_Plain_Text`.
 Common **Relation** "named" format with attribute names repeating per tuple.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Plain_Text" T"https://muldis.com" T"0.300.0"]
+    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.300.0"]
         D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.300.0"]
             D T"Relation" M[
                 K[xname T"Jane Ives"
@@ -79,7 +79,7 @@ Alternate **Relation** "positional" format with attribute names declared
 once between all tuples.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Plain_Text" T"https://muldis.com" T"0.300.0"]
+    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.300.0"]
         D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.300.0"]
             D T"Relation" D
                     J[xname T"birth_date" T"phone_numbers"]
