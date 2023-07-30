@@ -947,7 +947,7 @@ Grammar:
 
     token escaped_char_simple
     {
-        '\\' <[tnrqbg]>
+        '\\' <[tnrqkg]>
     }
 
     token escaped_char_cpt_seq
@@ -989,7 +989,7 @@ The meanings of the simple character escape sequences are:
     \n  | 0xA     10 | LINE FEED (LF)  |     | dividing space line feed / newline
     \r  | 0xD     13 | CARR. RET. (CR) |     | dividing space carriage return
     \q  | 0x22    34 | QUOTATION MARK  | "   | delimit Text/opaque literals
-    \b  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
+    \k  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
     \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
 ```
 

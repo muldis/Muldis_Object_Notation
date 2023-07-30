@@ -357,7 +357,7 @@ grammar Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar
 
     token escaped_octet_simple
     {
-        '\\' <[tnrqbg]>
+        '\\' <[tnrqkg]>
     }
 
     token restricted_escaped_octet_base_16_pair

@@ -1118,7 +1118,7 @@ Grammar:
 
     token escaped_octet_simple
     {
-        '\\' <[tnrqbg]>
+        '\\' <[tnrqkg]>
     }
 
     token restricted_escaped_octet_base_16_pair
@@ -1164,7 +1164,7 @@ The meanings of the simple octet escape sequences, which apply to all possreps, 
     \n  | 0xA     10 | LINE FEED (LF)  |     | dividing space line feed / newline
     \r  | 0xD     13 | CARR. RET. (CR) |     | dividing space carriage return
     \q  | 0x22    34 | QUOTATION MARK  | "   | delimit quoted octet string
-    \b  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
+    \k  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
     \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
 ```
 
@@ -1218,7 +1218,7 @@ Examples:
     o\g
 
     `The 1-octet string 0xx5C (3 octets).`
-    o\b
+    o\k
 
     `The 4-octet string 0xxA705_E416 (7 octets).`
     B"\A7\05\E4\16"

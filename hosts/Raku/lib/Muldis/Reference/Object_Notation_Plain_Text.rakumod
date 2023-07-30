@@ -228,7 +228,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token escaped_char_simple
     {
-        '\\' <[tnrqbg]>
+        '\\' <[tnrqkg]>
     }
 
     token escaped_char_cpt_seq
