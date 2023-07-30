@@ -113,7 +113,7 @@ This document consists of multiple parts; for a directory to all of the
 parts, see [Overview](Muldis_Object_Notation.md).
 
 This part of the **Muldis Object Notation** document specifies the
-canonical concrete plain text syntax of MUON,
+canonical concrete plain text (strict) syntax of MUON,
 which expresses a MUON artifact in terms of a Unicode character string
 conforming to a well-defined pattern,
 which can exist as a raw file in a filesystem or be exchanged over a
@@ -123,7 +123,7 @@ The MUON `Syntax_Plain_Text` is derived from and maps with the MUON
 [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
 [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
-The MUON canonical plain text format is semi-lightweight and designed to
+The MUON canonical plain text (strict) format is semi-lightweight and designed to
 support interchange of source code and data between any 2 environments that
 do not have a common working memory, such as because they are distinct
 machine processes written in different programming languages, or because
@@ -133,7 +133,7 @@ fairly easy for machines to parse and generate.  The MUON plain text format
 is completely language independent but uses conventions that are
 familiar to programmers of many other languages.
 
-Note that the machine-only readable/writable MUON
+Note that the machine-focused MUON
 [Syntax_Packed_Plain_Text](Muldis_Object_Notation_Syntax_Packed_Plain_Text.md)
 exists as an alternative to the MUON `Syntax_Plain_Text`.
 
@@ -559,7 +559,7 @@ Grammar:
 ```
     token Boolean
     {
-        0b [FALSE | TRUE]
+        0bFALSE | 0bTRUE
     }
 ```
 
@@ -947,7 +947,7 @@ Grammar:
 
     token escaped_char_simple
     {
-        '\\' <[tnrqkg]>
+        '\\' <[abtnvfreqkg]>
     }
 
     token escaped_char_cpt_seq
@@ -957,6 +957,7 @@ Grammar:
 
     token nonquoted_alphanumeric_text
     {
+        <!before [null | false | true] <wb>>
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
     }
 
@@ -972,6 +973,22 @@ Grammar:
 The meaning of `<nonquoted_alphanumeric_text>` is exactly the same as if
 the same characters were surrounded by quotation marks.
 
+This grammar explicitly forbids a **Text** literal of the
+`<nonquoted_alphanumeric_text>` format from being one of a few special
+cases as a precaution against subtle security flaws or other bugs resulting
+from users copying literals between MUON and some other language/format
+that might differ in their interpretation of certain barewords.
+For these special cases, the **Text** literal must use the
+`<quoted_text>` format instead so it is unambiguous in any context.
+
+These are the current special cases; more may be added later:
+
+```
+    null
+    false
+    true
+```
+
 This grammar explicitly forbids leading zeros in the main body of non-zero
 `<code_point_text>` for consistency with **Integer** literals.
 
@@ -985,9 +1002,14 @@ The meanings of the simple character escape sequences are:
     Esc | Unicode    | Unicode         | Chr | Literal character used
     Seq | Code Point | Character Name  | Lit | for when not escaped
     ----+------------+-----------------+-----+-----------------------------
+    \a  | 0x7      7 | BELL            |     | not used
+    \b  | 0x8      8 | BACKSPACE       |     | not used
     \t  | 0x9      9 | CHAR... TAB...  |     | dividing space horizontal tab
     \n  | 0xA     10 | LINE FEED (LF)  |     | dividing space line feed / newline
+    \v  | 0xB     11 | LINE TABULATION |     | not used
+    \f  | 0xC     12 | FORM FEED (FF)  |     | not used
     \r  | 0xD     13 | CARR. RET. (CR) |     | dividing space carriage return
+    \e  | 0x1B    27 | ESCAPE          |     | not used
     \q  | 0x22    34 | QUOTATION MARK  | "   | delimit Text/opaque literals
     \k  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
     \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
@@ -1484,6 +1506,10 @@ operator or routine invocations or to refer to variable names or whatever;
 in that case, any contexts that could be interpreted either as a **Text**
 literal or as something else will be interpreted as the latter, and one can
 use the quoted form of **Text** to force that meaning.
+
+However, MUON explicitly forbids a few special cases of alpha barewords
+such as [`null`,`false`,`true`] since their presence in a MUON artifact can
+cause confusion or other problems, so such **Text** must be quoted instead.
 
 [RETURN](#TOP)
 

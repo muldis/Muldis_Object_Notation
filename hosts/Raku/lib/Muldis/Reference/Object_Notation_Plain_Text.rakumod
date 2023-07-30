@@ -91,7 +91,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token Boolean
     {
-        0b [FALSE | TRUE]
+        0bFALSE | 0bTRUE
     }
 
 ###########################################################################
@@ -228,7 +228,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token escaped_char_simple
     {
-        '\\' <[tnrqkg]>
+        '\\' <[abtnvfreqkg]>
     }
 
     token escaped_char_cpt_seq
@@ -238,6 +238,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token nonquoted_alphanumeric_text
     {
+        <!before [null | false | true] <wb>>
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
     }
 
