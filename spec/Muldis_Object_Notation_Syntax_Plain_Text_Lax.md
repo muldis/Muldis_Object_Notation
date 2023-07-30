@@ -115,6 +115,11 @@ MUON `Syntax_Plain_Text` *and* JSON, so every artifact of the latter 2
 should parse as an artifact of the first, but not every artifact of the
 first would parse as an artifact of either of the latter 2.
 
+Note that while some versions of the JSON spec allow more file encoding
+options, MUON Plain Text Lax maintains the MUON Plain Text (strict)
+restriction to UTF-8 as the only allowed option, which is also in keeping
+with other versions of the JSON spec as well as many JSON implementations.
+
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
 MUON Plain Text Lax artifact is `Muldis_Object_Notation_Plain_Text_Lax`.
 
@@ -569,13 +574,15 @@ The meanings of the additional simple character escape sequences are:
     \\  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
 ```
 
-There is one additional complex escape sequence, of the format `\uNNNN`,
-that supports specifying characters in terms of their Unicode code point
-number, specifically in UTF-16, so characters outside the Basic
-Multilingual Plane must be specified as a surrogate pair like
-`\uNNNN\uNNNN` when using this additional escape sequence format,
-in contrast with the standard Unicode code point escape sequence that
-specifies those using a single number instead.
+An additional complex escape sequence, of the format `\uNNNN` which denotes
+an unsigned 16-bit integer, supports specifying characters in terms of
+their Unicode code point number in terms of UTF-16.  For a Unicode BMP code
+point, that is a single `\uNNNN` integer in the non-surrogate set
+`[0..0xD7FF,0xE000..0xFFFF]`.  For a Unicode non-BMP code point, that is an
+ordered pair of `\uNNNN` integer in the surrogate set `[0xD800..0xDFFF]`,
+which looks like `\uNNNN\uNNNN` such that the pair is also well formed.
+It is forbidden for a `<quoted_text_segment>` to contain any `\uNNNN` of
+the surrogate set that isn't so paired.
 
 Additional Examples:
 
