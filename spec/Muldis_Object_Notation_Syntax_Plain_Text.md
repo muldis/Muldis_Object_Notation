@@ -942,6 +942,8 @@ Grammar:
           <restricted_nonescaped_char>
         | <escaped_char_simple>
         | <escaped_char_cpt_seq>
+        | <escaped_char_utf32_cpt_seq>
+        | <escaped_char_utf16_cpt_seq>
     }
 
     token restricted_nonescaped_char
@@ -957,6 +959,16 @@ Grammar:
     token escaped_char_cpt_seq
     {
         '\\' ['[' ~ ']' [<code_point_text>* % ',']]
+    }
+
+    token escaped_char_utf32_cpt_seq
+    {
+        '\\' U00 [<[ 0..9 A..F a..f ]> ** 6]
+    }
+
+    token escaped_char_utf16_cpt_seq
+    {
+        '\\' u [<[ 0..9 A..F a..f ]> ** 4]
     }
 
     token nonquoted_alphanumeric_text
@@ -1000,6 +1012,13 @@ A `<code_point_text>` is subject to the additional rule that the
 non-negative integer it denotes must be in the set
 `[0..0xD7FF,0xE000..0x10FFFF]`.
 
+An `<escaped_char_utf32_cpt_seq>` is subject to the additional rule that
+the integer it denotes must be in the set `[0..0xD7FF,0xE000..0x10FFFF]`.
+
+A `<quoted_text_segment>` is subject to the additional rule that if it has
+any `<escaped_char_utf16_cpt_seq>` then it must denote *well formed UTF-16*
+as further described below.
+
 The meanings of the simple character escape sequences are:
 
 ```
@@ -1019,13 +1038,33 @@ The meanings of the simple character escape sequences are:
     \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
 ```
 
-There is just one complex escape sequence, of the format `\[...]`, that
-supports specifying characters in terms of their Unicode code point number.
-One reason for this feature is to empower more elegant passing of
-Unicode-savvy MUON through a communications channel that is more limited,
-such as to 7-bit ASCII.
+There are 3 complex escape sequences that support specifying characters in
+terms of their Unicode code point number.  One benefit of these is to
+empower more elegant passing of Unicode-savvy MUON through a communications
+channel that is more limited, such as to 7-bit ASCII.
+
+An `<escaped_char_cpt_seq>` is the MUON-specific standard format, `\[...]`,
+that is the most consistent with the rest of MUON and supports writing
+a code point number in any of the numeric bases 2/8/10/16.
 This format also supports specifying a sequence of multiple characters at
 once, rather than just one, to aid brevity when there are a lot.
+
+An `<escaped_char_utf32_cpt_seq>` is an alternate format, `\U00HHHHHH`
+which denotes an unsigned 32-bit integer; it supports writing a code point
+number in base-16 only, but using both upper-case and lower-case letters.
+This format exists to match a support common in other programming languages.
+
+An `<escaped_char_utf16_cpt_seq>` is an alternate format, `\uHHHH` which
+denotes an unsigned 16-bit integer, which supports specifying characters in
+terms of UTF-16.  For a Unicode BMP code point, that is a single `\uHHHH`
+integer in the non-surrogate set `[0..0xD7FF,0xE000..0xFFFF]`.  For a
+Unicode non-BMP code point, that is an ordered pair of `\uHHHH` integer in
+the surrogate set `[0xD800..0xDFFF]`, which looks like `\uHHHH\uHHHH` such
+that the pair is also *well formed UTF-16*.  It is forbidden for a
+`<quoted_text_segment>` to contain any `\uHHHH` of the surrogate set that
+isn't so paired.  This format supports writing a code point number in
+base-16 only, but using both upper-case and lower-case letters.
+This format exists to match a support common in other programming languages.
 
 A `<code_point_text>` is a specialized shorthand for a **Text** of
 exactly 1 character whose code point number it denotes.
@@ -1059,7 +1098,11 @@ Examples:
 
     "This isn't not escaped.\n"
 
+    `Two characters specified in terms of Unicode code-point numbers.`
     "\[0tx263A,0t65]"
+
+    `Same thing.`
+    "\u263A\u0041"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"

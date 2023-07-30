@@ -525,6 +525,7 @@ Grammar:
           <restricted_nonescaped_char>
         | <escaped_char_simple>
         | <escaped_char_cpt_seq>
+        | <escaped_char_utf32_cpt_seq>
         | <escaped_char_utf16_cpt_seq>
     }
 
@@ -541,6 +542,11 @@ Grammar:
     token escaped_char_cpt_seq
     {
         '\\' ['[' ~ ']' [<code_point_text>* % ',']]
+    }
+
+    token escaped_char_utf32_cpt_seq
+    {
+        '\\' U00 [<[ 0..9 A..F a..f ]> ** 6]
     }
 
     token escaped_char_utf16_cpt_seq
@@ -572,22 +578,6 @@ The meanings of the additional simple character escape sequences are:
     \"  | 0x22    34 | QUOTATION MARK  | "   | delimit Text/opaque literals
     \/  | 0x2F    47 | SOLIDUS         | /   | Fraction literals
     \\  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
-```
-
-An additional complex escape sequence, of the format `\uNNNN` which denotes
-an unsigned 16-bit integer, supports specifying characters in terms of
-their Unicode code point number in terms of UTF-16.  For a Unicode BMP code
-point, that is a single `\uNNNN` integer in the non-surrogate set
-`[0..0xD7FF,0xE000..0xFFFF]`.  For a Unicode non-BMP code point, that is an
-ordered pair of `\uNNNN` integer in the surrogate set `[0xD800..0xDFFF]`,
-which looks like `\uNNNN\uNNNN` such that the pair is also well formed.
-It is forbidden for a `<quoted_text_segment>` to contain any `\uNNNN` of
-the surrogate set that isn't so paired.
-
-Additional Examples:
-
-```
-    "\u263A\u0041"
 ```
 
 [RETURN](#TOP)
@@ -834,8 +824,6 @@ could only specify it with `\g` before.
 - Added the simple character escape sequences: `\"`, `\/`, `\\`.
 Otherwise the first and last could only be specified with `\q` and `\k`
 respectively.  The `/` didn't have an escape as it may appear literally.
-- Added the alternate Unicode escape sequence `\uNNNN` as an alternate
-syntax for the escape sequence `\[0t...]`.
 
 [RETURN](#TOP)
 

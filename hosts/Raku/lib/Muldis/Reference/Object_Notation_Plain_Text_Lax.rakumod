@@ -232,6 +232,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text_Lax::Grammar
           <restricted_nonescaped_char>
         | <escaped_char_simple>
         | <escaped_char_cpt_seq>
+        | <escaped_char_utf32_cpt_seq>
         | <escaped_char_utf16_cpt_seq>
     }
 
@@ -248,6 +249,11 @@ grammar Muldis::Reference::Object_Notation_Plain_Text_Lax::Grammar
     token escaped_char_cpt_seq
     {
         '\\' ['[' ~ ']' [<code_point_text>* % ',']]
+    }
+
+    token escaped_char_utf32_cpt_seq
+    {
+        '\\' U00 [<[ 0..9 A..F a..f ]> ** 6]
     }
 
     token escaped_char_utf16_cpt_seq

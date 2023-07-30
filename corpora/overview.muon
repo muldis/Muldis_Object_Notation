@@ -139,7 +139,11 @@ Ceres
 `Muldis_Object_Notation_Sync_Mark`
 "This isn't not escaped.\n"
 `Muldis_Object_Notation_Sync_Mark`
+`Two characters specified in terms of Unicode code-point numbers.`
 "\[0tx263A,0t65]"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing.`
+"\u263A\u0041"
 `Muldis_Object_Notation_Sync_Mark`
 `One non-ordered quoted Text (or, one named attribute).`
 "sales"

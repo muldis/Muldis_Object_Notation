@@ -514,7 +514,11 @@ Examples:
 
     "This isn't not escaped.\n"
 
+    `Two characters specified in terms of Unicode code-point numbers.`
     "\[0tx263A,0t65]"
+
+    `Same thing.`
+    "\u263A\u0041"
 
     `One non-ordered quoted Text (or, one named attribute).`
     "sales"

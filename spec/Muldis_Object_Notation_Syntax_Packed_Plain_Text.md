@@ -208,11 +208,11 @@ printable ASCII characters or SPACE in the ISO Latin-1 encoding will
 typically appear as the same character literals in the grammar, while the
 other octets `[0..0x1F,0x7F..0xFF]` will be expressed as those integers.
 
-Note that in any artifact examples, the format `\NN` is used to represent
+Note that in any artifact examples, the format `\HH` is used to represent
 octets that don't correspond to printable ASCII characters or SPACE; the
-`NN` is a padded base-16 notation integer between `00` and `FF`; all other
+`HH` is a padded base-16 notation integer between `00` and `FF`; all other
 appearances of `\` are followed by a letter and represent themselves.
-Note that the use of `\NN` format may also be used in examples even where
+Note that the use of `\HH` format may also be used in examples even where
 not required, as sometimes using it consistently actually aids readability.
 
 [RETURN](#TOP)
@@ -1168,14 +1168,14 @@ The meanings of the simple octet escape sequences, which apply to all possreps, 
     \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
 ```
 
-There is just one complex escape sequence, of the format `\NN` such that
-the `NN` is a padded base-16 notation integer between `00` and `FF`.
+There is just one complex escape sequence, of the format `\HH` such that
+the `HH` is a padded base-16 notation integer between `00` and `FF`.
 It is the exact same 250 octets that are allowed to exist literally in a
-quoted octet string and that are allowed to be represented by the `\NN`
+quoted octet string and that are allowed to be represented by the `\HH`
 format; the complimentary 6 octets are only allowed to be represented by
 the simple one-letter format.
 
-The primary reason that the `\NN` option exists is to support documentation
+The primary reason that the `\HH` option exists is to support documentation
 examples of MUON artifacts that are both easy for humans to read as
 documentation, because some octets correspond to otherwise nonprintable
 ASCII characters, and likewise don't get corrupted when passed through
@@ -1184,7 +1184,7 @@ is, without having to be pre-processed into the actual octets to be treated
 as the binary MUON.
 
 However, it is expected that normal use cases for the binary MUON will use
-the actual octets and not `\NN` because in general that is necessary to
+the actual octets and not `\HH` because in general that is necessary to
 reap a key benefit of using binary MUON over text MUON, its compactness.
 
 Examples:
@@ -1386,10 +1386,10 @@ Examples:
     T"This isn't not escaped.\0A"
 
     `The 2-character UTF-8 string "\[0tx263A,0t65]" (5 octets).`
-    x\E2\98\BA\65
+    x\E2\98\BA\41
 
     `Same thing (7 octets).`
-    T"\E2\98\BA\65"
+    T"\E2\98\BA\41"
 
     `A 10-character UTF-8 string (13 octets).`
     T"First Name"
