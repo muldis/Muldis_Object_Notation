@@ -133,6 +133,10 @@ fairly easy for machines to parse and generate.  The MUON plain text format
 is completely language independent but uses conventions that are
 familiar to programmers of many other languages.
 
+Note that the less-strict human-focused MUON
+[Syntax_Plain_Text_Lax](Muldis_Object_Notation_Syntax_Plain_Text_Lax.md)
+exists as an alternative to the MUON `Syntax_Plain_Text`.
+
 Note that the machine-focused MUON
 [Syntax_Packed_Plain_Text](Muldis_Object_Notation_Syntax_Packed_Plain_Text.md)
 exists as an alternative to the MUON `Syntax_Plain_Text`.

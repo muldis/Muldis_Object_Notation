@@ -74,9 +74,9 @@ once between all tuples.
 
 <a name="Syntax_Plain_Text_Lax"></a>
 
-## Syntax_Plain_Text_Lax
+## [Syntax_Plain_Text_Lax](Muldis_Object_Notation_Syntax_Plain_Text_Lax.md)
 
-*TODO.*
+*No example provided as it would be identical to the MUON Plain Text (strict) version.*
 
 [RETURN](#TOP)
 

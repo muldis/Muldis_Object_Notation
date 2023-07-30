@@ -85,7 +85,7 @@ This document consists of multiple parts:
 1. Container_Plain_Aggregate
 1. [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md)
 1. [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
-1. Syntax_Plain_Text_Lax
+1. [Syntax_Plain_Text_Lax](Muldis_Object_Notation_Syntax_Plain_Text_Lax.md)
 1. [Syntax_Packed_Plain_Text](Muldis_Object_Notation_Syntax_Packed_Plain_Text.md)
 1. [Syntax_Muldis_Data_Language](Muldis_Object_Notation_Syntax_Muldis_Data_Language.md)
 1. [Syntax_Raku](Muldis_Object_Notation_Syntax_Raku.md)

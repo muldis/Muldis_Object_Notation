@@ -55,8 +55,7 @@ MUON natively supports exact rational numeric values that are *not*
 terminating in base 10, so for example `1/3` can be conveyed losslessly,
 while JSON only natively supports exact rational numeric values that *are*
 terminating in base 10.
-Both MUON and JSON support scientific notation for numeric literals, though
-their exact syntax differs, `4.263*10^15` and `4.263e15` respectively.
+Both MUON and JSON support scientific notation for numeric literals.
 MUON supports 4 numeric bases (2,8,10,16) for all numeric literals,
 while JSON only supports base 10 for all numeric literals.
 (This is merely a syntactic convenience given that all rational values that
@@ -79,6 +78,8 @@ planes, which is a separate data model layer above the JSON.
 MUON uses the same string delimiters `"` as JSON but MUON is easier to
 parse because the escape sequence for said delimiter is `\q` in MUON versus
 `\"` in JSON; a MUON delimited string never contains its delimiter.
+At least that is true with the MUON Plain Text (strict) syntax; however the
+MUON Plain Text Lax syntax also supports `\"` for syntactic parity with JSON.
 
 MUON is more expressive than JSON regarding simple collections.
 MUON has distinct Array/Set/Bag collections so it is clear whether the
@@ -108,9 +109,7 @@ MUON also competes with JSON by being more fully specified, such that every
 2 MUON libraries should exhibit the same behavior and be fully compatible,
 which is apparently not true for JSON, which is much more loosely specified
 or leaves important details unspecified, and has multiple competing
-definitions.
-See
-<https://seriot.ch/parsing_json.php> and
+definitions.  See <https://seriot.ch/parsing_json.php> and
 <https://github.com/nst/JSONTestSuite> for more about this.
 So reliability and consistency could also be a primary benefit of MUON over
 JSON, and a key reason to adopt it over JSON.
