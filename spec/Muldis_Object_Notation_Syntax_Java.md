@@ -284,12 +284,12 @@ A **Text** artifact is any of the following:
 
 A *SYS_Text* is any of the following:
 
-* Any object of the Java class `java.lang.String` that is *well formed*.
+* Any object of the Java class `java.lang.String` that is *well formed UTF-16*.
 
 Not permitted for a *SYS_Text* is any of the following,
 to keep things more correct and simpler:
 
-* Any object of the Java class `java.lang.String` that is not *well formed*.
+* Any object of the Java class `java.lang.String` that is not *well formed UTF-16*.
 
 * Any value of the Java primitive type `char`.
 
@@ -302,13 +302,13 @@ to keep things more correct and simpler:
 
 A Java `java.lang.String` is characterized as an ordered sequence of 0..N `char`
 such that each of the latter is an unsigned 16-bit integer *C*.
-A *well formed* string denotes a Unicode BMP code point with a single *C*
+A *well formed UTF-16* string denotes a Unicode BMP code point with a single *C*
 in the non-surrogate set `[0..0xD7FF,0xE000..0xFFFF]`
 (`java.lang.Character.isSurrogate()` is false) or it denotes a Unicode
 non-BMP code point with an ordered pair of *C* each in the surrogate set
 `[0xD800..0xDFFF]` (`java.lang.Character.isSurrogate()` is true) and the pair
 is also well formed (`java.lang.Character.isSurrogatePair()` is true); a
-*well formed* string does not contain any *C* in the surrogate set that
+*well formed UTF-16* string does not contain any *C* in the surrogate set that
 isn't so paired.
 
 [RETURN](#TOP)

@@ -338,16 +338,16 @@ A *SYS_Text* is any of the following:
 
 * Any *SYS_String* either whose UTF8 flag is true
 or all of whose octets are in the set `0..127`,
-and that is *well formed*.
+and that is *well formed UTF-8*.
 
 Not permitted for a *SYS_Text* is any of the following,
 to keep things more correct and simpler:
 
 * Any *SYS_String* whose UTF8 flag is false
 and which has at least one octet not in the set `0..127`,
-or that is not *well formed*.
+or that is not *well formed UTF-8*.
 
-Note that *well formed* means all octet sequences are valid Unicode UTF-8
+Note that *well formed UTF-8* means all octet sequences are valid Unicode UTF-8
 and there are no UTF-16 surrogate code points
 defined in it that aren't in valid surrogate pairs.
 

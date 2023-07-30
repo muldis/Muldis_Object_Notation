@@ -311,9 +311,9 @@ A **Text** artifact is any of the following:
 
 A *SYS_Text* is any of the following:
 
-* Any value of the JSON type `string` that is *well formed*.
+* Any value of the JSON type `string` that is *well formed UTF-8*.
 
-Note that *well formed* means all octet sequences are valid Unicode UTF-8
+Note that *well formed UTF-8* means all octet sequences are valid Unicode UTF-8
 and there are no UTF-16 surrogate code points
 defined in it that aren't in valid surrogate pairs.
 
