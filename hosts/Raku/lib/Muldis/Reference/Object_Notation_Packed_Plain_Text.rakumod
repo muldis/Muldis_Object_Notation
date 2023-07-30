@@ -7,7 +7,7 @@ module Muldis::Reference::Object_Notation_Packed_Plain_Text
     {
         return Muldis::Reference::Object_Notation_Packed_Plain_Text::Grammar.parse(
             $text,
-            :token<MUON>,
+            :token<Muldis_Object_Notation_Packed_Plain_Text>,
             :actions(Muldis::Reference::Object_Notation_Packed_Plain_Text::Actions.new())
         );
     }
