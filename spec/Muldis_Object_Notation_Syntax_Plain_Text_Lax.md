@@ -42,6 +42,7 @@ its part name is `Syntax_Plain_Text_Lax`.
     - [Excuse](#Excuse)
 - [EXTENSIONS OVER SYNTAX PLAIN TEXT](#EXTENSIONS-OVER-SYNTAX-PLAIN-TEXT)
     - [JSON - JavaScript Object Notation](#JSON---JavaScript-Object-Notation)
+    - [Pair Separator Equals-Greater-Than](#Pair-Separator-Equals-Greater-Than)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -636,8 +637,8 @@ Grammar:
 
     token this_and_that
     {
-          [<this> <sp>? [':'|'->'] <sp>? <that>]
-        | [<that> <sp>?      '<-'  <sp>? <this>]
+          [<this> <sp>? [':'|'->'|'=>'] <sp>? <that>]
+        | [<that> <sp>?      '<-'       <sp>? <this>]
     }
 
     token this
@@ -675,8 +676,8 @@ Grammar:
 
     token multiplied_member
     {
-          [<member>       <sp>? [':'|'->'] <sp>? <multiplicity>]
-        | [<multiplicity> <sp>?      '<-'  <sp>? <member>      ]
+          [<member>       <sp>? [':'|'->'|'=>'] <sp>? <multiplicity>]
+        | [<multiplicity> <sp>?      '<-'       <sp>? <member>      ]
         | <member>
     }
 
@@ -715,8 +716,8 @@ Grammar:
 
     token kit_attr
     {
-          [<attr_name>  <sp>? [':'|'->'] <sp>? <attr_asset>]
-        | [<attr_asset> <sp>?      '<-'  <sp>? <attr_name> ]
+          [<attr_name>  <sp>? [':'|'->'|'=>'] <sp>? <attr_asset>]
+        | [<attr_asset> <sp>?      '<-'       <sp>? <attr_name> ]
         | <attr_asset>
     }
 
@@ -824,6 +825,19 @@ could only specify it with `\g` before.
 - Added the simple character escape sequences: `\"`, `\/`, `\\`.
 Otherwise the first and last could only be specified with `\q` and `\k`
 respectively.  The `/` didn't have an escape as it may appear literally.
+
+[RETURN](#TOP)
+
+<a name="Pair-Separator-Equals-Greater-Than"></a>
+
+## Pair Separator Equals-Greater-Than
+
+Following are extensions made by MUON Plain Text Lax which collectively
+increase the level of compatibility with: Raku, Perl, PHP, maybe others.
+
+For **Duo** and **Lot** and **Kit**:
+
+- Added `=>` as an alternative pair separator syntax for `:` and `->`.
 
 [RETURN](#TOP)
 
