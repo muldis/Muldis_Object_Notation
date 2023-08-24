@@ -93,7 +93,7 @@ The MUON `Syntax_Perl` is derived from and maps with the MUON
 [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
 [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
-The MUON Perl-hosted format is semi-lightweight and designed to support
+The MUON Perl hosted format is semi-lightweight and designed to support
 interchange of source code and data between any 2 environments that do have
 a common working memory and run the Perl programming language, such as
 because they collectively are part of a single process of a Perl virtual
@@ -106,7 +106,7 @@ The format is fairly easy for humans to read and write in terms of plain
 Perl source code.  It is fairly easy for machines to parse and generate.
 
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON Perl-hosted artifact is `Muldis_Object_Notation_Perl`.
+MUON Perl hosted artifact is `Muldis_Object_Notation_Perl`.
 
 See also <https://perl.org>.
 

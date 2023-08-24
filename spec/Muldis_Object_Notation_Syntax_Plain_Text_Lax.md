@@ -67,7 +67,7 @@ This document consists of multiple parts; for a directory to all of the
 parts, see [Overview](Muldis_Object_Notation.md).
 
 This part of the **Muldis Object Notation** document specifies the
-canonical concrete plain text lax syntax of MUON,
+canonical concrete nonhosted plain text lax syntax of MUON,
 which expresses a MUON artifact in terms of a Unicode character string
 conforming to a well-defined pattern,
 which can exist as a raw file in a filesystem or be exchanged over a

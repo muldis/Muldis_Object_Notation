@@ -93,7 +93,7 @@ The MUON `Syntax_PHP` is derived from and maps with the MUON
 [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
 [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
-The MUON PHP-hosted format is semi-lightweight and designed to support
+The MUON PHP hosted format is semi-lightweight and designed to support
 interchange of source code and data between any 2 environments that do have
 a common working memory and run the PHP programming language, such as
 because they collectively are part of a single process of a PHP virtual
@@ -106,7 +106,7 @@ The format is fairly easy for humans to read and write in terms of plain
 PHP source code.  It is fairly easy for machines to parse and generate.
 
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON PHP-hosted artifact is `Muldis_Object_Notation_PHP`.
+MUON PHP hosted artifact is `Muldis_Object_Notation_PHP`.
 
 See also <https://php.net>.
 

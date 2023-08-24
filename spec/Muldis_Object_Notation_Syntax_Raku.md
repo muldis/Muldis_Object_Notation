@@ -94,7 +94,7 @@ The MUON `Syntax_Raku` is derived from and maps with the MUON
 [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
 [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
-The MUON Raku-hosted format is semi-lightweight and designed to support
+The MUON Raku hosted format is semi-lightweight and designed to support
 interchange of source code and data between any 2 environments that do have
 a common working memory and run the Raku programming language, such as
 because they collectively are part of a single process of a
@@ -107,7 +107,7 @@ The format is fairly easy for humans to read and write in terms of plain
 Raku source code.  It is fairly easy for machines to parse and generate.
 
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON Raku-hosted artifact is `Muldis_Object_Notation_Raku`.
+MUON Raku hosted artifact is `Muldis_Object_Notation_Raku`.
 
 See also <https://raku.org>.
 

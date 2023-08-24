@@ -95,7 +95,7 @@ The MUON `Syntax_ECMAScript` is derived from and maps with the MUON
 [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
 [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
-The MUON ECMAScript-hosted format is semi-lightweight and designed to support
+The MUON ECMAScript hosted format is semi-lightweight and designed to support
 interchange of source code and data between any 2 environments that do have
 a common working memory and run the ECMAScript programming language, such as
 because they collectively are part of a single process of an ECMAScript virtual
@@ -108,7 +108,7 @@ The format is fairly easy for humans to read and write in terms of plain
 ECMAScript source code.  It is fairly easy for machines to parse and generate.
 
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON ECMAScript-hosted artifact is `Muldis_Object_Notation_ECMAScript`.
+MUON ECMAScript hosted artifact is `Muldis_Object_Notation_ECMAScript`.
 
 See also <https://ecma-international.org/publications-and-standards/standards/ecma-262>.
 

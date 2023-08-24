@@ -99,7 +99,7 @@ The MUON `Syntax_DotNet` is derived from and maps with the MUON
 [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
 [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
-The MUON .NET-hosted format is semi-lightweight and designed to support
+The MUON .NET hosted format is semi-lightweight and designed to support
 interchange of source code and data between any 2 environments that do have
 a common working memory and run the .NET/C\# programming language, such as
 because they collectively are part of a single process of a Common Language
@@ -112,7 +112,7 @@ The format is fairly easy for humans to read and write in terms of plain
 .NET/C\# source code.  It is fairly easy for machines to parse and generate.
 
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON .NET-hosted artifact is `Muldis_Object_Notation_DotNet`.
+MUON .NET hosted artifact is `Muldis_Object_Notation_DotNet`.
 
 See also <https://dotnet.microsoft.com>.
 

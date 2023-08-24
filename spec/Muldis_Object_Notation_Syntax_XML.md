@@ -94,7 +94,7 @@ The MUON `Syntax_XML` is derived from and maps with the MUON
 [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
 [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
-The MUON XML-hosted format is semi-lightweight and designed to
+The MUON XML hosted format is semi-lightweight and designed to
 support interchange of source code and data between any 2 environments that
 do not have a common working memory, such as because they are distinct
 machine processes written in different programming languages, or because
@@ -103,7 +103,7 @@ disk file.  The format is fairly easy for humans to read and write.  It is
 fairly easy for machines to parse and generate.
 
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON XML-hosted artifact is `Muldis_Object_Notation_XML`.
+MUON XML hosted artifact is `Muldis_Object_Notation_XML`.
 
 See also <https://w3.org/XML>.
 

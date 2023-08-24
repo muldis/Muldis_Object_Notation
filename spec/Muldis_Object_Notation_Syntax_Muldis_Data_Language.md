@@ -86,7 +86,7 @@ The MUON `Syntax_Muldis_Data_Language` is derived from and maps with the MUON
 [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md); see that plus
 [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
-The MUON MDL-hosted format is semi-lightweight and designed to support
+The MUON MDL hosted format is semi-lightweight and designed to support
 interchange of source code and data between any 2 environments that do have
 a common working memory and run the MDL programming language, such as
 because they collectively are part of a single instance of a Muldis Data
@@ -99,7 +99,7 @@ The format is fairly easy for humans to read and write in terms of plain
 MDL source code.  It is fairly easy for machines to parse and generate.
 
 The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON MDL-hosted artifact is `Muldis_Object_Notation_Muldis_Data_Language`.
+MUON MDL hosted artifact is `Muldis_Object_Notation_Muldis_Data_Language`.
 
 See also <https://github.com/muldis/Muldis_Data_Language>.
 
