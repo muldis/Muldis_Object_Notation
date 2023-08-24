@@ -662,7 +662,11 @@ Grammar:
     }
 ```
 
-*This part of the grammar has no differences from the MUON Plain Text (strict) version.*
+Additional Examples:
+
+```
+    (x=>y)
+```
 
 [RETURN](#TOP)
 
@@ -702,7 +706,16 @@ Grammar:
     }
 ```
 
-*This part of the grammar has no differences from the MUON Plain Text (strict) version.*
+Additional Examples:
+
+```
+    [
+        Clubs  =>  5,
+        Diamonds,
+        Hearts => 10,
+        Spades => 20,
+    ]
+```
 
 [RETURN](#TOP)
 
@@ -742,7 +755,15 @@ Grammar:
     }
 ```
 
-*This part of the grammar has no differences from the MUON Plain Text (strict) version.*
+Additional Examples:
+
+```
+    {
+        login_name => hartmark,
+        login_pass => letmein,
+        is_special => 0bTRUE,
+    }
+```
 
 [RETURN](#TOP)
 
