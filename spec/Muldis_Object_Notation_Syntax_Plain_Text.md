@@ -1033,7 +1033,7 @@ The meanings of the simple character escape sequences are:
     \f  | 0xC     12 | FORM FEED (FF)  |     | not used
     \r  | 0xD     13 | CARR. RET. (CR) |     | dividing space carriage return
     \e  | 0x1B    27 | ESCAPE          |     | not used
-    \q  | 0x22    34 | QUOTATION MARK  | "   | delimit Text/opaque literals
+    \q  | 0x22    34 | QUOTATION MARK  | "   | delimit quoted-Text/identifier literals
     \k  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
     \g  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
 ```

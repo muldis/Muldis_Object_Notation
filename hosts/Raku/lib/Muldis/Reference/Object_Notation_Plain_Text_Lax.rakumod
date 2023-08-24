@@ -224,7 +224,8 @@ grammar Muldis::Reference::Object_Notation_Plain_Text_Lax::Grammar
 
     token quoted_text_segment
     {
-        '"' ~ '"' <aescaped_char>*
+          ['"'  ~ '"'  [<aescaped_char> | '\'']*]
+        | ['\'' ~ '\'' [<aescaped_char> | '"' ]*]
     }
 
     token aescaped_char
@@ -238,12 +239,12 @@ grammar Muldis::Reference::Object_Notation_Plain_Text_Lax::Grammar
 
     token restricted_nonescaped_char
     {
-        <-[ \x[0]..\x[1F] " \\ \x[7F] \x[80]..\x[9F] ]>
+        <-[ \x[0]..\x[1F] " ' \\ \x[7F] \x[80]..\x[9F] ]>
     }
 
     token escaped_char_simple
     {
-        '\\' <[ " / \\ abtnvfreqkg ]>
+        '\\' <[ " ' / \\ ` abtnvfreqkg ]>
     }
 
     token escaped_char_cpt_seq

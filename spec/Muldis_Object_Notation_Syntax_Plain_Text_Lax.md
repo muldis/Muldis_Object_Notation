@@ -43,6 +43,7 @@ its part name is `Syntax_Plain_Text_Lax`.
 - [EXTENSIONS OVER SYNTAX PLAIN TEXT](#EXTENSIONS-OVER-SYNTAX-PLAIN-TEXT)
     - [JSON - JavaScript Object Notation](#JSON---JavaScript-Object-Notation)
     - [Pair Separator Equals-Greater-Than](#Pair-Separator-Equals-Greater-Than)
+    - [String Delimiter Single-Quote](#String-Delimiter-Single-Quote)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -518,7 +519,8 @@ Grammar:
 
     token quoted_text_segment
     {
-        '"' ~ '"' <aescaped_char>*
+          ['"'  ~ '"'  [<aescaped_char> | '\'']*]
+        | ['\'' ~ '\'' [<aescaped_char> | '"' ]*]
     }
 
     token aescaped_char
@@ -532,12 +534,12 @@ Grammar:
 
     token restricted_nonescaped_char
     {
-        <-[ \x[0]..\x[1F] " \\ \x[7F] \x[80]..\x[9F] ]>
+        <-[ \x[0]..\x[1F] " ' \\ \x[7F] \x[80]..\x[9F] ]>
     }
 
     token escaped_char_simple
     {
-        '\\' <[ " / \\ abtnvfreqkg ]>
+        '\\' <[ " ' / \\ ` abtnvfreqkg ]>
     }
 
     token escaped_char_cpt_seq
@@ -576,9 +578,17 @@ The meanings of the additional simple character escape sequences are:
     Esc | Unicode    | Unicode         | Chr | Literal character used
     Seq | Code Point | Character Name  | Lit | for when not escaped
     ----+------------+-----------------+-----+-----------------------------
-    \"  | 0x22    34 | QUOTATION MARK  | "   | delimit Text/opaque literals
+    \"  | 0x22    34 | QUOTATION MARK  | "   | delimit quoted-Text/identifier literals
+    \'  | 0x27    39 | APOSTROPHE      | '   | delimit quoted-Text/identifier literals
     \/  | 0x2F    47 | SOLIDUS         | /   | Fraction literals
     \\  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
+    \`  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
+```
+
+Additional Examples:
+
+```
+    'Differently quoted text.'
 ```
 
 [RETURN](#TOP)
@@ -838,6 +848,21 @@ increase the level of compatibility with: Raku, Perl, PHP, maybe others.
 For **Duo** and **Lot** and **Kit**:
 
 - Added `=>` as an alternative pair separator syntax for `:` and `->`.
+
+[RETURN](#TOP)
+
+<a name="String-Delimiter-Single-Quote"></a>
+
+## String Delimiter Single-Quote
+
+Following are extensions made by MUON Plain Text Lax which collectively
+increase the level of compatibility with any formats and languages that
+delimit strings with single-quotes, either instead of or as an alternative
+to double-quotes.
+
+For **Text** and **Nesting** and **Kit** and **Article** and **Excuse**:
+
+- Added `'` as an alternative delimiter for `"` for any quoted string.
 
 [RETURN](#TOP)
 
