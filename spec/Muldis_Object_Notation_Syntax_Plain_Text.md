@@ -477,12 +477,7 @@ Grammar:
 ```
     token Any
     {
-        <generic_group> | <simple_primary> | <collective_primary>
-    }
-
-    token generic_group
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <Any>
+        <simple_primary> | <collective_primary>
     }
 
     token simple_primary
@@ -506,10 +501,6 @@ Grammar:
         | <Excuse>
     }
 ```
-
-A `<generic_group>` is an optional syntactic construct to force a
-particular parsing precedence or otherwise help illustrate an existing one;
-it is not actually needed by MUON itself but can assist a superset grammar.
 
 [RETURN](#TOP)
 
@@ -1484,7 +1475,7 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0t
     Nesting         | leading ::, or :: between 2 of, what otherwise is Text
-    Duo             | (...:...) or (...->...) or (...<-...)
+    Duo             | (...)
     Lot             | only [] or [...]
     Kit             | only {} or {...}
     Article         | * between a Nesting|Text and a Kit in that order
@@ -1532,6 +1523,11 @@ anything, and leaves it reserved for a superset to use as it sees fit.
 MUON does not use the semicolon `;` for anything, so a superset grammar can
 use it for things like separating statements and thus disambiguating its
 own uses of bracketing characters to define statement or expression groups.
+
+MUON does not use parenthesis pairs `(` and `)`, except with a colon `:`
+between them as a `Duo` syntax, so parenthesis pairs without the colon are
+available for a superset grammar to use for generic grouping purposes
+to force a particular parsing precedence with infix operators and such.
 
 [RETURN](#TOP)
 
@@ -1585,7 +1581,6 @@ that means they are used either in pairs or as contiguous sequences.
     \     | escaped characters     | * prefix for each escaped char in quoted string
     ------+------------------------+---------------------------------------
     ()    | pair collections       | * delimit Duo selectors
-          | generic grouping       | * optional delimiters around Any to force a parsing precedence
     ------+------------------------+---------------------------------------
     []    | discrete collections   | * delimit homogeneous discrete collections
           |                        |   of members, concept asset+cardinal pairs
@@ -1599,7 +1594,6 @@ that means they are used either in pairs or as contiguous sequences.
     ->    |                        | * separates the 2 parts of a pair
     <-    |                        | * this/that separator in Duo sels
           |                        | * optional attr name/asset separator in Kit sels
-          |                        | * disambiguate Duo sels from generic_group
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
           |                        | * separate members in Lot sels
@@ -1755,8 +1749,10 @@ single fraction value and not 4 integers separated by operators.
 
 It is expected that any programming languages whose grammar is a superset
 of MUON's will also keep this precedence over any actual prefix/infix/etc
-operators they may have, which in some case may require `<generic_group>`
-parenthesis to disambiguate that they want those operator calls instead.
+operators they may have, which in some cases may require the superset
+grammar to have some kind of additional syntax, perhaps a pair of
+parenthesis without a colon between them, to disambiguate that they want
+those operator calls instead.
 
 [RETURN](#TOP)
 

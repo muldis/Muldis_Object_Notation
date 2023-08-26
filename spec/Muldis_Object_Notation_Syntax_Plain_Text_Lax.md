@@ -225,12 +225,7 @@ Grammar:
 ```
     token Any
     {
-        <generic_group> | <simple_primary> | <collective_primary>
-    }
-
-    token generic_group
-    {
-        ['(' <sp>?] ~ [<sp>? ')'] <Any>
+        <simple_primary> | <collective_primary>
     }
 
     token simple_primary
