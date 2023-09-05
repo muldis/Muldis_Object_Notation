@@ -86,7 +86,8 @@ parts, see [Overview](Muldis_Object_Notation.md).
 This part of the **Muldis Object Notation** document specifies the
 canonical concrete PHP hosted syntax of MUON,
 which expresses a MUON artifact in terms of a native in-memory value or
-object of the PHP programming language, version 8.1 (2021) or later,
+object of the PHP programming language,
+version 8.2 (2022) or later,
 as a non-cyclic data structure composed only using system-defined types.
 
 The MUON `Syntax_PHP` is derived from and maps with the MUON

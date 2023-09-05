@@ -91,7 +91,7 @@ This part of the **Muldis Object Notation** document specifies the
 canonical concrete .NET/C\# hosted syntax of MUON,
 which expresses a MUON artifact in terms of a native in-memory value or
 object of the .NET/C\# programming language,
-.NET version 6.0 (2021; or Framework 4.0, 2010) or later,
+.NET version 7.0 (2022; or Framework 4.0, 2010) or later,
 as a non-cyclic data structure composed only using system-defined types,
 and specifically the subset that are *CLS-compliant*.
 

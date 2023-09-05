@@ -267,7 +267,7 @@ explicit declarations of what character encoding is in use to help parsers.
 Strictly speaking the door is not closed for a future version of the MUON
 specification to support character encoding declarations, or for a future
 MUON parser to natively support other character encoding formats, but in
-the foreseeable future, forbidding this best satisfies YAGNI and KISS.
+the foreseeable future, forbidding this is best for simplicity.
 
 [RETURN](#TOP)
 
