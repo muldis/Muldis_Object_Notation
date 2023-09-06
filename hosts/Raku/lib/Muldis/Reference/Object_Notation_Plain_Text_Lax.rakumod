@@ -298,8 +298,8 @@ grammar Muldis::Reference::Object_Notation_Plain_Text_Lax::Grammar
 
     token this_and_that
     {
-          [<this> <sp>? [':'|'->'|'=>'] <sp>? <that>]
-        | [<that> <sp>?      '<-'       <sp>? <this>]
+          [<this> <sp>? [':'|'->'|'=>'|','] <sp>? <that>]
+        | [<that> <sp>?      '<-'           <sp>? <this>]
     }
 
     token this

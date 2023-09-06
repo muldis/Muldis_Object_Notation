@@ -43,6 +43,7 @@ its part name is `Syntax_Plain_Text_Lax`.
 - [EXTENSIONS OVER SYNTAX PLAIN TEXT](#EXTENSIONS-OVER-SYNTAX-PLAIN-TEXT)
     - [JSON - JavaScript Object Notation](#JSON---JavaScript-Object-Notation)
     - [Pair Separator Equals-Greater-Than](#Pair-Separator-Equals-Greater-Than)
+    - [Duo Pair Separator Comma](#Duo-Pair-Separator-Comma)
     - [String Delimiter Single-Quote](#String-Delimiter-Single-Quote)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
@@ -642,8 +643,8 @@ Grammar:
 
     token this_and_that
     {
-          [<this> <sp>? [':'|'->'|'=>'] <sp>? <that>]
-        | [<that> <sp>?      '<-'       <sp>? <this>]
+          [<this> <sp>? [':'|'->'|'=>'|','] <sp>? <that>]
+        | [<that> <sp>?      '<-'           <sp>? <this>]
     }
 
     token this
@@ -864,6 +865,19 @@ increase the level of compatibility with: Raku, Perl, PHP, maybe others.
 For **Duo** and **Lot** and **Kit**:
 
 - Added `=>` as an alternative pair separator syntax for `:` and `->`.
+
+[RETURN](#TOP)
+
+<a name="Duo-Pair-Separator-Comma"></a>
+
+## Duo Pair Separator Comma
+
+Following are extensions made by MUON Plain Text Lax which collectively
+increase the level of compatibility with: C#, Python, maybe others.
+
+For **Duo**:
+
+- Added `,` as an alternative pair separator syntax for `:` and `->`.
 
 [RETURN](#TOP)
 
