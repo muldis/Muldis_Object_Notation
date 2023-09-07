@@ -266,12 +266,13 @@ sequence of digits or anything else resembles a numeric literal.
 A **Bits** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Bits`
-and its *SYS_that* is any object of any Raku class that composes the Raku role `Blob`.
+and its *SYS_that* is any *SYS_Blob*
+such that every integer is in the set `0..1`.
 
 Not permitted for a **Bits** is any of the following,
 to prevent ambiguity and simplify things:
 
-* Any object of any Raku class that composes the Raku role `Blob`.
+* Any *SYS_Blob*.
 This is because that would be interpreted as a **Blob** artifact.
 
 [RETURN](#TOP)
@@ -282,12 +283,17 @@ This is because that would be interpreted as a **Blob** artifact.
 
 A **Blob** artifact is any of the following:
 
-* Any object of any Raku class that composes the Raku role `Blob`.
+* Any *SYS_Blob*.
+
+A *SYS_Blob* is any of the following:
+
+* Any object of any Raku class that composes the Raku role `Blob`
+such that every integer is in the set `0..255`.
 
 Note that the Raku role `Buf` composes the Raku role `Blob` and so objects
 of classes that compose the latter also compose the former.
 
-Not permitted for a **Blob** is any of the following,
+Not permitted for a **SYS_Blob** is any of the following,
 to prevent ambiguity and simplify things:
 
 * Any object of the Raku class `List` whose elements are **Integer** artifacts.
