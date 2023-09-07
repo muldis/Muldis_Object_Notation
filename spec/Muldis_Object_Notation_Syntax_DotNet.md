@@ -569,7 +569,7 @@ A **Geographic Point** artifact is additionally any of the following:
 * Any coordinate-specifying object of the .NET class
 `System.Data.Spatial.DbGeography`.
 
-*Note: DbGeography is only in .NET Framework; it is not in .NET 6.*
+*Note: DbGeography is only in .NET Framework; it is not in .NET 5+.*
 
 [RETURN](#TOP)
 
