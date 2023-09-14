@@ -343,9 +343,22 @@ once between all tuples.
 
 <a name="Syntax_Ruby"></a>
 
-## Syntax_Ruby
+## [Syntax_Ruby](Muldis_Object_Notation_Syntax_Ruby.md)
 
-*TODO.*
+```
+    [:Syntax,[[:Lot,[:Muldis_Object_Notation_Ruby, "https://muldis.com", "0.300.0"]],
+        [:Model,[[:Lot,[:Muldis_Data_Language, "https://muldis.com", "0.300.0"]],
+            [:Relation,[:Lot,[
+                {name: "Jane Ives", birth_date: [:Calendar_Instant,{y:1971,m:11,d:6}],
+                    phone_numbers: [:Set,[:Lot,["+1.4045552995", "+1.7705557572"]]]},
+                {name: "Layla Miller", birth_date: [:Calendar_Instant,{y:1995,m:8,d:27}],
+                    phone_numbers: [:Set,[:Lot,[]]]},
+                {name: "岩倉 玲音", birth_date: [:Calendar_Instant,{y:1984,m:7,d:6}],
+                    phone_numbers: [:Set,[:Lot,["+81.9072391679"]]]},
+            ]]]
+        ]]
+    ]]
+```
 
 [RETURN](#TOP)
 

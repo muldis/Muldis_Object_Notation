@@ -96,7 +96,7 @@ This document consists of multiple parts:
 1. Syntax_Rust
 1. Syntax_Go
 1. [Syntax_ECMAScript](Muldis_Object_Notation_Syntax_ECMAScript.md)
-1. Syntax_Ruby
+1. [Syntax_Ruby](Muldis_Object_Notation_Syntax_Ruby.md)
 1. [Syntax_Python](Muldis_Object_Notation_Syntax_Python.md)
 1. [Syntax_PHP](Muldis_Object_Notation_Syntax_PHP.md)
 1. [Syntax_JSON](Muldis_Object_Notation_Syntax_JSON.md)
