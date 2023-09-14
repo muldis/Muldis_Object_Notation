@@ -354,7 +354,7 @@ once between all tuples.
 ## [Syntax_Python](Muldis_Object_Notation_Syntax_Python.md)
 
 ```
-    ("Syntax",(["Muldis_Object_Notation_Plain_Text", "https://muldis.com", "0.300.0"],
+    ("Syntax",(["Muldis_Object_Notation_Python", "https://muldis.com", "0.300.0"],
         ("Model",(["Muldis_Data_Language", "https://muldis.com", "0.300.0"],
             ("Relation",[
                 {"name" : "Jane Ives", "birth_date" : ("Calendar_Instant",{"y":1971,"m":11,"d":6}),

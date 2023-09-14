@@ -51,7 +51,7 @@ its part name is `Syntax_Python`.
 # SYNOPSIS
 
 ```
-    ("Syntax",(["Muldis_Object_Notation_Plain_Text", "https://muldis.com", "0.300.0"],
+    ("Syntax",(["Muldis_Object_Notation_Python", "https://muldis.com", "0.300.0"],
         ("Model",(["Muldis_Data_Language", "https://muldis.com", "0.300.0"],
             ("Relation",[
                 {"name" : "Jane Ives", "birth_date" : ("Calendar_Instant",{"y":1971,"m":11,"d":6}),
@@ -404,14 +404,16 @@ A *SYS_Non_Qualified_Kit* is any of the following:
 * Any *SYS_Ordered_Tuple_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
-this format can express any **Kit** which has only normalized ordered attributes;
+this format can express any **Kit** which has only normalized ordered attributes
+or which has zero attributes;
 this format is more concise than the general format
 and is equally concise with the other ordered-specific format.
 
 * Any *SYS_Array_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
-this format can express any **Kit** which has only normalized ordered attributes;
+this format can express any **Kit** which has only normalized ordered attributes
+or which has zero attributes;
 this format is more concise than the general format
 and is equally concise with the other ordered-specific format.
 
