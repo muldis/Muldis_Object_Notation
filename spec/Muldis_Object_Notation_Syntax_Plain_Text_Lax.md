@@ -57,7 +57,8 @@ its part name is `Syntax_Plain_Text_Lax`.
 
 # SYNOPSIS
 
-*No example provided as it would be identical to the MUON Plain Text (strict) version.*
+*No example provided as it would be identical to the MUON Plain Text (strict) version,
+except that the `Syntax` would say `Muldis_Object_Notation_Plain_Text_Lax`.*
 
 [RETURN](#TOP)
 
