@@ -22,7 +22,6 @@ its part name is `Syntax_Packed_Plain_Text`.
 - [NORMALIZATION](#NORMALIZATION)
     - [UNIX Shebang Interpreter Directive](#UNIX-Shebang-Interpreter-Directive)
     - [Script / Character Encoding](#Script---Character-Encoding)
-    - [Aggregate Self-Synchronization Mark](#Aggregate-Self-Synchronization-Mark)
 - [COMMON QUALITIES OF THE GRAMMAR](#COMMON-QUALITIES-OF-THE-GRAMMAR)
 - [PARSING UNIT](#PARSING-UNIT)
 - [DIVIDING SPACE](#DIVIDING-SPACE)
@@ -214,28 +213,6 @@ octets that don't correspond to printable ASCII characters or SPACE; the
 appearances of `\` are followed by a letter and represent themselves.
 Note that the use of `\HH` format may also be used in examples even where
 not required, as sometimes using it consistently actually aids readability.
-
-[RETURN](#TOP)
-
-<a name="Aggregate-Self-Synchronization-Mark"></a>
-
-## Aggregate Self-Synchronization Mark
-
-It is mandatory for every MUON parser to recognize the simple aggregation
-of multiple mutually independent *parsing unit* into a *parsing unit
-aggregate* such that each pair of consecutive components is separated by an
-*aggregate self-synchronization mark* (*assm*), which is this literal text:
-
-```
-    `Muldis_Object_Notation_Sync_Mark`
-```
-
-See the corresponding section of the MUON Syntax Plain Text documentation
-for rationale, which will not be repeated here.
-
-Examples:
-
-*TODO.*
 
 [RETURN](#TOP)
 
