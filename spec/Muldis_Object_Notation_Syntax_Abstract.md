@@ -501,7 +501,7 @@ Examples:
     0t0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\[0t0]"
+    "\(0t0)"
 
     `Another ordered nonquoted Text (or, the second ordered attribute).`
     0t1
@@ -515,7 +515,7 @@ Examples:
     "This isn't not escaped.\n"
 
     `Two characters specified in terms of Unicode code-point numbers.`
-    "\[0tx263A,0t65]"
+    "\(0tx263A)\(0t65)"
 
     `Same thing.`
     "\u263A\u0041"
@@ -657,7 +657,7 @@ Examples:
     {0t0: 53}
 
     `Same thing.`
-    {"\[0t0]": 53}
+    {"\(0t0)": 53}
 
     `Three named attributes.`
     {
@@ -1345,7 +1345,7 @@ Examples:
     (Heading:{0t0})
 
     `Same thing.`
-    (Heading:{"\[0t0]"})
+    (Heading:{"\(0t0)"})
 
     `Three named attributes.`
     (Heading:{region,revenue,qty})

@@ -849,7 +849,7 @@ Grammar:
 
     token escaped_char_cpt_seq
     {
-        '\\' ['[' ~ ']' [<code_point_text>* % ',']]
+        '\\' ['(' ~ ')' <code_point_text>]
     }
 
     token escaped_char_utf32_cpt_seq
@@ -934,11 +934,9 @@ terms of their Unicode code point number.  One benefit of these is to
 empower more elegant passing of Unicode-savvy MUON through a communications
 channel that is more limited, such as to 7-bit ASCII.
 
-An `<escaped_char_cpt_seq>` is the MUON-specific standard format, `\[...]`,
+An `<escaped_char_cpt_seq>` is the MUON-specific standard format, `\(...)`,
 that is the most consistent with the rest of MUON and supports writing
 a code point number in any of the numeric bases 2/8/10/16.
-This format also supports specifying a sequence of multiple characters at
-once, rather than just one, to aid brevity when there are a lot.
 
 An `<escaped_char_utf32_cpt_seq>` is an alternate format, `\U00HHHHHH`
 which denotes an unsigned 32-bit integer; it supports writing a code point
@@ -976,7 +974,7 @@ Examples:
     0t0
 
     `Same Text value (or, one ordered attr written in format of a named).`
-    "\[0t0]"
+    "\(0t0)"
 
     `Another ordered nonquoted Text (or, the second ordered attribute).`
     0t1
@@ -990,7 +988,7 @@ Examples:
     "This isn't not escaped.\n"
 
     `Two characters specified in terms of Unicode code-point numbers.`
-    "\[0tx263A,0t65]"
+    "\(0tx263A)\(0t65)"
 
     `Same thing.`
     "\u263A\u0041"
@@ -1238,7 +1236,7 @@ Examples:
     {0t0: 53}
 
     `Same thing.`
-    {"\[0t0]": 53}
+    {"\(0t0)": 53}
 
     `Three named attributes.`
     {

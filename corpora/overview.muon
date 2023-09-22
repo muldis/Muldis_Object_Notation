@@ -126,7 +126,7 @@
 0t0
 `Muldis_Object_Notation_Sync_Mark`
 `Same Text value (or, one ordered attr written in format of a named).`
-"\[0t0]"
+"\(0t0)"
 `Muldis_Object_Notation_Sync_Mark`
 `Another ordered nonquoted Text (or, the second ordered attribute).`
 0t1
@@ -140,7 +140,7 @@ Ceres
 "This isn't not escaped.\n"
 `Muldis_Object_Notation_Sync_Mark`
 `Two characters specified in terms of Unicode code-point numbers.`
-"\[0tx263A,0t65]"
+"\(0tx263A)\(0t65)"
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
 "\u263A\u0041"
@@ -216,7 +216,7 @@ the_db::stats::"samples by order"
 {0t0: 53}
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-{"\[0t0]": 53}
+{"\(0t0)": 53}
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes.`
 {
@@ -568,7 +568,7 @@ No_Such_Attr_Name!{}
 (Heading:{0t0})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Heading:{"\[0t0]"})
+(Heading:{"\(0t0)"})
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes.`
 (Heading:{region,revenue,qty})

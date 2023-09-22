@@ -1324,7 +1324,7 @@ Examples:
     `Same thing (3 octets).`
     T""
 
-    `The 1-character UTF-8 string 0t0 or "\[0t0]" (1 octet);`
+    `The 1-character UTF-8 string 0t0 or "\(0t0)" (1 octet);`
     `also known as the first ordered attribute name.`
     \00
 
@@ -1334,7 +1334,7 @@ Examples:
     `Same thing (4 octets).`
     T"\00"
 
-    `The 1-character UTF-8 string 0t1 or "\[0t1]" (1 octet);`
+    `The 1-character UTF-8 string 0t1 or "\(0t1)" (1 octet);`
     `also known as the second ordered attribute name.`
     \01
 
@@ -1362,7 +1362,7 @@ Examples:
     `A 24 character UTF-8 string (27 octets).`
     T"This isn't not escaped.\0A"
 
-    `The 2-character UTF-8 string "\[0tx263A,0t65]" (5 octets).`
+    `The 2-character UTF-8 string "\(0tx263A)\(0t65)" (5 octets).`
     x\E2\98\BA\41
 
     `Same thing (7 octets).`

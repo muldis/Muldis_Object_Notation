@@ -230,7 +230,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token escaped_char_cpt_seq
     {
-        '\\' ['[' ~ ']' [<code_point_text>* % ',']]
+        '\\' ['(' ~ ')' <code_point_text>]
     }
 
     token escaped_char_utf32_cpt_seq
