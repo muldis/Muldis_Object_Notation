@@ -130,7 +130,6 @@ Folding Algebraic:
 
 - **Fractional**
 - **Nesty**
-- Relational: **Heady**, **Renamey**, **Tupley**
 
 Simple Primary:
 

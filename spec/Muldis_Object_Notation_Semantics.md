@@ -25,9 +25,6 @@ its part name is `Semantics`.
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
     - [Nesty](#Nesty)
-    - [Heady](#Heady)
-    - [Renamey](#Renamey)
-    - [Tupley](#Tupley)
 - [SIMPLE PRIMARY DATA TYPE POSSREPS](#SIMPLE-PRIMARY-DATA-TYPE-POSSREPS)
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
@@ -158,11 +155,10 @@ would also accept an artifact of possrep Y when it is already the case that
 an artifact of possrep X can optionally be defined wholly in terms of an
 artifact of possrep Y; in that case, an explicit Y by itself is is an
 implicit X that will be produced from Y.
-There are exactly 5 of these:
+There are exactly 2 of these:
 
 - **Fractional**
 - **Nesty**
-- Relational: **Heady**, **Renamey**, **Tupley**
 
 *Some of the above may be renamed to read more nicely.*
 
@@ -292,36 +288,6 @@ The **Nesty** possrep is the union of the **Nesting** and **Text**
 possreps.  It is used where a context may conceptually require a **Nesting**
 but it would also accept a **Text** that would be interpreted as the
 single-element **Nesting** artifact whose element is that **Text**.
-
-[RETURN](#TOP)
-
-<a name="Heady"></a>
-
-## Heady
-
-The **Heady** possrep is the union of the **Heading** and **Kit**
-possreps.  It is used where a context may conceptually require a **Heading**
-but it would also accept a **Kit** that would be interpreted as the former.
-
-[RETURN](#TOP)
-
-<a name="Renamey"></a>
-
-## Renamey
-
-The **Renamey** possrep is the union of the **Renaming** and **Kit**
-possreps.  It is used where a context may conceptually require a **Renaming**
-but it would also accept a **Kit** that would be interpreted as the former.
-
-[RETURN](#TOP)
-
-<a name="Tupley"></a>
-
-## Tupley
-
-The **Tupley** possrep is the union of the **Tuple** and **Kit**
-possreps.  It is used where a context may conceptually require a **Tuple**
-but it would also accept a **Kit** that would be interpreted as the former.
 
 [RETURN](#TOP)
 

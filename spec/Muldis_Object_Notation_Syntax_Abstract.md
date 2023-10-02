@@ -26,9 +26,6 @@ its part name is `Syntax_Abstract`.
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
     - [Nesty](#Nesty)
-    - [Heady](#Heady)
-    - [Renamey](#Renamey)
-    - [Tupley](#Tupley)
 - [SIMPLE PRIMARY DATA TYPE POSSREPS](#SIMPLE-PRIMARY-DATA-TYPE-POSSREPS)
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
@@ -199,45 +196,6 @@ A context explicitly requiring any **Nesty** artifact implicitly requires
 any **Nesting** artifact; when a **Text** artifact is instead given,
 then the proper interpretation is as if a single-element **Nesting** artifact was
 actually given whose element was the same as that **Text**.
-
-[RETURN](#TOP)
-
-<a name="Heady"></a>
-
-## Heady
-
-A **Heady** artifact is an artifact that qualifies as either
-any **Heading** artifact or as any **Kit** artifact.
-A context explicitly requiring any **Heady** artifact implicitly requires
-any **Heading** artifact; when a **Kit** artifact is instead given,
-then the proper interpretation is as if a **Heading** artifact was
-actually given whose subject was that **Kit**.
-
-[RETURN](#TOP)
-
-<a name="Renamey"></a>
-
-## Renamey
-
-A **Renamey** artifact is an artifact that qualifies as either
-any **Renaming** artifact or as any **Kit** artifact.
-A context explicitly requiring any **Renamey** artifact implicitly requires
-any **Renaming** artifact; when a **Kit** artifact is instead given,
-then the proper interpretation is as if a **Renaming** artifact was
-actually given whose subject was that **Kit**.
-
-[RETURN](#TOP)
-
-<a name="Tupley"></a>
-
-## Tupley
-
-A **Tupley** artifact is an artifact that qualifies as either
-any **Tuple** artifact or as any **Kit** artifact.
-A context explicitly requiring any **Tupley** artifact implicitly requires
-any **Tuple** artifact; when a **Kit** artifact is instead given,
-then the proper interpretation is as if a **Tuple** artifact was
-actually given whose subject was that **Kit**.
 
 [RETURN](#TOP)
 
@@ -1395,7 +1353,7 @@ a **Tuple** where the attribute names and assets appear interleaved.
 
 * Any **Duo** artifact such that its *this* and *that* correspond to the
 *heading* and *body* of the new **Tuple** respectively, and its *that* is
-any **Tupley** artifact, and its *this* is any **Renamey** artifact such
+any **Tuple** subject, and its *this* is any **Renaming** subject such
 that its set of *name before* is identical to the set of attribute names of
 *that*.  This is the idiomatic format for specifying a **Tuple** where all
 the attribute names appear first and then all the corresponding attribute
@@ -1484,12 +1442,12 @@ A **Relation** artifact has the predicate `Relation`.
 
 Its subject is any of the following:
 
-* Any **Heady** artifact, which denotes the *heading* of the
+* Any **Heading** subject, which denotes the *heading* of the
 **Relation**, and the *body* of the **Relation** has zero tuples.
 This is the idiomatic format for an empty (zero-tuple) **Relation**.
 
-* Any **Set** subject such that every *member* is a **Tupley**
-artifact, and the count of its members is at least 1, and no 2 members have
+* Any **Set** subject such that every *member* is a **Tuple**
+subject, and the count of its members is at least 1, and no 2 members have
 different *headings*.  The *members* of the **Set** subject denote the *body* or
 *members* of the **Relation**, and any one *member* also denotes the
 *heading* of the **Relation**.  This is the idiomatic format for specifying
@@ -1499,7 +1457,7 @@ repeat for every tuple.
 * Any **Duo** artifact such that its *this* and *that* correspond to the
 *heading* and *body* of the new **Relation** respectively, and its *that*
 is any **Set** subject per the prior bullet point but that it may have
-zero members, and its *this* is any **Renamey** artifact such that its set
+zero members, and its *this* is any **Renaming** subject such that its set
 of *name before* is identical to the set of attribute names in every
 *member* of *that*.  This is the idiomatic format for specifying a
 **Relation** where the attribute names just appear once and are shared for
