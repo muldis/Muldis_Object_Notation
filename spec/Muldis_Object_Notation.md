@@ -129,7 +129,6 @@ Critical Algebraic:
 Folding Algebraic:
 
 - **Fractional**
-- **Nesty**
 
 Simple Primary:
 

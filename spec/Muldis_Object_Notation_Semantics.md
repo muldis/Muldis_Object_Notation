@@ -24,7 +24,6 @@ its part name is `Semantics`.
     - [None / Empty Type Possrep](#None---Empty-Type-Possrep)
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
-    - [Nesty](#Nesty)
 - [SIMPLE PRIMARY DATA TYPE POSSREPS](#SIMPLE-PRIMARY-DATA-TYPE-POSSREPS)
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
@@ -155,10 +154,9 @@ would also accept an artifact of possrep Y when it is already the case that
 an artifact of possrep X can optionally be defined wholly in terms of an
 artifact of possrep Y; in that case, an explicit Y by itself is is an
 implicit X that will be produced from Y.
-There are exactly 2 of these:
+There is exactly 1 of these:
 
 - **Fractional**
-- **Nesty**
 
 *Some of the above may be renamed to read more nicely.*
 
@@ -277,17 +275,6 @@ The **Fractional** possrep is the union of the **Fraction** and **Integer**
 possreps.  It is used where a context may conceptually require a **Fraction**
 but it would also accept an **Integer** that would be interpreted as the
 **Fraction** artifact with the same numeric value.
-
-[RETURN](#TOP)
-
-<a name="Nesty"></a>
-
-## Nesty
-
-The **Nesty** possrep is the union of the **Nesting** and **Text**
-possreps.  It is used where a context may conceptually require a **Nesting**
-but it would also accept a **Text** that would be interpreted as the
-single-element **Nesting** artifact whose element is that **Text**.
 
 [RETURN](#TOP)
 

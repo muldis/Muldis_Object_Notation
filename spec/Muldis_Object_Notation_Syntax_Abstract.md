@@ -25,7 +25,6 @@ its part name is `Syntax_Abstract`.
     - [None / Empty Type Possrep](#None---Empty-Type-Possrep)
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
-    - [Nesty](#Nesty)
 - [SIMPLE PRIMARY DATA TYPE POSSREPS](#SIMPLE-PRIMARY-DATA-TYPE-POSSREPS)
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
@@ -183,19 +182,6 @@ A context explicitly requiring any **Fractional** artifact implicitly requires
 any **Fraction** artifact; when an **Integer** artifact is instead given,
 then the proper interpretation is as if a **Fraction** artifact was
 actually given whose numeric value was the same as that **Integer**.
-
-[RETURN](#TOP)
-
-<a name="Nesty"></a>
-
-## Nesty
-
-A **Nesty** artifact is an artifact that qualifies as either
-any **Nesting** artifact or as any **Text** artifact.
-A context explicitly requiring any **Nesty** artifact implicitly requires
-any **Nesting** artifact; when a **Text** artifact is instead given,
-then the proper interpretation is as if a single-element **Nesting** artifact was
-actually given whose element was the same as that **Text**.
 
 [RETURN](#TOP)
 
@@ -599,7 +585,9 @@ Examples:
 ## Article / Labelled Tuple
 
 An **Article** artifact is an ordered collection having exactly 2 elements
-which in order are named *label* (any **Nesty** artifact)
+which in order are named *label* (any **Nesting** artifact,
+or any **Text** artifact which would be interpreted as a single-element
+**Nesting** artifact whose element is the same as that **Text**)
 and *attributes* (any **Kit** artifact).
 
 Examples:
@@ -634,7 +622,9 @@ Examples:
 ## Excuse
 
 An **Excuse** artifact is an ordered collection having exactly 2 elements
-which in order are named *label* (any **Nesty** artifact)
+which in order are named *label* (any **Nesting** artifact,
+or any **Text** artifact which would be interpreted as a single-element
+**Nesting** artifact whose element is the same as that **Text**)
 and *attributes* (any **Kit** artifact).
 
 Examples:
