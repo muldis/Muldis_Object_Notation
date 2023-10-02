@@ -1109,10 +1109,10 @@ value with a *syntax subject* value, such that the former describes the latter.
 A *syntax predicate* consists of, in order, the *syntax base name*,
 *authority* and *version number* of the fully-qualified name of the
 language syntax specification, or faked stand-in name,
-that the *syntax subject*, or the *value* as a whole, conforms to.
+that the *syntax subject*, or the **Syntax** value as a whole, conforms to.
 
-There may be multiple **Syntax**; when this is the case,
-it means the *value* conforms to every one of those syntaxes,
+There may be multiple nested **Syntax**; when this is the case,
+it means the most-nested *syntax subject* conforms to every one of those syntaxes,
 typically because only the lowest common denominators of said were used.
 
 [RETURN](#TOP)
@@ -1127,11 +1127,11 @@ value with a *model subject* value, such that the former describes the latter.
 A *model predicate* consists of, in order, the *data model base name*,
 *authority* and *version number* of the fully-qualified name of the
 data model or type system specification, or faked stand-in name,
-that the *model subject*, or the *value* as a whole, represents values of,
+that the *model subject*, or the **Model** value as a whole, represents values of,
 and influences what specific data types a parser maps data to.
 
-There may be multiple **Model**; when this is the case,
-it means the *value* conforms to every one of those data models,
+There may be multiple nested **Model**; when this is the case,
+it means the most-nested *model subject* conforms to every one of those data models,
 typically because only the lowest common denominators of said were used.
 
 [RETURN](#TOP)

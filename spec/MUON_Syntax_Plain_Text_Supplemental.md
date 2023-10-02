@@ -472,9 +472,9 @@ A **Script** value is characterized by the pairing of a *script predicate*
 value with a *script subject* value, such that the former describes the latter.
 
 A *script predicate* is a declaration of the primary *script* of (typically)
-the *value* as a whole, meaning its character repertoire and/or character
+the **Script** value as a whole, meaning its character repertoire and/or character
 encoding and/or character normalization.  Under the assumption that a
-parser might be reading the *value* as binary data or otherwise as
+parser might be reading the *script subject* as binary data or otherwise as
 unnormalized character data, declaring the **Script** makes it completely
 unambiguous as to what characters it is to be treating the input as.
 
@@ -497,8 +497,8 @@ declaring the same encoding that the **Script** is itself written in, and
 then from that point it would expect the whole file to be that declared
 encoding or it would consider the source code invalid.
 
-There may be multiple **Script**; when this is the case,
-it means the *value* conforms to every one of those scripts,
+There may be multiple nested **Script**; when this is the case,
+it means the most-nested *script subject* conforms to every one of those scripts,
 typically because only the common subsets of said were used.
 
 [RETURN](#TOP)
