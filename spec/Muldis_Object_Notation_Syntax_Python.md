@@ -78,7 +78,7 @@ This part of the **Muldis Object Notation** document specifies the
 canonical concrete Python hosted syntax of MUON,
 which expresses a MUON artifact in terms of a native in-memory value or
 object of the Python programming language,
-version 3.11 (2022; or 3.7, 2018) or later,
+version 3.12 (2023; or 3.7, 2018) or later,
 as a non-cyclic data structure composed only using system-defined types.
 
 The MUON `Syntax_Python` is derived from and maps with the MUON
