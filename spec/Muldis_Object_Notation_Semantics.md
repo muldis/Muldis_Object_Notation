@@ -158,8 +158,6 @@ There is exactly 1 of these:
 
 - **Fractional**
 
-*Some of the above may be renamed to read more nicely.*
-
 A *primary possrep* is a member of the reasonable minimum set of MUON
 possreps that bootstraps every syntax.  Each one is of exactly one of these
 2 kinds:  *simple primary possrep*, *collective primary possrep*.
@@ -225,6 +223,29 @@ These 0 secondary possreps are specifically for defining program source
 code and are not for defining regular data:
 
 *More secondary possreps will be added corresponding to program source code.*
+
+These 18 secondary possreps are not yet part of MUON and are representative
+of ones that are intended to be added, that are specifically for defining
+program source code and are not for defining regular data:
+
+- **Procedure**
+- **Function**
+- **Type**
+- **Signature**
+- **Priming**
+- **Call**
+- **Literal**
+- **Args**
+- **Attr**
+- **If_Then_Else**
+- **Given_When_Default**
+- **Guard**
+- **Vars**
+- **New**
+- **Current**
+- **Assign**
+- **Comment**
+- **Annotation**
 
 [RETURN](#TOP)
 

@@ -166,6 +166,27 @@ Source Code Defining Secondary:
 
 *None yet.*
 
+Example Potential Source Code Defining Secondary:
+
+- **Procedure**
+- **Function**
+- **Type**
+- **Signature**
+- **Priming**
+- **Call**
+- **Literal**
+- **Args**
+- **Attr**
+- **If_Then_Else**
+- **Given_When_Default**
+- **Guard**
+- **Vars**
+- **New**
+- **Current**
+- **Assign**
+- **Comment**
+- **Annotation**
+
 See [Semantics](Muldis_Object_Notation_Semantics.md) for details.
 
 [RETURN](#TOP)
