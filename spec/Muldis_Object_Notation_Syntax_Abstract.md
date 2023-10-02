@@ -26,9 +26,6 @@ its part name is `Syntax_Abstract`.
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
     - [Nesty](#Nesty)
-    - [Arrayish](#Arrayish)
-    - [Setty](#Setty)
-    - [Baggy](#Baggy)
     - [Heady](#Heady)
     - [Renamey](#Renamey)
     - [Tupley](#Tupley)
@@ -202,45 +199,6 @@ A context explicitly requiring any **Nesty** artifact implicitly requires
 any **Nesting** artifact; when a **Text** artifact is instead given,
 then the proper interpretation is as if a single-element **Nesting** artifact was
 actually given whose element was the same as that **Text**.
-
-[RETURN](#TOP)
-
-<a name="Arrayish"></a>
-
-## Arrayish
-
-A **Arrayish** artifact is an artifact that qualifies as either
-any **Array** artifact or as any **Lot** artifact.
-A context explicitly requiring any **Arrayish** artifact implicitly requires
-any **Array** artifact; when a **Lot** artifact is instead given,
-then the proper interpretation is as if a **Array** artifact was
-actually given whose subject was that **Lot**.
-
-[RETURN](#TOP)
-
-<a name="Setty"></a>
-
-## Setty
-
-A **Setty** artifact is an artifact that qualifies as either
-any **Set** artifact or as any **Lot** artifact.
-A context explicitly requiring any **Setty** artifact implicitly requires
-any **Set** artifact; when a **Lot** artifact is instead given,
-then the proper interpretation is as if a **Set** artifact was
-actually given whose subject was that **Lot**.
-
-[RETURN](#TOP)
-
-<a name="Baggy"></a>
-
-## Baggy
-
-A **Baggy** artifact is an artifact that qualifies as either
-any **Bag** artifact or as any **Lot** artifact.
-A context explicitly requiring any **Baggy** artifact implicitly requires
-any **Bag** artifact; when a **Lot** artifact is instead given,
-then the proper interpretation is as if a **Bag** artifact was
-actually given whose subject was that **Lot**.
 
 [RETURN](#TOP)
 
@@ -1198,8 +1156,7 @@ An **Interval Set** artifact has the predicate `Interval_Set`.
 
 Its subject is any of the following:
 
-* Any **Setty** artifact such that every one of its *members* is an
-**Interval** artifact.
+* Any **Set** subject such that every *member* is an **Interval** artifact.
 
 Examples:
 
@@ -1253,8 +1210,8 @@ An **Interval Bag** artifact has the predicate `Interval_Bag`.
 
 Its subject is any of the following:
 
-* Any **Interval Set** subject but that any **Baggy** artifact is used in
-place of the specified any **Setty** artifact.
+* Any **Interval Set** subject but that any **Bag** subject is used in
+place of the specified any **Set** subject.
 
 Examples:
 
@@ -1485,8 +1442,8 @@ A **Tuple Array** artifact has the predicate `Tuple_Array`.
 
 Its subject is any of the following:
 
-* Any **Relation** subject but that any **Arrayish** artifact is used in
-place of the specified any **Setty** artifact.
+* Any **Relation** subject but that any **Array** subject is used in
+place of the specified any **Set** subject.
 
 Examples:
 
@@ -1531,9 +1488,9 @@ Its subject is any of the following:
 **Relation**, and the *body* of the **Relation** has zero tuples.
 This is the idiomatic format for an empty (zero-tuple) **Relation**.
 
-* Any **Setty** artifact such that every one of its *members* is a **Tupley**
+* Any **Set** subject such that every *member* is a **Tupley**
 artifact, and the count of its members is at least 1, and no 2 members have
-different *headings*.  The *members* of the **Setty** denote the *body* or
+different *headings*.  The *members* of the **Set** subject denote the *body* or
 *members* of the **Relation**, and any one *member* also denotes the
 *heading* of the **Relation**.  This is the idiomatic format for specifying
 a non-empty (at least one tuple) **Relation** where the attribute names
@@ -1541,13 +1498,13 @@ repeat for every tuple.
 
 * Any **Duo** artifact such that its *this* and *that* correspond to the
 *heading* and *body* of the new **Relation** respectively, and its *that*
-is any **Setty** artifact per the prior bullet point but that it may have
+is any **Set** subject per the prior bullet point but that it may have
 zero members, and its *this* is any **Renamey** artifact such that its set
 of *name before* is identical to the set of attribute names in every
 *member* of *that*.  This is the idiomatic format for specifying a
 **Relation** where the attribute names just appear once and are shared for
 every tuple, like in a terse columnar table format; it is expected the
-normal use case of this format is that every **Setty** member only has
+normal use case of this format is that every **Set** subject member only has
 positional attributes and the **Renaming** is effectively giving them
 non-positional names.
 
@@ -1624,8 +1581,8 @@ A **Tuple Bag** artifact has the predicate `Tuple_Bag`.
 
 Its subject is any of the following:
 
-* Any **Relation** subject but that any **Baggy** artifact is used in
-place of the specified any **Setty** artifact.
+* Any **Relation** subject but that any **Bag** subject is used in
+place of the specified any **Set** subject.
 
 Examples:
 
@@ -1675,7 +1632,7 @@ Its subject is any of the following:
 
 * Any **Duo** artifact such that its *this* and *that*
 are the *syntax predicate* and *syntax subject* respectively;
-the *syntax predicate* is any **Arrayish** artifact
+the *syntax predicate* is any **Lot** artifact
 that typically consists of 3 **Text** artifacts;
 the *syntax subject* is any **Any** artifact.
 
@@ -1703,7 +1660,7 @@ Its subject is any of the following:
 
 * Any **Duo** artifact such that its *this* and *that*
 are the *model predicate* and *model subject* respectively;
-the *model predicate* is any **Arrayish** artifact
+the *model predicate* is any **Lot** artifact
 that typically consists of 3 **Text** artifacts;
 the *model subject* is any **Any** artifact.
 

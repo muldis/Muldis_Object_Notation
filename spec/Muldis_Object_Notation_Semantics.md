@@ -25,9 +25,6 @@ its part name is `Semantics`.
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
     - [Nesty](#Nesty)
-    - [Arrayish](#Arrayish)
-    - [Setty](#Setty)
-    - [Baggy](#Baggy)
     - [Heady](#Heady)
     - [Renamey](#Renamey)
     - [Tupley](#Tupley)
@@ -161,11 +158,10 @@ would also accept an artifact of possrep Y when it is already the case that
 an artifact of possrep X can optionally be defined wholly in terms of an
 artifact of possrep Y; in that case, an explicit Y by itself is is an
 implicit X that will be produced from Y.
-There are exactly 8 of these:
+There are exactly 5 of these:
 
 - **Fractional**
 - **Nesty**
-- Discrete: **Arrayish**, **Setty**, **Baggy**
 - Relational: **Heady**, **Renamey**, **Tupley**
 
 *Some of the above may be renamed to read more nicely.*
@@ -296,36 +292,6 @@ The **Nesty** possrep is the union of the **Nesting** and **Text**
 possreps.  It is used where a context may conceptually require a **Nesting**
 but it would also accept a **Text** that would be interpreted as the
 single-element **Nesting** artifact whose element is that **Text**.
-
-[RETURN](#TOP)
-
-<a name="Arrayish"></a>
-
-## Arrayish
-
-The **Arrayish** possrep is the union of the **Array** and **Lot**
-possreps.  It is used where a context may conceptually require an **Array**
-but it would also accept a **Lot** that would be interpreted as the former.
-
-[RETURN](#TOP)
-
-<a name="Setty"></a>
-
-## Setty
-
-The **Setty** possrep is the union of the **Set** and **Lot**
-possreps.  It is used where a context may conceptually require a **Set**
-but it would also accept a **Lot** that would be interpreted as the former.
-
-[RETURN](#TOP)
-
-<a name="Baggy"></a>
-
-## Baggy
-
-The **Baggy** possrep is the union of the **Bag** and **Lot**
-possreps.  It is used where a context may conceptually require a **Bag**
-but it would also accept a **Lot** that would be interpreted as the former.
 
 [RETURN](#TOP)
 
