@@ -234,9 +234,9 @@ the_db::stats::"samples by order"
 `A non-Latin name.`
 {"サンプル": "https://example.com"}
 `Muldis_Object_Notation_Sync_Mark`
-Point*{x : 5, y : 3}
+::Point*{x : 5, y : 3}
 `Muldis_Object_Notation_Sync_Mark`
-Float*{
+::Float*{
     significand : 45207196,
     radix       : 10,
     exponent    : 37,
@@ -251,15 +251,15 @@ the_db::UTC_Date_Time*{
     second : 0.0,
 }
 `Muldis_Object_Notation_Sync_Mark`
-Positive_Infinity*{}
+::Positive_Infinity*{}
 `Muldis_Object_Notation_Sync_Mark`
-Negative_Zero*{}
+::Negative_Zero*{}
 `Muldis_Object_Notation_Sync_Mark`
-Input_Field_Wrong!{name : "Your Age"}
+::Input_Field_Wrong!{name : "Your Age"}
 `Muldis_Object_Notation_Sync_Mark`
-Div_By_Zero!{}
+::Div_By_Zero!{}
 `Muldis_Object_Notation_Sync_Mark`
-No_Such_Attr_Name!{}
+::No_Such_Attr_Name!{}
 `Muldis_Object_Notation_Sync_Mark`
 `No measurement was taken or specified at all.`
 (Calendar_Time:{})

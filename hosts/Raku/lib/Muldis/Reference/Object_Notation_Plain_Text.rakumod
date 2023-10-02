@@ -361,7 +361,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token label
     {
-        <Nesting> | <Text>
+        <Nesting>
     }
 
     token attrs

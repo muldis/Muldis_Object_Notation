@@ -1274,7 +1274,7 @@ Grammar:
 
     token label
     {
-        <Nesting> | <Text>
+        <Nesting>
     }
 
     token attrs
@@ -1286,9 +1286,9 @@ Grammar:
 Examples:
 
 ```
-    Point*{x : 5, y : 3}
+    ::Point*{x : 5, y : 3}
 
-    Float*{
+    ::Float*{
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
@@ -1303,9 +1303,9 @@ Examples:
         second : 0.0,
     }
 
-    Positive_Infinity*{}
+    ::Positive_Infinity*{}
 
-    Negative_Zero*{}
+    ::Negative_Zero*{}
 ```
 
 [RETURN](#TOP)
@@ -1329,11 +1329,11 @@ Grammar:
 Examples:
 
 ```
-    Input_Field_Wrong!{name : "Your Age"}
+    ::Input_Field_Wrong!{name : "Your Age"}
 
-    Div_By_Zero!{}
+    ::Div_By_Zero!{}
 
-    No_Such_Attr_Name!{}
+    ::No_Such_Attr_Name!{}
 ```
 
 [RETURN](#TOP)
@@ -1376,8 +1376,8 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Duo             | (...)
     Lot             | only [] or [...]
     Kit             | only {} or {...}
-    Article         | * between a Nesting|Text and a Kit in that order
-    Excuse          | ! between a Nesting|Text and a Kit in that order
+    Article         | * between a Nesting and a Kit in that order
+    Excuse          | ! between a Nesting and a Kit in that order
 ```
 
 [RETURN](#TOP)

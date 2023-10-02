@@ -585,17 +585,15 @@ Examples:
 ## Article / Labelled Tuple
 
 An **Article** artifact is an ordered collection having exactly 2 elements
-which in order are named *label* (any **Nesting** artifact,
-or any **Text** artifact which would be interpreted as a single-element
-**Nesting** artifact whose element is the same as that **Text**)
+which in order are named *label* (any **Nesting** artifact)
 and *attributes* (any **Kit** artifact).
 
 Examples:
 
 ```
-    Point*{x : 5, y : 3}
+    ::Point*{x : 5, y : 3}
 
-    Float*{
+    ::Float*{
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
@@ -610,9 +608,9 @@ Examples:
         second : 0.0,
     }
 
-    Positive_Infinity*{}
+    ::Positive_Infinity*{}
 
-    Negative_Zero*{}
+    ::Negative_Zero*{}
 ```
 
 [RETURN](#TOP)
@@ -622,19 +620,17 @@ Examples:
 ## Excuse
 
 An **Excuse** artifact is an ordered collection having exactly 2 elements
-which in order are named *label* (any **Nesting** artifact,
-or any **Text** artifact which would be interpreted as a single-element
-**Nesting** artifact whose element is the same as that **Text**)
+which in order are named *label* (any **Nesting** artifact)
 and *attributes* (any **Kit** artifact).
 
 Examples:
 
 ```
-    Input_Field_Wrong!{name : "Your Age"}
+    ::Input_Field_Wrong!{name : "Your Age"}
 
-    Div_By_Zero!{}
+    ::Div_By_Zero!{}
 
-    No_Such_Attr_Name!{}
+    ::No_Such_Attr_Name!{}
 ```
 
 [RETURN](#TOP)

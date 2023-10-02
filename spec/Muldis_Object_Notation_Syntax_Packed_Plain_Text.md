@@ -1653,7 +1653,7 @@ Grammar:
 
     token label
     {
-        <Nesting> | <Text>
+        <Nesting>
     }
 
     token attrs
