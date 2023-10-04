@@ -484,61 +484,46 @@ the_db::UTC_Date_Time*{
 (Interval_Set:[])
 `Muldis_Object_Notation_Sync_Mark`
 `Unit interval-set (one member).`
-(Interval_Set:[(Interval:("":abc))])
+(Interval_Set:[("":abc)])
 `Muldis_Object_Notation_Sync_Mark`
 `Probably 10 members, depending on the model used.`
-(Interval_Set:[(Interval:("<=*<=":(1:10)))])
+(Interval_Set:[("<=*<=":(1:10))])
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Interval_Set:[(Interval:("..":(1:10)))])
+(Interval_Set:[("..":(1:10))])
 `Muldis_Object_Notation_Sync_Mark`
 `Probably 6 members.`
-(Interval_Set:[
-    (Interval:("..":(1:3))),
-    (Interval:(""  :6    )),
-    (Interval:("..":(8:9))),
-])
+(Interval_Set:[("..":(1:3)),("":6),("..":(8:9))])
 `Muldis_Object_Notation_Sync_Mark`
 `Every Integer x except for [4..13,22..28]`
-(Interval_Set:[*<=3,(Interval:("..":(14:21))),29<=*])
+(Interval_Set:[("*<=":3),("..":(14:21)),("<=*":29)])
 `Muldis_Object_Notation_Sync_Mark`
 `Set of all valid Unicode code points.`
-(Interval_Set:[
-    (Interval:("..":(     0:  0xD7FF))),
-    (Interval:("..":(0xE000:0x10FFFF))),
-])
+(Interval_Set:[("..":(0:0xD7FF)),("..":(0xE000:0x10FFFF))])
 `Muldis_Object_Notation_Sync_Mark`
 `Probably 15 members (no duplicates), depending on the model used.`
-(Interval_Set:[(Interval:("..":(1:10))),(Interval:("..":(6:15)))])
+(Interval_Set:[("..":(1:10)),("..":(6:15))])
 `Muldis_Object_Notation_Sync_Mark`
 `Probably same thing, regardless of data model used.`
-(Interval_Set:[
-    (Interval:("<=*<":( 1: 6)))  ,
-    (Interval:(".."  :( 6:10))):2,
-    (Interval:("<*<=":(10:15)))  ,
-])
+(Interval_Set:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
 `Muldis_Object_Notation_Sync_Mark`
 `Empty interval-bag (zero members).`
 (Interval_Bag:[])
 `Muldis_Object_Notation_Sync_Mark`
 `Unit interval-bag (one member).`
-(Interval_Bag:[(Interval:("":abc))])
+(Interval_Bag:[("":abc)])
 `Muldis_Object_Notation_Sync_Mark`
 `Five members (4 duplicates).`
-(Interval_Bag:[(Interval:("":def)):5])
+(Interval_Bag:[("":def):5])
 `Muldis_Object_Notation_Sync_Mark`
 `Probably 20 members (5 duplicates), depending on the model used.`
-(Interval_Bag:[(Interval:("<=*<=":(1:10))),(Interval:("<=*<=":(6:15)))])
+(Interval_Bag:[("<=*<=":(1:10)),("<=*<=":(6:15))])
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Interval_Bag:[(Interval:("..":(1:10))),(Interval:("..":(6:15)))])
+(Interval_Bag:[("..":(1:10)),("..":(6:15))])
 `Muldis_Object_Notation_Sync_Mark`
 `Probably same thing, regardless of data model used.`
-(Interval_Bag:[
-    (Interval:("<=*<":( 1: 6)))  ,
-    (Interval:(".."  :( 6:10))):2,
-    (Interval:("<*<=":(10:15)))  ,
-])
+(Interval_Bag:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
 `Muldis_Object_Notation_Sync_Mark`
 `Pair of Integer.`
 (Pair:(5: -3))

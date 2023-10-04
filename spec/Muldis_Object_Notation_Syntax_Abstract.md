@@ -1100,7 +1100,7 @@ An **Interval Set** artifact has the predicate `Interval_Set`.
 
 Its subject is any of the following:
 
-* Any **Set** subject such that every *member* is an **Interval** artifact.
+* Any **Set** subject such that every *member* is an **Interval** subject.
 
 Examples:
 
@@ -1109,39 +1109,28 @@ Examples:
     (Interval_Set:[])
 
     `Unit interval-set (one member).`
-    (Interval_Set:[(Interval:("":abc))])
+    (Interval_Set:[("":abc)])
 
     `Probably 10 members, depending on the model used.`
-    (Interval_Set:[(Interval:("<=*<=":(1:10)))])
+    (Interval_Set:[("<=*<=":(1:10))])
 
     `Same thing.`
-    (Interval_Set:[(Interval:("..":(1:10)))])
+    (Interval_Set:[("..":(1:10))])
 
     `Probably 6 members.`
-    (Interval_Set:[
-        (Interval:("..":(1:3))),
-        (Interval:(""  :6    )),
-        (Interval:("..":(8:9))),
-    ])
+    (Interval_Set:[("..":(1:3)),("":6),("..":(8:9))])
 
     `Every Integer x except for [4..13,22..28]`
-    (Interval_Set:[*<=3,(Interval:("..":(14:21))),29<=*])
+    (Interval_Set:[("*<=":3),("..":(14:21)),("<=*":29)])
 
     `Set of all valid Unicode code points.`
-    (Interval_Set:[
-        (Interval:("..":(     0:  0xD7FF))),
-        (Interval:("..":(0xE000:0x10FFFF))),
-    ])
+    (Interval_Set:[("..":(0:0xD7FF)),("..":(0xE000:0x10FFFF))])
 
     `Probably 15 members (no duplicates), depending on the model used.`
-    (Interval_Set:[(Interval:("..":(1:10))),(Interval:("..":(6:15)))])
+    (Interval_Set:[("..":(1:10)),("..":(6:15))])
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Set:[
-        (Interval:("<=*<":( 1: 6)))  ,
-        (Interval:(".."  :( 6:10))):2,
-        (Interval:("<*<=":(10:15)))  ,
-    ])
+    (Interval_Set:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
 ```
 
 [RETURN](#TOP)
@@ -1164,23 +1153,19 @@ Examples:
     (Interval_Bag:[])
 
     `Unit interval-bag (one member).`
-    (Interval_Bag:[(Interval:("":abc))])
+    (Interval_Bag:[("":abc)])
 
     `Five members (4 duplicates).`
-    (Interval_Bag:[(Interval:("":def)):5])
+    (Interval_Bag:[("":def):5])
 
     `Probably 20 members (5 duplicates), depending on the model used.`
-    (Interval_Bag:[(Interval:("<=*<=":(1:10))),(Interval:("<=*<=":(6:15)))])
+    (Interval_Bag:[("<=*<=":(1:10)),("<=*<=":(6:15))])
 
     `Same thing.`
-    (Interval_Bag:[(Interval:("..":(1:10))),(Interval:("..":(6:15)))])
+    (Interval_Bag:[("..":(1:10)),("..":(6:15))])
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Bag:[
-        (Interval:("<=*<":( 1: 6)))  ,
-        (Interval:(".."  :( 6:10))):2,
-        (Interval:("<*<=":(10:15)))  ,
-    ])
+    (Interval_Bag:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
 ```
 
 [RETURN](#TOP)

@@ -295,7 +295,7 @@ Examples:
 
 ```
     `Empty interval (zero members).`
-    {}
+    (::)
 
     `Unit interval (one member).`
     (:abc:)
