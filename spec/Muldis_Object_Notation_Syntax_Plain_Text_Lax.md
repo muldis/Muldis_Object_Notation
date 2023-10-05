@@ -655,7 +655,7 @@ Grammar:
 
     token that
     {
-        <Any>
+        <Any> | ''
     }
 ```
 

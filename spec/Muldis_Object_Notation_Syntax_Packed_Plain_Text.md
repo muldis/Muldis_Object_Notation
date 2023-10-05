@@ -1435,7 +1435,7 @@ Examples:
     `Same thing (4 octets).`
     N[\00]
 
-    `The Nesting with exactly 1 element that is the 6-charater UTF-8
+    `The Nesting with exactly 1 element that is the 6-charater UTF-8`
     `string "person" (8 octets); also known as ::person.`
     nzperson
 
@@ -1512,6 +1512,10 @@ Examples:
 
     `Another Duo (5 octets); also known as (x:y).`
     Duxuy
+
+    `A singleton secondary-level data type possrep artifact;`
+    `also known as (Arguments: 0iIGNORANCE).`
+    DT"Arguments"_
 ```
 
 [RETURN](#TOP)

@@ -498,6 +498,12 @@ Examples:
 
     `Same thing.`
     (y<-x)
+
+    `A singleton secondary-level data type possrep artifact.`
+    (Arguments: 0iIGNORANCE)
+
+    `Same thing in shorthand.`
+    (Arguments:)
 ```
 
 [RETURN](#TOP)
