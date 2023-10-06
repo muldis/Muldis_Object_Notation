@@ -32,8 +32,6 @@ its part name is `Syntax_DotNet`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
-    - [Excuse](#Excuse)
 - [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
     - [Calendar Duration](#Calendar-Duration)
     - [Calendar Instant](#Calendar-Instant)
@@ -503,32 +501,6 @@ as the 8th actual component, recursively as needed.
 * Any value of any .NET structure type, except for `System.ValueTuple`,
 or object of any .NET class,
 that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
-
-[RETURN](#TOP)
-
-<a name="Article---Labelled-Tuple"></a>
-
-## Article / Labelled Tuple
-
-An **Article** artifact is any of the following:
-
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Article`
-and its *SYS_that* is any *SYS_Duo_AA* such that
-its *SYS_this* is *label* (any *SYS_Nesting*) and
-its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
-
-[RETURN](#TOP)
-
-<a name="Excuse"></a>
-
-## Excuse
-
-An **Excuse** artifact is any of the following:
-
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Excuse`
-and its *SYS_that* is any *SYS_Duo_AA* such that
-its *SYS_this* is *label* (any *SYS_Nesting*) and
-its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
 [RETURN](#TOP)
 

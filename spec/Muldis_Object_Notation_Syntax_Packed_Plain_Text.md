@@ -41,8 +41,6 @@ its part name is `Syntax_Packed_Plain_Text`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
-    - [Excuse](#Excuse)
 - [GLOSSARY OF OCTETS](#GLOSSARY-OF-OCTETS)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
@@ -340,8 +338,6 @@ Grammar:
           <Duo>
         | <Lot>
         | <Kit>
-        | <Article>
-        | <Excuse>
     }
 ```
 
@@ -1640,60 +1636,6 @@ Examples:
 
 [RETURN](#TOP)
 
-<a name="Article---Labelled-Tuple"></a>
-
-## Article / Labelled Tuple
-
-A **Article** artifact has the dedicated concrete literal format
-described by `<Article>`.
-
-Grammar:
-
-```
-    token Article
-    {
-        A <sp>? <label> <sp>? <attrs>
-    }
-
-    token label
-    {
-        <Nesting>
-    }
-
-    token attrs
-    {
-        <Kit>
-    }
-```
-
-Examples:
-
-*TODO.*
-
-[RETURN](#TOP)
-
-<a name="Excuse"></a>
-
-## Excuse
-
-A **Excuse** artifact has the dedicated concrete literal format
-described by `<Excuse>`.
-
-Grammar:
-
-```
-    token Excuse
-    {
-        E <sp>? <label> <sp>? <attrs>
-    }
-```
-
-Examples:
-
-*TODO.*
-
-[RETURN](#TOP)
-
 <a name="GLOSSARY-OF-OCTETS"></a>
 
 # GLOSSARY OF OCTETS
@@ -1750,11 +1692,11 @@ usually in the context of their being the first octet of an artifact.
     3F  | ?   | 0bTRUE      | Boolean artifact true
     40  | @   |             | (unassigned)
     ----+-----+-------------+----------------------------------------------
-    41  | A   |             | Article artifact prefix general case
+    41  | A   |             | (unassigned)
     42  | B   |             | Blob artifact prefix general case quoted string with N octets
     43  | C   |             | (unassigned)
     44  | D   |             | Duo artifact prefix general case
-    45  | E   |             | Excuse artifact prefix general case
+    45  | E   |             | (unassigned)
     46  | F   |             | (unassigned)
     47  | G   |             | (unassigned)
     48  | H   |             | (unassigned)

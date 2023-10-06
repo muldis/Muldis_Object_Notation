@@ -32,8 +32,6 @@ its part name is `Syntax_Muldis_Data_Language`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
-    - [Excuse](#Excuse)
 - [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
     - [Calendar Time](#Calendar-Time)
     - [Calendar Duration](#Calendar-Duration)
@@ -212,26 +210,6 @@ A **Lot** artifact is any of the following:
 A **Kit** artifact is any of the following:
 
 * Any value of the MDL type `fdn::SC_Kit`.
-
-[RETURN](#TOP)
-
-<a name="Article---Labelled-Tuple"></a>
-
-## Article / Labelled Tuple
-
-An **Article** artifact is any of the following:
-
-* Any value of the MDL type `fdn::SC_Article`.
-
-[RETURN](#TOP)
-
-<a name="Excuse"></a>
-
-## Excuse
-
-An **Excuse** artifact is any of the following:
-
-* Any value of the MDL type `fdn::SC_Excuse`.
 
 [RETURN](#TOP)
 

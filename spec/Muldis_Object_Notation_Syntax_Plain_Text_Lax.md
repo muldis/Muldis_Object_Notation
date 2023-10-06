@@ -38,8 +38,6 @@ its part name is `Syntax_Plain_Text_Lax`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
-    - [Excuse](#Excuse)
 - [EXTENSIONS OVER SYNTAX PLAIN TEXT](#EXTENSIONS-OVER-SYNTAX-PLAIN-TEXT)
     - [JSON - JavaScript Object Notation](#JSON---JavaScript-Object-Notation)
     - [Pair Separator Equals-Greater-Than](#Pair-Separator-Equals-Greater-Than)
@@ -247,8 +245,6 @@ Grammar:
           <Duo>
         | <Lot>
         | <Kit>
-        | <Article>
-        | <Excuse>
     }
 ```
 
@@ -764,56 +760,6 @@ Additional Examples:
 
 [RETURN](#TOP)
 
-<a name="Article---Labelled-Tuple"></a>
-
-## Article / Labelled Tuple
-
-A **Article** artifact has the dedicated concrete literal format
-described by `<Article>`.
-
-Grammar:
-
-```
-    token Article
-    {
-        <label> <sp>? '*' <sp>? <attrs>
-    }
-
-    token label
-    {
-        <Nesting>
-    }
-
-    token attrs
-    {
-        <Kit>
-    }
-```
-
-*This part of the grammar has no differences from the MUON Plain Text (strict) version.*
-
-[RETURN](#TOP)
-
-<a name="Excuse"></a>
-
-## Excuse
-
-A **Excuse** artifact has the dedicated concrete literal format
-described by `<Excuse>`.
-
-Grammar:
-
-```
-    token Excuse
-    {
-        <label> <sp>? '!' <sp>? <attrs>
-    }
-```
-
-*This part of the grammar has no differences from the MUON Plain Text (strict) version.*
-
-[RETURN](#TOP)
-
 <a name="EXTENSIONS-OVER-SYNTAX-PLAIN-TEXT"></a>
 
 # EXTENSIONS OVER SYNTAX PLAIN TEXT
@@ -891,7 +837,7 @@ increase the level of compatibility with any formats and languages that
 delimit strings with single-quotes, either instead of or as an alternative
 to double-quotes.
 
-For **Text** and **Nesting** and **Kit** and **Article** and **Excuse**:
+For **Text** and **Nesting** and **Kit**:
 
 - Added `'` as an alternative delimiter for `"` for any quoted string.
 

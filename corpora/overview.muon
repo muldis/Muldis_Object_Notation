@@ -240,33 +240,6 @@ the_db::stats::"samples by order"
 `A non-Latin name.`
 {"サンプル": "https://example.com"}
 `Muldis_Object_Notation_Sync_Mark`
-::Point*{x : 5, y : 3}
-`Muldis_Object_Notation_Sync_Mark`
-::Float*{
-    significand : 45207196,
-    radix       : 10,
-    exponent    : 37,
-}
-`Muldis_Object_Notation_Sync_Mark`
-the_db::UTC_Date_Time*{
-    year   : 2003,
-    month  : 10,
-    day    : 26,
-    hour   : 1,
-    minute : 30,
-    second : 0.0,
-}
-`Muldis_Object_Notation_Sync_Mark`
-::Positive_Infinity*{}
-`Muldis_Object_Notation_Sync_Mark`
-::Negative_Zero*{}
-`Muldis_Object_Notation_Sync_Mark`
-::Input_Field_Wrong!{name : "Your Age"}
-`Muldis_Object_Notation_Sync_Mark`
-::Div_By_Zero!{}
-`Muldis_Object_Notation_Sync_Mark`
-::No_Such_Attr_Name!{}
-`Muldis_Object_Notation_Sync_Mark`
 `No measurement was taken or specified at all.`
 (Calendar_Time:{})
 `Muldis_Object_Notation_Sync_Mark`
@@ -749,6 +722,33 @@ the_db::UTC_Date_Time*{
     {Michelle, 17},
     {Amy     , 14},
 ])
+`Muldis_Object_Notation_Sync_Mark`
+(Article: (::Point : {x : 5, y : 3}))
+`Muldis_Object_Notation_Sync_Mark`
+(Article: (::Float : {
+    significand : 45207196,
+    radix       : 10,
+    exponent    : 37,
+}))
+`Muldis_Object_Notation_Sync_Mark`
+(Article: (the_db::UTC_Date_Time : {
+    year   : 2003,
+    month  : 10,
+    day    : 26,
+    hour   : 1,
+    minute : 30,
+    second : 0.0,
+}))
+`Muldis_Object_Notation_Sync_Mark`
+(Article: ::Positive_Infinity)
+`Muldis_Object_Notation_Sync_Mark`
+(Article: ::Negative_Zero)
+`Muldis_Object_Notation_Sync_Mark`
+(Excuse: (::Input_Field_Wrong : {name : "Your Age"}))
+`Muldis_Object_Notation_Sync_Mark`
+(Excuse: ::Div_By_Zero)
+`Muldis_Object_Notation_Sync_Mark`
+(Excuse: ::No_Such_Attr_Name)
 `Muldis_Object_Notation_Sync_Mark`
 (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
     42

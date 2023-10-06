@@ -32,8 +32,6 @@ its part name is `Syntax_XML`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
-    - [Excuse](#Excuse)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -204,22 +202,6 @@ See also <https://w3.org/XML>.
 <a name="Kit"></a>
 
 ## Kit
-
-*TODO.*
-
-[RETURN](#TOP)
-
-<a name="Article---Labelled-Tuple"></a>
-
-## Article / Labelled Tuple
-
-*TODO.*
-
-[RETURN](#TOP)
-
-<a name="Excuse"></a>
-
-## Excuse
 
 *TODO.*
 

@@ -32,8 +32,6 @@ its part name is `Syntax_ECMAScript`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
-    - [Excuse](#Excuse)
 - [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
     - [Calendar Instant](#Calendar-Instant)
 - [SEE ALSO](#SEE-ALSO)
@@ -448,32 +446,6 @@ of elements, even if the defacto standard implementations all do so.
 A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
-
-[RETURN](#TOP)
-
-<a name="Article---Labelled-Tuple"></a>
-
-## Article / Labelled Tuple
-
-An **Article** artifact is any of the following:
-
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Article`
-and its *SYS_that* is any *SYS_Duo_AA* such that
-its *SYS_this* is *label* (any *SYS_Nesting*) and
-its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
-
-[RETURN](#TOP)
-
-<a name="Excuse"></a>
-
-## Excuse
-
-An **Excuse** artifact is any of the following:
-
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Excuse`
-and its *SYS_that* is any *SYS_Duo_AA* such that
-its *SYS_this* is *label* (any *SYS_Nesting*) and
-its *SYS_that* is *attributes* (any *SYS_Non_Qualified_Named_Kit*).
 
 [RETURN](#TOP)
 

@@ -143,8 +143,6 @@ Collective Primary:
 - **Duo**
 - **Lot**
 - **Kit**
-- **Article**
-- **Excuse**
 
 Less-Collective Secondary:
 
@@ -156,6 +154,8 @@ More-Collective Secondary:
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
 - **Pair**
 - Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
+- **Article**
+- **Excuse**
 
 Signature Declaring Secondary:
 

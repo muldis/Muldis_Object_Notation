@@ -41,8 +41,6 @@ its part name is `Syntax_Plain_Text`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
-    - [Excuse](#Excuse)
 - [RESERVED UNUSED SYNTAX](#RESERVED-UNUSED-SYNTAX)
     - [Possrep Heuristics](#Possrep-Heuristics)
     - [Features Reserved For Superset Grammars](#Features-Reserved-For-Superset-Grammars)
@@ -397,8 +395,6 @@ Grammar:
           <Duo>
         | <Lot>
         | <Kit>
-        | <Article>
-        | <Excuse>
     }
 ```
 
@@ -1269,87 +1265,6 @@ Examples:
 
 [RETURN](#TOP)
 
-<a name="Article---Labelled-Tuple"></a>
-
-## Article / Labelled Tuple
-
-A **Article** artifact has the dedicated concrete literal format
-described by `<Article>`.
-
-Grammar:
-
-```
-    token Article
-    {
-        <label> <sp>? '*' <sp>? <attrs>
-    }
-
-    token label
-    {
-        <Nesting>
-    }
-
-    token attrs
-    {
-        <Kit>
-    }
-```
-
-Examples:
-
-```
-    ::Point*{x : 5, y : 3}
-
-    ::Float*{
-        significand : 45207196,
-        radix       : 10,
-        exponent    : 37,
-    }
-
-    the_db::UTC_Date_Time*{
-        year   : 2003,
-        month  : 10,
-        day    : 26,
-        hour   : 1,
-        minute : 30,
-        second : 0.0,
-    }
-
-    ::Positive_Infinity*{}
-
-    ::Negative_Zero*{}
-```
-
-[RETURN](#TOP)
-
-<a name="Excuse"></a>
-
-## Excuse
-
-A **Excuse** artifact has the dedicated concrete literal format
-described by `<Excuse>`.
-
-Grammar:
-
-```
-    token Excuse
-    {
-        <label> <sp>? '!' <sp>? <attrs>
-    }
-```
-
-Examples:
-
-```
-    ::Input_Field_Wrong!{name : "Your Age"}
-
-    ::Div_By_Zero!{}
-
-    ::No_Such_Attr_Name!{}
-```
-
-[RETURN](#TOP)
-
 <a name="RESERVED-UNUSED-SYNTAX"></a>
 
 # RESERVED UNUSED SYNTAX
@@ -1388,8 +1303,6 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Duo             | (...)
     Lot             | only [] or [...]
     Kit             | only {} or {...}
-    Article         | * between a Nesting and a Kit in that order
-    Excuse          | ! between a Nesting and a Kit in that order
 ```
 
 [RETURN](#TOP)
@@ -1434,9 +1347,10 @@ MUON does not use the semicolon `;` for anything, so a superset grammar can
 use it for things like separating statements and thus disambiguating its
 own uses of bracketing characters to define statement or expression groups.
 
-MUON does not use parenthesis pairs `(` and `)`, except with a colon `:`
-between them as a `Duo` syntax, so parenthesis pairs without the colon are
-available for a superset grammar to use for generic grouping purposes
+MUON does not use parenthesis pairs `(` and `)`,
+except with a colon/etc (`:`/`->`/`<-`)
+between them as a `Duo` syntax, so parenthesis pairs without the colon/etc
+are available for a superset grammar to use for generic grouping purposes
 to force a particular parsing precedence with infix operators and such.
 
 [RETURN](#TOP)
@@ -1513,10 +1427,7 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * disambiguate Nesting from Text
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
-          | articles               | * separates the 2 parts of an Article selector
           | multiplication         | * significand/radix separator in Fraction literals
-    ------+------------------------+---------------------------------------
-    !     | excuses                | * separates the 2 parts of an Excuse selector
     ------+------------------------+---------------------------------------
     +     | addition               | * optional indicates positive-Integer/Fraction literal
     ------+------------------------+---------------------------------------
@@ -1614,7 +1525,7 @@ remainder of the grammar would apply outside of those tokens.
 
 Anywhere outside of a quoted string that these specific symbolic sequences
 appear, each one is its own indivisible token that is not part of any
-bareword or (except for the case of `*`) numeric-format literal;
+bareword or numeric-format literal;
 when any of these sequences overlap, longest token always wins:
 
 ```
@@ -1629,8 +1540,6 @@ when any of these sequences overlap, longest token always wins:
     <-
     ,
     ::
-    *
-    !
 ```
 
 [RETURN](#TOP)

@@ -71,8 +71,6 @@ grammar Muldis::Reference::Object_Notation_Plain_Text_Lax::Grammar
           <Duo>
         | <Lot>
         | <Kit>
-        | <Article>
-        | <Excuse>
     }
 
 ###########################################################################
@@ -364,30 +362,6 @@ grammar Muldis::Reference::Object_Notation_Plain_Text_Lax::Grammar
     token attr_asset
     {
         <Any>
-    }
-
-###########################################################################
-
-    token Article
-    {
-        <label> <sp>? '*' <sp>? <attrs>
-    }
-
-    token label
-    {
-        <Nesting>
-    }
-
-    token attrs
-    {
-        <Kit>
-    }
-
-###########################################################################
-
-    token Excuse
-    {
-        <label> <sp>? '!' <sp>? <attrs>
     }
 
 ###########################################################################

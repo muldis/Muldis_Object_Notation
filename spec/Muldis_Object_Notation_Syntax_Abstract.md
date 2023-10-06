@@ -38,8 +38,6 @@ its part name is `Syntax_Abstract`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
-    - [Excuse](#Excuse)
 - [COMMON QUALITIES OF ABSTRACT SECONDARY DATA TYPE POSSREPS](#COMMON-QUALITIES-OF-ABSTRACT-SECONDARY-DATA-TYPE-POSSREPS)
 - [LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS](#LESS-COLLECTIVE-SECONDARY-DATA-TYPE-POSSREPS)
     - [Calendar Time](#Calendar-Time)
@@ -61,6 +59,8 @@ its part name is `Syntax_Abstract`.
     - [Tuple Array](#Tuple-Array)
     - [Relation / Tuple Set](#Relation---Tuple-Set)
     - [Tuple Bag](#Tuple-Bag)
+    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
+    - [Excuse](#Excuse)
 - [SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS](#SIGNATURE-DECLARING-SECONDARY-DATA-TYPE-POSSREPS)
     - [Syntax](#Syntax)
     - [Model](#Model)
@@ -582,61 +582,6 @@ Examples:
 
     `A non-Latin name.`
     {"サンプル": "https://example.com"}
-```
-
-[RETURN](#TOP)
-
-<a name="Article---Labelled-Tuple"></a>
-
-## Article / Labelled Tuple
-
-An **Article** artifact is an ordered collection having exactly 2 elements
-which in order are named *label* (any **Nesting** artifact)
-and *attributes* (any **Kit** artifact).
-
-Examples:
-
-```
-    ::Point*{x : 5, y : 3}
-
-    ::Float*{
-        significand : 45207196,
-        radix       : 10,
-        exponent    : 37,
-    }
-
-    the_db::UTC_Date_Time*{
-        year   : 2003,
-        month  : 10,
-        day    : 26,
-        hour   : 1,
-        minute : 30,
-        second : 0.0,
-    }
-
-    ::Positive_Infinity*{}
-
-    ::Negative_Zero*{}
-```
-
-[RETURN](#TOP)
-
-<a name="Excuse"></a>
-
-## Excuse
-
-An **Excuse** artifact is an ordered collection having exactly 2 elements
-which in order are named *label* (any **Nesting** artifact)
-and *attributes* (any **Kit** artifact).
-
-Examples:
-
-```
-    ::Input_Field_Wrong!{name : "Your Age"}
-
-    ::Div_By_Zero!{}
-
-    ::No_Such_Attr_Name!{}
 ```
 
 [RETURN](#TOP)
@@ -1545,6 +1490,71 @@ Examples:
         {Michelle, 17},
         {Amy     , 14},
     ])
+```
+
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
+## Article / Labelled Tuple
+
+An **Article** artifact has the predicate `Article`.
+
+Its subject is any of the following:
+
+* Any **Nesting** artifact, which denotes the *label* of the
+**Article**, and the **Article** has zero attributes.
+This is the idiomatic format for a nullary (zero-attribute) **Article**.
+
+* Any **Duo** artifact such that its *this* and *that* correspond to the
+*label* (any **Nesting** artifact) and *attributes* (any **Kit** artifact)
+of the new **Article** respectively.
+
+Examples:
+
+```
+    (Article: (::Point : {x : 5, y : 3}))
+
+    (Article: (::Float : {
+        significand : 45207196,
+        radix       : 10,
+        exponent    : 37,
+    }))
+
+    (Article: (the_db::UTC_Date_Time : {
+        year   : 2003,
+        month  : 10,
+        day    : 26,
+        hour   : 1,
+        minute : 30,
+        second : 0.0,
+    }))
+
+    (Article: ::Positive_Infinity)
+
+    (Article: ::Negative_Zero)
+```
+
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
+
+## Excuse
+
+An **Excuse** artifact has the predicate `Excuse`.
+
+Its subject is any of the following:
+
+* Any **Article** subject.
+
+Examples:
+
+```
+    (Excuse: (::Input_Field_Wrong : {name : "Your Age"}))
+
+    (Excuse: ::Div_By_Zero)
+
+    (Excuse: ::No_Such_Attr_Name)
 ```
 
 [RETURN](#TOP)

@@ -37,8 +37,6 @@ its part name is `Semantics`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
-    - [Excuse](#Excuse)
 - [LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS](#LESS-COLLECTIVE-SECONDARY-DATA-TYPE-POSSREPS)
     - [Calendar Time](#Calendar-Time)
     - [Calendar Duration](#Calendar-Duration)
@@ -59,6 +57,8 @@ its part name is `Semantics`.
     - [Tuple Array](#Tuple-Array)
     - [Relation / Tuple Set](#Relation---Tuple-Set)
     - [Tuple Bag](#Tuple-Bag)
+    - [Article / Labelled Tuple](#Article---Labelled-Tuple)
+    - [Excuse](#Excuse)
 - [SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS](#SIGNATURE-DECLARING-SECONDARY-DATA-TYPE-POSSREPS)
     - [Syntax](#Syntax)
     - [Model](#Model)
@@ -181,13 +181,11 @@ There are exactly 8 of these:
 A *collective primary possrep* has a strictly recursive definition, and is
 expressed mainly in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single collective item.
-There are exactly 5 of these:
+There are exactly 3 of these:
 
 - **Duo**
 - **Lot**
 - **Kit**
-- **Article**
-- **Excuse**
 
 A *secondary possrep* is one whose canonical definition has no format of
 its own in any syntax and rather its canonical definition is as one or more
@@ -204,13 +202,15 @@ dedicated simple literal formats or data type values in some syntaxes:
 
 - Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
 
-Some of these 14 more-collective-like secondary possreps might have its own
+Some of these 16 more-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
 - Discrete: **Array**, **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
 - **Pair**
 - Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
+- **Article**
+- **Excuse**
 
 These 2 secondary possreps are specifically for signatures or explicit
 declarations that are used alongside or embedded in data to declare more
@@ -482,7 +482,7 @@ these cases counts as an error or as a value of some other primary possrep.
 A *Primary_Possrep_Name* is any of these **Text** values:
 `Ignorance`, `Boolean`, `Integer`, `Fraction`,
 `Bits`, `Blob`, `Text`, `Nesting`,
-`Duo`, `Lot`, `Kit`, `Article`, `Excuse`.
+`Duo`, `Lot`, `Kit`.
 
 As a further special exception, each specific concrete syntax may designate
 additional values for a prospect's *this* that it treats as special in
@@ -563,66 +563,6 @@ A key feature of **Kit** is that it natively preserves the relative
 order of its child nodes even when the value being selected is an unordered
 type, which can be considered essential for round tripping source code that
 better resembles what the programmer wrote.
-
-[RETURN](#TOP)
-
-<a name="Article---Labelled-Tuple"></a>
-
-## Article / Labelled Tuple
-
-An **Article** value is characterized by the pairing of a *label*, which is
-a **Nesting** value, with a set of 0..N *attributes*, where that set is a
-**Kit** value.
-
-The **Article** possrep is the idiomatic way for an external data model to
-represent "new" types of a nominal type system in a consistent way.  The
-*label* represents a fully-qualified external data type name, and thus a
-namespace within all the **Article** values, while the *attributes* define
-all the components of a value of that external type.  Thus an **Article**
-corresponds to a generic *object* of an object-oriented language, the
-*label* is the *class* of that *object*, and *attributes* are *properties*.
-
-As a primary exception to the above, the large number of *exception* or
-*error* types common in some data models / type systems should *not* be
-represented using an **Article** but rather with the structurally identical
-**Excuse** which natively carries that extra semantic.
-
-The idiomatic way to represent a singleton type value is as an **Article**
-where the *label* is the singleton type name and the *attributes* is the
-**Kit** with zero attributes.
-
-The idiomatic default attribute name for a single-attribute **Article** is
-`0t0` (the first conceptually ordered attribute name) when there isn't an
-actual meaningful name to give it.
-
-[RETURN](#TOP)
-
-<a name="Excuse"></a>
-
-## Excuse
-
-An **Excuse** value is an explicitly stated reason for why, given some
-particular problem domain, a value is not being used that is ordinary for
-that domain.  Alternately, an **Excuse** is characterized by an **Article**
-that has the added semantic of representing some kind of error condition,
-in contrast to an actual **Article** which explicitly does *not* represent
-an error condition in the general case.
-
-For example, the typical integer division operation is not defined to give
-an integer result when the divisor is zero, and so a function for integer
-division could be defined to result in an **Excuse** value rather than
-throw an exception in that case.  For another example, an **Excuse** value
-could be used to declare that the information we are storing about a person
-is missing certain details and why those are missing, such as because the
-person left the birthdate field blank on their application form.
-
-An **Excuse** is isomorphic to an *exception* but that use of the former is
-not meant to terminate execution of code early unlike the latter which is.
-
-The **Excuse** possrep is the idiomatic way for an external data model to
-represent "new" *error* or *exception* types of a nominal type system in a
-consistent way.  The counterpart **Article** possrep should *not* be used for
-these things, but rather just every other kind of externally-defined type.
 
 [RETURN](#TOP)
 
@@ -1028,6 +968,66 @@ A **Tuple Bag** value is characterized by the pairing of a **Heading**
 value with a **Bag** value, which define its *heading* and *body*,
 respectively.  A **Tuple Bag** is isomorphic to a **Relation** with the
 sole exception of being based on a **Bag** rather than a **Set**.
+
+[RETURN](#TOP)
+
+<a name="Article---Labelled-Tuple"></a>
+
+## Article / Labelled Tuple
+
+An **Article** value is characterized by the pairing of a *label*, which is
+a **Nesting** value, with a set of 0..N *attributes*, where that set is a
+**Tuple** value.
+
+The **Article** possrep is the idiomatic way for an external data model to
+represent "new" types of a nominal type system in a consistent way.  The
+*label* represents a fully-qualified external data type name, and thus a
+namespace within all the **Article** values, while the *attributes* define
+all the components of a value of that external type.  Thus an **Article**
+corresponds to a generic *object* of an object-oriented language, the
+*label* is the *class* of that *object*, and *attributes* are *properties*.
+
+As a primary exception to the above, the large number of *exception* or
+*error* types common in some data models / type systems should *not* be
+represented using an **Article** but rather with the structurally identical
+**Excuse** which natively carries that extra semantic.
+
+The idiomatic way to represent a singleton type value is as an **Article**
+where the *label* is the singleton type name and the *attributes* is the
+**Tuple** with zero attributes.
+
+The idiomatic default attribute name for a single-attribute **Article** is
+`0t0` (the first conceptually ordered attribute name) when there isn't an
+actual meaningful name to give it.
+
+[RETURN](#TOP)
+
+<a name="Excuse"></a>
+
+## Excuse
+
+An **Excuse** value is an explicitly stated reason for why, given some
+particular problem domain, a value is not being used that is ordinary for
+that domain.  Alternately, an **Excuse** is characterized by an **Article**
+that has the added semantic of representing some kind of error condition,
+in contrast to an actual **Article** which explicitly does *not* represent
+an error condition in the general case.
+
+For example, the typical integer division operation is not defined to give
+an integer result when the divisor is zero, and so a function for integer
+division could be defined to result in an **Excuse** value rather than
+throw an exception in that case.  For another example, an **Excuse** value
+could be used to declare that the information we are storing about a person
+is missing certain details and why those are missing, such as because the
+person left the birthdate field blank on their application form.
+
+An **Excuse** is isomorphic to an *exception* but that use of the former is
+not meant to terminate execution of code early unlike the latter which is.
+
+The **Excuse** possrep is the idiomatic way for an external data model to
+represent "new" *error* or *exception* types of a nominal type system in a
+consistent way.  The counterpart **Article** possrep should *not* be used for
+these things, but rather just every other kind of externally-defined type.
 
 [RETURN](#TOP)
 
