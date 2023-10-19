@@ -650,6 +650,8 @@ Additional Examples:
 
 ```
     (x=>y)
+
+    (x,y)
 ```
 
 [RETURN](#TOP)
