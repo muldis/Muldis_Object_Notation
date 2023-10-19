@@ -1,0 +1,242 @@
+#!/usr/bin/env muldisder
+`Muldis_Object_Notation_Sync_Mark`
+0iIGNORANCE
+`Muldis_Object_Notation_Sync_Mark`
+0bFALSE
+`Muldis_Object_Notation_Sync_Mark`
+0bTRUE
+`Muldis_Object_Notation_Sync_Mark`
+0
+`Muldis_Object_Notation_Sync_Mark`
+1
+`Muldis_Object_Notation_Sync_Mark`
+-1
+`Muldis_Object_Notation_Sync_Mark`
++42
+`Muldis_Object_Notation_Sync_Mark`
+`USA national debt in US dollars close to midnight of 2017 Dec 31.`
+20_597_460_196_915
+`Muldis_Object_Notation_Sync_Mark`
+`Mersenne Prime 2^521-1, 157 digits, discovered 1952 Jan 30.`
+68_64797
+    66013_06097_14981_90079_90813_93217_26943_53001_43305_40939
+    44634_59185_54318_33976_56052_12255_96406_61454_55497_72963
+    11391_48085_80371_21987_99971_66438_12574_02829_11150_57151
+`Muldis_Object_Notation_Sync_Mark`
+`Base 10.`
+0d39
+`Muldis_Object_Notation_Sync_Mark`
+`Base 16.`
+0xDEADBEEF
+`Muldis_Object_Notation_Sync_Mark`
+`Base 8.`
+0o644
+`Muldis_Object_Notation_Sync_Mark`
+`Base 2.`
+0b11001001
+`Muldis_Object_Notation_Sync_Mark`
+0.0
+`Muldis_Object_Notation_Sync_Mark`
+0/1
+`Muldis_Object_Notation_Sync_Mark`
+0/1*2^0
+`Muldis_Object_Notation_Sync_Mark`
+0/1*10^0
+`Muldis_Object_Notation_Sync_Mark`
+1.0
+`Muldis_Object_Notation_Sync_Mark`
+1/1
+`Muldis_Object_Notation_Sync_Mark`
+1/1*2^0
+`Muldis_Object_Notation_Sync_Mark`
+-1.0
+`Muldis_Object_Notation_Sync_Mark`
+-1/1
+`Muldis_Object_Notation_Sync_Mark`
+-1/1*2^0
+`Muldis_Object_Notation_Sync_Mark`
+5/3
+`Muldis_Object_Notation_Sync_Mark`
+5/1*3^-1
+`Muldis_Object_Notation_Sync_Mark`
+-4.72
+`Muldis_Object_Notation_Sync_Mark`
+-472/100
+`Muldis_Object_Notation_Sync_Mark`
+-472/1*10^-2
+`Muldis_Object_Notation_Sync_Mark`
+15_485_863/32_452_843
+`Muldis_Object_Notation_Sync_Mark`
+`First 101 digits of transcendental number π.`
+3.14159_26535_89793_23846_26433_83279_50288_41971_69399_37510
+    58209_74944_59230_78164_06286_20899_86280_34825_34211_70679
+`Muldis_Object_Notation_Sync_Mark`
+`Mersenne Primes 2^107-1 divided by 2^127-1.`
+162259276829213363391578010288127
+    /170141183460469231731687303715884105727
+`Muldis_Object_Notation_Sync_Mark`
+`Base 10.`
+4.5207196*10^37
+`Muldis_Object_Notation_Sync_Mark`
+`Base 16.`
+0xDEADBEEF.FACE
+`Muldis_Object_Notation_Sync_Mark`
+`Base 8.`
+-0o35/0o3
+`Muldis_Object_Notation_Sync_Mark`
+`Base 2.`
+0b1.1
+`Muldis_Object_Notation_Sync_Mark`
+`Base 2.`
+0b1.011101101*0b10^-0b11011
+`Muldis_Object_Notation_Sync_Mark`
+0bb
+`Muldis_Object_Notation_Sync_Mark`
+0bb0
+`Muldis_Object_Notation_Sync_Mark`
+0bb1
+`Muldis_Object_Notation_Sync_Mark`
+0bb00101110_100010
+`Muldis_Object_Notation_Sync_Mark`
+0bo644
+`Muldis_Object_Notation_Sync_Mark`
+0bxA705E
+`Muldis_Object_Notation_Sync_Mark`
+0xx
+`Muldis_Object_Notation_Sync_Mark`
+0xx0
+`Muldis_Object_Notation_Sync_Mark`
+0xx1
+`Muldis_Object_Notation_Sync_Mark`
+0xxA705_E416
+`Muldis_Object_Notation_Sync_Mark`
+0xb00101110_10001011
+`Muldis_Object_Notation_Sync_Mark`
+`A quote from Thomas Hobbes' "Leviathan", as UTF-8 text encoded in Base64.`
+0xy
+    TWFuIGlzIGRpc3Rpbmd1aXNoZWQsIG5vdCBvbmx5IGJ5IGhpcyByZWFzb24sIGJ1dCBieSB0aGlz
+    IHNpbmd1bGFyIHBhc3Npb24gZnJvbSBvdGhlciBhbmltYWxzLCB3aGljaCBpcyBhIGx1c3Qgb2Yg
+    dGhlIG1pbmQsIHRoYXQgYnkgYSBwZXJzZXZlcmFuY2Ugb2YgZGVsaWdodCBpbiB0aGUgY29udGlu
+    dWVkIGFuZCBpbmRlZmF0aWdhYmxlIGdlbmVyYXRpb24gb2Yga25vd2xlZGdlLCBleGNlZWRzIHRo
+    ZSBzaG9ydCB2ZWhlbWVuY2Ugb2YgYW55IGNhcm5hbCBwbGVhc3VyZS4=
+`Muldis_Object_Notation_Sync_Mark`
+""
+`Muldis_Object_Notation_Sync_Mark`
+`One ordered nonquoted Text (or, the first ordered attribute).`
+0t0
+`Muldis_Object_Notation_Sync_Mark`
+`Same Text value (or, one ordered attr written in format of a named).`
+"\(0t0)"
+`Muldis_Object_Notation_Sync_Mark`
+`Another ordered nonquoted Text (or, the second ordered attribute).`
+0t1
+`Muldis_Object_Notation_Sync_Mark`
+Ceres
+`Muldis_Object_Notation_Sync_Mark`
+"⨝"
+`Muldis_Object_Notation_Sync_Mark`
+"サンプル"
+`Muldis_Object_Notation_Sync_Mark`
+"This isn't not escaped.\n"
+`Muldis_Object_Notation_Sync_Mark`
+`Two characters specified in terms of Unicode code-point numbers.`
+"\(0tx263A)\(0t65)"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing.`
+"\u263A\u0041"
+`Muldis_Object_Notation_Sync_Mark`
+`One non-ordered quoted Text (or, one named attribute).`
+"sales"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing but nonquoted.`
+sales
+`Muldis_Object_Notation_Sync_Mark`
+`One attribute name with a space in it.`
+"First Name"
+`Muldis_Object_Notation_Sync_Mark`
+`From a graduate student (in finals week), the following haiku:`
+"study, write, study,\n"
+    "do review (each word) if time.\n"
+    "close book. sleep? what's that?\n"
+`Muldis_Object_Notation_Sync_Mark`
+::""
+`Muldis_Object_Notation_Sync_Mark`
+::0t0
+`Muldis_Object_Notation_Sync_Mark`
+::person
+`Muldis_Object_Notation_Sync_Mark`
+person::birth_date
+`Muldis_Object_Notation_Sync_Mark`
+person::birth_date::year
+`Muldis_Object_Notation_Sync_Mark`
+the_db::stats::"samples by order"
+`Muldis_Object_Notation_Sync_Mark`
+`Duo of Ignorance.`
+(0iIGNORANCE: 0iIGNORANCE)
+`Muldis_Object_Notation_Sync_Mark`
+`Duo of Integer.`
+(5: -3)
+`Muldis_Object_Notation_Sync_Mark`
+`Duo of Text.`
+("First Name": Joy)
+`Muldis_Object_Notation_Sync_Mark`
+`Another Duo.`
+(x:y)
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing.`
+(x->y)
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing.`
+(y<-x)
+`Muldis_Object_Notation_Sync_Mark`
+`A singleton higher-level data type possrep artifact.`
+(Arguments: 0iIGNORANCE)
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing in shorthand.`
+(Arguments:)
+`Muldis_Object_Notation_Sync_Mark`
+`Zero members.`
+[]
+`Muldis_Object_Notation_Sync_Mark`
+`One member.`
+[ "The lonely only." ]
+`Muldis_Object_Notation_Sync_Mark`
+`Four members.`
+[
+    Clubs  :  5,
+    Diamonds,
+    Hearts : 10,
+    Spades : 20,
+]
+`Muldis_Object_Notation_Sync_Mark`
+`Zero attributes.`
+{}
+`Muldis_Object_Notation_Sync_Mark`
+`One named attribute.`
+{"First Name": Joy}
+`Muldis_Object_Notation_Sync_Mark`
+`One ordered attribute.`
+{53}
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing.`
+{0t0: 53}
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing.`
+{"\(0t0)": 53}
+`Muldis_Object_Notation_Sync_Mark`
+`Three named attributes.`
+{
+    login_name : hartmark,
+    login_pass : letmein,
+    is_special : 0bTRUE,
+}
+`Muldis_Object_Notation_Sync_Mark`
+`Three ordered attributes.`
+{hello,26,0bTRUE}
+`Muldis_Object_Notation_Sync_Mark`
+`One of each.`
+{Jay, age: 10}
+`Muldis_Object_Notation_Sync_Mark`
+`A non-Latin name.`
+{"サンプル": "https://example.com"}
+`Muldis_Object_Notation_Sync_Mark`
