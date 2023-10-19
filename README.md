@@ -4,22 +4,26 @@ This repository or distribution features the document named
 **Muldis Object Notation** (**MUON**)
 and its supporting documents.
 
-See the file
-[spec/Muldis_Object_Notation.md](spec/Muldis_Object_Notation.md)
-for that feature document.
+This is the feature document, the actual formal **Muldis Object Notation**
+specification, which is composed of multiple parts plus supporting files:
 
-See the file
-[spec/MUON_Syntax_Parallels.md](spec/MUON_Syntax_Parallels.md)
-for that supporting document.
+- [spec/Muldis_Object_Notation.md](spec/Muldis_Object_Notation.md)
 
-See the file
-[spec/MUON_Syntax_Plain_Text_Supplemental.md](spec/MUON_Syntax_Plain_Text_Supplemental.md)
-for that supporting document.
+This document has quick reference code examples copied from the formal spec:
 
-See the file
-[spec/MUON_Feature_Comparison.md](spec/MUON_Feature_Comparison.md)
-for that supporting document.
+- [spec/MUON_Syntax_Parallels.md](spec/MUON_Syntax_Parallels.md)
 
-See the file
-[tooling/BBEdit/README.md](tooling/BBEdit/README.md)
-for that tree of supporting documents and files.
+These documents have supplemental material that used to be part of the
+formal spec but was since removed from it, typically to simplify or reduce
+the scope of the formal spec, and are preserved here for posterity or
+because they might be useful for tangential projects:
+
+- [spec/MUON_Syntax_Plain_Text_Supplemental.md](spec/MUON_Syntax_Plain_Text_Supplemental.md)
+
+This tree of supporting files provides basic tooling related to the spec:
+
+- [tooling/BBEdit/README.md](tooling/BBEdit/README.md)
+
+This supplemental document compares **MUON** to other projects in its space:
+
+- [spec/MUON_Feature_Comparison.md](spec/MUON_Feature_Comparison.md)
