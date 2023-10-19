@@ -1046,9 +1046,9 @@ Examples:
         second : 0.0,
     }))
 
-    (Article: ::Positive_Infinity)
+    (Article: (::Positive_Infinity : {}))
 
-    (Article: ::Negative_Zero)
+    (Article: (::Negative_Zero : {}))
 ```
 
 [RETURN](#TOP)
@@ -1068,9 +1068,9 @@ Examples:
 ```
     (Excuse: (::Input_Field_Wrong : {name : "Your Age"}))
 
-    (Excuse: ::Div_By_Zero)
+    (Excuse: (::Div_By_Zero : {}))
 
-    (Excuse: ::No_Such_Attr_Name)
+    (Excuse: (::No_Such_Attr_Name : {}))
 ```
 
 [RETURN](#TOP)

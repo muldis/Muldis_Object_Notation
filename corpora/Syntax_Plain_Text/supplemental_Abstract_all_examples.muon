@@ -500,15 +500,15 @@
     second : 0.0,
 }))
 `Muldis_Object_Notation_Sync_Mark`
-(Article: ::Positive_Infinity)
+(Article: (::Positive_Infinity : {}))
 `Muldis_Object_Notation_Sync_Mark`
-(Article: ::Negative_Zero)
+(Article: (::Negative_Zero : {}))
 `Muldis_Object_Notation_Sync_Mark`
 (Excuse: (::Input_Field_Wrong : {name : "Your Age"}))
 `Muldis_Object_Notation_Sync_Mark`
-(Excuse: ::Div_By_Zero)
+(Excuse: (::Div_By_Zero : {}))
 `Muldis_Object_Notation_Sync_Mark`
-(Excuse: ::No_Such_Attr_Name)
+(Excuse: (::No_Such_Attr_Name : {}))
 `Muldis_Object_Notation_Sync_Mark`
 (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
     42
