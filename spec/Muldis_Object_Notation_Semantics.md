@@ -22,7 +22,7 @@ its part name is `Semantics`.
 - [CRITICAL ALGEBRAIC DATA TYPE POSSREPS](#CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Any / Universal Type Possrep](#Any---Universal-Type-Possrep)
     - [None / Empty Type Possrep](#None---Empty-Type-Possrep)
-- [SIMPLE PRIMARY DATA TYPE POSSREPS](#SIMPLE-PRIMARY-DATA-TYPE-POSSREPS)
+- [SIMPLE DATA TYPE POSSREPS](#SIMPLE-DATA-TYPE-POSSREPS)
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
@@ -31,7 +31,7 @@ its part name is `Semantics`.
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
-- [COLLECTIVE PRIMARY DATA TYPE POSSREPS](#COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS)
+- [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
@@ -254,9 +254,9 @@ the logical complement of **Any**.
 
 [RETURN](#TOP)
 
-<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+<a name="SIMPLE-DATA-TYPE-POSSREPS"></a>
 
-# SIMPLE PRIMARY DATA TYPE POSSREPS
+# SIMPLE DATA TYPE POSSREPS
 
 [RETURN](#TOP)
 
@@ -406,9 +406,9 @@ such as nested **Tuple** may implement.
 
 [RETURN](#TOP)
 
-<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+<a name="COLLECTIVE-DATA-TYPE-POSSREPS"></a>
 
-# COLLECTIVE PRIMARY DATA TYPE POSSREPS
+# COLLECTIVE DATA TYPE POSSREPS
 
 [RETURN](#TOP)
 

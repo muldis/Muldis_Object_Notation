@@ -19,7 +19,7 @@ its part name is `Syntax_XML`.
 
 - [SYNOPSIS](#SYNOPSIS)
 - [DESCRIPTION](#DESCRIPTION)
-- [SIMPLE PRIMARY DATA TYPE POSSREPS](#SIMPLE-PRIMARY-DATA-TYPE-POSSREPS)
+- [SIMPLE DATA TYPE POSSREPS](#SIMPLE-DATA-TYPE-POSSREPS)
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
@@ -28,7 +28,7 @@ its part name is `Syntax_XML`.
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
-- [COLLECTIVE PRIMARY DATA TYPE POSSREPS](#COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS)
+- [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
@@ -107,9 +107,9 @@ See also <https://w3.org/XML>.
 
 [RETURN](#TOP)
 
-<a name="SIMPLE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+<a name="SIMPLE-DATA-TYPE-POSSREPS"></a>
 
-# SIMPLE PRIMARY DATA TYPE POSSREPS
+# SIMPLE DATA TYPE POSSREPS
 
 [RETURN](#TOP)
 
@@ -177,9 +177,9 @@ See also <https://w3.org/XML>.
 
 [RETURN](#TOP)
 
-<a name="COLLECTIVE-PRIMARY-DATA-TYPE-POSSREPS"></a>
+<a name="COLLECTIVE-DATA-TYPE-POSSREPS"></a>
 
-# COLLECTIVE PRIMARY DATA TYPE POSSREPS
+# COLLECTIVE DATA TYPE POSSREPS
 
 [RETURN](#TOP)
 
