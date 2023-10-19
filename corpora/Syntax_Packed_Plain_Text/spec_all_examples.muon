@@ -1,0 +1,369 @@
+#!/usr/bin/env muldisder
+`Muldis_Object_Notation_Sync_Mark`
+`Ignorance singleton (1 octet).`
+_
+`Muldis_Object_Notation_Sync_Mark`
+`Boolean false (1 octet).`
+!
+`Muldis_Object_Notation_Sync_Mark`
+`Boolean true (1 octet).`
+?
+`Muldis_Object_Notation_Sync_Mark`
+`Zero (1 octet).`
+0
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (3 octets).`
++""
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
++"\00"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (3 octets).`
+-""
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+c\00
+`Muldis_Object_Notation_Sync_Mark`
+`Positive one (1 octet).`
+1
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
++"\01"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+c\01
+`Muldis_Object_Notation_Sync_Mark`
+`Positive three (1 octet).`
+3
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
++"\03"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+c\03
+`Muldis_Object_Notation_Sync_Mark`
+`Positive ten (1 octet).`
+$
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
++"\0A"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+c\0A
+`Muldis_Object_Notation_Sync_Mark`
+`Positive eleven (1 octet).`
+q
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
++"\0B"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+c\0B
+`Muldis_Object_Notation_Sync_Mark`
+`Positive twelve (1 octet).`
+r
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
++"\0C"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+c\0C
+`Muldis_Object_Notation_Sync_Mark`
+`Positive one-hundred (1 octet).`
+%
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
++"\64"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+c\64
+`Muldis_Object_Notation_Sync_Mark`
+`Positive one-thousand (1 octet).`
+&
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets).`
++"\03\E8"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (3 octets).`
+e\03\E8
+`Muldis_Object_Notation_Sync_Mark`
+`Negative one (1 octet).`
+#
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
+-"\01"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+d\FF
+`Muldis_Object_Notation_Sync_Mark`
+`Negative three (4 octets).`
+-"\03"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+d\FD
+`Muldis_Object_Notation_Sync_Mark`
+`Positive forty-two (4 octets).`
++"\2A"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+c\2A
+`Muldis_Object_Notation_Sync_Mark`
+`USA national debt in US dollars close to midnight of 2017 Dec 31`
+`(9 octets); also known as 20_597_460_196_915.`
++"\12\BB\B8\4C\5E\33"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (9 octets).`
+i\00\00\12\BB\B8\4C\5E\33
+`Muldis_Object_Notation_Sync_Mark`
+`Dead Beef (5 octets); also known as 0xDEADBEEF.`
+g\DE\AD\BE\EF
+`Muldis_Object_Notation_Sync_Mark`
+`Zero (1 octet).`
+=
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (3 octets); also known as 0/1.`
+/01
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets); also known as 0/1.`
+/c\00c\01
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (9 octets); also known as 0/1.`
+/+"\00"+"\01"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets); also known as 0/1*2^0.`
+^0120
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (9 octets); also known as 0/1*2^0.`
+^c\00c\01c\02c\00
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets); also known as 0/1*10^0.`
+^01$0
+`Muldis_Object_Notation_Sync_Mark`
+`Positive one (1 octet).`
+>
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (3 octets); also known as 1/1.`
+/11
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets); also known as 1/1*2^0.`
+^1120
+`Muldis_Object_Notation_Sync_Mark`
+`Negative one (1 octet).`
+<
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (3 octets); also known as -1/1.`
+/#1
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets); also known as -1/1*2^0.`
+^#120
+`Muldis_Object_Notation_Sync_Mark`
+`Positive five-thirds (3 octets); also known as 5/3.`
+/53
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets); also known as 5/1*3^-1.`
+^513#
+`Muldis_Object_Notation_Sync_Mark`
+`Ten (3 octets); also known as 10/1.`
+/$1
+`Muldis_Object_Notation_Sync_Mark`
+`One tenth (3 octets); also known as 1/10.`
+/1$
+`Muldis_Object_Notation_Sync_Mark`
+`One hundred (3 octets); also known as 100/1.`
+/%1
+`Muldis_Object_Notation_Sync_Mark`
+`One hundredth (3 octets); also known as 1/100.`
+/1%
+`Muldis_Object_Notation_Sync_Mark`
+`One thousand (3 octets); also known as 1000/1.`
+/&1
+`Muldis_Object_Notation_Sync_Mark`
+`One thousandth (3 octets); also known as 1/1000.`
+/1&
+`Muldis_Object_Notation_Sync_Mark`
+`Negative 472-hundredths (7 octets); also known as -472/100.`
+/-"\01\D8"%
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets); also known as -472/100.`
+/f\FE\28%
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (6 octets); also known as -472/100.`
+/f\FE\28c\64
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (7 octets); also known as -472/100.`
+/f\FE\28e\00\64
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (8 octets); also known as -472/1*10^-2.`
+^f\FE\281$d\FE
+`Muldis_Object_Notation_Sync_Mark`
+`The fraction 15_485_863/32_452_843 (11 octets).`
+/g\00\EC\4B\A7g\01\EF\30\EB
+`Muldis_Object_Notation_Sync_Mark`
+`The fraction 4.5207196*10^37 (11 octets); also known as 45207196/1*10^30.`
+^g\02\B1\CE\9C1$c\1E
+`Muldis_Object_Notation_Sync_Mark`
+`Dead Beef Face (15 octets); also known as 0xDEADBEEF.FACE.`
+/i\00\00\DE\AD\BE\EF\FA\CEg\00\01\00\00
+`Muldis_Object_Notation_Sync_Mark`
+`Empty bit string (1 octet); also known as 0bb.`
+s
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
+S8""
+`Muldis_Object_Notation_Sync_Mark`
+`One zero bit (3 octets); also known as 0bb0.`
+p1\00
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets).`
+S1"\00"
+`Muldis_Object_Notation_Sync_Mark`
+`One one bit (3 octets); also known as 0bb1.`
+p1\80
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets).`
+S1"\80"
+`Muldis_Object_Notation_Sync_Mark`
+`The 14-bit string 0bb00101110_100010 (6 octets).`
+S6"\2E\88"
+`Muldis_Object_Notation_Sync_Mark`
+`The 9-bit string 0bo644 (6 octets).`
+S1"\D2\00"
+`Muldis_Object_Notation_Sync_Mark`
+`The 20-bit string 0bxA705E (7 octets).`
+S4"\A7\05\E0"
+`Muldis_Object_Notation_Sync_Mark`
+`Empty octet string (1 octet); also known as 0xx.`
+b
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (3 octets).`
+B""
+`Muldis_Object_Notation_Sync_Mark`
+`One zero octet (2 octets); also known as 0xx0.`
+o\00
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
+B"\00"
+`Muldis_Object_Notation_Sync_Mark`
+`One one octet (2 octets); also known as 0xx1.`
+o\01
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
+B"\01"
+`Muldis_Object_Notation_Sync_Mark`
+`The 1-octet string 0xx22 (3 octets).`
+o\q
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (5 octets).`
+B"\q"
+`Muldis_Object_Notation_Sync_Mark`
+`The 1-octet string 0xx60 (3 octets).`
+o\g
+`Muldis_Object_Notation_Sync_Mark`
+`The 1-octet string 0xx5C (3 octets).`
+o\k
+`Muldis_Object_Notation_Sync_Mark`
+`The 4-octet string 0xxA705_E416 (7 octets).`
+B"\A7\05\E4\16"
+`Muldis_Object_Notation_Sync_Mark`
+`The 2-octet string 0xb00101110_10001011 (7 octets).`
+B"\2E\8B"
+`Muldis_Object_Notation_Sync_Mark`
+`Empty character UTF-8 string (1 octet); also known as "".`
+t
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (3 octets).`
+T""
+`Muldis_Object_Notation_Sync_Mark`
+`The 1-character UTF-8 string 0t0 or "\(0t0)" (1 octet);`
+`also known as the first ordered attribute name.`
+\00
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+u\00
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
+T"\00"
+`Muldis_Object_Notation_Sync_Mark`
+`The 1-character UTF-8 string 0t1 or "\(0t1)" (1 octet);`
+`also known as the second ordered attribute name.`
+\01
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (2 octets).`
+u\01
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
+T"\01"
+`Muldis_Object_Notation_Sync_Mark`
+`The 5-character UTF-8 string "Ceres" (6 octets).`
+yCeres
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (8 octets).`
+T"Ceres"
+`Muldis_Object_Notation_Sync_Mark`
+`The 1-character UTF-8 string "⨝" (4 octets).`
+w\E2\A8\9D
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (6 octets).`
+T"\E2\A8\9D"
+`Muldis_Object_Notation_Sync_Mark`
+`The 4-character UTF-8 string "サンプル" (15 octets).`
+T"\E3\82\B5\E3\83\B3\E3\83\97\E3\83\AB"
+`Muldis_Object_Notation_Sync_Mark`
+`A 24 character UTF-8 string (27 octets).`
+T"This isn't not escaped.\0A"
+`Muldis_Object_Notation_Sync_Mark`
+`The 2-character UTF-8 string "\(0tx263A)\(0t65)" (5 octets).`
+x\E2\98\BA\41
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (7 octets).`
+T"\E2\98\BA\41"
+`Muldis_Object_Notation_Sync_Mark`
+`A 10-character UTF-8 string (13 octets).`
+T"First Name"
+`Muldis_Object_Notation_Sync_Mark`
+`The Nesting with exactly 1 element that is the empty character UTF-8`
+`string (2 octets); also known as ::"".`
+nt
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
+N[t]
+`Muldis_Object_Notation_Sync_Mark`
+`The Nesting with exactly 1 element that is the first ordered`
+`attribute name (2 octets); also known as ::0t0.`
+n\00
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (4 octets).`
+N[\00]
+`Muldis_Object_Notation_Sync_Mark`
+`The Nesting with exactly 1 element that is the 6-charater UTF-8`
+`string "person" (8 octets); also known as ::person.`
+nzperson
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing (10 octets).`
+N[zperson]
+`Muldis_Object_Notation_Sync_Mark`
+`The 2-element Nesting person::birth_date (23 octets).`
+N[zpersonT"birth_date"]
+`Muldis_Object_Notation_Sync_Mark`
+`The 3-element Nesting person::birth_date::year (28 octets).`
+N[zpersonT"birth_date"xyear]
+`Muldis_Object_Notation_Sync_Mark`
+`The 3-element Nesting the_db::stats::"samples by order" (35 octets).`
+N[zthe_dbystatsT"samples by order"]
+`Muldis_Object_Notation_Sync_Mark`
+`Duo of Ignorance (3 octets); also known as (0iIGNORANCE: 0iIGNORANCE).`
+D__
+`Muldis_Object_Notation_Sync_Mark`
+`Duo of Integer (4 octets); also known as (5: -3).`
+D5d\FD
+`Muldis_Object_Notation_Sync_Mark`
+`Duo of Text (18 octets); also known as ("First Name": Joy).`
+DT"First Name"wJoy
+`Muldis_Object_Notation_Sync_Mark`
+`Another Duo (5 octets); also known as (x:y).`
+Duxuy
+`Muldis_Object_Notation_Sync_Mark`
+`A singleton higher-level data type possrep artifact;`
+`also known as (Arguments: 0iIGNORANCE).`
+DT"Arguments"_
+`Muldis_Object_Notation_Sync_Mark`
