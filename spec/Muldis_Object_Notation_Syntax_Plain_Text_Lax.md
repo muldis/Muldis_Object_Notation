@@ -22,7 +22,7 @@ its part name is `Syntax_Plain_Text_Lax`.
 - [COMMON QUALITIES OF THE GRAMMAR](#COMMON-QUALITIES-OF-THE-GRAMMAR)
 - [PARSING UNIT](#PARSING-UNIT)
 - [DIVIDING SPACE](#DIVIDING-SPACE)
-- [CRITICAL ALGEBRAIC DATA TYPE POSSREPS](#CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS)
+- [ALGEBRAIC DATA TYPE POSSREPS](#ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Any / Universal Type Possrep](#Any---Universal-Type-Possrep)
     - [None / Empty Type Possrep](#None---Empty-Type-Possrep)
 - [SIMPLE DATA TYPE POSSREPS](#SIMPLE-DATA-TYPE-POSSREPS)
@@ -102,7 +102,7 @@ syntax options of JSON so users are empowered that every valid JSON
 artifact can also be parsed as a valid MUON artifact with essentially the
 same meaning, rather than the 2 languages being incompatible despite their
 overlapping features being mostly syntax compatible.  This full
-compatibility is provided as a secondary syntax rather than being part of
+compatibility is provided as an additional syntax rather than being part of
 the most fundamental Plain Text (strict) format so that the latter can be
 more pure and not constrained by third-party decision-makers.  The Lax
 syntax also incorporates several non-conflicting formats from a variety of
@@ -207,9 +207,9 @@ Grammar:
 
 [RETURN](#TOP)
 
-<a name="CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
+<a name="ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
 
-# CRITICAL ALGEBRAIC DATA TYPE POSSREPS
+# ALGEBRAIC DATA TYPE POSSREPS
 
 [RETURN](#TOP)
 

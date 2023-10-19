@@ -121,71 +121,18 @@ more unique to it and some reasons for why one might want to use it.
 possreps* or *possreps* (*possible representations*) that all *values*
 represented with MUON syntax are characterized by.
 
-Critical Algebraic:
-
 - **Any**
-- **None**
-
-Folding Algebraic:
-
-- **Fractional**
-
-Simple Primary:
-
 - **Ignorance**
 - **Boolean**
-- Numeric: **Integer**, **Fraction**
-- Stringy: **Bits**, **Blob**, **Text**
+- **Integer**
+- **Fraction**
+- **Bits**
+- **Blob**
+- **Text**
 - **Nesting**
-
-Collective Primary:
-
 - **Duo**
 - **Lot**
 - **Kit**
-
-Less-Collective Secondary:
-
-- Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
-
-More-Collective Secondary:
-
-- Discrete: **Array**, **Set**, **Bag**, **Mix**
-- Continuous: **Interval**, **Interval Set**, **Interval Bag**
-- **Pair**
-- Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
-- **Article**
-- **Excuse**
-
-Signature Declaring Secondary:
-
-- **Syntax**
-- **Model**
-
-Source Code Defining Secondary:
-
-*None yet.*
-
-Example Potential Source Code Defining Secondary:
-
-- **Procedure**
-- **Function**
-- **Type**
-- **Signature**
-- **Priming**
-- **Call**
-- **Literal**
-- **Args**
-- **Attr**
-- **If_Then_Else**
-- **Given_When_Default**
-- **Guard**
-- **Vars**
-- **New**
-- **Current**
-- **Assign**
-- **Comment**
-- **Annotation**
 
 See [Semantics](Muldis_Object_Notation_Semantics.md) for details.
 

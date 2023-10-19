@@ -339,7 +339,7 @@ for example, any value of the .NET structure type array `System.String[]`.
 A **Duo** artifact is any of the following:
 
 * Any *SYS_Duo_AA* such that its *SYS_this* is *this*
-(any **Any** artifact except for any *Primary_Possrep_Name*)
+(any **Any** artifact except for any *Possrep_Name*)
 and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`

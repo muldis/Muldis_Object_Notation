@@ -16,6 +16,7 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
 
 ## CONTENTS
 
+- [OVERVIEW OF ABSTRACT DATA TYPE POSSREPS](#OVERVIEW-OF-ABSTRACT-DATA-TYPE-POSSREPS)
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
 - [COMMON QUALITIES OF ABSTRACT SECONDARY DATA TYPE POSSREPS](#COMMON-QUALITIES-OF-ABSTRACT-SECONDARY-DATA-TYPE-POSSREPS)
@@ -44,6 +45,41 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
 - [SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS](#SIGNATURE-DECLARING-SECONDARY-DATA-TYPE-POSSREPS)
     - [Syntax](#Syntax)
     - [Model](#Model)
+
+[RETURN](#TOP)
+
+<a name="OVERVIEW-OF-ABSTRACT-DATA-TYPE-POSSREPS"></a>
+
+# OVERVIEW OF ABSTRACT DATA TYPE POSSREPS
+
+This document section still has a counterpart in
+[Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md)
+as of the creation of this current **Supplemental** document,
+but it was rewritten to something much shorter.
+
+Each valid abstract MUON artifact is an instance of a single abstract MUON
+possrep.  Each abstract MUON possrep is of exactly one of these 3 kinds:
+*algebraic possrep*, *primary possrep*, *secondary possrep*.
+
+This document considers each abstract MUON *primary possrep* to be
+fundamental and to simply exist.  It is manadatory that each concrete MUON
+syntax will bootstrap a *primary possrep* in terms of one or more
+dedicated concrete literal formats or host language data types.
+
+This document considers each abstract MUON *secondary possrep* to be
+non-fundamental and to be defined as a special case of a *primary possrep*.
+Each concrete MUON syntax does not have to say anything at all about any
+*secondary possrep*, but it may optionally provide for it one or more
+dedicated concrete literal formats or host language data types.
+
+This document considers each abstract MUON *algebraic possrep* to be
+non-fundamental and to be defined as a union of 0..N *primary possrep*.
+
+See [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
+
+This document part provides illustrative example code in the concrete
+[Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
+but expressly limits itself to the *primary possrep* literal formats.
 
 [RETURN](#TOP)
 

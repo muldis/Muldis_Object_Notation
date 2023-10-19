@@ -16,6 +16,8 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
 
 ## CONTENTS
 
+- [OVERVIEW OF DATA TYPE POSSREPS](#OVERVIEW-OF-DATA-TYPE-POSSREPS)
+- [EXCLUDED DATA TYPE POSSREPS](#EXCLUDED-DATA-TYPE-POSSREPS)
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
 - [LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS](#LESS-COLLECTIVE-SECONDARY-DATA-TYPE-POSSREPS)
@@ -43,6 +45,252 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
 - [SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS](#SIGNATURE-DECLARING-SECONDARY-DATA-TYPE-POSSREPS)
     - [Syntax](#Syntax)
     - [Model](#Model)
+
+[RETURN](#TOP)
+
+<a name="OVERVIEW-OF-DATA-TYPE-POSSREPS"></a>
+
+## OVERVIEW OF DATA TYPE POSSREPS
+
+This document section still has a counterpart in
+[Semantics](Muldis_Object_Notation_Semantics.md)
+as of the creation of this current **Supplemental** document,
+but it was rewritten to something much shorter.
+
+**Muldis Object Notation** is mainly characterized by a set of *data type
+possreps* or *possreps* (*possible representations*) that all *values*
+represented with MUON syntax are characterized by.
+
+A *possrep* corresponds to the concept of a *data type*, where the latter
+is characterized by a set of *values*, and one may choose to use those
+terms interchangeably in less formal speech.  But formally a *data type*
+exists only as part of an external data model used with MUON and is not
+part of MUON itself.  Depending on the data model in question, each MUON
+possrep may correspond to exactly 1 data type, or to multiple data types,
+or multiple possreps may correspond to 1 data type.
+
+This document largely avoids defining any relationship between these possreps,
+and officially leaves it up to each external data model used with MUON to
+define for itself whether any two given possreps are *conjoined* (have any
+values in common) or *disjoint* (have no values in common).  For example,
+some external data models may consider **Integer** to correspond to a
+*subtype* of what **Fraction** corresponds to (`42` is a member of both)
+while others may consider the two possreps to be disjoint (`42` and `42.0`
+are not the same value).  The sole exceptions are that the
+**Any** and **None** possreps explicitly correspond to a *supertype*
+or *subtype* respectively of what every other possrep corresponds to,
+regardless of the data model.
+
+When an external data model is used with MUON, MUON requires that a
+thorough mapping is defined for every MUON possrep to some data type of
+that model.  The intent here is that every well-formed MUON *parsing unit*
+can be deterministically parsed into some value of that model, and
+therefore that there would never be a MUON parsing failure due to the data
+model not supporting some particular data type.  The mapping should be a
+reasonable best fit, even if crude, when there isn't a perfect analogy.
+
+In contrast, MUON does *not* require that a mapping exist from every value
+of an external data model to MUON, in particular types that are like opaque
+pointers to memory addresses which don't meaningfully serialize.  MUON also
+does require that any value which a data model supports generating a MUON
+parsing unit from must be losslessly round-trippable, that when one
+generates MUON from said value, and then turns around and parses that MUON
+with the same model, it will be parsed as the exact same value.
+Note that the **Article** possrep is the idiomatic way for an external data
+model to represent "new" types as MUON in a consistent way.
+
+Each MUON possrep is of exactly one of these 3 kinds:
+*algebraic possrep*, *primary possrep*, *secondary possrep*.
+
+An *algebraic possrep* has no syntax of its own and just exists as a
+concept defined in terms of the union of 0..N other possreps, and in
+practice any reference to an algebraic possrep is just a shorthand for
+referring to a set of the possreps it is defined in terms of.
+
+A *critical algebraic possrep* is one that is of critical universal
+importance in theory and practice to even the simplest possible versions of
+a type system and should always be included, at least if it is a type
+system that has any concept of overlapping or generic types.
+There are exactly 2 of these:
+
+- **Any**
+- **None**
+
+A *folding algebraic possrep* is one that exists to provide a definition
+shorthand where a context may conceptually require an artifact of possrep X
+but, in order to be more terse and friendly for programmers, the context
+would also accept an artifact of possrep Y when it is already the case that
+an artifact of possrep X can optionally be defined wholly in terms of an
+artifact of possrep Y; in that case, an explicit Y by itself is is an
+implicit X that will be produced from Y.
+There is exactly 1 of these:
+
+- **Fractional**
+
+A *primary possrep* is a member of the reasonable minimum set of MUON
+possreps that bootstraps every syntax.  Each one is of exactly one of these
+2 kinds:  *simple primary possrep*, *collective primary possrep*.
+No primary possrep is defined in terms of any other possrep, it is
+conceptually opaque.  Every syntax must have a reasonably uncomplicated
+format for each primary possrep that is disjoint from the formats of all
+other primary possreps, and typically there would be a simple literal or
+simple system-defined data type corresponding directly to each one.
+
+A *simple primary possrep* has a strictly non-recursive definition, and
+never is expressed in terms of **Any** components directly or indirectly,
+and typically corresponds to the concept of a single non-collective item.
+There are exactly 8 of these:
+
+- **Ignorance**
+- **Boolean**
+- Numeric: **Integer**, **Fraction**
+- Stringy: **Bits**, **Blob**, **Text**
+- **Nesting**
+
+A *collective primary possrep* has a strictly recursive definition, and is
+expressed mainly in terms of **Any** components directly or indirectly,
+and typically corresponds to the concept of a single collective item.
+There are exactly 3 of these:
+
+- **Duo**
+- **Lot**
+- **Kit**
+
+A *secondary possrep* is one whose canonical definition has no format of
+its own in any syntax and rather its canonical definition is as one or more
+special cases of some other possrep.  To be specific, an artifact of every
+secondary possrep is canonically expressed in every syntax as a **Duo**
+artifact which provides a semantic tag for some other
+typically-structure-defining artifact thus giving the latter a different
+interpretation than otherwise.  Each syntax may optionally define extra
+formats specific to any secondary possrep which are more compact, such as
+a dedicated **Calendar Time** simple literal syntax or system data type value.
+
+Each of these 4 less-collective-like secondary possreps might have its own
+dedicated simple literal formats or data type values in some syntaxes:
+
+- Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
+
+Some of these 16 more-collective-like secondary possreps might have its own
+dedicated simple literal formats or data type values in some syntaxes:
+
+- Discrete: **Array**, **Set**, **Bag**, **Mix**
+- Continuous: **Interval**, **Interval Set**, **Interval Bag**
+- **Pair**
+- Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
+- **Article**
+- **Excuse**
+
+These 2 secondary possreps are specifically for signatures or explicit
+declarations that are used alongside or embedded in data to declare more
+unambiguously how the latter was intended by its authors to be interpreted:
+
+- **Syntax**
+- **Model**
+
+These 0 secondary possreps are specifically for defining program source
+code and are not for defining regular data:
+
+*More secondary possreps will be added corresponding to program source code.*
+
+These 18 secondary possreps are not yet part of MUON and are representative
+of ones that are intended to be added, that are specifically for defining
+program source code and are not for defining regular data:
+
+- **Procedure**
+- **Function**
+- **Type**
+- **Signature**
+- **Priming**
+- **Call**
+- **Literal**
+- **Args**
+- **Attr**
+- **If_Then_Else**
+- **Given_When_Default**
+- **Guard**
+- **Vars**
+- **New**
+- **Current**
+- **Assign**
+- **Comment**
+- **Annotation**
+
+[RETURN](#TOP)
+
+<a name="EXCLUDED-DATA-TYPE-POSSREPS"></a>
+
+## EXCLUDED DATA TYPE POSSREPS
+
+This document section still has a counterpart in
+[Semantics](Muldis_Object_Notation_Semantics.md)
+as of the creation of this current **Supplemental** document,
+but it was rewritten to something much shorter.
+
+Muldis Object Notation eschews dedicated possreps for some data types that
+users might expect to see here.  This section enumerates some and says why.
+
+IEEE floating-point signed zeroes, infinities, and NaNs are not part of the
+**Fraction** possrep (only regular finite numbers are included) and rather
+would be their own singleton **Article** or **Excuse** possreps, usually
+left up to the overlaid data model.
+
+Fixed-precision/scale numbers and/or significant figures indication and/or
+error margin indication, left up to the overlaid data model.  Any added
+would be bareword only as expected to be relatively short. They would be
+defined in terms of being a scaled integer or fixed-denominator fraction.
+
+While **Mix** is characterized by a generalization of a **Bag**, there are
+currently no possreps defined like **Interval Mix** or **Tuple Mix**,
+because there doesn't seem to be a use case for them.  However, if it turns
+out that either would have a practical use, then it should be easy enough
+to extend the pattern established with **Set** and **Bag**.
+
+Dictionary types in the general case are excluded because the relational
+types should be able to represent all their variations (eg, unordered,
+ordered, one-directional vs bi-directional, with or without duplicates,
+etc) more effectively and in a more generic manner.  The canonical way to
+represent a dictionary used like an anonymous structure or class, where the
+dictionary keys are all character strings, is the **Tuple**.  The canonical
+way to represent the general case of a dictionary where the dictionary keys
+might be of any data type is with a binary **Relation** with 2 "positional"
+attributes, and a single key-value pair of such a dictionary is a binary
+**Tuple**.  A canonical syntax specific to the most common case of a
+Dictionary, namely unordered, one-directional, any key type, no duplicates,
+might be added later.
+
+Most complexities related to temporal types are excluded by MUON, and are
+best handled by a data model layered over top of MUON.  For example, MUON
+itself does not place any restrictions on how many
+months/days/hours/minutes/seconds are permitted in particular slots for the
+possreps it does provide.  Also, MUON itself makes no assumptions on what
+particular calendars/eras/epochs are in use, eg Gregorian or other.
+
+Most complexities related to spatial types are excluded by MUON, and are
+best handled by a data model layered over top of MUON.  While MUON includes
+the **Geographic Point** possrep to handle the generally most simple and
+widely useful geographic coordinate type, it doesn't explicitly support any
+other kinds of geometries.
+
+Currency types in the general case are excluded because the **Mix** possrep
+should be able to represent all their variations in a more generic manner.
+
+Media types in the general case, such as audio or still or moving visual,
+are excluded because they are better defined by a data model layered over
+top of MUON and they are complex.  Only generic plain-text media is native.
+
+Source code types in the general case, such as definitions of functions or
+procedures or data types, are excluded because they are better defined by a
+data model layered over top of MUON and they are both complex and highly
+variable.  Only a few source code types have dedicated MUON syntax because
+they specifically benefit from that and conceptually they are simple even
+if they may vary greatly in implementation, such as unqualified identifiers
+(via **Text**) and **Nesting**, **Heading**, **Renaming**.  However it is
+planned for MUON to be extended with many more source code defining possreps.
+
+Generic foreign serialization types such as JSON and XML are excluded
+because MUON as a whole is supposed to natively handle everything they can
+represent but better; otherwise one can still use **Text** to embed those.
 
 [RETURN](#TOP)
 

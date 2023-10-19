@@ -25,7 +25,7 @@ its part name is `Syntax_Plain_Text`.
 - [COMMON QUALITIES OF THE GRAMMAR](#COMMON-QUALITIES-OF-THE-GRAMMAR)
 - [PARSING UNIT](#PARSING-UNIT)
 - [DIVIDING SPACE](#DIVIDING-SPACE)
-- [CRITICAL ALGEBRAIC DATA TYPE POSSREPS](#CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS)
+- [ALGEBRAIC DATA TYPE POSSREPS](#ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Any / Universal Type Possrep](#Any---Universal-Type-Possrep)
     - [None / Empty Type Possrep](#None---Empty-Type-Possrep)
 - [SIMPLE DATA TYPE POSSREPS](#SIMPLE-DATA-TYPE-POSSREPS)
@@ -357,9 +357,9 @@ See the grammar sections for `<Integer>`, `<Fraction>`, `<Bits>`, `<Blob>`,
 
 [RETURN](#TOP)
 
-<a name="CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
+<a name="ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
 
-# CRITICAL ALGEBRAIC DATA TYPE POSSREPS
+# ALGEBRAIC DATA TYPE POSSREPS
 
 [RETURN](#TOP)
 
@@ -1083,7 +1083,7 @@ Grammar:
 The meaning of a `<that>` which is the special empty string option is
 exactly the same as if it were explicitly `0iIGNORANCE`.  This special
 **Duo** shorthand is provided to better support the common special case of
-a singleton secondary-level data type possrep Which necessarily must be
+a singleton higher-level data type possrep Which necessarily must be
 expressed with a **Duo** but doesn't have a meaningful `<that>` component.
 
 Examples:
@@ -1107,7 +1107,7 @@ Examples:
     `Same thing.`
     (y<-x)
 
-    `A singleton secondary-level data type possrep artifact.`
+    `A singleton higher-level data type possrep artifact.`
     (Arguments: 0iIGNORANCE)
 
     `Same thing in shorthand.`
@@ -1273,7 +1273,7 @@ grammars to define their own meanings.
 
 ## Possrep Heuristics
 
-The following table indicates the basic heuristics for how each primary
+The following table indicates the basic heuristics for how each
 possrep is recognized within a valid Muldis Object Notation artifact:
 
 ```

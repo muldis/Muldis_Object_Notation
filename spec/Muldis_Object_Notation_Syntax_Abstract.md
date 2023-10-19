@@ -20,7 +20,7 @@ its part name is `Syntax_Abstract`.
 - [SYNOPSIS](#SYNOPSIS)
 - [DESCRIPTION](#DESCRIPTION)
 - [OVERVIEW OF ABSTRACT DATA TYPE POSSREPS](#OVERVIEW-OF-ABSTRACT-DATA-TYPE-POSSREPS)
-- [CRITICAL ALGEBRAIC DATA TYPE POSSREPS](#CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS)
+- [ALGEBRAIC DATA TYPE POSSREPS](#ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Any / Universal Type Possrep](#Any---Universal-Type-Possrep)
     - [None / Empty Type Possrep](#None---Empty-Type-Possrep)
 - [SIMPLE DATA TYPE POSSREPS](#SIMPLE-DATA-TYPE-POSSREPS)
@@ -85,34 +85,27 @@ designed to satisfy the requirements of and map with.
 # OVERVIEW OF ABSTRACT DATA TYPE POSSREPS
 
 Each valid abstract MUON artifact is an instance of a single abstract MUON
-possrep.  Each abstract MUON possrep is of exactly one of these 3 kinds:
-*algebraic possrep*, *primary possrep*, *secondary possrep*.
+possrep.  Each abstract MUON possrep is of exactly one of these 2 kinds:
+*algebraic possrep*, *non-algebraic possrep*.
 
-This document considers each abstract MUON *primary possrep* to be
+This document considers each abstract MUON *non-algebraic possrep* to be
 fundamental and to simply exist.  It is manadatory that each concrete MUON
-syntax will bootstrap a *primary possrep* in terms of one or more
-dedicated concrete literal formats or host language data types.
-
-This document considers each abstract MUON *secondary possrep* to be
-non-fundamental and to be defined as a special case of a *primary possrep*.
-Each concrete MUON syntax does not have to say anything at all about any
-*secondary possrep*, but it may optionally provide for it one or more
+syntax will bootstrap a *non-algebraic possrep* in terms of one or more
 dedicated concrete literal formats or host language data types.
 
 This document considers each abstract MUON *algebraic possrep* to be
-non-fundamental and to be defined as a union of 0..N *primary possrep*.
+non-fundamental and to be defined as a union of 0..N *non-algebraic possrep*.
 
 See [Semantics](Muldis_Object_Notation_Semantics.md) for further context.
 
 This document part provides illustrative example code in the concrete
-[Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
-but expressly limits itself to the *primary possrep* literal formats.
+[Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md).
 
 [RETURN](#TOP)
 
-<a name="CRITICAL-ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
+<a name="ALGEBRAIC-DATA-TYPE-POSSREPS"></a>
 
-# CRITICAL ALGEBRAIC DATA TYPE POSSREPS
+# ALGEBRAIC DATA TYPE POSSREPS
 
 [RETURN](#TOP)
 
@@ -451,7 +444,7 @@ Examples:
     `Same thing.`
     (y<-x)
 
-    `A singleton secondary-level data type possrep artifact.`
+    `A singleton higher-level data type possrep artifact.`
     (Arguments: 0iIGNORANCE)
 
     `Same thing in shorthand.`

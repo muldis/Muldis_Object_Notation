@@ -338,7 +338,7 @@ A *SYS_Array_T* is any of the following:
 A **Duo** artifact is any of the following:
 
 * Any *SYS_Duo_AA* such that its *SYS_this* is *this*
-(any **Any** artifact except for any *Primary_Possrep_Name*
+(any **Any** artifact except for any *Possrep_Name*
 and except for the *SYS_Text* value `multiplied`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
