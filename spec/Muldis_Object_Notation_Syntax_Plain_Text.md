@@ -1100,6 +1100,72 @@ Examples:
 
     `Same thing.`
     (y<-x)
+
+    `Higher-level Article type.`
+    (Article: (::Point : {x : 5, y : 3}))
+
+    `Higher-level Article type.`
+    (Article: (::Float : {
+        significand : 45207196,
+        radix       : 10,
+        exponent    : 37,
+    }))
+
+    `Higher-level Article type.`
+    (Article: (the_db::UTC_Date_Time : {
+        year   : 2003,
+        month  : 10,
+        day    : 26,
+        hour   : 1,
+        minute : 30,
+        second : 0.0,
+    }))
+
+    `Higher-level Article type.`
+    (Article: (::Positive_Infinity : {}))
+
+    `Higher-level Article type.`
+    (Article: (::Negative_Zero : {}))
+
+    `Higher-level Excuse type.`
+    (Excuse: (::Input_Field_Wrong : {name : "Your Age"}))
+
+    `Higher-level Excuse type.`
+    (Excuse: (::Div_By_Zero : {}))
+
+    `Higher-level Excuse type.`
+    (Excuse: (::No_Such_Attr_Name : {}))
+
+    `Higher-level signature-declaring Syntax type.`
+    (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
+        42
+    ))
+
+    `Higher-level signature-declaring Model type.`
+    (Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
+        42
+    ))
+
+    `Higher-level Calendar_Duration type: Addition of 2 years and 3 months.`
+    (Calendar_Duration:{y:2,m:3,d:0,h:0,i:0,s:0})
+
+    `Higher-level Calendar_Duration type: Subtraction of 22 hours.`
+    (Calendar_Duration:{y:0,m:0,d:0,h-22,i:0,s:0})
+
+    `Higher-level Calendar_Instant type: The Day The Music Died (if paired with Gregorian calendar).`
+    (Calendar_Instant:{y:1959,m:2,d:3})
+
+    `Higher-level Calendar_Instant type: A time of day when one might have breakfast.`
+    (Calendar_Instant:{h:7,i:30,s:0})
+
+    `Higher-level Calendar_Instant type: What was now in the Pacific zone (if paired with Gregorian calendar).`
+    (Calendar_Instant:({y:2018,m:9,d:3,h:20,i:51,s:17}:{h:-8,i:0,s:0}))
+
+    `Higher-level Calendar_Instant type: A time of day in the UTC zone on an unspecified day.`
+    (Calendar_Instant:({h:9,i:25,s:0}:{h:0,i:0,s:0}))
+
+    `Higher-level Calendar_Instant type: A specific day and time in the Pacific Standard Time zone.`
+    (Calendar_Instant:({y:2001,m:4,d:16,h:20,i:1,s:44}:"PST"))
 ```
 
 [RETURN](#TOP)
@@ -1159,6 +1225,87 @@ Examples:
         Hearts : 10,
         Spades : 20,
     ]
+
+    `Higher-level Array type: Three members.`
+    (Array:[
+        Alphonse,
+        Edward,
+        Winry,
+    ])
+
+    `Higher-level Array type: 32 members (28 duplicates in 2 runs).`
+    (Array:[
+        "/",
+        "*" : 20,
+        "+" : 10,
+        "-",
+    ])
+
+    `Higher-level Set type: Four members (no duplicates).`
+    (Set:[
+        Canada,
+        Spain,
+        Jordan,
+        Jordan,
+        Thailand,
+    ])
+
+    `Higher-level Bag type: Zero members.`
+    (Bag:[])
+
+    `Higher-level Bag type: One member.`
+    (Bag:[ "I hear that!": 1 ])
+
+    `Higher-level Bag type: 1200 members (1197 duplicates).`
+    (Bag:[
+        Apple  : 500,
+        Orange : 300,
+        Banana : 400,
+    ])
+
+    `Higher-level Bag type: Six members (2 duplicates).`
+    (Bag:[
+        Foo : 1,
+        Quux : 1,
+        Foo : 1,
+        Bar : 1,
+        Baz : 1,
+        Baz : 1,
+    ])
+
+    `Higher-level Mix type: Zero members; we measured zero of nothing in particular.`
+    (Mix:[])
+
+    `Higher-level Mix type: One member; one gram of mass.`
+    (Mix:[::Gram: 1.0])
+
+    `Higher-level Mix type: 29.95 members (28.95 duplicates); the cost of a surgery.`
+    (Mix:[::USD: 29.95])
+
+    `Higher-level Mix type: 9.8 members; acceleration under Earth's gravity.`
+    (Mix:[::Meter_Per_Second_Squared: 9.8])
+
+    `Higher-level Mix type: 0.615 members (fractions of 3 distinct members); recipe.`
+    (Mix:[
+        ::Butter : 0.22,
+        ::Sugar  : 0.1,
+        ::Flour  : 0.275,
+        ::Sugar  : 0.02,
+    ])
+
+    `Higher-level Mix type: 4/3 members (fractions of 3 distinct members); this-mix.`
+    (Mix:[
+        Sugar: 1/3,
+        Spice: 1/4,
+        All_Things_Nice: 3/4,
+    ])
+
+    `Higher-level Mix type: -1.5 members; adjustment for recipe.`
+    (Mix:[
+        Rice: +4.0,
+        Beans: -5.7,
+        Carrots: +0.2,
+    ])
 ```
 
 [RETURN](#TOP)
@@ -1240,6 +1387,104 @@ Examples:
 
     `A non-Latin name.`
     {"サンプル": "https://example.com"}
+
+    `Higher-level Renaming type: Rename one attribute.`
+    (Renaming:{fname->first_name})
+
+    `Higher-level Renaming type: Same thing.`
+    (Renaming:{fname:first_name})
+
+    `Higher-level Renaming type: Same thing.`
+    (Renaming:{first_name<-fname})
+
+    `Higher-level Renaming type: Swap 2 named attributes.`
+    (Renaming:{foo->bar,foo<-bar})
+
+    `Higher-level Renaming type: Convert ordered names to nonordered.`
+    (Renaming:{foo,bar})
+
+    `Higher-level Renaming type: Same thing.`
+    (Renaming:{0t0->foo,0t1->bar})
+
+    `Higher-level Renaming type: Convert nonordered names to ordered.`
+    (Renaming:{0t0<-foo,0t1<-bar})
+
+    `Higher-level Renaming type: Swap 2 ordered attributes.`
+    (Renaming:{0t0->0t1,0t0<-0t1})
+
+    `Higher-level Renaming type: Same thing.`
+    (Renaming:{0t1,0t0})
+
+    `Higher-level Tuple type: Two named attributes.`
+    (Tuple:{
+        name : Michelle,
+        age  : 17,
+    })
+
+    `Higher-level Tuple type: Same thing.`
+    (Tuple:(
+          {name    , age}
+        : {Michelle, 17 }
+    ))
+
+    `Higher-level Relation type: Zero attributes + zero tuples.`
+    (Relation:{})
+
+    `Higher-level Relation type: Same thing.`
+    (Relation:({}:[]))
+
+    `Higher-level Relation type: Zero attributes + one tuple.`
+    (Relation:[{}])
+
+    `Higher-level Relation type: Same thing.`
+    (Relation:({}:[{}]))
+
+    `Higher-level Relation type: Three named attributes + zero tuples.`
+    (Relation:{x,y,z})
+
+    `Higher-level Relation type: Three positional attributes + zero tuples.`
+    (Relation:{0t0,0t1,0t2})
+
+    `Higher-level Relation type: Two named attributes + two tuples.`
+    (Relation:[
+        {name: Michelle, age: 17},
+        {name: Amy     , age: 14},
+    ])
+
+    `Higher-level Relation type: Same thing.`
+    (Relation:(
+            {name    , age}
+        : [
+            {Michelle, 17 },
+            {Amy     , 14 },
+        ]
+    ))
+
+    `Higher-level Relation type: Two positional attributes + two tuples.`
+    (Relation:[
+        {Michelle, 17},
+        {Amy     , 14},
+    ])
+
+    `Higher-level Relation type: Some people records.`
+    (Relation:[
+        {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
+            phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
+        {name : "Layla Miller", birth_date : (Calendar_Instant:{y:1995,m:8,d:27}),
+            phone_numbers : (Set:[])},
+        {name : "岩倉 玲音", birth_date : (Calendar_Instant:{y:1984,m:7,d:6}),
+            phone_numbers : (Set:["+81.9072391679"])},
+    ])
+
+    `Higher-level Relation type: Same thing.`
+    (Relation:(
+            {name          , birth_date                          , phone_numbers}
+        : [
+            {"Jane Ives"   , (Calendar_Instant:{y:1971,m:11,d:6}), (Set:["+1.4045552995", "+1.7705557572"])},
+            {"Layla Miller", (Calendar_Instant:{y:1995,m:8,d:27}), (Set:[])},
+            {"岩倉 玲音", (Calendar_Instant:{y:1984,m:7,d:6}), (Set:["+81.9072391679"])},
+        ]
+    ))
 ```
 
 [RETURN](#TOP)
