@@ -18,6 +18,7 @@ formal spec but was since removed from it, typically to simplify or reduce
 the scope of the formal spec, and are preserved here for posterity or
 because they might be useful for tangential projects:
 
+- [spec/MUON_Syntax_Abstract_Supplemental.md](spec/MUON_Syntax_Abstract_Supplemental.md)
 - [spec/MUON_Hosted_Syntaxes_Supplemental.md](spec/MUON_Hosted_Syntaxes_Supplemental.md)
 - [spec/MUON_Syntax_Plain_Text_Supplemental.md](spec/MUON_Syntax_Plain_Text_Supplemental.md)
 
