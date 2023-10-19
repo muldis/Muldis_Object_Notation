@@ -54,7 +54,7 @@ its part name is `Syntax_Packed_Plain_Text`.
 
 # SYNOPSIS
 
-Common **Relation** "named" format with attribute names repeating per tuple.
+Common "named relation" format with attribute names repeating per tuple.
 
 ```
     D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.300.0"]
@@ -72,7 +72,7 @@ Common **Relation** "named" format with attribute names repeating per tuple.
             ]
 ```
 
-Alternate **Relation** "positional" format with attribute names declared
+Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
@@ -1269,7 +1269,7 @@ character string.  This single canonical octet corresponds to the ASCII/UTF-8
 There is also another format for this, but it takes more octets.
 
 A **Text** artifact uses just 1 octet to canonically represent the first 32
-"positional" **Kit**/**Tuple**/etc attribute names.
+"positional" **Kit** attribute names.
 The single canonical octet for each of `[0t0..0t8,0t11..0t12,0t14..0t31]`
 corresponds to each of the ASCII/UTF-8 code points
 `[0x0..0x8,0xB..0xC,0xE..0x1F]` respectively, so each one is represented by

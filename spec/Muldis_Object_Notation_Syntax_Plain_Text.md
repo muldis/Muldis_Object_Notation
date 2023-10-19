@@ -62,7 +62,7 @@ its part name is `Syntax_Plain_Text`.
 
 # SYNOPSIS
 
-Common **Relation** "named" format with attribute names repeating per tuple.
+Common "named relation" format with attribute names repeating per tuple.
 
 ```
     (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
@@ -79,7 +79,7 @@ Common **Relation** "named" format with attribute names repeating per tuple.
     ))
 ```
 
-Alternate **Relation** "positional" format with attribute names declared
+Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```

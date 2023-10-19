@@ -365,14 +365,14 @@ to keep things more correct and simpler:
 except for `System.ValueTuple`, having exactly 2 elements.
 
 Important note:  While a `System.Collections.Generic.KeyValuePair` value is
-conceptually the most direct analogy in .NET to a **Duo** or **Pair**
+conceptually the most direct analogy in .NET to a **Duo**
 artifact, MUON uses `System.ValueTuple` instead, because the literal syntax
 for the latter, `(this,that)`, is *much* less verbose than for the former,
 `new KeyValuePair<This,That>(this,that)`.  Given how **Duo** is
 conceptually one of the simplest possreps *and* it is one of the most
 frequently used in typical MUON artifacts, this choice is a huge win for
 brevity and usability, despite the trade-off that a common positional
-format of **Kit** or **Tuple** are somewhat more verbose as a result.
+format of **Kit** are somewhat more verbose as a result.
 
 [RETURN](#TOP)
 
