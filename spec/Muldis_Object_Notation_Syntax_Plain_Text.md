@@ -1076,15 +1076,9 @@ Grammar:
 
     token that
     {
-        <Any> | ''
+        <Any>
     }
 ```
-
-The meaning of a `<that>` which is the special empty string option is
-exactly the same as if it were explicitly `0iIGNORANCE`.  This special
-**Duo** shorthand is provided to better support the common special case of
-a singleton higher-level data type possrep Which necessarily must be
-expressed with a **Duo** but doesn't have a meaningful `<that>` component.
 
 Examples:
 
@@ -1106,12 +1100,6 @@ Examples:
 
     `Same thing.`
     (y<-x)
-
-    `A singleton higher-level data type possrep artifact.`
-    (Arguments: 0iIGNORANCE)
-
-    `Same thing in shorthand.`
-    (Arguments:)
 ```
 
 [RETURN](#TOP)

@@ -284,7 +284,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 
     token that
     {
-        <Any> | ''
+        <Any>
     }
 
 ###########################################################################

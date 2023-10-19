@@ -1499,10 +1499,6 @@ Examples:
 
     `Another Duo (5 octets); also known as (x:y).`
     Duxuy
-
-    `A singleton higher-level data type possrep artifact;`
-    `also known as (Arguments: 0iIGNORANCE).`
-    DT"Arguments"_
 ```
 
 [RETURN](#TOP)
