@@ -32,10 +32,6 @@ its part name is `Syntax_Raku`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
-    - [Calendar Duration](#Calendar-Duration)
-    - [Calendar Instant](#Calendar-Instant)
-    - [Interval](#Interval)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -479,43 +475,6 @@ represent a collection of arguments for a routine.
 A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
-
-[RETURN](#TOP)
-
-<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
-
-# ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
-
-[RETURN](#TOP)
-
-<a name="Calendar-Duration"></a>
-
-## Calendar Duration
-
-A **Calendar Duration** artifact is additionally any of the following:
-
-* Any object of the Raku class `Duration`.
-
-[RETURN](#TOP)
-
-<a name="Calendar-Instant"></a>
-
-## Calendar Instant
-
-A **Calendar Instant** artifact is additionally any of the following:
-
-* Any object of any of the Raku classes `Date`, `DateTime`, `Instant`.
-
-[RETURN](#TOP)
-
-<a name="Interval"></a>
-
-## Interval
-
-An **Interval** artifact is additionally any of the following:
-
-* Any object of the Raku class `Range`
-such that each of its `min` and `max` properties is any **Any** artifact.
 
 [RETURN](#TOP)
 

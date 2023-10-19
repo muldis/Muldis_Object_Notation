@@ -32,9 +32,6 @@ its part name is `Syntax_Ruby`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
-    - [Calendar Instant](#Calendar-Instant)
-    - [Interval](#Interval)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -437,32 +434,6 @@ A *SYS_Ordered_Dictionary_AA* is any of the following:
 A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
-
-[RETURN](#TOP)
-
-<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
-
-# ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
-
-[RETURN](#TOP)
-
-<a name="Calendar-Instant"></a>
-
-## Calendar Instant
-
-A **Calendar Instant** artifact is additionally any of the following:
-
-* Any object of the Ruby class `Time`.
-
-[RETURN](#TOP)
-
-<a name="Interval"></a>
-
-## Interval
-
-An **Interval** artifact is additionally any of the following:
-
-* Any object of the Ruby class `Range`.
 
 [RETURN](#TOP)
 

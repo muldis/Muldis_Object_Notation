@@ -32,9 +32,6 @@ its part name is `Syntax_Java`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
-    - [Calendar Duration](#Calendar-Duration)
-    - [Calendar Instant](#Calendar-Instant)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -468,50 +465,6 @@ because its collection of elements is likely to be unordered.
 A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
-
-[RETURN](#TOP)
-
-<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
-
-# ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
-
-[RETURN](#TOP)
-
-<a name="Calendar-Duration"></a>
-
-## Calendar Duration
-
-A **Calendar Duration** artifact is additionally any of the following:
-
-* Any object of any of the Java classes
-`java.time.Duration`,
-`java.time.Period`.
-
-*TODO: Consider removing some of the above options.*
-
-[RETURN](#TOP)
-
-<a name="Calendar-Instant"></a>
-
-## Calendar Instant
-
-A **Calendar Instant** artifact is additionally any of the following:
-
-* Any object of any of the Java classes
-`java.time.Instant`,
-`java.time.LocalDate`,
-`java.time.LocalDateTime`,
-`java.time.LocalTime`,
-`java.time.Month`,
-`java.time.MonthDay`,
-`java.time.OffsetDateTime`,
-`java.time.OffsetTime`,
-`java.time.Year`,
-`java.time.YearMonth`,
-`java.time.ZonedDateTime`,
-`java.time.ZoneOffset`.
-
-*TODO: Consider removing some of the above options.*
 
 [RETURN](#TOP)
 

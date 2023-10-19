@@ -32,8 +32,6 @@ its part name is `Syntax_ECMAScript`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
-    - [Calendar Instant](#Calendar-Instant)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -446,22 +444,6 @@ of elements, even if the defacto standard implementations all do so.
 A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
-
-[RETURN](#TOP)
-
-<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
-
-# ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
-
-[RETURN](#TOP)
-
-<a name="Calendar-Instant"></a>
-
-## Calendar Instant
-
-A **Calendar Instant** artifact is additionally any of the following:
-
-* Any value of the ECMAScript type `Date`.
 
 [RETURN](#TOP)
 

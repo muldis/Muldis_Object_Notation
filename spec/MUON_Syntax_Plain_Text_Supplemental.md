@@ -4,7 +4,8 @@
 
 This document features supplemental material that used to be part of
 [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
-but was removed from there as it was deemed to fit better as part of a
+but was removed from there when MUON itself was narrowed in scope.
+This material was deemed to fit better as part of a
 possible superset of the MUON grammar rather than as part of MUON proper.
 
 ## CONTENTS

@@ -32,11 +32,6 @@ its part name is `Syntax_Muldis_Data_Language`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
-    - [Calendar Time](#Calendar-Time)
-    - [Calendar Duration](#Calendar-Duration)
-    - [Calendar Instant](#Calendar-Instant)
-    - [Geographic Point](#Geographic-Point)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -210,52 +205,6 @@ A **Lot** artifact is any of the following:
 A **Kit** artifact is any of the following:
 
 * Any value of the MDL type `fdn::SC_Kit`.
-
-[RETURN](#TOP)
-
-<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
-
-# ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
-
-[RETURN](#TOP)
-
-<a name="Calendar-Time"></a>
-
-## Calendar Time
-
-A **Calendar Time** artifact is additionally any of the following:
-
-* Any value of the MDL type `fdn::Calendar_Time`.
-
-[RETURN](#TOP)
-
-<a name="Calendar-Duration"></a>
-
-## Calendar Duration
-
-A **Calendar Duration** artifact is additionally any of the following:
-
-* Any value of the MDL type `fdn::Calendar_Duration`.
-
-[RETURN](#TOP)
-
-<a name="Calendar-Instant"></a>
-
-## Calendar Instant
-
-A **Calendar Instant** artifact is additionally any of the following:
-
-* Any value of the MDL type `fdn::Calendar_Instant`.
-
-[RETURN](#TOP)
-
-<a name="Geographic-Point"></a>
-
-## Geographic Point
-
-A **Geographic Point** artifact is additionally any of the following:
-
-* Any value of the MDL type `fdn::Geographic_Point`.
 
 [RETURN](#TOP)
 

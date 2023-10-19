@@ -32,11 +32,6 @@ its part name is `Syntax_DotNet`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
-    - [Calendar Duration](#Calendar-Duration)
-    - [Calendar Instant](#Calendar-Instant)
-    - [Geographic Point](#Geographic-Point)
-    - [Pair](#Pair)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -501,59 +496,6 @@ as the 8th actual component, recursively as needed.
 * Any value of any .NET structure type, except for `System.ValueTuple`,
 or object of any .NET class,
 that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
-
-[RETURN](#TOP)
-
-<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
-
-# ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
-
-[RETURN](#TOP)
-
-<a name="Calendar-Duration"></a>
-
-## Calendar Duration
-
-A **Calendar Duration** artifact is additionally any of the following:
-
-* Any value of the .NET structure type `System.TimeSpan`.
-
-[RETURN](#TOP)
-
-<a name="Calendar-Instant"></a>
-
-## Calendar Instant
-
-A **Calendar Instant** artifact is additionally any of the following:
-
-* Any value of any of the .NET structure types
-`System.DateTime`,
-`System.DateTimeOffset`.
-
-[RETURN](#TOP)
-
-<a name="Geographic-Point"></a>
-
-## Geographic Point
-
-A **Geographic Point** artifact is additionally any of the following:
-
-* Any coordinate-specifying object of the .NET class
-`System.Data.Spatial.DbGeography`.
-
-*Note: DbGeography is only in .NET Framework; it is not in .NET 5+.*
-
-[RETURN](#TOP)
-
-<a name="Pair"></a>
-
-## Pair
-
-A **Pair** artifact is additionally any of the following:
-
-* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`
-such that its `Key` property is *this* (any **Any** artifact)
-and its `Value` property is *that* (any **Any** artifact).
 
 [RETURN](#TOP)
 

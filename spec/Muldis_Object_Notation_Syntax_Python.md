@@ -32,10 +32,6 @@ its part name is `Syntax_Python`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS](#ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS)
-    - [Calendar Duration](#Calendar-Duration)
-    - [Calendar Instant](#Calendar-Instant)
-    - [Interval](#Interval)
 - [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -442,45 +438,6 @@ to prevent ambiguity and simplify things:
 A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any value of the Python type `tuple`.
-
-[RETURN](#TOP)
-
-<a name="ADDITIONAL-SECONDARY-DATA-TYPE-POSSREP-FORMATS"></a>
-
-# ADDITIONAL SECONDARY DATA TYPE POSSREP FORMATS
-
-[RETURN](#TOP)
-
-<a name="Calendar-Duration"></a>
-
-## Calendar Duration
-
-A **Calendar Duration** artifact is additionally any of the following:
-
-* Any value of the Python type `datetime.timedelta`.
-
-[RETURN](#TOP)
-
-<a name="Calendar-Instant"></a>
-
-## Calendar Instant
-
-A **Calendar Instant** artifact is additionally any of the following:
-
-* Any value of any of the Python types
-`datetime.datetime`,
-`datetime.date`,
-`datetime.time`.
-
-[RETURN](#TOP)
-
-<a name="Interval"></a>
-
-## Interval
-
-An **Interval** artifact is additionally any of the following:
-
-* Any object of the Python class `range`.
 
 [RETURN](#TOP)
 
