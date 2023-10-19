@@ -375,11 +375,6 @@ Grammar:
 ```
     token Any
     {
-        <simple_primary> | <collective_primary>
-    }
-
-    token simple_primary
-    {
           <Ignorance>
         | <Boolean>
         | <Integer>
@@ -388,11 +383,7 @@ Grammar:
         | <Blob>
         | <Text>
         | <Nesting>
-    }
-
-    token collective_primary
-    {
-          <Duo>
+        | <Duo>
         | <Lot>
         | <Kit>
     }
