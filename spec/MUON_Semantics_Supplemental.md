@@ -18,6 +18,9 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
 
 - [OVERVIEW OF DATA TYPE POSSREPS](#OVERVIEW-OF-DATA-TYPE-POSSREPS)
 - [EXCLUDED DATA TYPE POSSREPS](#EXCLUDED-DATA-TYPE-POSSREPS)
+- [PRIMARY DATA TYPE POSSREPS](#PRIMARY-DATA-TYPE-POSSREPS)
+    - [Ignorance](#Ignorance)
+    - [Duo](#Duo)
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
 - [LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS](#LESS-COLLECTIVE-SECONDARY-DATA-TYPE-POSSREPS)
@@ -291,6 +294,84 @@ planned for MUON to be extended with many more source code defining possreps.
 Generic foreign serialization types such as JSON and XML are excluded
 because MUON as a whole is supposed to natively handle everything they can
 represent but better; otherwise one can still use **Text** to embed those.
+
+[RETURN](#TOP)
+
+<a name="PRIMARY-DATA-TYPE-POSSREPS"></a>
+
+## PRIMARY DATA TYPE POSSREPS
+
+These document sections still have counterparts in
+[Semantics](Muldis_Object_Notation_Semantics.md)
+as of the creation of this current **Supplemental** document,
+but they were rewritten to something much shorter.
+
+[RETURN](#TOP)
+
+<a name="Ignorance"></a>
+
+### Ignorance
+
+The singleton **Ignorance** value is characterized by an **Excuse** which
+simply says that an ordinary value for any given domain is missing and that
+there is simply no excuse that has been given for this; in other words,
+something has gone wrong without the slightest hint of an explanation.
+
+This is conceptually the most generic excuse value there is and it can
+be used by lazy programmers as a fallback for when they don't have even a
+semblance of a better explanation for why an ordinary value is missing.
+
+The **Ignorance** value has its own special syntax in MUON disjoint from
+any **Excuse** syntax so that this MUON-defined excuse doesn't step on any
+possible name that a particular external data model might use.
+
+When an external data model natively has exactly one generic *null* or
+*nil* or *undefined* or *unknown* or similar value or quasi-value,
+**Ignorance** is the official way to represent an instance of it in MUON.
+
+When an external data model natively has a concept of 3-valued logic (MUON
+itself does not), specifically a concept like such where the multiplicity
+of scenarios that may produce a special no-regular-value-is-here marker do
+in fact all produce the exact same marker, **Ignorance** is the official
+way to represent that marker.  This includes the *null* of any common
+dialect of SQL.  Whereas, for external data models that distinguish the
+reasons for why a regular value may be missing, **Ignorance** should NOT be
+used and instead other more applicable **Excuse** values should instead.
+
+[RETURN](#TOP)
+
+<a name="Duo"></a>
+
+### Duo
+
+A **Duo** value is a general purpose 2-element ordered heterogeneous
+collection whose elements in order are *this* and *that*, each of which may
+be any other value.  A **Duo** value is also characterized by a **Pair**.
+
+The intended use of the **Duo** possrep is the many situations where MUON
+secondary possrep artifacts are built in terms of ordered pairs and we want
+to clearly distinguish this from regular user data or source code that is
+logically a generic pair, the latter being what **Pair** is for.
+
+As a special exception, for any generic context where an **Any** value is
+permitted, certain otherwise-valid **Duo** values may be either forbidden
+or be interpreted as a value of some other primary possrep rather than as a
+**Duo** value; in such generic contexts, when a prospective **Duo** has a
+*this* which is any *Primary_Possrep_Name*, the prospect will
+never be treated as a valid **Duo** value.
+It is up to each specific concrete syntax in question as to whether each of
+these cases counts as an error or as a value of some other primary possrep.
+
+A *Primary_Possrep_Name* is any of these **Text** values:
+`Ignorance`, `Boolean`, `Integer`, `Fraction`,
+`Bits`, `Blob`, `Text`, `Nesting`,
+`Duo`, `Lot`, `Kit`.
+
+As a further special exception, each specific concrete syntax may designate
+additional values for a prospect's *this* that it treats as special in
+certain contexts and thus such a prospect will also not be treated as its
+own **Duo** value.  Potential examples are these **Text** values:
+`multiplied`, `named`.
 
 [RETURN](#TOP)
 
