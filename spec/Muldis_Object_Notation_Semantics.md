@@ -350,26 +350,6 @@ secondary possrep artifacts are built in terms of ordered pairs and we want
 to clearly distinguish this from regular user data or source code that is
 logically a generic pair, the latter being what **Pair** is for.
 
-As a special exception, for any generic context where an **Any** value is
-permitted, certain otherwise-valid **Duo** values may be either forbidden
-or be interpreted as a value of some other non-algebraic possrep rather than as a
-**Duo** value; in such generic contexts, when a prospective **Duo** has a
-*this* which is any *Possrep_Name*, the prospect will
-never be treated as a valid **Duo** value.
-It is up to each specific concrete syntax in question as to whether each of
-these cases counts as an error or as a value of some other non-algebraic possrep.
-
-A *Possrep_Name* is any of these **Text** values:
-`Ignorance`, `Boolean`, `Integer`, `Fraction`,
-`Bits`, `Blob`, `Text`, `Nesting`,
-`Duo`, `Lot`, `Kit`.
-
-As a further special exception, each specific concrete syntax may designate
-additional values for a prospect's *this* that it treats as special in
-certain contexts and thus such a prospect will also not be treated as its
-own **Duo** value.  Potential examples are these **Text** values:
-`multiplied`, `named`.
-
 [RETURN](#TOP)
 
 <a name="Lot"></a>
