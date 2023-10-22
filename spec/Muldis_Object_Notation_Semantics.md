@@ -185,9 +185,7 @@ the logical complement of **Any**.
 
 ## Ignorance
 
-*TODO: Reword this to exclude references to Muldis Data Language types.*
-
-The singleton **Ignorance** value is characterized by an **Excuse** which
+The singleton **Ignorance** value is characterized by an *excuse* which
 simply says that an ordinary value for any given domain is missing and that
 there is simply no excuse that has been given for this; in other words,
 something has gone wrong without the slightest hint of an explanation.
@@ -197,8 +195,8 @@ be used by lazy programmers as a fallback for when they don't have even a
 semblance of a better explanation for why an ordinary value is missing.
 
 The **Ignorance** value has its own special syntax in MUON disjoint from
-any **Excuse** syntax so that this MUON-defined excuse doesn't step on any
-possible name that a particular external data model might use.
+any **Duo** (*excuse*) syntax so that this MUON-defined excuse doesn't step
+on any possible name that a particular external data model might use.
 
 When an external data model natively has exactly one generic *null* or
 *nil* or *undefined* or *unknown* or similar value or quasi-value,
@@ -211,7 +209,7 @@ in fact all produce the exact same marker, **Ignorance** is the official
 way to represent that marker.  This includes the *null* of any common
 dialect of SQL.  Whereas, for external data models that distinguish the
 reasons for why a regular value may be missing, **Ignorance** should NOT be
-used and instead other more applicable **Excuse** values should instead.
+used and instead other more applicable **Duo** (*excuse*) values should instead.
 
 [RETURN](#TOP)
 
@@ -339,16 +337,46 @@ such as nested **Kit** may implement.
 
 ## Duo
 
-*TODO: Reword this to exclude references to Muldis Data Language types.*
-
 A **Duo** value is a general purpose 2-element ordered heterogeneous
 collection whose elements in order are *this* and *that*, each of which may
-be any other value.  A **Duo** value is also characterized by a **Pair**.
+be any other value.
 
-The intended use of the **Duo** possrep is the many situations where MUON
-secondary possrep artifacts are built in terms of ordered pairs and we want
-to clearly distinguish this from regular user data or source code that is
-logically a generic pair, the latter being what **Pair** is for.
+A primary intended use of the **Duo** possrep is to be the idiomatic way
+for an external data model to represent "new" types of a nominal type
+system in a consistent way.
+
+For that usage, a **Duo** value is further characterized as an *article*,
+by the pairing of a *label* (*this*), which is a **Nesting** value, with a
+set of 0..N *attributes* (*that*), where that set is a **Kit** value.
+
+The *label* represents a fully-qualified external data type name, and thus
+a namespace within all the *article* values, while the *attributes* define
+all the components of a value of that external type.  Thus an *article*
+corresponds to a generic *object* of an object-oriented language, the
+*label* is the *class* of that *object*, and *attributes* are *properties*.
+
+The idiomatic way to represent a singleton type value is as an *article*
+where the *label* is the singleton type name and the *attributes* has zero
+attributes.  The idiomatic default attribute name for a single-attribute
+*article* is `0t0` (the first conceptually ordered attribute name) when
+there isn't an actual meaningful name to give it.
+
+A common special case of an *article* is an *excuse*, which has the added
+semantic of representing some kind of error condition.  That is, an
+*excuse* is the idiomatic way for an external data model to represent "new"
+*error* or *exception* types.
+
+An *excuse* value is an explicitly stated reason for why, given some
+particular problem domain, a value is not being used that is ordinary for
+that domain.
+
+For example, the typical integer division operation is not defined to give
+an integer result when the divisor is zero, and so a function for integer
+division could be defined to result in an *excuse* value rather than
+throw an exception in that case.  For another example, an *excuse* value
+could be used to declare that the information we are storing about a person
+is missing certain details and why those are missing, such as because the
+person left the birthdate field blank on their application form.
 
 [RETURN](#TOP)
 
