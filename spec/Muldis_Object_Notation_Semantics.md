@@ -407,6 +407,16 @@ have **Lot** as a fundamental syntax, and then any other possreps for
 discrete homogeneous collections can be represented just as a **Lot**
 plus a plain unary type cast in the form of a **Duo** possrep.
 
+A primary intended use of the **Lot** possrep is to be the idiomatic way
+for an external data model to represent generic high-cardinality
+homogeneous collections of user data.  Fundamental examples of these are
+*arrays*, *sets*, *bags*, *mixes*; they are variations of
+generic collections of members that may or may not be ordered and may or
+may not have duplicates.  When the members are all *tuples* (typically
+**Kit**), such **Lot** examples also include *relations* or *dictionaries*.
+A **Lot** by itself would represent an anonymous or structural type, but
+when wrapped with a **Duo** providing a name, it represents a nominal type.
+
 The intended use of the **Lot** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
 discrete homogeneous collection types where their member values or
@@ -441,6 +451,16 @@ heterogeneous collection, such that any given MUON syntax can choose to just
 have **Kit** as a fundamental syntax, and then any other possreps for
 discrete heterogeneous collections can be represented just as a **Kit**
 plus a plain unary type cast in the form of a **Duo** possrep.
+
+A primary intended use of the **Kit** possrep is to be the idiomatic way
+for an external data model to represent generic low-cardinality
+heterogeneous collections of user data.  Fundamental examples of these are
+*tuples*, *records*, *structs*, *objects*; they are variations of
+generic collections of named or ordered attributes with no duplicate names.
+When a set of **Kit** with common attribute names are collected in a
+**Lot**, such a **Lot** can also represent a *relation* or *dictionary*.
+A **Kit** by itself would represent an anonymous or structural type, but
+when wrapped with a **Duo** providing a name, it represents a nominal type.
 
 The intended use of the **Kit** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
