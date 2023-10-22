@@ -38,6 +38,10 @@ can do natively by layering an extra data model over top, thus making the
 JSON version more verbose.  But for simpler cases where that extra meaning
 is not needed, JSON and MUON should be about equal in verbosity.
 
+MUON and JSON are equal in expressivity regarding the special "null"/etc
+value, as each provides a literal for it that is a distinct value
+from booleans and numbers and strings and anything else.
+
 MUON and JSON are equal in expressivity regarding logical boolean values,
 as each provides distinct *false* and *true* literals that are distinct
 values from numbers and strings and anything else.
@@ -81,10 +85,26 @@ parse because the escape sequence for said delimiter is `\q` in MUON versus
 At least that is true with the MUON Plain Text (strict) syntax; however the
 MUON Plain Text Lax syntax also supports `\"` for syntactic parity with JSON.
 
-MUON is more expressive than JSON regarding simple collections.
-MUON has distinct Array/Set/Bag collections so it is clear whether the
-ordinal position and or the multiplicity of members is significant or not;
-in contrast, JSON provides no native way to distinguish these factors.
+MUON is more expressive than JSON regarding binary string literals, in that
+MUON provides distinct bit-string and octet-string literal formats while
+JSON can only express such data indirectly such as using an array of
+integers or encoding the binary data as character strings.
+
+MUON is more expressive than JSON regarding program identifiers, in that
+MUON provides the distinct **Nesting** literal format to tersely represent
+a namespace-qualified identifier, and JSON has no direct analogy.
+
+MUON and JSON are equal in native expressivity regarding simple collections
+such that the same basic format would be used for arrays/sets/bags/etc and
+it is up to an extra data model layered over top to express semantics like
+whether the ordinal position and or the multiplicity of members is
+significant or not.
+
+However MUON is more expressive than JSON in that it provides extra native
+syntax to express duplicate elements concisely as member-multiplicity
+pairs, so the duplicated value itself only has to be written out once in
+MUON but multiple times in JSON; to get such conciseness in JSON one needs
+an extra data model layered over top to express it.
 
 MUON explicitly preserves the element order of all collection literals, and
 so it can losslessly pass through any collection literals that are
@@ -92,13 +112,17 @@ conceptually program source code, and typically programmers consider the
 element order of their source code to be intentional and worth preserving,
 even if conceptually the collection is logically an unordered one, while in
 contrast JSON's `object` collection is expressly unordered and so can't
-preserve a very significant in practice aspect of program source code.
+preserve a very significant in practice aspect of program source code;
+many JSON parsers may defacto preserve `object` element order, but the JSON
+specification explicitly declares it unordered, so order can't be counted on.
 
 JSON has no native support for parser-ignorable (treated like insignificant
 whitespace) comments, as an intentional difference from JavaScript, while
 MUON does support such comments.
 
-MUON provides an explicit possrep/syntax **Article** to indicate that a
+MUON is more expressive than JSON in supporting nominal type systems, such
+as common "object-oriented" ones, by providing a third generic collection
+type possrep/syntax **Duo** to explicitly declare in a distinct way that a
 particular user-defined collection denotes a value or object of some
 user-defined type or class, while those using JSON tend to overload the
 meaning of the elements of a JSON `object` to indicate either object type or
@@ -151,18 +175,21 @@ and by having a syntax that is more clean and consistent.
 
 *TODO.*
 
-MUON is more expressive than SQL regarding tuple/row collections.
-MUON has distinct Tuple Array / Relation / Tuple Bag collections so it is
-clear whether the ordinal position and or the multiplicity of tuples is
-significant or not; in contrast, SQL provides no native or elegant or
-portable way to be explicit about these factors.
+MUON and SQL are equal in native expressivity regarding tuple/row
+collections such that the same basic format would be used for arrays of
+tuples, relations (sets of tuples), and bags of tuples, and it is up to an
+extra data model layered over top to express semantics like whether the
+ordinal position and or the multiplicity of tuples is significant or not.
+
+However MUON provides a foundation with the distinct **Duo** possrep/syntax
+for a data model layered over it to express those semantics concisely.
 
 MUON is more expressive than SQL regarding missing information.
 SQL provides the *null* quasi-value concept to indicate that a regular
 value of some type is not present, but does not provide any standard way of
 indicating the reason for its absense, such as that a regular value is
 *unknown* versus *not applicable* versus *no matching record* or whatever;
-in contrast, MUON provides the generic extensible **Excuse** concept, as
-well as other tools, so that reasons can be specified.
+in contrast, MUON provides the generic extensible *excuse* concept by way
+of **Duo**, as well as other tools, so that reasons can be specified.
 
 *TODO.*
