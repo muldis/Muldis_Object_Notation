@@ -45,26 +45,26 @@ its part name is `Syntax_JSON`.
 # SYNOPSIS
 
 ```
-    ["Syntax",[["Lot",["Muldis_Object_Notation_JSON", "https://muldis.com", "0.300.0"]],
-        ["Model",[["Lot",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
-            ["Relation",["Lot",[
+    ["Syntax",[["Lot_m",["Muldis_Object_Notation_JSON", "https://muldis.com", "0.300.0"]],
+        ["Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+            ["Relation",["Lot_m",[
                 ["Kit",["named",[
                     ["name", "Jane Ives"],
                     ["birth_date", ["Calendar_Instant",
                         ["Kit",["named",[["y",1971],["m",11],["d",6]]]]]],
-                    ["phone_numbers", ["Set",["Lot",["+1.4045552995", "+1.7705557572"]]]]
+                    ["phone_numbers", ["Set",["Lot_m",["+1.4045552995", "+1.7705557572"]]]]
                 ]]],
                 ["Kit",["named",[
                     ["name", "Layla Miller"],
                     ["birth_date", ["Calendar_Instant",
                         ["Kit",["named",[["y",1995],["m",8],["d",27]]]]]],
-                    ["phone_numbers", ["Set",["Lot",[]]]]
+                    ["phone_numbers", ["Set",["Lot_m",[]]]]
                 ]]],
                 ["Kit",["named",[
                     ["name", "岩倉 玲音"],
                     ["birth_date", ["Calendar_Instant",
                         ["Kit",["named",[["y",1984],["m",7],["d",6]]]]]],
-                    ["phone_numbers", ["Set",["Lot",["+81.9072391679"]]]]
+                    ["phone_numbers", ["Set",["Lot_m",["+81.9072391679"]]]]
                 ]]]
             ]]]
         ]]
@@ -360,7 +360,7 @@ A **Duo** artifact is any of the following:
 * Any *SYS_Duo_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
 `Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
-`Nesting`, `Duo`, `Lot`, `Kit`, `multiplied`, `named`)
+`Nesting`, `Duo`, `Lot_m`, `Lot_mm`, `Kit`, `named`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
@@ -385,14 +385,10 @@ such that its first element is *SYS_this* and its second element is *SYS_that*.
 
 A **Lot** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot`
-and its *SYS_that* is any *SYS_Non_Qualified_Lot*.
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+and its *SYS_that* is any *SYS_Non_Qualified_Array_Lot*.
 
-A *SYS_Non_Qualified_Lot* is any of the following:
-
-* Any *SYS_Non_Qualified_Array_Lot*.
-
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `multiplied`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
 and its *SYS_that* is
 any *SYS_Array_DAA* such that each of its elements in turn is
 *multiplied member* whose *SYS_this* is *member* (any **Any** artifact)

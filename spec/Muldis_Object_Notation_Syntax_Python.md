@@ -326,7 +326,7 @@ A **Duo** artifact is any of the following:
 * Any *SYS_Duo_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
 `Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
-`Nesting`, `Duo`, `Lot`, `Kit`)
+`Nesting`, `Duo`, `Lot_m`, `Kit`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
@@ -353,17 +353,17 @@ A **Lot** artifact is any of the following:
 
 * Any *SYS_Non_Qualified_Array_Lot*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot`
-and its *SYS_that* is any *SYS_Non_Qualified_Lot*.
-
-A *SYS_Non_Qualified_Lot* is any of the following:
-
-* Any *SYS_Ordered_Tuple_A* such that each of its elements in turn is *member*
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+and its *SYS_that* is
+any *SYS_Ordered_Tuple_A* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1.
 
-* Any *SYS_Non_Qualified_Array_Lot*.
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+and its *SYS_that* is any *SYS_Non_Qualified_Array_Lot*.
 
-* Any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
+and its *SYS_that* is
+any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
 *multiplied member* whose element key is *member* (any **Any** artifact)
 and whose element value is *multiplicity*
 (any **Any** artifact but conceptually a real number);

@@ -170,26 +170,26 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
 ## [Syntax_Perl](Muldis_Object_Notation_Syntax_Perl.md)
 
 ```
-    [Syntax=>[[Lot=>["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]]=>
-        [Model=>[[Lot=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]]=>
-            [Relation=>[Lot=>[
+    [Syntax=>[[Lot_m=>["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]]=>
+        [Model=>[[Lot_m=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]]=>
+            [Relation=>[Lot_m=>[
                 [Kit=>[named=>[
                     [name => "Jane Ives"],
                     [birth_date => [Calendar_Instant=>
                         [Kit=>[named=>[[y=>1971],[m=>11],[d=>6]]]]]],
-                    [phone_numbers => [Set=>[Lot=>["+1.4045552995", "+1.7705557572"]]]],
+                    [phone_numbers => [Set=>[Lot_m=>["+1.4045552995", "+1.7705557572"]]]],
                 ]]],
                 [Kit=>[named=>[
                     [name => "Layla Miller"],
                     [birth_date => [Calendar_Instant=>
                         [Kit=>[named=>[[y=>1995],[m=>8],[d=>27]]]]]],
-                    [phone_numbers => [Set=>[Lot=>[]]]],
+                    [phone_numbers => [Set=>[Lot_m=>[]]]],
                 ]]],
                 [Kit=>[named=>[
                     [name => "岩倉 玲音"],
                     [birth_date => [Calendar_Instant=>
                         [Kit=>[named=>[[y=>1984],[m=>7],[d=>6]]]]]],
-                    [phone_numbers => [Set=>[Lot=>["+81.9072391679"]]]],
+                    [phone_numbers => [Set=>[Lot_m=>["+81.9072391679"]]]],
                 ]]],
             ]]]
         ]]
@@ -203,26 +203,26 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
 ```
-    ("Syntax",(("Lot",("Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0")),
-        ("Model",(("Lot",("Muldis_Data_Language", "https://muldis.com", "0.300.0")),
-            ("Relation",("Lot",(
+    ("Syntax",(("Lot_m",("Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0")),
+        ("Model",(("Lot_m",("Muldis_Data_Language", "https://muldis.com", "0.300.0")),
+            ("Relation",("Lot_m",(
                 new OrderedDictionary{
                     ["name"] = "Jane Ives",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}),
-                    ["phone_numbers"] = ("Set",("Lot",("+1.4045552995", "+1.7705557572"))),
+                    ["phone_numbers"] = ("Set",("Lot_m",("+1.4045552995", "+1.7705557572"))),
                 },
                 new OrderedDictionary{
                     ["name"] = "Layla Miller",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}),
-                    ["phone_numbers"] = ("Set",("Lot",ValueTuple.Create())),
+                    ["phone_numbers"] = ("Set",("Lot_m",ValueTuple.Create())),
                 },
                 new OrderedDictionary{
                     ["name"] = "岩倉 玲音",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}),
-                    ["phone_numbers"] = ("Set",("Lot",ValueTuple.Create("+81.9072391679"))),
+                    ["phone_numbers"] = ("Set",("Lot_m",ValueTuple.Create("+81.9072391679"))),
                 }
             )))
         ))
@@ -302,26 +302,26 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
 ## [Syntax_ECMAScript](Muldis_Object_Notation_Syntax_ECMAScript.md)
 
 ```
-    ["Syntax",[["Lot",["Muldis_Object_Notation_ECMAScript", "https://muldis.com", "0.300.0"]],
-        ["Model",[["Lot",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
-            ["Relation",["Lot",[
+    ["Syntax",[["Lot_m",["Muldis_Object_Notation_ECMAScript", "https://muldis.com", "0.300.0"]],
+        ["Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+            ["Relation",["Lot_m",[
                 ["Kit",["named",[
                     ["name", "Jane Ives"],
                     ["birth_date", ["Calendar_Instant",
                         ["Kit",["named",[["y",1971],["m",11],["d",6]]]]]],
-                    ["phone_numbers", ["Set",["Lot",["+1.4045552995", "+1.7705557572"]]]]
+                    ["phone_numbers", ["Set",["Lot_m",["+1.4045552995", "+1.7705557572"]]]]
                 ]]],
                 ["Kit",["named",[
                     ["name", "Layla Miller"],
                     ["birth_date", ["Calendar_Instant",
                         ["Kit",["named",[["y",1995],["m",8],["d",27]]]]]],
-                    ["phone_numbers", ["Set",["Lot",[]]]]
+                    ["phone_numbers", ["Set",["Lot_m",[]]]]
                 ]]],
                 ["Kit",["named",[
                     ["name", "岩倉 玲音"],
                     ["birth_date", ["Calendar_Instant",
                         ["Kit",["named",[["y",1984],["m",7],["d",6]]]]]],
-                    ["phone_numbers", ["Set",["Lot",["+81.9072391679"]]]]
+                    ["phone_numbers", ["Set",["Lot_m",["+81.9072391679"]]]]
                 ]]]
             ]]]
         ]]
@@ -335,15 +335,15 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
 ## [Syntax_Ruby](Muldis_Object_Notation_Syntax_Ruby.md)
 
 ```
-    [:Syntax,[[:Lot,[:Muldis_Object_Notation_Ruby, "https://muldis.com", "0.300.0"]],
-        [:Model,[[:Lot,[:Muldis_Data_Language, "https://muldis.com", "0.300.0"]],
-            [:Relation,[:Lot,[
+    [:Syntax,[[:Lot_m,[:Muldis_Object_Notation_Ruby, "https://muldis.com", "0.300.0"]],
+        [:Model,[[:Lot_m,[:Muldis_Data_Language, "https://muldis.com", "0.300.0"]],
+            [:Relation,[:Lot_m,[
                 {name: "Jane Ives", birth_date: [:Calendar_Instant,{y:1971,m:11,d:6}],
-                    phone_numbers: [:Set,[:Lot,["+1.4045552995", "+1.7705557572"]]]},
+                    phone_numbers: [:Set,[:Lot_m,["+1.4045552995", "+1.7705557572"]]]},
                 {name: "Layla Miller", birth_date: [:Calendar_Instant,{y:1995,m:8,d:27}],
-                    phone_numbers: [:Set,[:Lot,[]]]},
+                    phone_numbers: [:Set,[:Lot_m,[]]]},
                 {name: "岩倉 玲音", birth_date: [:Calendar_Instant,{y:1984,m:7,d:6}],
-                    phone_numbers: [:Set,[:Lot,["+81.9072391679"]]]},
+                    phone_numbers: [:Set,[:Lot_m,["+81.9072391679"]]]},
             ]]]
         ]]
     ]]
@@ -377,23 +377,23 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
 ## [Syntax_PHP](Muldis_Object_Notation_Syntax_PHP.md)
 
 ```
-    ["Syntax",[["Lot",["Muldis_Object_Notation_PHP", "https://muldis.com", "0.300.0"]],
-        ["Model",[["Lot",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
-            ["Relation",["Lot",[
+    ["Syntax",[["Lot_m",["Muldis_Object_Notation_PHP", "https://muldis.com", "0.300.0"]],
+        ["Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+            ["Relation",["Lot_m",[
                 [
                     "name" => "Jane Ives",
                     "birth_date" => ["Calendar_Instant",["y"=>1971,"m"=>11,"d"=>6]],
-                    "phone_numbers" => ["Set",["Lot",["+1.4045552995", "+1.7705557572"]]],
+                    "phone_numbers" => ["Set",["Lot_m",["+1.4045552995", "+1.7705557572"]]],
                 ],
                 [
                     "name" => "Layla Miller",
                     "birth_date" => ["Calendar_Instant",["y"=>1995,"m"=>8,"d"=>27]],
-                    "phone_numbers" => ["Set",["Lot",[]]],
+                    "phone_numbers" => ["Set",["Lot_m",[]]],
                 ],
                 [
                     "name" => "岩倉 玲音",
                     "birth_date" => ["Calendar_Instant",["y"=>1984,"m"=>7,"d"=>6]],
-                    "phone_numbers" => ["Set",["Lot",["+81.9072391679"]]],
+                    "phone_numbers" => ["Set",["Lot_m",["+81.9072391679"]]],
                 ],
             ]]]
         ]]
@@ -407,26 +407,26 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
 ## [Syntax_JSON](Muldis_Object_Notation_Syntax_JSON.md)
 
 ```
-    ["Syntax",[["Lot",["Muldis_Object_Notation_JSON", "https://muldis.com", "0.300.0"]],
-        ["Model",[["Lot",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
-            ["Relation",["Lot",[
+    ["Syntax",[["Lot_m",["Muldis_Object_Notation_JSON", "https://muldis.com", "0.300.0"]],
+        ["Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+            ["Relation",["Lot_m",[
                 ["Kit",["named",[
                     ["name", "Jane Ives"],
                     ["birth_date", ["Calendar_Instant",
                         ["Kit",["named",[["y",1971],["m",11],["d",6]]]]]],
-                    ["phone_numbers", ["Set",["Lot",["+1.4045552995", "+1.7705557572"]]]]
+                    ["phone_numbers", ["Set",["Lot_m",["+1.4045552995", "+1.7705557572"]]]]
                 ]]],
                 ["Kit",["named",[
                     ["name", "Layla Miller"],
                     ["birth_date", ["Calendar_Instant",
                         ["Kit",["named",[["y",1995],["m",8],["d",27]]]]]],
-                    ["phone_numbers", ["Set",["Lot",[]]]]
+                    ["phone_numbers", ["Set",["Lot_m",[]]]]
                 ]]],
                 ["Kit",["named",[
                     ["name", "岩倉 玲音"],
                     ["birth_date", ["Calendar_Instant",
                         ["Kit",["named",[["y",1984],["m",7],["d",6]]]]]],
-                    ["phone_numbers", ["Set",["Lot",["+81.9072391679"]]]]
+                    ["phone_numbers", ["Set",["Lot_m",["+81.9072391679"]]]]
                 ]]]
             ]]]
         ]]
@@ -443,14 +443,14 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
     <?xml version="1.0" encoding="UTF-8"?>
     <MUON>
         <Duo this="Syntax"><Duo>
-            <this><Lot><m>Muldis_Object_Notation_XML</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot></this>
+            <this><Lot_m><m>Muldis_Object_Notation_XML</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot_m></this>
             <that><Duo this="Model"><Duo>
-                <this><Lot><m>Muldis_Data_Language</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot></this>
-                <that><Duo this="Relation"><Lot>
+                <this><Lot_m><m>Muldis_Data_Language</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot_m></this>
+                <that><Duo this="Relation"><Lot_m>
                     <m><Kit>
                         <a n="name"><q>Jane Ives</q></a>
                         <a n="birth_date"><Duo this="Calendar_Instant"><Kit><a n="y">1971</a><a n="m">11</a><a n="d">6</a></Kit></Duo></a>
-                        <a n="phone_numbers"><Duo this="Set"><Lot><m><q>+1.4045552995</q></m><m><q>+1.7705557572</q></m></Lot></Duo></a>
+                        <a n="phone_numbers"><Duo this="Set"><Lot_m><m><q>+1.4045552995</q></m><m><q>+1.7705557572</q></m></Lot_m></Duo></a>
                     </Kit></m>
                     <m><Kit>
                         <a n="name"><q>Layla Miller</q></a>
@@ -460,9 +460,9 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
                     <m><Kit>
                         <a n="name"><q>岩倉 玲音</q></a>
                         <a n="birth_date"><Duo this="Calendar_Instant"><Kit><a n="y">1984</a><a n="m">7</a><a n="d">6</a></Kit></Duo></a>
-                        <a n="phone_numbers"><Duo this="Set"><Lot><m><q>+81.9072391679</q></m></Lot></Duo></a>
+                        <a n="phone_numbers"><Duo this="Set"><Lot_m><m><q>+81.9072391679</q></m></Lot_m></Duo></a>
                     </Kit></m>
-                </Lot></Duo></that>
+                </Lot_m></Duo></that>
             </Duo></Duo></that>
         </Duo></Duo>
     </MUON>

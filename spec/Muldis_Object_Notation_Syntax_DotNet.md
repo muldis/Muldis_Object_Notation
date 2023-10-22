@@ -45,26 +45,26 @@ its part name is `Syntax_DotNet`.
 # SYNOPSIS
 
 ```
-    ("Syntax",(("Lot",("Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0")),
-        ("Model",(("Lot",("Muldis_Data_Language", "https://muldis.com", "0.300.0")),
-            ("Relation",("Lot",(
+    ("Syntax",(("Lot_m",("Muldis_Object_Notation_DotNet", "https://muldis.com", "0.300.0")),
+        ("Model",(("Lot_m",("Muldis_Data_Language", "https://muldis.com", "0.300.0")),
+            ("Relation",("Lot_m",(
                 new OrderedDictionary{
                     ["name"] = "Jane Ives",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}),
-                    ["phone_numbers"] = ("Set",("Lot",("+1.4045552995", "+1.7705557572"))),
+                    ["phone_numbers"] = ("Set",("Lot_m",("+1.4045552995", "+1.7705557572"))),
                 },
                 new OrderedDictionary{
                     ["name"] = "Layla Miller",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}),
-                    ["phone_numbers"] = ("Set",("Lot",ValueTuple.Create())),
+                    ["phone_numbers"] = ("Set",("Lot_m",ValueTuple.Create())),
                 },
                 new OrderedDictionary{
                     ["name"] = "岩倉 玲音",
                     ["birth_date"] = ("Calendar_Instant",
                         new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}),
-                    ["phone_numbers"] = ("Set",("Lot",ValueTuple.Create("+81.9072391679"))),
+                    ["phone_numbers"] = ("Set",("Lot_m",ValueTuple.Create("+81.9072391679"))),
                 }
             )))
         ))
@@ -341,7 +341,7 @@ A **Duo** artifact is any of the following:
 * Any *SYS_Duo_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
 `Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
-`Nesting`, `Duo`, `Lot`, `Kit`)
+`Nesting`, `Duo`, `Lot_m`, `Kit`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
@@ -386,19 +386,19 @@ A **Lot** artifact is any of the following:
 
 * Any *SYS_Non_Qualified_Array_Lot*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot`
-and its *SYS_that* is any *SYS_Non_Qualified_Lot*.
-
-A *SYS_Non_Qualified_Lot* is any of the following:
-
-* Any *SYS_Ordered_Tuple_A* such that each of its elements in turn is *member*
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+and its *SYS_that* is
+any *SYS_Ordered_Tuple_A* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1;
 this format can express any **Lot** which has 0..7 members,
 so to specify 8 or more members, one of the other formats must be used.
 
-* Any *SYS_Non_Qualified_Array_Lot*.
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+and its *SYS_that* is any *SYS_Non_Qualified_Array_Lot*.
 
-* Any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
+and its *SYS_that* is
+any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
 *multiplied member* whose element key is *member* (any **Any** artifact)
 and whose element value is *multiplicity*
 (any **Any** artifact but conceptually a real number);
