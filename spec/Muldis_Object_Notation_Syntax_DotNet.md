@@ -341,7 +341,7 @@ A **Duo** artifact is any of the following:
 * Any *SYS_Duo_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
 `Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
-`Nesting`, `Duo`, `Lot_m`, `Kit`)
+`Nesting`, `Duo`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
@@ -440,12 +440,9 @@ A **Kit** artifact is any of the following:
 
 * Any *SYS_Non_Qualified_Named_Kit*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit`
-and its *SYS_that* is any *SYS_Non_Qualified_Kit*.
-
-A *SYS_Non_Qualified_Kit* is any of the following:
-
-* Any *SYS_Ordered_Tuple_A* such that each of its elements
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
+and its *SYS_that* is
+any *SYS_Ordered_Tuple_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
 this format can express any **Kit** which has only normalized ordered attributes
@@ -453,13 +450,16 @@ and which has 0..7 attributes,
 so to specify 8 or more attributes, one of the other formats must be used;
 this format is even more concise than the other ordered-specific format.
 
-* Any *SYS_Array_A* such that each of its elements
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
+and its *SYS_that* is
+any *SYS_Array_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
 this format can express any **Kit** which has only normalized ordered attributes;
 this format is more concise than the general format.
 
-* Any *SYS_Non_Qualified_Named_Kit*.
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
+and its *SYS_that* is any *SYS_Non_Qualified_Named_Kit*.
 
 A *SYS_Non_Qualified_Named_Kit* is any of the following:
 

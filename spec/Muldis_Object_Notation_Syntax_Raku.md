@@ -48,21 +48,21 @@ its part name is `Syntax_Raku`.
     :Syntax(("Muldis_Object_Notation_Raku", "https://muldis.com", "0.300.0")=>
         :Model(("Muldis_Data_Language", "https://muldis.com", "0.300.0")=>
             :Relation(
-                :Kit(:named(
+                :Kit_na(
                     name => "Jane Ives",
-                    birth_date => :Calendar_Instant(:Kit(:named(y=>1971,m=>11,d=>6))),
+                    birth_date => :Calendar_Instant(:Kit_na(y=>1971,m=>11,d=>6)),
                     phone_numbers => :Set("+1.4045552995", "+1.7705557572"),
-                )),
-                :Kit(:named(
+                ),
+                :Kit_na(
                     name => "Layla Miller",
-                    birth_date => :Calendar_Instant(:Kit(:named(y=>1995,m=>8,d=>27))),
+                    birth_date => :Calendar_Instant(:Kit_na(y=>1995,m=>8,d=>27)),
                     phone_numbers => :Set(),
-                )),
-                :Kit(:named(
+                ),
+                :Kit_na(
                     name => "岩倉 玲音",
-                    birth_date => :Calendar_Instant(:Kit(:named(y=>1984,m=>7,d=>6))),
+                    birth_date => :Calendar_Instant(:Kit_na(y=>1984,m=>7,d=>6)),
                     phone_numbers => :Set("+81.9072391679",),
-                )),
+                ),
             )
         )
     )
@@ -369,7 +369,7 @@ A **Duo** artifact is any of the following:
 * Any *SYS_Duo_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
 `Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
-`Nesting`, `Duo`, `Lot_m`, `Lot_mm`, `Kit`, `named`)
+`Nesting`, `Duo`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
@@ -440,18 +440,15 @@ so their objects can be used anywhere `List` objects can be used.
 
 A **Kit** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit`
-and its *SYS_that* is any *SYS_Non_Qualified_Kit*.
-
-A *SYS_Non_Qualified_Kit* is any of the following:
-
-* Any *SYS_Array_A* such that each of its elements
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
+and its *SYS_that* is
+any *SYS_Array_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
 this format can express any **Kit** which has only normalized ordered attributes;
 this format is more concise than the general format.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `named`
+* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
 and its *SYS_that* is any *SYS_Non_Qualified_Named_Kit*.
 
 A *SYS_Non_Qualified_Named_Kit* is any of the following:
@@ -465,7 +462,7 @@ Note that objects of the Raku class `Map` (or of its subclasses such as `Hash`)
 are not used to represent collections of pairs because they are
 unordered collections, and Raku doesn't provide any ordered analogy.
 
-Note that an object of the Raku class `Capture` is a direct `Kit`/`Tuple`
+Note that an object of the Raku class `Capture` is a direct **Kit**/*tuple*
 analogy which extends to the fact that a primary purpose of both is to
 represent a collection of arguments for a routine.
 

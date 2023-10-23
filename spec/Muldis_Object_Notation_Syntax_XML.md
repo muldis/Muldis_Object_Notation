@@ -52,21 +52,21 @@ its part name is `Syntax_XML`.
             <that><Duo this="Model"><Duo>
                 <this><Lot_m><m>Muldis_Data_Language</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot_m></this>
                 <that><Duo this="Relation"><Lot_m>
-                    <m><Kit>
+                    <m><Kit_na>
                         <a n="name"><q>Jane Ives</q></a>
-                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit><a n="y">1971</a><a n="m">11</a><a n="d">6</a></Kit></Duo></a>
+                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit_na><a n="y">1971</a><a n="m">11</a><a n="d">6</a></Kit_na></Duo></a>
                         <a n="phone_numbers"><Duo this="Set"><Lot_m><m><q>+1.4045552995</q></m><m><q>+1.7705557572</q></m></Lot_m></Duo></a>
-                    </Kit></m>
-                    <m><Kit>
+                    </Kit_na></m>
+                    <m><Kit_na>
                         <a n="name"><q>Layla Miller</q></a>
-                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit><a n="y">1995</a><a n="m">8</a><a n="d">27</a></Kit></Duo></a>
+                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit_na><a n="y">1995</a><a n="m">8</a><a n="d">27</a></Kit_na></Duo></a>
                         <a n="phone_numbers"><Duo this="Set"><Lot/></Duo></a>
-                    </Kit></m>
-                    <m><Kit>
+                    </Kit_na></m>
+                    <m><Kit_na>
                         <a n="name"><q>岩倉 玲音</q></a>
-                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit><a n="y">1984</a><a n="m">7</a><a n="d">6</a></Kit></Duo></a>
+                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit_na><a n="y">1984</a><a n="m">7</a><a n="d">6</a></Kit_na></Duo></a>
                         <a n="phone_numbers"><Duo this="Set"><Lot_m><m><q>+81.9072391679</q></m></Lot_m></Duo></a>
-                    </Kit></m>
+                    </Kit_na></m>
                 </Lot_m></Duo></that>
             </Duo></Duo></that>
         </Duo></Duo>

@@ -32,7 +32,7 @@ mutually alternative MUON concrete syntaxes compare with each other.
 
 ## [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 
-Common **Relation** "named" format with attribute names repeating per tuple.
+Common "named relation" format with attribute names repeating per tuple.
 
 ```
     (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
@@ -49,7 +49,7 @@ Common **Relation** "named" format with attribute names repeating per tuple.
     ))
 ```
 
-Alternate **Relation** "positional" format with attribute names declared
+Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
@@ -85,7 +85,7 @@ except that the `Syntax` would say `Muldis_Object_Notation_Plain_Text_Lax`.*
 
 ## [Syntax_Packed_Plain_Text](Muldis_Object_Notation_Syntax_Packed_Plain_Text.md)
 
-Common **Relation** "named" format with attribute names repeating per tuple.
+Common "named relation" format with attribute names repeating per tuple.
 
 ```
     D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.300.0"]
@@ -103,7 +103,7 @@ Common **Relation** "named" format with attribute names repeating per tuple.
             ]
 ```
 
-Alternate **Relation** "positional" format with attribute names declared
+Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
@@ -143,21 +143,21 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
     :Syntax(("Muldis_Object_Notation_Raku", "https://muldis.com", "0.300.0")=>
         :Model(("Muldis_Data_Language", "https://muldis.com", "0.300.0")=>
             :Relation(
-                :Kit(:named(
+                :Kit_na(
                     name => "Jane Ives",
-                    birth_date => :Calendar_Instant(:Kit(:named(y=>1971,m=>11,d=>6))),
+                    birth_date => :Calendar_Instant(:Kit_na(y=>1971,m=>11,d=>6)),
                     phone_numbers => :Set("+1.4045552995", "+1.7705557572"),
-                )),
-                :Kit(:named(
+                ),
+                :Kit_na(
                     name => "Layla Miller",
-                    birth_date => :Calendar_Instant(:Kit(:named(y=>1995,m=>8,d=>27))),
+                    birth_date => :Calendar_Instant(:Kit_na(y=>1995,m=>8,d=>27)),
                     phone_numbers => :Set(),
-                )),
-                :Kit(:named(
+                ),
+                :Kit_na(
                     name => "岩倉 玲音",
-                    birth_date => :Calendar_Instant(:Kit(:named(y=>1984,m=>7,d=>6))),
+                    birth_date => :Calendar_Instant(:Kit_na(y=>1984,m=>7,d=>6)),
                     phone_numbers => :Set("+81.9072391679",),
-                )),
+                ),
             )
         )
     )
@@ -173,24 +173,24 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
     [Syntax=>[[Lot_m=>["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]]=>
         [Model=>[[Lot_m=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]]=>
             [Relation=>[Lot_m=>[
-                [Kit=>[named=>[
+                [Kit_na=>[
                     [name => "Jane Ives"],
                     [birth_date => [Calendar_Instant=>
-                        [Kit=>[named=>[[y=>1971],[m=>11],[d=>6]]]]]],
+                        [Kit_na=>[[y=>1971],[m=>11],[d=>6]]]]],
                     [phone_numbers => [Set=>[Lot_m=>["+1.4045552995", "+1.7705557572"]]]],
-                ]]],
-                [Kit=>[named=>[
+                ]],
+                [Kit_na=>[
                     [name => "Layla Miller"],
                     [birth_date => [Calendar_Instant=>
-                        [Kit=>[named=>[[y=>1995],[m=>8],[d=>27]]]]]],
+                        [Kit_na=>[[y=>1995],[m=>8],[d=>27]]]]],
                     [phone_numbers => [Set=>[Lot_m=>[]]]],
-                ]]],
-                [Kit=>[named=>[
+                ]],
+                [Kit_na=>[
                     [name => "岩倉 玲音"],
                     [birth_date => [Calendar_Instant=>
-                        [Kit=>[named=>[[y=>1984],[m=>7],[d=>6]]]]]],
+                        [Kit_na=>[[y=>1984],[m=>7],[d=>6]]]]],
                     [phone_numbers => [Set=>[Lot_m=>["+81.9072391679"]]]],
-                ]]],
+                ]],
             ]]]
         ]]
     ]]
@@ -305,24 +305,24 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
     ["Syntax",[["Lot_m",["Muldis_Object_Notation_ECMAScript", "https://muldis.com", "0.300.0"]],
         ["Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
             ["Relation",["Lot_m",[
-                ["Kit",["named",[
+                ["Kit_na",[
                     ["name", "Jane Ives"],
                     ["birth_date", ["Calendar_Instant",
-                        ["Kit",["named",[["y",1971],["m",11],["d",6]]]]]],
+                        ["Kit_na",[["y",1971],["m",11],["d",6]]]]],
                     ["phone_numbers", ["Set",["Lot_m",["+1.4045552995", "+1.7705557572"]]]]
-                ]]],
-                ["Kit",["named",[
+                ]],
+                ["Kit_na",[
                     ["name", "Layla Miller"],
                     ["birth_date", ["Calendar_Instant",
-                        ["Kit",["named",[["y",1995],["m",8],["d",27]]]]]],
+                        ["Kit_na",[["y",1995],["m",8],["d",27]]]]],
                     ["phone_numbers", ["Set",["Lot_m",[]]]]
-                ]]],
-                ["Kit",["named",[
+                ]],
+                ["Kit_na",[
                     ["name", "岩倉 玲音"],
                     ["birth_date", ["Calendar_Instant",
-                        ["Kit",["named",[["y",1984],["m",7],["d",6]]]]]],
+                        ["Kit_na",[["y",1984],["m",7],["d",6]]]]],
                     ["phone_numbers", ["Set",["Lot_m",["+81.9072391679"]]]]
-                ]]]
+                ]]
             ]]]
         ]]
     ]]
@@ -410,24 +410,24 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
     ["Syntax",[["Lot_m",["Muldis_Object_Notation_JSON", "https://muldis.com", "0.300.0"]],
         ["Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
             ["Relation",["Lot_m",[
-                ["Kit",["named",[
+                ["Kit_na",[
                     ["name", "Jane Ives"],
                     ["birth_date", ["Calendar_Instant",
-                        ["Kit",["named",[["y",1971],["m",11],["d",6]]]]]],
+                        ["Kit_na",[["y",1971],["m",11],["d",6]]]]],
                     ["phone_numbers", ["Set",["Lot_m",["+1.4045552995", "+1.7705557572"]]]]
-                ]]],
-                ["Kit",["named",[
+                ]],
+                ["Kit_na",[
                     ["name", "Layla Miller"],
                     ["birth_date", ["Calendar_Instant",
-                        ["Kit",["named",[["y",1995],["m",8],["d",27]]]]]],
+                        ["Kit_na",[["y",1995],["m",8],["d",27]]]]],
                     ["phone_numbers", ["Set",["Lot_m",[]]]]
-                ]]],
-                ["Kit",["named",[
+                ]],
+                ["Kit_na",[
                     ["name", "岩倉 玲音"],
                     ["birth_date", ["Calendar_Instant",
-                        ["Kit",["named",[["y",1984],["m",7],["d",6]]]]]],
+                        ["Kit_na",[["y",1984],["m",7],["d",6]]]]],
                     ["phone_numbers", ["Set",["Lot_m",["+81.9072391679"]]]]
-                ]]]
+                ]]
             ]]]
         ]]
     ]]
@@ -447,21 +447,21 @@ except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`
             <that><Duo this="Model"><Duo>
                 <this><Lot_m><m>Muldis_Data_Language</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot_m></this>
                 <that><Duo this="Relation"><Lot_m>
-                    <m><Kit>
+                    <m><Kit_na>
                         <a n="name"><q>Jane Ives</q></a>
-                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit><a n="y">1971</a><a n="m">11</a><a n="d">6</a></Kit></Duo></a>
+                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit_na><a n="y">1971</a><a n="m">11</a><a n="d">6</a></Kit_na></Duo></a>
                         <a n="phone_numbers"><Duo this="Set"><Lot_m><m><q>+1.4045552995</q></m><m><q>+1.7705557572</q></m></Lot_m></Duo></a>
-                    </Kit></m>
-                    <m><Kit>
+                    </Kit_na></m>
+                    <m><Kit_na>
                         <a n="name"><q>Layla Miller</q></a>
-                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit><a n="y">1995</a><a n="m">8</a><a n="d">27</a></Kit></Duo></a>
+                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit_na><a n="y">1995</a><a n="m">8</a><a n="d">27</a></Kit_na></Duo></a>
                         <a n="phone_numbers"><Duo this="Set"><Lot/></Duo></a>
-                    </Kit></m>
-                    <m><Kit>
+                    </Kit_na></m>
+                    <m><Kit_na>
                         <a n="name"><q>岩倉 玲音</q></a>
-                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit><a n="y">1984</a><a n="m">7</a><a n="d">6</a></Kit></Duo></a>
+                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit_na><a n="y">1984</a><a n="m">7</a><a n="d">6</a></Kit_na></Duo></a>
                         <a n="phone_numbers"><Duo this="Set"><Lot_m><m><q>+81.9072391679</q></m></Lot_m></Duo></a>
-                    </Kit></m>
+                    </Kit_na></m>
                 </Lot_m></Duo></that>
             </Duo></Duo></that>
         </Duo></Duo>
