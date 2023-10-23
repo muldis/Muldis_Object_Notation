@@ -443,9 +443,6 @@ program identifier and is conceptually a character string that is not a
 **Text** value.  In the general case each attribute of a **Kit** is of a
 distinct data type, though multiple attributes often have the same type.
 
-A **Kit** value is also characterized by a tuple of the relational model of data
-but that its collection of attributes is ordered rather than unordered.
-
 The **Kit** possrep is an idiomatic generalization of a discrete
 heterogeneous collection, such that any given MUON syntax can choose to just
 have **Kit** as a fundamental syntax, and then any other possreps for
@@ -462,6 +459,30 @@ When a set of **Kit** with common attribute names are collected in a
 A **Kit** by itself would represent an anonymous or structural type, but
 when wrapped with a **Duo** providing a name, it represents a nominal type.
 
+A **Kit** value is also characterized by a *tuple* of the relational model
+of data but that its collection of attributes is ordered rather than
+unordered.  For the usage of a **Kit** to represent a *tuple*, the set of
+attribute names of a **Kit** is called its *heading*, and the corresponding
+attribute assets are called its *body*.
+
+With respect to the relational model of data, a *heading* represents a
+predicate, for which each *attribute name* is a free variable, and a
+*tuple* as a whole represents a derived proposition, where the
+corresponding attribute asset values substitute for the free variables;
+however, any actual predicate/etc is defined by the context of a
+*tuple* value and a *tuple* in isolation explicitly does not
+represent any proposition in particular.
+
+The canonical way to represent the concept of a *tuple* that has ordered
+attributes is to use integral names; to be specific, the attribute name
+consisting of just the character code point 0 would mark the first ordered
+attribute, the name consisting of just the code point 1 would mark the
+second, and so on; this can be repeated up to 32 "positional" names whose
+names would correspond to non-printing Unicode code points and would
+alphabetically sort correctly and prior to any normal text-like attribute
+names like `name` or `age`; said first 32 would likewise be distinct in
+appearance from all regular printable numbers used as attribute names.
+
 The intended use of the **Kit** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
 discrete heterogeneous collection types where their assets are defined by
@@ -471,6 +492,23 @@ A key feature of **Kit** is that it natively preserves the relative
 order of its child nodes even when the value being selected is an unordered
 type, which can be considered essential for round tripping source code that
 better resembles what the programmer wrote.
+
+For the usage of a **Lot** whose members are each **Kit** to represent a
+*relation*, a *relation* value is characterized by the pairing of a
+*heading* with a set of *tuple*, which define its *heading* and *body*,
+respectively.  A *relation* ensures that every *member* of its *body* is
+a *tuple* having the same *heading* (set of *attribute names*) as its own
+*heading*.  A *relation* is alternately characterized by the pairing of a
+single set of attribute names with a set of corresponding attribute assets
+for each attribute name.
+
+With respect to the relational model of data, a *heading* represents a
+predicate, for which each *attribute name* is a free variable, and a
+*relation* as a whole represents a set of derived propositions, where the
+corresponding attribute asset values substitute for the free variables;
+however, any actual predicate/etc is defined by the context of a
+*relation* value and a *relation* in isolation explicitly does not
+represent any proposition in particular.
 
 [RETURN](#TOP)
 
