@@ -224,16 +224,6 @@ the_db::stats::"samples by order"
 `Higher-level Excuse type.`
 (Excuse: (::No_Such_Attr_Name : {}))
 `Muldis_Object_Notation_Sync_Mark`
-`Higher-level signature-declaring Syntax type.`
-(Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
-    42
-))
-`Muldis_Object_Notation_Sync_Mark`
-`Higher-level signature-declaring Model type.`
-(Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
-    42
-))
-`Muldis_Object_Notation_Sync_Mark`
 `Higher-level Calendar_Duration type: Addition of 2 years and 3 months.`
 (Calendar_Duration:{y:2,m:3,d:0,h:0,i:0,s:0})
 `Muldis_Object_Notation_Sync_Mark`

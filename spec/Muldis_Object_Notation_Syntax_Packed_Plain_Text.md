@@ -136,8 +136,8 @@ don't correspond to ASCII printable characters, or to different ones.
 Some design choices are such that Packed Plain Text is at least partially
 human readable or writeable, but on the whole it isn't intended for that.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON Packed Plain Text artifact is `Muldis_Object_Notation_Packed_Plain_Text`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON Packed Plain Text artifact is `Packed_Plain_Text`.
 
 The prescribed standard filename extension for files featuring a MUON Packed Plain
 Text parsing unit is `.muonppt`, though as per standard UNIX conventions,

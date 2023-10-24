@@ -45,8 +45,8 @@ its part name is `Syntax_Raku`.
 # SYNOPSIS
 
 ```
-    (Syntax=>(("Muldis_Object_Notation_Raku", "https://muldis.com", "0.300.0")=>
-        (Model=>(("Muldis_Data_Language", "https://muldis.com", "0.300.0")=>
+    (Muldis_Object_Notation_Syntax=>(("Raku", "https://muldis.com", "0.300.0")=>
+        (Muldis_Object_Notation_Model=>(("Muldis_Data_Language", "https://muldis.com", "0.300.0")=>
             (Relation=>(
                 (Kit_na=>(
                     name => "Jane Ives",
@@ -100,8 +100,8 @@ a Raku library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 Raku source code.  It is fairly easy for machines to parse and generate.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON Raku hosted artifact is `Muldis_Object_Notation_Raku`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON Raku hosted artifact is `Raku`.
 
 See also <https://raku.org>.
 

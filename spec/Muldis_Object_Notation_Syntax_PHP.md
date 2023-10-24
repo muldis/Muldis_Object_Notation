@@ -45,8 +45,8 @@ its part name is `Syntax_PHP`.
 # SYNOPSIS
 
 ```
-    ["Syntax",[["Lot_m",["Muldis_Object_Notation_PHP", "https://muldis.com", "0.300.0"]],
-        ["Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+    ["Muldis_Object_Notation_Syntax",[["Lot_m",["PHP", "https://muldis.com", "0.300.0"]],
+        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
             ["Relation",["Lot_m",[
                 [
                     "name" => "Jane Ives",
@@ -100,8 +100,8 @@ a PHP library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 PHP source code.  It is fairly easy for machines to parse and generate.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON PHP hosted artifact is `Muldis_Object_Notation_PHP`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON PHP hosted artifact is `PHP`.
 
 See also <https://php.net>.
 

@@ -45,9 +45,9 @@ its part name is `Syntax_Java`.
 # SYNOPSIS
 
 ```
-    new AbstractMap.SimpleEntry("Syntax", new AbstractMap.SimpleEntry(
-        new String[]{"Muldis_Object_Notation_Java", "https://muldis.com", "0.300.0"},
-        new AbstractMap.SimpleEntry("Model", new AbstractMap.SimpleEntry(
+    new AbstractMap.SimpleEntry("Muldis_Object_Notation_Syntax", new AbstractMap.SimpleEntry(
+        new String[]{"Java", "https://muldis.com", "0.300.0"},
+        new AbstractMap.SimpleEntry("Muldis_Object_Notation_Model", new AbstractMap.SimpleEntry(
             new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
             new AbstractMap.SimpleEntry("Relation", new LinkedHashMap[]{
                 new LinkedHashMap(){{
@@ -112,8 +112,8 @@ a Java library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 Java source code.  It is fairly easy for machines to parse and generate.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON Java hosted artifact is `Muldis_Object_Notation_Java`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON Java hosted artifact is `Java`.
 
 See also <https://docs.oracle.com/javase/specs/index.html>.
 

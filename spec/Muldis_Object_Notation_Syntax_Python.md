@@ -45,8 +45,8 @@ its part name is `Syntax_Python`.
 # SYNOPSIS
 
 ```
-    ("Syntax",(["Muldis_Object_Notation_Python", "https://muldis.com", "0.300.0"],
-        ("Model",(["Muldis_Data_Language", "https://muldis.com", "0.300.0"],
+    ("Muldis_Object_Notation_Syntax",(["Python", "https://muldis.com", "0.300.0"],
+        ("Muldis_Object_Notation_Model",(["Muldis_Data_Language", "https://muldis.com", "0.300.0"],
             ("Relation",[
                 {"name" : "Jane Ives", "birth_date" : ("Calendar_Instant",{"y":1971,"m":11,"d":6}),
                     "phone_numbers" : ("Set",["+1.4045552995", "+1.7705557572"])},
@@ -91,8 +91,8 @@ a Python library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 Python source code.  It is fairly easy for machines to parse and generate.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON Python hosted artifact is `Muldis_Object_Notation_Python`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON Python hosted artifact is `Python`.
 
 See also <https://python.org>.
 

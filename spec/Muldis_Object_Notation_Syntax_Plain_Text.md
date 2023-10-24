@@ -65,8 +65,8 @@ its part name is `Syntax_Plain_Text`.
 Common "named relation" format with attribute names repeating per tuple.
 
 ```
-    (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
-        (Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
+    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.300.0"]:
+        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
             (Relation:[
                 {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
                     phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
@@ -83,8 +83,8 @@ Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
-    (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
-        (Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
+    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.300.0"]:
+        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
             (Relation:(
                     {name, birth_date, phone_numbers}
                 : [
@@ -138,8 +138,8 @@ Note that the machine-focused MUON
 [Syntax_Packed_Plain_Text](Muldis_Object_Notation_Syntax_Packed_Plain_Text.md)
 exists as an alternative to the MUON `Syntax_Plain_Text`.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON Plain Text artifact is `Muldis_Object_Notation_Plain_Text`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON Plain Text artifact is `Plain_Text`.
 
 The prescribed standard filename extension for files featuring a MUON Plain
 Text parsing unit is `.muon`, though as per standard UNIX conventions,
@@ -1135,16 +1135,6 @@ Examples:
 
     `Higher-level Excuse type.`
     (Excuse: (::No_Such_Attr_Name : {}))
-
-    `Higher-level signature-declaring Syntax type.`
-    (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
-        42
-    ))
-
-    `Higher-level signature-declaring Model type.`
-    (Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
-        42
-    ))
 
     `Higher-level Calendar_Duration type: Addition of 2 years and 3 months.`
     (Calendar_Duration:{y:2,m:3,d:0,h:0,i:0,s:0})

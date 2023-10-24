@@ -39,8 +39,8 @@ its part name is `Overview`.
 # SYNOPSIS
 
 ```
-    (Syntax:([Muldis_Object_Notation_Plain_Text, "https://muldis.com", "0.300.0"]:
-        (Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
+    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.300.0"]:
+        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
             (Relation:[
                 {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
                     phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
@@ -83,7 +83,7 @@ This document consists of multiple parts:
 1. Overview (the current part)
 1. [Semantics](Muldis_Object_Notation_Semantics.md)
 1. [Container_Plain_Aggregate](Muldis_Object_Notation_Container_Plain_Aggregate.md)
-1. Signature
+1. [Signature](Muldis_Object_Notation_Signature.md)
 1. [Syntax_Abstract](Muldis_Object_Notation_Syntax_Abstract.md)
 1. [Syntax_Plain_Text](Muldis_Object_Notation_Syntax_Plain_Text.md)
 1. [Syntax_Plain_Text_Lax](Muldis_Object_Notation_Syntax_Plain_Text_Lax.md)

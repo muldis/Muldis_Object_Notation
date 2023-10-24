@@ -45,8 +45,8 @@ its part name is `Syntax_ECMAScript`.
 # SYNOPSIS
 
 ```
-    ["Syntax",[["Lot_m",["Muldis_Object_Notation_ECMAScript", "https://muldis.com", "0.300.0"]],
-        ["Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+    ["Muldis_Object_Notation_Syntax",[["Lot_m",["ECMAScript", "https://muldis.com", "0.300.0"]],
+        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
             ["Relation",["Lot_m",[
                 ["Kit_na",[
                     ["name", "Jane Ives"],
@@ -103,8 +103,8 @@ an ECMAScript library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 ECMAScript source code.  It is fairly easy for machines to parse and generate.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON ECMAScript hosted artifact is `Muldis_Object_Notation_ECMAScript`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON ECMAScript hosted artifact is `ECMAScript`.
 
 See also <https://ecma-international.org/publications-and-standards/standards/ecma-262>.
 

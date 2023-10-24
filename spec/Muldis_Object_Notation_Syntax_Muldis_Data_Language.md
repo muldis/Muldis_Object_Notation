@@ -45,7 +45,7 @@ its part name is `Syntax_Muldis_Data_Language`.
 # SYNOPSIS
 
 *No example provided as it would be identical to the MUON Plain Text (strict) version,
-except that the `Syntax` would say `Muldis_Object_Notation_Muldis_Data_Language`.*
+except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`.*
 
 [RETURN](#TOP)
 
@@ -79,8 +79,8 @@ a MDL library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 MDL source code.  It is fairly easy for machines to parse and generate.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON MDL hosted artifact is `Muldis_Object_Notation_Muldis_Data_Language`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON MDL hosted artifact is `Muldis_Data_Language`.
 
 See also <https://github.com/muldis/Muldis_Data_Language>.
 

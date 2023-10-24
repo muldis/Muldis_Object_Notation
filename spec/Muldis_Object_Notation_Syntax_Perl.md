@@ -45,8 +45,8 @@ its part name is `Syntax_Perl`.
 # SYNOPSIS
 
 ```
-    [Syntax=>[[Lot_m=>["Muldis_Object_Notation_Perl", "https://muldis.com", "0.300.0"]]=>
-        [Model=>[[Lot_m=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]]=>
+    [Muldis_Object_Notation_Syntax=>[[Lot_m=>["Perl", "https://muldis.com", "0.300.0"]]=>
+        [Muldis_Object_Notation_Model=>[[Lot_m=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]]=>
             [Relation=>[Lot_m=>[
                 [Kit_na=>[
                     [name => "Jane Ives"],
@@ -103,8 +103,8 @@ a Perl library for generating or parsing MUON `Syntax_Plain_Text`.
 The format is fairly easy for humans to read and write in terms of plain
 Perl source code.  It is fairly easy for machines to parse and generate.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON Perl hosted artifact is `Muldis_Object_Notation_Perl`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON Perl hosted artifact is `Perl`.
 
 See also <https://perl.org>.
 

@@ -47,9 +47,9 @@ its part name is `Syntax_XML`.
 ```
     <?xml version="1.0" encoding="UTF-8"?>
     <MUON>
-        <Duo this="Syntax"><Duo>
-            <this><Lot_m><m>Muldis_Object_Notation_XML</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot_m></this>
-            <that><Duo this="Model"><Duo>
+        <Duo this="Muldis_Object_Notation_Syntax"><Duo>
+            <this><Lot_m><m>XML</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot_m></this>
+            <that><Duo this="Muldis_Object_Notation_Model"><Duo>
                 <this><Lot_m><m>Muldis_Data_Language</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot_m></this>
                 <that><Duo this="Relation"><Lot_m>
                     <m><Kit_na>
@@ -100,8 +100,8 @@ they are on distinct machines, or because they are mediated by a network or
 disk file.  The format is fairly easy for humans to read and write.  It is
 fairly easy for machines to parse and generate.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON XML hosted artifact is `Muldis_Object_Notation_XML`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON XML hosted artifact is `XML`.
 
 See also <https://w3.org/XML>.
 

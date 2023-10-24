@@ -56,7 +56,7 @@ its part name is `Syntax_Plain_Text_Lax`.
 # SYNOPSIS
 
 *No example provided as it would be identical to the MUON Plain Text (strict) version,
-except that the `Syntax` would say `Muldis_Object_Notation_Plain_Text_Lax`.*
+except that the `Muldis_Object_Notation_Syntax` would say `Plain_Text_Lax`.*
 
 [RETURN](#TOP)
 
@@ -122,8 +122,8 @@ options, MUON Plain Text Lax maintains the MUON Plain Text (strict)
 restriction to UTF-8 as the only allowed option, which is also in keeping
 with other versions of the JSON spec as well as many JSON implementations.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON Plain Text Lax artifact is `Muldis_Object_Notation_Plain_Text_Lax`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON Plain Text Lax artifact is `Plain_Text_Lax`.
 
 The prescribed standard filename extension for files featuring a MUON Plain
 Text Lax parsing unit is `.muonlax`, though as per standard UNIX conventions,

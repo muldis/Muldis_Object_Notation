@@ -45,9 +45,6 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
     - [Tuple Bag](#Tuple-Bag)
     - [Article / Labelled Tuple](#Article---Labelled-Tuple)
     - [Excuse](#Excuse)
-- [SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS](#SIGNATURE-DECLARING-SECONDARY-DATA-TYPE-POSSREPS)
-    - [Syntax](#Syntax)
-    - [Model](#Model)
 
 [RETURN](#TOP)
 
@@ -183,13 +180,6 @@ dedicated simple literal formats or data type values in some syntaxes:
 - Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
 - **Article**
 - **Excuse**
-
-These 2 secondary possreps are specifically for signatures or explicit
-declarations that are used alongside or embedded in data to declare more
-unambiguously how the latter was intended by its authors to be interpreted:
-
-- **Syntax**
-- **Model**
 
 These 0 secondary possreps are specifically for defining program source
 code and are not for defining regular data:
@@ -854,48 +844,3 @@ The **Excuse** possrep is the idiomatic way for an external data model to
 represent "new" *error* or *exception* types of a nominal type system in a
 consistent way.  The counterpart **Article** possrep should *not* be used for
 these things, but rather just every other kind of externally-defined type.
-
-[RETURN](#TOP)
-
-<a name="SIGNATURE-DECLARING-SECONDARY-DATA-TYPE-POSSREPS"></a>
-
-## SIGNATURE DECLARING SECONDARY DATA TYPE POSSREPS
-
-*This whole section is quite rough and will be rewritten at some future time.*
-
-[RETURN](#TOP)
-
-<a name="Syntax"></a>
-
-### Syntax
-
-A **Syntax** value is characterized by the pairing of a *syntax predicate*
-value with a *syntax subject* value, such that the former describes the latter.
-
-A *syntax predicate* consists of, in order, the *syntax base name*,
-*authority* and *version number* of the fully-qualified name of the
-language syntax specification, or faked stand-in name,
-that the *syntax subject*, or the **Syntax** value as a whole, conforms to.
-
-There may be multiple nested **Syntax**; when this is the case,
-it means the most-nested *syntax subject* conforms to every one of those syntaxes,
-typically because only the lowest common denominators of said were used.
-
-[RETURN](#TOP)
-
-<a name="Model"></a>
-
-### Model
-
-A **Model** value is characterized by the pairing of a *model predicate*
-value with a *model subject* value, such that the former describes the latter.
-
-A *model predicate* consists of, in order, the *data model base name*,
-*authority* and *version number* of the fully-qualified name of the
-data model or type system specification, or faked stand-in name,
-that the *model subject*, or the **Model** value as a whole, represents values of,
-and influences what specific data types a parser maps data to.
-
-There may be multiple nested **Model**; when this is the case,
-it means the most-nested *model subject* conforms to every one of those data models,
-typically because only the lowest common denominators of said were used.

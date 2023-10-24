@@ -45,8 +45,8 @@ its part name is `Syntax_JSON`.
 # SYNOPSIS
 
 ```
-    ["Syntax",[["Lot_m",["Muldis_Object_Notation_JSON", "https://muldis.com", "0.300.0"]],
-        ["Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+    ["Muldis_Object_Notation_Syntax",[["Lot_m",["JSON", "https://muldis.com", "0.300.0"]],
+        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
             ["Relation",["Lot_m",[
                 ["Kit_na",[
                     ["name", "Jane Ives"],
@@ -107,8 +107,8 @@ representations of such may not be supported by some JSON implementations.
 This is also useful for conveyence of **Fraction** and **Bits** and **Blob**
 artifacts as it opens up more compact options than are otherwise available.
 
-The prescribed standard *syntax predicate* of a **Syntax** signature for a
-MUON JSON hosted artifact is `Muldis_Object_Notation_JSON`.
+The prescribed standard *syntax base name* of a *syntax-qualified artifact*
+for a MUON JSON hosted artifact is `JSON`.
 
 See also <https://json.org>.
 
