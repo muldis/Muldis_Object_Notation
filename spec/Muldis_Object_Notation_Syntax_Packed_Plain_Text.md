@@ -11,7 +11,7 @@ The fully-qualified name of this document is
 
 # PART
 
-This artifact is part 7 of 21 of the document
+This artifact is part 8 of 22 of the document
 `Muldis_Object_Notation https://muldis.com 0.300.0`;
 its part name is `Syntax_Packed_Plain_Text`.
 
