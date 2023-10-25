@@ -444,7 +444,7 @@ such that its first element is *SYS_this* and its second element is *SYS_that*.
 A **Lot** artifact is any of the following:
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
-and its *SYS_that* is any *SYS_Non_Qualified_Array_Lot*.
+and its *SYS_that* is any *SYS_Non_Qualified_Lot_M*.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
 and its *SYS_that* is
@@ -456,7 +456,7 @@ this format can express every possible **Lot**,
 such that an explicit multiplicity is specified for each member as a number
 rather than by repeating the member value for each instance.
 
-A *SYS_Non_Qualified_Array_Lot* is any of the following:
+A *SYS_Non_Qualified_Lot_M* is any of the following:
 
 * Any *SYS_Array_A* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1;
@@ -495,9 +495,9 @@ this format can express any **Kit** which has only normalized ordered attributes
 this format is more concise than the general format.
 
 * Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
-and its *SYS_that* is any *SYS_Non_Qualified_Named_Kit*.
+and its *SYS_that* is any *SYS_Non_Qualified_Kit_NA*.
 
-A *SYS_Non_Qualified_Named_Kit* is any of the following:
+A *SYS_Non_Qualified_Kit_NA* is any of the following:
 
 * Any *SYS_Array_DAA* such that each of its elements in turn is
 *attribute* whose *SYS_this* is *attribute name* (any *SYS_Text*)
