@@ -486,7 +486,8 @@ appearance from all regular printable numbers used as attribute names.
 The intended use of the **Kit** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
 discrete heterogeneous collection types where their assets are defined by
-arbitrarily complex sub-expressions.
+arbitrarily complex sub-expressions
+(and their names are hard-coded **Text** values).
 
 A key feature of **Kit** is that it natively preserves the relative
 order of its child nodes even when the value being selected is an unordered
