@@ -11,6 +11,7 @@ possible superset of the MUON grammar rather than as part of MUON proper.
 ## CONTENTS
 
 - [Expansion of Possrep Any](#Expansion-of-Possrep-Any)
+- [Expansion of Possreps Duo/Lot/Kit](#Expansion-of-Possreps-Duo-Lot-Kit)
 - [Added Dedicated Format for Calendar Time](#Added-Dedicated-Format-for-Calendar-Time)
 - [Added Dedicated Format for Calendar Duration](#Added-Dedicated-Format-for-Calendar-Duration)
 - [Added Dedicated Format for Calendar Instant](#Added-Dedicated-Format-for-Calendar-Instant)
@@ -42,6 +43,73 @@ Grammar:
         | <Geographic_Point>
         | <Interval>
     }
+```
+
+[RETURN](#TOP)
+
+<a name="Expansion-of-Possreps-Duo-Lot-Kit"></a>
+
+## Expansion of Possreps Duo/Lot/Kit
+
+Grammar:
+
+```
+    token this_and_that
+    {
+          [<this> <sp>? [':'|'->'] <sp>? <that>]
+        | [<that> <sp>?      '<-'  <sp>? <this>]
+    }
+
+    token multiplied_member
+    {
+          [<member>       <sp>? [':'|'->'] <sp>? <multiplicity>]
+        | [<multiplicity> <sp>?      '<-'  <sp>? <member>      ]
+        | <member>
+    }
+
+    token kit_attr
+    {
+          [<attr_name>  <sp>? [':'|'->'] <sp>? <attr_asset>]
+        | [<attr_asset> <sp>?      '<-'  <sp>? <attr_name> ]
+        | <attr_asset>
+    }
+```
+
+Examples:
+
+```
+    `Another Duo.`
+    (x:y)
+
+    `Same thing.`
+    (x->y)
+
+    `Same thing.`
+    (y<-x)
+
+    `Higher-level Renaming type: Rename one attribute.`
+    (Renaming:{fname->first_name})
+
+    `Higher-level Renaming type: Same thing.`
+    (Renaming:{fname:first_name})
+
+    `Higher-level Renaming type: Same thing.`
+    (Renaming:{first_name<-fname})
+
+    `Higher-level Renaming type: Swap 2 named attributes.`
+    (Renaming:{foo->bar,foo<-bar})
+
+    `Higher-level Renaming type: Convert ordered names to nonordered.`
+    (Renaming:{foo,bar})
+
+    `Higher-level Renaming type: Same thing.`
+    (Renaming:{0t0->foo,0t1->bar})
+
+    `Higher-level Renaming type: Convert nonordered names to ordered.`
+    (Renaming:{0t0<-foo,0t1<-bar})
+
+    `Higher-level Renaming type: Swap 2 ordered attributes.`
+    (Renaming:{0t0->0t1,0t0<-0t1})
 ```
 
 [RETURN](#TOP)

@@ -631,8 +631,7 @@ Grammar:
 
     token this_and_that
     {
-          [<this> <sp>? [':'|'->'|'=>'|','] <sp>? <that>]
-        | [<that> <sp>?      '<-'           <sp>? <this>]
+        [<this> <sp>? [':'|'->'|'=>'|','] <sp>? <that>]
     }
 
     token this
@@ -676,9 +675,7 @@ Grammar:
 
     token multiplied_member
     {
-          [<member>       <sp>? [':'|'->'|'=>'] <sp>? <multiplicity>]
-        | [<multiplicity> <sp>?      '<-'       <sp>? <member>      ]
-        | <member>
+        [<member> <sp>? [':'|'->'|'=>'] <sp>? <multiplicity>] | <member>
     }
 
     token member
@@ -725,9 +722,7 @@ Grammar:
 
     token kit_attr
     {
-          [<attr_name>  <sp>? [':'|'->'|'=>'] <sp>? <attr_asset>]
-        | [<attr_asset> <sp>?      '<-'       <sp>? <attr_name> ]
-        | <attr_asset>
+        [<attr_name> <sp>? [':'|'->'|'=>'] <sp>? <attr_asset>] | <attr_asset>
     }
 
     token attr_name

@@ -186,9 +186,6 @@ the_db::stats::"samples by order"
 `Same thing.`
 (x->y)
 `Muldis_Object_Notation_Sync_Mark`
-`Same thing.`
-(y<-x)
-`Muldis_Object_Notation_Sync_Mark`
 `Higher-level Article type.`
 (Article: (::Point : {x : 5, y : 3}))
 `Muldis_Object_Notation_Sync_Mark`
@@ -377,11 +374,8 @@ the_db::stats::"samples by order"
 `Higher-level Renaming type: Same thing.`
 (Renaming:{fname:first_name})
 `Muldis_Object_Notation_Sync_Mark`
-`Higher-level Renaming type: Same thing.`
-(Renaming:{first_name<-fname})
-`Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Swap 2 named attributes.`
-(Renaming:{foo->bar,foo<-bar})
+(Renaming:{foo->bar,bar->foo})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Convert ordered names to nonordered.`
 (Renaming:{foo,bar})
@@ -390,10 +384,10 @@ the_db::stats::"samples by order"
 (Renaming:{0t0->foo,0t1->bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Convert nonordered names to ordered.`
-(Renaming:{0t0<-foo,0t1<-bar})
+(Renaming:{foo->0t0,bar->0t1})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Swap 2 ordered attributes.`
-(Renaming:{0t0->0t1,0t0<-0t1})
+(Renaming:{0t0->0t1,0t1->0t0})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Same thing.`
 (Renaming:{0t1,0t0})

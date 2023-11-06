@@ -659,9 +659,6 @@ Examples:
 
     `Same thing.`
     (Pair:(x->y))
-
-    `Same thing.`
-    (Pair:(y<-x))
 ```
 
 [RETURN](#TOP)
@@ -747,11 +744,8 @@ Examples:
     `Same thing.`
     (Renaming:{fname:first_name})
 
-    `Same thing.`
-    (Renaming:{first_name<-fname})
-
     `Swap 2 named attributes.`
-    (Renaming:{foo->bar,foo<-bar})
+    (Renaming:{foo->bar,bar->foo})
 
     `Convert ordered names to nonordered.`
     (Renaming:{foo,bar})
@@ -760,10 +754,10 @@ Examples:
     (Renaming:{0t0->foo,0t1->bar})
 
     `Convert nonordered names to ordered.`
-    (Renaming:{0t0<-foo,0t1<-bar})
+    (Renaming:{foo->0t0,bar->0t1})
 
     `Swap 2 ordered attributes.`
-    (Renaming:{0t0->0t1,0t0<-0t1})
+    (Renaming:{0t0->0t1,0t1->0t0})
 
     `Same thing.`
     (Renaming:{0t1,0t0})

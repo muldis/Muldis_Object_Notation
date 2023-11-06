@@ -276,9 +276,6 @@
 `Same thing.`
 (Pair:(x->y))
 `Muldis_Object_Notation_Sync_Mark`
-`Same thing.`
-(Pair:(y<-x))
-`Muldis_Object_Notation_Sync_Mark`
 `Zero attributes.`
 (Heading:{})
 `Muldis_Object_Notation_Sync_Mark`
@@ -324,11 +321,8 @@
 `Same thing.`
 (Renaming:{fname:first_name})
 `Muldis_Object_Notation_Sync_Mark`
-`Same thing.`
-(Renaming:{first_name<-fname})
-`Muldis_Object_Notation_Sync_Mark`
 `Swap 2 named attributes.`
-(Renaming:{foo->bar,foo<-bar})
+(Renaming:{foo->bar,bar->foo})
 `Muldis_Object_Notation_Sync_Mark`
 `Convert ordered names to nonordered.`
 (Renaming:{foo,bar})
@@ -337,10 +331,10 @@
 (Renaming:{0t0->foo,0t1->bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Convert nonordered names to ordered.`
-(Renaming:{0t0<-foo,0t1<-bar})
+(Renaming:{foo->0t0,bar->0t1})
 `Muldis_Object_Notation_Sync_Mark`
 `Swap 2 ordered attributes.`
-(Renaming:{0t0->0t1,0t0<-0t1})
+(Renaming:{0t0->0t1,0t1->0t0})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
 (Renaming:{0t1,0t0})

@@ -1065,8 +1065,7 @@ Grammar:
 
     token this_and_that
     {
-          [<this> <sp>? [':'|'->'] <sp>? <that>]
-        | [<that> <sp>?      '<-'  <sp>? <this>]
+        [<this> <sp>? [':'|'->'] <sp>? <that>]
     }
 
     token this
@@ -1097,9 +1096,6 @@ Examples:
 
     `Same thing.`
     (x->y)
-
-    `Same thing.`
-    (y<-x)
 
     `Higher-level Article type.`
     (Article: (::Point : {x : 5, y : 3}))
@@ -1180,9 +1176,7 @@ Grammar:
 
     token multiplied_member
     {
-          [<member>       <sp>? [':'|'->'] <sp>? <multiplicity>]
-        | [<multiplicity> <sp>?      '<-'  <sp>? <member>      ]
-        | <member>
+        [<member> <sp>? [':'|'->'] <sp>? <multiplicity>] | <member>
     }
 
     token member
@@ -1320,9 +1314,7 @@ Grammar:
 
     token kit_attr
     {
-          [<attr_name>  <sp>? [':'|'->'] <sp>? <attr_asset>]
-        | [<attr_asset> <sp>?      '<-'  <sp>? <attr_name> ]
-        | <attr_asset>
+        [<attr_name> <sp>? [':'|'->'] <sp>? <attr_asset>] | <attr_asset>
     }
 
     token attr_name
@@ -1384,11 +1376,8 @@ Examples:
     `Higher-level Renaming type: Same thing.`
     (Renaming:{fname:first_name})
 
-    `Higher-level Renaming type: Same thing.`
-    (Renaming:{first_name<-fname})
-
     `Higher-level Renaming type: Swap 2 named attributes.`
-    (Renaming:{foo->bar,foo<-bar})
+    (Renaming:{foo->bar,bar->foo})
 
     `Higher-level Renaming type: Convert ordered names to nonordered.`
     (Renaming:{foo,bar})
@@ -1397,10 +1386,10 @@ Examples:
     (Renaming:{0t0->foo,0t1->bar})
 
     `Higher-level Renaming type: Convert nonordered names to ordered.`
-    (Renaming:{0t0<-foo,0t1<-bar})
+    (Renaming:{foo->0t0,bar->0t1})
 
     `Higher-level Renaming type: Swap 2 ordered attributes.`
-    (Renaming:{0t0->0t1,0t0<-0t1})
+    (Renaming:{0t0->0t1,0t1->0t0})
 
     `Higher-level Renaming type: Same thing.`
     (Renaming:{0t1,0t0})
@@ -1550,7 +1539,7 @@ While MUON also has some free `.+-*/^`, those only appear adjacent to
 numeric barewords and are considered part of those numeric literals, and so
 shouldn't interfere with a superset using those for regular operators.
 
-Likewise, any uses of `:` or `->` or `<-` or `,` are only used by MUON
+Likewise, any uses of `:` or `->` or `,` are only used by MUON
 within various kinds of bracketing pairs and a superset should be able to
 also use them.
 
@@ -1562,7 +1551,7 @@ use it for things like separating statements and thus disambiguating its
 own uses of bracketing characters to define statement or expression groups.
 
 MUON does not use parenthesis pairs `(` and `)`,
-except with a colon/etc (`:`/`->`/`<-`)
+except with a colon/etc (`:`/`->`)
 between them as a `Duo` syntax, so parenthesis pairs without the colon/etc
 are available for a superset grammar to use for generic grouping purposes
 to force a particular parsing precedence with infix operators and such.
@@ -1630,11 +1619,12 @@ that means they are used either in pairs or as contiguous sequences.
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
     ->    |                        | * separates the 2 parts of a pair
-    <-    |                        | * this/that separator in Duo sels
+          |                        | * this/that separator in Duo sels
+          |                        | * optional m-m member/multiplicity sep in Lot sels
           |                        | * optional attr name/asset separator in Kit sels
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
-          |                        | * separate members in Lot sels
+          |                        | * separate multiplied-members in Lot sels
           |                        | * separate attributes in Kit sels
     ------+------------------------+---------------------------------------
     ::    | nestings               | * prefix or separate elements of a Nesting literal
@@ -1751,7 +1741,6 @@ when any of these sequences overlap, longest token always wins:
     }
     :
     ->
-    <-
     ,
     ::
 ```
