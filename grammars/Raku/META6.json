@@ -1,6 +1,6 @@
 {
-    "perl" : "6.c",
-    "name" : "Muldis::Reference::Object_Notation_Plain_Text",
+    "perl" : "6.d",
+    "name" : "Muldis::Object_Notation_Grammar_Reference",
     "auth" : "github:muldis",
     "api" : "0.300",
     "version" : "0.300.0",
@@ -8,14 +8,16 @@
     "authors" : [ "Darren Duncan" ],
     "license" : "Apache-2.0",
     "provides" : {
-        "Muldis::Reference::Object_Notation_Plain_Text" : "lib/Muldis/Reference/Object_Notation_Plain_Text.rakumod",
+        "Muldis::Object_Notation_Grammar_Reference::Plain_Text" : "lib/Muldis/Object_Notation_Grammar_Reference/Plain_Text.rakumod",
+        "Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax" : "lib/Muldis/Object_Notation_Grammar_Reference/Plain_Text_Lax.rakumod",
+        "Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text" : "lib/Muldis/Object_Notation_Grammar_Reference/Packed_Plain_Text.rakumod",
     },
     "depends" : [ ],
     "build-depends" : [ ],
     "test-depends" : [ ],
     "resources" : [ ],
     "tags" : [
-        "Muldis", "Object", "Notation", "MUON", "Reference", "parse", "serialize"
+        "Muldis", "Object", "Notation", "MUON", "Grammar", "Reference", "parse", "serialize"
     ],
     "source-url" : "git@github.com:muldis/Muldis_Object_Notation.git"
 }

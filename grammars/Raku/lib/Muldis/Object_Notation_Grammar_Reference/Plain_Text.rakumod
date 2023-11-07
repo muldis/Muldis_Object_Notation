@@ -1,14 +1,14 @@
 ###########################################################################
 ###########################################################################
 
-module Muldis::Reference::Object_Notation_Plain_Text
+module Muldis::Object_Notation_Grammar_Reference::Plain_Text
 {
     sub extract_MUON_from_Text(Str:D $text)
     {
-        return Muldis::Reference::Object_Notation_Plain_Text::Grammar.parse(
+        return Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar.parse(
             $text,
             :token<Muldis_Object_Notation_Plain_Text>,
-            :actions(Muldis::Reference::Object_Notation_Plain_Text::Actions.new())
+            :actions(Muldis::Object_Notation_Grammar_Reference::Plain_Text::Actions.new())
         );
     }
 }
@@ -16,7 +16,7 @@ module Muldis::Reference::Object_Notation_Plain_Text
 ###########################################################################
 ###########################################################################
 
-grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
+grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
 {
 
 ###########################################################################
@@ -343,7 +343,7 @@ grammar Muldis::Reference::Object_Notation_Plain_Text::Grammar
 ###########################################################################
 ###########################################################################
 
-class Muldis::Reference::Object_Notation_Plain_Text::Actions
+class Muldis::Object_Notation_Grammar_Reference::Plain_Text::Actions
 {
 }
 
