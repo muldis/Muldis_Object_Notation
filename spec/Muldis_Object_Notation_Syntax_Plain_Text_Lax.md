@@ -45,8 +45,6 @@ its part name is `Syntax_Plain_Text_Lax`.
     - [String Delimiter Single-Quote](#String-Delimiter-Single-Quote)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
-- [TRADEMARK POLICY](#TRADEMARK-POLICY)
-- [ACKNOWLEDGEMENTS](#ACKNOWLEDGEMENTS)
 
 [RETURN](#TOP)
 
@@ -848,19 +846,3 @@ This file is part of the formal specification named
 MUON is Copyright © 2002-2023, Muldis Data Systems, Inc.
 
 See the LICENSE AND COPYRIGHT of [Overview](Muldis_Object_Notation.md) for details.
-
-[RETURN](#TOP)
-
-<a name="TRADEMARK-POLICY"></a>
-
-# TRADEMARK POLICY
-
-The TRADEMARK POLICY in [Overview](Muldis_Object_Notation.md) applies to this file too.
-
-[RETURN](#TOP)
-
-<a name="ACKNOWLEDGEMENTS"></a>
-
-# ACKNOWLEDGEMENTS
-
-The ACKNOWLEDGEMENTS in [Overview](Muldis_Object_Notation.md) apply to this file too.
