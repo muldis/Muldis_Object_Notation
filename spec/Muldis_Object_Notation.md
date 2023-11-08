@@ -7,12 +7,12 @@ Muldis Object Notation (MUON) - Source code and data interchange format
 # VERSION
 
 The fully-qualified name of this document is
-`Muldis_Object_Notation https://muldis.com 0.300.0`.
+`Muldis_Object_Notation https://muldis.com 0.400.0`.
 
 # PART
 
 This artifact is part 1 of 22 of the document
-`Muldis_Object_Notation https://muldis.com 0.300.0`;
+`Muldis_Object_Notation https://muldis.com 0.400.0`;
 its part name is `Overview`.
 
 # CONTENTS
@@ -38,8 +38,8 @@ its part name is `Overview`.
 # SYNOPSIS
 
 ```
-    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.300.0"]:
-        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
+    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.400.0"]:
+        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.400.0"]:
             (Relation:[
                 {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
                     phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
@@ -61,9 +61,9 @@ its part name is `Overview`.
 This document is the human readable authoritative formal specification named
 **Muldis Object Notation** (**MUON**).
 The fully-qualified name of this document and specification is
-`Muldis_Object_Notation https://muldis.com 0.300.0`.
+`Muldis_Object_Notation https://muldis.com 0.400.0`.
 This is the official/original version by the authority Muldis Data Systems
-(`https://muldis.com`), version number `0.300.0`.
+(`https://muldis.com`), version number `0.400.0`.
 
 **Muldis Object Notation** specifies a semi-lightweight source code and
 data interchange abstract format.  It is fairly easy for humans to read and

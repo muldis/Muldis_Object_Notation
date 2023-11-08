@@ -7,12 +7,12 @@ Muldis Object Notation (MUON) - Source code and data interchange format
 # VERSION
 
 The fully-qualified name of this document is
-`Muldis_Object_Notation https://muldis.com 0.300.0`.
+`Muldis_Object_Notation https://muldis.com 0.400.0`.
 
 # PART
 
 This artifact is part 3 of 22 of the document
-`Muldis_Object_Notation https://muldis.com 0.300.0`;
+`Muldis_Object_Notation https://muldis.com 0.400.0`;
 its part name is `Container_Plain_Aggregate`.
 
 # CONTENTS

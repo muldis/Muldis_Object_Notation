@@ -35,8 +35,8 @@ mutually alternative MUON concrete syntaxes compare with each other.
 Common "named relation" format with attribute names repeating per tuple.
 
 ```
-    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.300.0"]:
-        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
+    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.400.0"]:
+        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.400.0"]:
             (Relation:[
                 {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
                     phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
@@ -53,8 +53,8 @@ Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
-    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.300.0"]:
-        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.300.0"]:
+    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.400.0"]:
+        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.400.0"]:
             (Relation:(
                     {name, birth_date, phone_numbers}
                 : [
@@ -88,8 +88,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Plain_Text_Lax`.*
 Common "named relation" format with attribute names repeating per tuple.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.300.0"]
-        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.300.0"]
+    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
+        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
             D T"Relation" M[
                 K[xname T"Jane Ives"
                     T"birth_date" D T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
@@ -107,8 +107,8 @@ Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.300.0"]
-        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.300.0"]
+    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
+        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
             D T"Relation" D
                     J[xname T"birth_date" T"phone_numbers"]
                 M[
@@ -140,8 +140,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_Raku](Muldis_Object_Notation_Syntax_Raku.md)
 
 ```
-    (Muldis_Object_Notation_Syntax=>(("Raku", "https://muldis.com", "0.300.0")=>
-        (Muldis_Object_Notation_Model=>(("Muldis_Data_Language", "https://muldis.com", "0.300.0")=>
+    (Muldis_Object_Notation_Syntax=>(("Raku", "https://muldis.com", "0.400.0")=>
+        (Muldis_Object_Notation_Model=>(("Muldis_Data_Language", "https://muldis.com", "0.400.0")=>
             (Relation=>(
                 (Kit_na=>(
                     name => "Jane Ives",
@@ -170,8 +170,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_Perl](Muldis_Object_Notation_Syntax_Perl.md)
 
 ```
-    [Muldis_Object_Notation_Syntax=>[[Lot_m=>["Perl", "https://muldis.com", "0.300.0"]]=>
-        [Muldis_Object_Notation_Model=>[[Lot_m=>["Muldis_Data_Language", "https://muldis.com", "0.300.0"]]=>
+    [Muldis_Object_Notation_Syntax=>[[Lot_m=>["Perl", "https://muldis.com", "0.400.0"]]=>
+        [Muldis_Object_Notation_Model=>[[Lot_m=>["Muldis_Data_Language", "https://muldis.com", "0.400.0"]]=>
             [Relation=>[Lot_m=>[
                 [Kit_na=>[
                     [name => "Jane Ives"],
@@ -203,8 +203,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
 ```
-    ("Muldis_Object_Notation_Syntax",(("Lot_m",("DotNet", "https://muldis.com", "0.300.0")),
-        ("Muldis_Object_Notation_Model",(("Lot_m",("Muldis_Data_Language", "https://muldis.com", "0.300.0")),
+    ("Muldis_Object_Notation_Syntax",(("Lot_m",("DotNet", "https://muldis.com", "0.400.0")),
+        ("Muldis_Object_Notation_Model",(("Lot_m",("Muldis_Data_Language", "https://muldis.com", "0.400.0")),
             ("Relation",("Lot_m",(
                 new OrderedDictionary{
                     ["name"] = "Jane Ives",
@@ -237,9 +237,9 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 
 ```
     new AbstractMap.SimpleEntry("Muldis_Object_Notation_Syntax", new AbstractMap.SimpleEntry(
-        new String[]{"Java", "https://muldis.com", "0.300.0"},
+        new String[]{"Java", "https://muldis.com", "0.400.0"},
         new AbstractMap.SimpleEntry("Muldis_Object_Notation_Model", new AbstractMap.SimpleEntry(
-            new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
+            new String[]{"Muldis_Data_Language", "https://muldis.com", "0.400.0"},
             new AbstractMap.SimpleEntry("Relation", new LinkedHashMap[]{
                 new LinkedHashMap(){{
                     put("name", "Jane Ives");
@@ -302,8 +302,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_ECMAScript](Muldis_Object_Notation_Syntax_ECMAScript.md)
 
 ```
-    ["Muldis_Object_Notation_Syntax",[["Lot_m",["ECMAScript", "https://muldis.com", "0.300.0"]],
-        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+    ["Muldis_Object_Notation_Syntax",[["Lot_m",["ECMAScript", "https://muldis.com", "0.400.0"]],
+        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
             ["Relation",["Lot_m",[
                 ["Kit_na",[
                     ["name", "Jane Ives"],
@@ -335,8 +335,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_Ruby](Muldis_Object_Notation_Syntax_Ruby.md)
 
 ```
-    [:Muldis_Object_Notation_Syntax,[[:Lot_m,[:Ruby, "https://muldis.com", "0.300.0"]],
-        [:Muldis_Object_Notation_Model,[[:Lot_m,[:Muldis_Data_Language, "https://muldis.com", "0.300.0"]],
+    [:Muldis_Object_Notation_Syntax,[[:Lot_m,[:Ruby, "https://muldis.com", "0.400.0"]],
+        [:Muldis_Object_Notation_Model,[[:Lot_m,[:Muldis_Data_Language, "https://muldis.com", "0.400.0"]],
             [:Relation,[:Lot_m,[
                 {name: "Jane Ives", birth_date: [:Calendar_Instant,{y:1971,m:11,d:6}],
                     phone_numbers: [:Set,[:Lot_m,["+1.4045552995", "+1.7705557572"]]]},
@@ -356,8 +356,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_Python](Muldis_Object_Notation_Syntax_Python.md)
 
 ```
-    ("Muldis_Object_Notation_Syntax",(["Python", "https://muldis.com", "0.300.0"],
-        ("Muldis_Object_Notation_Model",(["Muldis_Data_Language", "https://muldis.com", "0.300.0"],
+    ("Muldis_Object_Notation_Syntax",(["Python", "https://muldis.com", "0.400.0"],
+        ("Muldis_Object_Notation_Model",(["Muldis_Data_Language", "https://muldis.com", "0.400.0"],
             ("Relation",[
                 {"name" : "Jane Ives", "birth_date" : ("Calendar_Instant",{"y":1971,"m":11,"d":6}),
                     "phone_numbers" : ("Set",["+1.4045552995", "+1.7705557572"])},
@@ -377,8 +377,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_PHP](Muldis_Object_Notation_Syntax_PHP.md)
 
 ```
-    ["Muldis_Object_Notation_Syntax",[["Lot_m",["PHP", "https://muldis.com", "0.300.0"]],
-        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+    ["Muldis_Object_Notation_Syntax",[["Lot_m",["PHP", "https://muldis.com", "0.400.0"]],
+        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
             ["Relation",["Lot_m",[
                 [
                     "name" => "Jane Ives",
@@ -407,8 +407,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_JSON](Muldis_Object_Notation_Syntax_JSON.md)
 
 ```
-    ["Muldis_Object_Notation_Syntax",[["Lot_m",["JSON", "https://muldis.com", "0.300.0"]],
-        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.300.0"]],
+    ["Muldis_Object_Notation_Syntax",[["Lot_m",["JSON", "https://muldis.com", "0.400.0"]],
+        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
             ["Relation",["Lot_m",[
                 ["Kit_na",[
                     ["name", "Jane Ives"],
@@ -443,9 +443,9 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
     <?xml version="1.0" encoding="UTF-8"?>
     <MUON>
         <Duo this="Muldis_Object_Notation_Syntax"><Duo>
-            <this><Lot_m><m>XML</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot_m></this>
+            <this><Lot_m><m>XML</m><m><q>https://muldis.com</q></m><m><q>0.400.0</q></m></Lot_m></this>
             <that><Duo this="Muldis_Object_Notation_Model"><Duo>
-                <this><Lot_m><m>Muldis_Data_Language</m><m><q>https://muldis.com</q></m><m><q>0.300.0</q></m></Lot_m></this>
+                <this><Lot_m><m>Muldis_Data_Language</m><m><q>https://muldis.com</q></m><m><q>0.400.0</q></m></Lot_m></this>
                 <that><Duo this="Relation"><Lot_m>
                     <m><Kit_na>
                         <a n="name"><q>Jane Ives</q></a>

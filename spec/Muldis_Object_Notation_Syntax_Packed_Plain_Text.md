@@ -7,12 +7,12 @@ Muldis Object Notation (MUON) - Source code and data interchange format
 # VERSION
 
 The fully-qualified name of this document is
-`Muldis_Object_Notation https://muldis.com 0.300.0`.
+`Muldis_Object_Notation https://muldis.com 0.400.0`.
 
 # PART
 
 This artifact is part 8 of 22 of the document
-`Muldis_Object_Notation https://muldis.com 0.300.0`;
+`Muldis_Object_Notation https://muldis.com 0.400.0`;
 its part name is `Syntax_Packed_Plain_Text`.
 
 # CONTENTS
@@ -54,8 +54,8 @@ its part name is `Syntax_Packed_Plain_Text`.
 Common "named relation" format with attribute names repeating per tuple.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.300.0"]
-        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.300.0"]
+    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
+        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
             D T"Relation" M[
                 K[xname T"Jane Ives"
                     T"birth_date" D T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
@@ -73,8 +73,8 @@ Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.300.0"]
-        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.300.0"]
+    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
+        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
             D T"Relation" D
                     J[xname T"birth_date" T"phone_numbers"]
                 M[

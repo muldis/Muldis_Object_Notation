@@ -7,12 +7,12 @@ Muldis Object Notation (MUON) - Source code and data interchange format
 # VERSION
 
 The fully-qualified name of this document is
-`Muldis_Object_Notation https://muldis.com 0.300.0`.
+`Muldis_Object_Notation https://muldis.com 0.400.0`.
 
 # PART
 
 This artifact is part 13 of 22 of the document
-`Muldis_Object_Notation https://muldis.com 0.300.0`;
+`Muldis_Object_Notation https://muldis.com 0.400.0`;
 its part name is `Syntax_Java`.
 
 # CONTENTS
@@ -43,9 +43,9 @@ its part name is `Syntax_Java`.
 
 ```
     new AbstractMap.SimpleEntry("Muldis_Object_Notation_Syntax", new AbstractMap.SimpleEntry(
-        new String[]{"Java", "https://muldis.com", "0.300.0"},
+        new String[]{"Java", "https://muldis.com", "0.400.0"},
         new AbstractMap.SimpleEntry("Muldis_Object_Notation_Model", new AbstractMap.SimpleEntry(
-            new String[]{"Muldis_Data_Language", "https://muldis.com", "0.300.0"},
+            new String[]{"Muldis_Data_Language", "https://muldis.com", "0.400.0"},
             new AbstractMap.SimpleEntry("Relation", new LinkedHashMap[]{
                 new LinkedHashMap(){{
                     put("name", "Jane Ives");

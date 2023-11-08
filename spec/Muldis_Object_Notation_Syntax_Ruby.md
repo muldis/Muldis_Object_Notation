@@ -7,12 +7,12 @@ Muldis Object Notation (MUON) - Source code and data interchange format
 # VERSION
 
 The fully-qualified name of this document is
-`Muldis_Object_Notation https://muldis.com 0.300.0`.
+`Muldis_Object_Notation https://muldis.com 0.400.0`.
 
 # PART
 
 This artifact is part 18 of 22 of the document
-`Muldis_Object_Notation https://muldis.com 0.300.0`;
+`Muldis_Object_Notation https://muldis.com 0.400.0`;
 its part name is `Syntax_Ruby`.
 
 # CONTENTS
@@ -42,8 +42,8 @@ its part name is `Syntax_Ruby`.
 # SYNOPSIS
 
 ```
-    [:Muldis_Object_Notation_Syntax,[[:Lot_m,[:Ruby, "https://muldis.com", "0.300.0"]],
-        [:Muldis_Object_Notation_Model,[[:Lot_m,[:Muldis_Data_Language, "https://muldis.com", "0.300.0"]],
+    [:Muldis_Object_Notation_Syntax,[[:Lot_m,[:Ruby, "https://muldis.com", "0.400.0"]],
+        [:Muldis_Object_Notation_Model,[[:Lot_m,[:Muldis_Data_Language, "https://muldis.com", "0.400.0"]],
             [:Relation,[:Lot_m,[
                 {name: "Jane Ives", birth_date: [:Calendar_Instant,{y:1971,m:11,d:6}],
                     phone_numbers: [:Set,[:Lot_m,["+1.4045552995", "+1.7705557572"]]]},

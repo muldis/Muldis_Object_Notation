@@ -7,12 +7,12 @@ Muldis Object Notation (MUON) - Source code and data interchange format
 # VERSION
 
 The fully-qualified name of this document is
-`Muldis_Object_Notation https://muldis.com 0.300.0`.
+`Muldis_Object_Notation https://muldis.com 0.400.0`.
 
 # PART
 
 This artifact is part 9 of 22 of the document
-`Muldis_Object_Notation https://muldis.com 0.300.0`;
+`Muldis_Object_Notation https://muldis.com 0.400.0`;
 its part name is `Syntax_Muldis_Data_Language`.
 
 # CONTENTS
@@ -57,7 +57,7 @@ This part of the **Muldis Object Notation** document specifies the
 canonical concrete Muldis Data Language (MDL) hosted syntax of MUON,
 which expresses a MUON artifact in terms of a native in-memory value or
 object of the MDL programming language,
-authority `https://muldis.com`, version 0.300.0 (2023) or later,
+authority `https://muldis.com`, version 0.400.0 (2023) or later,
 as a non-cyclic data structure composed only using system-defined types.
 
 The MUON `Syntax_Muldis_Data_Language` is derived from and maps with the MUON
