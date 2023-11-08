@@ -19,7 +19,6 @@ its part name is `Signature`.
 
 - [SYNOPSIS](#SYNOPSIS)
 - [DESCRIPTION](#DESCRIPTION)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -107,14 +106,6 @@ There may be multiple nested *model-qualified artifact*; when this is the
 case, it means the most-nested *model subject* conforms to every one of
 those data models, typically because only the lowest common denominators of
 said were used.
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

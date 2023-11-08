@@ -50,7 +50,6 @@ its part name is `Syntax_Plain_Text`.
     - [Quoted Strings](#Quoted-Strings)
     - [Symbolic Delimiters/Separators/Indicators](#Symbolic-Delimiters-Separators-Indicators)
     - [Barewords and Numeric-Format Literals](#Barewords-and-Numeric-Format-Literals)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -1775,14 +1774,6 @@ operators they may have, which in some cases may require the superset
 grammar to have some kind of additional syntax, perhaps a pair of
 parenthesis without a colon between them, to disambiguate that they want
 those operator calls instead.
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

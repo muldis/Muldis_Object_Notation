@@ -25,7 +25,6 @@ its part name is `Overview`.
     - [Resiliency](#Resiliency)
     - [Extensibility](#Extensibility)
 - [VERSIONING](#VERSIONING)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -274,14 +273,6 @@ or that the authority expects frequent upcoming backwards-incompatible changes.*
 
 See also <https://design.raku.org/S11.html#Versioning> which was the primary
 influence for the versioning scheme described above.
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

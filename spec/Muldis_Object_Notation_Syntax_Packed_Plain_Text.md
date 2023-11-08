@@ -42,7 +42,6 @@ its part name is `Syntax_Packed_Plain_Text`.
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [GLOSSARY OF OCTETS](#GLOSSARY-OF-OCTETS)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -1755,14 +1754,6 @@ usually in the context of their being the first octet of an artifact.
     FF  |     |             | reserved for users to declare reusable Any artifact factor
     ----+-----+-------------+----------------------------------------------
 ```
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

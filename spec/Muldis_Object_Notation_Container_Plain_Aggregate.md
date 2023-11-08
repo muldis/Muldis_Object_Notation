@@ -19,7 +19,6 @@ its part name is `Container_Plain_Aggregate`.
 
 - [SYNOPSIS](#SYNOPSIS)
 - [DESCRIPTION](#DESCRIPTION)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -219,14 +218,6 @@ combining what may otherwise be multiple file system files into one file.
 A special case is supporting multi-versioning of a data structure in a
 single append-only file where the changes of each new version is just
 appended to the file as a new *parsing unit*.
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

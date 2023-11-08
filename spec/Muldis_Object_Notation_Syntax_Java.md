@@ -32,7 +32,6 @@ its part name is `Syntax_Java`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -463,14 +462,6 @@ because its collection of elements is likely to be unordered.
 A *SYS_Ordered_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

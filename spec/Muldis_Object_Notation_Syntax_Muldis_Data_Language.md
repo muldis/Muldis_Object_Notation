@@ -32,7 +32,6 @@ its part name is `Syntax_Muldis_Data_Language`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -205,14 +204,6 @@ A **Lot** artifact is any of the following:
 A **Kit** artifact is any of the following:
 
 * Any value of the MDL type `fdn::SC_Kit`.
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

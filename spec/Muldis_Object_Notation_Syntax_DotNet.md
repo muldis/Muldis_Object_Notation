@@ -32,7 +32,6 @@ its part name is `Syntax_DotNet`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -498,14 +497,6 @@ as the 8th actual component, recursively as needed.
 * Any value of any .NET structure type, except for `System.ValueTuple`,
 or object of any .NET class,
 that composes the .NET interface `System.Runtime.CompilerServices.ITuple`.
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

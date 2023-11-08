@@ -35,7 +35,6 @@ its part name is `Syntax_Abstract`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -222,14 +221,6 @@ each of which in turn is named *attribute* such that each
 which in order are named *attribute name* (any **Text** artifact)
 and *attribute asset* (any **Any** artifact),
 such that no 2 attributes have the same *attribute name*.
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

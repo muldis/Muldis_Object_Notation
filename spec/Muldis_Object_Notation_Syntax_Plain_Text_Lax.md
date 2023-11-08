@@ -43,7 +43,6 @@ its part name is `Syntax_Plain_Text_Lax`.
     - [Pair Separator Equals-Greater-Than](#Pair-Separator-Equals-Greater-Than)
     - [Duo Pair Separator Comma](#Duo-Pair-Separator-Comma)
     - [String Delimiter Single-Quote](#String-Delimiter-Single-Quote)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -828,14 +827,6 @@ to double-quotes.
 For **Text** and **Nesting** and **Kit**:
 
 - Added `'` as an alternative delimiter for `"` for any quoted string.
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
-
-*TODO.*
 
 [RETURN](#TOP)
 

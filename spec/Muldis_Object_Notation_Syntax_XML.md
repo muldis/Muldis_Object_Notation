@@ -32,7 +32,6 @@ its part name is `Syntax_XML`.
     - [Duo](#Duo)
     - [Lot](#Lot)
     - [Kit](#Kit)
-- [SEE ALSO](#SEE-ALSO)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
 - [TRADEMARK POLICY](#TRADEMARK-POLICY)
@@ -202,14 +201,6 @@ See also <https://w3.org/XML>.
 <a name="Kit"></a>
 
 ## Kit
-
-*TODO.*
-
-[RETURN](#TOP)
-
-<a name="SEE-ALSO"></a>
-
-# SEE ALSO
 
 *TODO.*
 
