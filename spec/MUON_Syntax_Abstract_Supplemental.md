@@ -33,7 +33,6 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
     - [Interval](#Interval)
     - [Interval Set](#Interval-Set)
     - [Interval Bag](#Interval-Bag)
-    - [Pair](#Pair)
     - [Heading / Attribute Name Set](#Heading---Attribute-Name-Set)
     - [Renaming / Attribute Name Map](#Renaming---Attribute-Name-Map)
     - [Tuple / Attribute Set](#Tuple---Attribute-Set)
@@ -630,35 +629,6 @@ Examples:
 
     `Probably same thing, regardless of data model used.`
     (Interval_Bag:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
-```
-
-[RETURN](#TOP)
-
-<a name="Pair"></a>
-
-### Pair
-
-A **Pair** artifact has the predicate `Pair`.
-
-Its subject is any of the following:
-
-* Any **Duo** artifact such that its *this* and *that* define the same
-elements of the **Pair**.
-
-Examples:
-
-```
-    `Pair of Integer.`
-    (Pair:(5: -3))
-
-    `Pair of Text.`
-    (Pair:("First Name": Joy))
-
-    `Another Pair.`
-    (Pair:(x:y))
-
-    `Same thing.`
-    (Pair:(x->y))
 ```
 
 [RETURN](#TOP)

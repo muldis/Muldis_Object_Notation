@@ -36,7 +36,6 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
     - [Interval](#Interval)
     - [Interval Set](#Interval-Set)
     - [Interval Bag](#Interval-Bag)
-    - [Pair](#Pair)
     - [Heading / Attribute Name Set](#Heading---Attribute-Name-Set)
     - [Renaming / Attribute Name Map](#Renaming---Attribute-Name-Map)
     - [Tuple / Attribute Set](#Tuple---Attribute-Set)
@@ -171,12 +170,11 @@ dedicated simple literal formats or data type values in some syntaxes:
 
 - Locational: **Calendar Time**, **Calendar Duration**, **Calendar Instant**, **Geographic Point**
 
-Some of these 16 more-collective-like secondary possreps might have its own
+Some of these 15 more-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
 - Discrete: **Array**, **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Interval Set**, **Interval Bag**
-- **Pair**
 - Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
 - **Article**
 - **Excuse**
@@ -336,12 +334,11 @@ used and instead other more applicable **Excuse** values should instead.
 
 A **Duo** value is a general purpose 2-element ordered heterogeneous
 collection whose elements in order are *this* and *that*, each of which may
-be any other value.  A **Duo** value is also characterized by a **Pair**.
+be any other value.
 
-The intended use of the **Duo** possrep is the many situations where MUON
-secondary possrep artifacts are built in terms of ordered pairs and we want
-to clearly distinguish this from regular user data or source code that is
-logically a generic pair, the latter being what **Pair** is for.
+The main intended use of the **Duo** possrep is the many situations where
+MUON secondary possrep artifacts are built in terms of ordered pairs.
+It is also for regular user data or source code that is logically a generic pair.
 
 As a special exception, for any generic context where an **Any** value is
 permitted, certain otherwise-valid **Duo** values may be either forbidden
@@ -667,17 +664,6 @@ An **Interval Bag** value is characterized by a generalization of an
 **Interval Bag** is isomorphic to a **Bag** in the same way that an
 **Interval Set** is to a **Set**; every possible distinct **Bag** can map
 to a distinct **Interval Bag**.
-
-[RETURN](#TOP)
-
-<a name="Pair"></a>
-
-### Pair
-
-A **Pair** value is a general purpose 2-element ordered heterogeneous
-collection whose elements in order are *this* and *that*, each of which may
-be any other value.  A **Pair** value is also characterized by a **Tuple**
-value having exactly 2 "positional" attributes.
 
 [RETURN](#TOP)
 

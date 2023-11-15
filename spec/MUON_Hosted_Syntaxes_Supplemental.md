@@ -68,6 +68,12 @@ such that each of its `min` and `max` properties is any **Any** artifact.
 
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
+A **Duo** artifact is additionally any of the following:
+
+* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`
+such that its `Key` property is *this* (any **Any** artifact)
+and its `Value` property is *that* (any **Any** artifact).
+
 A **Calendar Duration** artifact is additionally any of the following:
 
 * Any value of the .NET structure type `System.TimeSpan`.
@@ -84,12 +90,6 @@ A **Geographic Point** artifact is additionally any of the following:
 `System.Data.Spatial.DbGeography`.
 
 *Note: DbGeography is only in .NET Framework; it is not in .NET 5+.*
-
-A **Pair** artifact is additionally any of the following:
-
-* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`
-such that its `Key` property is *this* (any **Any** artifact)
-and its `Value` property is *that* (any **Any** artifact).
 
 [RETURN](#TOP)
 

@@ -264,18 +264,6 @@
 `Probably same thing, regardless of data model used.`
 (Interval_Bag:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
 `Muldis_Object_Notation_Sync_Mark`
-`Pair of Integer.`
-(Pair:(5: -3))
-`Muldis_Object_Notation_Sync_Mark`
-`Pair of Text.`
-(Pair:("First Name": Joy))
-`Muldis_Object_Notation_Sync_Mark`
-`Another Pair.`
-(Pair:(x:y))
-`Muldis_Object_Notation_Sync_Mark`
-`Same thing.`
-(Pair:(x->y))
-`Muldis_Object_Notation_Sync_Mark`
 `Zero attributes.`
 (Heading:{})
 `Muldis_Object_Notation_Sync_Mark`

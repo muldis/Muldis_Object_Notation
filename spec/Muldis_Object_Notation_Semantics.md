@@ -336,7 +336,8 @@ such as nested **Kit** may implement.
 
 A **Duo** value is a general purpose 2-element ordered heterogeneous
 collection whose elements in order are *this* and *that*, each of which may
-be any other value.
+be any other value.  A **Duo** value is also characterized by a **Kit**
+value having exactly 2 "positional" attributes.
 
 A primary intended use of the **Duo** possrep is to be the idiomatic way
 for an external data model to represent "new" types of a nominal type
