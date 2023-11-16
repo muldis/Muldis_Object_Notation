@@ -181,7 +181,7 @@ A **Nesting** artifact is any of the following:
 
 A **Pair** artifact is any of the following:
 
-* Any value of the MDL type `fdn::SC_Pair`.
+* Any value of the MDL type `fdn::Pair`.
 
 [RETURN](#TOP)
 
@@ -191,7 +191,7 @@ A **Pair** artifact is any of the following:
 
 A **Lot** artifact is any of the following:
 
-* Any value of the MDL type `fdn::SC_Lot`.
+* Any value of the MDL type `fdn::Lot`.
 
 [RETURN](#TOP)
 
@@ -201,7 +201,7 @@ A **Lot** artifact is any of the following:
 
 A **Kit** artifact is any of the following:
 
-* Any value of the MDL type `fdn::SC_Kit`.
+* Any value of the MDL type `fdn::Kit`.
 
 [RETURN](#TOP)
 
