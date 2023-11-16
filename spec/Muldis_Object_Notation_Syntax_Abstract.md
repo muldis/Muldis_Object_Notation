@@ -32,7 +32,7 @@ its part name is `Syntax_Abstract`.
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [AUTHOR](#AUTHOR)
@@ -187,11 +187,11 @@ A **Nesting** artifact is an arbitrarily-large ordered sequence of
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-## Duo
+## Pair
 
-A **Duo** artifact is an ordered collection having exactly 2 elements
+A **Pair** artifact is an ordered collection having exactly 2 elements
 which in order are named *this* (any **Any** artifact)
 and *that* (any **Any** artifact).
 

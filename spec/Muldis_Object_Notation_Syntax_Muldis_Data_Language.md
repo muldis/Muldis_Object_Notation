@@ -29,7 +29,7 @@ its part name is `Syntax_Muldis_Data_Language`.
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [AUTHOR](#AUTHOR)
@@ -175,13 +175,13 @@ A **Nesting** artifact is any of the following:
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-## Duo
+## Pair
 
-A **Duo** artifact is any of the following:
+A **Pair** artifact is any of the following:
 
-* Any value of the MDL type `fdn::SC_Duo`.
+* Any value of the MDL type `fdn::SC_Pair`.
 
 [RETURN](#TOP)
 

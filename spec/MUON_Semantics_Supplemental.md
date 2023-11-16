@@ -20,7 +20,7 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
 - [EXCLUDED DATA TYPE POSSREPS](#EXCLUDED-DATA-TYPE-POSSREPS)
 - [PRIMARY DATA TYPE POSSREPS](#PRIMARY-DATA-TYPE-POSSREPS)
     - [Ignorance](#Ignorance)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
 - [FOLDING ALGEBRAIC DATA TYPE POSSREPS](#FOLDING-ALGEBRAIC-DATA-TYPE-POSSREPS)
     - [Fractional](#Fractional)
 - [LESS-COLLECTIVE SECONDARY DATA TYPE POSSREPS](#LESS-COLLECTIVE-SECONDARY-DATA-TYPE-POSSREPS)
@@ -151,14 +151,14 @@ expressed mainly in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single collective item.
 There are exactly 3 of these:
 
-- **Duo**
+- **Pair**
 - **Lot**
 - **Kit**
 
 A *secondary possrep* is one whose canonical definition has no format of
 its own in any syntax and rather its canonical definition is as one or more
 special cases of some other possrep.  To be specific, an artifact of every
-secondary possrep is canonically expressed in every syntax as a **Duo**
+secondary possrep is canonically expressed in every syntax as a **Pair**
 artifact which provides a semantic tag for some other
 typically-structure-defining artifact thus giving the latter a different
 interpretation than otherwise.  Each syntax may optionally define extra
@@ -328,36 +328,36 @@ used and instead other more applicable **Excuse** values should instead.
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-### Duo
+### Pair
 
-A **Duo** value is a general purpose 2-element ordered heterogeneous
+A **Pair** value is a general purpose 2-element ordered heterogeneous
 collection whose elements in order are *this* and *that*, each of which may
 be any other value.
 
-The main intended use of the **Duo** possrep is the many situations where
+The main intended use of the **Pair** possrep is the many situations where
 MUON secondary possrep artifacts are built in terms of ordered pairs.
 It is also for regular user data or source code that is logically a generic pair.
 
 As a special exception, for any generic context where an **Any** value is
-permitted, certain otherwise-valid **Duo** values may be either forbidden
+permitted, certain otherwise-valid **Pair** values may be either forbidden
 or be interpreted as a value of some other primary possrep rather than as a
-**Duo** value; in such generic contexts, when a prospective **Duo** has a
+**Pair** value; in such generic contexts, when a prospective **Pair** has a
 *this* which is any *Primary_Possrep_Name*, the prospect will
-never be treated as a valid **Duo** value.
+never be treated as a valid **Pair** value.
 It is up to each specific concrete syntax in question as to whether each of
 these cases counts as an error or as a value of some other primary possrep.
 
 A *Primary_Possrep_Name* is any of these **Text** values:
 `Ignorance`, `Boolean`, `Integer`, `Fraction`,
 `Bits`, `Blob`, `Text`, `Nesting`,
-`Duo`, `Lot`, `Kit`.
+`Pair`, `Lot`, `Kit`.
 
 As a further special exception, each specific concrete syntax may designate
 additional values for a prospect's *this* that it treats as special in
 certain contexts and thus such a prospect will also not be treated as its
-own **Duo** value.  Potential examples are these **Text** values:
+own **Pair** value.  Potential examples are these **Text** values:
 `multiplied`, `named`.
 
 [RETURN](#TOP)

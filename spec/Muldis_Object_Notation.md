@@ -130,7 +130,7 @@ represented with MUON syntax are characterized by.
 - **Blob**
 - **Text**
 - **Nesting**
-- **Duo**
+- **Pair**
 - **Lot**
 - **Kit**
 

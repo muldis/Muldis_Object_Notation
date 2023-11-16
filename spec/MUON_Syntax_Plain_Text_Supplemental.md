@@ -11,7 +11,7 @@ possible superset of the MUON grammar rather than as part of MUON proper.
 ## CONTENTS
 
 - [Expansion of Possrep Any](#Expansion-of-Possrep-Any)
-- [Expansion of Possreps Duo/Lot/Kit](#Expansion-of-Possreps-Duo-Lot-Kit)
+- [Expansion of Possreps Pair/Lot/Kit](#Expansion-of-Possreps-Pair-Lot-Kit)
 - [Added Dedicated Format for Calendar Time](#Added-Dedicated-Format-for-Calendar-Time)
 - [Added Dedicated Format for Calendar Duration](#Added-Dedicated-Format-for-Calendar-Duration)
 - [Added Dedicated Format for Calendar Instant](#Added-Dedicated-Format-for-Calendar-Instant)
@@ -47,9 +47,9 @@ Grammar:
 
 [RETURN](#TOP)
 
-<a name="Expansion-of-Possreps-Duo-Lot-Kit"></a>
+<a name="Expansion-of-Possreps-Pair-Lot-Kit"></a>
 
-## Expansion of Possreps Duo/Lot/Kit
+## Expansion of Possreps Pair/Lot/Kit
 
 Grammar:
 
@@ -78,7 +78,7 @@ Grammar:
 Examples:
 
 ```
-    `Another Duo.`
+    `Another Pair.`
     (x:y)
 
     `Same thing.`
@@ -587,7 +587,7 @@ A **Script** artifact has the predicate `Script`.
 
 Its subject is any of the following:
 
-* Any **Duo** artifact such that its *this* and *that*
+* Any **Pair** artifact such that its *this* and *that*
 are the *script predicate* and *script subject* respectively;
 the *script subject* is any **Any** artifact;
 the *script predicate* is any **Lot** artifact

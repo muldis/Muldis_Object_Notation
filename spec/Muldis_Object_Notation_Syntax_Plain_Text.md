@@ -38,7 +38,7 @@ its part name is `Syntax_Plain_Text`.
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [RESERVED UNUSED SYNTAX](#RESERVED-UNUSED-SYNTAX)
@@ -380,7 +380,7 @@ Grammar:
         | <Blob>
         | <Text>
         | <Nesting>
-        | <Duo>
+        | <Pair>
         | <Lot>
         | <Kit>
     }
@@ -1045,17 +1045,17 @@ Examples:
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-## Duo
+## Pair
 
-A **Duo** artifact has the dedicated concrete literal format
-described by `<Duo>`.
+A **Pair** artifact has the dedicated concrete literal format
+described by `<Pair>`.
 
 Grammar:
 
 ```
-    token Duo
+    token Pair
     {
         ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
     }
@@ -1079,16 +1079,16 @@ Grammar:
 Examples:
 
 ```
-    `Duo of Ignorance.`
+    `Pair of Ignorance.`
     (0iIGNORANCE: 0iIGNORANCE)
 
-    `Duo of Integer.`
+    `Pair of Integer.`
     (5: -3)
 
-    `Duo of Text.`
+    `Pair of Text.`
     ("First Name": Joy)
 
-    `Another Duo.`
+    `Another Pair.`
     (x:y)
 
     `Same thing.`
@@ -1500,7 +1500,7 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0t
     Nesting         | leading ::, or :: between 2 of, what otherwise is Text
-    Duo             | (...)
+    Pair            | (...)
     Lot             | only [] or [...]
     Kit             | only {} or {...}
 ```
@@ -1549,7 +1549,7 @@ own uses of bracketing characters to define statement or expression groups.
 
 MUON does not use parenthesis pairs `(` and `)`,
 except with a colon/etc (`:`/`->`)
-between them as a `Duo` syntax, so parenthesis pairs without the colon/etc
+between them as a `Pair` syntax, so parenthesis pairs without the colon/etc
 are available for a superset grammar to use for generic grouping purposes
 to force a particular parsing precedence with infix operators and such.
 
@@ -1604,7 +1604,7 @@ that means they are used either in pairs or as contiguous sequences.
     ------+------------------------+---------------------------------------
     \     | escaped characters     | * prefix for each escaped char in quoted string
     ------+------------------------+---------------------------------------
-    ()    | pair collections       | * delimit Duo selectors
+    ()    | pair collections       | * delimit Pair selectors
     ------+------------------------+---------------------------------------
     []    | discrete collections   | * delimit homogeneous discrete collections
           |                        |   of members, concept asset+cardinal pairs
@@ -1616,7 +1616,7 @@ that means they are used either in pairs or as contiguous sequences.
     ------+------------------------+---------------------------------------
     :     | pairings               | * indicates a pairing context
     ->    |                        | * separates the 2 parts of a pair
-          |                        | * this/that separator in Duo sels
+          |                        | * this/that separator in Pair sels
           |                        | * optional m-m member/multiplicity sep in Lot sels
           |                        | * optional attr name/asset separator in Kit sels
     ------+------------------------+---------------------------------------

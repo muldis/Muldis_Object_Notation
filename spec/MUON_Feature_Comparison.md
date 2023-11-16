@@ -122,7 +122,7 @@ MUON does support such comments.
 
 MUON is more expressive than JSON in supporting nominal type systems, such
 as common "object-oriented" ones, by providing a third generic collection
-type possrep/syntax **Duo** to explicitly declare in a distinct way that a
+type possrep/syntax **Pair** to explicitly declare in a distinct way that a
 particular user-defined collection denotes a value or object of some
 user-defined type or class, while those using JSON tend to overload the
 meaning of the elements of a JSON `object` to indicate either object type or
@@ -181,7 +181,7 @@ tuples, relations (sets of tuples), and bags of tuples, and it is up to an
 extra data model layered over top to express semantics like whether the
 ordinal position and or the multiplicity of tuples is significant or not.
 
-However MUON provides a foundation with the distinct **Duo** possrep/syntax
+However MUON provides a foundation with the distinct **Pair** possrep/syntax
 for a data model layered over it to express those semantics concisely.
 
 MUON is more expressive than SQL regarding missing information.
@@ -190,6 +190,6 @@ value of some type is not present, but does not provide any standard way of
 indicating the reason for its absense, such as that a regular value is
 *unknown* versus *not applicable* versus *no matching record* or whatever;
 in contrast, MUON provides the generic extensible *excuse* concept by way
-of **Duo**, as well as other tools, so that reasons can be specified.
+of **Pair**, as well as other tools, so that reasons can be specified.
 
 *TODO.*

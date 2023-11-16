@@ -29,7 +29,7 @@ its part name is `Syntax_JSON`.
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [AUTHOR](#AUTHOR)
@@ -152,7 +152,7 @@ An **Integer** artifact is any of the following:
 
 * Any *SYS_Integer*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Integer`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Integer`
 and its *SYS_that* is any *SYS_or_embedded_Integer*.
 
 Not permitted for an **Integer** is any of the following,
@@ -195,7 +195,7 @@ An *embedded_MUON_PT_parsing_unit* is any of the following:
 
 A **Fraction** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Non_Qualified_Fraction*.
 
 Not permitted for a **Fraction** is any of the following,
@@ -260,7 +260,7 @@ An *embedded_MUON_PT_Fraction* is any of the following:
 
 A **Bits** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Bits`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Bits`
 and its *SYS_that* is any *SYS_Non_Qualified_Bits*.
 
 A *SYS_Non_Qualified_Bits* is any of the following:
@@ -281,7 +281,7 @@ An *embedded_MUON_PT_Bits* is any of the following:
 
 A **Blob** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Blob`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Blob`
 and its *SYS_that* is any *SYS_Non_Qualified_Blob*.
 
 A *SYS_Non_Qualified_Blob* is any of the following:
@@ -320,14 +320,14 @@ defined in it that aren't in valid surrogate pairs.
 
 A **Nesting** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any *SYS_Nesting*.
 
 Not permitted for a **Nesting** is any of the following,
 to prevent ambiguity and simplify things:
 
 * Any *SYS_Array_T*.  This is because that would be interpreted as
-a **Duo** artifact all of whose members are any **Text** artifacts,
+a **Pair** artifact all of whose members are any **Text** artifacts,
 or as something invalid.
 
 A *SYS_Nesting* is any of the following:
@@ -348,28 +348,28 @@ A *SYS_Array_T* is any of the following:
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-## Duo
+## Pair
 
-A **Duo** artifact is any of the following:
+A **Pair** artifact is any of the following:
 
-* Any *SYS_Duo_AA* such that its *SYS_this* is *this*
+* Any *SYS_Pair_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
 `Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
-`Nesting`, `Duo`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
+`Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Pair`
 and its *SYS_that* is
-any *SYS_Duo_AA* such that its *SYS_this* is *this* (any **Any** artifact)
+any *SYS_Pair_AA* such that its *SYS_this* is *this* (any **Any** artifact)
 and its *SYS_that* is *that* (any **Any** artifact).
 
-A *SYS_Duo_TA* is any of the following:
+A *SYS_Pair_TA* is any of the following:
 
-* Any *SYS_Duo_AA* such that its *SYS_this* is any *SYS_Text*.
+* Any *SYS_Pair_AA* such that its *SYS_this* is any *SYS_Text*.
 
-A *SYS_Duo_AA* is any of the following:
+A *SYS_Pair_AA* is any of the following:
 
 * Any *SYS_Ordered_Tuple_A* having exactly 2 elements
 such that its first element is *SYS_this* and its second element is *SYS_that*.
@@ -382,10 +382,10 @@ such that its first element is *SYS_this* and its second element is *SYS_that*.
 
 A **Lot** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
 and its *SYS_that* is any *SYS_Non_Qualified_Lot_M*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
 and its *SYS_that* is
 any *SYS_Array_DAA* such that each of its elements in turn is
 *multiplied member* whose *SYS_this* is *member* (any **Any** artifact)
@@ -404,7 +404,7 @@ such that each distinct member repeats per instance.
 
 A *SYS_Array_DAA* is any of the following:
 
-* Any *SYS_Array_A* such that each of its elements is any *SYS_Duo_AA*.
+* Any *SYS_Array_A* such that each of its elements is any *SYS_Pair_AA*.
 
 A *SYS_Array_A* is any of the following:
 
@@ -418,7 +418,7 @@ A *SYS_Array_A* is any of the following:
 
 A **Kit** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
 and its *SYS_that* is
 any *SYS_Array_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
@@ -426,7 +426,7 @@ in turn is *attribute asset* (any **Any** artifact) and its corresponding
 this format can express any **Kit** which has only normalized ordered attributes;
 this format is more concise than the general format.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
 and its *SYS_that* is any *SYS_Non_Qualified_Kit_NA*.
 
 A *SYS_Non_Qualified_Kit_NA* is any of the following:

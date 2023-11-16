@@ -29,7 +29,7 @@ its part name is `Syntax_Java`.
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [AUTHOR](#AUTHOR)
@@ -184,7 +184,7 @@ A **Fraction** artifact is any of the following:
 
 * Any *SYS_Fraction*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Non_Qualified_Fraction*.
 
 A *SYS_Non_Qualified_Fraction* is any of the following:
@@ -252,7 +252,7 @@ A **Bits** artifact is any of the following:
 
 A **Blob** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Blob`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Blob`
 and its *SYS_that* is any value of the Java primitive type array `byte[]`.
 
 Not permitted for a **Blob** is any of the following,
@@ -311,7 +311,7 @@ isn't so paired.
 
 A **Nesting** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any *SYS_Nesting*.
 
 Not permitted for a **Nesting** is any of the following,
@@ -339,28 +339,28 @@ for example, any value of the Java primitive type array `String[]`.
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-## Duo
+## Pair
 
-A **Duo** artifact is any of the following:
+A **Pair** artifact is any of the following:
 
-* Any *SYS_Duo_AA* such that its *SYS_this* is *this*
+* Any *SYS_Pair_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
 `Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
-`Nesting`, `Duo`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
+`Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Pair`
 and its *SYS_that* is
-any *SYS_Duo_AA* such that its *SYS_this* is *this* (any **Any** artifact)
+any *SYS_Pair_AA* such that its *SYS_this* is *this* (any **Any** artifact)
 and its *SYS_that* is *that* (any **Any** artifact).
 
-A *SYS_Duo_TA* is any of the following:
+A *SYS_Pair_TA* is any of the following:
 
-* Any *SYS_Duo_AA* such that its *SYS_this* is any *SYS_Text*.
+* Any *SYS_Pair_AA* such that its *SYS_this* is any *SYS_Text*.
 
-A *SYS_Duo_AA* is any of the following:
+A *SYS_Pair_AA* is any of the following:
 
 * Any object of any Java class that composes the Java interface `java.util.Map.Entry`
 such that its `key` property is *SYS_this* and its `value` property is *SYS_that*.
@@ -369,7 +369,7 @@ Note that example composers of `java.util.Map.Entry` are:
 `java.util.AbstractMap.SimpleImmutableEntry`,
 `java.util.AbstractMap.SimpleEntry`.
 
-Not permitted for a *SYS_Duo_AA* is any of the following,
+Not permitted for a *SYS_Pair_AA* is any of the following,
 to keep things more correct and simpler:
 
 * Any values or objects of N-ary collection types having exactly 2 elements.
@@ -384,10 +384,10 @@ A **Lot** artifact is any of the following:
 
 * Any *SYS_Non_Qualified_Lot_M*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
 and its *SYS_that* is any *SYS_Non_Qualified_Lot_M*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
 and its *SYS_that* is
 any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
 *multiplied member* whose element key is *member* (any **Any** artifact)
@@ -428,7 +428,7 @@ A **Kit** artifact is any of the following:
 
 * Any *SYS_Non_Qualified_Kit_NA*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
 and its *SYS_that* is
 any *SYS_Array_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
@@ -436,7 +436,7 @@ in turn is *attribute asset* (any **Any** artifact) and its corresponding
 this format can express any **Kit** which has only normalized ordered attributes;
 this format is more concise than the general format.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
 and its *SYS_that* is any *SYS_Non_Qualified_Kit_NA*.
 
 A *SYS_Non_Qualified_Kit_NA* is any of the following:

@@ -38,7 +38,7 @@ its part name is `Syntax_Packed_Plain_Text`.
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [GLOSSARY OF OCTETS](#GLOSSARY-OF-OCTETS)
@@ -54,18 +54,18 @@ its part name is `Syntax_Packed_Plain_Text`.
 Common "named relation" format with attribute names repeating per tuple.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
-        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
-            D T"Relation" M[
+    P zSyntax P M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
+        P yModel P M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
+            P T"Relation" M[
                 K[xname T"Jane Ives"
-                    T"birth_date" D T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
-                    T"phone_numbers" D wSet M[T"+1.4045552995" T"+1.7705557572"]]
+                    T"birth_date" P T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                    T"phone_numbers" P wSet M[T"+1.4045552995" T"+1.7705557572"]]
                 K[xname T"Layla Miller"
-                    T"birth_date" D T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
-                    T"phone_numbers" D wSet l]
+                    T"birth_date" P T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                    T"phone_numbers" P wSet l]
                 K[xname T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
-                    T"birth_date" D T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
-                    T"phone_numbers" D wSet M[T"+81.9072391679"]]
+                    T"birth_date" P T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                    T"phone_numbers" P wSet M[T"+81.9072391679"]]
             ]
 ```
 
@@ -73,20 +73,20 @@ Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
-        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
-            D T"Relation" D
+    P zSyntax P M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
+        P yModel P M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
+            P T"Relation" P
                     J[xname T"birth_date" T"phone_numbers"]
                 M[
                     J[T"Jane Ives"
-                        D T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
-                        D wSet M[T"+1.4045552995" T"+1.7705557572"]]
+                        P T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                        P wSet M[T"+1.4045552995" T"+1.7705557572"]]
                     J[T"Layla Miller"
-                        D T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
-                        D wSet l]
+                        P T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                        P wSet l]
                     J[T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
-                        D T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
-                        D wSet M[T"+81.9072391679"]]
+                        P T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                        P wSet M[T"+81.9072391679"]]
                 ]
 ```
 
@@ -323,7 +323,7 @@ Grammar:
         | <Blob>
         | <Text>
         | <Nesting>
-        | <Duo>
+        | <Pair>
         | <Lot>
         | <Kit>
     }
@@ -1444,19 +1444,19 @@ Examples:
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-## Duo
+## Pair
 
-A **Duo** artifact has the dedicated concrete literal format
-described by `<Duo>`.
+A **Pair** artifact has the dedicated concrete literal format
+described by `<Pair>`.
 
 Grammar:
 
 ```
-    token Duo
+    token Pair
     {
-        D <sp>? <this_and_that>
+        P <sp>? <this_and_that>
     }
 
     token this_and_that
@@ -1475,27 +1475,27 @@ Grammar:
     }
 ```
 
-A **Duo** artifact uses 3..N octets to represent the general case of
+A **Pair** artifact uses 3..N octets to represent the general case of
 any pair as a single format-denoting octet, which corresponds to the
-ASCII/UTF-8 *LATIN CAPITAL LETTER D* character `D` so it is visually
+ASCII/UTF-8 *LATIN CAPITAL LETTER P* character `P` so it is visually
 represented by the *larger* version of the first letter of the possrep name
-`Duo`, followed by typically-any 2 **Any** artifacts which
+`Pair`, followed by typically-any 2 **Any** artifacts which
 represent in order the pair's *this* and *that*.
 
 Examples:
 
 ```
-    `Duo of Ignorance (3 octets); also known as (0iIGNORANCE: 0iIGNORANCE).`
-    D__
+    `Pair of Ignorance (3 octets); also known as (0iIGNORANCE: 0iIGNORANCE).`
+    P__
 
-    `Duo of Integer (4 octets); also known as (5: -3).`
-    D5d\FD
+    `Pair of Integer (4 octets); also known as (5: -3).`
+    P5d\FD
 
-    `Duo of Text (18 octets); also known as ("First Name": Joy).`
-    DT"First Name"wJoy
+    `Pair of Text (18 octets); also known as ("First Name": Joy).`
+    PT"First Name"wJoy
 
-    `Another Duo (5 octets); also known as (x:y).`
-    Duxuy
+    `Another Pair (5 octets); also known as (x:y).`
+    Puxuy
 ```
 
 [RETURN](#TOP)
@@ -1679,7 +1679,7 @@ usually in the context of their being the first octet of an artifact.
     41  | A   |             | (unassigned)
     42  | B   |             | Blob artifact prefix general case quoted string with N octets
     43  | C   |             | (unassigned)
-    44  | D   |             | Duo artifact prefix general case
+    44  | D   |             | (unassigned)
     45  | E   |             | (unassigned)
     46  | F   |             | (unassigned)
     47  | G   |             | (unassigned)
@@ -1691,7 +1691,7 @@ usually in the context of their being the first octet of an artifact.
     4D  | M   |             | Lot artifact prefix special case with N non-multiplied members
     4E  | N   |             | Nesting artifact prefix general case with N elements
     4F  | O   |             | (unassigned)
-    50  | P   |             | (unassigned)
+    50  | P   |             | Pair artifact prefix general case
     51  | Q   |             | (unassigned)
     52  | R   |             | (unassigned)
     53  | S   |             | Bits artifact prefix general case quoted string with N octets / N bits

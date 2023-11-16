@@ -108,7 +108,7 @@ There is NOT any abstract MUON secondary possrep that has any alternative
 *unqualified* formats characterized by the *subject* on its own; however,
 the latter is a common option for concrete MUON possreps.
 
-Every (qualified) abstract MUON artifact is a **Duo** artifact;
+Every (qualified) abstract MUON artifact is a **Pair** artifact;
 its *this* is the *predicate* and its *that* is the *subject*.
 
 Every MUON possrep *predicate* is a **Text** artifact,
@@ -209,10 +209,10 @@ Its subject is any of the following:
 
 * Any *instant base*.
 
-* Any **Duo** artifact such that its *this* and *that* respectively are
+* Any **Pair** artifact such that its *this* and *that* respectively are
 the *instant base* and *instant offset*.
 
-* Any **Duo** artifact such that its *this* and *that* respectively are
+* Any **Pair** artifact such that its *this* and *that* respectively are
 the *instant base* and *instant zone*.
 
 The above components are defined as follows:
@@ -493,22 +493,22 @@ Its subject is any of the following:
 
 * The **Text** artifact empty string value; this designates an *empty interval*.
 
-* Any **Duo** artifact such that its *this* is the **Text** artifact empty
+* Any **Pair** artifact such that its *this* is the **Text** artifact empty
 string value and its *that* is any **Any** artifact; this designates a
 *unit interval*, and *that* corresponds to its sole member.
 
-* Any **Duo** artifact such that its *this* is any of the 5 **Text**
+* Any **Pair** artifact such that its *this* is any of the 5 **Text**
 artifacts [`<=*<=`, `<=*<`, `<*<=`, `<*<`, `..`] and its *that* is any
-**Duo** artifact such that its *this* and *that* respectively are each any
+**Pair** artifact such that its *this* and *that* respectively are each any
 **Any** artifact; this designates a *bounded interval*, and the latter
 *this* and *that* correspond respectively to the low and high endpoints.
 
-* Any **Duo** artifact such that its *this* is any of the 2 **Text**
+* Any **Pair** artifact such that its *this* is any of the 2 **Text**
 artifacts [`<=*`, `<*`] and its *that* is any **Any** artifact; this
 designates a *low-bounded, high-unbounded interval*, and *that* corresponds
 to the low endpoint.
 
-* Any **Duo** artifact such that its *this* is any of the 2 **Text**
+* Any **Pair** artifact such that its *this* is any of the 2 **Text**
 artifacts [`*<=`, `*<`] and its *that* is any **Any** artifact; this
 designates a *low-unbounded, high-bounded interval*, and *that* corresponds
 to the high endpoint.
@@ -750,7 +750,7 @@ Its subject is any of the following:
 *attributes* of the **Tuple**.  This is the idiomatic format for specifying
 a **Tuple** where the attribute names and assets appear interleaved.
 
-* Any **Duo** artifact such that its *this* and *that* correspond to the
+* Any **Pair** artifact such that its *this* and *that* correspond to the
 *heading* and *body* of the new **Tuple** respectively, and its *that* is
 any **Tuple** subject, and its *this* is any **Renaming** subject such
 that its set of *name before* is identical to the set of attribute names of
@@ -853,7 +853,7 @@ different *headings*.  The *members* of the **Set** subject denote the *body* or
 a non-empty (at least one tuple) **Relation** where the attribute names
 repeat for every tuple.
 
-* Any **Duo** artifact such that its *this* and *that* correspond to the
+* Any **Pair** artifact such that its *this* and *that* correspond to the
 *heading* and *body* of the new **Relation** respectively, and its *that*
 is any **Set** subject per the prior bullet point but that it may have
 zero members, and its *this* is any **Renaming** subject such that its set
@@ -983,7 +983,7 @@ Its subject is any of the following:
 **Article**, and the **Article** has zero attributes.
 This is the idiomatic format for a nullary (zero-attribute) **Article**.
 
-* Any **Duo** artifact such that its *this* and *that* correspond to the
+* Any **Pair** artifact such that its *this* and *that* correspond to the
 *label* (any **Nesting** artifact) and *attributes* (any **Kit** artifact)
 of the new **Article** respectively.
 

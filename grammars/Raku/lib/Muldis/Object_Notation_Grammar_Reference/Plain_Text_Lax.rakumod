@@ -59,7 +59,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
         | <Blob>
         | <Text>
         | <Nesting>
-        | <Duo>
+        | <Pair>
         | <Lot>
         | <Kit>
     }
@@ -280,7 +280,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
 
 ###########################################################################
 
-    token Duo
+    token Pair
     {
         ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
     }

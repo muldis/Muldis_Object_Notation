@@ -32,7 +32,7 @@ its part name is `Semantics`.
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [EXCLUDED DATA TYPE POSSREPS](#EXCLUDED-DATA-TYPE-POSSREPS)
@@ -133,7 +133,7 @@ expressed mainly in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single collective item.
 There are exactly 3 of these:
 
-- **Duo**
+- **Pair**
 - **Lot**
 - **Kit**
 
@@ -192,7 +192,7 @@ be used by lazy programmers as a fallback for when they don't have even a
 semblance of a better explanation for why an ordinary value is missing.
 
 The **Ignorance** value has its own special syntax in MUON disjoint from
-any **Duo** (*excuse*) syntax so that this MUON-defined excuse doesn't step
+any **Pair** (*excuse*) syntax so that this MUON-defined excuse doesn't step
 on any possible name that a particular external data model might use.
 
 When an external data model natively has exactly one generic *null* or
@@ -206,7 +206,7 @@ in fact all produce the exact same marker, **Ignorance** is the official
 way to represent that marker.  This includes the *null* of any common
 dialect of SQL.  Whereas, for external data models that distinguish the
 reasons for why a regular value may be missing, **Ignorance** should NOT be
-used and instead other more applicable **Duo** (*excuse*) values should instead.
+used and instead other more applicable **Pair** (*excuse*) values should instead.
 
 [RETURN](#TOP)
 
@@ -330,20 +330,20 @@ such as nested **Kit** may implement.
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-## Duo
+## Pair
 
-A **Duo** value is a general purpose 2-element ordered heterogeneous
+A **Pair** value is a general purpose 2-element ordered heterogeneous
 collection whose elements in order are *this* and *that*, each of which may
-be any other value.  A **Duo** value is also characterized by a **Kit**
+be any other value.  A **Pair** value is also characterized by a **Kit**
 value having exactly 2 "positional" attributes.
 
-A primary intended use of the **Duo** possrep is to be the idiomatic way
+A primary intended use of the **Pair** possrep is to be the idiomatic way
 for an external data model to represent "new" types of a nominal type
 system in a consistent way.
 
-For that usage, a **Duo** value is further characterized as an *article*,
+For that usage, a **Pair** value is further characterized as an *article*,
 by the pairing of a *label* (*this*), which is a **Nesting** value, with a
 set of 0..N *attributes* (*that*), where that set is a **Kit** value.
 
@@ -403,7 +403,7 @@ The **Lot** possrep is an idiomatic generalization of a discrete
 homogeneous collection, such that any given MUON syntax can choose to just
 have **Lot** as a fundamental syntax, and then any other possreps for
 discrete homogeneous collections can be represented just as a **Lot**
-plus a plain unary type cast in the form of a **Duo** possrep.
+plus a plain unary type cast in the form of a **Pair** possrep.
 
 A primary intended use of the **Lot** possrep is to be the idiomatic way
 for an external data model to represent generic high-cardinality
@@ -413,7 +413,7 @@ generic collections of members that may or may not be ordered and may or
 may not have duplicates.  When the members are all *tuples* (typically
 **Kit**), such **Lot** examples also include *relations* or *dictionaries*.
 A **Lot** by itself would represent an anonymous or structural type, but
-when wrapped with a **Duo** providing a name, it represents a nominal type.
+when wrapped with a **Pair** providing a name, it represents a nominal type.
 
 The intended use of the **Lot** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
@@ -445,7 +445,7 @@ The **Kit** possrep is an idiomatic generalization of a discrete
 heterogeneous collection, such that any given MUON syntax can choose to just
 have **Kit** as a fundamental syntax, and then any other possreps for
 discrete heterogeneous collections can be represented just as a **Kit**
-plus a plain unary type cast in the form of a **Duo** possrep.
+plus a plain unary type cast in the form of a **Pair** possrep.
 
 A primary intended use of the **Kit** possrep is to be the idiomatic way
 for an external data model to represent generic low-cardinality
@@ -455,7 +455,7 @@ generic collections of named or ordered attributes with no duplicate names.
 When a set of **Kit** with common attribute names are collected in a
 **Lot**, such a **Lot** can also represent a *relation* or *dictionary*.
 A **Kit** by itself would represent an anonymous or structural type, but
-when wrapped with a **Duo** providing a name, it represents a nominal type.
+when wrapped with a **Pair** providing a name, it represents a nominal type.
 
 A **Kit** value is also characterized by a *tuple* of the relational model
 of data but that its collection of attributes is ordered rather than
@@ -529,8 +529,8 @@ defined in terms of being a scaled integer or fixed-denominator fraction.
 
 Collective types in the general case are left up to the overlaid data model
 and all their variations should be expressible concisely in MUON as
-combinations of the provided **Duo** and **Lot** and **Kit** collective
-possreps, such that **Duo** lets one tag an arbitrary structure with a
+combinations of the provided **Pair** and **Lot** and **Kit** collective
+possreps, such that **Pair** lets one tag an arbitrary structure with a
 label (typically a **Nesting**) to indicate its type, while **Lot** is the
 basis for larger homogeneous types like arrays, sets, and relations, and
 **Kit** is the basis for smaller heterogeneous types like tuples or

@@ -29,7 +29,7 @@ its part name is `Syntax_DotNet`.
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [AUTHOR](#AUTHOR)
@@ -182,7 +182,7 @@ A **Fraction** artifact is any of the following:
 
 * Any *SYS_Fraction*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
 and its *SYS_that* is any *SYS_Non_Qualified_Fraction*.
 
 A *SYS_Non_Qualified_Fraction* is any of the following:
@@ -243,7 +243,7 @@ A **Bits** artifact is any of the following:
 
 A **Blob** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Blob`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Blob`
 and its *SYS_that* is any value of the .NET structure type array `System.Byte[]`.
 
 Not permitted for a **Blob** is any of the following,
@@ -299,7 +299,7 @@ isn't so paired.
 
 A **Nesting** artifact is any of the following:
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
 and its *SYS_that* is any *SYS_Nesting*.
 
 Not permitted for a **Nesting** is any of the following,
@@ -329,33 +329,33 @@ for example, any value of the .NET structure type array `System.String[]`.
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-## Duo
+## Pair
 
-A **Duo** artifact is any of the following:
+A **Pair** artifact is any of the following:
 
-* Any *SYS_Duo_AA* such that its *SYS_this* is *this*
+* Any *SYS_Pair_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
 `Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
-`Nesting`, `Duo`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
+`Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Duo`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Pair`
 and its *SYS_that* is
-any *SYS_Duo_AA* such that its *SYS_this* is *this* (any **Any** artifact)
+any *SYS_Pair_AA* such that its *SYS_this* is *this* (any **Any** artifact)
 and its *SYS_that* is *that* (any **Any** artifact).
 
-A *SYS_Duo_TA* is any of the following:
+A *SYS_Pair_TA* is any of the following:
 
-* Any *SYS_Duo_AA* such that its *SYS_this* is any *SYS_Text*.
+* Any *SYS_Pair_AA* such that its *SYS_this* is any *SYS_Text*.
 
-A *SYS_Duo_AA* is any of the following:
+A *SYS_Pair_AA* is any of the following:
 
 * Any *SYS_Ordered_Tuple_A* having exactly 2 elements
 such that its `Item1` field is *SYS_this* and its `Item2` field is *SYS_that*.
 
-Not permitted for a *SYS_Duo_AA* is any of the following,
+Not permitted for a *SYS_Pair_AA* is any of the following,
 to keep things more correct and simpler:
 
 * Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`.
@@ -364,10 +364,10 @@ to keep things more correct and simpler:
 except for `System.ValueTuple`, having exactly 2 elements.
 
 Important note:  While a `System.Collections.Generic.KeyValuePair` value is
-conceptually the most direct analogy in .NET to a **Duo**
+conceptually the most direct analogy in .NET to a **Pair**
 artifact, MUON uses `System.ValueTuple` instead, because the literal syntax
 for the latter, `(this,that)`, is *much* less verbose than for the former,
-`new KeyValuePair<This,That>(this,that)`.  Given how **Duo** is
+`new KeyValuePair<This,That>(this,that)`.  Given how **Pair** is
 conceptually one of the simplest possreps *and* it is one of the most
 frequently used in typical MUON artifacts, this choice is a huge win for
 brevity and usability, despite the trade-off that a common positional
@@ -383,17 +383,17 @@ A **Lot** artifact is any of the following:
 
 * Any *SYS_Non_Qualified_Lot_M*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
 and its *SYS_that* is
 any *SYS_Ordered_Tuple_A* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1;
 this format can express any **Lot** which has 0..7 members,
 so to specify 8 or more members, one of the other formats must be used.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
 and its *SYS_that* is any *SYS_Non_Qualified_Lot_M*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
 and its *SYS_that* is
 any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
 *multiplied member* whose element key is *member* (any **Any** artifact)
@@ -437,7 +437,7 @@ A **Kit** artifact is any of the following:
 
 * Any *SYS_Non_Qualified_Kit_NA*.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
 and its *SYS_that* is
 any *SYS_Ordered_Tuple_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
@@ -447,7 +447,7 @@ and which has 0..7 attributes,
 so to specify 8 or more attributes, one of the other formats must be used;
 this format is even more concise than the other ordered-specific format.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
 and its *SYS_that* is
 any *SYS_Array_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
@@ -455,7 +455,7 @@ in turn is *attribute asset* (any **Any** artifact) and its corresponding
 this format can express any **Kit** which has only normalized ordered attributes;
 this format is more concise than the general format.
 
-* Any *SYS_Duo_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
 and its *SYS_that* is any *SYS_Non_Qualified_Kit_NA*.
 
 A *SYS_Non_Qualified_Kit_NA* is any of the following:

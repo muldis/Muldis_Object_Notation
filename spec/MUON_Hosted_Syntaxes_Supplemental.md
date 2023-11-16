@@ -68,7 +68,7 @@ such that each of its `min` and `max` properties is any **Any** artifact.
 
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
-A **Duo** artifact is additionally any of the following:
+A **Pair** artifact is additionally any of the following:
 
 * Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`
 such that its `Key` property is *this* (any **Any** artifact)

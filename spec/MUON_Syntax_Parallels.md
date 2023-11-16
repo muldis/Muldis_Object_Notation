@@ -88,18 +88,18 @@ except that the `Muldis_Object_Notation_Syntax` would say `Plain_Text_Lax`.*
 Common "named relation" format with attribute names repeating per tuple.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
-        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
-            D T"Relation" M[
+    P zSyntax P M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
+        P yModel P M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
+            P T"Relation" M[
                 K[xname T"Jane Ives"
-                    T"birth_date" D T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
-                    T"phone_numbers" D wSet M[T"+1.4045552995" T"+1.7705557572"]]
+                    T"birth_date" P T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                    T"phone_numbers" P wSet M[T"+1.4045552995" T"+1.7705557572"]]
                 K[xname T"Layla Miller"
-                    T"birth_date" D T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
-                    T"phone_numbers" D wSet l]
+                    T"birth_date" P T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                    T"phone_numbers" P wSet l]
                 K[xname T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
-                    T"birth_date" D T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
-                    T"phone_numbers" D wSet M[T"+81.9072391679"]]
+                    T"birth_date" P T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                    T"phone_numbers" P wSet M[T"+81.9072391679"]]
             ]
 ```
 
@@ -107,20 +107,20 @@ Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
-    D zSyntax D M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
-        D yModel D M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
-            D T"Relation" D
+    P zSyntax P M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
+        P yModel P M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
+            P T"Relation" P
                     J[xname T"birth_date" T"phone_numbers"]
                 M[
                     J[T"Jane Ives"
-                        D T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
-                        D wSet M[T"+1.4045552995" T"+1.7705557572"]]
+                        P T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                        P wSet M[T"+1.4045552995" T"+1.7705557572"]]
                     J[T"Layla Miller"
-                        D T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
-                        D wSet l]
+                        P T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                        P wSet l]
                     J[T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
-                        D T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
-                        D wSet M[T"+81.9072391679"]]
+                        P T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                        P wSet M[T"+81.9072391679"]]
                 ]
 ```
 
@@ -442,28 +442,28 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ```
     <?xml version="1.0" encoding="UTF-8"?>
     <MUON>
-        <Duo this="Muldis_Object_Notation_Syntax"><Duo>
+        <Pair this="Muldis_Object_Notation_Syntax"><Pair>
             <this><Lot_m><m>XML</m><m><q>https://muldis.com</q></m><m><q>0.400.0</q></m></Lot_m></this>
-            <that><Duo this="Muldis_Object_Notation_Model"><Duo>
+            <that><Pair this="Muldis_Object_Notation_Model"><Pair>
                 <this><Lot_m><m>Muldis_Data_Language</m><m><q>https://muldis.com</q></m><m><q>0.400.0</q></m></Lot_m></this>
-                <that><Duo this="Relation"><Lot_m>
+                <that><Pair this="Relation"><Lot_m>
                     <m><Kit_na>
                         <a n="name"><q>Jane Ives</q></a>
-                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit_na><a n="y">1971</a><a n="m">11</a><a n="d">6</a></Kit_na></Duo></a>
-                        <a n="phone_numbers"><Duo this="Set"><Lot_m><m><q>+1.4045552995</q></m><m><q>+1.7705557572</q></m></Lot_m></Duo></a>
+                        <a n="birth_date"><Pair this="Calendar_Instant"><Kit_na><a n="y">1971</a><a n="m">11</a><a n="d">6</a></Kit_na></Pair></a>
+                        <a n="phone_numbers"><Pair this="Set"><Lot_m><m><q>+1.4045552995</q></m><m><q>+1.7705557572</q></m></Lot_m></Pair></a>
                     </Kit_na></m>
                     <m><Kit_na>
                         <a n="name"><q>Layla Miller</q></a>
-                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit_na><a n="y">1995</a><a n="m">8</a><a n="d">27</a></Kit_na></Duo></a>
-                        <a n="phone_numbers"><Duo this="Set"><Lot/></Duo></a>
+                        <a n="birth_date"><Pair this="Calendar_Instant"><Kit_na><a n="y">1995</a><a n="m">8</a><a n="d">27</a></Kit_na></Pair></a>
+                        <a n="phone_numbers"><Pair this="Set"><Lot/></Pair></a>
                     </Kit_na></m>
                     <m><Kit_na>
                         <a n="name"><q>岩倉 玲音</q></a>
-                        <a n="birth_date"><Duo this="Calendar_Instant"><Kit_na><a n="y">1984</a><a n="m">7</a><a n="d">6</a></Kit_na></Duo></a>
-                        <a n="phone_numbers"><Duo this="Set"><Lot_m><m><q>+81.9072391679</q></m></Lot_m></Duo></a>
+                        <a n="birth_date"><Pair this="Calendar_Instant"><Kit_na><a n="y">1984</a><a n="m">7</a><a n="d">6</a></Kit_na></Pair></a>
+                        <a n="phone_numbers"><Pair this="Set"><Lot_m><m><q>+81.9072391679</q></m></Lot_m></Pair></a>
                     </Kit_na></m>
-                </Lot_m></Duo></that>
-            </Duo></Duo></that>
-        </Duo></Duo>
+                </Lot_m></Pair></that>
+            </Pair></Pair></that>
+        </Pair></Pair>
     </MUON>
 ```

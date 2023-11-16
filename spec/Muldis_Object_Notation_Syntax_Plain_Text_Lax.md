@@ -35,13 +35,13 @@ its part name is `Syntax_Plain_Text_Lax`.
     - [Text / Attribute Name](#Text---Attribute-Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
-    - [Duo](#Duo)
+    - [Pair](#Pair)
     - [Lot](#Lot)
     - [Kit](#Kit)
 - [EXTENSIONS OVER SYNTAX PLAIN TEXT](#EXTENSIONS-OVER-SYNTAX-PLAIN-TEXT)
     - [JSON - JavaScript Object Notation](#JSON---JavaScript-Object-Notation)
     - [Pair Separator Equals-Greater-Than](#Pair-Separator-Equals-Greater-Than)
-    - [Duo Pair Separator Comma](#Duo-Pair-Separator-Comma)
+    - [Pair Separator Comma](#Pair-Separator-Comma)
     - [String Delimiter Single-Quote](#String-Delimiter-Single-Quote)
 - [AUTHOR](#AUTHOR)
 - [LICENSE AND COPYRIGHT](#LICENSE-AND-COPYRIGHT)
@@ -230,7 +230,7 @@ Grammar:
         | <Blob>
         | <Text>
         | <Nesting>
-        | <Duo>
+        | <Pair>
         | <Lot>
         | <Kit>
     }
@@ -611,17 +611,17 @@ Grammar:
 
 [RETURN](#TOP)
 
-<a name="Duo"></a>
+<a name="Pair"></a>
 
-## Duo
+## Pair
 
-A **Duo** artifact has the dedicated concrete literal format
-described by `<Duo>`.
+A **Pair** artifact has the dedicated concrete literal format
+described by `<Pair>`.
 
 Grammar:
 
 ```
-    token Duo
+    token Pair
     {
         ['(' <sp>?] ~ [<sp>? ')'] <this_and_that>
     }
@@ -794,20 +794,20 @@ respectively.  The `/` didn't have an escape as it may appear literally.
 Following are extensions made by MUON Plain Text Lax which collectively
 increase the level of compatibility with: Raku, Perl, PHP, maybe others.
 
-For **Duo** and **Lot** and **Kit**:
+For **Pair** and **Lot** and **Kit**:
 
 - Added `=>` as an alternative pair separator syntax for `:` and `->`.
 
 [RETURN](#TOP)
 
-<a name="Duo-Pair-Separator-Comma"></a>
+<a name="Pair-Separator-Comma"></a>
 
-## Duo Pair Separator Comma
+## Pair Separator Comma
 
 Following are extensions made by MUON Plain Text Lax which collectively
 increase the level of compatibility with: C#, Python, maybe others.
 
-For **Duo**:
+For **Pair**:
 
 - Added `,` as an alternative pair separator syntax for `:` and `->`.
 
