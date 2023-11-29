@@ -244,12 +244,12 @@ A **Bits** artifact is any of the following:
 A **Blob** artifact is any of the following:
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Blob`
-and its *SYS_that* is any value of the .NET structure type array `System.Byte[]`.
+and its *SYS_that* is any value of the .NET array class `System.Byte[]`.
 
 Not permitted for a **Blob** is any of the following,
 to prevent ambiguity and simplify things:
 
-* Any value of the .NET structure type array `System.Byte[]`.
+* Any value of the .NET array class `System.Byte[]`.
 This is because to keep things simple we treat all standalone .NET array
 values as being attempts at **Lot** artifacts, so we can succeed at
 interpreting possreps or fail fast rather than having to scan a whole one
@@ -319,7 +319,7 @@ A *SYS_Nesting* is any of the following:
 A *SYS_Array_T* is any of the following:
 
 * Any *SYS_Array_A* such that each of its elements is any *SYS_Text*;
-for example, any value of the .NET structure type array `System.String[]`.
+for example, any value of the .NET array class `System.String[]`.
 
 [RETURN](#TOP)
 
