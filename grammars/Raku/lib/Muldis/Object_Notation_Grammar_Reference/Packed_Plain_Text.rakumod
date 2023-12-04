@@ -506,7 +506,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
     {
           <Kit_zero>
         | <Kit_unlimited>
-        | <Kit_unlimited_positional>
+        | <Kit_limited_positional>
         | <Kit_limited_1_attr>
     }
 
@@ -517,12 +517,12 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
     token Kit_unlimited
     {
-        K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr>* % <sp>?]
+        K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr_na>* % <sp>?]
     }
 
-    token Kit_unlimited_positional
+    token Kit_limited_positional
     {
-        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <attr_asset>* % <sp>?]
+        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr_a> ** 0..32 % <sp>?]
     }
 
     token Kit_limited_1_attr
@@ -530,9 +530,14 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
         a <kit_attr>
     }
 
-    token kit_attr
+    token kit_attr_na
     {
         <attr_name> <sp>? <attr_asset>
+    }
+
+    token kit_attr_a
+    {
+        <attr_asset>
     }
 
     token attr_name

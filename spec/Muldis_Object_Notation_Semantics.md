@@ -481,6 +481,27 @@ alphabetically sort correctly and prior to any normal text-like attribute
 names like `name` or `age`; said first 32 would likewise be distinct in
 appearance from all regular printable numbers used as attribute names.
 
+While strictly speaking a **Kit** possrep could support a much larger count
+of "positional" attribute names by extending the same pattern of
+single-code-point names beyond 0..31, officially MUON limits this concept
+to the first 32 code points, and for any attribute name consisting of a
+single Unicode code point of 32 and higher, that name is officially
+considered "named" and NOT "positional".
+
+One reason for the limit of 32 is that attribute names in the extended
+range quickly get into single-letter names like `x` which can easily be
+confused as ones that are conceptually named.  Another reason is that
+thanks to the complexities of Unicode with its UTF-16 surrogates, after the
+range `0..0xD7FF` the normal code points are non-contiguous, so the simple
+correspondence of ordinal number to code point number no longer matches;
+supporting "positional" beyond 0xD7FF would be much more complicated and
+best avoided, and in practice stopping at 32 seems no more arbitrary than
+at 0xD7FF so choosing the lower number seems better.  Another reason is
+that the practical value of a "positional" attribute name is a diminishing
+return with each additional one, and 32 should be plenty in practice.
+Finally, implementations of MUON and corresponding data models should be
+somewhat more efficient with the limit of 32 required to be supported.
+
 The intended use of the **Kit** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
 discrete heterogeneous collection types where their assets are defined by

@@ -1062,7 +1062,7 @@ Grammar:
 
     token this_and_that
     {
-        [<this> <sp>? [':'|'->'] <sp>? <that>]
+        <this> <sp>? [':'|'->'] <sp>? <that>
     }
 
     token this
@@ -1166,9 +1166,11 @@ Grammar:
     token Lot
     {
         ['[' <sp>?] ~ [<sp>? ']']
-            [',' <sp>?]?
-            [<multiplied_member>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
+            [
+                [',' <sp>?]?
+                [<multiplied_member>+ % [<sp>? ',' <sp>?]]
+                [<sp>? ',']?
+            ]?
     }
 
     token multiplied_member
@@ -1304,14 +1306,27 @@ Grammar:
     token Kit
     {
         ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [<kit_attr>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
+            [
+                [',' <sp>?]?
+                [
+                      [
+                        [<kit_attr_a> ** 1..32 % [<sp>? ',' <sp>?]?]
+                        [<sp>? ',' <sp>? <kit_attr_na>+ % [<sp>? ',' <sp>?]]?
+                      ]
+                    | [<kit_attr_na>+ % [<sp>? ',' <sp>?]]
+                ]
+                [<sp>? ',']?
+            ]?
     }
 
-    token kit_attr
+    token kit_attr_na
     {
-        [<attr_name> <sp>? [':'|'->'] <sp>? <attr_asset>] | <attr_asset>
+        <attr_name> <sp>? [':'|'->'] <sp>? <attr_asset>
+    }
+
+    token kit_attr_a
+    {
+        <attr_asset>
     }
 
     token attr_name
@@ -1325,13 +1340,14 @@ Grammar:
     }
 ```
 
-The meaning of a `<kit_attr>` consisting of only an `<attr_asset>` is
+The meaning of a `<kit_attr_a>` (consisting of only an `<attr_asset>`) is
 exactly the same as if the former also had an `<attr_name>` of the form
 `0tN` such that `N` is the zero-based ordinal position of the
-`<kit_attr>` in the `<kit_attrs>` among all sibling such
-`<kit_attr>`.  These *attribute name* are determined without regard to
-any explicit *attribute name* that a `<kit_attrs>` may contain, and it is
-invalid for any explicit names to duplicate any implicit or explicit names.
+`<kit_attr_a>` in the `<kit_attrs>` among all sibling such `<kit_attr_a>`.
+These *attribute name* are determined without regard to the explicit
+*attribute name* of any `<kit_attr_na>` that a `<kit_attrs>` may contain,
+and it is invalid for any explicit names to duplicate any implicit or
+explicit names.
 
 Examples:
 

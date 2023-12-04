@@ -391,21 +391,23 @@ A **Kit** artifact is any of the following:
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
 and its *SYS_that* is
-any *SYS_Ordered_Tuple_A* such that each of its elements
+any *SYS_Ordered_Tuple_A* having at most 32 elements such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
 this format can express any **Kit** which has only normalized ordered attributes
-or which has zero attributes;
+and which has 0..32 attributes,
+so to specify 33 or more attributes, the general format must be used;
 this format is more concise than the general format
 and is equally concise with the other ordered-specific format.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
 and its *SYS_that* is
-any *SYS_Array_A* such that each of its elements
+any *SYS_Array_A* having at most 32 elements such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
 this format can express any **Kit** which has only normalized ordered attributes
-or which has zero attributes;
+and which has 0..32 attributes,
+so to specify 33 or more attributes, the general format must be used;
 this format is more concise than the general format
 and is equally concise with the other ordered-specific format.
 

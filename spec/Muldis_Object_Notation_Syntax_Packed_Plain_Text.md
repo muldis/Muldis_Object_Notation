@@ -1574,7 +1574,7 @@ Grammar:
     {
           <Kit_zero>
         | <Kit_unlimited>
-        | <Kit_unlimited_positional>
+        | <Kit_limited_positional>
         | <Kit_limited_1_attr>
     }
 
@@ -1585,12 +1585,12 @@ Grammar:
 
     token Kit_unlimited
     {
-        K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr>* % <sp>?]
+        K <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr_na>* % <sp>?]
     }
 
-    token Kit_unlimited_positional
+    token Kit_limited_positional
     {
-        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <attr_asset>* % <sp>?]
+        J <sp>? [['[' <sp>?] ~ [<sp>? ']'] <kit_attr_a> ** 0..32 % <sp>?]
     }
 
     token Kit_limited_1_attr
@@ -1598,9 +1598,14 @@ Grammar:
         a <kit_attr>
     }
 
-    token kit_attr
+    token kit_attr_na
     {
         <attr_name> <sp>? <attr_asset>
+    }
+
+    token kit_attr_a
+    {
+        <attr_asset>
     }
 
     token attr_name

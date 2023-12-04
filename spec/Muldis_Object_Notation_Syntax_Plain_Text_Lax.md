@@ -628,7 +628,7 @@ Grammar:
 
     token this_and_that
     {
-        [<this> <sp>? [':'|'->'|'=>'|','] <sp>? <that>]
+        <this> <sp>? [':'|'->'|'=>'|','] <sp>? <that>
     }
 
     token this
@@ -665,9 +665,11 @@ Grammar:
     token Lot
     {
         ['[' <sp>?] ~ [<sp>? ']']
-            [',' <sp>?]?
-            [<multiplied_member>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
+            [
+                [',' <sp>?]?
+                [<multiplied_member>+ % [<sp>? ',' <sp>?]]
+                [<sp>? ',']?
+            ]?
     }
 
     token multiplied_member
@@ -712,14 +714,27 @@ Grammar:
     token Kit
     {
         ['{' <sp>?] ~ [<sp>? '}']
-            [',' <sp>?]?
-            [<kit_attr>* % [<sp>? ',' <sp>?]]
-            [<sp>? ',']?
+            [
+                [',' <sp>?]?
+                [
+                      [
+                        [<kit_attr_a> ** 1..32 % [<sp>? ',' <sp>?]?]
+                        [<sp>? ',' <sp>? <kit_attr_na>+ % [<sp>? ',' <sp>?]]?
+                      ]
+                    | [<kit_attr_na>+ % [<sp>? ',' <sp>?]]
+                ]
+                [<sp>? ',']?
+            ]?
     }
 
-    token kit_attr
+    token kit_attr_na
     {
-        [<attr_name> <sp>? [':'|'->'|'=>'] <sp>? <attr_asset>] | <attr_asset>
+        <attr_name> <sp>? [':'|'->'|'=>'] <sp>? <attr_asset>
+    }
+
+    token kit_attr_a
+    {
+        <attr_asset>
     }
 
     token attr_name
