@@ -203,28 +203,37 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
 ```
-    ("Muldis_Object_Notation_Syntax",(("Lot_m",("DotNet", "https://muldis.com", "0.400.0")),
-        ("Muldis_Object_Notation_Model",(("Lot_m",("Muldis_Data_Language", "https://muldis.com", "0.400.0")),
-            ("Relation",("Lot_m",(
+    new KeyValuePair<String, Object>("Muldis_Object_Notation_Syntax", new KeyValuePair<String[], Object>(
+        new String[]{"DotNet", "https://muldis.com", "0.400.0"},
+        new KeyValuePair<String, Object>("Muldis_Object_Notation_Model", new KeyValuePair<String[], Object>(
+            new String[]{"Muldis_Data_Language", "https://muldis.com", "0.400.0"},
+            new KeyValuePair<String, OrderedDictionary[]>("Relation", new OrderedDictionary[]{
                 new OrderedDictionary{
                     ["name"] = "Jane Ives",
-                    ["birth_date"] = ("Calendar_Instant",
-                        new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}),
-                    ["phone_numbers"] = ("Set",("Lot_m",("+1.4045552995", "+1.7705557572"))),
+                    ["birth_date"] = new KeyValuePair<String, OrderedDictionary>("Calendar_Instant",
+                        new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}
+                    ),
+                    ["phone_numbers"] = new KeyValuePair<String, String[]>("Set",
+                        new String[]{"+1.4045552995", "+1.7705557572"}
+                    ),
                 },
                 new OrderedDictionary{
                     ["name"] = "Layla Miller",
-                    ["birth_date"] = ("Calendar_Instant",
-                        new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}),
-                    ["phone_numbers"] = ("Set",("Lot_m",ValueTuple.Create())),
+                    ["birth_date"] = new KeyValuePair<String, OrderedDictionary>("Calendar_Instant",
+                        new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}
+                    ),
+                    ["phone_numbers"] = new KeyValuePair<String, String[]>("Set", new String[]{}),
                 },
                 new OrderedDictionary{
                     ["name"] = "岩倉 玲音",
-                    ["birth_date"] = ("Calendar_Instant",
-                        new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}),
-                    ["phone_numbers"] = ("Set",("Lot_m",ValueTuple.Create("+81.9072391679"))),
-                }
-            )))
+                    ["birth_date"] = new KeyValuePair<String, OrderedDictionary>("Calendar_Instant",
+                        new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}
+                    ),
+                    ["phone_numbers"] = new KeyValuePair<String, String[]>("Set",
+                        new String[]{"+81.9072391679"}
+                    ),
+                },
+            })
         ))
     ))
 ```

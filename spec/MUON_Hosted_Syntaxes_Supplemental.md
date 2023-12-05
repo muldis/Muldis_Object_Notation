@@ -68,12 +68,6 @@ such that each of its `min` and `max` properties is any **Any** artifact.
 
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
-A **Pair** artifact is additionally any of the following:
-
-* Any value of the .NET structure type `System.Collections.Generic.KeyValuePair`
-such that its `Key` property is *this* (any **Any** artifact)
-and its `Value` property is *that* (any **Any** artifact).
-
 A **Calendar Duration** artifact is additionally any of the following:
 
 * Any value of the .NET structure type `System.TimeSpan`.
