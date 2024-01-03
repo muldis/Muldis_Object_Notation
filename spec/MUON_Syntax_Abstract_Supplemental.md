@@ -31,8 +31,8 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
     - [Bag / Multiset](#Bag---Multiset)
     - [Mix](#Mix)
     - [Interval](#Interval)
-    - [Interval Set](#Interval-Set)
-    - [Interval Bag](#Interval-Bag)
+    - [Set Of Interval](#Set-Of-Interval)
+    - [Bag Of Interval](#Bag-Of-Interval)
     - [Heading / Attribute Name Set](#Heading---Attribute-Name-Set)
     - [Renaming / Attribute Name Map](#Renaming---Attribute-Name-Map)
     - [Tuple / Attribute Set](#Tuple---Attribute-Set)
@@ -555,11 +555,11 @@ Examples:
 
 [RETURN](#TOP)
 
-<a name="Interval-Set"></a>
+<a name="Set-Of-Interval"></a>
 
-### Interval Set
+### Set Of Interval
 
-An **Interval Set** artifact has the predicate `Interval_Set`.
+A **Set Of Interval** artifact has the predicate `Set_Of_Interval`.
 
 Its subject is any of the following:
 
@@ -568,67 +568,67 @@ Its subject is any of the following:
 Examples:
 
 ```
-    `Empty interval-set (zero members).`
-    (Interval_Set:[])
+    `Empty set-of-interval (zero members).`
+    (Set_Of_Interval:[])
 
-    `Unit interval-set (one member).`
-    (Interval_Set:[("":abc)])
+    `Unit set-of-interval (one member).`
+    (Set_Of_Interval:[("":abc)])
 
     `Probably 10 members, depending on the model used.`
-    (Interval_Set:[("<=*<=":(1:10))])
+    (Set_Of_Interval:[("<=*<=":(1:10))])
 
     `Same thing.`
-    (Interval_Set:[("..":(1:10))])
+    (Set_Of_Interval:[("..":(1:10))])
 
     `Probably 6 members.`
-    (Interval_Set:[("..":(1:3)),("":6),("..":(8:9))])
+    (Set_Of_Interval:[("..":(1:3)),("":6),("..":(8:9))])
 
     `Every Integer x except for [4..13,22..28]`
-    (Interval_Set:[("*<=":3),("..":(14:21)),("<=*":29)])
+    (Set_Of_Interval:[("*<=":3),("..":(14:21)),("<=*":29)])
 
     `Set of all valid Unicode code points.`
-    (Interval_Set:[("..":(0:0xD7FF)),("..":(0xE000:0x10FFFF))])
+    (Set_Of_Interval:[("..":(0:0xD7FF)),("..":(0xE000:0x10FFFF))])
 
     `Probably 15 members (no duplicates), depending on the model used.`
-    (Interval_Set:[("..":(1:10)),("..":(6:15))])
+    (Set_Of_Interval:[("..":(1:10)),("..":(6:15))])
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Set:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
+    (Set_Of_Interval:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
 ```
 
 [RETURN](#TOP)
 
-<a name="Interval-Bag"></a>
+<a name="Bag-Of-Interval"></a>
 
-### Interval Bag
+### Bag Of Interval
 
-An **Interval Bag** artifact has the predicate `Interval_Bag`.
+A **Bag Of Interval** artifact has the predicate `Bag_Of_Interval`.
 
 Its subject is any of the following:
 
-* Any **Interval Set** subject but that any **Bag** subject is used in
+* Any **Set Of Interval** subject but that any **Bag** subject is used in
 place of the specified any **Set** subject.
 
 Examples:
 
 ```
-    `Empty interval-bag (zero members).`
-    (Interval_Bag:[])
+    `Empty bag-of-interval (zero members).`
+    (Bag_Of_Interval:[])
 
-    `Unit interval-bag (one member).`
-    (Interval_Bag:[("":abc)])
+    `Unit bag-of-interval (one member).`
+    (Bag_Of_Interval:[("":abc)])
 
     `Five members (4 duplicates).`
-    (Interval_Bag:[("":def):5])
+    (Bag_Of_Interval:[("":def):5])
 
     `Probably 20 members (5 duplicates), depending on the model used.`
-    (Interval_Bag:[("<=*<=":(1:10)),("<=*<=":(6:15))])
+    (Bag_Of_Interval:[("<=*<=":(1:10)),("<=*<=":(6:15))])
 
     `Same thing.`
-    (Interval_Bag:[("..":(1:10)),("..":(6:15))])
+    (Bag_Of_Interval:[("..":(1:10)),("..":(6:15))])
 
     `Probably same thing, regardless of data model used.`
-    (Interval_Bag:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
+    (Bag_Of_Interval:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
 ```
 
 [RETURN](#TOP)

@@ -34,8 +34,8 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
     - [Bag / Multiset](#Bag---Multiset)
     - [Mix](#Mix)
     - [Interval](#Interval)
-    - [Interval Set](#Interval-Set)
-    - [Interval Bag](#Interval-Bag)
+    - [Set Of Interval](#Set-Of-Interval)
+    - [Bag Of Interval](#Bag-Of-Interval)
     - [Heading / Attribute Name Set](#Heading---Attribute-Name-Set)
     - [Renaming / Attribute Name Map](#Renaming---Attribute-Name-Map)
     - [Tuple / Attribute Set](#Tuple---Attribute-Set)
@@ -174,7 +174,7 @@ Some of these 15 more-collective-like secondary possreps might have its own
 dedicated simple literal formats or data type values in some syntaxes:
 
 - Discrete: **Array**, **Set**, **Bag**, **Mix**
-- Continuous: **Interval**, **Interval Set**, **Interval Bag**
+- Continuous: **Interval**, **Set Of Interval**, **Bag Of Interval**
 - Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
 - **Article**
 - **Excuse**
@@ -632,38 +632,38 @@ MUON itself simply characterizes an **Interval** *as* its endpoints.
 
 [RETURN](#TOP)
 
-<a name="Interval-Set"></a>
+<a name="Set-Of-Interval"></a>
 
-### Interval Set
+### Set Of Interval
 
-An **Interval Set** value is characterized by a **Set** value such that
-every member value of the **Set** is an **Interval**.  An **Interval Set**
+A **Set Of Interval** value is characterized by a **Set** value such that
+every member value of the **Set** is an **Interval**.  A **Set Of Interval**
 is alternately characterized by a single **Interval** that is allowed to
 have discontinuities, and is in the typical case characterized by more than
 2 *endpoint* values.
 
 When reasoning about an interval in terms of defining a set of values by
-endpoints under a total order rather than by enumeration, an **Interval
-Set** is the actual best direct analogy to a **Set** because every possible
-distinct **Set** value can map to a distinct **Interval Set** value but
+endpoints under a total order rather than by enumeration, a **Set Of Interval**
+is the actual best direct analogy to a **Set** because every possible
+distinct **Set** value can map to a distinct **Set Of Interval** value but
 only a proper subset of the former can map to an **Interval**.  The
-**Interval Set** type is closed under *set union* operations just as
+**Set Of Interval** type is closed under *set union* operations just as
 **Set** is, while **Interval** is not.
 
-Unlike with the **Set** type, the **Interval Set** type also has a
+Unlike with the **Set** type, the **Set Of Interval** type also has a
 meaningful *set absolute complement* operation applicable to it.
 
 [RETURN](#TOP)
 
-<a name="Interval-Bag"></a>
+<a name="Bag-Of-Interval"></a>
 
-### Interval Bag
+### Bag Of Interval
 
-An **Interval Bag** value is characterized by a generalization of an
-**Interval Set** that permits multiple members to have the same value; an
-**Interval Bag** is isomorphic to a **Bag** in the same way that an
-**Interval Set** is to a **Set**; every possible distinct **Bag** can map
-to a distinct **Interval Bag**.
+A **Bag Of Interval** value is characterized by a generalization of a
+**Set Of Interval** that permits multiple members to have the same value; a
+**Bag Of Interval** is isomorphic to a **Bag** in the same way that a
+**Set Of Interval** is to a **Set**; every possible distinct **Bag** can map
+to a distinct **Bag Of Interval**.
 
 [RETURN](#TOP)
 
