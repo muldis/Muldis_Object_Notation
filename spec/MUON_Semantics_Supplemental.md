@@ -41,7 +41,7 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
     - [Tuple / Attribute Set](#Tuple---Attribute-Set)
     - [Tuple Array](#Tuple-Array)
     - [Relation / Tuple Set](#Relation---Tuple-Set)
-    - [Tuple Bag](#Tuple-Bag)
+    - [Multirelation / Tuple Bag](#Multirelation---Tuple-Bag)
     - [Article / Labelled Tuple](#Article---Labelled-Tuple)
     - [Excuse](#Excuse)
 
@@ -175,7 +175,7 @@ dedicated simple literal formats or data type values in some syntaxes:
 
 - Discrete: **Array**, **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Set Of Interval**, **Bag Of Interval**
-- Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Tuple Bag**
+- Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Multirelation**
 - **Article**
 - **Excuse**
 
@@ -762,13 +762,13 @@ represent any proposition in particular.
 
 [RETURN](#TOP)
 
-<a name="Tuple-Bag"></a>
+<a name="Multirelation---Tuple-Bag"></a>
 
-### Tuple Bag
+### Multirelation / Tuple Bag
 
-A **Tuple Bag** value is characterized by the pairing of a **Heading**
+A **Multirelation** value is characterized by the pairing of a **Heading**
 value with a **Bag** value, which define its *heading* and *body*,
-respectively.  A **Tuple Bag** is isomorphic to a **Relation** with the
+respectively.  A **Multirelation** is isomorphic to a **Relation** with the
 sole exception of being based on a **Bag** rather than a **Set**.
 
 [RETURN](#TOP)

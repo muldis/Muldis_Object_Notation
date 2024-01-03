@@ -38,7 +38,7 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
     - [Tuple / Attribute Set](#Tuple---Attribute-Set)
     - [Tuple Array](#Tuple-Array)
     - [Relation / Tuple Set](#Relation---Tuple-Set)
-    - [Tuple Bag](#Tuple-Bag)
+    - [Multirelation / Tuple Bag](#Multirelation---Tuple-Bag)
     - [Article / Labelled Tuple](#Article---Labelled-Tuple)
     - [Excuse](#Excuse)
 
@@ -930,11 +930,11 @@ Examples:
 
 [RETURN](#TOP)
 
-<a name="Tuple-Bag"></a>
+<a name="Multirelation---Tuple-Bag"></a>
 
-### Tuple Bag
+### Multirelation / Tuple Bag
 
-A **Tuple Bag** artifact has the predicate `Tuple_Bag`.
+A **Multirelation** artifact has the predicate `Multirelation`.
 
 Its subject is any of the following:
 
@@ -945,25 +945,25 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Tuple_Bag:{})
+    (Multirelation:{})
 
     `Zero attributes + one tuple.`
-    (Tuple_Bag:[{}])
+    (Multirelation:[{}])
 
     `Three named attributes + zero tuples.`
-    (Tuple_Bag:{x,y,z})
+    (Multirelation:{x,y,z})
 
     `Three positional attributes + zero tuples.`
-    (Tuple_Bag:{0t0,0t1,0t2})
+    (Multirelation:{0t0,0t1,0t2})
 
     `Two named attributes + six tuples (4 duplicates).`
-    (Tuple_Bag:[
+    (Multirelation:[
         {name: Michelle, age: 17},
         {name: Amy     , age: 14} : 5,
     ])
 
     `Two positional attributes + two tuples.`
-    (Tuple_Bag:[
+    (Multirelation:[
         {Michelle, 17},
         {Amy     , 14},
     ])

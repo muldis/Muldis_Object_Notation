@@ -176,8 +176,9 @@ and by having a syntax that is more clean and consistent.
 *TODO.*
 
 MUON and SQL are equal in native expressivity regarding tuple/row
-collections such that the same basic format would be used for arrays of
-tuples, relations (sets of tuples), and bags of tuples, and it is up to an
+collections such that the same basic format would be used for
+arrays of tuples, relations (sets of tuples),
+and multirelations (bags of tuples), and it is up to an
 extra data model layered over top to express semantics like whether the
 ordinal position and or the multiplicity of tuples is significant or not.
 
