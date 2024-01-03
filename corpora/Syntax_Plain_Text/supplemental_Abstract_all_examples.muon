@@ -358,26 +358,26 @@
 ))
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes + zero tuples.`
-(Tuple_Array:{})
+(Orderelation:{})
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes + one tuple.`
-(Tuple_Array:[{}])
+(Orderelation:[{}])
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes + zero tuples.`
-(Tuple_Array:{x,y,z})
+(Orderelation:{x,y,z})
 `Muldis_Object_Notation_Sync_Mark`
 `Three positional attributes + zero tuples.`
-(Tuple_Array:{0t0,0t1,0t2})
+(Orderelation:{0t0,0t1,0t2})
 `Muldis_Object_Notation_Sync_Mark`
 `Two named attributes + three tuples (1 duplicate).`
-(Tuple_Array:[
+(Orderelation:[
     {name: Amy     , age: 14},
     {name: Michelle, age: 17},
     {name: Amy     , age: 14},
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Two positional attributes + two tuples.`
-(Tuple_Array:[
+(Orderelation:[
     {Michelle, 17},
     {Amy     , 14},
 ])

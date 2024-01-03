@@ -385,12 +385,12 @@ person left the birthdate field blank on their application form.
 A **Lot** value is a general purpose arbitrarily-large ordered sequence of
 *multiplied members*, which explicitly does not represent any kind of thing
 in particular, and is simply the sum of its multiplied members.
-A **Lot** in the general case may have multiple multiplied mmembers that are
+A **Lot** in the general case may have multiple multiplied members that are
 the same, and any duplicates may or may not exist at consecutive ordinal positions.
 A **Lot** value is dense; iff it has any multiplied members, then its
 first-ordered multiplied member is at ordinal position `0`, and its
-last-ordinal-positioned multiplied mmember is at the ordinal position that
-is one less than the count of its multiplied mmembers.
+last-ordinal-positioned multiplied member is at the ordinal position that
+is one less than the count of its multiplied members.
 
 A multiplied member is conceptually a *member*/*multiplicity* pair such that
 a *member* is any other value at all and a *multiplicity* is a real number

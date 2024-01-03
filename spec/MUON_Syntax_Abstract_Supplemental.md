@@ -36,7 +36,7 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
     - [Heading / Attribute Name Set](#Heading---Attribute-Name-Set)
     - [Renaming / Attribute Name Map](#Renaming---Attribute-Name-Map)
     - [Tuple / Attribute Set](#Tuple---Attribute-Set)
-    - [Tuple Array](#Tuple-Array)
+    - [Orderelation / Tuple Array](#Orderelation---Tuple-Array)
     - [Relation / Tuple Set](#Relation---Tuple-Set)
     - [Multirelation / Tuple Bag](#Multirelation---Tuple-Bag)
     - [Article / Labelled Tuple](#Article---Labelled-Tuple)
@@ -791,11 +791,11 @@ Examples:
 
 [RETURN](#TOP)
 
-<a name="Tuple-Array"></a>
+<a name="Orderelation---Tuple-Array"></a>
 
-### Tuple Array
+### Orderelation / Tuple Array
 
-A **Tuple Array** artifact has the predicate `Tuple_Array`.
+An **Orderelation** artifact has the predicate `Orderelation`.
 
 Its subject is any of the following:
 
@@ -806,26 +806,26 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Tuple_Array:{})
+    (Orderelation:{})
 
     `Zero attributes + one tuple.`
-    (Tuple_Array:[{}])
+    (Orderelation:[{}])
 
     `Three named attributes + zero tuples.`
-    (Tuple_Array:{x,y,z})
+    (Orderelation:{x,y,z})
 
     `Three positional attributes + zero tuples.`
-    (Tuple_Array:{0t0,0t1,0t2})
+    (Orderelation:{0t0,0t1,0t2})
 
     `Two named attributes + three tuples (1 duplicate).`
-    (Tuple_Array:[
+    (Orderelation:[
         {name: Amy     , age: 14},
         {name: Michelle, age: 17},
         {name: Amy     , age: 14},
     ])
 
     `Two positional attributes + two tuples.`
-    (Tuple_Array:[
+    (Orderelation:[
         {Michelle, 17},
         {Amy     , 14},
     ])

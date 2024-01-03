@@ -39,7 +39,7 @@ form of MUON possreps, in case that may be helpful to MUON implementations.
     - [Heading / Attribute Name Set](#Heading---Attribute-Name-Set)
     - [Renaming / Attribute Name Map](#Renaming---Attribute-Name-Map)
     - [Tuple / Attribute Set](#Tuple---Attribute-Set)
-    - [Tuple Array](#Tuple-Array)
+    - [Orderelation / Tuple Array](#Orderelation---Tuple-Array)
     - [Relation / Tuple Set](#Relation---Tuple-Set)
     - [Multirelation / Tuple Bag](#Multirelation---Tuple-Bag)
     - [Article / Labelled Tuple](#Article---Labelled-Tuple)
@@ -175,7 +175,7 @@ dedicated simple literal formats or data type values in some syntaxes:
 
 - Discrete: **Array**, **Set**, **Bag**, **Mix**
 - Continuous: **Interval**, **Set Of Interval**, **Bag Of Interval**
-- Relational: **Heading**, **Renaming**, **Tuple**, **Tuple Array**, **Relation**, **Multirelation**
+- Relational: **Heading**, **Renaming**, **Tuple**, **Orderelation**, **Relation**, **Multirelation**
 - **Article**
 - **Excuse**
 
@@ -729,13 +729,13 @@ appearance from all regular printable numbers used as attribute names.
 
 [RETURN](#TOP)
 
-<a name="Tuple-Array"></a>
+<a name="Orderelation---Tuple-Array"></a>
 
-### Tuple Array
+### Orderelation / Tuple Array
 
-A **Tuple Array** value is characterized by the pairing of a **Heading**
+An **Orderelation** value is characterized by the pairing of a **Heading**
 value with an **Array** value, which define its *heading* and *body*,
-respectively.  A **Tuple Array** is isomorphic to a **Relation** with the
+respectively.  An **Orderelation** is isomorphic to a **Relation** with the
 sole exception of being based on an **Array** rather than a **Set**.
 
 [RETURN](#TOP)
