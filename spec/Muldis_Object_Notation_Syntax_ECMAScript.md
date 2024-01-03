@@ -210,16 +210,16 @@ A *SYS_Non_Qualified_Fraction* is any of the following:
 
 * Any *significand*.
 
-* Any *SYS_Ordered_Tuple_A* having exactly 1 element which
+* Any *SYS_Positional_Tuple_A* having exactly 1 element which
 is the *significand*.
 
-* Any *SYS_Ordered_Tuple_A* having exactly 2 elements which in
+* Any *SYS_Positional_Tuple_A* having exactly 2 elements which in
 ascending order are the *numerator* and *denominator*.
 
-* Any *SYS_Ordered_Tuple_A* having exactly 3 elements which in
+* Any *SYS_Positional_Tuple_A* having exactly 3 elements which in
 ascending order are the *significand*, *radix*, and *exponent*.
 
-* Any *SYS_Ordered_Tuple_A* having exactly 4 elements which in
+* Any *SYS_Positional_Tuple_A* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
 A *significand* is any *SYS_Fraction* or any *SYS_Integer*.
@@ -362,7 +362,7 @@ A *SYS_Pair_TA* is any of the following:
 
 A *SYS_Pair_AA* is any of the following:
 
-* Any *SYS_Ordered_Tuple_A* having exactly 2 elements
+* Any *SYS_Positional_Tuple_A* having exactly 2 elements
 such that its first element is *SYS_this* and its second element is *SYS_that*.
 
 [RETURN](#TOP)
@@ -414,7 +414,7 @@ and its *SYS_that* is
 any *SYS_Array_A* having at most 32 elements such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
-this format can express any **Kit** which has only normalized ordered attributes
+this format can express any **Kit** which has only normalized positional attributes
 and which has 0..32 attributes,
 so to specify 33 or more attributes, the general format must be used;
 this format is more concise than the general format.
@@ -434,7 +434,7 @@ are not used to represent collections of pairs because the ECMAScript
 language standard does not guarantee that they preserve the insertion order
 of elements, even if the defacto standard implementations all do so.
 
-A *SYS_Ordered_Tuple_A* is any of the following:
+A *SYS_Positional_Tuple_A* is any of the following:
 
 * Any *SYS_Array_A*.
 

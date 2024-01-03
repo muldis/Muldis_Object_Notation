@@ -356,7 +356,7 @@ corresponds to a generic *object* of an object-oriented language, the
 The idiomatic way to represent a singleton type value is as an *article*
 where the *label* is the singleton type name and the *attributes* has zero
 attributes.  The idiomatic default attribute name for a single-attribute
-*article* is `0t0` (the first conceptually ordered attribute name) when
+*article* is `0t0` (the first conceptually positional attribute name) when
 there isn't an actual meaningful name to give it.
 
 A common special case of an *article* is an *excuse*, which has the added
@@ -451,7 +451,7 @@ A primary intended use of the **Kit** possrep is to be the idiomatic way
 for an external data model to represent generic low-cardinality
 heterogeneous collections of user data.  Fundamental examples of these are
 *tuples*, *records*, *structs*, *objects*; they are variations of
-generic collections of named or ordered attributes with no duplicate names.
+generic collections of named or positional attributes with no duplicate names.
 When a set of **Kit** with common attribute names are collected in a
 **Lot**, such a **Lot** can also represent a *relation* or *dictionary*.
 A **Kit** by itself would represent an anonymous or structural type, but
@@ -471,9 +471,9 @@ however, any actual predicate/etc is defined by the context of a
 *tuple* value and a *tuple* in isolation explicitly does not
 represent any proposition in particular.
 
-The canonical way to represent the concept of a *tuple* that has ordered
+The canonical way to represent the concept of a *tuple* that has positional
 attributes is to use integral names; to be specific, the attribute name
-consisting of just the character code point 0 would mark the first ordered
+consisting of just the character code point 0 would mark the first positional
 attribute, the name consisting of just the code point 1 would mark the
 second, and so on; this can be repeated up to 32 "positional" names whose
 names would correspond to non-printing Unicode code points and would

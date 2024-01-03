@@ -198,16 +198,16 @@ A *SYS_Non_Qualified_Fraction* is any of the following:
 
 * Any *significand*.
 
-* Any *SYS_Ordered_Tuple_A* having exactly 1 element which
+* Any *SYS_Positional_Tuple_A* having exactly 1 element which
 is the *significand*.
 
-* Any *SYS_Ordered_Tuple_A* having exactly 2 elements which in
+* Any *SYS_Positional_Tuple_A* having exactly 2 elements which in
 ascending order are the *numerator* and *denominator*.
 
-* Any *SYS_Ordered_Tuple_A* having exactly 3 elements which in
+* Any *SYS_Positional_Tuple_A* having exactly 3 elements which in
 ascending order are the *significand*, *radix*, and *exponent*.
 
-* Any *SYS_Ordered_Tuple_A* having exactly 4 elements which in
+* Any *SYS_Positional_Tuple_A* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
 A *significand* is any *SYS_Fraction* or any *SYS_Integer*.
@@ -319,7 +319,7 @@ a **Lot** artifact all of whose members are any **Text** artifacts.
 
 A *SYS_Nesting* is any of the following:
 
-* Any *SYS_Ordered_Tuple_A* such that each of its elements is any *SYS_Text*.
+* Any *SYS_Positional_Tuple_A* such that each of its elements is any *SYS_Text*.
 
 * Any *SYS_Array_T*.
 
@@ -381,7 +381,7 @@ A **Lot** artifact is any of the following:
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
 and its *SYS_that* is
-any *SYS_Ordered_Tuple_A* such that each of its elements in turn is *member*
+any *SYS_Positional_Tuple_A* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1;
 this format can express any **Lot** which has 0..7 members,
 so to specify 8 or more members, one of the other formats must be used.
@@ -443,7 +443,7 @@ and its *SYS_that* is
 any *SYS_Array_A* having at most 32 elements such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
-this format can express any **Kit** which has only normalized ordered attributes
+this format can express any **Kit** which has only normalized positional attributes
 and which has 0..32 attributes,
 so to specify 33 or more attributes, the general format must be used;
 this format is more concise than the general format.
@@ -453,10 +453,10 @@ and its *SYS_that* is any *SYS_Non_Qualified_Kit_NA*.
 
 A *SYS_Non_Qualified_Kit_A* is any of the following:
 
-* Any *SYS_Ordered_Tuple_A* such that each of its elements
+* Any *SYS_Positional_Tuple_A* such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
 *attribute name* is the ordinal position of that element;
-this format can express any **Kit** which has only normalized ordered attributes
+this format can express any **Kit** which has only normalized positional attributes
 and which has 0..7 attributes,
 so to specify 8 or more attributes, one of the other formats must be used;
 this format is even more concise than the other ordered-specific format.
@@ -480,12 +480,12 @@ because its collection of elements is unordered.
 
 * Any object of the .NET class `System.Data.DataRow`.
 
-A *SYS_Ordered_Tuple_A* is any of the following:
+A *SYS_Positional_Tuple_A* is any of the following:
 
 * Any value of the .NET structure type `System.ValueTuple`
 that has 0..7 components.
 
-Not permitted for a *SYS_Ordered_Tuple_A* is any of the following,
+Not permitted for a *SYS_Positional_Tuple_A* is any of the following,
 to keep things more correct and simpler:
 
 * Any value of the .NET structure type `System.ValueTuple`

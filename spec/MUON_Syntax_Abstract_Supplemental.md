@@ -658,7 +658,7 @@ Examples:
     `Same thing.`
     (Heading:{"sales"})
 
-    `One ordered attribute.`
+    `One positional attribute.`
     (Heading:{0t0})
 
     `Same thing.`
@@ -667,7 +667,7 @@ Examples:
     `Three named attributes.`
     (Heading:{region,revenue,qty})
 
-    `Three ordered attributes.`
+    `Three positional attributes.`
     (Heading:{0t0,0t1,0t2})
 
     `One of each.`
@@ -717,16 +717,16 @@ Examples:
     `Swap 2 named attributes.`
     (Renaming:{foo->bar,bar->foo})
 
-    `Convert ordered names to nonordered.`
+    `Convert positional names to nonpositional.`
     (Renaming:{foo,bar})
 
     `Same thing.`
     (Renaming:{0t0->foo,0t1->bar})
 
-    `Convert nonordered names to ordered.`
+    `Convert nonpositional names to positional.`
     (Renaming:{foo->0t0,bar->0t1})
 
-    `Swap 2 ordered attributes.`
+    `Swap 2 positional attributes.`
     (Renaming:{0t0->0t1,0t1->0t0})
 
     `Same thing.`
@@ -767,10 +767,10 @@ Examples:
     `One named attribute.`
     (Tuple:{"First Name": Joy})
 
-    `One ordered attribute.`
+    `One positional attribute.`
     (Tuple:{53})
 
-    `Three ordered attributes.`
+    `Three positional attributes.`
     (Tuple:{hello,26,0bTRUE})
 
     `One of each.`

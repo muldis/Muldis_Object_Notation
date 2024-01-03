@@ -99,16 +99,16 @@ Examples:
     `Higher-level Renaming type: Swap 2 named attributes.`
     (Renaming:{foo->bar,foo<-bar})
 
-    `Higher-level Renaming type: Convert ordered names to nonordered.`
+    `Higher-level Renaming type: Convert positional names to nonpositional.`
     (Renaming:{foo,bar})
 
     `Higher-level Renaming type: Same thing.`
     (Renaming:{0t0->foo,0t1->bar})
 
-    `Higher-level Renaming type: Convert nonordered names to ordered.`
+    `Higher-level Renaming type: Convert nonpositional names to positional.`
     (Renaming:{0t0<-foo,0t1<-bar})
 
-    `Higher-level Renaming type: Swap 2 ordered attributes.`
+    `Higher-level Renaming type: Swap 2 positional attributes.`
     (Renaming:{0t0->0t1,0t0<-0t1})
 ```
 

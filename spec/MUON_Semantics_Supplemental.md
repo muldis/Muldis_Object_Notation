@@ -717,9 +717,9 @@ however, any actual predicate/etc is defined by the context of a
 **Tuple** value and a **Tuple** in isolation explicitly does not
 represent any proposition in particular.
 
-The canonical way to represent the concept of a *tuple* that has ordered
+The canonical way to represent the concept of a *tuple* that has positional
 attributes is to use integral names; to be specific, the attribute name
-consisting of just the character code point 0 would mark the first ordered
+consisting of just the character code point 0 would mark the first positional
 attribute, the name consisting of just the code point 1 would mark the
 second, and so on; this can be repeated up to 32 "positional" names whose
 names would correspond to non-printing Unicode code points and would
@@ -799,7 +799,7 @@ where the *label* is the singleton type name and the *attributes* is the
 **Tuple** with zero attributes.
 
 The idiomatic default attribute name for a single-attribute **Article** is
-`0t0` (the first conceptually ordered attribute name) when there isn't an
+`0t0` (the first conceptually positional attribute name) when there isn't an
 actual meaningful name to give it.
 
 [RETURN](#TOP)

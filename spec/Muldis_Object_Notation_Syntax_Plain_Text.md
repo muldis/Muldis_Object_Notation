@@ -954,13 +954,13 @@ Examples:
 ```
     ""
 
-    `One ordered nonquoted Text (or, the first ordered attribute).`
+    `One positional nonquoted Text (or, the first positional attribute).`
     0t0
 
-    `Same Text value (or, one ordered attr written in format of a named).`
+    `Same Text value (or, one positional attr written in format of a named).`
     "\(0t0)"
 
-    `Another ordered nonquoted Text (or, the second ordered attribute).`
+    `Another positional nonquoted Text (or, the second positional attribute).`
     0t1
 
     Ceres
@@ -977,7 +977,7 @@ Examples:
     `Same thing.`
     "\u263A\u0041"
 
-    `One non-ordered quoted Text (or, one named attribute).`
+    `One non-positional quoted Text (or, one named attribute).`
     "sales"
 
     `Same thing but nonquoted.`
@@ -1358,7 +1358,7 @@ Examples:
     `One named attribute.`
     {"First Name": Joy}
 
-    `One ordered attribute.`
+    `One positional attribute.`
     {53}
 
     `Same thing.`
@@ -1374,7 +1374,7 @@ Examples:
         is_special : 0bTRUE,
     }
 
-    `Three ordered attributes.`
+    `Three positional attributes.`
     {hello,26,0bTRUE}
 
     `One of each.`
@@ -1392,16 +1392,16 @@ Examples:
     `Higher-level Renaming type: Swap 2 named attributes.`
     (Renaming:{foo->bar,bar->foo})
 
-    `Higher-level Renaming type: Convert ordered names to nonordered.`
+    `Higher-level Renaming type: Convert positional names to nonpositional.`
     (Renaming:{foo,bar})
 
     `Higher-level Renaming type: Same thing.`
     (Renaming:{0t0->foo,0t1->bar})
 
-    `Higher-level Renaming type: Convert nonordered names to ordered.`
+    `Higher-level Renaming type: Convert nonpositional names to positional.`
     (Renaming:{foo->0t0,bar->0t1})
 
-    `Higher-level Renaming type: Swap 2 ordered attributes.`
+    `Higher-level Renaming type: Swap 2 positional attributes.`
     (Renaming:{0t0->0t1,0t1->0t0})
 
     `Higher-level Renaming type: Same thing.`

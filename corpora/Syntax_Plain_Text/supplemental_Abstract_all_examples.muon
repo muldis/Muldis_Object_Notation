@@ -273,7 +273,7 @@
 `Same thing.`
 (Heading:{"sales"})
 `Muldis_Object_Notation_Sync_Mark`
-`One ordered attribute.`
+`One positional attribute.`
 (Heading:{0t0})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
@@ -282,7 +282,7 @@
 `Three named attributes.`
 (Heading:{region,revenue,qty})
 `Muldis_Object_Notation_Sync_Mark`
-`Three ordered attributes.`
+`Three positional attributes.`
 (Heading:{0t0,0t1,0t2})
 `Muldis_Object_Notation_Sync_Mark`
 `One of each.`
@@ -312,16 +312,16 @@
 `Swap 2 named attributes.`
 (Renaming:{foo->bar,bar->foo})
 `Muldis_Object_Notation_Sync_Mark`
-`Convert ordered names to nonordered.`
+`Convert positional names to nonpositional.`
 (Renaming:{foo,bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
 (Renaming:{0t0->foo,0t1->bar})
 `Muldis_Object_Notation_Sync_Mark`
-`Convert nonordered names to ordered.`
+`Convert nonpositional names to positional.`
 (Renaming:{foo->0t0,bar->0t1})
 `Muldis_Object_Notation_Sync_Mark`
-`Swap 2 ordered attributes.`
+`Swap 2 positional attributes.`
 (Renaming:{0t0->0t1,0t1->0t0})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
@@ -336,10 +336,10 @@
 `One named attribute.`
 (Tuple:{"First Name": Joy})
 `Muldis_Object_Notation_Sync_Mark`
-`One ordered attribute.`
+`One positional attribute.`
 (Tuple:{53})
 `Muldis_Object_Notation_Sync_Mark`
-`Three ordered attributes.`
+`Three positional attributes.`
 (Tuple:{hello,26,0bTRUE})
 `Muldis_Object_Notation_Sync_Mark`
 `One of each.`

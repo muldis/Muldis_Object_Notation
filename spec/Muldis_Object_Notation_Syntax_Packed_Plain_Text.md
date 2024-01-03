@@ -1309,7 +1309,7 @@ Examples:
     T""
 
     `The 1-character UTF-8 string 0t0 or "\(0t0)" (1 octet);`
-    `also known as the first ordered attribute name.`
+    `also known as the first positional attribute name.`
     \00
 
     `Same thing (2 octets).`
@@ -1319,7 +1319,7 @@ Examples:
     T"\00"
 
     `The 1-character UTF-8 string 0t1 or "\(0t1)" (1 octet);`
-    `also known as the second ordered attribute name.`
+    `also known as the second positional attribute name.`
     \01
 
     `Same thing (2 octets).`
@@ -1412,7 +1412,7 @@ Examples:
     `Same thing (4 octets).`
     N[t]
 
-    `The Nesting with exactly 1 element that is the first ordered`
+    `The Nesting with exactly 1 element that is the first positional`
     `attribute name (2 octets); also known as ::0t0.`
     n\00
 
