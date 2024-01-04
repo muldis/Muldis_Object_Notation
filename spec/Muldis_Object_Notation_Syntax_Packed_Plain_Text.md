@@ -321,6 +321,8 @@ Grammar:
         | <Boolean>
         | <Integer>
         | <Rational>
+        | <Binary>
+        | <Decimal>
         | <Bits>
         | <Blob>
         | <Text>
@@ -919,6 +921,18 @@ Examples:
 
 ## Binary
 
+A **Binary** artifact has the dedicated concrete literal format
+described by `<Binary>`.
+
+Grammar:
+
+```
+    token Binary
+    {
+        TODO
+    }
+```
+
 *TODO.*
 
 [RETURN](#TOP)
@@ -926,6 +940,18 @@ Examples:
 <a name="Decimal"></a>
 
 ## Decimal
+
+A **Decimal** artifact has the dedicated concrete literal format
+described by `<Decimal>`.
+
+Grammar:
+
+```
+    token Decimal
+    {
+        TODO
+    }
+```
 
 *TODO.*
 

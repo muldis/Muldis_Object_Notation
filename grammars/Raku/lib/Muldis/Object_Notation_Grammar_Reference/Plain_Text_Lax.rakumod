@@ -55,6 +55,8 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
         | <Boolean>
         | <Integer>
         | <Rational>
+        | <Binary>
+        | <Decimal>
         | <Bits>
         | <Blob>
         | <Text>
@@ -97,25 +99,15 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
 
     token Rational
     {
-        <Rational_but_alpha_sci_notation> | <Rational_alpha_sci_notation>
+        <Rational_with_radix_point> | <Rational_with_num_den>
     }
 
-    token Rational_but_alpha_sci_notation
+    token Rational_with_radix_point
     {
-        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
+        <[+-]>? <sp>? <Rational_with_radix_point_nonsigned>
     }
 
-    token significand
-    {
-        <radix_point_sig> | <num_den_sig>
-    }
-
-    token radix_point_sig
-    {
-        <[+-]>? <sp>? <nonsigned_radix_point_sig>
-    }
-
-    token nonsigned_radix_point_sig
+    token Rational_with_radix_point_nonsigned
     {
           [
             0b <sp>?
@@ -143,7 +135,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
           ]
     }
 
-    token num_den_sig
+    token Rational_with_num_den
     {
         <numerator> <sp>? '/' <sp>? <denominator>
     }
@@ -158,9 +150,21 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
         <Integer_nonsigned>
     }
 
-    token radix
+###########################################################################
+
+    token Binary
     {
-        <Integer_nonsigned>
+        <significand> <sp>? '*' <sp>? <radix_two> <sp>? '^' <sp>? <exponent>
+    }
+
+    token significand
+    {
+        <Rational_with_radix_point> | <Integer>
+    }
+
+    token radix_two
+    {
+        2
     }
 
     token exponent
@@ -168,7 +172,24 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
         <Integer>
     }
 
-    token Rational_alpha_sci_notation
+###########################################################################
+
+    token Decimal
+    {
+        <Decimal_but_alpha_sci_notation> | <Decimal_alpha_sci_notation>
+    }
+
+    token Decimal_but_alpha_sci_notation
+    {
+        <significand> <sp>? '*' <sp>? <radix_ten> <sp>? '^' <sp>? <exponent>
+    }
+
+    token radix_ten
+    {
+        10
+    }
+
+    token Decimal_alpha_sci_notation
     {
         <[+-]>? <sp>? [0 | [<[ 1..9 ]> [[_ | <sp>]? <[ 0..9 ]>+]*]]
         [[_ | <sp>]? '.' [[_ | <sp>]? <[ 0..9 ]>+]+]?

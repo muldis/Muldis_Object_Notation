@@ -228,6 +228,8 @@ Grammar:
         | <Boolean>
         | <Integer>
         | <Rational>
+        | <Binary>
+        | <Decimal>
         | <Bits>
         | <Blob>
         | <Text>
@@ -346,25 +348,15 @@ Grammar:
 ```
     token Rational
     {
-        <Rational_but_alpha_sci_notation> | <Rational_alpha_sci_notation>
+        <Rational_with_radix_point> | <Rational_with_num_den>
     }
 
-    token Rational_but_alpha_sci_notation
+    token Rational_with_radix_point
     {
-        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
+        <[+-]>? <sp>? <Rational_with_radix_point_nonsigned>
     }
 
-    token significand
-    {
-        <radix_point_sig> | <num_den_sig>
-    }
-
-    token radix_point_sig
-    {
-        <[+-]>? <sp>? <nonsigned_radix_point_sig>
-    }
-
-    token nonsigned_radix_point_sig
+    token Rational_with_radix_point_nonsigned
     {
           [
             0b <sp>?
@@ -392,7 +384,7 @@ Grammar:
           ]
     }
 
-    token num_den_sig
+    token Rational_with_num_den
     {
         <numerator> <sp>? '/' <sp>? <denominator>
     }
@@ -406,18 +398,73 @@ Grammar:
     {
         <Integer_nonsigned>
     }
+```
 
-    token radix
+*This part of the grammar has no differences from the MUON Plain Text (strict) version.*
+
+[RETURN](#TOP)
+
+<a name="Binary"></a>
+
+## Binary
+
+A **Binary** artifact has the dedicated concrete literal format
+described by `<Binary>`.
+
+Grammar:
+
+```
+    token Binary
     {
-        <Integer_nonsigned>
+        <significand> <sp>? '*' <sp>? <radix_two> <sp>? '^' <sp>? <exponent>
+    }
+
+    token significand
+    {
+        <Rational_with_radix_point> | <Integer>
+    }
+
+    token radix_two
+    {
+        2
     }
 
     token exponent
     {
         <Integer>
     }
+```
 
-    token Rational_alpha_sci_notation
+*This part of the grammar has no differences from the MUON Plain Text (strict) version.*
+
+[RETURN](#TOP)
+
+<a name="Decimal"></a>
+
+## Decimal
+
+A **Decimal** artifact has the dedicated concrete literal format
+described by `<Decimal>`.
+
+Grammar:
+
+```
+    token Decimal
+    {
+        <Decimal_but_alpha_sci_notation> | <Decimal_alpha_sci_notation>
+    }
+
+    token Decimal_but_alpha_sci_notation
+    {
+        <significand> <sp>? '*' <sp>? <radix_ten> <sp>? '^' <sp>? <exponent>
+    }
+
+    token radix_ten
+    {
+        10
+    }
+
+    token Decimal_alpha_sci_notation
     {
         <[+-]>? <sp>? [0 | [<[ 1..9 ]> [[_ | <sp>]? <[ 0..9 ]>+]*]]
         [[_ | <sp>]? '.' [[_ | <sp>]? <[ 0..9 ]>+]+]?
@@ -433,22 +480,6 @@ Additional Examples:
 
     4.5207196e37
 ```
-
-[RETURN](#TOP)
-
-<a name="Binary"></a>
-
-## Binary
-
-*TODO.*
-
-[RETURN](#TOP)
-
-<a name="Decimal"></a>
-
-## Decimal
-
-*TODO.*
 
 [RETURN](#TOP)
 
@@ -804,7 +835,7 @@ For **Boolean**:
 - Added `false` and `true` as alternate syntaxes respectively for `0bFALSE`
 and `0bTRUE`.
 
-For **Rational**:
+For **Decimal**:
 
 - Added the scientific notation format like `4.5207196e37` as an alternate
 syntax for the format like `4.5207196*10^37`.

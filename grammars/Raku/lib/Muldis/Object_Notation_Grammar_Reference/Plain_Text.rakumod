@@ -55,6 +55,8 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
         | <Boolean>
         | <Integer>
         | <Rational>
+        | <Binary>
+        | <Decimal>
         | <Bits>
         | <Blob>
         | <Text>
@@ -97,20 +99,15 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
 
     token Rational
     {
-        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
+        <Rational_with_radix_point> | <Rational_with_num_den>
     }
 
-    token significand
+    token Rational_with_radix_point
     {
-        <radix_point_sig> | <num_den_sig>
+        <[+-]>? <sp>? <Rational_with_radix_point_nonsigned>
     }
 
-    token radix_point_sig
-    {
-        <[+-]>? <sp>? <nonsigned_radix_point_sig>
-    }
-
-    token nonsigned_radix_point_sig
+    token Rational_with_radix_point_nonsigned
     {
           [
             0b <sp>?
@@ -138,7 +135,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
           ]
     }
 
-    token num_den_sig
+    token Rational_with_num_den
     {
         <numerator> <sp>? '/' <sp>? <denominator>
     }
@@ -153,14 +150,38 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
         <Integer_nonsigned>
     }
 
-    token radix
+###########################################################################
+
+    token Binary
     {
-        <Integer_nonsigned>
+        <significand> <sp>? '*' <sp>? <radix_two> <sp>? '^' <sp>? <exponent>
+    }
+
+    token significand
+    {
+        <Rational_with_radix_point> | <Integer>
+    }
+
+    token radix_two
+    {
+        2
     }
 
     token exponent
     {
         <Integer>
+    }
+
+###########################################################################
+
+    token Decimal
+    {
+        <significand> <sp>? '*' <sp>? <radix_ten> <sp>? '^' <sp>? <exponent>
+    }
+
+    token radix_ten
+    {
+        10
     }
 
 ###########################################################################

@@ -378,6 +378,8 @@ Grammar:
         | <Boolean>
         | <Integer>
         | <Rational>
+        | <Binary>
+        | <Decimal>
         | <Bits>
         | <Blob>
         | <Text>
@@ -536,20 +538,15 @@ Grammar:
 ```
     token Rational
     {
-        <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
+        <Rational_with_radix_point> | <Rational_with_num_den>
     }
 
-    token significand
+    token Rational_with_radix_point
     {
-        <radix_point_sig> | <num_den_sig>
+        <[+-]>? <sp>? <Rational_with_radix_point_nonsigned>
     }
 
-    token radix_point_sig
-    {
-        <[+-]>? <sp>? <nonsigned_radix_point_sig>
-    }
-
-    token nonsigned_radix_point_sig
+    token Rational_with_radix_point_nonsigned
     {
           [
             0b <sp>?
@@ -577,7 +574,7 @@ Grammar:
           ]
     }
 
-    token num_den_sig
+    token Rational_with_num_den
     {
         <numerator> <sp>? '/' <sp>? <denominator>
     }
@@ -590,16 +587,6 @@ Grammar:
     token denominator
     {
         <Integer_nonsigned>
-    }
-
-    token radix
-    {
-        <Integer_nonsigned>
-    }
-
-    token exponent
-    {
-        <Integer>
     }
 ```
 
@@ -644,31 +631,19 @@ Examples:
 
     0/1
 
-    0/1*2^0
-
-    0/1*10^0
-
     1.0
 
     1/1
-
-    1/1*2^0
 
     -1.0
 
     -1/1
 
-    -1/1*2^0
-
     5/3
-
-    5/1*3^-1
 
     -4.72
 
     -472/100
-
-    -472/1*10^-2
 
     15_485_863/32_452_843
 
@@ -680,9 +655,6 @@ Examples:
     162259276829213363391578010288127
         /170141183460469231731687303715884105727
 
-    `Base 10.`
-    4.5207196*10^37
-
     `Base 16.`
     0xDEADBEEF.FACE
 
@@ -691,9 +663,6 @@ Examples:
 
     `Base 2.`
     0b1.1
-
-    `Base 2.`
-    0b1.011101101*0b10^-0b11011
 ```
 
 [RETURN](#TOP)
@@ -702,7 +671,56 @@ Examples:
 
 ## Binary
 
+A **Binary** artifact has the dedicated concrete literal format
+described by `<Binary>`.
+
+Grammar:
+
+```
+    token Binary
+    {
+        <significand> <sp>? '*' <sp>? <radix_two> <sp>? '^' <sp>? <exponent>
+    }
+
+    token significand
+    {
+        <Rational_with_radix_point> | <Integer>
+    }
+
+    token radix_two
+    {
+        2
+    }
+
+    token exponent
+    {
+        <Integer>
+    }
+```
+
 *TODO.*
+
+Examples:
+
+```
+    0.0*2^0
+
+    0*2^0
+
+    1.0*2^0
+
+    1*2^0
+
+    -1.0*2^0
+
+    -1*2^0
+
+    0xDEADBEEF*2^0x0
+
+    0xD.EADBEEF*2^0x38
+
+    0b1.011101101*2^-0b11011
+```
 
 [RETURN](#TOP)
 
@@ -710,7 +728,46 @@ Examples:
 
 ## Decimal
 
+A **Decimal** artifact has the dedicated concrete literal format
+described by `<Decimal>`.
+
+Grammar:
+
+```
+    token Decimal
+    {
+        <significand> <sp>? '*' <sp>? <radix_ten> <sp>? '^' <sp>? <exponent>
+    }
+
+    token radix_ten
+    {
+        10
+    }
+```
+
 *TODO.*
+
+Examples:
+
+```
+    0.0*10^0
+
+    0*10^0
+
+    1.0*10^0
+
+    1*10^0
+
+    -1.0*10^0
+
+    -1*10^0
+
+    -4.72*10^0
+
+    -472*10^-2
+
+    4.5207196*10^37
+```
 
 [RETURN](#TOP)
 
@@ -1524,12 +1581,14 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     ----------------+---------------------------------------------
     Ignorance       | prefix 0i followed by IGNORANCE
     Boolean         | prefix 0b followed by FALSE or TRUE
-    Integer         | optional prefix +|-
-                    |     and leading 0..9 without any ./*^
+    Integer         | optional prefix +|- and leading 0..9
+                    |     and without any ./*^
                     |     and no prefix 0[i|t] or 0b[F|T] or 0[b|x][a..z]
-    Rational        | optional prefix +|-
-                    |     and leading 0..9 with at least 1 of ./*^
-                    |     and no prefix 0xy
+    Rational        | optional prefix +|- and leading 0..9
+                    |     and with . but no * or ^
+                    |         or with / but no prefix 0xy
+    Binary          | optional prefix +|- and leading 0..9 and with *2^
+    Decimal         | optional prefix +|- and leading 0..9 and with *10^
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
     Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0t

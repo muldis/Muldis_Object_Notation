@@ -55,6 +55,8 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
         | <Boolean>
         | <Integer>
         | <Rational>
+        | <Binary>
+        | <Decimal>
         | <Bits>
         | <Blob>
         | <Text>
@@ -266,6 +268,20 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
     token exponent
     {
         <Integer>
+    }
+
+###########################################################################
+
+    token Binary
+    {
+        TODO
+    }
+
+###########################################################################
+
+    token Decimal
+    {
+        TODO
     }
 
 ###########################################################################
