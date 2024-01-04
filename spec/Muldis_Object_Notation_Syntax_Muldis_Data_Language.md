@@ -24,6 +24,8 @@ its part name is `Syntax_Muldis_Data_Language`.
     - [Boolean](#Boolean)
     - [Integer](#Integer)
     - [Rational](#Rational)
+    - [Binary](#Binary)
+    - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -126,6 +128,22 @@ An **Integer** artifact is any of the following:
 A **Rational** artifact is any of the following:
 
 * Any value of the MDL type `fdn::Rational`.
+
+[RETURN](#TOP)
+
+<a name="Binary"></a>
+
+## Binary
+
+*TODO.*
+
+[RETURN](#TOP)
+
+<a name="Decimal"></a>
+
+## Decimal
+
+*TODO.*
 
 [RETURN](#TOP)
 

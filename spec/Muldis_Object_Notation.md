@@ -126,6 +126,8 @@ represented with MUON syntax are characterized by.
 - **Boolean**
 - **Integer**
 - **Rational**
+- **Binary**
+- **Decimal**
 - **Bits**
 - **Blob**
 - **Text**

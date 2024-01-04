@@ -30,6 +30,8 @@ its part name is `Syntax_Plain_Text_Lax`.
     - [Boolean](#Boolean)
     - [Integer](#Integer)
     - [Rational](#Rational)
+    - [Binary](#Binary)
+    - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -431,6 +433,22 @@ Additional Examples:
 
     4.5207196e37
 ```
+
+[RETURN](#TOP)
+
+<a name="Binary"></a>
+
+## Binary
+
+*TODO.*
+
+[RETURN](#TOP)
+
+<a name="Decimal"></a>
+
+## Decimal
+
+*TODO.*
 
 [RETURN](#TOP)
 

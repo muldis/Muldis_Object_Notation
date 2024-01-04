@@ -24,6 +24,8 @@ its part name is `Syntax_XML`.
     - [Boolean](#Boolean)
     - [Integer](#Integer)
     - [Rational](#Rational)
+    - [Binary](#Binary)
+    - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -137,6 +139,22 @@ See also <https://w3.org/XML>.
 <a name="Rational"></a>
 
 ## Rational
+
+*TODO.*
+
+[RETURN](#TOP)
+
+<a name="Binary"></a>
+
+## Binary
+
+*TODO.*
+
+[RETURN](#TOP)
+
+<a name="Decimal"></a>
+
+## Decimal
 
 *TODO.*
 

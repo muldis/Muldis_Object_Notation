@@ -24,6 +24,8 @@ its part name is `Syntax_Raku`.
     - [Boolean](#Boolean)
     - [Integer](#Integer)
     - [Rational](#Rational)
+    - [Binary](#Binary)
+    - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -250,6 +252,22 @@ sequence of digits or anything else resembles a numeric literal.
 
 [RETURN](#TOP)
 
+<a name="Binary"></a>
+
+## Binary
+
+*TODO.*
+
+[RETURN](#TOP)
+
+<a name="Decimal"></a>
+
+## Decimal
+
+*TODO.*
+
+[RETURN](#TOP)
+
 <a name="Bits"></a>
 
 ## Bits
@@ -365,8 +383,8 @@ A **Pair** artifact is any of the following:
 
 * Any *SYS_Pair_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
-`Ignorance`, `Boolean`, `Integer`, `Rational`, `Bits`, `Blob`, `Text`,
-`Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
+`Ignorance`, `Boolean`, `Integer`, `Rational`, `Binary`, `Decimal`, `Bits`,
+`Blob`, `Text`, `Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Pair`

@@ -33,6 +33,8 @@ its part name is `Syntax_Plain_Text`.
     - [Boolean](#Boolean)
     - [Integer](#Integer)
     - [Rational](#Rational)
+    - [Binary](#Binary)
+    - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -693,6 +695,22 @@ Examples:
     `Base 2.`
     0b1.011101101*0b10^-0b11011
 ```
+
+[RETURN](#TOP)
+
+<a name="Binary"></a>
+
+## Binary
+
+*TODO.*
+
+[RETURN](#TOP)
+
+<a name="Decimal"></a>
+
+## Decimal
+
+*TODO.*
 
 [RETURN](#TOP)
 

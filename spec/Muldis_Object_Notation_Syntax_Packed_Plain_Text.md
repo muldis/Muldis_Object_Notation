@@ -33,6 +33,8 @@ its part name is `Syntax_Packed_Plain_Text`.
     - [Boolean](#Boolean)
     - [Integer](#Integer)
     - [Rational](#Rational)
+    - [Binary](#Binary)
+    - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -910,6 +912,22 @@ Examples:
     `Dead Beef Face (15 octets); also known as 0xDEADBEEF.FACE.`
     /i\00\00\DE\AD\BE\EF\FA\CEg\00\01\00\00
 ```
+
+[RETURN](#TOP)
+
+<a name="Binary"></a>
+
+## Binary
+
+*TODO.*
+
+[RETURN](#TOP)
+
+<a name="Decimal"></a>
+
+## Decimal
+
+*TODO.*
 
 [RETURN](#TOP)
 

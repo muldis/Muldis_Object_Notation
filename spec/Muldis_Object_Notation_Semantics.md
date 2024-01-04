@@ -27,6 +27,8 @@ its part name is `Semantics`.
     - [Boolean](#Boolean)
     - [Integer](#Integer)
     - [Rational](#Rational)
+    - [Binary](#Binary)
+    - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -120,11 +122,11 @@ literal or system-defined data type corresponding directly to each one.
 A *simple possrep* has a strictly non-recursive definition, and
 never is expressed in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single non-collective item.
-There are exactly 8 of these:
+There are exactly 10 of these:
 
 - **Ignorance**
 - **Boolean**
-- Numeric: **Integer**, **Rational**
+- Numeric: **Integer**, **Rational**, **Binary**, **Decimal**
 - Stringy: **Bits**, **Blob**, **Text**
 - **Nesting**
 
@@ -264,6 +266,22 @@ a **Rational** artifact, that means a rational number that takes the place
 of the numerator/denominator pair.  Examples of *significand* are literals
 with radix points like `3.14` and host language values that are already the
 general case of a rational.
+
+[RETURN](#TOP)
+
+<a name="Binary"></a>
+
+## Binary
+
+*TODO.*
+
+[RETURN](#TOP)
+
+<a name="Decimal"></a>
+
+## Decimal
+
+*TODO.*
 
 [RETURN](#TOP)
 
