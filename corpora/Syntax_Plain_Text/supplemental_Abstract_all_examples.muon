@@ -198,7 +198,7 @@
 `Same thing.`
 (Interval:("..":(1:10)))
 `Muldis_Object_Notation_Sync_Mark`
-`Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
+`Left-closed, right-open interval; every Rational x in [2.7<=x<9.3].`
 (Interval:("<=*<":(2.7:9.3)))
 `Muldis_Object_Notation_Sync_Mark`
 `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`

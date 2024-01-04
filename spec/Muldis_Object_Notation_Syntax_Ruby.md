@@ -23,7 +23,7 @@ its part name is `Syntax_Ruby`.
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
-    - [Fraction](#Fraction)
+    - [Rational](#Rational)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -157,18 +157,18 @@ This is because that would be interpreted as a **Text** artifact.
 
 [RETURN](#TOP)
 
-<a name="Fraction"></a>
+<a name="Rational"></a>
 
-## Fraction
+## Rational
 
-A **Fraction** artifact is any of the following:
+A **Rational** artifact is any of the following:
 
-* Any *SYS_Fraction*.
+* Any *SYS_Rational*.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Non_Qualified_Fraction*.
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
+and its *SYS_that* is any *SYS_Non_Qualified_Rational*.
 
-A *SYS_Non_Qualified_Fraction* is any of the following:
+A *SYS_Non_Qualified_Rational* is any of the following:
 
 * Any *significand*.
 
@@ -184,7 +184,7 @@ ascending order are the *significand*, *radix*, and *exponent*.
 * Any *SYS_Positional_Tuple_A* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
-A *significand* is any *SYS_Fraction* or any *SYS_Integer*.
+A *significand* is any *SYS_Rational* or any *SYS_Integer*.
 
 A *numerator* is any *SYS_Integer*.
 
@@ -194,7 +194,7 @@ A *radix* is any *SYS_Integer* which denotes an integer that is at least 2.
 
 An *exponent* is any *SYS_Integer*.
 
-A *SYS_Fraction* is any of the following:
+A *SYS_Rational* is any of the following:
 
 * Any object of the Ruby class `Rational`.
 
@@ -202,7 +202,7 @@ A *SYS_Fraction* is any of the following:
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
-Not permitted for a *SYS_Fraction* is any of the following,
+Not permitted for a *SYS_Rational* is any of the following,
 to keep things more correct and simpler:
 
 * Any object of the Ruby class `Float`
@@ -329,7 +329,7 @@ A **Pair** artifact is any of the following:
 
 * Any *SYS_Pair_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
-`Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
+`Ignorance`, `Boolean`, `Integer`, `Rational`, `Bits`, `Blob`, `Text`,
 `Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 

@@ -23,7 +23,7 @@ its part name is `Syntax_Muldis_Data_Language`.
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
-    - [Fraction](#Fraction)
+    - [Rational](#Rational)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -119,13 +119,13 @@ An **Integer** artifact is any of the following:
 
 [RETURN](#TOP)
 
-<a name="Fraction"></a>
+<a name="Rational"></a>
 
-## Fraction
+## Rational
 
-A **Fraction** artifact is any of the following:
+A **Rational** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Fraction`.
+* Any value of the MDL type `fdn::Rational`.
 
 [RETURN](#TOP)
 

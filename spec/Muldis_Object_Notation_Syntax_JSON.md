@@ -23,7 +23,7 @@ its part name is `Syntax_JSON`.
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
-    - [Fraction](#Fraction)
+    - [Rational](#Rational)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -101,7 +101,7 @@ concrete literal formats, embedded within JSON `string` values.
 This is particularly important for the lossless conveyance of **Integer**
 artifacts of larger magnitudes or derivatives since JSON `number`
 representations of such may not be supported by some JSON implementations.
-This is also useful for conveyence of **Fraction** and **Bits** and **Blob**
+This is also useful for conveyence of **Rational** and **Bits** and **Blob**
 artifacts as it opens up more compact options than are otherwise available.
 
 The prescribed standard *syntax base name* of a *syntax-qualified artifact*
@@ -164,12 +164,12 @@ This is because that would be interpreted as a **Text** artifact.
 
 A *SYS_Integer* is any of the following:
 
-* Any *SYS_Fraction* that represents a whole number.
+* Any *SYS_Rational* that represents a whole number.
 
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:
 
-* Any *SYS_Fraction* that doesn't represent a whole number.
+* Any *SYS_Rational* that doesn't represent a whole number.
 
 A *SYS_or_embedded_Integer* is any of the following:
 
@@ -185,32 +185,32 @@ An *embedded_MUON_PT_parsing_unit* is any of the following:
 
 * Any *SYS_Text* that can be successfully interpreted as a
 `Muldis_Object_Notation_Plain_Text` parsing unit consisting of a single
-**Integer** or **Fraction** or **Bits** or **Blob** artifact.
+**Integer** or **Rational** or **Bits** or **Blob** artifact.
 
 [RETURN](#TOP)
 
-<a name="Fraction"></a>
+<a name="Rational"></a>
 
-## Fraction
+## Rational
 
-A **Fraction** artifact is any of the following:
+A **Rational** artifact is any of the following:
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Fraction`
-and its *SYS_that* is any *SYS_Non_Qualified_Fraction*.
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
+and its *SYS_that* is any *SYS_Non_Qualified_Rational*.
 
-Not permitted for a **Fraction** is any of the following,
+Not permitted for a **Rational** is any of the following,
 to keep things more correct and simpler:
 
-* Any *SYS_Fraction*.
+* Any *SYS_Rational*.
 This is because that would often be interpreted as an **Integer** artifact.
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
 This is because that would typically be interpreted as a **Text** artifact.
 
-A *SYS_Non_Qualified_Fraction* is any of the following:
+A *SYS_Non_Qualified_Rational* is any of the following:
 
-* Any *embedded_MUON_PT_Fraction*.
+* Any *embedded_MUON_PT_Rational*.
 
 * Any *significand*.
 
@@ -226,7 +226,7 @@ ascending order are the *significand*, *radix*, and *exponent*.
 * Any *SYS_Positional_Tuple_A* having exactly 4 elements which in
 ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
 
-A *significand* is any *SYS_Fraction* or any *SYS_or_embedded_Integer*.
+A *significand* is any *SYS_Rational* or any *SYS_or_embedded_Integer*.
 
 A *numerator* is any *SYS_or_embedded_Integer*.
 
@@ -236,21 +236,21 @@ A *radix* is any *SYS_or_embedded_Integer* which denotes an integer that is at l
 
 An *exponent* is any *SYS_or_embedded_Integer*.
 
-A *SYS_Fraction* is any of the following:
+A *SYS_Rational* is any of the following:
 
 * Any value of the JSON type `number`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
-Not permitted for a *SYS_Fraction* is any of the following,
+Not permitted for a *SYS_Rational* is any of the following,
 to keep things more correct and simpler:
 
 * Any value of the JSON type `number`
 that represents an infinity or NaN.
 
-An *embedded_MUON_PT_Fraction* is any of the following:
+An *embedded_MUON_PT_Rational* is any of the following:
 
-* Any *embedded_MUON_PT_parsing_unit* that denotes any **Fraction** artifact.
+* Any *embedded_MUON_PT_parsing_unit* that denotes any **Rational** artifact.
 
 [RETURN](#TOP)
 
@@ -356,7 +356,7 @@ A **Pair** artifact is any of the following:
 
 * Any *SYS_Pair_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
-`Ignorance`, `Boolean`, `Integer`, `Fraction`, `Bits`, `Blob`, `Text`,
+`Ignorance`, `Boolean`, `Integer`, `Rational`, `Bits`, `Blob`, `Text`,
 `Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 

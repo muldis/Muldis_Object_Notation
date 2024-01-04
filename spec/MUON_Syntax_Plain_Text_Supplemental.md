@@ -141,7 +141,7 @@ Grammar:
 
     token loc_multiplicity
     {
-        <Integer> | <Fraction>
+        <Integer> | <Rational>
     }
 ```
 
@@ -375,7 +375,7 @@ Examples:
     `Same thing.`
     (:1..10:)
 
-    `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
+    `Left-closed, right-open interval; every Rational x in [2.7<=x<9.3].`
     (:2.7 <=*< 9.3:)
 
     `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`

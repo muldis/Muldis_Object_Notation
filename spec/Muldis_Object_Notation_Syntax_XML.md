@@ -23,7 +23,7 @@ its part name is `Syntax_XML`.
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
-    - [Fraction](#Fraction)
+    - [Rational](#Rational)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -134,9 +134,9 @@ See also <https://w3.org/XML>.
 
 [RETURN](#TOP)
 
-<a name="Fraction"></a>
+<a name="Rational"></a>
 
-## Fraction
+## Rational
 
 *TODO.*
 

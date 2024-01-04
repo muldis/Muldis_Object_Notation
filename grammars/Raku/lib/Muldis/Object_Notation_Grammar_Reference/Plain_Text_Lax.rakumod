@@ -54,7 +54,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
           <Ignorance>
         | <Boolean>
         | <Integer>
-        | <Fraction>
+        | <Rational>
         | <Bits>
         | <Blob>
         | <Text>
@@ -95,12 +95,12 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
 
 ###########################################################################
 
-    token Fraction
+    token Rational
     {
-        <Fraction_but_alpha_sci_notation> | <Fraction_alpha_sci_notation>
+        <Rational_but_alpha_sci_notation> | <Rational_alpha_sci_notation>
     }
 
-    token Fraction_but_alpha_sci_notation
+    token Rational_but_alpha_sci_notation
     {
         <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }
@@ -168,7 +168,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
         <Integer>
     }
 
-    token Fraction_alpha_sci_notation
+    token Rational_alpha_sci_notation
     {
         <[+-]>? <sp>? [0 | [<[ 1..9 ]> [[_ | <sp>]? <[ 0..9 ]>+]*]]
         [[_ | <sp>]? '.' [[_ | <sp>]? <[ 0..9 ]>+]+]?

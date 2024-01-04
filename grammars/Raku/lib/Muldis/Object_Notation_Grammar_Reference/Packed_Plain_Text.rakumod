@@ -54,7 +54,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
           <Ignorance>
         | <Boolean>
         | <Integer>
-        | <Fraction>
+        | <Rational>
         | <Bits>
         | <Blob>
         | <Text>
@@ -214,36 +214,36 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
 ###########################################################################
 
-    token Fraction
+    token Rational
     {
-          <Fraction_zero>
-        | <Fraction_positive_one>
-        | <Fraction_negative_one>
-        | <Fraction_2_tuple_numerator_denominator>
-        | <Fraction_4_tuple_num_den_radix_exponent>
+          <Rational_zero>
+        | <Rational_positive_one>
+        | <Rational_negative_one>
+        | <Rational_2_tuple_numerator_denominator>
+        | <Rational_4_tuple_num_den_radix_exponent>
     }
 
-    token Fraction_zero
+    token Rational_zero
     {
         '='
     }
 
-    token Fraction_positive_one
+    token Rational_positive_one
     {
        '>'
     }
 
-    token Fraction_negative_one
+    token Rational_negative_one
     {
         '<'
     }
 
-    token Fraction_2_tuple_numerator_denominator
+    token Rational_2_tuple_numerator_denominator
     {
         '/' <sp>? <numerator> <sp>? <denominator>
     }
 
-    token Fraction_4_tuple_num_den_radix_exponent
+    token Rational_4_tuple_num_den_radix_exponent
     {
         '^' <sp>? <numerator> <sp>? <denominator> <sp>? <radix> <sp>? <exponent>
     }

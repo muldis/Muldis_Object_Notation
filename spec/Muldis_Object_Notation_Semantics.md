@@ -26,7 +26,7 @@ its part name is `Semantics`.
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
-    - [Fraction](#Fraction)
+    - [Rational](#Rational)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -74,7 +74,7 @@ and officially leaves it up to each external data model used with MUON to
 define for itself whether any two given possreps are *conjoined* (have any
 values in common) or *disjoint* (have no values in common).  For example,
 some external data models may consider **Integer** to correspond to a
-*subtype* of what **Fraction** corresponds to (`42` is a member of both)
+*subtype* of what **Rational** corresponds to (`42` is a member of both)
 while others may consider the two possreps to be disjoint (`42` and `42.0`
 are not the same value).  The sole exceptions are that the
 **Any** and **None** possreps explicitly correspond to a *supertype*
@@ -124,7 +124,7 @@ There are exactly 8 of these:
 
 - **Ignorance**
 - **Boolean**
-- Numeric: **Integer**, **Fraction**
+- Numeric: **Integer**, **Rational**
 - Stringy: **Bits**, **Blob**, **Text**
 - **Nesting**
 
@@ -230,16 +230,16 @@ It has no minimum or maximum value.
 
 [RETURN](#TOP)
 
-<a name="Fraction"></a>
+<a name="Rational"></a>
 
-## Fraction
+## Rational
 
-A **Fraction** value is a general purpose exact rational number of any
+A **Rational** value is a general purpose exact rational number of any
 magnitude and precision, which explicitly does not represent any kind of
 thing in particular, neither cardinal nor ordinal nor nominal.
 It has no minimum or maximum value.
 
-A **Fraction** value is characterized by a **Kit** having a subset of the
+A **Rational** value is characterized by a **Kit** having a subset of the
 4 attributes of the heading
 [`n|numerator`,`d|denominator`,`r|radix`,`e|exponent`] such that each
 attribute asset is an **Integer**, and [`r|radix`,`e|exponent`] must only
@@ -247,20 +247,20 @@ be given as a pair, and `d|denominator` if given must be non-zero, and
 `r|radix` if given must be at least 2; each of the 4 attributes, if not
 given, respectively have the implicit values [0,1,2,0].
 
-The intended interpretation of a **Fraction** is as the rational number
+The intended interpretation of a **Rational** is as the rational number
 that results from evaluating the given 4 integers as the mathematical
 expression `(n/d)*(r^e)`, such that `/` means divide, `*` means multiply,
 and `^` means exponentiate.
 
-MUON does not require any mathematical normalization of a **Fraction**
+MUON does not require any mathematical normalization of a **Rational**
 artifact's components in order for it to be a valid artifact; for example,
 the numerator/denominator pair do not need to be coprime.  But typically a
 type system will hide from the user the actual physical representation of
-whatever value a given **Fraction** artifact resolves to, and would
+whatever value a given **Rational** artifact resolves to, and would
 determine value identity based on the actual logical rational number.
 
 Where any MUON syntax makes reference to a `s|sig|significand` as a part of
-a **Fraction** artifact, that means a rational number that takes the place
+a **Rational** artifact, that means a rational number that takes the place
 of the numerator/denominator pair.  Examples of *significand* are literals
 with radix points like `3.14` and host language values that are already the
 general case of a rational.
@@ -540,13 +540,13 @@ Muldis Object Notation eschews dedicated possreps for some data types that
 users might expect to see here.  This section enumerates some and says why.
 
 IEEE floating-point signed zeroes, infinities, and NaNs are not part of the
-**Fraction** possrep (only regular finite numbers are included) and rather
+**Rational** possrep (only regular finite numbers are included) and rather
 would be left up to the overlaid data model.
 
 Fixed-precision/scale numbers and/or significant figures indication and/or
 error margin indication, left up to the overlaid data model.  Any added
 would be bareword only as expected to be relatively short.  They would be
-defined in terms of being a scaled integer or fixed-denominator fraction.
+defined in terms of being a scaled integer or fixed-denominator rational.
 
 Collective types in the general case are left up to the overlaid data model
 and all their variations should be expressible concisely in MUON as

@@ -125,7 +125,7 @@ represented with MUON syntax are characterized by.
 - **Ignorance**
 - **Boolean**
 - **Integer**
-- **Fraction**
+- **Rational**
 - **Bits**
 - **Blob**
 - **Text**

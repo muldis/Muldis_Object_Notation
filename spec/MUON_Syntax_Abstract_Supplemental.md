@@ -90,10 +90,10 @@ but expressly limits itself to the *primary possrep* literal formats.
 ### Fractional
 
 A **Fractional** artifact is an artifact that qualifies as either
-any **Fraction** artifact or as any **Integer** artifact.
+any **Rational** artifact or as any **Integer** artifact.
 A context explicitly requiring any **Fractional** artifact implicitly requires
-any **Fraction** artifact; when an **Integer** artifact is instead given,
-then the proper interpretation is as if a **Fraction** artifact was
+any **Rational** artifact; when an **Integer** artifact is instead given,
+then the proper interpretation is as if a **Rational** artifact was
 actually given whose numeric value was the same as that **Integer**.
 
 [RETURN](#TOP)
@@ -531,7 +531,7 @@ Examples:
     `Same thing.`
     (Interval:("..":(1:10)))
 
-    `Left-closed, right-open interval; every Fraction x in [2.7<=x<9.3].`
+    `Left-closed, right-open interval; every Rational x in [2.7<=x<9.3].`
     (Interval:("<=*<":(2.7:9.3)))
 
     `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`

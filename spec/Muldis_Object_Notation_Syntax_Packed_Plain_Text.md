@@ -32,7 +32,7 @@ its part name is `Syntax_Packed_Plain_Text`.
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
-    - [Fraction](#Fraction)
+    - [Rational](#Rational)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -318,7 +318,7 @@ Grammar:
           <Ignorance>
         | <Boolean>
         | <Integer>
-        | <Fraction>
+        | <Rational>
         | <Bits>
         | <Blob>
         | <Text>
@@ -571,7 +571,7 @@ Its single canonical octet for [`11`,`12`] corresponds to the ASCII/UTF-8
 
 Its single canonical octet for `100` corresponds to the ASCII/UTF-8
 *PERCENT SIGN* character `%` which has a common mnemonic for percentages
-which a fractions with a denominator of 100.
+which are rationals with a denominator of 100.
 
 Its single canonical octet for `1000` corresponds to the ASCII/UTF-8
 *AMPERSAND SIGN* character `&`.
@@ -613,7 +613,7 @@ corresponds to the ASCII/UTF-8 *LATIN SMALL LETTER [D,F,H,J]* character
 Note that making special cases of single-octet representations for 100 and
 1000 is rationalized by their frequent use in decimalised currencies, where
 hundredths denominations are very common and thousanths are also used;
-this efficiency mainly is for the benefit of 2-tuple **Fraction** artifacts.
+this efficiency mainly is for the benefit of 2-tuple **Rational** artifacts.
 
 Examples:
 
@@ -730,46 +730,46 @@ Examples:
 
 [RETURN](#TOP)
 
-<a name="Fraction"></a>
+<a name="Rational"></a>
 
-## Fraction
+## Rational
 
-A **Fraction** artifact has the dedicated concrete literal format
-described by `<Fraction>`.
+A **Rational** artifact has the dedicated concrete literal format
+described by `<Rational>`.
 
 Grammar:
 
 ```
-    token Fraction
+    token Rational
     {
-          <Fraction_zero>
-        | <Fraction_positive_one>
-        | <Fraction_negative_one>
-        | <Fraction_2_tuple_numerator_denominator>
-        | <Fraction_4_tuple_num_den_radix_exponent>
+          <Rational_zero>
+        | <Rational_positive_one>
+        | <Rational_negative_one>
+        | <Rational_2_tuple_numerator_denominator>
+        | <Rational_4_tuple_num_den_radix_exponent>
     }
 
-    token Fraction_zero
+    token Rational_zero
     {
         '='
     }
 
-    token Fraction_positive_one
+    token Rational_positive_one
     {
        '>'
     }
 
-    token Fraction_negative_one
+    token Rational_negative_one
     {
         '<'
     }
 
-    token Fraction_2_tuple_numerator_denominator
+    token Rational_2_tuple_numerator_denominator
     {
         '/' <sp>? <numerator> <sp>? <denominator>
     }
 
-    token Fraction_4_tuple_num_den_radix_exponent
+    token Rational_4_tuple_num_den_radix_exponent
     {
         '^' <sp>? <numerator> <sp>? <denominator> <sp>? <radix> <sp>? <exponent>
     }
@@ -795,9 +795,9 @@ Grammar:
     }
 ```
 
-A **Fraction** artifact uses just 1 octet to canonically represent the most
-commonly used fractions `[-1.0,0.0,1.0]`.  There are also
-other formats for each of these fractions, but they all take more octets.
+A **Rational** artifact uses just 1 octet to canonically represent the most
+commonly used rationals `[-1.0,0.0,1.0]`.  There are also
+other formats for each of these rationals, but they all take more octets.
 
 Its single canonical octet for `0.0` corresponds to the ASCII/UTF-8
 *EQUALS SIGN* character `=`.
@@ -808,14 +808,14 @@ Its single canonical octet for `1.0` corresponds to the ASCII/UTF-8
 Its single canonical octet for `-1.0` corresponds to the ASCII/UTF-8
 *LESS-THAN SIGN* character `<`.
 
-A **Fraction** artifact uses 3..N octets to represent the general case of
-any fraction as a 2-tuple-denoting octet, which corresponds to the
+A **Rational** artifact uses 3..N octets to represent the general case of
+any rational as a 2-tuple-denoting octet, which corresponds to the
 ASCII/UTF-8 *SOLIDUS* character `/` which has a common mnemonic
-of numeric division or fractions, followed by 2 **Integer** artifacts which
-represent in order a numerator and denominator.
+of numeric division or rationals/fractions, followed by 2 **Integer**
+artifacts which represent in order a numerator and denominator.
 
-A **Fraction** artifact uses 5..N octets to represent the general case of
-any fraction as a 4-tuple-denoting octet, which corresponds to the
+A **Rational** artifact uses 5..N octets to represent the general case of
+any rational as a 4-tuple-denoting octet, which corresponds to the
 ASCII/UTF-8 *CIRCUMFLEX ACCENT* character `^` which has a common mnemonic
 of numeric exponentiation, followed by 4 **Integer** artifacts which
 represent in order a numerator, denominator, radix, and exponent.
@@ -901,10 +901,10 @@ Examples:
     `Same thing (8 octets); also known as -472/1*10^-2.`
     ^f\FE\281$d\FE
 
-    `The fraction 15_485_863/32_452_843 (11 octets).`
+    `The rational 15_485_863/32_452_843 (11 octets).`
     /g\00\EC\4B\A7g\01\EF\30\EB
 
-    `The fraction 4.5207196*10^37 (11 octets); also known as 45207196/1*10^30.`
+    `The rational 4.5207196*10^37 (11 octets); also known as 45207196/1*10^30.`
     ^g\02\B1\CE\9C1$c\1E
 
     `Dead Beef Face (15 octets); also known as 0xDEADBEEF.FACE.`
@@ -1666,7 +1666,7 @@ usually in the context of their being the first octet of an artifact.
     2C  | ,   | 0t9         | Text artifact or 10th "positional" Kit attribute name
     2D  | -   |             | Integer artifact prefix general case negative number
     2E  | .   |             | (unassigned)
-    2F  | /   |             | Fraction artifact prefix general case [numerator,denominator] 2-tuple/pair
+    2F  | /   |             | Rational artifact prefix general case [numerator,denominator] 2-tuple/pair
     ----+-----+-------------+----------------------------------------------
     30  | 0   | 0           | Integer artifact zero
     31  | 1   | 1           | Integer artifact positive one or Lot member multiplicity one
@@ -1675,9 +1675,9 @@ usually in the context of their being the first octet of an artifact.
     ----+-----+-------------+----------------------------------------------
     3A  | :   | 0t13        | Text artifact or 14th "positional" Kit attribute name
     3B  | ;   | 0t10        | Text artifact or 11th "positional" Kit attribute name
-    3C  | <   | -1.0        | Fraction artifact negative one
-    3D  | =   | 0.0         | Fraction artifact zero
-    3E  | >   | 1.0         | Fraction artifact positive one
+    3C  | <   | -1.0        | Rational artifact negative one
+    3D  | =   | 0.0         | Rational artifact zero
+    3E  | >   | 1.0         | Rational artifact positive one
     3F  | ?   | 0bTRUE      | Boolean artifact true
     40  | @   |             | (unassigned)
     ----+-----+-------------+----------------------------------------------
@@ -1711,7 +1711,7 @@ usually in the context of their being the first octet of an artifact.
     5B  | [   |             | delimit-start N-ary collection element list (Nesting/Lot/Kit) or multi-segment quoted octet string
     5C  | \   |             | escape sequence prefix within quoted octet string
     5D  | ]   |             | delimit-end N-ary collection element list (Nesting/Lot/Kit) or multi-segment quoted octet string
-    5E  | ^   |             | Fraction artifact prefix general case [numerator,denominator,radix,exponent] 4-tuple
+    5E  | ^   |             | Rational artifact prefix general case [numerator,denominator,radix,exponent] 4-tuple
     5F  | _   | 0iIGNORANCE | Ignorance artifact singleton
     60  | `   |             | delimit dividing space for embedding arbitrary octet strings or ASCII comments
     ----+-----+-------------+----------------------------------------------

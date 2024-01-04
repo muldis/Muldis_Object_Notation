@@ -32,7 +32,7 @@ its part name is `Syntax_Plain_Text`.
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
-    - [Fraction](#Fraction)
+    - [Rational](#Rational)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -349,7 +349,7 @@ identifier may be split into multiple segments
 separated by dividing space.  This segmenting ability is provided to
 support code that contains very long numeric or stringy literals while
 still being well formatted (no extra long lines).
-See the grammar sections for `<Integer>`, `<Fraction>`, `<Bits>`, `<Blob>`,
+See the grammar sections for `<Integer>`, `<Rational>`, `<Bits>`, `<Blob>`,
 `<Text>` for more details on how this specifically applies to them.
 
 [RETURN](#TOP)
@@ -375,7 +375,7 @@ Grammar:
           <Ignorance>
         | <Boolean>
         | <Integer>
-        | <Fraction>
+        | <Rational>
         | <Bits>
         | <Blob>
         | <Text>
@@ -522,17 +522,17 @@ Examples:
 
 [RETURN](#TOP)
 
-<a name="Fraction"></a>
+<a name="Rational"></a>
 
-## Fraction
+## Rational
 
-A **Fraction** artifact has the dedicated concrete literal format
-described by `<Fraction>`.
+A **Rational** artifact has the dedicated concrete literal format
+described by `<Rational>`.
 
 Grammar:
 
 ```
-    token Fraction
+    token Rational
     {
         <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }
@@ -601,18 +601,18 @@ Grammar:
     }
 ```
 
-This grammar supports writing **Fraction** literals in any of the numeric
+This grammar supports writing **Rational** literals in any of the numeric
 bases `[2,8,10,16]`, using conventional syntax.  The literal may
 optionally contain underscore characters (`_`), which exist just to help
 with visual formatting, such as for `20_194/17` or `3.141_59`.
 
 This grammar explicitly forbids leading zeros in the main body of non-zero
-**Fraction** literals as a precaution against subtle security flaws or
+**Rational** literals as a precaution against subtle security flaws or
 other bugs resulting from users copying literals with leading zeros between
 MUON and some other language/format that differ in whether or not they
 consider a leading zero to signify octal/base-8 notation.
 
-The general form of a **Fraction** literal is `n/d*r^e` such that
+The general form of a **Rational** literal is `n/d*r^e` such that
 `[n,d,r,e]` are each integers and the literal represents the rational
 number that results from evaluating the mathematical expression using the
 following implicit order of operations, `(n/d)*(r^e)` such that `/` means
@@ -627,10 +627,10 @@ represented as a terminating binary or octal or hexadecimal number can also
 be represented as a terminating decimal number.
 
 Note that in order to keep the grammar simpler or more predictable, each
-**Fraction** component `[n,d,r,e]` must have its numeric base specified
+**Rational** component `[n,d,r,e]` must have its numeric base specified
 individually, and so any component without a [`0b`,`0o`,`0x`] prefix will
 be interpreted as base 10.  This keeps behaviour consistent with a parser
-that sees a **Fraction** literal but interprets it as multiple **Integer**
+that sees a **Rational** literal but interprets it as multiple **Integer**
 literals separated by symbolic infix operators, evaluation order aside.
 Also per normal expectations, literals in the format `x.x` only specify the
 base at most once in total, *not* separately for the part after the `.`.
@@ -1509,7 +1509,7 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Integer         | optional prefix +|-
                     |     and leading 0..9 without any ./*^
                     |     and no prefix 0[i|t] or 0b[F|T] or 0[b|x][a..z]
-    Fraction        | optional prefix +|-
+    Rational        | optional prefix +|-
                     |     and leading 0..9 with at least 1 of ./*^
                     |     and no prefix 0xy
     Bits            | prefix 0bb or 0bo or 0bx
@@ -1644,19 +1644,19 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * disambiguate Nesting from Text
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
-          | multiplication         | * significand/radix separator in Fraction literals
+          | multiplication         | * significand/radix separator in Rational literals
     ------+------------------------+---------------------------------------
-    +     | addition               | * optional indicates positive-Integer/Fraction literal
+    +     | addition               | * optional indicates positive-Integer/Rational literal
     ------+------------------------+---------------------------------------
-    -     | subtraction            | * indicates negative-Integer/Fraction literal
+    -     | subtraction            | * indicates negative-Integer/Rational literal
     ------+------------------------+---------------------------------------
-    .     | radix point            | * disambiguate Fraction lit from Integer lit
+    .     | radix point            | * disambiguate Rational lit from Integer lit
     ------+------------------------+---------------------------------------
-    /     | fractions/measures     | * indicates a fractional quantifying/count context
-          | division               | * disambiguate Fraction lit from Integer lit
-          |                        | * numerator/denominator separator in Fraction literals
+    /     | rationals/measures     | * indicates a fractional quantifying/count context
+          | division               | * disambiguate Rational lit from Integer lit
+          |                        | * numerator/denominator separator in Rational literals
     ------+------------------------+---------------------------------------
-    ^     | exponentiation         | * radix/exponent separator in Fraction literals
+    ^     | exponentiation         | * radix/exponent separator in Rational literals
     ------+------------------------+---------------------------------------
     digit | number/enumeration     | * first char 0..9 in bareword indicates is number/code-point/Bits/Blob/enumeration
     ------+------------------------+---------------------------------------
@@ -1666,17 +1666,17 @@ that means they are used either in pairs or as contiguous sequences.
     ------+------------------------+---------------------------------------
     0b    | boolean                | * prefix for Boolean literal
           | base-2                 | * indicates base-2/binary notation
-          |                        | * prefix for Integer or Fraction-part in base-2
+          |                        | * prefix for Integer or Rational-part in base-2
           | bit string             | * prefix for Bits literals; 0bb/0bo/0bx means in base-2/8/16
     ------+------------------------+---------------------------------------
     0o    | base-8                 | * indicates base-8/octal notation
-          |                        | * prefix for Integer or Fraction-part in base-8
+          |                        | * prefix for Integer or Rational-part in base-8
     ------+------------------------+---------------------------------------
     0d    | base-10                | * indicates base-10/decimal notation
-          |                        | * optional prefix for Integer or Fraction-part in base-10
+          |                        | * optional prefix for Integer or Rational-part in base-10
     ------+------------------------+---------------------------------------
     0x    | base-16                | * indicates base-16/hexadecimal notation
-          |                        | * prefix for Integer or Fraction-part in base-16
+          |                        | * prefix for Integer or Rational-part in base-16
           | octet string           | * prefix for Blob literals; 0xb/0xx/0xy means in base-2/16/64
     ------+------------------------+---------------------------------------
     0t    | character code point   | * indicates a Unicode character code point
@@ -1780,7 +1780,7 @@ precedes it, but interrupting with something like a comma as in
 `29 56, 14 09` would instead be two integers of 4 digits.
 
 For example, an unquoted `- 29 / 14 * 2 ^ - 6` will be interpreted as a
-single fraction value and not 4 integers separated by operators.
+single `Rational` value and not 4 integers separated by operators.
 
 It is expected that any programming languages whose grammar is a superset
 of MUON's will also keep this precedence over any actual prefix/infix/etc

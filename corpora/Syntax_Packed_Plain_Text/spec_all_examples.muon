@@ -196,10 +196,10 @@ g\DE\AD\BE\EF
 `Same thing (8 octets); also known as -472/1*10^-2.`
 ^f\FE\281$d\FE
 `Muldis_Object_Notation_Sync_Mark`
-`The fraction 15_485_863/32_452_843 (11 octets).`
+`The rational 15_485_863/32_452_843 (11 octets).`
 /g\00\EC\4B\A7g\01\EF\30\EB
 `Muldis_Object_Notation_Sync_Mark`
-`The fraction 4.5207196*10^37 (11 octets); also known as 45207196/1*10^30.`
+`The rational 4.5207196*10^37 (11 octets); also known as 45207196/1*10^30.`
 ^g\02\B1\CE\9C1$c\1E
 `Muldis_Object_Notation_Sync_Mark`
 `Dead Beef Face (15 octets); also known as 0xDEADBEEF.FACE.`

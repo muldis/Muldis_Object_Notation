@@ -26,7 +26,7 @@ its part name is `Syntax_Abstract`.
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
-    - [Fraction](#Fraction)
+    - [Rational](#Rational)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -135,11 +135,11 @@ An **Integer** artifact is any generic exact integral number of any magnitude.
 
 [RETURN](#TOP)
 
-<a name="Fraction"></a>
+<a name="Rational"></a>
 
-## Fraction
+## Rational
 
-A **Fraction** artifact is any generic exact rational number of any
+A **Rational** artifact is any generic exact rational number of any
 magnitude and precision.
 
 [RETURN](#TOP)

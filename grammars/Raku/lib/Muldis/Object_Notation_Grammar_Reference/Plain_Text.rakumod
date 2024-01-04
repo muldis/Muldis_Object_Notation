@@ -54,7 +54,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
           <Ignorance>
         | <Boolean>
         | <Integer>
-        | <Fraction>
+        | <Rational>
         | <Bits>
         | <Blob>
         | <Text>
@@ -95,7 +95,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
 
 ###########################################################################
 
-    token Fraction
+    token Rational
     {
         <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }

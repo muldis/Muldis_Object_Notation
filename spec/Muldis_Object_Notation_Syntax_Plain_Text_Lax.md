@@ -29,7 +29,7 @@ its part name is `Syntax_Plain_Text_Lax`.
     - [Ignorance](#Ignorance)
     - [Boolean](#Boolean)
     - [Integer](#Integer)
-    - [Fraction](#Fraction)
+    - [Rational](#Rational)
     - [Bits](#Bits)
     - [Blob](#Blob)
     - [Text / Attribute Name](#Text---Attribute-Name)
@@ -225,7 +225,7 @@ Grammar:
           <Ignorance>
         | <Boolean>
         | <Integer>
-        | <Fraction>
+        | <Rational>
         | <Bits>
         | <Blob>
         | <Text>
@@ -332,22 +332,22 @@ Grammar:
 
 [RETURN](#TOP)
 
-<a name="Fraction"></a>
+<a name="Rational"></a>
 
-## Fraction
+## Rational
 
-A **Fraction** artifact has the dedicated concrete literal format
-described by `<Fraction>`.
+A **Rational** artifact has the dedicated concrete literal format
+described by `<Rational>`.
 
 Grammar:
 
 ```
-    token Fraction
+    token Rational
     {
-        <Fraction_but_alpha_sci_notation> | <Fraction_alpha_sci_notation>
+        <Rational_but_alpha_sci_notation> | <Rational_alpha_sci_notation>
     }
 
-    token Fraction_but_alpha_sci_notation
+    token Rational_but_alpha_sci_notation
     {
         <significand> [<sp>? '*' <sp>? <radix> <sp>? '^' <sp>? <exponent>]?
     }
@@ -415,7 +415,7 @@ Grammar:
         <Integer>
     }
 
-    token Fraction_alpha_sci_notation
+    token Rational_alpha_sci_notation
     {
         <[+-]>? <sp>? [0 | [<[ 1..9 ]> [[_ | <sp>]? <[ 0..9 ]>+]*]]
         [[_ | <sp>]? '.' [[_ | <sp>]? <[ 0..9 ]>+]+]?
@@ -561,7 +561,7 @@ The meanings of the additional simple character escape sequences are:
     ----+------------+-----------------+-----+-----------------------------
     \"  | 0x22    34 | QUOTATION MARK  | "   | delimit quoted-Text/identifier literals
     \'  | 0x27    39 | APOSTROPHE      | '   | delimit quoted-Text/identifier literals
-    \/  | 0x2F    47 | SOLIDUS         | /   | Fraction literals
+    \/  | 0x2F    47 | SOLIDUS         | /   | Rational literals
     \\  | 0x5C    93 | REVERSE SOLIDUS | \   | not used
     \`  | 0x60    96 | GRAVE ACCENT    | `   | delimit dividing space comments
 ```
@@ -786,7 +786,7 @@ For **Boolean**:
 - Added `false` and `true` as alternate syntaxes respectively for `0bFALSE`
 and `0bTRUE`.
 
-For **Fraction**:
+For **Rational**:
 
 - Added the scientific notation format like `4.5207196e37` as an alternate
 syntax for the format like `4.5207196*10^37`.

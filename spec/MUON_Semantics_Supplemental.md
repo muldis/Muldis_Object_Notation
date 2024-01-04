@@ -73,7 +73,7 @@ and officially leaves it up to each external data model used with MUON to
 define for itself whether any two given possreps are *conjoined* (have any
 values in common) or *disjoint* (have no values in common).  For example,
 some external data models may consider **Integer** to correspond to a
-*subtype* of what **Fraction** corresponds to (`42` is a member of both)
+*subtype* of what **Rational** corresponds to (`42` is a member of both)
 while others may consider the two possreps to be disjoint (`42` and `42.0`
 are not the same value).  The sole exceptions are that the
 **Any** and **None** possreps explicitly correspond to a *supertype*
@@ -142,7 +142,7 @@ There are exactly 8 of these:
 
 - **Ignorance**
 - **Boolean**
-- Numeric: **Integer**, **Fraction**
+- Numeric: **Integer**, **Rational**
 - Stringy: **Bits**, **Blob**, **Text**
 - **Nesting**
 
@@ -222,14 +222,14 @@ Muldis Object Notation eschews dedicated possreps for some data types that
 users might expect to see here.  This section enumerates some and says why.
 
 IEEE floating-point signed zeroes, infinities, and NaNs are not part of the
-**Fraction** possrep (only regular finite numbers are included) and rather
+**Rational** possrep (only regular finite numbers are included) and rather
 would be their own singleton **Article** or **Excuse** possreps, usually
 left up to the overlaid data model.
 
 Fixed-precision/scale numbers and/or significant figures indication and/or
 error margin indication, left up to the overlaid data model.  Any added
 would be bareword only as expected to be relatively short. They would be
-defined in terms of being a scaled integer or fixed-denominator fraction.
+defined in terms of being a scaled integer or fixed-denominator rational.
 
 While **Mix** is characterized by a generalization of a **Bag**, there are
 currently no possreps defined like **Interval Mix** or **Tuple Mix**,
@@ -350,7 +350,7 @@ It is up to each specific concrete syntax in question as to whether each of
 these cases counts as an error or as a value of some other primary possrep.
 
 A *Primary_Possrep_Name* is any of these **Text** values:
-`Ignorance`, `Boolean`, `Integer`, `Fraction`,
+`Ignorance`, `Boolean`, `Integer`, `Rational`,
 `Bits`, `Blob`, `Text`, `Nesting`,
 `Pair`, `Lot`, `Kit`.
 
@@ -372,10 +372,10 @@ own **Pair** value.  Potential examples are these **Text** values:
 
 ### Fractional
 
-The **Fractional** possrep is the union of the **Fraction** and **Integer**
-possreps.  It is used where a context may conceptually require a **Fraction**
+The **Fractional** possrep is the union of the **Rational** and **Integer**
+possreps.  It is used where a context may conceptually require a **Rational**
 but it would also accept an **Integer** that would be interpreted as the
-**Fraction** artifact with the same numeric value.
+**Rational** artifact with the same numeric value.
 
 [RETURN](#TOP)
 
@@ -615,7 +615,7 @@ or *unbounded interval* includes every value in the type system.
 In the general case, for MUON-defined types, only a *bounded interval* over
 2 distinct **Integer** (or **Boolean**) endpoints has a finite member
 count; whereas, a *bounded interval* over 2 distinct endpoints over any
-other type (such as **Fraction** or **Text**) has an infinite member count,
+other type (such as **Rational** or **Text**) has an infinite member count,
 because given any 2 distinct values of most types you can find another
 distinct value that is ordered between them.  Also, a non-bounded interval
 over **Integer** has an infinite member count in MUON.  An external data
