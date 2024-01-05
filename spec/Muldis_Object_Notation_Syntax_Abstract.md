@@ -141,8 +141,8 @@ An **Integer** artifact is any generic exact integral number of any magnitude.
 
 ## Rational
 
-A **Rational** artifact is any generic exact rational number of any
-magnitude and precision.
+A **Rational** artifact is any generic exact rational number
+of any magnitude and precision.
 
 [RETURN](#TOP)
 
@@ -150,7 +150,8 @@ magnitude and precision.
 
 ## Binary
 
-*TODO.*
+A **Binary** artifact is any generic exact rational number,
+which is a binary fraction, of any magnitude and precision.
 
 [RETURN](#TOP)
 
@@ -158,7 +159,8 @@ magnitude and precision.
 
 ## Decimal
 
-*TODO.*
+A **Decimal** artifact is any generic exact rational number,
+which is a decimal fraction, of any magnitude and precision.
 
 [RETURN](#TOP)
 

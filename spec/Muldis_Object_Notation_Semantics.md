@@ -241,31 +241,21 @@ magnitude and precision, which explicitly does not represent any kind of
 thing in particular, neither cardinal nor ordinal nor nominal.
 It has no minimum or maximum value.
 
-A **Rational** value is characterized by a **Kit** having a subset of the
-4 attributes of the heading
-[`n|numerator`,`d|denominator`,`r|radix`,`e|exponent`] such that each
-attribute asset is an **Integer**, and [`r|radix`,`e|exponent`] must only
-be given as a pair, and `d|denominator` if given must be non-zero, and
-`r|radix` if given must be at least 2; each of the 4 attributes, if not
-given, respectively have the implicit values [0,1,2,0].
+A **Rational** value is characterized by the pairing of a *numerator*,
+which is an **Integer** value, with a *denominator*, which is an
+**Integer** value that is non-zero.
 
 The intended interpretation of a **Rational** is as the rational number
-that results from evaluating the given 4 integers as the mathematical
-expression `(n/d)*(r^e)`, such that `/` means divide, `*` means multiply,
-and `^` means exponentiate.
+that results from evaluating the given 2 integers as the mathematical
+expression `numerator/denominator`, such that `/` means divide.
 
 MUON does not require any mathematical normalization of a **Rational**
-artifact's components in order for it to be a valid artifact; for example,
-the numerator/denominator pair do not need to be coprime.  But typically a
+artifact's components in order for it to be a valid artifact;
+the numerator/denominator pair do not need to be coprime
+and the denominator does not need to be positive.  But typically a
 type system will hide from the user the actual physical representation of
 whatever value a given **Rational** artifact resolves to, and would
 determine value identity based on the actual logical rational number.
-
-Where any MUON syntax makes reference to a `s|sig|significand` as a part of
-a **Rational** artifact, that means a rational number that takes the place
-of the numerator/denominator pair.  Examples of *significand* are literals
-with radix points like `3.14` and host language values that are already the
-general case of a rational.
 
 [RETURN](#TOP)
 
@@ -273,7 +263,23 @@ general case of a rational.
 
 ## Binary
 
-*TODO.*
+A **Binary** value is a general purpose exact rational number of any
+magnitude and precision, which is a binary fraction (an exact multiple of
+any power of two), which explicitly does not represent any kind of
+thing in particular, neither cardinal nor ordinal nor nominal.
+It has no minimum or maximum value.
+
+A **Binary** value is characterized by the pairing of a *significand*,
+which is an **Integer** value, with a *exponent*, which is an
+**Integer** value.
+
+The intended interpretation of a **Binary** is as the rational number
+that results from evaluating the given 2 integers as the mathematical
+expression `significand*(2^exponent)`, such that `*` means multiply
+and `^` means exponentiate.
+
+MUON does not require any mathematical normalization of a **Binary**
+artifact's components in order for it to be a valid artifact.
 
 [RETURN](#TOP)
 
@@ -281,7 +287,23 @@ general case of a rational.
 
 ## Decimal
 
-*TODO.*
+A **Decimal** value is a general purpose exact rational number of any
+magnitude and precision, which is a decimal fraction (an exact multiple of
+any power of ten), which explicitly does not represent any kind of
+thing in particular, neither cardinal nor ordinal nor nominal.
+It has no minimum or maximum value.
+
+A **Decimal** value is characterized by the pairing of a *significand*,
+which is an **Integer** value, with a *exponent*, which is an
+**Integer** value.
+
+The intended interpretation of a **Decimal** is as the rational number
+that results from evaluating the given 2 integers as the mathematical
+expression `significand*(10^exponent)`, such that `*` means multiply
+and `^` means exponentiate.
+
+MUON does not require any mathematical normalization of a **Decimal**
+artifact's components in order for it to be a valid artifact.
 
 [RETURN](#TOP)
 

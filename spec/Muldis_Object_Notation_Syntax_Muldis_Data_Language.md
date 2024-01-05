@@ -135,7 +135,9 @@ A **Rational** artifact is any of the following:
 
 ## Binary
 
-*TODO.*
+A **Binary** artifact is any of the following:
+
+* Any value of the MDL type `fdn::Binary`.
 
 [RETURN](#TOP)
 
@@ -143,7 +145,9 @@ A **Rational** artifact is any of the following:
 
 ## Decimal
 
-*TODO.*
+A **Decimal** artifact is any of the following:
+
+* Any value of the MDL type `fdn::Decimal`.
 
 [RETURN](#TOP)
 

@@ -596,19 +596,15 @@ optionally contain underscore characters (`_`), which exist just to help
 with visual formatting, such as for `20_194/17` or `3.141_59`.
 
 This grammar explicitly forbids leading zeros in the main body of non-zero
-**Rational** literals as a precaution against subtle security flaws or
-other bugs resulting from users copying literals with leading zeros between
-MUON and some other language/format that differ in whether or not they
-consider a leading zero to signify octal/base-8 notation.
+**Rational** literals for the same reason as with **Integer** literals.
 
-The general form of a **Rational** literal is `n/d*r^e` such that
-`[n,d,r,e]` are each integers and the literal represents the rational
-number that results from evaluating the mathematical expression using the
-following implicit order of operations, `(n/d)*(r^e)` such that `/` means
-divide, `*` means multiply, and `^` means exponentiate.
+The general form of a **Rational** literal is `numerator/denominator` such
+that `[numerator,denominator]` are each integers and the literal represents
+the rational number that results from evaluating the mathematical
+expression `numerator/denominator`, such that `/` means divide.
 
-While the wider general format `n/d*r^e` can represent every rational
-number, as can just the `n/d` portion by itself, the alternate but typical
+While the general format `numerator/denominator` can represent
+every rational number, the alternate but typical
 format `x.x` can only represent a proper subset of the rational numbers,
 that subset being every rational number that can be represented as a
 terminating decimal number.  Note that every rational number that can be
@@ -616,8 +612,8 @@ represented as a terminating binary or octal or hexadecimal number can also
 be represented as a terminating decimal number.
 
 Note that in order to keep the grammar simpler or more predictable, each
-**Rational** component `[n,d,r,e]` must have its numeric base specified
-individually, and so any component without a [`0b`,`0o`,`0x`] prefix will
+**Rational** component `[numerator,denominator]` must have its numeric base
+specified individually; any component without a [`0b`,`0o`,`0x`] prefix will
 be interpreted as base 10.  This keeps behaviour consistent with a parser
 that sees a **Rational** literal but interprets it as multiple **Integer**
 literals separated by symbolic infix operators, evaluation order aside.
@@ -698,7 +694,34 @@ Grammar:
     }
 ```
 
-*TODO.*
+This grammar supports writing **Binary** literals in any of the numeric
+bases `[2,8,10,16]`, using conventional syntax.  The literal may
+optionally contain underscore characters (`_`), which exist just to help
+with visual formatting, such as for `0b1.0111_0110_1*2^-0b1_1011`.
+
+This grammar explicitly forbids leading zeros in the main body of non-zero
+**Binary** literals for the same reason as with **Integer** literals.
+
+The general form of a **Binary** literal is `significand*2^exponent` such
+that `[significand,exponent]` are each integers and the literal represents
+the rational number that results from evaluating the mathematical
+expression `significand*(2^exponent)`, such that `*` means multiply
+and `^` means exponentiate.
+
+Note that in order to keep the grammar simpler or more predictable, each
+**Binary** component `[significand,exponent]` must have its numeric base
+specified individually; any component without a [`0b`,`0o`,`0x`] prefix will
+be interpreted as base 10.  This keeps behaviour consistent with a parser
+that sees a **Binary** literal but interprets it as multiple **Integer**
+literals separated by symbolic infix operators, evaluation order aside.
+Also per normal expectations, significands in the format `x.x` only specify
+the base at most once in total, *not* separately for the part after the `.`.
+
+A `<Binary>` with a `<significand>` that is a `<Rational_with_radix_point>`
+is subject to the additional rule that the integer it denotes must be an
+exact multiple of any power of two.  While this is always the case when
+that significand has a [`0b`,`0o`,`0x`] prefix, it can easily not be the
+case when that significand has either no prefix or a `0d` prefix.
 
 Examples:
 
@@ -749,7 +772,28 @@ Grammar:
     }
 ```
 
-*TODO.*
+This grammar supports writing **Decimal** literals in any of the numeric
+bases `[2,8,10,16]`, using conventional syntax.  The literal may
+optionally contain underscore characters (`_`), which exist just to help
+with visual formatting, such as for `4.520_719_6*10^37`.
+
+This grammar explicitly forbids leading zeros in the main body of non-zero
+**Decimal** literals for the same reason as with **Integer** literals.
+
+The general form of a **Decimal** literal is `significand*10^exponent` such
+that `[significand,exponent]` are each integers and the literal represents
+the rational number that results from evaluating the mathematical
+expression `significand*(10^exponent)`, such that `*` means multiply
+and `^` means exponentiate.
+
+Note that in order to keep the grammar simpler or more predictable, each
+**Decimal** component `[significand,exponent]` must have its numeric base
+specified individually; any component without a [`0b`,`0o`,`0x`] prefix will
+be interpreted as base 10.  This keeps behaviour consistent with a parser
+that sees a **Decimal** literal but interprets it as multiple **Integer**
+literals separated by symbolic infix operators, evaluation order aside.
+Also per normal expectations, significands in the format `x.x` only specify
+the base at most once in total, *not* separately for the part after the `.`.
 
 Examples:
 
@@ -1731,7 +1775,8 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * disambiguate Nesting from Text
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
-          | multiplication         | * significand/radix separator in Rational literals
+          | multiplication         | * significand/radix separator in Binary/Decimal literals
+          |                        | * disambiguate Binary/Decimal lit from Integer/Rational lit
     ------+------------------------+---------------------------------------
     +     | addition               | * optional indicates positive-Integer/Rational literal
     ------+------------------------+---------------------------------------
@@ -1743,7 +1788,8 @@ that means they are used either in pairs or as contiguous sequences.
           | division               | * disambiguate Rational lit from Integer lit
           |                        | * numerator/denominator separator in Rational literals
     ------+------------------------+---------------------------------------
-    ^     | exponentiation         | * radix/exponent separator in Rational literals
+    ^     | exponentiation         | * radix/exponent separator in Binary/Decimal literals
+          |                        | * disambiguate Binary/Decimal lit from Integer/Rational lit
     ------+------------------------+---------------------------------------
     digit | number/enumeration     | * first char 0..9 in bareword indicates is number/code-point/Bits/Blob/enumeration
     ------+------------------------+---------------------------------------
@@ -1866,8 +1912,8 @@ integer of 8 digits, or as part of something larger depending on what
 precedes it, but interrupting with something like a comma as in
 `29 56, 14 09` would instead be two integers of 4 digits.
 
-For example, an unquoted `- 29 / 14 * 2 ^ - 6` will be interpreted as a
-single `Rational` value and not 4 integers separated by operators.
+For example, an unquoted `- 29 * 10 ^ - 6` will be interpreted as a
+single `Decimal` value and not 3 integers separated by operators.
 
 It is expected that any programming languages whose grammar is a superset
 of MUON's will also keep this precedence over any actual prefix/infix/etc

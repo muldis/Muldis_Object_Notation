@@ -617,7 +617,7 @@ corresponds to the ASCII/UTF-8 *LATIN SMALL LETTER [D,F,H,J]* character
 Note that making special cases of single-octet representations for 100 and
 1000 is rationalized by their frequent use in decimalised currencies, where
 hundredths denominations are very common and thousanths are also used;
-this efficiency mainly is for the benefit of 2-tuple **Rational** artifacts.
+this efficiency mainly is for the benefit of **Rational** artifacts.
 
 Examples:
 
@@ -797,7 +797,7 @@ Its single canonical octet for `-1.0` corresponds to the ASCII/UTF-8
 *LESS-THAN SIGN* character `<`.
 
 A **Rational** artifact uses 3..N octets to represent the general case of
-any rational as a 2-tuple-denoting octet, which corresponds to the
+any rational as a pair-denoting octet, which corresponds to the
 ASCII/UTF-8 *SOLIDUS* character `/` which has a common mnemonic
 of numeric division or rationals/fractions, followed by 2 **Integer**
 artifacts which represent in order a numerator and denominator.
@@ -926,7 +926,23 @@ Grammar:
     }
 ```
 
-*TODO.*
+A **Binary** artifact uses just 1 octet to canonically represent the most
+commonly used rationals `[-1*2^0,0*2^0,1*2^0]`.  There are also
+other formats for each of these rationals, but they all take more octets.
+
+Its single canonical octet for `-1*2^0` corresponds to the ASCII/UTF-8
+*LEFT CURLY BRACKET* character `{`.
+
+Its single canonical octet for `0*2^0` corresponds to the ASCII/UTF-8
+*VERTICAL LINE* character `|`.
+
+Its single canonical octet for `1*2^0` corresponds to the ASCII/UTF-8
+*RIGHT CURLY BRACKET* character `}`.
+
+A **Binary** artifact uses 3..N octets to represent the general case of
+any binary fraction as a pair-denoting octet, which corresponds to the
+ASCII/UTF-8 *TILDE* character `~`, followed by 2 **Integer** artifacts which
+represent in order a significand and exponent.
 
 Examples:
 
@@ -1010,7 +1026,24 @@ Grammar:
     }
 ```
 
-*TODO.*
+A **Decimal** artifact uses just 1 octet to canonically represent the most
+commonly used rationals `[-1*10^0,0*10^0,1*10^0]`.  There are also
+other formats for each of these rationals, but they all take more octets.
+
+Its single canonical octet for `-1*10^0` corresponds to the ASCII/UTF-8
+*LEFT PARENTHESIS* character `(`.
+
+Its single canonical octet for `0*10^0` corresponds to the ASCII/UTF-8
+*ASTERISK* character `*`.
+
+Its single canonical octet for `1*10^0` corresponds to the ASCII/UTF-8
+*RIGHT PARENTHESIS* character `)`.
+
+A **Decimal** artifact uses 3..N octets to represent the general case of
+any decimal fraction as a pair-denoting octet, which corresponds to the
+ASCII/UTF-8 *CIRCUMFLEX ACCENT* character `^` which has a common mnemonic
+of numeric exponentiation, followed by 2 **Integer** artifacts which
+represent in order a significand and exponent.
 
 Examples:
 
@@ -1810,7 +1843,7 @@ usually in the context of their being the first octet of an artifact.
     2C  | ,   | 0t9         | Text artifact or 10th "positional" Kit attribute name
     2D  | -   |             | Integer artifact prefix general case negative number
     2E  | .   |             | (unassigned)
-    2F  | /   |             | Rational artifact prefix general case [numerator,denominator] 2-tuple/pair
+    2F  | /   |             | Rational artifact prefix general case [numerator,denominator] pair
     ----+-----+-------------+----------------------------------------------
     30  | 0   | 0           | Integer artifact zero
     31  | 1   | 1           | Integer artifact positive one or Lot member multiplicity one
@@ -1855,7 +1888,7 @@ usually in the context of their being the first octet of an artifact.
     5B  | [   |             | delimit-start N-ary collection element list (Nesting/Lot/Kit) or multi-segment quoted octet string
     5C  | \   |             | escape sequence prefix within quoted octet string
     5D  | ]   |             | delimit-end N-ary collection element list (Nesting/Lot/Kit) or multi-segment quoted octet string
-    5E  | ^   |             | Decimal artifact prefix general case [significand,exponent] 2-tuple/pair
+    5E  | ^   |             | Decimal artifact prefix general case [significand,exponent] pair
     5F  | _   | 0iIGNORANCE | Ignorance artifact singleton
     60  | `   |             | delimit dividing space for embedding arbitrary octet strings or ASCII comments
     ----+-----+-------------+----------------------------------------------
@@ -1892,7 +1925,7 @@ usually in the context of their being the first octet of an artifact.
     7B  | {   |             | Binary artifact negative one
     7C  | |   |             | Binary artifact zero
     7D  | }   |             | Binary artifact positive one
-    7E  | ~   |             | Binary artifact prefix general case [significand,exponent] 2-tuple/pair
+    7E  | ~   |             | Binary artifact prefix general case [significand,exponent] pair
     ----+-----+-------------+----------------------------------------------
     7F  |     |             | (unassigned)
     ----+-----+-------------+----------------------------------------------
