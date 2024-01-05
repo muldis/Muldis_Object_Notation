@@ -218,11 +218,15 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
     token Rational
     {
-          <Rational_zero>
+          <Rational_negative_one>
+        | <Rational_zero>
         | <Rational_positive_one>
-        | <Rational_negative_one>
-        | <Rational_2_tuple_numerator_denominator>
-        | <Rational_4_tuple_num_den_radix_exponent>
+        | <Rational_with_num_den>
+    }
+
+    token Rational_negative_one
+    {
+        '<'
     }
 
     token Rational_zero
@@ -235,19 +239,9 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
        '>'
     }
 
-    token Rational_negative_one
-    {
-        '<'
-    }
-
-    token Rational_2_tuple_numerator_denominator
+    token Rational_with_num_den
     {
         '/' <sp>? <numerator> <sp>? <denominator>
-    }
-
-    token Rational_4_tuple_num_den_radix_exponent
-    {
-        '^' <sp>? <numerator> <sp>? <denominator> <sp>? <radix> <sp>? <exponent>
     }
 
     token numerator
@@ -260,9 +254,39 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
         <Integer_nonsigned>
     }
 
-    token radix
+###########################################################################
+
+    token Binary
     {
-        <Integer_nonsigned>
+          <Binary_negative_one>
+        | <Binary_zero>
+        | <Binary_positive_one>
+        | <Binary_with_num_den>
+    }
+
+    token Binary_negative_one
+    {
+        '{'
+    }
+
+    token Binary_zero
+    {
+        '|'
+    }
+
+    token Binary_positive_one
+    {
+       '}'
+    }
+
+    token Binary_with_sig_exp
+    {
+        '~' <sp>? <significand> <sp>? <exponent>
+    }
+
+    token significand
+    {
+        <Integer>
     }
 
     token exponent
@@ -272,16 +296,32 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
 ###########################################################################
 
-    token Binary
-    {
-        TODO
-    }
-
-###########################################################################
-
     token Decimal
     {
-        TODO
+          <Decimal_negative_one>
+        | <Decimal_zero>
+        | <Decimal_positive_one>
+        | <Decimal_with_num_den>
+    }
+
+    token Decimal_negative_one
+    {
+        '('
+    }
+
+    token Decimal_zero
+    {
+        '*'
+    }
+
+    token Decimal_positive_one
+    {
+       ')'
+    }
+
+    token Decimal_with_sig_exp
+    {
+        '^' <sp>? <significand> <sp>? <exponent>
     }
 
 ###########################################################################

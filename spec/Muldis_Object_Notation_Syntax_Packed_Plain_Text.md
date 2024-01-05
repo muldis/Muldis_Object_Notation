@@ -746,11 +746,15 @@ Grammar:
 ```
     token Rational
     {
-          <Rational_zero>
+          <Rational_negative_one>
+        | <Rational_zero>
         | <Rational_positive_one>
-        | <Rational_negative_one>
-        | <Rational_2_tuple_numerator_denominator>
-        | <Rational_4_tuple_num_den_radix_exponent>
+        | <Rational_with_num_den>
+    }
+
+    token Rational_negative_one
+    {
+        '<'
     }
 
     token Rational_zero
@@ -763,19 +767,9 @@ Grammar:
        '>'
     }
 
-    token Rational_negative_one
-    {
-        '<'
-    }
-
-    token Rational_2_tuple_numerator_denominator
+    token Rational_with_num_den
     {
         '/' <sp>? <numerator> <sp>? <denominator>
-    }
-
-    token Rational_4_tuple_num_den_radix_exponent
-    {
-        '^' <sp>? <numerator> <sp>? <denominator> <sp>? <radix> <sp>? <exponent>
     }
 
     token numerator
@@ -786,16 +780,6 @@ Grammar:
     token denominator
     {
         <Integer_nonsigned>
-    }
-
-    token radix
-    {
-        <Integer_nonsigned>
-    }
-
-    token exponent
-    {
-        <Integer>
     }
 ```
 
@@ -839,23 +823,11 @@ Examples:
     `Same thing (9 octets); also known as 0/1.`
     /+"\00"+"\01"
 
-    `Same thing (5 octets); also known as 0/1*2^0.`
-    ^0120
-
-    `Same thing (9 octets); also known as 0/1*2^0.`
-    ^c\00c\01c\02c\00
-
-    `Same thing (5 octets); also known as 0/1*10^0.`
-    ^01$0
-
     `Positive one (1 octet).`
     >
 
     `Same thing (3 octets); also known as 1/1.`
     /11
-
-    `Same thing (5 octets); also known as 1/1*2^0.`
-    ^1120
 
     `Negative one (1 octet).`
     <
@@ -863,14 +835,8 @@ Examples:
     `Same thing (3 octets); also known as -1/1.`
     /#1
 
-    `Same thing (5 octets); also known as -1/1*2^0.`
-    ^#120
-
     `Positive five-thirds (3 octets); also known as 5/3.`
     /53
-
-    `Same thing (5 octets); also known as 5/1*3^-1.`
-    ^513#
 
     `Ten (3 octets); also known as 10/1.`
     /$1
@@ -902,14 +868,8 @@ Examples:
     `Same thing (7 octets); also known as -472/100.`
     /f\FE\28e\00\64
 
-    `Same thing (8 octets); also known as -472/1*10^-2.`
-    ^f\FE\281$d\FE
-
     `The rational 15_485_863/32_452_843 (11 octets).`
     /g\00\EC\4B\A7g\01\EF\30\EB
-
-    `The rational 4.5207196*10^37 (11 octets); also known as 45207196/1*10^30.`
-    ^g\02\B1\CE\9C1$c\1E
 
     `Dead Beef Face (15 octets); also known as 0xDEADBEEF.FACE.`
     /i\00\00\DE\AD\BE\EF\FA\CEg\00\01\00\00
@@ -929,11 +889,85 @@ Grammar:
 ```
     token Binary
     {
-        TODO
+          <Binary_negative_one>
+        | <Binary_zero>
+        | <Binary_positive_one>
+        | <Binary_with_num_den>
+    }
+
+    token Binary_negative_one
+    {
+        '{'
+    }
+
+    token Binary_zero
+    {
+        '|'
+    }
+
+    token Binary_positive_one
+    {
+       '}'
+    }
+
+    token Binary_with_sig_exp
+    {
+        '~' <sp>? <significand> <sp>? <exponent>
+    }
+
+    token significand
+    {
+        <Integer>
+    }
+
+    token exponent
+    {
+        <Integer>
     }
 ```
 
 *TODO.*
+
+Examples:
+
+```
+    `Zero (1 octet).`
+    |
+
+    `Same thing (3 octets); also known as 0*2^0.`
+    ~00
+
+    `Same thing (5 octets); also known as 0*2^0.`
+    ~c\00c\00
+
+    `Same thing (9 octets); also known as 0*2^0.`
+    ~+"\00"+"\00"
+
+    `Positive one (1 octet).`
+    }
+
+    `Same thing (3 octets); also known as 1*2^0.`
+    ~10
+
+    `Negative one (1 octet).`
+    {
+
+    `Same thing (3 octets); also known as -1*2^0.`
+    ~#0
+
+    `Two (3 octets); also known as 1*2^1.`
+    ~11
+
+    `One half (3 octets); also known as 1*2^-1.`
+    ~1#
+
+    `Dead Beef (7 octets); also known as 0xDEADBEEF*2^0x0.`
+    ~i\DE\AD\BE\EF0
+
+    `The rational 0b1.011101101*2^-0b11011 (6 octets);`
+    `also known as 0b1011101101*2^-0b100100.`
+    ~e\02\EDd\DC
+```
 
 [RETURN](#TOP)
 
@@ -949,11 +983,77 @@ Grammar:
 ```
     token Decimal
     {
-        TODO
+          <Decimal_negative_one>
+        | <Decimal_zero>
+        | <Decimal_positive_one>
+        | <Decimal_with_num_den>
+    }
+
+    token Decimal_negative_one
+    {
+        '('
+    }
+
+    token Decimal_zero
+    {
+        '*'
+    }
+
+    token Decimal_positive_one
+    {
+       ')'
+    }
+
+    token Decimal_with_sig_exp
+    {
+        '^' <sp>? <significand> <sp>? <exponent>
     }
 ```
 
 *TODO.*
+
+Examples:
+
+```
+    `Zero (1 octet).`
+    *
+
+    `Same thing (3 octets); also known as 0*10^0.`
+    ^00
+
+    `Same thing (5 octets); also known as 0*10^0.`
+    ^c\00c\00
+
+    `Same thing (9 octets); also known as 0*10^0.`
+    ^+"\00"+"\00"
+
+    `Positive one (1 octet).`
+    )
+
+    `Same thing (3 octets); also known as 1*10^0.`
+    ^10
+
+    `Negative one (1 octet).`
+    (
+
+    `Same thing (3 octets); also known as -1*10^0.`
+    ^#0
+
+    `Ten (3 octets); also known as 1*10^1.`
+    ^11
+
+    `One tenth (3 octets); also known as 1*10^-1.`
+    ^1#
+
+    `Negative 472-hundredths (10 octets); also known as -472*10^-2.`
+    ^-"\01\D8"-"\02"
+
+    `Same thing (6 octets); also known as -472*10^-2.`
+    ^f\FE\28d\FE
+
+    `The rational 4.5207196*10^37 (8 octets); also known as 45207196*10^30.`
+    ^g\02\B1\CE\9Cc\1E
+```
 
 [RETURN](#TOP)
 
@@ -1703,10 +1803,10 @@ usually in the context of their being the first octet of an artifact.
     25  | %   | 100         | Integer artifact positive one-hundred or Lot member multiplicity one-hundred
     26  | &   | 1000        | Integer artifact positive one-thousand or Lot member multiplicity one-thousand
     27  | '   |             | (unassigned)
-    28  | (   |             | (unassigned)
-    29  | )   |             | (unassigned)
-    2A  | *   |             | (unassigned)
-    2B  | +   |             | Integer artifact prefix general case positive number
+    28  | (   |             | Decimal artifact negative one
+    29  | )   |             | Decimal artifact positive one
+    2A  | *   |             | Decimal artifact zero
+    2B  | +   |             | Integer artifact prefix general case positive number or Lot member multiplicity
     2C  | ,   | 0t9         | Text artifact or 10th "positional" Kit attribute name
     2D  | -   |             | Integer artifact prefix general case negative number
     2E  | .   |             | (unassigned)
@@ -1755,7 +1855,7 @@ usually in the context of their being the first octet of an artifact.
     5B  | [   |             | delimit-start N-ary collection element list (Nesting/Lot/Kit) or multi-segment quoted octet string
     5C  | \   |             | escape sequence prefix within quoted octet string
     5D  | ]   |             | delimit-end N-ary collection element list (Nesting/Lot/Kit) or multi-segment quoted octet string
-    5E  | ^   |             | Rational artifact prefix general case [numerator,denominator,radix,exponent] 4-tuple
+    5E  | ^   |             | Decimal artifact prefix general case [significand,exponent] 2-tuple/pair
     5F  | _   | 0iIGNORANCE | Ignorance artifact singleton
     60  | `   |             | delimit dividing space for embedding arbitrary octet strings or ASCII comments
     ----+-----+-------------+----------------------------------------------
@@ -1789,10 +1889,10 @@ usually in the context of their being the first octet of an artifact.
     79  | y   |             | Text artifact prefix special case UTF-8 string with exactly 5 octets
     7A  | z   |             | Text artifact prefix special case UTF-8 string with exactly 6 octets
     ----+-----+-------------+----------------------------------------------
-    7B  | {   |             | (unassigned)
-    7C  | |   |             | (unassigned)
-    7D  | }   |             | (unassigned)
-    7E  | ~   |             | (unassigned)
+    7B  | {   |             | Binary artifact negative one
+    7C  | |   |             | Binary artifact zero
+    7D  | }   |             | Binary artifact positive one
+    7E  | ~   |             | Binary artifact prefix general case [significand,exponent] 2-tuple/pair
     ----+-----+-------------+----------------------------------------------
     7F  |     |             | (unassigned)
     ----+-----+-------------+----------------------------------------------
