@@ -103,7 +103,8 @@ concrete literal formats, embedded within JSON `string` values.
 This is particularly important for the lossless conveyance of **Integer**
 artifacts of larger magnitudes or derivatives since JSON `number`
 representations of such may not be supported by some JSON implementations.
-This is also useful for conveyence of **Rational** and **Bits** and **Blob**
+This is also useful for conveyence of
+**Rational** and **Binary** and **Decimal** and **Bits** and **Blob**
 artifacts as it opens up more compact options than are otherwise available.
 
 The prescribed standard *syntax base name* of a *syntax-qualified artifact*
@@ -187,7 +188,8 @@ An *embedded_MUON_PT_parsing_unit* is any of the following:
 
 * Any *SYS_Text* that can be successfully interpreted as a
 `Muldis_Object_Notation_Plain_Text` parsing unit consisting of a single
-**Integer** or **Rational** or **Bits** or **Blob** artifact.
+**Integer** or **Rational** or **Binary** or **Decimal**
+or **Bits** or **Blob** artifact.
 
 [RETURN](#TOP)
 
@@ -198,7 +200,16 @@ An *embedded_MUON_PT_parsing_unit* is any of the following:
 A **Rational** artifact is any of the following:
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
-and its *SYS_that* is any *SYS_Non_Qualified_Rational*.
+and its *SYS_that* is any *SYS_Rational*
+or any *embedded_MUON_PT_Rational* or any *embedded_MUON_PT_Binary*
+or any *embedded_MUON_PT_Decimal* or any *SYS_or_embedded_Integer*.
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
+and its *SYS_that* is
+any *SYS_Pair_AA* such that its *SYS_this* and *SYS_that* correspond to
+the *numerator* (any *SYS_or_embedded_Integer*)
+and *denominator* (any *SYS_or_embedded_Integer*
+which denotes a nonzero integer) of the new **Rational** respectively.
 
 Not permitted for a **Rational** is any of the following,
 to keep things more correct and simpler:
@@ -209,34 +220,6 @@ This is because that would often be interpreted as an **Integer** artifact.
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
 This is because that would typically be interpreted as a **Text** artifact.
-
-A *SYS_Non_Qualified_Rational* is any of the following:
-
-* Any *embedded_MUON_PT_Rational*.
-
-* Any *significand*.
-
-* Any *SYS_Positional_Tuple_A* having exactly 1 element which
-is the *significand*.
-
-* Any *SYS_Positional_Tuple_A* having exactly 2 elements which in
-ascending order are the *numerator* and *denominator*.
-
-* Any *SYS_Positional_Tuple_A* having exactly 3 elements which in
-ascending order are the *significand*, *radix*, and *exponent*.
-
-* Any *SYS_Positional_Tuple_A* having exactly 4 elements which in
-ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
-
-A *significand* is any *SYS_Rational* or any *SYS_or_embedded_Integer*.
-
-A *numerator* is any *SYS_or_embedded_Integer*.
-
-A *denominator* is any *SYS_or_embedded_Integer* which denotes a nonzero integer.
-
-A *radix* is any *SYS_or_embedded_Integer* which denotes an integer that is at least 2.
-
-An *exponent* is any *SYS_or_embedded_Integer*.
 
 A *SYS_Rational* is any of the following:
 
@@ -260,7 +243,21 @@ An *embedded_MUON_PT_Rational* is any of the following:
 
 ## Binary
 
-*TODO.*
+A **Binary** artifact is any of the following:
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Binary`
+and its *SYS_that* is any *SYS_Rational*
+or any *embedded_MUON_PT_Binary* or any *SYS_or_embedded_Integer*.
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Binary`
+and its *SYS_that* is
+any *SYS_Pair_AA* such that its *SYS_this* and *SYS_that* correspond to
+the *significand* (any *SYS_or_embedded_Integer*) and *exponent*
+(any *SYS_or_embedded_Integer*) of the new **Binary** respectively.
+
+An *embedded_MUON_PT_Binary* is any of the following:
+
+* Any *embedded_MUON_PT_parsing_unit* that denotes any **Binary** artifact.
 
 [RETURN](#TOP)
 
@@ -268,7 +265,21 @@ An *embedded_MUON_PT_Rational* is any of the following:
 
 ## Decimal
 
-*TODO.*
+A **Decimal** artifact is any of the following:
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
+and its *SYS_that* is any *SYS_Rational*
+or any *embedded_MUON_PT_Decimal* or any *SYS_or_embedded_Integer*.
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
+and its *SYS_that* is
+any *SYS_Pair_AA* such that its *SYS_this* and *SYS_that* correspond to
+the *significand* (any *SYS_or_embedded_Integer*) and *exponent*
+(any *SYS_or_embedded_Integer*) of the new **Decimal** respectively.
+
+An *embedded_MUON_PT_Decimal* is any of the following:
+
+* Any *embedded_MUON_PT_parsing_unit* that denotes any **Decimal** artifact.
 
 [RETURN](#TOP)
 
