@@ -378,7 +378,7 @@ A *SYS_Pair_TA* is any of the following:
 
 A *SYS_Pair_AA* is any of the following:
 
-* Any *SYS_Positional_Tuple_A* having exactly 2 elements
+* Any *SYS_Array_A* having exactly 2 elements
 such that its first element is *SYS_this* and its second element is *SYS_that*.
 
 [RETURN](#TOP)
@@ -449,10 +449,6 @@ Note that values of the ECMAScript type `Map`
 are not used to represent collections of pairs because the ECMAScript
 language standard does not guarantee that they preserve the insertion order
 of elements, even if the defacto standard implementations all do so.
-
-A *SYS_Positional_Tuple_A* is any of the following:
-
-* Any *SYS_Array_A*.
 
 [RETURN](#TOP)
 

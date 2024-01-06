@@ -367,7 +367,7 @@ A *SYS_Pair_TA* is any of the following:
 
 A *SYS_Pair_AA* is any of the following:
 
-* Any *SYS_Positional_Tuple_A* having exactly 2 elements
+* Any *SYS_Array_A* having exactly 2 elements
 such that its first element is *SYS_this* and its second element is *SYS_that*.
 
 [RETURN](#TOP)
@@ -461,10 +461,6 @@ Not permitted for a *SYS_Ordered_Dictionary_AA* is any of the following,
 to prevent ambiguity and simplify things:
 
 * Any value of the PHP type `array` for which `array_is_list()` is true.
-
-A *SYS_Positional_Tuple_A* is any of the following:
-
-* Any *SYS_Array_A*.
 
 [RETURN](#TOP)
 

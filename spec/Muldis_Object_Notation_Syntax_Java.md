@@ -485,10 +485,6 @@ to prevent ambiguity and simplify things:
 that composes the Java interface `java.util.Map`,
 because its collection of elements is likely to be unordered.
 
-A *SYS_Positional_Tuple_A* is any of the following:
-
-* Any *SYS_Array_A*.
-
 [RETURN](#TOP)
 
 <a name="AUTHOR"></a>

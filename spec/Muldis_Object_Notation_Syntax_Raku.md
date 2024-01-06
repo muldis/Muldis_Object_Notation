@@ -492,10 +492,6 @@ Note that an object of the Raku class `Capture` is a direct **Kit**/*tuple*
 analogy which extends to the fact that a primary purpose of both is to
 represent a collection of arguments for a routine.
 
-A *SYS_Positional_Tuple_A* is any of the following:
-
-* Any *SYS_Array_A*.
-
 [RETURN](#TOP)
 
 <a name="AUTHOR"></a>

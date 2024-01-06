@@ -400,7 +400,7 @@ A *SYS_Pair_TA* is any of the following:
 
 A *SYS_Pair_AA* is any of the following:
 
-* Any *SYS_Positional_Tuple_A* having exactly 2 elements
+* Any *SYS_Array_A* having exactly 2 elements
 such that its first element is *SYS_this* and its second element is *SYS_that*.
 
 [RETURN](#TOP)
@@ -470,10 +470,6 @@ this format can express every possible **Kit**.
 Note that JSON `object` values
 are not used to represent collections of pairs because they are
 unordered collections, and JSON doesn't provide any ordered analogy.
-
-A *SYS_Positional_Tuple_A* is any of the following:
-
-* Any *SYS_Array_A*.
 
 [RETURN](#TOP)
 
