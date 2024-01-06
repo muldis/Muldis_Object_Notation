@@ -196,43 +196,23 @@ MUON for the general case of unlimited size numbers.
 A **Rational** artifact is any of the following:
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
-and its *SYS_that* is any *SYS_Non_Qualified_Rational*.
+and its *SYS_that* is any *SYS_Rational* or any *SYS_Binary* or any *SYS_Decimal* or any *SYS_Integer*.
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
+and its *SYS_that* is
+any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
+the *numerator* (any *SYS_Integer*) and *denominator* (any **SYS_Integer**
+which denotes a nonzero integer) of the new **Rational** respectively.
 
 Not permitted for a **Rational** is any of the following,
 to keep things more correct and simpler:
 
-* Any *SYS_Rational*.
+* Any *SYS_Rational* or any *SYS_Decimal*.
 This is because that would often be interpreted as an **Integer** artifact.
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
 This is because that would typically be interpreted as a **Text** artifact.
-
-A *SYS_Non_Qualified_Rational* is any of the following:
-
-* Any *significand*.
-
-* Any *SYS_Positional_Tuple_A* having exactly 1 element which
-is the *significand*.
-
-* Any *SYS_Positional_Tuple_A* having exactly 2 elements which in
-ascending order are the *numerator* and *denominator*.
-
-* Any *SYS_Positional_Tuple_A* having exactly 3 elements which in
-ascending order are the *significand*, *radix*, and *exponent*.
-
-* Any *SYS_Positional_Tuple_A* having exactly 4 elements which in
-ascending order are the *numerator*, *denominator*, *radix*, and *exponent*.
-
-A *significand* is any *SYS_Rational* or any *SYS_Integer*.
-
-A *numerator* is any *SYS_Integer*.
-
-A *denominator* is any *SYS_Integer* which denotes a nonzero integer.
-
-A *radix* is any *SYS_Integer* which denotes an integer that is at least 2.
-
-An *exponent* is any *SYS_Integer*.
 
 A *SYS_Rational* is any of the following:
 
@@ -254,6 +234,26 @@ which have the literals `-Infinity`, `+Infinity` (or `Infinity`), `NaN`.
 
 ## Binary
 
+A **Binary** artifact is any of the following:
+
+* Any *SYS_Binary*.
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Binary`
+and its *SYS_that* is any *SYS_Binary* or any *SYS_Integer*.
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Binary`
+and its *SYS_that* is
+any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
+the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
+(any **SYS_Integer**) of the new **Binary** respectively.
+
+A *SYS_Binary* is any of the following:
+
+*TODO.*
+
+Not permitted for a *SYS_Binary* is any of the following,
+to keep things more correct and simpler:
+
 *TODO.*
 
 [RETURN](#TOP)
@@ -261,6 +261,30 @@ which have the literals `-Infinity`, `+Infinity` (or `Infinity`), `NaN`.
 <a name="Decimal"></a>
 
 ## Decimal
+
+A **Decimal** artifact is any of the following:
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
+and its *SYS_that* is any *SYS_Decimal* or any *SYS_Integer*.
+
+* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
+and its *SYS_that* is
+any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
+the *significand* (any *SYS_Decimal* or any *SYS_Integer*) and *exponent*
+(any **SYS_Integer**) of the new **Decimal** respectively.
+
+Not permitted for a **Decimal** is any of the following,
+to keep things more correct and simpler:
+
+* Any *SYS_Decimal*.
+This is because that would be interpreted as a **Rational** artifact.
+
+A *SYS_Decimal* is any of the following:
+
+*TODO.*
+
+Not permitted for a *SYS_Decimal* is any of the following,
+to keep things more correct and simpler:
 
 *TODO.*
 
