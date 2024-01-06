@@ -174,14 +174,14 @@ This is because that would be interpreted as a **Text** artifact.
 
 A *SYS_Integer* is any of the following:
 
-* Any *SYS_Rational* that represents a whole number.
+* Any *SYS_Binary* that represents a whole number.
 
 * Any value of any of the ECMAScript types `bigint`, `BigInt`.
 
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:
 
-* Any *SYS_Rational* that doesn't represent a whole number.
+* Any *SYS_Binary* that doesn't represent a whole number.
 
 Note that the types `bigint`, `BigInt` are only part of ECMAScript starting
 with version 11 (2020), so that represents the minimum required to support
@@ -196,37 +196,13 @@ MUON for the general case of unlimited size numbers.
 A **Rational** artifact is any of the following:
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
-and its *SYS_that* is any *SYS_Rational* or any *SYS_Binary* or any *SYS_Decimal* or any *SYS_Integer*.
+and its *SYS_that* is any *SYS_Binary* or any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
 and its *SYS_that* is
 any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
 the *numerator* (any *SYS_Integer*) and *denominator* (any **SYS_Integer**
 which denotes a nonzero integer) of the new **Rational** respectively.
-
-Not permitted for a **Rational** is any of the following,
-to keep things more correct and simpler:
-
-* Any *SYS_Rational* or any *SYS_Decimal*.
-This is because that would often be interpreted as an **Integer** artifact.
-
-* Any value of any character string type such that it represents a
-sequence of digits or anything else resembles a numeric literal.
-This is because that would typically be interpreted as a **Text** artifact.
-
-A *SYS_Rational* is any of the following:
-
-* Any value of any of the ECMAScript types `number`, `Number`
-that represents a finite number or signed zero;
-both signed zeroes are treated as the same plain zero.
-
-Not permitted for a *SYS_Rational* is any of the following,
-to keep things more correct and simpler:
-
-* Any value of any of the ECMAScript types `number`, `Number`
-that represents an infinity or NaN;
-note that ECMAScript has exactly 3 of these special values in total,
-which have the literals `-Infinity`, `+Infinity` (or `Infinity`), `NaN`.
 
 [RETURN](#TOP)
 
@@ -235,8 +211,6 @@ which have the literals `-Infinity`, `+Infinity` (or `Infinity`), `NaN`.
 ## Binary
 
 A **Binary** artifact is any of the following:
-
-* Any *SYS_Binary*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Binary`
 and its *SYS_that* is any *SYS_Binary* or any *SYS_Integer*.
@@ -247,14 +221,29 @@ any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
 the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
 (any **SYS_Integer**) of the new **Binary** respectively.
 
+Not permitted for a **Binary** is any of the following,
+to keep things more correct and simpler:
+
+* Any *SYS_Binary*.
+This is because that would often be interpreted as an **Integer** artifact.
+
+* Any value of any character string type such that it represents a
+sequence of digits or anything else resembles a numeric literal.
+This is because that would typically be interpreted as a **Text** artifact.
+
 A *SYS_Binary* is any of the following:
 
-*TODO.*
+* Any value of any of the ECMAScript types `number`, `Number`
+that represents a finite number or signed zero;
+both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Binary* is any of the following,
 to keep things more correct and simpler:
 
-*TODO.*
+* Any value of any of the ECMAScript types `number`, `Number`
+that represents an infinity or NaN;
+note that ECMAScript has exactly 3 of these special values in total,
+which have the literals `-Infinity`, `+Infinity` (or `Infinity`), `NaN`.
 
 [RETURN](#TOP)
 
@@ -265,28 +254,13 @@ to keep things more correct and simpler:
 A **Decimal** artifact is any of the following:
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
-and its *SYS_that* is any *SYS_Decimal* or any *SYS_Integer*.
+and its *SYS_that* is any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
 and its *SYS_that* is
 any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
-the *significand* (any *SYS_Decimal* or any *SYS_Integer*) and *exponent*
+the *significand* (any *SYS_Integer*) and *exponent*
 (any **SYS_Integer**) of the new **Decimal** respectively.
-
-Not permitted for a **Decimal** is any of the following,
-to keep things more correct and simpler:
-
-* Any *SYS_Decimal*.
-This is because that would be interpreted as a **Rational** artifact.
-
-A *SYS_Decimal* is any of the following:
-
-*TODO.*
-
-Not permitted for a *SYS_Decimal* is any of the following,
-to keep things more correct and simpler:
-
-*TODO.*
 
 [RETURN](#TOP)
 

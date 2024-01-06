@@ -226,10 +226,10 @@ themselves before input, in the general case typically aided by
 
 A **Rational** artifact is any of the following:
 
-* Any *SYS_Rational* or any *SYS_Decimal*.
+* Any *SYS_Rational*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
-and its *SYS_that* is any *SYS_Rational* or any *SYS_Binary* or any *SYS_Decimal* or any *SYS_Integer*.
+and its *SYS_that* is any *SYS_Rational* or any *SYS_Binary* or any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
 and its *SYS_that* is
@@ -239,32 +239,9 @@ which denotes a nonzero integer) of the new **Rational** respectively.
 
 A *SYS_Rational* is any of the following:
 
-* Any *SYS_Scalar* that is canonically or "originally"
-a Perl float value and only a float value.
-
 * Any object of the Perl class `Math::BigRat`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
-
-* Any object of the Perl class `Math::BigFloat`
-that represents a finite number or signed zero;
-both signed zeroes are treated as the same plain zero.
-
-Not permitted for a *SYS_Rational* is any of the following,
-to keep things more correct and simpler:
-
-* Any *SYS_Scalar* that is canonically or "originally"
-a Perl boolean or integer or string or anything else besides a float value.
-
-* Any object of the Perl class `Math::BigRat`
-that represents an infinity or NaN.
-
-* Any object of the Perl class `Math::BigFloat`
-that represents an infinity or NaN.
-
-* Any value of any character string type such that it represents a
-sequence of digits or anything else resembles a numeric literal.
-This is because that would typically be interpreted as a **Text** artifact.
 
 [RETURN](#TOP)
 
@@ -287,12 +264,25 @@ the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
 
 A *SYS_Binary* is any of the following:
 
-*TODO.*
+* Any *SYS_Scalar* that is canonically or "originally"
+a Perl float value and only a float value.
+
+* Any object of the Perl class `Math::BigFloat`
+that represents a finite number or signed zero;
+both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Binary* is any of the following,
 to keep things more correct and simpler:
 
-*TODO.*
+* Any *SYS_Scalar* that is canonically or "originally"
+a Perl boolean or integer or string or anything else besides a float value.
+
+* Any object of the Perl class `Math::BigFloat`
+that represents an infinity or NaN.
+
+* Any value of any character string type such that it represents a
+sequence of digits or anything else resembles a numeric literal.
+This is because that would typically be interpreted as a **Text** artifact.
 
 [RETURN](#TOP)
 
@@ -303,28 +293,13 @@ to keep things more correct and simpler:
 A **Decimal** artifact is any of the following:
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
-and its *SYS_that* is any *SYS_Decimal* or any *SYS_Integer*.
+and its *SYS_that* is any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
 and its *SYS_that* is
 any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
-the *significand* (any *SYS_Decimal* or any *SYS_Integer*) and *exponent*
+the *significand* (any *SYS_Integer*) and *exponent*
 (any **SYS_Integer**) of the new **Decimal** respectively.
-
-Not permitted for a **Decimal** is any of the following,
-to keep things more correct and simpler:
-
-* Any *SYS_Decimal*.
-This is because that would be interpreted as a **Rational** artifact.
-
-A *SYS_Decimal* is any of the following:
-
-*TODO.*
-
-Not permitted for a *SYS_Decimal* is any of the following,
-to keep things more correct and simpler:
-
-*TODO.*
 
 [RETURN](#TOP)
 

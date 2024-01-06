@@ -185,10 +185,10 @@ sequence of digits or anything else resembles a numeric literal.
 
 A **Rational** artifact is any of the following:
 
-* Any *SYS_Rational* or any *SYS_Decimal*.
+* Any *SYS_Rational*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
-and its *SYS_that* is any *SYS_Rational* or any *SYS_Binary* or any *SYS_Decimal* or any *SYS_Integer*.
+and its *SYS_that* is any *SYS_Rational* or any *SYS_Binary* or any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
 and its *SYS_that* is
@@ -202,14 +202,6 @@ A *SYS_Rational* is any of the following:
 
 * Any object of the Raku class `FatRat` whose denominator is non-zero.
 
-* Any object of the Raku class `Num`
-that represents a finite number or signed zero;
-both signed zeroes are treated as the same plain zero.
-
-* Any object of any of the Raku classes `num`, `num32`, `num64`
-that represents a finite number or signed zero;
-both signed zeroes are treated as the same plain zero.
-
 Not permitted for a *SYS_Rational* is any of the following,
 to keep things more correct and simpler:
 
@@ -218,14 +210,7 @@ to keep things more correct and simpler:
 * Any object of any Raku class that composes the Raku role `Rational`
 besides `Rat` and `FatRat`.
 
-* Any object of the Raku class `Num`
-that represents an infinity or NaN.
-
-* Any object of any of the Raku classes `num`, `num32`, `num64`
-that represents an infinity or NaN.
-
-* Any object of any of the Raku classes `RatStr` or `NumStr`
-or of any other allomorphic class.
+* Any object of the Raku class `RatStr` or of any other allomorphic class.
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
@@ -251,12 +236,27 @@ the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
 
 A *SYS_Binary* is any of the following:
 
-*TODO.*
+* Any object of the Raku class `Num`
+that represents a finite number or signed zero;
+both signed zeroes are treated as the same plain zero.
+
+* Any object of any of the Raku classes `num`, `num32`, `num64`
+that represents a finite number or signed zero;
+both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Binary* is any of the following,
 to keep things more correct and simpler:
 
-*TODO.*
+* Any object of the Raku class `Num`
+that represents an infinity or NaN.
+
+* Any object of any of the Raku classes `num`, `num32`, `num64`
+that represents an infinity or NaN.
+
+* Any object of the Raku class `NumStr` or of any other allomorphic class.
+
+* Any value of any character string type such that it represents a
+sequence of digits or anything else resembles a numeric literal.
 
 [RETURN](#TOP)
 
@@ -267,28 +267,13 @@ to keep things more correct and simpler:
 A **Decimal** artifact is any of the following:
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
-and its *SYS_that* is any *SYS_Decimal* or any *SYS_Integer*.
+and its *SYS_that* is any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
 and its *SYS_that* is
 any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
-the *significand* (any *SYS_Decimal* or any *SYS_Integer*) and *exponent*
+the *significand* (*SYS_Integer*) and *exponent*
 (any **SYS_Integer**) of the new **Decimal** respectively.
-
-Not permitted for a **Decimal** is any of the following,
-to keep things more correct and simpler:
-
-* Any *SYS_Decimal*.
-This is because that would be interpreted as a **Rational** artifact.
-
-A *SYS_Decimal* is any of the following:
-
-*TODO.*
-
-Not permitted for a *SYS_Decimal* is any of the following,
-to keep things more correct and simpler:
-
-*TODO.*
 
 [RETURN](#TOP)
 

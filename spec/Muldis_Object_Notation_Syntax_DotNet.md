@@ -191,30 +191,16 @@ required to support MUON for the general case of unlimited size numbers.
 
 A **Rational** artifact is any of the following:
 
-* Any *SYS_Rational* or any *SYS_Decimal*.
+* Any *SYS_Decimal*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
-and its *SYS_that* is any *SYS_Rational* or any *SYS_Binary* or any *SYS_Decimal* or any *SYS_Integer*.
+and its *SYS_that* is any *SYS_Binary* or any *SYS_Decimal* or any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
 and its *SYS_that* is
 any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
 the *numerator* (any *SYS_Integer*) and *denominator* (any **SYS_Integer**
 which denotes a nonzero integer) of the new **Rational** respectively.
-
-A *SYS_Rational* is any of the following:
-
-* Any value of any of the .NET structure types `System.Single`, `System.Double`
-that represents a finite number or signed zero;
-both signed zeroes are treated as the same plain zero.
-
-* Any value of the .NET structure type `System.Decimal`.
-
-Not permitted for a *SYS_Rational* is any of the following,
-to keep things more correct and simpler:
-
-* Any value of any of the .NET structure types `System.Single`, `System.Double`
-that represents an infinity or NaN.
 
 [RETURN](#TOP)
 
@@ -237,12 +223,15 @@ the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
 
 A *SYS_Binary* is any of the following:
 
-*TODO.*
+* Any value of any of the .NET structure types `System.Single`, `System.Double`
+that represents a finite number or signed zero;
+both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Binary* is any of the following,
 to keep things more correct and simpler:
 
-*TODO.*
+* Any value of any of the .NET structure types `System.Single`, `System.Double`
+that represents an infinity or NaN.
 
 [RETURN](#TOP)
 
@@ -269,12 +258,7 @@ This is because that would be interpreted as a **Rational** artifact.
 
 A *SYS_Decimal* is any of the following:
 
-*TODO.*
-
-Not permitted for a *SYS_Decimal* is any of the following,
-to keep things more correct and simpler:
-
-*TODO.*
+* Any value of the .NET structure type `System.Decimal`.
 
 [RETURN](#TOP)
 
