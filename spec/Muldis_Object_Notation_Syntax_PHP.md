@@ -184,8 +184,8 @@ and its *SYS_that* is any *SYS_Binary* or any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
 and its *SYS_that* is
-any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
-the *numerator* (any *SYS_Integer*) and *denominator* (any **SYS_Integer**
+any *SYS_Pair_AA* such that its *SYS_this* and *SYS_that* correspond to
+the *numerator* (any *SYS_Integer*) and *denominator* (any *SYS_Integer*
 which denotes a nonzero integer) of the new **Rational** respectively.
 
 [RETURN](#TOP)
@@ -203,9 +203,9 @@ and its *SYS_that* is any *SYS_Binary* or any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Binary`
 and its *SYS_that* is
-any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
+any *SYS_Pair_AA* such that its *SYS_this* and *SYS_that* correspond to
 the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
-(any **SYS_Integer**) of the new **Binary** respectively.
+(any *SYS_Integer*) of the new **Binary** respectively.
 
 A *SYS_Binary* is any of the following:
 
@@ -236,9 +236,9 @@ and its *SYS_that* is any *SYS_Integer*.
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
 and its *SYS_that* is
-any **SYS_Pair_AA** such that its *SYS_this* and *SYS_that* correspond to
+any *SYS_Pair_AA* such that its *SYS_this* and *SYS_that* correspond to
 the *significand* (any *SYS_Integer*) and *exponent*
-(any **SYS_Integer**) of the new **Decimal** respectively.
+(any *SYS_Integer*) of the new **Decimal** respectively.
 
 [RETURN](#TOP)
 
