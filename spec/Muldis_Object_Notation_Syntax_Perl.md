@@ -189,21 +189,21 @@ and its *SYS_that* is any *SYS_Integer*.
 
 A *SYS_Integer* is any of the following:
 
-* Any *SYS_Scalar* that is canonically or "originally"
-a Perl integer value and only a integer value.
-
 * Any object of the Perl class `Math::BigInt`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
+* Any *SYS_Scalar* that is canonically or "originally"
+a Perl integer value and only a integer value.
+
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:
 
-* Any *SYS_Scalar* that is canonically or "originally"
-a Perl boolean or float or string or anything else besides an integer value.
-
 * Any object of the Perl class `Math::BigInt`
 that represents an infinity or NaN.
+
+* Any *SYS_Scalar* that is canonically or "originally"
+a Perl boolean or float or string or anything else besides an integer value.
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.
@@ -264,21 +264,21 @@ the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
 
 A *SYS_Binary* is any of the following:
 
-* Any *SYS_Scalar* that is canonically or "originally"
-a Perl float value and only a float value.
-
 * Any object of the Perl class `Math::BigFloat`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
+* Any *SYS_Scalar* that is canonically or "originally"
+a Perl float value and only a float value.
+
 Not permitted for a *SYS_Binary* is any of the following,
 to keep things more correct and simpler:
 
-* Any *SYS_Scalar* that is canonically or "originally"
-a Perl boolean or integer or string or anything else besides a float value.
-
 * Any object of the Perl class `Math::BigFloat`
 that represents an infinity or NaN.
+
+* Any *SYS_Scalar* that is canonically or "originally"
+a Perl boolean or integer or string or anything else besides a float value.
 
 * Any value of any character string type such that it represents a
 sequence of digits or anything else resembles a numeric literal.

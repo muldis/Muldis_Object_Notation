@@ -149,11 +149,11 @@ An **Integer** artifact is any of the following:
 
 A *SYS_Integer* is any of the following:
 
-* Any value of the PHP type `int`.
-
 * Any object of the PHP class `GMP`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
+
+* Any value of the PHP type `int`.
 
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:

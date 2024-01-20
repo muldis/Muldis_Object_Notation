@@ -163,18 +163,18 @@ An **Integer** artifact is any of the following:
 
 A *SYS_Integer* is any of the following:
 
-* Any value of any of the Java primitive types `int`, `long`.
-
-* Any object of any of the Java classes `java.lang.Integer`, `java.lang.Long`.
-
 * Any object of the Java class `java.math.BigInteger`.
+
+* Any value of any of the Java primitive types `long`, `int`.
+
+* Any object of any of the Java classes `java.lang.Long`, `java.lang.Integer`.
 
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:
 
-* Any value of any of the Java primitive types `byte`, `short`.
+* Any value of any of the Java primitive types `short`, `byte`.
 
-* Any object of any of the Java classes `java.lang.Byte`, `java.lang.Short`.
+* Any object of any of the Java classes `java.lang.Short`, `java.lang.Byte`.
 
 [RETURN](#TOP)
 
@@ -216,21 +216,21 @@ the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
 
 A *SYS_Binary* is any of the following:
 
-* Any value of any of the Java primitive types `float`, `double`
+* Any value of any of the Java primitive types `double`, `float`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
-* Any object of any of the Java classes `java.lang.Float`, `java.lang.Double`
+* Any object of any of the Java classes `java.lang.Double`, `java.lang.Float`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Binary* is any of the following,
 to keep things more correct and simpler:
 
-* Any value of any of the Java primitive types `float`, `double`
+* Any value of any of the Java primitive types `double`, `float`
 that represents an infinity or NaN.
 
-* Any object of any of the Java classes `java.lang.Float`, `java.lang.Double`
+* Any object of any of the Java classes `java.lang.Double`, `java.lang.Float`
 that represents an infinity or NaN.
 
 [RETURN](#TOP)

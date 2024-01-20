@@ -161,14 +161,14 @@ A *SYS_Integer* is any of the following:
 
 * Any object of any of the Raku classes `int`, `uint`, `atomicint`.
 
-* Any object of any of the Raku classes `int32`, `uint32`, `int64`, `uint64`.
+* Any object of any of the Raku classes `int64`, `uint64`, `int32`, `uint32`.
 
 Note that `UInt` is a Raku subset of `Int`.
 
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:
 
-* Any object of any of the Raku classes `byte`, `int8`, `uint8`, `int16`, `uint16`.
+* Any object of any of the Raku classes `int16`, `uint16`, `int8`, `uint8`, `byte`.
 
 * Any object of the Raku class `IntStr` or of any other allomorphic class.
 
@@ -198,9 +198,9 @@ which denotes a nonzero integer) of the new **Rational** respectively.
 
 A *SYS_Rational* is any of the following:
 
-* Any object of the Raku class `Rat`.
-
 * Any object of the Raku class `FatRat` whose denominator is non-zero.
+
+* Any object of the Raku class `Rat`.
 
 Not permitted for a *SYS_Rational* is any of the following,
 to keep things more correct and simpler:
@@ -240,7 +240,7 @@ A *SYS_Binary* is any of the following:
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
-* Any object of any of the Raku classes `num`, `num32`, `num64`
+* Any object of any of the Raku classes `num64`, `num32`, `num`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
@@ -250,7 +250,7 @@ to keep things more correct and simpler:
 * Any object of the Raku class `Num`
 that represents an infinity or NaN.
 
-* Any object of any of the Raku classes `num`, `num32`, `num64`
+* Any object of any of the Raku classes `num64`, `num32`, `num`
 that represents an infinity or NaN.
 
 * Any object of the Raku class `NumStr` or of any other allomorphic class.

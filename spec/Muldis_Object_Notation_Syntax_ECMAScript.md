@@ -174,9 +174,9 @@ This is because that would be interpreted as a **Text** artifact.
 
 A *SYS_Integer* is any of the following:
 
-* Any *SYS_Binary* that represents a whole number.
-
 * Any value of any of the ECMAScript types `bigint`, `BigInt`.
+
+* Any *SYS_Binary* that represents a whole number.
 
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:

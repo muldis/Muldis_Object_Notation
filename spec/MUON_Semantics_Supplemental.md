@@ -305,9 +305,9 @@ simply says that an ordinary value for any given domain is missing and that
 there is simply no excuse that has been given for this; in other words,
 something has gone wrong without the slightest hint of an explanation.
 
-This is conceptually the most generic excuse value there is and it can
-be used by lazy programmers as a fallback for when they don't have even a
-semblance of a better explanation for why an ordinary value is missing.
+This is conceptually the most generic **Excuse** there is, to help with
+expedient development, but any uses should be considered technical debt, to
+be replaced later.
 
 The **Ignorance** value has its own special syntax in MUON disjoint from
 any **Excuse** syntax so that this MUON-defined excuse doesn't step on any

@@ -167,17 +167,17 @@ An **Integer** artifact is any of the following:
 
 A *SYS_Integer* is any of the following:
 
-* Any value of any of the .NET structure types `System.Int32`, `System.Int64`.
-
 * Any value of the .NET structure type `System.Numerics.BigInteger`.
+
+* Any value of any of the .NET structure types `System.Int64`, `System.Int32`.
 
 Not permitted for a *SYS_Integer* is any of the following,
 to keep things more correct and simpler:
 
-* Any value of any of the .NET structure types `System.Byte`, `System.Int16`.
-
 * Any value of any of the .NET structure types (which are not *CLS-compliant*)
-`System.UInt16`, `System.UInt32`, `System.UInt64`.
+`System.UInt64`, `System.UInt32`, `System.UInt16`.
+
+* Any value of any of the .NET structure types `System.Int16`, `System.Byte`.
 
 Note that the type `System.Numerics.BigInteger` is only part of .NET starting
 with .NET Framework version 4.0 (2010), so that represents the minimum
@@ -223,14 +223,14 @@ the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
 
 A *SYS_Binary* is any of the following:
 
-* Any value of any of the .NET structure types `System.Single`, `System.Double`
+* Any value of any of the .NET structure types `System.Double`, `System.Single`
 that represents a finite number or signed zero;
 both signed zeroes are treated as the same plain zero.
 
 Not permitted for a *SYS_Binary* is any of the following,
 to keep things more correct and simpler:
 
-* Any value of any of the .NET structure types `System.Single`, `System.Double`
+* Any value of any of the .NET structure types `System.Double`, `System.Single`
 that represents an infinity or NaN.
 
 [RETURN](#TOP)
