@@ -71,7 +71,7 @@ This part of the **Muldis Object Notation** document specifies the
 canonical concrete Ruby hosted syntax of MUON,
 which expresses a MUON artifact in terms of a native in-memory value or
 object of the Ruby programming language,
-version 3.2 (2022) or later,
+version 3.3 (2023) or later,
 as a non-cyclic data structure composed only using system-defined types.
 
 The MUON `Syntax_Ruby` is derived from and maps with the MUON
