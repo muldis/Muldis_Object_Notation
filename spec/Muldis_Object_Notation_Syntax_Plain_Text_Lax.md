@@ -34,7 +34,8 @@ its part name is `Syntax_Plain_Text_Lax`.
     - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
-    - [Text / Attribute Name](#Text---Attribute-Name)
+    - [Text](#Text)
+    - [Name](#Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
     - [Pair](#Pair)
@@ -527,9 +528,9 @@ Grammar:
 
 [RETURN](#TOP)
 
-<a name="Text---Attribute-Name"></a>
+<a name="Text"></a>
 
-## Text / Attribute Name
+## Text
 
 A **Text** artifact has the dedicated concrete literal format
 described by `<Text>`.
@@ -634,6 +635,14 @@ Additional Examples:
 ```
     'Differently quoted text.'
 ```
+
+[RETURN](#TOP)
+
+<a name="Name"></a>
+
+## Name
+
+*TODO.*
 
 [RETURN](#TOP)
 

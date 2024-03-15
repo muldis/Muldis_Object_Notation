@@ -28,7 +28,8 @@ its part name is `Syntax_XML`.
     - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
-    - [Text / Attribute Name](#Text---Attribute-Name)
+    - [Text](#Text)
+    - [Name](#Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
     - [Pair](#Pair)
@@ -176,9 +177,17 @@ See also <https://w3.org/XML>.
 
 [RETURN](#TOP)
 
-<a name="Text---Attribute-Name"></a>
+<a name="Text"></a>
 
-## Text / Attribute Name
+## Text
+
+*TODO.*
+
+[RETURN](#TOP)
+
+<a name="Name"></a>
+
+## Name
 
 *TODO.*
 

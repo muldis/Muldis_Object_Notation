@@ -28,7 +28,8 @@ its part name is `Syntax_Raku`.
     - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
-    - [Text / Attribute Name](#Text---Attribute-Name)
+    - [Text](#Text)
+    - [Name](#Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
     - [Pair](#Pair)
@@ -320,9 +321,9 @@ members are any **Integer** artifacts.
 
 [RETURN](#TOP)
 
-<a name="Text---Attribute-Name"></a>
+<a name="Text"></a>
 
-## Text / Attribute Name
+## Text
 
 A **Text** artifact is any of the following:
 
@@ -348,6 +349,14 @@ if such a thing exists.
 
 * Any object of any of the Raku classes `IntStr` or `RatStr` or `NumStr`
 or of any other allomorphic class.
+
+[RETURN](#TOP)
+
+<a name="Name"></a>
+
+## Name
+
+*TODO.*
 
 [RETURN](#TOP)
 
@@ -393,7 +402,7 @@ A **Pair** artifact is any of the following:
 * Any *SYS_Pair_AA* such that its *SYS_this* is *this*
 (any **Any** artifact except for any of the *SYS_Text* values
 `Ignorance`, `Boolean`, `Integer`, `Rational`, `Binary`, `Decimal`, `Bits`,
-`Blob`, `Text`, `Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
+`Blob`, `Text`, `Name`, `Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
 * Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Pair`

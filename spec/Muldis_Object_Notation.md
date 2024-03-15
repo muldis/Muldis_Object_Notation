@@ -131,6 +131,7 @@ represented with MUON syntax are characterized by.
 - **Bits**
 - **Blob**
 - **Text**
+- **Name**
 - **Nesting**
 - **Pair**
 - **Lot**

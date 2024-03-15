@@ -31,7 +31,8 @@ its part name is `Syntax_Abstract`.
     - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
-    - [Text / Attribute Name](#Text---Attribute-Name)
+    - [Text](#Text)
+    - [Name](#Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
     - [Pair](#Pair)
@@ -182,13 +183,21 @@ octet is an integer in the set `0..255`.
 
 [RETURN](#TOP)
 
-<a name="Text---Attribute-Name"></a>
+<a name="Text"></a>
 
-## Text / Attribute Name
+## Text
 
 A **Text** artifact is an arbitrarily-large ordered sequence of **Unicode** standard
 *character code points* where each code point is an integer in the set
 `[0..0xD7FF,0xE000..0x10FFFF]`.
+
+[RETURN](#TOP)
+
+<a name="Name"></a>
+
+## Name
+
+*TODO.*
 
 [RETURN](#TOP)
 

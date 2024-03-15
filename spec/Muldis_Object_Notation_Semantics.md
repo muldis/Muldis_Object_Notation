@@ -31,7 +31,8 @@ its part name is `Semantics`.
     - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
-    - [Text / Attribute Name](#Text---Attribute-Name)
+    - [Text](#Text)
+    - [Name](#Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
     - [Pair](#Pair)
@@ -122,13 +123,13 @@ literal or system-defined data type corresponding directly to each one.
 A *simple possrep* has a strictly non-recursive definition, and
 never is expressed in terms of **Any** components directly or indirectly,
 and typically corresponds to the concept of a single non-collective item.
-There are exactly 10 of these:
+There are exactly 11 of these:
 
 - **Ignorance**
 - **Boolean**
 - Numeric: **Integer**, **Rational**, **Binary**, **Decimal**
 - Stringy: **Bits**, **Blob**, **Text**
-- **Nesting**
+- Identifiers: **Name**, **Nesting**
 
 A *collective possrep* has a strictly recursive definition, and is
 expressed mainly in terms of **Any** components directly or indirectly,
@@ -327,9 +328,9 @@ which explicitly does not represent any kind of thing in particular.
 
 [RETURN](#TOP)
 
-<a name="Text---Attribute-Name"></a>
+<a name="Text"></a>
 
-## Text / Attribute Name
+## Text
 
 A **Text** value is characterized by an arbitrarily-large ordered sequence of
 **Unicode** standard *character code points*, where each distinct code
@@ -350,6 +351,14 @@ may allow isolated/non-paired UTF-16 "surrogate" code points corresponding
 to integers in the set **[0xD800..0xDFFF]**.  MUON forbids the use of any
 such "character strings" using the **Text** possrep.  However, such data can
 still be conveyed using other means such as MUON's **Lot**+**Integer**.
+
+[RETURN](#TOP)
+
+<a name="Name"></a>
+
+## Name
+
+*TODO.*
 
 [RETURN](#TOP)
 

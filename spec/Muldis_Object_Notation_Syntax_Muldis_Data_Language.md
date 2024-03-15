@@ -28,7 +28,8 @@ its part name is `Syntax_Muldis_Data_Language`.
     - [Decimal](#Decimal)
     - [Bits](#Bits)
     - [Blob](#Blob)
-    - [Text / Attribute Name](#Text---Attribute-Name)
+    - [Text](#Text)
+    - [Name](#Name)
     - [Nesting / Attribute Name List](#Nesting---Attribute-Name-List)
 - [COLLECTIVE DATA TYPE POSSREPS](#COLLECTIVE-DATA-TYPE-POSSREPS)
     - [Pair](#Pair)
@@ -171,13 +172,21 @@ A **Blob** artifact is any of the following:
 
 [RETURN](#TOP)
 
-<a name="Text---Attribute-Name"></a>
+<a name="Text"></a>
 
-## Text / Attribute Name
+## Text
 
 A **Text** artifact is any of the following:
 
 * Any value of the MDL type `fdn::Text`.
+
+[RETURN](#TOP)
+
+<a name="Name"></a>
+
+## Name
+
+*TODO.*
 
 [RETURN](#TOP)
 
