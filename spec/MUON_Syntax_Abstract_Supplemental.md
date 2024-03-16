@@ -105,7 +105,7 @@ actually given whose numeric value was the same as that **Integer**.
 Every abstract MUON *secondary possrep* has one or more general *qualified*
 formats characterized by the pairing of a *predicate* with a *subject*.
 There is NOT any abstract MUON secondary possrep that has any alternative
-*unqualified* formats characterized by the *subject* on its own; however,
+*nonqualified* formats characterized by the *subject* on its own; however,
 the latter is a common option for concrete MUON possreps.
 
 Every (qualified) abstract MUON artifact is a **Pair** artifact;

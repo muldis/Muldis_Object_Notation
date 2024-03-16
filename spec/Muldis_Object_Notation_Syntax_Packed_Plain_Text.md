@@ -1671,7 +1671,7 @@ Examples:
     `Pair of Text (18 octets); also known as ("First Name": "Joy").`
     PT"First Name"wJoy
 
-    `Another Pair (5 octets); also known as (:x : y).`
+    `Another Pair (5 octets); also known as ("x":"y").`
     Puxuy
 ```
 

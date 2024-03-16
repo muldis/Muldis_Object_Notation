@@ -275,7 +275,7 @@ procedures or data types, are excluded because they are better defined by a
 data model layered over top of MUON and they are both complex and highly
 variable.  Only a few source code types have dedicated MUON syntax because
 they specifically benefit from that and conceptually they are simple even
-if they may vary greatly in implementation, such as unqualified identifiers
+if they may vary greatly in implementation, such as nonqualified identifiers
 (via **Text**) and **Nesting**, **Heading**, **Renaming**.  However it is
 planned for MUON to be extended with many more source code defining possreps.
 
@@ -702,7 +702,7 @@ heterogeneous collection of named *attributes*, such that no 2 attributes
 have the same *attribute name*, which explicitly does not represent any
 kind of thing in particular, and is simply the sum of its attributes.
 An attribute is conceptually a name-asset pair, the name being used to look
-up the attribute in a **Tuple**.  An *attribute name* is an unqualified
+up the attribute in a **Tuple**.  An *attribute name* is an nonqualified
 program identifier and is conceptually a character string that is not a
 **Text** value.  In the general case each attribute of a tuple is of a
 distinct data type, though multiple attributes often have the same type.

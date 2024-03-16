@@ -238,7 +238,7 @@ Grammar:
 
     token instant_zone
     {
-        <quoted_text_segment>
+        <quoted_char_seq_segment>
     }
 ```
 

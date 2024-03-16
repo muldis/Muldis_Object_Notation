@@ -927,20 +927,20 @@ Grammar:
 ```
     token Text
     {
-        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point_text>
+        <quoted_char_seq> | <nonquoted_alphanumeric_text> | <code_point_text>
     }
 
     token Text_nonqualified
     {
-        <quoted_text> | <nonquoted_alphanumeric_char_seq> | <code_point>
+        <quoted_char_seq> | <nonquoted_alphanumeric_char_seq> | <code_point>
     }
 
-    token quoted_text
+    token quoted_char_seq
     {
-        <quoted_text_segment>+ % <sp>?
+        <quoted_char_seq_segment>+ % <sp>?
     }
 
-    token quoted_text_segment
+    token quoted_char_seq_segment
     {
         '"' ~ '"' <aescaped_char>*
     }
@@ -949,9 +949,9 @@ Grammar:
     {
           <restricted_nonescaped_char>
         | <escaped_char_simple>
-        | <escaped_char_cpt_seq>
-        | <escaped_char_utf32_cpt_seq>
-        | <escaped_char_utf16_cpt_seq>
+        | <escaped_char_code_point>
+        | <escaped_char_utf32_code_point>
+        | <escaped_char_utf16_code_point>
     }
 
     token restricted_nonescaped_char
@@ -964,17 +964,25 @@ Grammar:
         '\\' <[abtnvfreqkg]>
     }
 
-    token escaped_char_cpt_seq
+    token escaped_char_code_point
     {
         '\\' ['(' ~ ')' <code_point>]
     }
 
-    token escaped_char_utf32_cpt_seq
+    token code_point
+    {
+          [0b    [0 | [   1            <[ 0..1      ]> ** 0..20]]]
+        | [0o    [0 | [<[ 1..7      ]> <[ 0..7      ]> ** 0..6 ]]]
+        | [[0d]? [0 | [<[ 1..9      ]> <[ 0..9      ]> ** 0..6 ]]]
+        | [0x    [0 | [<[ 1..9 A..F ]> <[ 0..9 A..F ]> ** 0..5 ]]]
+    }
+
+    token escaped_char_utf32_code_point
     {
         '\\' U00 [<[ 0..9 A..F a..f ]> ** 6]
     }
 
-    token escaped_char_utf16_cpt_seq
+    token escaped_char_utf16_code_point
     {
         '\\' u [<[ 0..9 A..F a..f ]> ** 4]
     }
@@ -993,18 +1001,16 @@ Grammar:
     {
         ':' <sp>? <code_point>
     }
-
-    token code_point
-    {
-          [0b    [0 | [   1            <[ 0..1      ]> ** 0..20]]]
-        | [0o    [0 | [<[ 1..7      ]> <[ 0..7      ]> ** 0..6 ]]]
-        | [[0d]? [0 | [<[ 1..9      ]> <[ 0..9      ]> ** 0..6 ]]]
-        | [0x    [0 | [<[ 1..9 A..F ]> <[ 0..9 A..F ]> ** 0..5 ]]]
-    }
 ```
 
-The meaning of `<nonquoted_alphanumeric_char_seq>` is exactly the same as if
-the same characters were surrounded by quotation marks.
+The meaning of `<nonquoted_alphanumeric_char_seq>` is exactly the same as
+if the same characters were surrounded by quotation marks;
+for example, `:foo` is equivalent to `"foo"`.
+
+The meaning of a `<Text_nonqualified>` that is a `<code_point>` is exactly
+the same as if the same characters were surrounded, first as per
+`<escaped_char_code_point>`, and second by quotation marks;
+for example, `:0` is equivalent to `"\(0)"`.
 
 This grammar explicitly forbids leading zeros in the main body of non-zero
 `<code_point>` for consistency with **Integer** literals.
@@ -1013,12 +1019,12 @@ A `<code_point>` is subject to the additional rule that the
 non-negative integer it denotes must be in the set
 `[0..0xD7FF,0xE000..0x10FFFF]`.
 
-An `<escaped_char_utf32_cpt_seq>` is subject to the additional rule that
+An `<escaped_char_utf32_code_point>` is subject to the additional rule that
 the integer it denotes must be in the set `[0..0xD7FF,0xE000..0x10FFFF]`.
 
-A `<quoted_text_segment>` is subject to the additional rule that if it has
-any `<escaped_char_utf16_cpt_seq>` then it must denote *well formed UTF-16*
-as further described below.
+A `<quoted_char_seq_segment>` is subject to the additional rule that
+if it has any `<escaped_char_utf16_code_point>` then it must denote
+*well formed UTF-16* as further described below.
 
 The meanings of the simple character escape sequences are:
 
@@ -1044,36 +1050,26 @@ terms of their Unicode code point number.  One benefit of these is to
 empower more elegant passing of Unicode-savvy MUON through a communications
 channel that is more limited, such as to 7-bit ASCII.
 
-An `<escaped_char_cpt_seq>` is the MUON-specific standard format, `\(...)`,
-that is the most consistent with the rest of MUON and supports writing
-a code point number in any of the numeric bases 2/8/10/16.
+An `<escaped_char_code_point>` is the MUON-specific standard format,
+`\(...)`, that is the most consistent with the rest of MUON and supports
+writing a code point number in any of the numeric bases 2/8/10/16.
 
-An `<escaped_char_utf32_cpt_seq>` is an alternate format, `\U00HHHHHH`
+An `<escaped_char_utf32_code_point>` is an alternate format, `\U00HHHHHH`
 which denotes an unsigned 32-bit integer; it supports writing a code point
 number in base-16 only, but using both upper-case and lower-case letters.
 This format exists to match a support common in other programming languages.
 
-An `<escaped_char_utf16_cpt_seq>` is an alternate format, `\uHHHH` which
+An `<escaped_char_utf16_code_point>` is an alternate format, `\uHHHH` which
 denotes an unsigned 16-bit integer, which supports specifying characters in
 terms of UTF-16.  For a Unicode BMP code point, that is a single `\uHHHH`
 integer in the non-surrogate set `[0..0xD7FF,0xE000..0xFFFF]`.  For a
 Unicode non-BMP code point, that is an ordered pair of `\uHHHH` integer in
 the surrogate set `[0xD800..0xDFFF]`, which looks like `\uHHHH\uHHHH` such
 that the pair is also *well formed UTF-16*.  It is forbidden for a
-`<quoted_text_segment>` to contain any `\uHHHH` of the surrogate set that
-isn't so paired.  This format supports writing a code point number in
+`<quoted_char_seq_segment>` to contain any `\uHHHH` of the surrogate set
+that isn't so paired.  This format supports writing a code point number in
 base-16 only, but using both upper-case and lower-case letters.
 This format exists to match a support common in other programming languages.
-
-A `<code_point_text>` is a specialized shorthand for a **Text** of
-exactly 1 character whose code point number it denotes.
-
-Given that **Text** values or syntax serve double duty for not only regular
-user data but also for attribute names of tuples or other kinds of
-identifiers, the `<code_point_text>` variant provides a nicer alternative
-for specifying them in latter contexts; it is purposefully like a regular
-integer for use in situations where we have conceptually ordered (rather
-than conceptually named) attributes.
 
 Examples:
 
@@ -1838,12 +1834,12 @@ characters immediately before/after it were instead adjacent.
 grammar as if the before/after were instead separated by a single space
 character, if that is necessary to properly parse the superset.)
 
-A `<quoted_text>`, that is, a pair of quotation marks `"` with a run of any
+A `<quoted_char_seq>`, that is, a pair of quotation marks `"` with a run of any
 other (except grave accent) characters between them, has the second highest
 precedence of the whole MUON grammar, and a valid MUON artifact will only
 have zero or an exact positive multiple of 2 of quotation mark characters
 outside of a `<quoted_sp_comment_str>`.  A MUON parser would logically
-isolate all `<quoted_text>` as their own tokens second, and then the
+isolate all `<quoted_char_seq>` as their own tokens second, and then the
 remainder of the grammar would apply outside of those tokens.
 
 [RETURN](#TOP)

@@ -219,20 +219,20 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
 
     token Text
     {
-        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point_text>
+        <quoted_char_seq> | <nonquoted_alphanumeric_text> | <code_point_text>
     }
 
     token Text_nonqualified
     {
-        <quoted_text> | <nonquoted_alphanumeric_char_seq> | <code_point>
+        <quoted_char_seq> | <nonquoted_alphanumeric_char_seq> | <code_point>
     }
 
-    token quoted_text
+    token quoted_char_seq
     {
-        <quoted_text_segment>+ % <sp>?
+        <quoted_char_seq_segment>+ % <sp>?
     }
 
-    token quoted_text_segment
+    token quoted_char_seq_segment
     {
           ['"'  ~ '"'  [<aescaped_char> | '\'']*]
         | ['\'' ~ '\'' [<aescaped_char> | '"' ]*]
@@ -242,9 +242,9 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
     {
           <restricted_nonescaped_char>
         | <escaped_char_simple>
-        | <escaped_char_cpt_seq>
-        | <escaped_char_utf32_cpt_seq>
-        | <escaped_char_utf16_cpt_seq>
+        | <escaped_char_code_point>
+        | <escaped_char_utf32_code_point>
+        | <escaped_char_utf16_code_point>
     }
 
     token restricted_nonescaped_char
@@ -257,17 +257,25 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
         '\\' <[ " ' / \\ ` abtnvfreqkg ]>
     }
 
-    token escaped_char_cpt_seq
+    token escaped_char_code_point
     {
         '\\' ['(' ~ ')' <code_point>]
     }
 
-    token escaped_char_utf32_cpt_seq
+    token code_point
+    {
+          [0b    [0 | [   1            <[ 0..1      ]> ** 0..20]]]
+        | [0o    [0 | [<[ 1..7      ]> <[ 0..7      ]> ** 0..6 ]]]
+        | [[0d]? [0 | [<[ 1..9      ]> <[ 0..9      ]> ** 0..6 ]]]
+        | [0x    [0 | [<[ 1..9 A..F ]> <[ 0..9 A..F ]> ** 0..5 ]]]
+    }
+
+    token escaped_char_utf32_code_point
     {
         '\\' U00 [<[ 0..9 A..F a..f ]> ** 6]
     }
 
-    token escaped_char_utf16_cpt_seq
+    token escaped_char_utf16_code_point
     {
         '\\' u [<[ 0..9 A..F a..f ]> ** 4]
     }
@@ -285,14 +293,6 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
     token code_point_text
     {
         ':' <sp>? <code_point>
-    }
-
-    token code_point
-    {
-          [0b    [0 | [   1            <[ 0..1      ]> ** 0..20]]]
-        | [0o    [0 | [<[ 1..7      ]> <[ 0..7      ]> ** 0..6 ]]]
-        | [[0d]? [0 | [<[ 1..9      ]> <[ 0..9      ]> ** 0..6 ]]]
-        | [0x    [0 | [<[ 1..9 A..F ]> <[ 0..9 A..F ]> ** 0..5 ]]]
     }
 
 ###########################################################################

@@ -169,7 +169,7 @@ when running under Perl versions prior to 5.36.
 boolean value, given any Perl source code that defines MUON `Syntax_Perl`
 artifacts and that is intended to execute under both older and newer Perl
 versions, all **Boolean** artifacts therein should use the fully-qualified
-form based on *SYS_Pair_TA* to be portable.  If you use the unqualified form,
+form based on *SYS_Pair_TA* to be portable.  If you use the nonqualified form,
 then the exact same Perl logic may produce values that are interpreted as
 **Boolean** artifacts on higher Perl versions and as either **Text** or
 **Integer** artifacts on lower Perl versions.
