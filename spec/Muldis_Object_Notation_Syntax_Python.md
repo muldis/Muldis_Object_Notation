@@ -127,7 +127,7 @@ to keep things more correct and simpler:
 
 A **Boolean** artifact is any of the following:
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Boolean`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Boolean`
 and its *SYS_that* is any *SYS_Boolean*.
 
 Not permitted for a **Boolean** is any of the following,
@@ -179,11 +179,11 @@ A **Rational** artifact is any of the following:
 
 * Any *SYS_Rational* or any *SYS_Decimal*.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Rational`
 and its *SYS_that* is any *SYS_Rational* or any *SYS_Binary*
 or any *SYS_Decimal* or any *SYS_Integer*.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Rational`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Rational`
 and its *SYS_that* is
 any *SYS_Pair_AA* such that its *SYS_this* and *SYS_that* correspond to
 the *numerator* (any *SYS_Integer*) and *denominator* (any *SYS_Integer*
@@ -218,10 +218,10 @@ A **Binary** artifact is any of the following:
 
 * Any *SYS_Binary*.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Binary`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Binary`
 and its *SYS_that* is any *SYS_Binary* or any *SYS_Integer*.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Binary`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Binary`
 and its *SYS_that* is
 any *SYS_Pair_AA* such that its *SYS_this* and *SYS_that* correspond to
 the *significand* (any *SYS_Binary* or any *SYS_Integer*) and *exponent*
@@ -254,10 +254,10 @@ This is because that would typically be interpreted as a **Text** artifact.
 
 A **Decimal** artifact is any of the following:
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Decimal`
 and its *SYS_that* is any *SYS_Decimal* or any *SYS_Integer*.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Decimal`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Decimal`
 and its *SYS_that* is
 any *SYS_Pair_AA* such that its *SYS_this* and *SYS_that* correspond to
 the *significand* (any *SYS_Decimal* or any *SYS_Integer*) and *exponent*
@@ -296,7 +296,7 @@ This is because that would typically be interpreted as a **Text** artifact.
 
 A **Bits** artifact is any of the following:
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Bits`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Bits`
 and its *SYS_that* is any *SYS_Blob*
 such that every octet is in the set `0..1`.
 
@@ -345,7 +345,14 @@ A *SYS_Text* is any of the following:
 
 ## Name
 
-*TODO.*
+A **Name** artifact is any of the following:
+
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Name`
+and its *SYS_that* is any *SYS_Name*.
+
+A *SYS_Name* is any of the following:
+
+* Any *SYS_Text*.
 
 [RETURN](#TOP)
 
@@ -355,26 +362,26 @@ A *SYS_Text* is any of the following:
 
 A **Nesting** artifact is any of the following:
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Nesting`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Nesting`
 and its *SYS_that* is any *SYS_Nesting*.
 
 Not permitted for a **Nesting** is any of the following,
 to prevent ambiguity and simplify things:
 
-* Any *SYS_Array_T*.  This is because that would be interpreted as
+* Any *SYS_Array_N*.  This is because that would be interpreted as
 a **Lot** artifact all of whose members are any **Text** artifacts.
 
 A *SYS_Nesting* is any of the following:
 
-* Any *SYS_Positional_Tuple_A* such that each of its elements is any *SYS_Text*.
+* Any *SYS_Positional_Tuple_A* such that each of its elements is any *SYS_Name*.
 
-* Any *SYS_Array_T*.
+* Any *SYS_Array_N*.
 
-* Any *SYS_Text*.
+* Any *SYS_Name*.
 
-A *SYS_Array_T* is any of the following:
+A *SYS_Array_N* is any of the following:
 
-* Any *SYS_Array_A* such that each of its elements is any *SYS_Text*.
+* Any *SYS_Array_A* such that each of its elements is any *SYS_Name*.
 
 [RETURN](#TOP)
 
@@ -391,19 +398,19 @@ A *SYS_Array_T* is any of the following:
 A **Pair** artifact is any of the following:
 
 * Any *SYS_Pair_AA* such that its *SYS_this* is *this*
-(any **Any** artifact except for any of the *SYS_Text* values
+(any **Any** artifact except for any of the *SYS_Name* values
 `Ignorance`, `Boolean`, `Integer`, `Rational`, `Binary`, `Decimal`, `Bits`,
 `Blob`, `Text`, `Name`, `Nesting`, `Pair`, `Lot_m`, `Lot_mm`, `Kit_a`, `Kit_na`)
 and its *SYS_that* is *that* (any **Any** artifact).
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Pair`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Pair`
 and its *SYS_that* is
 any *SYS_Pair_AA* such that its *SYS_this* is *this* (any **Any** artifact)
 and its *SYS_that* is *that* (any **Any** artifact).
 
-A *SYS_Pair_TA* is any of the following:
+A *SYS_Pair_NA* is any of the following:
 
-* Any *SYS_Pair_AA* such that its *SYS_this* is any *SYS_Text*.
+* Any *SYS_Pair_AA* such that its *SYS_this* is any *SYS_Name*.
 
 A *SYS_Pair_AA* is any of the following:
 
@@ -420,15 +427,15 @@ A **Lot** artifact is any of the following:
 
 * Any *SYS_Non_Qualified_Lot_M*.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Lot_m`
 and its *SYS_that* is
 any *SYS_Positional_Tuple_A* such that each of its elements in turn is *member*
 (any **Any** artifact) and its corresponding *multiplicity* is 1.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_m`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Lot_m`
 and its *SYS_that* is any *SYS_Non_Qualified_Lot_M*.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Lot_mm`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Lot_mm`
 and its *SYS_that* is
 any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
 *multiplied member* whose element key is *member* (any **Any** artifact)
@@ -459,7 +466,7 @@ A **Kit** artifact is any of the following:
 
 * Any *SYS_Non_Qualified_Kit_NA*.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Kit_a`
 and its *SYS_that* is
 any *SYS_Positional_Tuple_A* having at most 32 elements such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
@@ -470,7 +477,7 @@ so to specify 33 or more attributes, the general format must be used;
 this format is more concise than the general format
 and is equally concise with the other ordered-specific format.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_a`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Kit_a`
 and its *SYS_that* is
 any *SYS_Array_A* having at most 32 elements such that each of its elements
 in turn is *attribute asset* (any **Any** artifact) and its corresponding
@@ -481,13 +488,13 @@ so to specify 33 or more attributes, the general format must be used;
 this format is more concise than the general format
 and is equally concise with the other ordered-specific format.
 
-* Any *SYS_Pair_TA* such that its *SYS_this* is the *SYS_Text* value `Kit_na`
+* Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Kit_na`
 and its *SYS_that* is any *SYS_Non_Qualified_Kit_NA*.
 
 A *SYS_Non_Qualified_Kit_NA* is any of the following:
 
 * Any *SYS_Ordered_Dictionary_AA* such that each of its elements in turn is
-*attribute* whose element key is *attribute name* (any *SYS_Text*)
+*attribute* whose element key is *attribute name* (any *SYS_Name*)
 and whose element value is *attribute asset* (any **Any** artifact);
 this format can express every possible **Kit**.
 
