@@ -274,19 +274,19 @@
 (Heading:{"sales"})
 `Muldis_Object_Notation_Sync_Mark`
 `One positional attribute.`
-(Heading:{0t0})
+(Heading:{:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Heading:{"\(0t0)"})
+(Heading:{"\(0)"})
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes.`
 (Heading:{region,revenue,qty})
 `Muldis_Object_Notation_Sync_Mark`
 `Three positional attributes.`
-(Heading:{0t0,0t1,0t2})
+(Heading:{:0,:1,:2})
 `Muldis_Object_Notation_Sync_Mark`
 `One of each.`
-(Heading:{0t1,age})
+(Heading:{:1,age})
 `Muldis_Object_Notation_Sync_Mark`
 `Some attribute names can only appear quoted.`
 (Heading:{"Street Address"})
@@ -301,7 +301,7 @@
 (Renaming:{age->age})
 `Muldis_Object_Notation_Sync_Mark`
 `Also a no-op.`
-(Renaming:{0t0})
+(Renaming:{:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Rename one attribute.`
 (Renaming:{fname->first_name})
@@ -316,16 +316,16 @@
 (Renaming:{foo,bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Renaming:{0t0->foo,0t1->bar})
+(Renaming:{0->foo,1->bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Convert nonpositional names to positional.`
-(Renaming:{foo->0t0,bar->0t1})
+(Renaming:{foo->:0,bar->:1})
 `Muldis_Object_Notation_Sync_Mark`
 `Swap 2 positional attributes.`
-(Renaming:{0t0->0t1,0t1->0t0})
+(Renaming:{0->:1,1->:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(Renaming:{0t1,0t0})
+(Renaming:{:1,:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Some attribute names can only appear quoted.`
 (Renaming:{"First Name"->"Last Name"})
@@ -367,7 +367,7 @@
 (Orderelation:{x,y,z})
 `Muldis_Object_Notation_Sync_Mark`
 `Three positional attributes + zero tuples.`
-(Orderelation:{0t0,0t1,0t2})
+(Orderelation:{:0,:1,:2})
 `Muldis_Object_Notation_Sync_Mark`
 `Two named attributes + three tuples (1 duplicate).`
 (Orderelation:[
@@ -398,7 +398,7 @@
 (Relation:{x,y,z})
 `Muldis_Object_Notation_Sync_Mark`
 `Three positional attributes + zero tuples.`
-(Relation:{0t0,0t1,0t2})
+(Relation:{:0,:1,:2})
 `Muldis_Object_Notation_Sync_Mark`
 `Two named attributes + two tuples.`
 (Relation:[
@@ -451,7 +451,7 @@
 (Multirelation:{x,y,z})
 `Muldis_Object_Notation_Sync_Mark`
 `Three positional attributes + zero tuples.`
-(Multirelation:{0t0,0t1,0t2})
+(Multirelation:{:0,:1,:2})
 `Muldis_Object_Notation_Sync_Mark`
 `Two named attributes + six tuples (4 duplicates).`
 (Multirelation:[

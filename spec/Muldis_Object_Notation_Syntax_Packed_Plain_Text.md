@@ -1444,11 +1444,11 @@ There is also another format for this, but it takes more octets.
 
 A **Text** artifact uses just 1 octet to canonically represent the first 32
 "positional" **Kit** attribute names.
-The single canonical octet for each of `[0t0..0t8,0t11..0t12,0t14..0t31]`
+The single canonical octet for each of `[:0..:8,:11..:12,:14..:31]`
 corresponds to each of the ASCII/UTF-8 code points
 `[0x0..0x8,0xB..0xC,0xE..0x1F]` respectively, so each one is represented by
 itself in UTF-8 format with no extra metadata octets.
-The single canonical octet for each of `[0t9,0t10,0t13]` corresponds to
+The single canonical octet for each of `[:9,:10,:13]` corresponds to
 each of the ASCII/UTF-8 code points `[0x2C,0x3B,0x3A]` respectively, meaning
 the [*COMMA*, *SEMICOLON*, *COLON*] characters [`,`,`;`,`:`] respectively.
 There are also other formats for each of these character strings,
@@ -1485,7 +1485,7 @@ Examples:
     `Same thing (3 octets).`
     T""
 
-    `The 1-character UTF-8 string 0t0 or "\(0t0)" (1 octet);`
+    `The 1-character UTF-8 string :0 or "\(0)" (1 octet);`
     `also known as the first positional attribute name.`
     \00
 
@@ -1495,7 +1495,7 @@ Examples:
     `Same thing (4 octets).`
     T"\00"
 
-    `The 1-character UTF-8 string 0t1 or "\(0t1)" (1 octet);`
+    `The 1-character UTF-8 string :1 or "\(1)" (1 octet);`
     `also known as the second positional attribute name.`
     \01
 
@@ -1523,7 +1523,7 @@ Examples:
     `A 24 character UTF-8 string (27 octets).`
     T"This isn't not escaped.\0A"
 
-    `The 2-character UTF-8 string "\(0tx263A)\(0t65)" (5 octets).`
+    `The 2-character UTF-8 string "\(0x263A)\(65)" (5 octets).`
     x\E2\98\BA\41
 
     `Same thing (7 octets).`
@@ -1590,7 +1590,7 @@ Examples:
     N[t]
 
     `The Nesting with exactly 1 element that is the first positional`
-    `attribute name (2 octets); also known as ::0t0.`
+    `attribute name (2 octets); also known as ::0.`
     n\00
 
     `Same thing (4 octets).`
@@ -1814,18 +1814,18 @@ usually in the context of their being the first octet of an artifact.
     PPT | PPT | Plain Text  | Meaning
     Oct | Chr | Literal     |
     ----+-----+-------------+----------------------------------------------
-    00  |     | 0t0         | Text artifact or 1st "positional" Kit attribute name
-    01  |     | 0t1         | Text artifact or 2nd "positional" Kit attribute name
+    00  |     | :0          | Text artifact or 1st "positional" Kit attribute name
+    01  |     | :1          | Text artifact or 2nd "positional" Kit attribute name
     ...
-    08  |     | 0t8         | Text artifact or 9th "positional" Kit attribute name
+    08  |     | :8          | Text artifact or 9th "positional" Kit attribute name
     09  |     |             | dividing space for visual formatting with CHARACTER TABULATION
     0A  |     |             | dividing space for visual formatting with LINE FEED (LF)
-    0B  |     | 0t11        | Text artifact or 12th "positional" Kit attribute name
-    0C  |     | 0t12        | Text artifact or 13th "positional" Kit attribute name
+    0B  |     | :11         | Text artifact or 12th "positional" Kit attribute name
+    0C  |     | :12         | Text artifact or 13th "positional" Kit attribute name
     0D  |     |             | dividing space for visual formatting with CARRIAGE RETURN (CR)
-    0E  |     | 0t14        | Text artifact or 15th "positional" Kit attribute name
+    0E  |     | :14         | Text artifact or 15th "positional" Kit attribute name
     ...
-    1F  |     | 0t31        | Text artifact or 32nd "positional" Kit attribute name
+    1F  |     | :31         | Text artifact or 32nd "positional" Kit attribute name
     ----+-----+-------------+----------------------------------------------
     20  |     |             | dividing space for visual formatting with SPACE
     ----+-----+-------------+----------------------------------------------
@@ -1840,7 +1840,7 @@ usually in the context of their being the first octet of an artifact.
     29  | )   |             | Decimal artifact positive one
     2A  | *   |             | Decimal artifact zero
     2B  | +   |             | Integer artifact prefix general case positive number or Lot member multiplicity
-    2C  | ,   | 0t9         | Text artifact or 10th "positional" Kit attribute name
+    2C  | ,   | :9          | Text artifact or 10th "positional" Kit attribute name
     2D  | -   |             | Integer artifact prefix general case negative number
     2E  | .   |             | (unassigned)
     2F  | /   |             | Rational artifact prefix general case [numerator,denominator] pair
@@ -1850,8 +1850,8 @@ usually in the context of their being the first octet of an artifact.
     ...
     39  | 9   | 9           | Integer artifact positive nine or Lot member multiplicity nine
     ----+-----+-------------+----------------------------------------------
-    3A  | :   | 0t13        | Text artifact or 14th "positional" Kit attribute name
-    3B  | ;   | 0t10        | Text artifact or 11th "positional" Kit attribute name
+    3A  | :   | :13         | Text artifact or 14th "positional" Kit attribute name
+    3B  | ;   | :10         | Text artifact or 11th "positional" Kit attribute name
     3C  | <   | -1.0        | Rational artifact negative one
     3D  | =   | 0.0         | Rational artifact zero
     3E  | >   | 1.0         | Rational artifact positive one

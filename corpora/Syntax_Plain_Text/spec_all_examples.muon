@@ -151,13 +151,13 @@
 ""
 `Muldis_Object_Notation_Sync_Mark`
 `One positional nonquoted Text (or, the first positional attribute).`
-0t0
+:0
 `Muldis_Object_Notation_Sync_Mark`
 `Same Text value (or, one positional attr written in format of a named).`
-"\(0t0)"
+"\(0)"
 `Muldis_Object_Notation_Sync_Mark`
 `Another positional nonquoted Text (or, the second positional attribute).`
-0t1
+:1
 `Muldis_Object_Notation_Sync_Mark`
 Ceres
 `Muldis_Object_Notation_Sync_Mark`
@@ -168,7 +168,7 @@ Ceres
 "This isn't not escaped.\n"
 `Muldis_Object_Notation_Sync_Mark`
 `Two characters specified in terms of Unicode code-point numbers.`
-"\(0tx263A)\(0t65)"
+"\(0x263A)\(65)"
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
 "\u263A\u0041"
@@ -189,7 +189,7 @@ sales
 `Muldis_Object_Notation_Sync_Mark`
 ::""
 `Muldis_Object_Notation_Sync_Mark`
-::0t0
+::0
 `Muldis_Object_Notation_Sync_Mark`
 ::person
 `Muldis_Object_Notation_Sync_Mark`
@@ -375,10 +375,10 @@ the_db::stats::"samples by order"
 {53}
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-{0t0: 53}
+{0: 53}
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-{"\(0t0)": 53}
+{"\(0)": 53}
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes.`
 {
@@ -409,16 +409,16 @@ the_db::stats::"samples by order"
 (Renaming:{foo,bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Same thing.`
-(Renaming:{0t0->foo,0t1->bar})
+(Renaming:{0->foo,1->bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Convert nonpositional names to positional.`
-(Renaming:{foo->0t0,bar->0t1})
+(Renaming:{foo->:0,bar->:1})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Swap 2 positional attributes.`
-(Renaming:{0t0->0t1,0t1->0t0})
+(Renaming:{0->:1,1->:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Same thing.`
-(Renaming:{0t1,0t0})
+(Renaming:{:1,:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Tuple type: Two named attributes.`
 (Tuple:{
@@ -448,7 +448,7 @@ the_db::stats::"samples by order"
 (Relation:{x,y,z})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Three positional attributes + zero tuples.`
-(Relation:{0t0,0t1,0t2})
+(Relation:{:0,:1,:2})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Two named attributes + two tuples.`
 (Relation:[

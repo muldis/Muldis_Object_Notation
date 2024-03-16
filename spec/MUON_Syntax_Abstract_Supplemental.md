@@ -659,19 +659,19 @@ Examples:
     (Heading:{"sales"})
 
     `One positional attribute.`
-    (Heading:{0t0})
+    (Heading:{:0})
 
     `Same thing.`
-    (Heading:{"\(0t0)"})
+    (Heading:{"\(0)"})
 
     `Three named attributes.`
     (Heading:{region,revenue,qty})
 
     `Three positional attributes.`
-    (Heading:{0t0,0t1,0t2})
+    (Heading:{:0,:1,:2})
 
     `One of each.`
-    (Heading:{0t1,age})
+    (Heading:{:1,age})
 
     `Some attribute names can only appear quoted.`
     (Heading:{"Street Address"})
@@ -706,7 +706,7 @@ Examples:
     (Renaming:{age->age})
 
     `Also a no-op.`
-    (Renaming:{0t0})
+    (Renaming:{:0})
 
     `Rename one attribute.`
     (Renaming:{fname->first_name})
@@ -721,16 +721,16 @@ Examples:
     (Renaming:{foo,bar})
 
     `Same thing.`
-    (Renaming:{0t0->foo,0t1->bar})
+    (Renaming:{0->foo,1->bar})
 
     `Convert nonpositional names to positional.`
-    (Renaming:{foo->0t0,bar->0t1})
+    (Renaming:{foo->:0,bar->:1})
 
     `Swap 2 positional attributes.`
-    (Renaming:{0t0->0t1,0t1->0t0})
+    (Renaming:{0->:1,1->:0})
 
     `Same thing.`
-    (Renaming:{0t1,0t0})
+    (Renaming:{:1,:0})
 
     `Some attribute names can only appear quoted.`
     (Renaming:{"First Name"->"Last Name"})
@@ -815,7 +815,7 @@ Examples:
     (Orderelation:{x,y,z})
 
     `Three positional attributes + zero tuples.`
-    (Orderelation:{0t0,0t1,0t2})
+    (Orderelation:{:0,:1,:2})
 
     `Two named attributes + three tuples (1 duplicate).`
     (Orderelation:[
@@ -884,7 +884,7 @@ Examples:
     (Relation:{x,y,z})
 
     `Three positional attributes + zero tuples.`
-    (Relation:{0t0,0t1,0t2})
+    (Relation:{:0,:1,:2})
 
     `Two named attributes + two tuples.`
     (Relation:[
@@ -954,7 +954,7 @@ Examples:
     (Multirelation:{x,y,z})
 
     `Three positional attributes + zero tuples.`
-    (Multirelation:{0t0,0t1,0t2})
+    (Multirelation:{:0,:1,:2})
 
     `Two named attributes + six tuples (4 duplicates).`
     (Multirelation:[

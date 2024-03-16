@@ -103,13 +103,13 @@ Examples:
     (Renaming:{foo,bar})
 
     `Higher-level Renaming type: Same thing.`
-    (Renaming:{0t0->foo,0t1->bar})
+    (Renaming:{0->foo,1->bar})
 
     `Higher-level Renaming type: Convert nonpositional names to positional.`
-    (Renaming:{0t0<-foo,0t1<-bar})
+    (Renaming:{:0<-foo,:1<-bar})
 
     `Higher-level Renaming type: Swap 2 positional attributes.`
-    (Renaming:{0t0->0t1,0t0<-0t1})
+    (Renaming:{0->:1,:0<-1})
 ```
 
 [RETURN](#TOP)
@@ -319,6 +319,8 @@ Examples:
 
 An **Interval** artifact has the dedicated concrete literal format
 described by `<Interval>`.
+
+*TODO: Fix this to avoid syntactic conflict with its use of the colon.*
 
 Grammar:
 

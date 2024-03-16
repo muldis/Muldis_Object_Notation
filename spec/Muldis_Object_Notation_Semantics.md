@@ -396,7 +396,7 @@ corresponds to a generic *object* of an object-oriented language, the
 The idiomatic way to represent a singleton type value is as an *article*
 where the *label* is the singleton type name and the *attributes* has zero
 attributes.  The idiomatic default attribute name for a single-attribute
-*article* is `0t0` (the first conceptually positional attribute name) when
+*article* is `:0` (the first conceptually positional attribute name) when
 there isn't an actual meaningful name to give it.
 
 A common special case of an *article* is an *excuse*, which has the added

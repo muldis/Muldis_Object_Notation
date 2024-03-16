@@ -799,7 +799,7 @@ where the *label* is the singleton type name and the *attributes* is the
 **Tuple** with zero attributes.
 
 The idiomatic default attribute name for a single-attribute **Article** is
-`0t0` (the first conceptually positional attribute name) when there isn't an
+`:0` (the first conceptually positional attribute name) when there isn't an
 actual meaningful name to give it.
 
 [RETURN](#TOP)

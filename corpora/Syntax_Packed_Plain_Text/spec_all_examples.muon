@@ -326,7 +326,7 @@ t
 `Same thing (3 octets).`
 T""
 `Muldis_Object_Notation_Sync_Mark`
-`The 1-character UTF-8 string 0t0 or "\(0t0)" (1 octet);`
+`The 1-character UTF-8 string :0 or "\(0)" (1 octet);`
 `also known as the first positional attribute name.`
 \00
 `Muldis_Object_Notation_Sync_Mark`
@@ -336,7 +336,7 @@ u\00
 `Same thing (4 octets).`
 T"\00"
 `Muldis_Object_Notation_Sync_Mark`
-`The 1-character UTF-8 string 0t1 or "\(0t1)" (1 octet);`
+`The 1-character UTF-8 string :1 or "\(1)" (1 octet);`
 `also known as the second positional attribute name.`
 \01
 `Muldis_Object_Notation_Sync_Mark`
@@ -364,7 +364,7 @@ T"\E3\82\B5\E3\83\B3\E3\83\97\E3\83\AB"
 `A 24 character UTF-8 string (27 octets).`
 T"This isn't not escaped.\0A"
 `Muldis_Object_Notation_Sync_Mark`
-`The 2-character UTF-8 string "\(0tx263A)\(0t65)" (5 octets).`
+`The 2-character UTF-8 string "\(0x263A)\(65)" (5 octets).`
 x\E2\98\BA\41
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing (7 octets).`
@@ -381,7 +381,7 @@ nt
 N[t]
 `Muldis_Object_Notation_Sync_Mark`
 `The Nesting with exactly 1 element that is the first positional`
-`attribute name (2 octets); also known as ::0t0.`
+`attribute name (2 octets); also known as ::0.`
 n\00
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing (4 octets).`

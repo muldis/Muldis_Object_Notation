@@ -931,6 +931,11 @@ Grammar:
         <quoted_text> | <nonquoted_alphanumeric_text> | <code_point_text>
     }
 
+    token Text_nonqualified
+    {
+        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point>
+    }
+
     token quoted_text
     {
         <quoted_text_segment>+ % <sp>?
@@ -962,7 +967,7 @@ Grammar:
 
     token escaped_char_cpt_seq
     {
-        '\\' ['(' ~ ')' <code_point_text>]
+        '\\' ['(' ~ ')' <code_point>]
     }
 
     token escaped_char_utf32_cpt_seq
@@ -983,10 +988,15 @@ Grammar:
 
     token code_point_text
     {
-          [0tb  [0 | [   1            <[ 0..1      ]> ** 0..20]]]
-        | [0to  [0 | [<[ 1..7      ]> <[ 0..7      ]> ** 0..6 ]]]
-        | [0td? [0 | [<[ 1..9      ]> <[ 0..9      ]> ** 0..6 ]]]
-        | [0tx  [0 | [<[ 1..9 A..F ]> <[ 0..9 A..F ]> ** 0..5 ]]]
+        ':' <sp>? <code_point>
+    }
+
+    token code_point
+    {
+          [0b    [0 | [   1            <[ 0..1      ]> ** 0..20]]]
+        | [0o    [0 | [<[ 1..7      ]> <[ 0..7      ]> ** 0..6 ]]]
+        | [[0d]? [0 | [<[ 1..9      ]> <[ 0..9      ]> ** 0..6 ]]]
+        | [0x    [0 | [<[ 1..9 A..F ]> <[ 0..9 A..F ]> ** 0..5 ]]]
     }
 ```
 
@@ -1010,9 +1020,9 @@ These are the current special cases; more may be added later:
 ```
 
 This grammar explicitly forbids leading zeros in the main body of non-zero
-`<code_point_text>` for consistency with **Integer** literals.
+`<code_point>` for consistency with **Integer** literals.
 
-A `<code_point_text>` is subject to the additional rule that the
+A `<code_point>` is subject to the additional rule that the
 non-negative integer it denotes must be in the set
 `[0..0xD7FF,0xE000..0x10FFFF]`.
 
@@ -1084,13 +1094,13 @@ Examples:
     ""
 
     `One positional nonquoted Text (or, the first positional attribute).`
-    0t0
+    :0
 
     `Same Text value (or, one positional attr written in format of a named).`
-    "\(0t0)"
+    "\(0)"
 
     `Another positional nonquoted Text (or, the second positional attribute).`
-    0t1
+    :1
 
     Ceres
 
@@ -1101,7 +1111,7 @@ Examples:
     "This isn't not escaped.\n"
 
     `Two characters specified in terms of Unicode code-point numbers.`
-    "\(0tx263A)\(0t65)"
+    "\(0x263A)\(65)"
 
     `Same thing.`
     "\u263A\u0041"
@@ -1140,13 +1150,13 @@ Grammar:
 
     token nesting_unary
     {
-        ['::' <sp>? <Text>]
+        ['::' <sp>? <Text_nonqualified>]
     }
 
     token nesting_nary
     {
         ['::' <sp>?]?
-        [<Text> ** 2..* % [<sp>? '::' <sp>?]]
+        [<Text_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
     }
 ```
 
@@ -1155,7 +1165,7 @@ Examples:
 ```
     ::""
 
-    ::0t0
+    ::0
 
     ::person
 
@@ -1460,7 +1470,7 @@ Grammar:
 
     token attr_name
     {
-        <Text>
+        <Text_nonqualified>
     }
 
     token attr_asset
@@ -1471,7 +1481,7 @@ Grammar:
 
 The meaning of a `<kit_attr_a>` (consisting of only an `<attr_asset>`) is
 exactly the same as if the former also had an `<attr_name>` of the form
-`0tN` such that `N` is the zero-based ordinal position of the
+`N` such that `N` is the zero-based ordinal position of the
 `<kit_attr_a>` in the `<kit_attrs>` among all sibling such `<kit_attr_a>`.
 These *attribute name* are determined without regard to the explicit
 *attribute name* of any `<kit_attr_na>` that a `<kit_attrs>` may contain,
@@ -1491,10 +1501,10 @@ Examples:
     {53}
 
     `Same thing.`
-    {0t0: 53}
+    {0: 53}
 
     `Same thing.`
-    {"\(0t0)": 53}
+    {"\(0)": 53}
 
     `Three named attributes.`
     {
@@ -1525,16 +1535,16 @@ Examples:
     (Renaming:{foo,bar})
 
     `Higher-level Renaming type: Same thing.`
-    (Renaming:{0t0->foo,0t1->bar})
+    (Renaming:{0->foo,1->bar})
 
     `Higher-level Renaming type: Convert nonpositional names to positional.`
-    (Renaming:{foo->0t0,bar->0t1})
+    (Renaming:{foo->:0,bar->:1})
 
     `Higher-level Renaming type: Swap 2 positional attributes.`
-    (Renaming:{0t0->0t1,0t1->0t0})
+    (Renaming:{0->:1,1->:0})
 
     `Higher-level Renaming type: Same thing.`
-    (Renaming:{0t1,0t0})
+    (Renaming:{:1,:0})
 
     `Higher-level Tuple type: Two named attributes.`
     (Tuple:{
@@ -1564,7 +1574,7 @@ Examples:
     (Relation:{x,y,z})
 
     `Higher-level Relation type: Three positional attributes + zero tuples.`
-    (Relation:{0t0,0t1,0t2})
+    (Relation:{:0,:1,:2})
 
     `Higher-level Relation type: Two named attributes + two tuples.`
     (Relation:[
@@ -1645,8 +1655,9 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Decimal         | optional prefix +|- and leading 0..9 and with *10^
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
-    Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix 0t
-    Nesting         | leading ::, or :: between 2 of, what otherwise is Text
+    Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix :
+    Nesting         | prefix ::, or :: between 2 of,
+                    |     what otherwise is Text sans prefix :
     Pair            | (...)
     Lot             | only [] or [...]
     Kit             | only {} or {...}
@@ -1671,7 +1682,7 @@ MUON *always* defines enumerated literals or numeric literals or
 non-character string literals to begin with a digit, in some cases with the
 sole exception of a `-` or `+` symbol.  It *always* defines character
 string literals to start with a simple letter or underscore, or that
-literal is double-quoted, with the sole exception of `0tN` literals.
+literal is double-quoted, with the sole exception of `:N` literals.
 
 MUON doesn't use any generic-context symbolic barewords, but if it did then
 it would group them into a single namespace defined by a leading `\` which
@@ -1683,9 +1694,12 @@ While MUON also has some free `.+-*/^`, those only appear adjacent to
 numeric barewords and are considered part of those numeric literals, and so
 shouldn't interfere with a superset using those for regular operators.
 
-Likewise, any uses of `:` or `->` or `,` are only used by MUON
-within various kinds of bracketing pairs and a superset should be able to
-also use them.
+Likewise, any uses of `->` or `,` are only used by MUON within various
+kinds of bracketing pairs and a superset should be able to also use them.
+
+MUON has some free `:` and `::` but both only appear in identifier literals
+but that `:` also otherwise only appears within bracketing pairs;
+a superset should be able to use them in non-conflicting generic scenarios.
 
 MUON does not use the single-quote string delimiter character `'` for
 anything, and leaves it reserved for a superset to use as it sees fit.
@@ -1766,6 +1780,8 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * this/that separator in Pair sels
           |                        | * optional m-m member/multiplicity sep in Lot sels
           |                        | * optional attr name/asset separator in Kit sels
+    :     | identifiers            | * prefix of a Text literal in code-point format
+          |                        | * disambiguate Text from Nesting
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
           |                        | * separate multiplied-members in Lot sels
@@ -1811,9 +1827,6 @@ that means they are used either in pairs or as contiguous sequences.
     0x    | base-16                | * indicates base-16/hexadecimal notation
           |                        | * prefix for Integer or Rational-part in base-16
           | octet string           | * prefix for Blob literals; 0xb/0xx/0xy means in base-2/16/64
-    ------+------------------------+---------------------------------------
-    0t    | character code point   | * indicates a Unicode character code point
-          |                        | * prefix for code-point-Text lit; 0tb/0to/0td/0tx means in base-2/8/10/16
     ------+------------------------+---------------------------------------
 ```
 
@@ -1890,6 +1903,11 @@ when any of these sequences overlap, longest token always wins:
     ,
     ::
 ```
+
+The symbolic sequence `:` is special and has either of 2 different possible
+meanings, which are indicating a **Text** literal as well as being a pair
+separator within a bracketed pair.  The design of MUON should preclude any
+ambiguous situations where it isn't clear which of these meanings a `:` has.
 
 [RETURN](#TOP)
 

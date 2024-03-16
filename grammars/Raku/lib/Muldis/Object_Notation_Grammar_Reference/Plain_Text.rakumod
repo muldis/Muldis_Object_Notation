@@ -209,6 +209,11 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
         <quoted_text> | <nonquoted_alphanumeric_text> | <code_point_text>
     }
 
+    token Text_nonqualified
+    {
+        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point>
+    }
+
     token quoted_text
     {
         <quoted_text_segment>+ % <sp>?
@@ -240,7 +245,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
 
     token escaped_char_cpt_seq
     {
-        '\\' ['(' ~ ')' <code_point_text>]
+        '\\' ['(' ~ ')' <code_point>]
     }
 
     token escaped_char_utf32_cpt_seq
@@ -261,10 +266,15 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
 
     token code_point_text
     {
-          [0tb  [0 | [   1            <[ 0..1      ]> ** 0..20]]]
-        | [0to  [0 | [<[ 1..7      ]> <[ 0..7      ]> ** 0..6 ]]]
-        | [0td? [0 | [<[ 1..9      ]> <[ 0..9      ]> ** 0..6 ]]]
-        | [0tx  [0 | [<[ 1..9 A..F ]> <[ 0..9 A..F ]> ** 0..5 ]]]
+        ':' <sp>? <code_point>
+    }
+
+    token code_point
+    {
+          [0b    [0 | [   1            <[ 0..1      ]> ** 0..20]]]
+        | [0o    [0 | [<[ 1..7      ]> <[ 0..7      ]> ** 0..6 ]]]
+        | [[0d]? [0 | [<[ 1..9      ]> <[ 0..9      ]> ** 0..6 ]]]
+        | [0x    [0 | [<[ 1..9 A..F ]> <[ 0..9 A..F ]> ** 0..5 ]]]
     }
 
 ###########################################################################
@@ -276,13 +286,13 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
 
     token nesting_unary
     {
-        ['::' <sp>? <Text>]
+        ['::' <sp>? <Text_nonqualified>]
     }
 
     token nesting_nary
     {
         ['::' <sp>?]?
-        [<Text> ** 2..* % [<sp>? '::' <sp>?]]
+        [<Text_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
     }
 
 ###########################################################################
@@ -364,7 +374,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
 
     token attr_name
     {
-        <Text>
+        <Text_nonqualified>
     }
 
     token attr_asset
