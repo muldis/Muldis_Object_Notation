@@ -544,7 +544,7 @@ Grammar:
 
     token Text_nonqualified
     {
-        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point>
+        <quoted_text> | <nonquoted_alphanumeric_char_seq> | <code_point>
     }
 
     token quoted_text
@@ -594,7 +594,11 @@ Grammar:
 
     token nonquoted_alphanumeric_text
     {
-        <!before [null | false | true] <wb>>
+        ':' <sp>? <nonquoted_alphanumeric_char_seq>
+    }
+
+    token nonquoted_alphanumeric_char_seq
+    {
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
     }
 
@@ -704,9 +708,9 @@ Grammar:
 Additional Examples:
 
 ```
-    (x=>y)
+    ("x"=">y")
 
-    (x,y)
+    ("x","y")
 ```
 
 [RETURN](#TOP)
@@ -751,10 +755,10 @@ Additional Examples:
 
 ```
     [
-        Clubs  =>  5,
-        Diamonds,
-        Hearts => 10,
-        Spades => 20,
+        "Clubs"  =>  5,
+        "Diamonds",
+        "Hearts" => 10,
+        "Spades" => 20,
     ]
 ```
 
@@ -811,8 +815,8 @@ Additional Examples:
 
 ```
     {
-        login_name => hartmark,
-        login_pass => letmein,
+        login_name => "hartmark",
+        login_pass => "letmein",
         is_special => 0bTRUE,
     }
 ```

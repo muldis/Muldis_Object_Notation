@@ -145,34 +145,34 @@ Examples:
 
 ```
     `No measurement was taken or specified at all.`
-    (Calendar_Time:{})
+    (:Calendar_Time : {})
 
     `Either an unspecified period in 1970 or a duration of 1970 years.`
-    (Calendar_Time:{y:1970})
+    (:Calendar_Time : {y:1970})
 
     `Either a civil calendar date 2015-5-3 or a duration of 2015y+5m+3d.`
-    (Calendar_Time:{y:2015,m:5,d:3})
+    (:Calendar_Time : {y:2015,m:5,d:3})
 
     `Either a military calendar date 1998-300 or a duration of 1998y+300d.`
-    (Calendar_Time:{y:1998,d:300})
+    (:Calendar_Time : {y:1998,d:300})
 
     `Either the 6th week of 1776 or a duration of 1776 years + 6 weeks.`
-    (Calendar_Time:{y:1776,d:42})
+    (:Calendar_Time : {y:1776,d:42})
 
     `Either the first quarter of 1953 or a duration of 1953.25 years.`
-    (Calendar_Time:{y:1953.25})
+    (:Calendar_Time : {y:1953.25})
 
     `Either high noon on an unspecified day or a duration of 12 hours.`
-    (Calendar_Time:{h:12,i:0,s:0})
+    (:Calendar_Time : {h:12,i:0,s:0})
 
     `Either a fully specified civil date and time or a 6-part duration.`
-    (Calendar_Time:{y:1884,m:10,d:17,h:20,i:55,s:30})
+    (:Calendar_Time : {y:1884,m:10,d:17,h:20,i:55,s:30})
 
     `Either an ancient date and time or a negative duration.`
-    (Calendar_Time:{y:-370,m:1,d:24,h:11,i:0,s:0})
+    (:Calendar_Time : {y:-370,m:1,d:24,h:11,i:0,s:0})
 
     `Either a time on some unspecified day or a duration of seconds.`
-    (Calendar_Time:{s:5923.21124603})
+    (:Calendar_Time : {s:5923.21124603})
 ```
 
 [RETURN](#TOP)
@@ -191,10 +191,10 @@ Examples:
 
 ```
     `Addition of 2 years and 3 months.`
-    (Calendar_Duration:{y:2,m:3,d:0,h:0,i:0,s:0})
+    (:Calendar_Duration : {y:2,m:3,d:0,h:0,i:0,s:0})
 
     `Subtraction of 22 hours.`
-    (Calendar_Duration:{y:0,m:0,d:0,h-22,i:0,s:0})
+    (:Calendar_Duration : {y:0,m:0,d:0,h-22,i:0,s:0})
 ```
 
 [RETURN](#TOP)
@@ -228,19 +228,19 @@ Examples:
 
 ```
     `The Day The Music Died (if paired with Gregorian calendar).`
-    (Calendar_Instant:{y:1959,m:2,d:3})
+    (:Calendar_Instant : {y:1959,m:2,d:3})
 
     `A time of day when one might have breakfast.`
-    (Calendar_Instant:{h:7,i:30,s:0})
+    (:Calendar_Instant : {h:7,i:30,s:0})
 
     `What was now in the Pacific zone (if paired with Gregorian calendar).`
-    (Calendar_Instant:({y:2018,m:9,d:3,h:20,i:51,s:17}:{h:-8,i:0,s:0}))
+    (:Calendar_Instant : ({y:2018,m:9,d:3,h:20,i:51,s:17}:{h:-8,i:0,s:0}))
 
     `A time of day in the UTC zone on an unspecified day.`
-    (Calendar_Instant:({h:9,i:25,s:0}:{h:0,i:0,s:0}))
+    (:Calendar_Instant : ({h:9,i:25,s:0}:{h:0,i:0,s:0}))
 
     `A specific day and time in the Pacific Standard Time zone.`
-    (Calendar_Instant:({y:2001,m:4,d:16,h:20,i:1,s:44}:"PST"))
+    (:Calendar_Instant : ({y:2001,m:4,d:16,h:20,i:1,s:44}:"PST"))
 ```
 
 [RETURN](#TOP)
@@ -262,22 +262,22 @@ Examples:
 
 ```
     `No specified coordinates at all.`
-    (Geographic_Point:{})
+    (:Geographic_Point : {})
 
     `Just an elevation specified.`
-    (Geographic_Point:{"+":920})
+    (:Geographic_Point : {"+":920})
 
     `Geographic surface coordinates of Googleplex; elevation not specified.`
-    (Geographic_Point:{">":-122.0857017,"^":37.4218363})
+    (:Geographic_Point : {">":-122.0857017,"^":37.4218363})
 
     `Same thing.`
-    (Geographic_Point:{"^":37.4218363,">":-122.0857017})
+    (:Geographic_Point : {"^":37.4218363,">":-122.0857017})
 
     `Some location with all coordinates specified.`
-    (Geographic_Point:{">":-101,"^":-70,"+":1000})
+    (:Geographic_Point : {">":-101,"^":-70,"+":1000})
 
     `Another place.`
-    (Geographic_Point:{">":-94.746094,"^":37.483577})
+    (:Geographic_Point : {">":-94.746094,"^":37.483577})
 ```
 
 [RETURN](#TOP)
@@ -306,20 +306,20 @@ Examples:
 
 ```
     `Zero members.`
-    (Array:[])
+    (:Array : [])
 
     `One member.`
-    (Array:[ "You got it!" ])
+    (:Array : [ "You got it!" ])
 
     `Three members.`
-    (Array:[
-        Alphonse,
-        Edward,
-        Winry,
+    (:Array : [
+        "Alphonse",
+        "Edward",
+        "Winry",
     ])
 
     `Five members (1 duplicate).`
-    (Array:[
+    (:Array : [
         57,
         45,
         63,
@@ -328,7 +328,7 @@ Examples:
     ])
 
     `32 members (28 duplicates in 2 runs).`
-    (Array:[
+    (:Array : [
         "/",
         "*" : 20,
         "+" : 10,
@@ -356,29 +356,29 @@ Examples:
 
 ```
     `Zero members.`
-    (Set:[])
+    (:Set : [])
 
     `One member.`
-    (Set:[ "I know this one!" ])
+    (:Set : [ "I know this one!" ])
 
     `Four members (no duplicates).`
-    (Set:[
-        Canada,
-        Spain,
-        Jordan,
-        Jordan,
-        Thailand,
+    (:Set : [
+        "Canada",
+        "Spain",
+        "Jordan",
+        "Jordan",
+        "Thailand",
     ])
 
     `Three members.`
-    (Set:[
+    (:Set : [
         3,
         16,
         85,
     ])
 
     `Two members.`
-    (Set:[
+    (:Set : [
         21 : 1,
         62 : 0,
         3 : 1,
@@ -405,26 +405,26 @@ Examples:
 
 ```
     `Zero members.`
-    (Bag:[])
+    (:Bag : [])
 
     `One member.`
-    (Bag:[ "I hear that!": 1 ])
+    (:Bag : [ "I hear that!": 1 ])
 
     `1200 members (1197 duplicates).`
-    (Bag:[
-        Apple  : 500,
-        Orange : 300,
-        Banana : 400,
+    (:Bag : [
+        "Apple"  : 500,
+        "Orange" : 300,
+        "Banana" : 400,
     ])
 
     `Six members (2 duplicates).`
-    (Bag:[
-        Foo : 1,
-        Quux : 1,
-        Foo : 1,
-        Bar : 1,
-        Baz : 1,
-        Baz : 1,
+    (:Bag : [
+        "Foo" : 1,
+        "Quux" : 1,
+        "Foo" : 1,
+        "Bar" : 1,
+        "Baz" : 1,
+        "Baz" : 1,
     ])
 ```
 
@@ -447,19 +447,19 @@ Examples:
 
 ```
     `Zero members; we measured zero of nothing in particular.`
-    (Mix:[])
+    (:Mix : [])
 
     `One member; one gram of mass.`
-    (Mix:[::Gram: 1.0])
+    (:Mix : [::Gram: 1.0])
 
     `29.95 members (28.95 duplicates); the cost of a surgery.`
-    (Mix:[::USD: 29.95])
+    (:Mix : [::USD: 29.95])
 
     `9.8 members; acceleration under Earth's gravity.`
-    (Mix:[::Meter_Per_Second_Squared: 9.8])
+    (:Mix : [::Meter_Per_Second_Squared: 9.8])
 
     `0.615 members (fractions of 3 distinct members); recipe.`
-    (Mix:[
+    (:Mix : [
         ::Butter : 0.22,
         ::Sugar  : 0.1,
         ::Flour  : 0.275,
@@ -467,14 +467,14 @@ Examples:
     ])
 
     `4/3 members (fractions of 3 distinct members); this-mix.`
-    (Mix:[
+    (:Mix : [
         Sugar: 1/3,
         Spice: 1/4,
         All_Things_Nice: 3/4,
     ])
 
     `-1.5 members; adjustment for recipe.`
-    (Mix:[
+    (:Mix : [
         Rice: +4.0,
         Beans: -5.7,
         Carrots: +0.2,
@@ -520,37 +520,37 @@ Examples:
 
 ```
     `Empty interval (zero members).`
-    (Interval:"")
+    (:Interval : "")
 
     `Unit interval (one member).`
-    (Interval:("":abc))
+    (:Interval : ("":"abc"))
 
     `Closed interval (probably 10 members, depending on the model used).`
-    (Interval:("<=*<=":(1:10)))
+    (:Interval : ("<=*<=":(1:10)))
 
     `Same thing.`
-    (Interval:("..":(1:10)))
+    (:Interval : ("..":(1:10)))
 
     `Left-closed, right-open interval; every Rational x in [2.7<=x<9.3].`
-    (Interval:("<=*<":(2.7:9.3)))
+    (:Interval : ("<=*<":(2.7:9.3)))
 
     `Left-open, right-closed interval; every Text x ordered in [a<x<=z].`
-    (Interval:("<*<=":(a:z)))
+    (:Interval : ("<*<=":(:a : z)))
 
     `Open interval; time period between Dec 6 and 20 excluding both.`
-    (Interval:("<*<":(
-          (Calendar_Instant:({y:2002,m:12,d: 6}:"UTC"))
-        : (Calendar_Instant:({y:2002,m:12,d:20}:"UTC"))
+    (:Interval : ("<*<":(
+          (:Calendar_Instant : ({y:2002,m:12,d: 6}:"UTC"))
+        : (:Calendar_Instant : ({y:2002,m:12,d:20}:"UTC"))
     )))
 
     `Left-unbounded, right-closed interval; every Integer x where x <= 3.`
-    (Interval:("*<=":3))
+    (:Interval : ("*<=":3))
 
     `Left-closed, right-unbounded interval; every Integer x where 29 <= x.`
-    (Interval:("<=*":29))
+    (:Interval : ("<=*":29))
 
     `Universal interval; unbounded; every value of type system is a member.`
-    (Interval:"*")
+    (:Interval : "*")
 ```
 
 [RETURN](#TOP)
@@ -569,31 +569,31 @@ Examples:
 
 ```
     `Empty set-of-interval (zero members).`
-    (Set_Of_Interval:[])
+    (:Set_Of_Interval : [])
 
     `Unit set-of-interval (one member).`
-    (Set_Of_Interval:[("":abc)])
+    (:Set_Of_Interval : [("":"abc")])
 
     `Probably 10 members, depending on the model used.`
-    (Set_Of_Interval:[("<=*<=":(1:10))])
+    (:Set_Of_Interval : [("<=*<=":(1:10))])
 
     `Same thing.`
-    (Set_Of_Interval:[("..":(1:10))])
+    (:Set_Of_Interval : [("..":(1:10))])
 
     `Probably 6 members.`
-    (Set_Of_Interval:[("..":(1:3)),("":6),("..":(8:9))])
+    (:Set_Of_Interval : [("..":(1:3)),("":6),("..":(8:9))])
 
     `Every Integer x except for [4..13,22..28]`
-    (Set_Of_Interval:[("*<=":3),("..":(14:21)),("<=*":29)])
+    (:Set_Of_Interval : [("*<=":3),("..":(14:21)),("<=*":29)])
 
     `Set of all valid Unicode code points.`
-    (Set_Of_Interval:[("..":(0:0xD7FF)),("..":(0xE000:0x10FFFF))])
+    (:Set_Of_Interval : [("..":(0:0xD7FF)),("..":(0xE000:0x10FFFF))])
 
     `Probably 15 members (no duplicates), depending on the model used.`
-    (Set_Of_Interval:[("..":(1:10)),("..":(6:15))])
+    (:Set_Of_Interval : [("..":(1:10)),("..":(6:15))])
 
     `Probably same thing, regardless of data model used.`
-    (Set_Of_Interval:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
+    (:Set_Of_Interval : [("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
 ```
 
 [RETURN](#TOP)
@@ -613,22 +613,22 @@ Examples:
 
 ```
     `Empty bag-of-interval (zero members).`
-    (Bag_Of_Interval:[])
+    (:Bag_Of_Interval : [])
 
     `Unit bag-of-interval (one member).`
-    (Bag_Of_Interval:[("":abc)])
+    (:Bag_Of_Interval : [("":"abc")])
 
     `Five members (4 duplicates).`
-    (Bag_Of_Interval:[("":def):5])
+    (:Bag_Of_Interval : [("":def):5])
 
     `Probably 20 members (5 duplicates), depending on the model used.`
-    (Bag_Of_Interval:[("<=*<=":(1:10)),("<=*<=":(6:15))])
+    (:Bag_Of_Interval : [("<=*<=":(1:10)),("<=*<=":(6:15))])
 
     `Same thing.`
-    (Bag_Of_Interval:[("..":(1:10)),("..":(6:15))])
+    (:Bag_Of_Interval : [("..":(1:10)),("..":(6:15))])
 
     `Probably same thing, regardless of data model used.`
-    (Bag_Of_Interval:[("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
+    (:Bag_Of_Interval : [("<=*<":(1:6)),("..":(6:10)):2,("<*<=":(10:15))])
 ```
 
 [RETURN](#TOP)
@@ -650,34 +650,34 @@ Examples:
 
 ```
     `Zero attributes.`
-    (Heading:{})
+    (:Heading : {})
 
     `One named attribute.`
-    (Heading:{sales})
+    (:Heading : {sales})
 
     `Same thing.`
-    (Heading:{"sales"})
+    (:Heading : {"sales"})
 
     `One positional attribute.`
-    (Heading:{:0})
+    (:Heading : {:0})
 
     `Same thing.`
-    (Heading:{"\(0)"})
+    (:Heading : {"\(0)"})
 
     `Three named attributes.`
-    (Heading:{region,revenue,qty})
+    (:Heading : {:region,:revenue,:qty})
 
     `Three positional attributes.`
-    (Heading:{:0,:1,:2})
+    (:Heading : {:0,:1,:2})
 
     `One of each.`
-    (Heading:{:1,age})
+    (:Heading : {:1,age})
 
     `Some attribute names can only appear quoted.`
-    (Heading:{"Street Address"})
+    (:Heading : {"Street Address"})
 
     `A non-Latin name.`
-    (Heading:{"サンプル"})
+    (:Heading : {"サンプル"})
 ```
 
 [RETURN](#TOP)
@@ -700,40 +700,40 @@ Examples:
 
 ```
     `Zero renamings, a no-op.`
-    (Renaming:{})
+    (:Renaming : {})
 
     `Also a no-op.`
-    (Renaming:{age->age})
+    (:Renaming : {age->age})
 
     `Also a no-op.`
-    (Renaming:{:0})
+    (:Renaming : {:0})
 
     `Rename one attribute.`
-    (Renaming:{fname->first_name})
+    (:Renaming : {fname->:first_name})
 
     `Same thing.`
-    (Renaming:{fname:first_name})
+    (:Renaming : {fname : :first_name})
 
     `Swap 2 named attributes.`
-    (Renaming:{foo->bar,bar->foo})
+    (:Renaming : {foo->:bar,bar->:foo})
 
     `Convert positional names to nonpositional.`
-    (Renaming:{foo,bar})
+    (:Renaming : {:foo,:bar})
 
     `Same thing.`
-    (Renaming:{0->foo,1->bar})
+    (:Renaming : {0->:foo,1->:bar})
 
     `Convert nonpositional names to positional.`
-    (Renaming:{foo->:0,bar->:1})
+    (:Renaming : {foo->:0,bar->:1})
 
     `Swap 2 positional attributes.`
-    (Renaming:{0->:1,1->:0})
+    (:Renaming : {0->:1,1->:0})
 
     `Same thing.`
-    (Renaming:{:1,:0})
+    (:Renaming : {:1,:0})
 
     `Some attribute names can only appear quoted.`
-    (Renaming:{"First Name"->"Last Name"})
+    (:Renaming : {"First Name"->"Last Name"})
 ```
 
 [RETURN](#TOP)
@@ -762,30 +762,30 @@ Examples:
 
 ```
     `Zero attributes.`
-    (Tuple:{})
+    (:Tuple : {})
 
     `One named attribute.`
-    (Tuple:{"First Name": Joy})
+    (:Tuple : {"First Name": "Joy"})
 
     `One positional attribute.`
-    (Tuple:{53})
+    (:Tuple : {53})
 
     `Three positional attributes.`
-    (Tuple:{hello,26,0bTRUE})
+    (:Tuple : {"hello",26,0bTRUE})
 
     `One of each.`
-    (Tuple:{Jay, age: 10})
+    (:Tuple : {"Jay", age: 10})
 
     `Two named attributes.`
-    (Tuple:{
-        name : Michelle,
+    (:Tuple : {
+        name : "Michelle",
         age  : 17,
     })
 
     `Same thing.`
-    (Tuple:(
-          {name    , age}
-        : {Michelle, 17 }
+    (:Tuple : (
+          {:name     , :age}
+        : {"Michelle", 17  }
     ))
 ```
 
@@ -806,28 +806,28 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Orderelation:{})
+    (:Orderelation : {})
 
     `Zero attributes + one tuple.`
-    (Orderelation:[{}])
+    (:Orderelation : [{}])
 
     `Three named attributes + zero tuples.`
-    (Orderelation:{x,y,z})
+    (:Orderelation : {:x,:y,:z})
 
     `Three positional attributes + zero tuples.`
-    (Orderelation:{:0,:1,:2})
+    (:Orderelation : {:0,:1,:2})
 
     `Two named attributes + three tuples (1 duplicate).`
-    (Orderelation:[
-        {name: Amy     , age: 14},
-        {name: Michelle, age: 17},
-        {name: Amy     , age: 14},
+    (:Orderelation : [
+        {name: "Amy"     , age: 14},
+        {name: "Michelle", age: 17},
+        {name: "Amy"     , age: 14},
     ])
 
     `Two positional attributes + two tuples.`
-    (Orderelation:[
-        {Michelle, 17},
-        {Amy     , 14},
+    (:Orderelation : [
+        {"Michelle", 17},
+        {"Amy"     , 14},
     ])
 ```
 
@@ -869,61 +869,61 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Relation:{})
+    (:Relation : {})
 
     `Same thing.`
-    (Relation:({}:[]))
+    (:Relation : ({}:[]))
 
     `Zero attributes + one tuple.`
-    (Relation:[{}])
+    (:Relation : [{}])
 
     `Same thing.`
-    (Relation:({}:[{}]))
+    (:Relation : ({}:[{}]))
 
     `Three named attributes + zero tuples.`
-    (Relation:{x,y,z})
+    (:Relation : {:x,:y,:z})
 
     `Three positional attributes + zero tuples.`
-    (Relation:{:0,:1,:2})
+    (:Relation : {:0,:1,:2})
 
     `Two named attributes + two tuples.`
-    (Relation:[
-        {name: Michelle, age: 17},
-        {name: Amy     , age: 14},
+    (:Relation : [
+        {name: "Michelle", age: 17},
+        {name: "Amy"     , age: 14},
     ])
 
     `Same thing.`
-    (Relation:(
-            {name    , age}
+    (:Relation : (
+            {:name     , :age}
         : [
-            {Michelle, 17 },
-            {Amy     , 14 },
+            {"Michelle", 17  },
+            {"Amy"     , 14  },
         ]
     ))
 
     `Two positional attributes + two tuples.`
-    (Relation:[
-        {Michelle, 17},
-        {Amy     , 14},
+    (:Relation : [
+        {"Michelle", 17},
+        {"Amy"     , 14},
     ])
 
     `Some people records.`
-    (Relation:[
-        {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
-            phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
-        {name : "Layla Miller", birth_date : (Calendar_Instant:{y:1995,m:8,d:27}),
-            phone_numbers : (Set:[])},
-        {name : "岩倉 玲音", birth_date : (Calendar_Instant:{y:1984,m:7,d:6}),
-            phone_numbers : (Set:["+81.9072391679"])},
+    (:Relation : [
+        {name : "Jane Ives", birth_date : (:Calendar_Instant : {y:1971,m:11,d:6}),
+            phone_numbers : (:Set : ["+1.4045552995", "+1.7705557572"])},
+        {name : "Layla Miller", birth_date : (:Calendar_Instant : {y:1995,m:8,d:27}),
+            phone_numbers : (:Set : [])},
+        {name : "岩倉 玲音", birth_date : (:Calendar_Instant : {y:1984,m:7,d:6}),
+            phone_numbers : (:Set : ["+81.9072391679"])},
     ])
 
     `Same thing.`
-    (Relation:(
-            {name          , birth_date                          , phone_numbers}
+    (:Relation : (
+            {:name         , :birth_date                            , :phone_numbers}
         : [
-            {"Jane Ives"   , (Calendar_Instant:{y:1971,m:11,d:6}), (Set:["+1.4045552995", "+1.7705557572"])},
-            {"Layla Miller", (Calendar_Instant:{y:1995,m:8,d:27}), (Set:[])},
-            {"岩倉 玲音", (Calendar_Instant:{y:1984,m:7,d:6}), (Set:["+81.9072391679"])},
+            {"Jane Ives"   , (:Calendar_Instant : {y:1971,m:11,d:6}), (:Set : ["+1.4045552995", "+1.7705557572"])},
+            {"Layla Miller", (:Calendar_Instant : {y:1995,m:8,d:27}), (:Set : [])},
+            {"岩倉 玲音", (:Calendar_Instant : {y:1984,m:7,d:6}), (:Set : ["+81.9072391679"])},
         ]
     ))
 ```
@@ -945,27 +945,27 @@ Examples:
 
 ```
     `Zero attributes + zero tuples.`
-    (Multirelation:{})
+    (:Multirelation : {})
 
     `Zero attributes + one tuple.`
-    (Multirelation:[{}])
+    (:Multirelation : [{}])
 
     `Three named attributes + zero tuples.`
-    (Multirelation:{x,y,z})
+    (:Multirelation : {:x,:y,:z})
 
     `Three positional attributes + zero tuples.`
-    (Multirelation:{:0,:1,:2})
+    (:Multirelation : {:0,:1,:2})
 
     `Two named attributes + six tuples (4 duplicates).`
-    (Multirelation:[
-        {name: Michelle, age: 17},
-        {name: Amy     , age: 14} : 5,
+    (:Multirelation : [
+        {name: "Michelle", age: 17},
+        {name: "Amy"     , age: 14} : 5,
     ])
 
     `Two positional attributes + two tuples.`
-    (Multirelation:[
-        {Michelle, 17},
-        {Amy     , 14},
+    (:Multirelation : [
+        {"Michelle", 17},
+        {"Amy"     , 14},
     ])
 ```
 
@@ -990,15 +990,15 @@ of the new **Article** respectively.
 Examples:
 
 ```
-    (Article: (::Point : {x : 5, y : 3}))
+    (:Article : (::Point : {x : 5, y : 3}))
 
-    (Article: (::Float : {
+    (:Article : (::Float : {
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
     }))
 
-    (Article: (the_db::UTC_Date_Time : {
+    (:Article : (the_db::UTC_Date_Time : {
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -1007,9 +1007,9 @@ Examples:
         second : 0.0,
     }))
 
-    (Article: (::Positive_Infinity : {}))
+    (:Article : (::Positive_Infinity : {}))
 
-    (Article: (::Negative_Zero : {}))
+    (:Article : (::Negative_Zero : {}))
 ```
 
 [RETURN](#TOP)
@@ -1027,9 +1027,9 @@ Its subject is any of the following:
 Examples:
 
 ```
-    (Excuse: (::Input_Field_Wrong : {name : "Your Age"}))
+    (:Excuse : (::Input_Field_Wrong : {name : "Your Age"}))
 
-    (Excuse: (::Div_By_Zero : {}))
+    (:Excuse : (::Div_By_Zero : {}))
 
-    (Excuse: (::No_Such_Attr_Name : {}))
+    (:Excuse : (::No_Such_Attr_Name : {}))
 ```

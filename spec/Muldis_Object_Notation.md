@@ -38,15 +38,15 @@ its part name is `Overview`.
 # SYNOPSIS
 
 ```
-    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.400.0"]:
-        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.400.0"]:
-            (Relation:[
-                {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
-                    phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
-                {name : "Layla Miller", birth_date : (Calendar_Instant:{y:1995,m:8,d:27}),
-                    phone_numbers : (Set:[])},
-                {name : "岩倉 玲音", birth_date : (Calendar_Instant:{y:1984,m:7,d:6}),
-                    phone_numbers : (Set:["+81.9072391679"])},
+    (:Muldis_Object_Notation_Syntax : (["Plain_Text", "https://muldis.com", "0.400.0"]:
+        (:Muldis_Object_Notation_Model : (["Muldis_Data_Language", "https://muldis.com", "0.400.0"]:
+            (:Relation : [
+                {name : "Jane Ives", birth_date : (:Calendar_Instant : {y:1971,m:11,d:6}),
+                    phone_numbers : (:Set : ["+1.4045552995", "+1.7705557572"])},
+                {name : "Layla Miller", birth_date : (:Calendar_Instant : {y:1995,m:8,d:27}),
+                    phone_numbers : (:Set : [])},
+                {name : "岩倉 玲音", birth_date : (:Calendar_Instant : {y:1984,m:7,d:6}),
+                    phone_numbers : (:Set : ["+81.9072391679"])},
             ])
         ))
     ))

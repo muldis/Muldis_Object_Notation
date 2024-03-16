@@ -12,20 +12,20 @@ true
 `Muldis_Object_Notation_Sync_Mark`
 'Differently quoted text.'
 `Muldis_Object_Notation_Sync_Mark`
-(x=>y)
+("x"=>"y")
 `Muldis_Object_Notation_Sync_Mark`
-(x,y)
+("x","y")
 `Muldis_Object_Notation_Sync_Mark`
 [
-    Clubs  =>  5,
-    Diamonds,
-    Hearts => 10,
-    Spades => 20,
+    "Clubs"  =>  5,
+    "Diamonds",
+    "Hearts" => 10,
+    "Spades" => 20,
 ]
 `Muldis_Object_Notation_Sync_Mark`
 {
-    login_name => hartmark,
-    login_pass => letmein,
+    login_name => "hartmark",
+    login_pass => "letmein",
     is_special => 0bTRUE,
 }
 `Muldis_Object_Notation_Sync_Mark`

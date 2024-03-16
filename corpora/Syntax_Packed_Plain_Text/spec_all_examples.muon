@@ -409,9 +409,9 @@ P__
 `Pair of Integer (4 octets); also known as (5: -3).`
 P5d\FD
 `Muldis_Object_Notation_Sync_Mark`
-`Pair of Text (18 octets); also known as ("First Name": Joy).`
+`Pair of Text (18 octets); also known as ("First Name": "Joy").`
 PT"First Name"wJoy
 `Muldis_Object_Notation_Sync_Mark`
-`Another Pair (5 octets); also known as (x:y).`
+`Another Pair (5 octets); also known as ("x":"y").`
 Puxuy
 `Muldis_Object_Notation_Sync_Mark`

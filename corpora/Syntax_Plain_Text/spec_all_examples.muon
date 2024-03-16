@@ -159,7 +159,7 @@
 `Another positional nonquoted Text (or, the second positional attribute).`
 :1
 `Muldis_Object_Notation_Sync_Mark`
-Ceres
+"Ceres"
 `Muldis_Object_Notation_Sync_Mark`
 "⨝"
 `Muldis_Object_Notation_Sync_Mark`
@@ -177,7 +177,7 @@ Ceres
 "sales"
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing but nonquoted.`
-sales
+:sales
 `Muldis_Object_Notation_Sync_Mark`
 `One attribute name with a space in it.`
 "First Name"
@@ -206,26 +206,26 @@ the_db::stats::"samples by order"
 (5: -3)
 `Muldis_Object_Notation_Sync_Mark`
 `Pair of Text.`
-("First Name": Joy)
+("First Name": "Joy")
 `Muldis_Object_Notation_Sync_Mark`
 `Another Pair.`
-(x:y)
+("x":"y")
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(x->y)
+("x"->"y")
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Article type.`
-(Article: (::Point : {x : 5, y : 3}))
+(:Article : (::Point : {x : 5, y : 3}))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Article type.`
-(Article: (::Float : {
+(:Article : (::Float : {
     significand : 45207196,
     radix       : 10,
     exponent    : 37,
 }))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Article type.`
-(Article: (the_db::UTC_Date_Time : {
+(:Article : (the_db::UTC_Date_Time : {
     year   : 2003,
     month  : 10,
     day    : 26,
@@ -235,40 +235,40 @@ the_db::stats::"samples by order"
 }))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Article type.`
-(Article: (::Positive_Infinity : {}))
+(:Article : (::Positive_Infinity : {}))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Article type.`
-(Article: (::Negative_Zero : {}))
+(:Article : (::Negative_Zero : {}))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Excuse type.`
-(Excuse: (::Input_Field_Wrong : {name : "Your Age"}))
+(:Excuse : (::Input_Field_Wrong : {name : "Your Age"}))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Excuse type.`
-(Excuse: (::Div_By_Zero : {}))
+(:Excuse : (::Div_By_Zero : {}))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Excuse type.`
-(Excuse: (::No_Such_Attr_Name : {}))
+(:Excuse : (::No_Such_Attr_Name : {}))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Calendar_Duration type: Addition of 2 years and 3 months.`
-(Calendar_Duration:{y:2,m:3,d:0,h:0,i:0,s:0})
+(:Calendar_Duration : {y:2,m:3,d:0,h:0,i:0,s:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Calendar_Duration type: Subtraction of 22 hours.`
-(Calendar_Duration:{y:0,m:0,d:0,h-22,i:0,s:0})
+(:Calendar_Duration : {y:0,m:0,d:0,h-22,i:0,s:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Calendar_Instant type: The Day The Music Died (if paired with Gregorian calendar).`
-(Calendar_Instant:{y:1959,m:2,d:3})
+(:Calendar_Instant : {y:1959,m:2,d:3})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Calendar_Instant type: A time of day when one might have breakfast.`
-(Calendar_Instant:{h:7,i:30,s:0})
+(:Calendar_Instant : {h:7,i:30,s:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Calendar_Instant type: What was now in the Pacific zone (if paired with Gregorian calendar).`
-(Calendar_Instant:({y:2018,m:9,d:3,h:20,i:51,s:17}:{h:-8,i:0,s:0}))
+(:Calendar_Instant : ({y:2018,m:9,d:3,h:20,i:51,s:17}:{h:-8,i:0,s:0}))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Calendar_Instant type: A time of day in the UTC zone on an unspecified day.`
-(Calendar_Instant:({h:9,i:25,s:0}:{h:0,i:0,s:0}))
+(:Calendar_Instant : ({h:9,i:25,s:0}:{h:0,i:0,s:0}))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Calendar_Instant type: A specific day and time in the Pacific Standard Time zone.`
-(Calendar_Instant:({y:2001,m:4,d:16,h:20,i:1,s:44}:"PST"))
+(:Calendar_Instant : ({y:2001,m:4,d:16,h:20,i:1,s:44}:"PST"))
 `Muldis_Object_Notation_Sync_Mark`
 `Zero members.`
 []
@@ -278,21 +278,21 @@ the_db::stats::"samples by order"
 `Muldis_Object_Notation_Sync_Mark`
 `Four members.`
 [
-    Clubs  :  5,
-    Diamonds,
-    Hearts : 10,
-    Spades : 20,
+    "Clubs"  :  5,
+    "Diamonds",
+    "Hearts" : 10,
+    "Spades" : 20,
 ]
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Array type: Three members.`
-(Array:[
-    Alphonse,
-    Edward,
-    Winry,
+(:Array : [
+    "Alphonse",
+    "Edward",
+    "Winry",
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Array type: 32 members (28 duplicates in 2 runs).`
-(Array:[
+(:Array : [
     "/",
     "*" : 20,
     "+" : 10,
@@ -300,51 +300,51 @@ the_db::stats::"samples by order"
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Set type: Four members (no duplicates).`
-(Set:[
-    Canada,
-    Spain,
-    Jordan,
-    Jordan,
-    Thailand,
+(:Set : [
+    "Canada",
+    "Spain",
+    "Jordan",
+    "Jordan",
+    "Thailand",
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Bag type: Zero members.`
-(Bag:[])
+(:Bag : [])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Bag type: One member.`
-(Bag:[ "I hear that!": 1 ])
+(:Bag : [ "I hear that!": 1 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Bag type: 1200 members (1197 duplicates).`
-(Bag:[
-    Apple  : 500,
-    Orange : 300,
-    Banana : 400,
+(:Bag : [
+    "Apple"  : 500,
+    "Orange" : 300,
+    "Banana" : 400,
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Bag type: Six members (2 duplicates).`
-(Bag:[
-    Foo : 1,
-    Quux : 1,
-    Foo : 1,
-    Bar : 1,
-    Baz : 1,
-    Baz : 1,
+(:Bag : [
+    "Foo" : 1,
+    "Quux" : 1,
+    "Foo" : 1,
+    "Bar" : 1,
+    "Baz" : 1,
+    "Baz" : 1,
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Mix type: Zero members; we measured zero of nothing in particular.`
-(Mix:[])
+(:Mix : [])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Mix type: One member; one gram of mass.`
-(Mix:[::Gram: 1.0])
+(:Mix : [::Gram: 1.0])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Mix type: 29.95 members (28.95 duplicates); the cost of a surgery.`
-(Mix:[::USD: 29.95])
+(:Mix : [::USD: 29.95])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Mix type: 9.8 members; acceleration under Earth's gravity.`
-(Mix:[::Meter_Per_Second_Squared: 9.8])
+(:Mix : [::Meter_Per_Second_Squared: 9.8])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Mix type: 0.615 members (fractions of 3 distinct members); recipe.`
-(Mix:[
+(:Mix : [
     ::Butter : 0.22,
     ::Sugar  : 0.1,
     ::Flour  : 0.275,
@@ -352,14 +352,14 @@ the_db::stats::"samples by order"
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Mix type: 4/3 members (fractions of 3 distinct members); this-mix.`
-(Mix:[
+(:Mix : [
     Sugar: 1/3,
     Spice: 1/4,
     All_Things_Nice: 3/4,
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Mix type: -1.5 members; adjustment for recipe.`
-(Mix:[
+(:Mix : [
     Rice: +4.0,
     Beans: -5.7,
     Carrots: +0.2,
@@ -369,7 +369,7 @@ the_db::stats::"samples by order"
 {}
 `Muldis_Object_Notation_Sync_Mark`
 `One named attribute.`
-{"First Name": Joy}
+{"First Name": "Joy"}
 `Muldis_Object_Notation_Sync_Mark`
 `One positional attribute.`
 {53}
@@ -382,112 +382,112 @@ the_db::stats::"samples by order"
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes.`
 {
-    login_name : hartmark,
-    login_pass : letmein,
+    login_name : "hartmark",
+    login_pass : "letmein",
     is_special : 0bTRUE,
 }
 `Muldis_Object_Notation_Sync_Mark`
 `Three positional attributes.`
-{hello,26,0bTRUE}
+{"hello",26,0bTRUE}
 `Muldis_Object_Notation_Sync_Mark`
 `One of each.`
-{Jay, age: 10}
+{"Jay", age: 10}
 `Muldis_Object_Notation_Sync_Mark`
 `A non-Latin name.`
 {"サンプル": "https://example.com"}
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Rename one attribute.`
-(Renaming:{fname->first_name})
+(:Renaming : {fname->:first_name})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Same thing.`
-(Renaming:{fname:first_name})
+(:Renaming : {fname : :first_name})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Swap 2 named attributes.`
-(Renaming:{foo->bar,bar->foo})
+(:Renaming : {foo->:bar,bar->:foo})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Convert positional names to nonpositional.`
-(Renaming:{foo,bar})
+(:Renaming : {:foo,:bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Same thing.`
-(Renaming:{0->foo,1->bar})
+(:Renaming : {0->:foo,1->:bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Convert nonpositional names to positional.`
-(Renaming:{foo->:0,bar->:1})
+(:Renaming : {foo->:0,bar->:1})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Swap 2 positional attributes.`
-(Renaming:{0->:1,1->:0})
+(:Renaming : {0->:1,1->:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Same thing.`
-(Renaming:{:1,:0})
+(:Renaming : {:1,:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Tuple type: Two named attributes.`
-(Tuple:{
-    name : Michelle,
+(:Tuple : {
+    name : "Michelle",
     age  : 17,
 })
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Tuple type: Same thing.`
-(Tuple:(
-      {name    , age}
-    : {Michelle, 17 }
+(:Tuple : (
+      {:name     , :age}
+    : {"Michelle", 17  }
 ))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Zero attributes + zero tuples.`
-(Relation:{})
+(:Relation : {})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Same thing.`
-(Relation:({}:[]))
+(:Relation : ({}:[]))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Zero attributes + one tuple.`
-(Relation:[{}])
+(:Relation : [{}])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Same thing.`
-(Relation:({}:[{}]))
+(:Relation : ({}:[{}]))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Three named attributes + zero tuples.`
-(Relation:{x,y,z})
+(:Relation : {:x,:y,:z})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Three positional attributes + zero tuples.`
-(Relation:{:0,:1,:2})
+(:Relation : {:0,:1,:2})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Two named attributes + two tuples.`
-(Relation:[
-    {name: Michelle, age: 17},
-    {name: Amy     , age: 14},
+(:Relation : [
+    {name: "Michelle", age: 17},
+    {name: "Amy"     , age: 14},
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Same thing.`
-(Relation:(
-        {name    , age}
+(:Relation : (
+        {:name     , :age}
     : [
-        {Michelle, 17 },
-        {Amy     , 14 },
+        {"Michelle", 17  },
+        {"Amy"     , 14  },
     ]
 ))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Two positional attributes + two tuples.`
-(Relation:[
-    {Michelle, 17},
-    {Amy     , 14},
+(:Relation : [
+    {"Michelle", 17},
+    {"Amy"     , 14},
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Some people records.`
-(Relation:[
-    {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
-        phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
-    {name : "Layla Miller", birth_date : (Calendar_Instant:{y:1995,m:8,d:27}),
-        phone_numbers : (Set:[])},
-    {name : "岩倉 玲音", birth_date : (Calendar_Instant:{y:1984,m:7,d:6}),
-        phone_numbers : (Set:["+81.9072391679"])},
+(:Relation : [
+    {name : "Jane Ives", birth_date : (:Calendar_Instant : {y:1971,m:11,d:6}),
+        phone_numbers : (:Set : ["+1.4045552995", "+1.7705557572"])},
+    {name : "Layla Miller", birth_date : (:Calendar_Instant : {y:1995,m:8,d:27}),
+        phone_numbers : (:Set : [])},
+    {name : "岩倉 玲音", birth_date : (:Calendar_Instant : {y:1984,m:7,d:6}),
+        phone_numbers : (:Set : ["+81.9072391679"])},
 ])
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Relation type: Same thing.`
-(Relation:(
-        {name          , birth_date                          , phone_numbers}
+(:Relation : (
+        {:name         , :birth_date                            , :phone_numbers}
     : [
-        {"Jane Ives"   , (Calendar_Instant:{y:1971,m:11,d:6}), (Set:["+1.4045552995", "+1.7705557572"])},
-        {"Layla Miller", (Calendar_Instant:{y:1995,m:8,d:27}), (Set:[])},
-        {"岩倉 玲音", (Calendar_Instant:{y:1984,m:7,d:6}), (Set:["+81.9072391679"])},
+        {"Jane Ives"   , (:Calendar_Instant : {y:1971,m:11,d:6}), (:Set : ["+1.4045552995", "+1.7705557572"])},
+        {"Layla Miller", (:Calendar_Instant : {y:1995,m:8,d:27}), (:Set : [])},
+        {"岩倉 玲音", (:Calendar_Instant : {y:1984,m:7,d:6}), (:Set : ["+81.9072391679"])},
     ]
 ))
 `Muldis_Object_Notation_Sync_Mark`

@@ -224,7 +224,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
 
     token Text_nonqualified
     {
-        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point>
+        <quoted_text> | <nonquoted_alphanumeric_char_seq> | <code_point>
     }
 
     token quoted_text
@@ -274,7 +274,11 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
 
     token nonquoted_alphanumeric_text
     {
-        <!before [null | false | true] <wb>>
+        ':' <sp>? <nonquoted_alphanumeric_char_seq>
+    }
+
+    token nonquoted_alphanumeric_char_seq
+    {
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
     }
 

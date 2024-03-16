@@ -79,37 +79,37 @@ Examples:
 
 ```
     `Another Pair.`
-    (x:y)
+    ("x":"y")
 
     `Same thing.`
-    (x->y)
+    ("x"->"y")
 
     `Same thing.`
-    (y<-x)
+    ("y"<-"x")
 
     `Higher-level Renaming type: Rename one attribute.`
-    (Renaming:{fname->first_name})
+    (:Renaming : {fname->:first_name})
 
     `Higher-level Renaming type: Same thing.`
-    (Renaming:{fname:first_name})
+    (:Renaming : {fname : :first_name})
 
     `Higher-level Renaming type: Same thing.`
-    (Renaming:{first_name<-fname})
+    (:Renaming : {:first_name<-fname})
 
     `Higher-level Renaming type: Swap 2 named attributes.`
-    (Renaming:{foo->bar,foo<-bar})
+    (:Renaming : {foo->:bar,:foo<-bar})
 
     `Higher-level Renaming type: Convert positional names to nonpositional.`
-    (Renaming:{foo,bar})
+    (:Renaming : {:foo,:bar})
 
     `Higher-level Renaming type: Same thing.`
-    (Renaming:{0->foo,1->bar})
+    (:Renaming : {0->:foo,1->:bar})
 
     `Higher-level Renaming type: Convert nonpositional names to positional.`
-    (Renaming:{:0<-foo,:1<-bar})
+    (:Renaming : {:0<-foo,:1<-bar})
 
     `Higher-level Renaming type: Swap 2 positional attributes.`
-    (Renaming:{0->:1,:0<-1})
+    (:Renaming : {0->:1,:0<-1})
 ```
 
 [RETURN](#TOP)
@@ -404,31 +404,31 @@ Examples:
 
 ```
     `Empty set-of-interval (zero members).`
-    (Set_Of_Interval:[])
+    (:Set_Of_Interval : [])
 
     `Unit set-of-interval (one member).`
-    (Set_Of_Interval:[(:abc:)])
+    (:Set_Of_Interval : [(:abc:)])
 
     `Probably 10 members, depending on the model used.`
-    (Set_Of_Interval:[(:1<=*<=10:)])
+    (:Set_Of_Interval : [(:1<=*<=10:)])
 
     `Same thing.`
-    (Set_Of_Interval:[(:1..10:)])
+    (:Set_Of_Interval : [(:1..10:)])
 
     `Probably 6 members.`
-    (Set_Of_Interval:[(:1..3:),(:6:),(:8..9:)])
+    (:Set_Of_Interval : [(:1..3:),(:6:),(:8..9:)])
 
     `Every Integer x except for [4..13,22..28]`
-    (Set_Of_Interval:[(:*<=3:),(:14..21:),(:29<=*:)])
+    (:Set_Of_Interval : [(:*<=3:),(:14..21:),(:29<=*:)])
 
     `Set of all valid Unicode code points.`
-    (Set_Of_Interval:[(:0..0xD7FF:),(:0xE000..0x10FFFF:)])
+    (:Set_Of_Interval : [(:0..0xD7FF:),(:0xE000..0x10FFFF:)])
 
     `Probably 15 members (no duplicates), depending on the model used.`
-    (Set_Of_Interval:[(:1..10:),(:6..15:)])
+    (:Set_Of_Interval : [(:1..10:),(:6..15:)])
 
     `Probably same thing, regardless of data model used.`
-    (Set_Of_Interval:[(:1<=*<6:),(:6..10:):2,(:10<*<=15:)])
+    (:Set_Of_Interval : [(:1<=*<6:),(:6..10:):2,(:10<*<=15:)])
 ```
 
 [RETURN](#TOP)
@@ -439,22 +439,22 @@ Examples:
 
 ```
     `Empty bag-of-interval (zero members).`
-    (Bag_Of_Interval:[])
+    (:Bag_Of_Interval : [])
 
     `Unit bag-of-interval (one member).`
-    (Bag_Of_Interval:[(:abc:)])
+    (:Bag_Of_Interval : [(:abc:)])
 
     `Five members (4 duplicates).`
-    (Bag_Of_Interval:[(:def:):5])
+    (:Bag_Of_Interval : [(:def:):5])
 
     `Probably 20 members (5 duplicates), depending on the model used.`
-    (Bag_Of_Interval:[(:1<=*<=10:),(:6<=*<=15:)])
+    (:Bag_Of_Interval : [(:1<=*<=10:),(:6<=*<=15:)])
 
     `Same thing.`
-    (Bag_Of_Interval:[(:1..10:),(:6..15:)])
+    (:Bag_Of_Interval : [(:1..10:),(:6..15:)])
 
     `Probably same thing, regardless of data model used.`
-    (Bag_Of_Interval:[(:1<=*<6:),(:6..10:):2,(:10<*<=15:)])
+    (:Bag_Of_Interval : [(:1<=*<6:),(:6..10:):2,(:10<*<=15:)])
 ```
 
 [RETURN](#TOP)
@@ -465,22 +465,22 @@ Examples:
 
 ```
     `Some people records.`
-    (Relation:[
+    (:Relation : [
         {name : "Jane Ives", birth_date : 0Lci@y1971|m11|d06,
-            phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
+            phone_numbers : (:Set : ["+1.4045552995", "+1.7705557572"])},
         {name : "Layla Miller", birth_date : 0Lci@y1995|m08|d27,
-            phone_numbers : (Set:[])},
+            phone_numbers : (:Set : [])},
         {name : "岩倉 玲音", birth_date : 0Lci@y1984|m07|d06,
-            phone_numbers : (Set:["+81.9072391679"])},
+            phone_numbers : (:Set : ["+81.9072391679"])},
     ])
 
     `Same thing.`
-    (Relation:(
-            {name          , birth_date        , phone_numbers}
+    (:Relation : (
+            {:name         , :birth_date       , :phone_numbers}
         : [
-            {"Jane Ives"   , 0Lci@y1971|m11|d06, (Set:["+1.4045552995", "+1.7705557572"])},
-            {"Layla Miller", 0Lci@y1995|m08|d27, (Set:[])},
-            {"岩倉 玲音", 0Lci@y1984|m07|d06, (Set:["+81.9072391679"])},
+            {"Jane Ives"   , 0Lci@y1971|m11|d06, (:Set : ["+1.4045552995", "+1.7705557572"])},
+            {"Layla Miller", 0Lci@y1995|m08|d27, (:Set : [])},
+            {"岩倉 玲音", 0Lci@y1984|m07|d06, (:Set : ["+81.9072391679"])},
         ]
     ))
 ```
@@ -598,15 +598,15 @@ that typically consists of 3 **Text** artifacts.
 Examples:
 
 ```
-    (Script:([ASCII]:
+    (:Script : ([ASCII]:
         42
     ))
 
-    (Script:([Unicode, 2.1, "UTF-8"]:
+    (:Script : ([Unicode, 2.1, "UTF-8"]:
         42
     ))
 
-    (Script:([Unicode, 2.1, "UTF-8", canon]:
+    (:Script : ([Unicode, 2.1, "UTF-8", canon]:
         42
     ))
 ```

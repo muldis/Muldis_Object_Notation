@@ -46,7 +46,6 @@ its part name is `Syntax_Plain_Text`.
 - [RESERVED UNUSED SYNTAX](#RESERVED-UNUSED-SYNTAX)
     - [Possrep Heuristics](#Possrep-Heuristics)
     - [Features Reserved For Superset Grammars](#Features-Reserved-For-Superset-Grammars)
-    - [Features Shared With Superset Grammars](#Features-Shared-With-Superset-Grammars)
 - [SYNTACTIC MNEMONICS](#SYNTACTIC-MNEMONICS)
 - [NESTING PRECEDENCE RULES](#NESTING-PRECEDENCE-RULES)
     - [Quoted Strings](#Quoted-Strings)
@@ -64,15 +63,15 @@ its part name is `Syntax_Plain_Text`.
 Common "named relation" format with attribute names repeating per tuple.
 
 ```
-    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.400.0"]:
-        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.400.0"]:
-            (Relation:[
-                {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
-                    phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
-                {name : "Layla Miller", birth_date : (Calendar_Instant:{y:1995,m:8,d:27}),
-                    phone_numbers : (Set:[])},
-                {name : "岩倉 玲音", birth_date : (Calendar_Instant:{y:1984,m:7,d:6}),
-                    phone_numbers : (Set:["+81.9072391679"])},
+    (:Muldis_Object_Notation_Syntax : (["Plain_Text", "https://muldis.com", "0.400.0"]:
+        (:Muldis_Object_Notation_Model : (["Muldis_Data_Language", "https://muldis.com", "0.400.0"]:
+            (:Relation : [
+                {name : "Jane Ives", birth_date : (:Calendar_Instant : {y:1971,m:11,d:6}),
+                    phone_numbers : (:Set : ["+1.4045552995", "+1.7705557572"])},
+                {name : "Layla Miller", birth_date : (:Calendar_Instant : {y:1995,m:8,d:27}),
+                    phone_numbers : (:Set : [])},
+                {name : "岩倉 玲音", birth_date : (:Calendar_Instant : {y:1984,m:7,d:6}),
+                    phone_numbers : (:Set : ["+81.9072391679"])},
             ])
         ))
     ))
@@ -82,17 +81,17 @@ Alternate "positional relation" format with attribute names declared
 once between all tuples.
 
 ```
-    (Muldis_Object_Notation_Syntax:([Plain_Text, "https://muldis.com", "0.400.0"]:
-        (Muldis_Object_Notation_Model:([Muldis_Data_Language, "https://muldis.com", "0.400.0"]:
-            (Relation:(
-                    {name, birth_date, phone_numbers}
+    (:Muldis_Object_Notation_Syntax : (["Plain_Text", "https://muldis.com", "0.400.0"]:
+        (:Muldis_Object_Notation_Model : (["Muldis_Data_Language", "https://muldis.com", "0.400.0"]:
+            (:Relation : (
+                    {:name, :birth_date, :phone_numbers}
                 : [
-                    {"Jane Ives", (Calendar_Instant:{y:1971,m:11,d:6}),
-                        (Set:["+1.4045552995", "+1.7705557572"])},
-                    {"Layla Miller", (Calendar_Instant:{y:1995,m:8,d:27}),
-                        (Set:[])},
-                    {"岩倉 玲音", (Calendar_Instant:{y:1984,m:7,d:6}),
-                        (Set:["+81.9072391679"])},
+                    {"Jane Ives", (:Calendar_Instant : {y:1971,m:11,d:6}),
+                        (:Set : ["+1.4045552995", "+1.7705557572"])},
+                    {"Layla Miller", (:Calendar_Instant : {y:1995,m:8,d:27}),
+                        (:Set : [])},
+                    {"岩倉 玲音", (:Calendar_Instant : {y:1984,m:7,d:6}),
+                        (:Set : ["+81.9072391679"])},
                 ]
             ))
         ))
@@ -933,7 +932,7 @@ Grammar:
 
     token Text_nonqualified
     {
-        <quoted_text> | <nonquoted_alphanumeric_text> | <code_point>
+        <quoted_text> | <nonquoted_alphanumeric_char_seq> | <code_point>
     }
 
     token quoted_text
@@ -982,7 +981,11 @@ Grammar:
 
     token nonquoted_alphanumeric_text
     {
-        <!before [null | false | true] <wb>>
+        ':' <sp>? <nonquoted_alphanumeric_char_seq>
+    }
+
+    token nonquoted_alphanumeric_char_seq
+    {
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
     }
 
@@ -1000,24 +1003,8 @@ Grammar:
     }
 ```
 
-The meaning of `<nonquoted_alphanumeric_text>` is exactly the same as if
+The meaning of `<nonquoted_alphanumeric_char_seq>` is exactly the same as if
 the same characters were surrounded by quotation marks.
-
-This grammar explicitly forbids a **Text** literal of the
-`<nonquoted_alphanumeric_text>` format from being one of a few special
-cases as a precaution against subtle security flaws or other bugs resulting
-from users copying literals between MUON and some other language/format
-that might differ in their interpretation of certain barewords.
-For these special cases, the **Text** literal must use the
-`<quoted_text>` format instead so it is unambiguous in any context.
-
-These are the current special cases; more may be added later:
-
-```
-    null
-    false
-    true
-```
 
 This grammar explicitly forbids leading zeros in the main body of non-zero
 `<code_point>` for consistency with **Integer** literals.
@@ -1102,7 +1089,7 @@ Examples:
     `Another positional nonquoted Text (or, the second positional attribute).`
     :1
 
-    Ceres
+    "Ceres"
 
     "⨝"
 
@@ -1225,26 +1212,26 @@ Examples:
     (5: -3)
 
     `Pair of Text.`
-    ("First Name": Joy)
+    ("First Name": "Joy")
 
     `Another Pair.`
-    (x:y)
+    ("x":"y")
 
     `Same thing.`
-    (x->y)
+    ("x"->"y")
 
     `Higher-level Article type.`
-    (Article: (::Point : {x : 5, y : 3}))
+    (:Article : (::Point : {x : 5, y : 3}))
 
     `Higher-level Article type.`
-    (Article: (::Float : {
+    (:Article : (::Float : {
         significand : 45207196,
         radix       : 10,
         exponent    : 37,
     }))
 
     `Higher-level Article type.`
-    (Article: (the_db::UTC_Date_Time : {
+    (:Article : (the_db::UTC_Date_Time : {
         year   : 2003,
         month  : 10,
         day    : 26,
@@ -1254,40 +1241,40 @@ Examples:
     }))
 
     `Higher-level Article type.`
-    (Article: (::Positive_Infinity : {}))
+    (:Article : (::Positive_Infinity : {}))
 
     `Higher-level Article type.`
-    (Article: (::Negative_Zero : {}))
+    (:Article : (::Negative_Zero : {}))
 
     `Higher-level Excuse type.`
-    (Excuse: (::Input_Field_Wrong : {name : "Your Age"}))
+    (:Excuse : (::Input_Field_Wrong : {name : "Your Age"}))
 
     `Higher-level Excuse type.`
-    (Excuse: (::Div_By_Zero : {}))
+    (:Excuse : (::Div_By_Zero : {}))
 
     `Higher-level Excuse type.`
-    (Excuse: (::No_Such_Attr_Name : {}))
+    (:Excuse : (::No_Such_Attr_Name : {}))
 
     `Higher-level Calendar_Duration type: Addition of 2 years and 3 months.`
-    (Calendar_Duration:{y:2,m:3,d:0,h:0,i:0,s:0})
+    (:Calendar_Duration : {y:2,m:3,d:0,h:0,i:0,s:0})
 
     `Higher-level Calendar_Duration type: Subtraction of 22 hours.`
-    (Calendar_Duration:{y:0,m:0,d:0,h-22,i:0,s:0})
+    (:Calendar_Duration : {y:0,m:0,d:0,h-22,i:0,s:0})
 
     `Higher-level Calendar_Instant type: The Day The Music Died (if paired with Gregorian calendar).`
-    (Calendar_Instant:{y:1959,m:2,d:3})
+    (:Calendar_Instant : {y:1959,m:2,d:3})
 
     `Higher-level Calendar_Instant type: A time of day when one might have breakfast.`
-    (Calendar_Instant:{h:7,i:30,s:0})
+    (:Calendar_Instant : {h:7,i:30,s:0})
 
     `Higher-level Calendar_Instant type: What was now in the Pacific zone (if paired with Gregorian calendar).`
-    (Calendar_Instant:({y:2018,m:9,d:3,h:20,i:51,s:17}:{h:-8,i:0,s:0}))
+    (:Calendar_Instant : ({y:2018,m:9,d:3,h:20,i:51,s:17}:{h:-8,i:0,s:0}))
 
     `Higher-level Calendar_Instant type: A time of day in the UTC zone on an unspecified day.`
-    (Calendar_Instant:({h:9,i:25,s:0}:{h:0,i:0,s:0}))
+    (:Calendar_Instant : ({h:9,i:25,s:0}:{h:0,i:0,s:0}))
 
     `Higher-level Calendar_Instant type: A specific day and time in the Pacific Standard Time zone.`
-    (Calendar_Instant:({y:2001,m:4,d:16,h:20,i:1,s:44}:"PST"))
+    (:Calendar_Instant : ({y:2001,m:4,d:16,h:20,i:1,s:44}:"PST"))
 ```
 
 [RETURN](#TOP)
@@ -1342,21 +1329,21 @@ Examples:
 
     `Four members.`
     [
-        Clubs  :  5,
-        Diamonds,
-        Hearts : 10,
-        Spades : 20,
+        "Clubs"  :  5,
+        "Diamonds",
+        "Hearts" : 10,
+        "Spades" : 20,
     ]
 
     `Higher-level Array type: Three members.`
-    (Array:[
-        Alphonse,
-        Edward,
-        Winry,
+    (:Array : [
+        "Alphonse",
+        "Edward",
+        "Winry",
     ])
 
     `Higher-level Array type: 32 members (28 duplicates in 2 runs).`
-    (Array:[
+    (:Array : [
         "/",
         "*" : 20,
         "+" : 10,
@@ -1364,51 +1351,51 @@ Examples:
     ])
 
     `Higher-level Set type: Four members (no duplicates).`
-    (Set:[
-        Canada,
-        Spain,
-        Jordan,
-        Jordan,
-        Thailand,
+    (:Set : [
+        "Canada",
+        "Spain",
+        "Jordan",
+        "Jordan",
+        "Thailand",
     ])
 
     `Higher-level Bag type: Zero members.`
-    (Bag:[])
+    (:Bag : [])
 
     `Higher-level Bag type: One member.`
-    (Bag:[ "I hear that!": 1 ])
+    (:Bag : [ "I hear that!": 1 ])
 
     `Higher-level Bag type: 1200 members (1197 duplicates).`
-    (Bag:[
-        Apple  : 500,
-        Orange : 300,
-        Banana : 400,
+    (:Bag : [
+        "Apple"  : 500,
+        "Orange" : 300,
+        "Banana" : 400,
     ])
 
     `Higher-level Bag type: Six members (2 duplicates).`
-    (Bag:[
-        Foo : 1,
-        Quux : 1,
-        Foo : 1,
-        Bar : 1,
-        Baz : 1,
-        Baz : 1,
+    (:Bag : [
+        "Foo" : 1,
+        "Quux" : 1,
+        "Foo" : 1,
+        "Bar" : 1,
+        "Baz" : 1,
+        "Baz" : 1,
     ])
 
     `Higher-level Mix type: Zero members; we measured zero of nothing in particular.`
-    (Mix:[])
+    (:Mix : [])
 
     `Higher-level Mix type: One member; one gram of mass.`
-    (Mix:[::Gram: 1.0])
+    (:Mix : [::Gram: 1.0])
 
     `Higher-level Mix type: 29.95 members (28.95 duplicates); the cost of a surgery.`
-    (Mix:[::USD: 29.95])
+    (:Mix : [::USD: 29.95])
 
     `Higher-level Mix type: 9.8 members; acceleration under Earth's gravity.`
-    (Mix:[::Meter_Per_Second_Squared: 9.8])
+    (:Mix : [::Meter_Per_Second_Squared: 9.8])
 
     `Higher-level Mix type: 0.615 members (fractions of 3 distinct members); recipe.`
-    (Mix:[
+    (:Mix : [
         ::Butter : 0.22,
         ::Sugar  : 0.1,
         ::Flour  : 0.275,
@@ -1416,14 +1403,14 @@ Examples:
     ])
 
     `Higher-level Mix type: 4/3 members (fractions of 3 distinct members); this-mix.`
-    (Mix:[
+    (:Mix : [
         Sugar: 1/3,
         Spice: 1/4,
         All_Things_Nice: 3/4,
     ])
 
     `Higher-level Mix type: -1.5 members; adjustment for recipe.`
-    (Mix:[
+    (:Mix : [
         Rice: +4.0,
         Beans: -5.7,
         Carrots: +0.2,
@@ -1495,7 +1482,7 @@ Examples:
     {}
 
     `One named attribute.`
-    {"First Name": Joy}
+    {"First Name": "Joy"}
 
     `One positional attribute.`
     {53}
@@ -1508,112 +1495,112 @@ Examples:
 
     `Three named attributes.`
     {
-        login_name : hartmark,
-        login_pass : letmein,
+        login_name : "hartmark",
+        login_pass : "letmein",
         is_special : 0bTRUE,
     }
 
     `Three positional attributes.`
-    {hello,26,0bTRUE}
+    {"hello",26,0bTRUE}
 
     `One of each.`
-    {Jay, age: 10}
+    {"Jay", age: 10}
 
     `A non-Latin name.`
     {"サンプル": "https://example.com"}
 
     `Higher-level Renaming type: Rename one attribute.`
-    (Renaming:{fname->first_name})
+    (:Renaming : {fname->:first_name})
 
     `Higher-level Renaming type: Same thing.`
-    (Renaming:{fname:first_name})
+    (:Renaming : {fname : :first_name})
 
     `Higher-level Renaming type: Swap 2 named attributes.`
-    (Renaming:{foo->bar,bar->foo})
+    (:Renaming : {foo->:bar,bar->:foo})
 
     `Higher-level Renaming type: Convert positional names to nonpositional.`
-    (Renaming:{foo,bar})
+    (:Renaming : {:foo,:bar})
 
     `Higher-level Renaming type: Same thing.`
-    (Renaming:{0->foo,1->bar})
+    (:Renaming : {0->:foo,1->:bar})
 
     `Higher-level Renaming type: Convert nonpositional names to positional.`
-    (Renaming:{foo->:0,bar->:1})
+    (:Renaming : {foo->:0,bar->:1})
 
     `Higher-level Renaming type: Swap 2 positional attributes.`
-    (Renaming:{0->:1,1->:0})
+    (:Renaming : {0->:1,1->:0})
 
     `Higher-level Renaming type: Same thing.`
-    (Renaming:{:1,:0})
+    (:Renaming : {:1,:0})
 
     `Higher-level Tuple type: Two named attributes.`
-    (Tuple:{
-        name : Michelle,
+    (:Tuple : {
+        name : "Michelle",
         age  : 17,
     })
 
     `Higher-level Tuple type: Same thing.`
-    (Tuple:(
-          {name    , age}
-        : {Michelle, 17 }
+    (:Tuple : (
+          {"name     , "age}
+        : {"Michelle", 17  }
     ))
 
     `Higher-level Relation type: Zero attributes + zero tuples.`
-    (Relation:{})
+    (:Relation : {})
 
     `Higher-level Relation type: Same thing.`
-    (Relation:({}:[]))
+    (:Relation : ({}:[]))
 
     `Higher-level Relation type: Zero attributes + one tuple.`
-    (Relation:[{}])
+    (:Relation : [{}])
 
     `Higher-level Relation type: Same thing.`
-    (Relation:({}:[{}]))
+    (:Relation : ({}:[{}]))
 
     `Higher-level Relation type: Three named attributes + zero tuples.`
-    (Relation:{x,y,z})
+    (:Relation : {:x,:y,:z})
 
     `Higher-level Relation type: Three positional attributes + zero tuples.`
-    (Relation:{:0,:1,:2})
+    (:Relation : {:0,:1,:2})
 
     `Higher-level Relation type: Two named attributes + two tuples.`
-    (Relation:[
-        {name: Michelle, age: 17},
-        {name: Amy     , age: 14},
+    (:Relation : [
+        {name: "Michelle", age: 17},
+        {name: "Amy"     , age: 14},
     ])
 
     `Higher-level Relation type: Same thing.`
-    (Relation:(
-            {name    , age}
+    (:Relation : (
+            {:name     , :age}
         : [
-            {Michelle, 17 },
-            {Amy     , 14 },
+            {"Michelle", 17  },
+            {"Amy"     , 14  },
         ]
     ))
 
     `Higher-level Relation type: Two positional attributes + two tuples.`
-    (Relation:[
-        {Michelle, 17},
-        {Amy     , 14},
+    (:Relation : [
+        {"Michelle", 17},
+        {"Amy"     , 14},
     ])
 
     `Higher-level Relation type: Some people records.`
-    (Relation:[
-        {name : "Jane Ives", birth_date : (Calendar_Instant:{y:1971,m:11,d:6}),
-            phone_numbers : (Set:["+1.4045552995", "+1.7705557572"])},
-        {name : "Layla Miller", birth_date : (Calendar_Instant:{y:1995,m:8,d:27}),
-            phone_numbers : (Set:[])},
-        {name : "岩倉 玲音", birth_date : (Calendar_Instant:{y:1984,m:7,d:6}),
-            phone_numbers : (Set:["+81.9072391679"])},
+    (:Relation : [
+        {name : "Jane Ives", birth_date : (:Calendar_Instant : {y:1971,m:11,d:6}),
+            phone_numbers : (:Set : ["+1.4045552995", "+1.7705557572"])},
+        {name : "Layla Miller", birth_date : (:Calendar_Instant : {y:1995,m:8,d:27}),
+            phone_numbers : (:Set : [])},
+        {name : "岩倉 玲音", birth_date : (:Calendar_Instant : {y:1984,m:7,d:6}),
+            phone_numbers : (:Set : ["+81.9072391679"])},
     ])
 
     `Higher-level Relation type: Same thing.`
-    (Relation:(
-            {name          , birth_date                          , phone_numbers}
+    (:Relation : (
+            {:name         , :birth_date                            , :phone_numbers}
         : [
-            {"Jane Ives"   , (Calendar_Instant:{y:1971,m:11,d:6}), (Set:["+1.4045552995", "+1.7705557572"])},
-            {"Layla Miller", (Calendar_Instant:{y:1995,m:8,d:27}), (Set:[])},
-            {"岩倉 玲音", (Calendar_Instant:{y:1984,m:7,d:6}), (Set:["+81.9072391679"])},
+            {"Jane Ives"   , (:Calendar_Instant : {y:1971,m:11,d:6}), (:Set : ["+1.4045552995", "+1.7705557572"])},
+            {"Layla Miller", (:Calendar_Instant : {y:1995,m:8,d:27}), (:Set : [])},
+            {"岩倉 玲音", (:Calendar_Instant : {y:1984,m:7,d:6}), (:Set : ["+81.9072391679"])},
         ]
     ))
 ```
@@ -1655,7 +1642,7 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Decimal         | optional prefix +|- and leading 0..9 and with *10^
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
-    Text            | only "" or "..." or prefix [A..Z _ a..z] or prefix :
+    Text            | only "" or "..." or prefix : but no prefix ::
     Nesting         | prefix ::, or :: between 2 of,
                     |     what otherwise is Text sans prefix :
     Pair            | (...)
@@ -1680,9 +1667,15 @@ types.  It has no alpha keywords or reserved words.
 
 MUON *always* defines enumerated literals or numeric literals or
 non-character string literals to begin with a digit, in some cases with the
-sole exception of a `-` or `+` symbol.  It *always* defines character
-string literals to start with a simple letter or underscore, or that
-literal is double-quoted, with the sole exception of `:N` literals.
+sole exception of a `-` or `+` symbol.
+
+MUON *always* defines character string literals to either be double-quoted
+or to begin with a `:` or to begin with or contain a `::`.
+
+MUON leaves all generic-context alphanumeric barewords, that start with a
+simple letter or underscore, free for a superset grammar to use.
+MUON only uses such barewords either combined with a `:` or `::`
+or within bracketing pairs.
 
 MUON doesn't use any generic-context symbolic barewords, but if it did then
 it would group them into a single namespace defined by a leading `\` which
@@ -1713,31 +1706,6 @@ except with a colon/etc (`:`/`->`)
 between them as a `Pair` syntax, so parenthesis pairs without the colon/etc
 are available for a superset grammar to use for generic grouping purposes
 to force a particular parsing precedence with infix operators and such.
-
-[RETURN](#TOP)
-
-<a name="Features-Shared-With-Superset-Grammars"></a>
-
-## Features Shared With Superset Grammars
-
-MUON declares that all alpha barewords are **Text** literals,
-meaning any bareword like `foo` is interpreted as if it were `"foo"`.
-This syntactic feature is intended to make the common cases of **Nesting**
-or attribute names or similar more pleasant to manually write or read.
-There are intentionally no special edge cases that could cause confusion or
-bugs; for example `FALSE` is a **Text**, not a **Boolean**; to get the
-latter you must prefix `0b` for a leading digit.
-
-MUON assumes that a superset grammar may wish to override that general
-interpretation such as to be reserved words or refer to infix or prefix etc
-operator or routine invocations or to refer to variable names or whatever;
-in that case, any contexts that could be interpreted either as a **Text**
-literal or as something else will be interpreted as the latter, and one can
-use the quoted form of **Text** to force that meaning.
-
-However, MUON explicitly forbids a few special cases of alpha barewords
-such as [`null`,`false`,`true`] since their presence in a MUON artifact can
-cause confusion or other problems, so such **Text** must be quoted instead.
 
 [RETURN](#TOP)
 
@@ -1780,7 +1748,7 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * this/that separator in Pair sels
           |                        | * optional m-m member/multiplicity sep in Lot sels
           |                        | * optional attr name/asset separator in Kit sels
-    :     | identifiers            | * prefix of a Text literal in code-point format
+    :     | identifiers            | * prefix of a Text literal in non-quoted formats
           |                        | * disambiguate Text from Nesting
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
@@ -1808,8 +1776,6 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * disambiguate Binary/Decimal lit from Integer/Rational lit
     ------+------------------------+---------------------------------------
     digit | number/enumeration     | * first char 0..9 in bareword indicates is number/code-point/Bits/Blob/enumeration
-    ------+------------------------+---------------------------------------
-    alpha | identifier             | * first char a..z/etc in bareword indicates is Text/identifier
     ------+------------------------+---------------------------------------
     0i    | ignorance              | * prefix for Ignorance literal
     ------+------------------------+---------------------------------------

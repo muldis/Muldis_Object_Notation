@@ -1668,10 +1668,10 @@ Examples:
     `Pair of Integer (4 octets); also known as (5: -3).`
     P5d\FD
 
-    `Pair of Text (18 octets); also known as ("First Name": Joy).`
+    `Pair of Text (18 octets); also known as ("First Name": "Joy").`
     PT"First Name"wJoy
 
-    `Another Pair (5 octets); also known as (x:y).`
+    `Another Pair (5 octets); also known as (:x : y).`
     Puxuy
 ```
 
