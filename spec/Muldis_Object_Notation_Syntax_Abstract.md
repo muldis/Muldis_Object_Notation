@@ -197,7 +197,8 @@ A **Text** artifact is an arbitrarily-large ordered sequence of **Unicode** stan
 
 ## Name
 
-*TODO.*
+A **Name** artifact is a standalone *attribute name*
+which is an nonqualified program identifier.
 
 [RETURN](#TOP)
 

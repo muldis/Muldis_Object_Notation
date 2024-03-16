@@ -234,6 +234,7 @@ Grammar:
         | <Bits>
         | <Blob>
         | <Text>
+        | <Name>
         | <Nesting>
         | <Pair>
         | <Lot>
@@ -540,12 +541,7 @@ Grammar:
 ```
     token Text
     {
-        <quoted_char_seq> | <nonquoted_alphanumeric_text> | <code_point_text>
-    }
-
-    token Text_nonqualified
-    {
-        <quoted_char_seq> | <nonquoted_alphanumeric_char_seq> | <code_point>
+        <quoted_char_seq>
     }
 
     token quoted_char_seq
@@ -600,21 +596,6 @@ Grammar:
     {
         '\\' u [<[ 0..9 A..F a..f ]> ** 4]
     }
-
-    token nonquoted_alphanumeric_text
-    {
-        ':' <sp>? <nonquoted_alphanumeric_char_seq>
-    }
-
-    token nonquoted_alphanumeric_char_seq
-    {
-        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
-    }
-
-    token code_point_text
-    {
-        ':' <sp>? <code_point>
-    }
 ```
 
 The meanings of the additional simple character escape sequences are:
@@ -642,7 +623,29 @@ Additional Examples:
 
 ## Name
 
-*TODO.*
+A **Name** artifact has the dedicated concrete literal format
+described by `<Name>`.
+
+Grammar:
+
+```
+    token Name
+    {
+        ':' <sp>? <Name_nonqualified>
+    }
+
+    token Name_nonqualified
+    {
+        <quoted_char_seq> | <nonquoted_alphanumeric_char_seq> | <code_point>
+    }
+
+    token nonquoted_alphanumeric_char_seq
+    {
+        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+    }
+```
+
+*This part of the grammar has no differences from the MUON Plain Text (strict) version.*
 
 [RETURN](#TOP)
 
@@ -663,13 +666,13 @@ Grammar:
 
     token nesting_unary
     {
-        ['::' <sp>? <Text_nonqualified>]
+        ['::' <sp>? <Name_nonqualified>]
     }
 
     token nesting_nary
     {
         ['::' <sp>?]?
-        [<Text_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
+        [<Name_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
     }
 ```
 
@@ -717,9 +720,9 @@ Grammar:
 Additional Examples:
 
 ```
-    ("x"=>"y")
+    (:x=>:y)
 
-    ("x","y")
+    (:x,:y)
 ```
 
 [RETURN](#TOP)
@@ -811,7 +814,7 @@ Grammar:
 
     token attr_name
     {
-        <Text_nonqualified>
+        <Name_nonqualified>
     }
 
     token attr_asset

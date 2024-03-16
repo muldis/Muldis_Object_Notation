@@ -12,9 +12,9 @@ true
 `Muldis_Object_Notation_Sync_Mark`
 'Differently quoted text.'
 `Muldis_Object_Notation_Sync_Mark`
-("x"=>"y")
+(:x=>:y)
 `Muldis_Object_Notation_Sync_Mark`
-("x","y")
+(:x,:y)
 `Muldis_Object_Notation_Sync_Mark`
 [
     "Clubs"  =>  5,

@@ -328,7 +328,7 @@
 (:Renaming : {:1,:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Some attribute names can only appear quoted.`
-(:Renaming : {"First Name"->"Last Name"})
+(:Renaming : {"First Name"->:"Last Name"})
 `Muldis_Object_Notation_Sync_Mark`
 `Zero attributes.`
 (:Tuple : {})

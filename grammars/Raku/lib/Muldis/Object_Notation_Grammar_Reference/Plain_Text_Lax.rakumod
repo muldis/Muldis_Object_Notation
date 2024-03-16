@@ -60,6 +60,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
         | <Bits>
         | <Blob>
         | <Text>
+        | <Name>
         | <Nesting>
         | <Pair>
         | <Lot>
@@ -219,12 +220,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
 
     token Text
     {
-        <quoted_char_seq> | <nonquoted_alphanumeric_text> | <code_point_text>
-    }
-
-    token Text_nonqualified
-    {
-        <quoted_char_seq> | <nonquoted_alphanumeric_char_seq> | <code_point>
+        <quoted_char_seq>
     }
 
     token quoted_char_seq
@@ -280,19 +276,21 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
         '\\' u [<[ 0..9 A..F a..f ]> ** 4]
     }
 
-    token nonquoted_alphanumeric_text
+###########################################################################
+
+    token Name
     {
-        ':' <sp>? <nonquoted_alphanumeric_char_seq>
+        ':' <sp>? <Name_nonqualified>
+    }
+
+    token Name_nonqualified
+    {
+        <quoted_char_seq> | <nonquoted_alphanumeric_char_seq> | <code_point>
     }
 
     token nonquoted_alphanumeric_char_seq
     {
         <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
-    }
-
-    token code_point_text
-    {
-        ':' <sp>? <code_point>
     }
 
 ###########################################################################
@@ -304,13 +302,13 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
 
     token nesting_unary
     {
-        ['::' <sp>? <Text_nonqualified>]
+        ['::' <sp>? <Name_nonqualified>]
     }
 
     token nesting_nary
     {
         ['::' <sp>?]?
-        [<Text_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
+        [<Name_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
     }
 
 ###########################################################################
@@ -392,7 +390,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text_Lax::Grammar
 
     token attr_name
     {
-        <Text_nonqualified>
+        <Name_nonqualified>
     }
 
     token attr_asset

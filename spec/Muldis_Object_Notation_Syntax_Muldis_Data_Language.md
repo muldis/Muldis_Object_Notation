@@ -186,7 +186,9 @@ A **Text** artifact is any of the following:
 
 ## Name
 
-*TODO.*
+A **Name** artifact is any of the following:
+
+* Any value of the MDL type `fdn::Name`.
 
 [RETURN](#TOP)
 

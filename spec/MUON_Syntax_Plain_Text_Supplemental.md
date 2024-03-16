@@ -79,13 +79,13 @@ Examples:
 
 ```
     `Another Pair.`
-    ("x":"y")
+    (:x : :y)
 
     `Same thing.`
-    ("x"->"y")
+    (:x->:y)
 
     `Same thing.`
-    ("y"<-"x")
+    (:y<-:x)
 
     `Higher-level Renaming type: Rename one attribute.`
     (:Renaming : {fname->:first_name})

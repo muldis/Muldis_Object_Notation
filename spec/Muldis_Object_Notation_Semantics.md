@@ -340,10 +340,6 @@ which explicitly does not represent any kind of thing in particular.
 
 See also <https://unicode.org>.
 
-A **Text** value has 2 fundamental uses, one being for generic user data,
-and the other being the canonical form of a standalone *attribute name*
-(see the **Kit** possrep) which is an nonqualified program identifier.
-
 Note that some programming languages or execution environments support a
 "Unicode character string" concept that is less strict than the **Unicode**
 standard, and thus allow malformed character strings.  For example, some
@@ -358,7 +354,10 @@ still be conveyed using other means such as MUON's **Lot**+**Integer**.
 
 ## Name
 
-*TODO.*
+A **Name** value is a standalone *attribute name* (see the **Kit** possrep)
+which is an nonqualified program identifier.
+A **Name** value is also characterized by a single **Text** value,
+but while **Text** is intended for generic user data, **Name** is not.
 
 [RETURN](#TOP)
 

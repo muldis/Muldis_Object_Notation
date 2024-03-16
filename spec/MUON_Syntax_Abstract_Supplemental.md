@@ -733,7 +733,7 @@ Examples:
     (:Renaming : {:1,:0})
 
     `Some attribute names can only appear quoted.`
-    (:Renaming : {"First Name"->"Last Name"})
+    (:Renaming : {"First Name"->:"Last Name"})
 ```
 
 [RETURN](#TOP)

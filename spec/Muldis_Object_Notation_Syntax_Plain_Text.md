@@ -383,6 +383,7 @@ Grammar:
         | <Bits>
         | <Blob>
         | <Text>
+        | <Name>
         | <Nesting>
         | <Pair>
         | <Lot>
@@ -928,12 +929,7 @@ Grammar:
 ```
     token Text
     {
-        <quoted_char_seq> | <nonquoted_alphanumeric_text> | <code_point_text>
-    }
-
-    token Text_nonqualified
-    {
-        <quoted_char_seq> | <nonquoted_alphanumeric_char_seq> | <code_point>
+        <quoted_char_seq>
     }
 
     token quoted_char_seq
@@ -987,31 +983,7 @@ Grammar:
     {
         '\\' u [<[ 0..9 A..F a..f ]> ** 4]
     }
-
-    token nonquoted_alphanumeric_text
-    {
-        ':' <sp>? <nonquoted_alphanumeric_char_seq>
-    }
-
-    token nonquoted_alphanumeric_char_seq
-    {
-        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
-    }
-
-    token code_point_text
-    {
-        ':' <sp>? <code_point>
-    }
 ```
-
-The meaning of `<nonquoted_alphanumeric_char_seq>` is exactly the same as
-if the same characters were surrounded by quotation marks;
-for example, `:foo` is equivalent to `"foo"`.
-
-The meaning of a `<Text_nonqualified>` that is a `<code_point>` is exactly
-the same as if the same characters were surrounded, first as per
-`<escaped_char_code_point>`, and second by quotation marks;
-for example, `:0` is equivalent to `"\(0)"`.
 
 This grammar explicitly forbids leading zeros in the main body of non-zero
 `<code_point>` for consistency with **Integer** literals.
@@ -1077,15 +1049,6 @@ Examples:
 ```
     ""
 
-    `One positional nonquoted Text (or, the first positional attribute).`
-    :0
-
-    `Same Text value (or, one positional attr written in format of a named).`
-    "\(0)"
-
-    `Another positional nonquoted Text (or, the second positional attribute).`
-    :1
-
     "Ceres"
 
     "⨝"
@@ -1100,15 +1063,6 @@ Examples:
     `Same thing.`
     "\u263A\u0041"
 
-    `One non-positional quoted Text (or, one named attribute).`
-    "sales"
-
-    `Same thing but nonquoted.`
-    sales
-
-    `One attribute name with a space in it.`
-    "First Name"
-
     `From a graduate student (in finals week), the following haiku:`
     "study, write, study,\n"
         "do review (each word) if time.\n"
@@ -1121,7 +1075,60 @@ Examples:
 
 ## Name
 
-*TODO.*
+A **Name** artifact has the dedicated concrete literal format
+described by `<Name>`.
+
+Grammar:
+
+```
+    token Name
+    {
+        ':' <sp>? <Name_nonqualified>
+    }
+
+    token Name_nonqualified
+    {
+        <quoted_char_seq> | <nonquoted_alphanumeric_char_seq> | <code_point>
+    }
+
+    token nonquoted_alphanumeric_char_seq
+    {
+        <[ A..Z _ a..z ]> <[ 0..9 A..Z _ a..z ]>*
+    }
+```
+
+The meaning of `<nonquoted_alphanumeric_char_seq>` is exactly the same as
+if the same characters were surrounded by quotation marks;
+for example, `:foo` is equivalent to `:"foo"`.
+
+The meaning of a `<Name_nonqualified>` that is a `<code_point>` is exactly
+the same as if the same characters were surrounded, first as per
+`<escaped_char_code_point>`, and second by quotation marks;
+for example, `:0` is equivalent to `:"\(0)"`.
+
+Examples:
+
+```
+    :""
+
+    `One positional nonquoted Name (or, the first positional attribute).`
+    :0
+
+    `Same Name value (or, one positional attr written in format of a named).`
+    :"\(0)"
+
+    `Another positional nonquoted Name (or, the second positional attribute).`
+    :1
+
+    `One non-positional quoted Name (or, one named attribute).`
+    :"age"
+
+    `Same thing but nonquoted.`
+    :age
+
+    `One attribute name with a space in it.`
+    :"First Name"
+```
 
 [RETURN](#TOP)
 
@@ -1142,13 +1149,13 @@ Grammar:
 
     token nesting_unary
     {
-        ['::' <sp>? <Text_nonqualified>]
+        ['::' <sp>? <Name_nonqualified>]
     }
 
     token nesting_nary
     {
         ['::' <sp>?]?
-        [<Text_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
+        [<Name_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
     }
 ```
 
@@ -1216,14 +1223,14 @@ Examples:
     `Pair of Integer.`
     (5: -3)
 
-    `Pair of Text.`
-    ("First Name": "Joy")
+    `Pair of Name+Text.`
+    (:"First Name" : "Joy")
 
     `Another Pair.`
-    ("x":"y")
+    (:x : :y)
 
     `Same thing.`
-    ("x"->"y")
+    (:x->:y)
 
     `Higher-level Article type.`
     (:Article : (::Point : {x : 5, y : 3}))
@@ -1462,7 +1469,7 @@ Grammar:
 
     token attr_name
     {
-        <Text_nonqualified>
+        <Name_nonqualified>
     }
 
     token attr_asset
@@ -1647,9 +1654,10 @@ possrep is recognized within a valid Muldis Object Notation artifact:
     Decimal         | optional prefix +|- and leading 0..9 and with *10^
     Bits            | prefix 0bb or 0bo or 0bx
     Blob            | prefix 0xb or 0xx or 0xy
-    Text            | only "" or "..." or prefix : but no prefix ::
+    Text            | only "" or "..." but no prefix : or ::
+    Name            | prefix : but no prefix ::
     Nesting         | prefix ::, or :: between 2 of,
-                    |     what otherwise is Text sans prefix :
+                    |     what otherwise is Name sans prefix :
     Pair            | (...)
     Lot             | only [] or [...]
     Kit             | only {} or {...}
@@ -1753,15 +1761,15 @@ that means they are used either in pairs or as contiguous sequences.
           |                        | * this/that separator in Pair sels
           |                        | * optional m-m member/multiplicity sep in Lot sels
           |                        | * optional attr name/asset separator in Kit sels
-    :     | identifiers            | * prefix of a Text literal in non-quoted formats
-          |                        | * disambiguate Text from Nesting
+    :     | identifiers            | * prefix of a Name literal
+          |                        | * disambiguate Name from Text and Nesting
     ------+------------------------+---------------------------------------
     ,     | list builders          | * separates collection elements
           |                        | * separate multiplied-members in Lot sels
           |                        | * separate attributes in Kit sels
     ------+------------------------+---------------------------------------
     ::    | nestings               | * prefix or separate elements of a Nesting literal
-          |                        | * disambiguate Nesting from Text
+          |                        | * disambiguate Nesting from Text and Name
     ------+------------------------+---------------------------------------
     *     | generics/whatever      | * indicates a generic type context
           | multiplication         | * significand/radix separator in Binary/Decimal literals
@@ -1876,7 +1884,7 @@ when any of these sequences overlap, longest token always wins:
 ```
 
 The symbolic sequence `:` is special and has either of 2 different possible
-meanings, which are indicating a **Text** literal as well as being a pair
+meanings, which are indicating a **Name** literal as well as being a pair
 separator within a bracketed pair.  The design of MUON should preclude any
 ambiguous situations where it isn't clear which of these meanings a `:` has.
 

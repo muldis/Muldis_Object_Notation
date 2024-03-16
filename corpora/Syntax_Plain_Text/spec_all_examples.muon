@@ -150,15 +150,6 @@
 `Muldis_Object_Notation_Sync_Mark`
 ""
 `Muldis_Object_Notation_Sync_Mark`
-`One positional nonquoted Text (or, the first positional attribute).`
-:0
-`Muldis_Object_Notation_Sync_Mark`
-`Same Text value (or, one positional attr written in format of a named).`
-"\(0)"
-`Muldis_Object_Notation_Sync_Mark`
-`Another positional nonquoted Text (or, the second positional attribute).`
-:1
-`Muldis_Object_Notation_Sync_Mark`
 "Ceres"
 `Muldis_Object_Notation_Sync_Mark`
 "⨝"
@@ -173,19 +164,30 @@
 `Same thing.`
 "\u263A\u0041"
 `Muldis_Object_Notation_Sync_Mark`
-`One non-positional quoted Text (or, one named attribute).`
-"sales"
-`Muldis_Object_Notation_Sync_Mark`
-`Same thing but nonquoted.`
-:sales
-`Muldis_Object_Notation_Sync_Mark`
-`One attribute name with a space in it.`
-"First Name"
-`Muldis_Object_Notation_Sync_Mark`
 `From a graduate student (in finals week), the following haiku:`
 "study, write, study,\n"
     "do review (each word) if time.\n"
     "close book. sleep? what's that?\n"
+`Muldis_Object_Notation_Sync_Mark`
+:""
+`Muldis_Object_Notation_Sync_Mark`
+`One positional nonquoted Name (or, the first positional attribute).`
+:0
+`Muldis_Object_Notation_Sync_Mark`
+`Same Name value (or, one positional attr written in format of a named).`
+:"\(0)"
+`Muldis_Object_Notation_Sync_Mark`
+`Another positional nonquoted Name (or, the second positional attribute).`
+:1
+`Muldis_Object_Notation_Sync_Mark`
+`One non-positional quoted Name (or, one named attribute).`
+:"age"
+`Muldis_Object_Notation_Sync_Mark`
+`Same thing but nonquoted.`
+:age
+`Muldis_Object_Notation_Sync_Mark`
+`One attribute name with a space in it.`
+:"First Name"
 `Muldis_Object_Notation_Sync_Mark`
 ::""
 `Muldis_Object_Notation_Sync_Mark`
@@ -205,14 +207,14 @@ the_db::stats::"samples by order"
 `Pair of Integer.`
 (5: -3)
 `Muldis_Object_Notation_Sync_Mark`
-`Pair of Text.`
-("First Name": "Joy")
+`Pair of Name+Text.`
+(:"First Name" : "Joy")
 `Muldis_Object_Notation_Sync_Mark`
 `Another Pair.`
-("x":"y")
+(:x : :y)
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-("x"->"y")
+(:x->:y)
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Article type.`
 (:Article : (::Point : {x : 5, y : 3}))
