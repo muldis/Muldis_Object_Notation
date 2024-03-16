@@ -59,16 +59,16 @@ Common "named relation" format with attribute names repeating per tuple.
 ```
     P zSyntax P M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
         P yModel P M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
-            P T"Relation" M[
+            P N"Relation" M[
                 K[xname T"Jane Ives"
-                    T"birth_date" P T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
-                    T"phone_numbers" P wSet M[T"+1.4045552995" T"+1.7705557572"]]
+                    N"birth_date" P N"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                    N"phone_numbers" P wSet M[T"+1.4045552995" T"+1.7705557572"]]
                 K[xname T"Layla Miller"
-                    T"birth_date" P T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
-                    T"phone_numbers" P wSet l]
+                    N"birth_date" P N"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                    N"phone_numbers" P wSet l]
                 K[xname T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
-                    T"birth_date" P T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
-                    T"phone_numbers" P wSet M[T"+81.9072391679"]]
+                    N"birth_date" P N"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                    N"phone_numbers" P wSet M[T"+81.9072391679"]]
             ]
 ```
 
@@ -78,17 +78,17 @@ once between all tuples.
 ```
     P zSyntax P M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
         P yModel P M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
-            P T"Relation" P
-                    J[xname T"birth_date" T"phone_numbers"]
+            P N"Relation" P
+                    J[xname N"birth_date" N"phone_numbers"]
                 M[
                     J[T"Jane Ives"
-                        P T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                        P N"Calendar_Instant" K[uy e\07\B3 um q ud 6]
                         P wSet M[T"+1.4045552995" T"+1.7705557572"]]
                     J[T"Layla Miller"
-                        P T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                        P N"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
                         P wSet l]
                     J[T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
-                        P T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                        P N"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
                         P wSet M[T"+81.9072391679"]]
                 ]
 ```
@@ -327,6 +327,7 @@ Grammar:
         | <Bits>
         | <Blob>
         | <Text>
+        | <Name>
         | <Nesting>
         | <Pair>
         | <Lot>
@@ -1380,15 +1381,7 @@ Grammar:
 ```
     token Text
     {
-          <Text_zero>
-        | <Text_positional_attr_name_zero_thru_thirty_one>
-        | <Text_unlimited>
-        | <Text_limited_1_octet>
-        | <Text_limited_2_octets>
-        | <Text_limited_3_octets>
-        | <Text_limited_4_octets>
-        | <Text_limited_5_octets>
-        | <Text_limited_6_octets>
+        <Text_zero> | <Text_unlimited>
     }
 
     token Text_zero
@@ -1396,44 +1389,9 @@ Grammar:
         t
     }
 
-    token Text_positional_attr_name_zero_thru_thirty_one
-    {
-        <[ \x[0]..\x[1F] ] - [ \t\n\r ] + [ ,;: ]>
-    }
-
     token Text_unlimited
     {
         T <sp>? <quoted_octet_string>
-    }
-
-    token Text_limited_1_octet
-    {
-        u <aescaped_octet>
-    }
-
-    token Text_limited_2_octets
-    {
-        v <aescaped_octet> ** 2
-    }
-
-    token Text_limited_3_octets
-    {
-        w <aescaped_octet> ** 3
-    }
-
-    token Text_limited_4_octets
-    {
-        x <aescaped_octet> ** 4
-    }
-
-    token Text_limited_5_octets
-    {
-        y <aescaped_octet> ** 5
-    }
-
-    token Text_limited_6_octets
-    {
-        z <aescaped_octet> ** 6
     }
 ```
 
@@ -1442,18 +1400,6 @@ character string.  This single canonical octet corresponds to the ASCII/UTF-8
 *LATIN SMALL LETTER T* character `t` so it is visually represented by the
 *smaller* version of the first letter of the possrep name `Text`.
 There is also another format for this, but it takes more octets.
-
-A **Text** artifact uses just 1 octet to canonically represent the first 32
-"positional" **Kit** attribute names.
-The single canonical octet for each of `[:0..:8,:11..:12,:14..:31]`
-corresponds to each of the ASCII/UTF-8 code points
-`[0x0..0x8,0xB..0xC,0xE..0x1F]` respectively, so each one is represented by
-itself in UTF-8 format with no extra metadata octets.
-The single canonical octet for each of `[:9,:10,:13]` corresponds to
-each of the ASCII/UTF-8 code points `[0x2C,0x3B,0x3A]` respectively, meaning
-the [*COMMA*, *SEMICOLON*, *COLON*] characters [`,`,`;`,`:`] respectively.
-There are also other formats for each of these character strings,
-but they all take more octets.
 
 A **Text** artifact uses 3..N octets to represent the general case of any
 character string as a single format-denoting octet, which corresponds to the
@@ -1468,7 +1414,134 @@ Most UTF-8 octet defining octets represent themselves, but a few of the possible
 values are instead represented by escape sequences of 2 different octets
 each, so no delimiter octets appear literally in the string they delimit.
 
-A **Text** artifact uses [2..4,3..7,4..10,5..13,6..16,7..19] octets
+Examples:
+
+```
+    `Empty character UTF-8 string (1 octet); also known as "".`
+    t
+
+    `Same thing (3 octets).`
+    T""
+
+    `The 5-character UTF-8 string "Ceres" (8 octets).`
+    T"Ceres"
+
+    `The 1-character UTF-8 string "⨝" (6 octets).`
+    T"\E2\A8\9D"
+
+    `The 4-character UTF-8 string "サンプル" (15 octets).`
+    T"\E3\82\B5\E3\83\B3\E3\83\97\E3\83\AB"
+
+    `A 24 character UTF-8 string (27 octets).`
+    T"This isn't not escaped.\0A"
+
+    `The 2-character UTF-8 string "\(0x263A)\(65)" (7 octets).`
+    T"\E2\98\BA\41"
+```
+
+[RETURN](#TOP)
+
+<a name="Name"></a>
+
+## Name
+
+A **Name** artifact has the dedicated concrete literal format
+described by `<Name>`.
+
+Grammar:
+
+```
+    token Name
+    {
+          <Name_zero>
+        | <Name_positional_attr_name_zero_thru_thirty_one>
+        | <Name_unlimited>
+        | <Name_limited_1_octet>
+        | <Name_limited_2_octets>
+        | <Name_limited_3_octets>
+        | <Name_limited_4_octets>
+        | <Name_limited_5_octets>
+        | <Name_limited_6_octets>
+    }
+
+    token Name_zero
+    {
+        n
+    }
+
+    token Name_positional_attr_name_zero_thru_thirty_one
+    {
+        <[ \x[0]..\x[1F] ] - [ \t\n\r ] + [ ,;: ]>
+    }
+
+    token Name_unlimited
+    {
+        N <sp>? <quoted_octet_string>
+    }
+
+    token Name_limited_1_octet
+    {
+        u <aescaped_octet>
+    }
+
+    token Name_limited_2_octets
+    {
+        v <aescaped_octet> ** 2
+    }
+
+    token Name_limited_3_octets
+    {
+        w <aescaped_octet> ** 3
+    }
+
+    token Name_limited_4_octets
+    {
+        x <aescaped_octet> ** 4
+    }
+
+    token Name_limited_5_octets
+    {
+        y <aescaped_octet> ** 5
+    }
+
+    token Name_limited_6_octets
+    {
+        z <aescaped_octet> ** 6
+    }
+```
+
+A **Name** artifact uses just 1 octet to canonically represent the empty
+character string.  This single canonical octet corresponds to the ASCII/UTF-8
+*LATIN SMALL LETTER N* character `n` so it is visually represented by the
+*smaller* version of the first letter of the possrep name `Name`.
+There is also another format for this, but it takes more octets.
+
+A **Name** artifact uses just 1 octet to canonically represent the first 32
+"positional" **Kit** attribute names.
+The single canonical octet for each of `[:0..:8,:11..:12,:14..:31]`
+corresponds to each of the ASCII/UTF-8 code points
+`[0x0..0x8,0xB..0xC,0xE..0x1F]` respectively, so each one is represented by
+itself in UTF-8 format with no extra metadata octets.
+The single canonical octet for each of `[:9,:10,:13]` corresponds to
+each of the ASCII/UTF-8 code points `[0x2C,0x3B,0x3A]` respectively, meaning
+the [*COMMA*, *SEMICOLON*, *COLON*] characters [`,`,`;`,`:`] respectively.
+There are also other formats for each of these character strings,
+but they all take more octets.
+
+A **Name** artifact uses 3..N octets to represent the general case of any
+character string as a single format-denoting octet, which corresponds to the
+ASCII/UTF-8 *LATIN CAPITAL LETTER N* character `N` so it is visually
+represented by the *larger* version of the first letter of the possrep name
+`Name`, followed by an unlimited length character string literal.
+The character string literal consists of 2 delimiter octets plus 0..N character literals.
+Each delimiter octet corresponds to the ASCII/UTF-8 *QUOTATION MARK*
+character `"` which has a common mnemonic for string quoting.
+Each character literal consists of 1..4 UTF-8 octet literals.
+Most UTF-8 octet defining octets represent themselves, but a few of the possible 256
+values are instead represented by escape sequences of 2 different octets
+each, so no delimiter octets appear literally in the string they delimit.
+
+A **Name** artifact uses [2..4,3..7,4..10,5..13,6..16,7..19] octets
 respectively to represent any shorter character string as a single
 length-denoting octet followed by a limited length character string literal.
 The character string literal consists of [1,2,3,4,5,6] UTF-8 octets and no delimiters.
@@ -1481,10 +1554,10 @@ Examples:
 
 ```
     `Empty character UTF-8 string (1 octet); also known as "".`
-    t
+    n
 
     `Same thing (3 octets).`
-    T""
+    N""
 
     `The 1-character UTF-8 string :0 or "\(0)" (1 octet);`
     `also known as the first positional attribute name.`
@@ -1494,7 +1567,7 @@ Examples:
     u\00
 
     `Same thing (4 octets).`
-    T"\00"
+    N"\00"
 
     `The 1-character UTF-8 string :1 or "\(1)" (1 octet);`
     `also known as the second positional attribute name.`
@@ -1504,43 +1577,17 @@ Examples:
     u\01
 
     `Same thing (4 octets).`
-    T"\01"
+    N"\01"
 
-    `The 5-character UTF-8 string "Ceres" (6 octets).`
-    yCeres
-
-    `Same thing (8 octets).`
-    T"Ceres"
-
-    `The 1-character UTF-8 string "⨝" (4 octets).`
-    w\E2\A8\9D
+    `The 4-character UTF-8 string "age" (4 octets).`
+    wage
 
     `Same thing (6 octets).`
-    T"\E2\A8\9D"
-
-    `The 4-character UTF-8 string "サンプル" (15 octets).`
-    T"\E3\82\B5\E3\83\B3\E3\83\97\E3\83\AB"
-
-    `A 24 character UTF-8 string (27 octets).`
-    T"This isn't not escaped.\0A"
-
-    `The 2-character UTF-8 string "\(0x263A)\(65)" (5 octets).`
-    x\E2\98\BA\41
-
-    `Same thing (7 octets).`
-    T"\E2\98\BA\41"
+    N"age"
 
     `A 10-character UTF-8 string (13 octets).`
-    T"First Name"
+    N"First Name"
 ```
-
-[RETURN](#TOP)
-
-<a name="Name"></a>
-
-## Name
-
-*TODO.*
 
 [RETURN](#TOP)
 
@@ -1561,7 +1608,7 @@ Grammar:
 
     token Nesting_unlimited
     {
-        E <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+ % <sp>?]
+        E <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Name>+ % <sp>?]
     }
 ```
 
@@ -1575,14 +1622,14 @@ The leading delimiter octet corresponds to the ASCII/UTF-8 *LEFT SQUARE BRACKET*
 character `[` which has a common mnemonic for delimiting an ordered list.
 The trailing delimiter octet corresponds to the ASCII/UTF-8 *RIGHT SQUARE BRACKET*
 character `]` which has a common mnemonic for delimiting an ordered list.
-Each element is any **Text** artifact.
+Each element is any **Name** artifact.
 
 Examples:
 
 ```
     `The Nesting with exactly 1 element that is the empty character UTF-8`
     `string (4 octets); also known as ::"".`
-    E[t]
+    E[n]
 
     `The Nesting with exactly 1 element that is the first positional`
     `attribute name (4 octets); also known as ::0.`
@@ -1593,13 +1640,13 @@ Examples:
     E[zperson]
 
     `The 2-element Nesting person::birth_date (23 octets).`
-    E[zpersonT"birth_date"]
+    E[zpersonN"birth_date"]
 
     `The 3-element Nesting person::birth_date::year (28 octets).`
-    E[zpersonT"birth_date"xyear]
+    E[zpersonN"birth_date"xyear]
 
     `The 3-element Nesting the_db::stats::"samples by order" (35 octets).`
-    E[zthe_dbystatsT"samples by order"]
+    E[zthe_dbystatsN"samples by order"]
 ```
 
 [RETURN](#TOP)
@@ -1657,10 +1704,10 @@ Examples:
     `Pair of Integer (4 octets); also known as (5: -3).`
     P5d\FD
 
-    `Pair of Text (18 octets); also known as ("First Name": "Joy").`
-    PT"First Name"wJoy
+    `Pair of Name+Text (20 octets); also known as (:"First Name" : "Joy").`
+    PN"First Name"T"Joy"
 
-    `Another Pair (5 octets); also known as ("x":"y").`
+    `Another Pair (5 octets); also known as (:x : :y).`
     Puxuy
 ```
 
@@ -1776,7 +1823,7 @@ Grammar:
 
     token attr_name
     {
-        <Text>
+        <Name>
     }
 
     token attr_asset
@@ -1803,18 +1850,18 @@ usually in the context of their being the first octet of an artifact.
     PPT | PPT | Plain Text  | Meaning
     Oct | Chr | Literal     |
     ----+-----+-------------+----------------------------------------------
-    00  |     | :0          | Text artifact or 1st "positional" Kit attribute name
-    01  |     | :1          | Text artifact or 2nd "positional" Kit attribute name
+    00  |     | :0          | Name artifact or 1st "positional" Kit attribute name
+    01  |     | :1          | Name artifact or 2nd "positional" Kit attribute name
     ...
-    08  |     | :8          | Text artifact or 9th "positional" Kit attribute name
+    08  |     | :8          | Name artifact or 9th "positional" Kit attribute name
     09  |     |             | dividing space for visual formatting with CHARACTER TABULATION
     0A  |     |             | dividing space for visual formatting with LINE FEED (LF)
-    0B  |     | :11         | Text artifact or 12th "positional" Kit attribute name
-    0C  |     | :12         | Text artifact or 13th "positional" Kit attribute name
+    0B  |     | :11         | Name artifact or 12th "positional" Kit attribute name
+    0C  |     | :12         | Name artifact or 13th "positional" Kit attribute name
     0D  |     |             | dividing space for visual formatting with CARRIAGE RETURN (CR)
-    0E  |     | :14         | Text artifact or 15th "positional" Kit attribute name
+    0E  |     | :14         | Name artifact or 15th "positional" Kit attribute name
     ...
-    1F  |     | :31         | Text artifact or 32nd "positional" Kit attribute name
+    1F  |     | :31         | Name artifact or 32nd "positional" Kit attribute name
     ----+-----+-------------+----------------------------------------------
     20  |     |             | dividing space for visual formatting with SPACE
     ----+-----+-------------+----------------------------------------------
@@ -1829,7 +1876,7 @@ usually in the context of their being the first octet of an artifact.
     29  | )   |             | Decimal artifact positive one
     2A  | *   |             | Decimal artifact zero
     2B  | +   |             | Integer artifact prefix general case positive number or Lot member multiplicity
-    2C  | ,   | :9          | Text artifact or 10th "positional" Kit attribute name
+    2C  | ,   | :9          | Name artifact or 10th "positional" Kit attribute name
     2D  | -   |             | Integer artifact prefix general case negative number
     2E  | .   |             | (unassigned)
     2F  | /   |             | Rational artifact prefix general case [numerator,denominator] pair
@@ -1839,8 +1886,8 @@ usually in the context of their being the first octet of an artifact.
     ...
     39  | 9   | 9           | Integer artifact positive nine or Lot member multiplicity nine
     ----+-----+-------------+----------------------------------------------
-    3A  | :   | :13         | Text artifact or 14th "positional" Kit attribute name
-    3B  | ;   | :10         | Text artifact or 11th "positional" Kit attribute name
+    3A  | :   | :13         | Name artifact or 14th "positional" Kit attribute name
+    3B  | ;   | :10         | Name artifact or 11th "positional" Kit attribute name
     3C  | <   | -1.0        | Rational artifact negative one
     3D  | =   | 0.0         | Rational artifact zero
     3E  | >   | 1.0         | Rational artifact positive one
@@ -1860,7 +1907,7 @@ usually in the context of their being the first octet of an artifact.
     4B  | K   |             | Kit artifact prefix general case with N attributes
     4C  | L   |             | Lot artifact prefix general case with N members
     4D  | M   |             | Lot artifact prefix special case with N non-multiplied members
-    4E  | N   |             | (unassigned)
+    4E  | N   |             | Name artifact prefix general case quoted UTF-8 string with N octets / N characters
     4F  | O   |             | (unassigned)
     50  | P   |             | Pair artifact prefix general case
     51  | Q   |             | (unassigned)
@@ -1896,7 +1943,7 @@ usually in the context of their being the first octet of an artifact.
     6B  | k   | {}          | Kit artifact with zero attributes
     6C  | l   | []          | Lot artifact with zero members
     6D  | m   |             | Lot artifact prefix special case with exactly 1 member (implicit multiplicity of 1)
-    6E  | n   |             | (unassigned)
+    6E  | n   | :""         | Name artifact empty string
     6F  | o   |             | Blob artifact prefix special case string with exactly 1 octet element
     70  | p   |             | Bits artifact prefix special case string with exactly 1..8 bit elements
     71  | q   | 11          | Integer artifact positive eleven or Lot member multiplicity eleven
@@ -1904,12 +1951,12 @@ usually in the context of their being the first octet of an artifact.
     73  | s   | 0bb         | Bits artifact empty string
     74  | t   | ""          | Text artifact empty string
     ----+-----+-------------+----------------------------------------------
-    75  | u   |             | Text artifact prefix special case UTF-8 string with exactly 1 octet / 1 ASCII character
-    76  | v   |             | Text artifact prefix special case UTF-8 string with exactly 2 octets
-    77  | w   |             | Text artifact prefix special case UTF-8 string with exactly 3 octets
-    78  | x   |             | Text artifact prefix special case UTF-8 string with exactly 4 octets / 1 non-BMP Unicode character
-    79  | y   |             | Text artifact prefix special case UTF-8 string with exactly 5 octets
-    7A  | z   |             | Text artifact prefix special case UTF-8 string with exactly 6 octets
+    75  | u   |             | Name artifact prefix special case UTF-8 string with exactly 1 octet / 1 ASCII character
+    76  | v   |             | Name artifact prefix special case UTF-8 string with exactly 2 octets
+    77  | w   |             | Name artifact prefix special case UTF-8 string with exactly 3 octets
+    78  | x   |             | Name artifact prefix special case UTF-8 string with exactly 4 octets / 1 non-BMP Unicode character
+    79  | y   |             | Name artifact prefix special case UTF-8 string with exactly 5 octets
+    7A  | z   |             | Name artifact prefix special case UTF-8 string with exactly 6 octets
     ----+-----+-------------+----------------------------------------------
     7B  | {   |             | Binary artifact negative one
     7C  | |   |             | Binary artifact zero

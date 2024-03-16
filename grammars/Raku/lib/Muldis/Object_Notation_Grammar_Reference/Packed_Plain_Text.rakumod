@@ -60,6 +60,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
         | <Bits>
         | <Blob>
         | <Text>
+        | <Name>
         | <Nesting>
         | <Pair>
         | <Lot>
@@ -416,15 +417,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
     token Text
     {
-          <Text_zero>
-        | <Text_positional_attr_name_zero_thru_thirty_one>
-        | <Text_unlimited>
-        | <Text_limited_1_octet>
-        | <Text_limited_2_octets>
-        | <Text_limited_3_octets>
-        | <Text_limited_4_octets>
-        | <Text_limited_5_octets>
-        | <Text_limited_6_octets>
+        <Text_zero> | <Text_unlimited>
     }
 
     token Text_zero
@@ -432,42 +425,67 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
         t
     }
 
-    token Text_positional_attr_name_zero_thru_thirty_one
-    {
-        <[ \x[0]..\x[1F] ] - [ \t\n\r ] + [ ,;: ]>
-    }
-
     token Text_unlimited
     {
         T <sp>? <quoted_octet_string>
     }
 
-    token Text_limited_1_octet
+###########################################################################
+
+    token Name
+    {
+          <Name_zero>
+        | <Name_positional_attr_name_zero_thru_thirty_one>
+        | <Name_unlimited>
+        | <Name_limited_1_octet>
+        | <Name_limited_2_octets>
+        | <Name_limited_3_octets>
+        | <Name_limited_4_octets>
+        | <Name_limited_5_octets>
+        | <Name_limited_6_octets>
+    }
+
+    token Name_zero
+    {
+        n
+    }
+
+    token Name_positional_attr_name_zero_thru_thirty_one
+    {
+        <[ \x[0]..\x[1F] ] - [ \t\n\r ] + [ ,;: ]>
+    }
+
+    token Name_unlimited
+    {
+        N <sp>? <quoted_octet_string>
+    }
+
+    token Name_limited_1_octet
     {
         u <aescaped_octet>
     }
 
-    token Text_limited_2_octets
+    token Name_limited_2_octets
     {
         v <aescaped_octet> ** 2
     }
 
-    token Text_limited_3_octets
+    token Name_limited_3_octets
     {
         w <aescaped_octet> ** 3
     }
 
-    token Text_limited_4_octets
+    token Name_limited_4_octets
     {
         x <aescaped_octet> ** 4
     }
 
-    token Text_limited_5_octets
+    token Name_limited_5_octets
     {
         y <aescaped_octet> ** 5
     }
 
-    token Text_limited_6_octets
+    token Name_limited_6_octets
     {
         z <aescaped_octet> ** 6
     }
@@ -481,7 +499,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
     token Nesting_unlimited
     {
-        E <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+ % <sp>?]
+        E <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Name>+ % <sp>?]
     }
 
 ###########################################################################
@@ -593,7 +611,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
     token attr_name
     {
-        <Text>
+        <Name>
     }
 
     token attr_asset

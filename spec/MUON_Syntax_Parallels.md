@@ -90,16 +90,16 @@ Common "named relation" format with attribute names repeating per tuple.
 ```
     P zSyntax P M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
         P yModel P M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
-            P T"Relation" M[
+            P N"Relation" M[
                 K[xname T"Jane Ives"
-                    T"birth_date" P T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
-                    T"phone_numbers" P wSet M[T"+1.4045552995" T"+1.7705557572"]]
+                    N"birth_date" P N"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                    N"phone_numbers" P wSet M[T"+1.4045552995" T"+1.7705557572"]]
                 K[xname T"Layla Miller"
-                    T"birth_date" P T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
-                    T"phone_numbers" P wSet l]
+                    N"birth_date" P N"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                    N"phone_numbers" P wSet l]
                 K[xname T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
-                    T"birth_date" P T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
-                    T"phone_numbers" P wSet M[T"+81.9072391679"]]
+                    N"birth_date" P N"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                    N"phone_numbers" P wSet M[T"+81.9072391679"]]
             ]
 ```
 
@@ -109,17 +109,17 @@ once between all tuples.
 ```
     P zSyntax P M[T"Muldis_Object_Notation_Packed_Plain_Text" T"https://muldis.com" T"0.400.0"]
         P yModel P M[T"Muldis_Data_Language" T"https://muldis.com" T"0.400.0"]
-            P T"Relation" P
-                    J[xname T"birth_date" T"phone_numbers"]
+            P N"Relation" P
+                    J[xname N"birth_date" N"phone_numbers"]
                 M[
                     J[T"Jane Ives"
-                        P T"Calendar_Instant" K[uy e\07\B3 um q ud 6]
+                        P N"Calendar_Instant" K[uy e\07\B3 um q ud 6]
                         P wSet M[T"+1.4045552995" T"+1.7705557572"]]
                     J[T"Layla Miller"
-                        P T"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
+                        P N"Calendar_Instant" K[uy e\07\CB um 8 ud c\1B]
                         P wSet l]
                     J[T"\E5\B2\A9\E5\80\89 \E7\8E\B2\E9\9F\B3"
-                        P T"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
+                        P N"Calendar_Instant" K[uy e\07\C0 um 7 ud 6]
                         P wSet M[T"+81.9072391679"]]
                 ]
 ```
