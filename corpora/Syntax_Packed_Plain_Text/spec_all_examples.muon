@@ -374,34 +374,25 @@ T"\E2\98\BA\41"
 T"First Name"
 `Muldis_Object_Notation_Sync_Mark`
 `The Nesting with exactly 1 element that is the empty character UTF-8`
-`string (2 octets); also known as ::"".`
-nt
-`Muldis_Object_Notation_Sync_Mark`
-`Same thing (4 octets).`
-N[t]
+`string (4 octets); also known as ::"".`
+E[t]
 `Muldis_Object_Notation_Sync_Mark`
 `The Nesting with exactly 1 element that is the first positional`
-`attribute name (2 octets); also known as ::0.`
-n\00
-`Muldis_Object_Notation_Sync_Mark`
-`Same thing (4 octets).`
-N[\00]
+`attribute name (4 octets); also known as ::0.`
+E[\00]
 `Muldis_Object_Notation_Sync_Mark`
 `The Nesting with exactly 1 element that is the 6-charater UTF-8`
-`string "person" (8 octets); also known as ::person.`
-nzperson
-`Muldis_Object_Notation_Sync_Mark`
-`Same thing (10 octets).`
-N[zperson]
+`string "person" (10 octets); also known as ::person.`
+E[zperson]
 `Muldis_Object_Notation_Sync_Mark`
 `The 2-element Nesting person::birth_date (23 octets).`
-N[zpersonT"birth_date"]
+E[zpersonT"birth_date"]
 `Muldis_Object_Notation_Sync_Mark`
 `The 3-element Nesting person::birth_date::year (28 octets).`
-N[zpersonT"birth_date"xyear]
+E[zpersonT"birth_date"xyear]
 `Muldis_Object_Notation_Sync_Mark`
 `The 3-element Nesting the_db::stats::"samples by order" (35 octets).`
-N[zthe_dbystatsT"samples by order"]
+E[zthe_dbystatsT"samples by order"]
 `Muldis_Object_Notation_Sync_Mark`
 `Pair of Ignorance (3 octets); also known as (0iIGNORANCE: 0iIGNORANCE).`
 P__

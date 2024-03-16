@@ -892,7 +892,7 @@ Grammar:
           <Binary_negative_one>
         | <Binary_zero>
         | <Binary_positive_one>
-        | <Binary_with_num_den>
+        | <Binary_with_sig_exp>
     }
 
     token Binary_negative_one
@@ -1002,7 +1002,7 @@ Grammar:
           <Decimal_negative_one>
         | <Decimal_zero>
         | <Decimal_positive_one>
-        | <Decimal_with_num_den>
+        | <Decimal_with_sig_exp>
     }
 
     token Decimal_negative_one
@@ -1547,24 +1547,19 @@ Grammar:
 ```
     token Nesting
     {
-        <Nesting_unlimited> | <Nesting_limited_1_element>
+        <Nesting_unlimited>
     }
 
     token Nesting_unlimited
     {
-        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+ % <sp>?]
-    }
-
-    token Nesting_limited_1_element
-    {
-        n <Text>
+        E <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+ % <sp>?]
     }
 ```
 
 A **Nesting** artifact uses 4..N octets to represent the general case of any
 attribute name sequence as a single format-denoting octet, which corresponds to the
-ASCII/UTF-8 *LATIN CAPITAL LETTER N* character `N` so it is visually
-represented by the *larger* version of the first letter of the possrep name
+ASCII/UTF-8 *LATIN CAPITAL LETTER E* character `E` so it is visually
+represented by the *larger* version of the second letter of the possrep name
 `Nesting`, followed by an unlimited length attribute name sequence literal.
 The attribute name sequence literal consists of 2 delimiter octets plus 1..N element.
 The leading delimiter octet corresponds to the ASCII/UTF-8 *LEFT SQUARE BRACKET*
@@ -1573,44 +1568,29 @@ The trailing delimiter octet corresponds to the ASCII/UTF-8 *RIGHT SQUARE BRACKE
 character `]` which has a common mnemonic for delimiting an ordered list.
 Each element is any **Text** artifact.
 
-A **Nesting** artifact uses 2..N octets to represent any single-element attribute
-name sequence as a single format-denoting octet, which corresponds to the
-ASCII/UTF-8 *LATIN SMALL LETTER N* character `n` so it is visually
-represented by the *smaller* version of the first letter of the possrep name
-`Nesting`, followed by single element that is any **Text** artifact.
-
 Examples:
 
 ```
     `The Nesting with exactly 1 element that is the empty character UTF-8`
-    `string (2 octets); also known as ::"".`
-    nt
-
-    `Same thing (4 octets).`
-    N[t]
+    `string (4 octets); also known as ::"".`
+    E[t]
 
     `The Nesting with exactly 1 element that is the first positional`
-    `attribute name (2 octets); also known as ::0.`
-    n\00
-
-    `Same thing (4 octets).`
-    N[\00]
+    `attribute name (4 octets); also known as ::0.`
+    E[\00]
 
     `The Nesting with exactly 1 element that is the 6-charater UTF-8`
-    `string "person" (8 octets); also known as ::person.`
-    nzperson
-
-    `Same thing (10 octets).`
-    N[zperson]
+    `string "person" (10 octets); also known as ::person.`
+    E[zperson]
 
     `The 2-element Nesting person::birth_date (23 octets).`
-    N[zpersonT"birth_date"]
+    E[zpersonT"birth_date"]
 
     `The 3-element Nesting person::birth_date::year (28 octets).`
-    N[zpersonT"birth_date"xyear]
+    E[zpersonT"birth_date"xyear]
 
     `The 3-element Nesting the_db::stats::"samples by order" (35 octets).`
-    N[zthe_dbystatsT"samples by order"]
+    E[zthe_dbystatsT"samples by order"]
 ```
 
 [RETURN](#TOP)
@@ -1862,7 +1842,7 @@ usually in the context of their being the first octet of an artifact.
     42  | B   |             | Blob artifact prefix general case quoted string with N octets
     43  | C   |             | (unassigned)
     44  | D   |             | (unassigned)
-    45  | E   |             | (unassigned)
+    45  | E   |             | Nesting artifact prefix general case with N elements
     46  | F   |             | (unassigned)
     47  | G   |             | (unassigned)
     48  | H   |             | (unassigned)
@@ -1871,7 +1851,7 @@ usually in the context of their being the first octet of an artifact.
     4B  | K   |             | Kit artifact prefix general case with N attributes
     4C  | L   |             | Lot artifact prefix general case with N members
     4D  | M   |             | Lot artifact prefix special case with N non-multiplied members
-    4E  | N   |             | Nesting artifact prefix general case with N elements
+    4E  | N   |             | (unassigned)
     4F  | O   |             | (unassigned)
     50  | P   |             | Pair artifact prefix general case
     51  | Q   |             | (unassigned)
@@ -1907,7 +1887,7 @@ usually in the context of their being the first octet of an artifact.
     6B  | k   | {}          | Kit artifact with zero attributes
     6C  | l   | []          | Lot artifact with zero members
     6D  | m   |             | Lot artifact prefix special case with exactly 1 member (implicit multiplicity of 1)
-    6E  | n   |             | Nesting artifact prefix special case with exactly 1 element
+    6E  | n   |             | (unassigned)
     6F  | o   |             | Blob artifact prefix special case string with exactly 1 octet element
     70  | p   |             | Bits artifact prefix special case string with exactly 1..8 bit elements
     71  | q   | 11          | Integer artifact positive eleven or Lot member multiplicity eleven

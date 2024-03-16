@@ -261,7 +261,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
           <Binary_negative_one>
         | <Binary_zero>
         | <Binary_positive_one>
-        | <Binary_with_num_den>
+        | <Binary_with_sig_exp>
     }
 
     token Binary_negative_one
@@ -301,7 +301,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
           <Decimal_negative_one>
         | <Decimal_zero>
         | <Decimal_positive_one>
-        | <Decimal_with_num_den>
+        | <Decimal_with_sig_exp>
     }
 
     token Decimal_negative_one
@@ -476,17 +476,12 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
     token Nesting
     {
-        <Nesting_unlimited> | <Nesting_limited_1_element>
+        <Nesting_unlimited>
     }
 
     token Nesting_unlimited
     {
-        N <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+ % <sp>?]
-    }
-
-    token Nesting_limited_1_element
-    {
-        n <Text>
+        E <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Text>+ % <sp>?]
     }
 
 ###########################################################################
