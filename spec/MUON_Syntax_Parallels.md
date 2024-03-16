@@ -344,8 +344,8 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_Ruby](Muldis_Object_Notation_Syntax_Ruby.md)
 
 ```
-    [:Muldis_Object_Notation_Syntax,[[:Lot_m,[:Ruby, "https://muldis.com", "0.400.0"]],
-        [:Muldis_Object_Notation_Model,[[:Lot_m,[:Muldis_Data_Language, "https://muldis.com", "0.400.0"]],
+    [:Muldis_Object_Notation_Syntax,[[:Lot_m,["Ruby", "https://muldis.com", "0.400.0"]],
+        [:Muldis_Object_Notation_Model,[[:Lot_m,["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
             [:Relation,[:Lot_m,[
                 {name: "Jane Ives", birth_date: [:Calendar_Instant,{y:1971,m:11,d:6}],
                     phone_numbers: [:Set,[:Lot_m,["+1.4045552995", "+1.7705557572"]]]},

@@ -45,8 +45,8 @@ its part name is `Syntax_Ruby`.
 # SYNOPSIS
 
 ```
-    [:Muldis_Object_Notation_Syntax,[[:Lot_m,[:Ruby, "https://muldis.com", "0.400.0"]],
-        [:Muldis_Object_Notation_Model,[[:Lot_m,[:Muldis_Data_Language, "https://muldis.com", "0.400.0"]],
+    [:Muldis_Object_Notation_Syntax,[[:Lot_m,["Ruby", "https://muldis.com", "0.400.0"]],
+        [:Muldis_Object_Notation_Model,[[:Lot_m,["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
             [:Relation,[:Lot_m,[
                 {name: "Jane Ives", birth_date: [:Calendar_Instant,{y:1971,m:11,d:6}],
                     phone_numbers: [:Set,[:Lot_m,["+1.4045552995", "+1.7705557572"]]]},
@@ -287,7 +287,7 @@ is not `Encoding::ASCII_8BIT`.
 
 A *SYS_String* is any of the following:
 
-* Any object of any of the Ruby classes `String`, `Symbol`.
+* Any object of the Ruby class `String`.
 
 [RETURN](#TOP)
 
@@ -324,12 +324,27 @@ aren't in valid surrogate pairs.
 
 A **Name** artifact is any of the following:
 
+* Any *SYS_Name*.
+
 * Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Name`
 and its *SYS_that* is any *SYS_Name*.
 
 A *SYS_Name* is any of the following:
 
-* Any *SYS_Text*.
+* Any *SYS_Symbol* whose associated Ruby `Encoding` object
+is `Encoding::UTF_8`
+and that is *well formed UTF-8*.
+
+Not permitted for a *SYS_Name* is any of the following,
+to keep things more correct and simpler:
+
+* Any *SYS_Symbol* whose associated Ruby `Encoding` object
+is not `Encoding::UTF_8`
+or that is not *well formed UTF-8*.
+
+A *SYS_Symbol* is any of the following:
+
+* Any object of the Ruby class `Symbol`.
 
 [RETURN](#TOP)
 
