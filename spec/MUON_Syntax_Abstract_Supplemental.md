@@ -111,7 +111,7 @@ the latter is a common option for concrete MUON possreps.
 Every (qualified) abstract MUON artifact is a **Pair** artifact;
 its *this* is the *predicate* and its *that* is the *subject*.
 
-Every MUON possrep *predicate* is a **Text** artifact,
+Every MUON possrep *predicate* is a **Name** artifact,
 and that value is characterized by the name
 of the MUON possrep in this document.  Every MUON possrep *predicate*
 conforms to the character string pattern `[<[A..Z]><[a..z]>+]+ % _`.

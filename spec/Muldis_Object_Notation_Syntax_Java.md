@@ -341,6 +341,12 @@ A **Name** artifact is any of the following:
 * Any *SYS_Pair_NA* such that its *SYS_this* is the *SYS_Name* value `Name`
 and its *SYS_that* is any *SYS_Name*.
 
+Not permitted for a **Name** is any of the following,
+to prevent ambiguity and simplify things:
+
+* Any *SYS_Name*.
+This is because that would be interpreted as a **Text** artifact.
+
 A *SYS_Name* is any of the following:
 
 * Any *SYS_Text*.

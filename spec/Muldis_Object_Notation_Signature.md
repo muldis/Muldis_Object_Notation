@@ -61,7 +61,7 @@ wrapping it in another MUON artifact, *syntax-qualified artifact*, that pairs
 it with a *syntax predicate*, such that the latter describes the former.
 
 A *syntax-qualified artifact* is any **Pair** artifact such that its *this*
-is the **Text** artifact `Muldis_Object_Notation_Syntax` and its *that* is
+is the **Name** artifact `Muldis_Object_Notation_Syntax` and its *that* is
 any **Pair** artifact such that its *this* and *that* are the
 *syntax predicate* and *syntax subject* respectively.
 
@@ -85,7 +85,7 @@ wrapping it in another MUON artifact, *model-qualified artifact*, that pairs
 it with a *model predicate*, such that the latter describes the former.
 
 A *model-qualified artifact* is any **Pair** artifact such that its *this*
-is the **Text** artifact `Muldis_Object_Notation_Model` and its *that* is
+is the **Name** artifact `Muldis_Object_Notation_Model` and its *that* is
 any **Pair** artifact such that its *this* and *that* are the
 *model predicate* and *model subject* respectively.
 

@@ -276,7 +276,7 @@ data model layered over top of MUON and they are both complex and highly
 variable.  Only a few source code types have dedicated MUON syntax because
 they specifically benefit from that and conceptually they are simple even
 if they may vary greatly in implementation, such as nonqualified identifiers
-(via **Text**) and **Nesting**, **Heading**, **Renaming**.  However it is
+(via **Name**) and **Nesting**, **Heading**, **Renaming**.  However it is
 planned for MUON to be extended with many more source code defining possreps.
 
 Generic foreign serialization types such as JSON and XML are excluded
@@ -349,7 +349,7 @@ never be treated as a valid **Pair** value.
 It is up to each specific concrete syntax in question as to whether each of
 these cases counts as an error or as a value of some other primary possrep.
 
-A *Primary_Possrep_Name* is any of these **Text** values:
+A *Primary_Possrep_Name* is any of these **Name** values:
 `Ignorance`, `Boolean`, `Integer`, `Rational`,
 `Bits`, `Blob`, `Text`, `Nesting`,
 `Pair`, `Lot`, `Kit`.
@@ -357,7 +357,7 @@ A *Primary_Possrep_Name* is any of these **Text** values:
 As a further special exception, each specific concrete syntax may designate
 additional values for a prospect's *this* that it treats as special in
 certain contexts and thus such a prospect will also not be treated as its
-own **Pair** value.  Potential examples are these **Text** values:
+own **Pair** value.  Potential examples are these **Name** values:
 `multiplied`, `named`.
 
 [RETURN](#TOP)
@@ -577,7 +577,7 @@ to any externally defined standards and should be able to represent units
 from any of them.  In this context, a *member* represents each measurement
 unit and its *multiplicity* is the measurement in that unit.  While **Mix**
 allows each *member* to have any possrep, in practice the **Nesting** and
-**Text** possreps are the most common, or an external data model might have
+**Name** possreps are the most common, or an external data model might have
 a dedicated type to represent a unit definition.
 
 See also <https://unitsofmeasure.org/ucum.html>.
@@ -674,7 +674,7 @@ to a distinct **Bag Of Interval**.
 A **Heading** value is an arbitrarily-large unordered collection of
 *attribute names*, such that no 2 attribute names are the same.
 A **Heading** value can be characterized by a **Set** value such that every
-*member* value of the latter is any **Text** value.
+*member* value of the latter is any **Name** value.
 
 [RETURN](#TOP)
 
@@ -686,7 +686,7 @@ A **Renaming** value is an arbitrarily-large unordered collection of
 attribute renaming specifications.
 
 A **Renaming** value is characterized by a **Tuple** such that each
-attribute asset is a **Text**, and no 2 attribute asset values are the same
+attribute asset is a **Name**, and no 2 attribute asset values are the same
 value; for each *attribute*, that attribute's name and asset respectively
 specify the *name before* and *name after* of some other attribute being
 renamed of some other attributive value.
@@ -703,8 +703,8 @@ have the same *attribute name*, which explicitly does not represent any
 kind of thing in particular, and is simply the sum of its attributes.
 An attribute is conceptually a name-asset pair, the name being used to look
 up the attribute in a **Tuple**.  An *attribute name* is an nonqualified
-program identifier and is conceptually a character string that is not a
-**Text** value.  In the general case each attribute of a tuple is of a
+program identifier and is conceptually a character string.
+In the general case each attribute of a tuple is of a
 distinct data type, though multiple attributes often have the same type.
 The set of attribute names of a **Tuple** is called its *heading*, and the
 corresponding attribute assets are called its *body*.

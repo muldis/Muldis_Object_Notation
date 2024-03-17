@@ -366,7 +366,7 @@ but while **Text** is intended for generic user data, **Name** is not.
 ## Nesting / Attribute Name List
 
 A **Nesting** value is characterized by an arbitrarily-large ordered
-sequence of *attribute names* (each one a **Text**), having at least 1
+sequence of *attribute names* (each one a **Name**), having at least 1
 element, intended for referencing an entity in a multi-level namespace,
 such as nested **Kit** may implement.
 
@@ -485,8 +485,9 @@ have the same *attribute name*, which explicitly does not represent any
 kind of thing in particular, and is simply the sum of its attributes.
 An attribute is conceptually a name-asset pair, the name being used to look
 up the attribute in a **Kit**.  An *attribute name* is an nonqualified
-program identifier and is conceptually a character string that is not a
-**Text** value.  In the general case each attribute of a **Kit** is of a
+program identifier and takes the form of a character string;
+one is represented in isolation by a **Name** value.
+In the general case each attribute asset of a **Kit** is of a
 distinct data type, though multiple attributes often have the same type.
 
 The **Kit** possrep is an idiomatic generalization of a discrete
@@ -554,7 +555,7 @@ The intended use of the **Kit** possrep is to represent a value
 expression node for selecting at runtime a value of any of the other
 discrete heterogeneous collection types where their assets are defined by
 arbitrarily complex sub-expressions
-(and their names are hard-coded **Text** values).
+(and their names are hard-coded **Name** values).
 
 A key feature of **Kit** is that it natively preserves the relative
 order of its child nodes even when the value being selected is an unordered
@@ -588,7 +589,8 @@ Muldis Object Notation eschews dedicated possreps for some data types that
 users might expect to see here.  This section enumerates some and says why.
 
 IEEE floating-point signed zeroes, infinities, and NaNs are not part of the
-**Rational** possrep (only regular finite numbers are included) and rather
+**Rational**/**Binary**/**Decimal** possreps
+(only regular finite numbers are included) and rather
 would be left up to the overlaid data model.
 
 Fixed-precision/scale numbers and/or significant figures indication and/or
@@ -618,7 +620,7 @@ data model layered over top of MUON and they are both complex and highly
 variable.  Only a few source code types have dedicated MUON syntax because
 they specifically benefit from that and conceptually they are simple even
 if they may vary greatly in implementation, such as nonqualified identifiers
-(via **Text**) and **Nesting**, and special **Kit** shorthand syntaxes.
+(via **Name**) and **Nesting**, and special **Kit** shorthand syntaxes.
 
 Generic foreign serialization types such as JSON and XML are excluded
 because MUON as a whole is supposed to natively handle everything they can
