@@ -1603,11 +1603,6 @@ Grammar:
 ```
     token Nesting
     {
-        <Nesting_unlimited>
-    }
-
-    token Nesting_unlimited
-    {
         E <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Name>+ % <sp>?]
     }
 ```
@@ -1639,13 +1634,13 @@ Examples:
     `string "person" (10 octets); also known as ::person.`
     E[zperson]
 
-    `The 2-element Nesting person::birth_date (23 octets).`
+    `The 2-element Nesting ::person::birth_date (23 octets).`
     E[zpersonN"birth_date"]
 
-    `The 3-element Nesting person::birth_date::year (28 octets).`
+    `The 3-element Nesting ::person::birth_date::year (28 octets).`
     E[zpersonN"birth_date"xyear]
 
-    `The 3-element Nesting the_db::stats::"samples by order" (35 octets).`
+    `The 3-element Nesting ::the_db::stats::"samples by order" (35 octets).`
     E[zthe_dbystatsN"samples by order"]
 ```
 

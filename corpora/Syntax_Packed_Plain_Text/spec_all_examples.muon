@@ -388,13 +388,13 @@ E[\00]
 `string "person" (10 octets); also known as ::person.`
 E[zperson]
 `Muldis_Object_Notation_Sync_Mark`
-`The 2-element Nesting person::birth_date (23 octets).`
+`The 2-element Nesting ::person::birth_date (23 octets).`
 E[zpersonN"birth_date"]
 `Muldis_Object_Notation_Sync_Mark`
-`The 3-element Nesting person::birth_date::year (28 octets).`
+`The 3-element Nesting ::person::birth_date::year (28 octets).`
 E[zpersonN"birth_date"xyear]
 `Muldis_Object_Notation_Sync_Mark`
-`The 3-element Nesting the_db::stats::"samples by order" (35 octets).`
+`The 3-element Nesting ::the_db::stats::"samples by order" (35 octets).`
 E[zthe_dbystatsN"samples by order"]
 `Muldis_Object_Notation_Sync_Mark`
 `Pair of Ignorance (3 octets); also known as (0iIGNORANCE: 0iIGNORANCE).`

@@ -494,11 +494,6 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
     token Nesting
     {
-        <Nesting_unlimited>
-    }
-
-    token Nesting_unlimited
-    {
         E <sp>? [['[' <sp>?] ~ [<sp>? ']'] <Name>+ % <sp>?]
     }
 

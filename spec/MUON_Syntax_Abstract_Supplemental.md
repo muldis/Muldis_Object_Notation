@@ -998,7 +998,7 @@ Examples:
         exponent    : 37,
     }))
 
-    (:Article : (the_db::UTC_Date_Time : {
+    (:Article : (::the_db::UTC_Date_Time : {
         year   : 2003,
         month  : 10,
         day    : 26,

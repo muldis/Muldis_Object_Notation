@@ -195,11 +195,11 @@
 `Muldis_Object_Notation_Sync_Mark`
 ::person
 `Muldis_Object_Notation_Sync_Mark`
-person::birth_date
+::person::birth_date
 `Muldis_Object_Notation_Sync_Mark`
-person::birth_date::year
+::person::birth_date::year
 `Muldis_Object_Notation_Sync_Mark`
-the_db::stats::"samples by order"
+::the_db::stats::"samples by order"
 `Muldis_Object_Notation_Sync_Mark`
 `Pair of Ignorance.`
 (0iIGNORANCE: 0iIGNORANCE)
@@ -227,7 +227,7 @@ the_db::stats::"samples by order"
 }))
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Article type.`
-(:Article : (the_db::UTC_Date_Time : {
+(:Article : (::the_db::UTC_Date_Time : {
     year   : 2003,
     month  : 10,
     day    : 26,

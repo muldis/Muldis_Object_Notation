@@ -1144,18 +1144,7 @@ Grammar:
 ```
     token Nesting
     {
-        <nesting_unary> | <nesting_nary>
-    }
-
-    token nesting_unary
-    {
-        ['::' <sp>? <Name_nonqualified>]
-    }
-
-    token nesting_nary
-    {
-        ['::' <sp>?]?
-        [<Name_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
+        '::' <sp>? [<Name_nonqualified>+ % [<sp>? '::' <sp>?]]
     }
 ```
 
@@ -1168,11 +1157,11 @@ Examples:
 
     ::person
 
-    person::birth_date
+    ::person::birth_date
 
-    person::birth_date::year
+    ::person::birth_date::year
 
-    the_db::stats::"samples by order"
+    ::the_db::stats::"samples by order"
 ```
 
 [RETURN](#TOP)
@@ -1243,7 +1232,7 @@ Examples:
     }))
 
     `Higher-level Article type.`
-    (:Article : (the_db::UTC_Date_Time : {
+    (:Article : (::the_db::UTC_Date_Time : {
         year   : 2003,
         month  : 10,
         day    : 26,

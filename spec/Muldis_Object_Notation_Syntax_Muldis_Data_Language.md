@@ -98,7 +98,7 @@ See also <https://github.com/muldis/Muldis_Data_Language>.
 
 An **Ignorance** artifact is any of the following:
 
-* The only value of the MDL singleton type `fdn::Ignorance`.
+* The only value of the MDL singleton type `::fdn::Ignorance`.
 
 [RETURN](#TOP)
 
@@ -108,7 +108,7 @@ An **Ignorance** artifact is any of the following:
 
 A **Boolean** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Boolean`.
+* Any value of the MDL type `::fdn::Boolean`.
 
 [RETURN](#TOP)
 
@@ -118,7 +118,7 @@ A **Boolean** artifact is any of the following:
 
 An **Integer** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Integer`.
+* Any value of the MDL type `::fdn::Integer`.
 
 [RETURN](#TOP)
 
@@ -128,7 +128,7 @@ An **Integer** artifact is any of the following:
 
 A **Rational** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Rational`.
+* Any value of the MDL type `::fdn::Rational`.
 
 [RETURN](#TOP)
 
@@ -138,7 +138,7 @@ A **Rational** artifact is any of the following:
 
 A **Binary** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Binary`.
+* Any value of the MDL type `::fdn::Binary`.
 
 [RETURN](#TOP)
 
@@ -148,7 +148,7 @@ A **Binary** artifact is any of the following:
 
 A **Decimal** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Decimal`.
+* Any value of the MDL type `::fdn::Decimal`.
 
 [RETURN](#TOP)
 
@@ -158,7 +158,7 @@ A **Decimal** artifact is any of the following:
 
 A **Bits** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Bits`.
+* Any value of the MDL type `::fdn::Bits`.
 
 [RETURN](#TOP)
 
@@ -168,7 +168,7 @@ A **Bits** artifact is any of the following:
 
 A **Blob** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Blob`.
+* Any value of the MDL type `::fdn::Blob`.
 
 [RETURN](#TOP)
 
@@ -178,7 +178,7 @@ A **Blob** artifact is any of the following:
 
 A **Text** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Text`.
+* Any value of the MDL type `::fdn::Text`.
 
 [RETURN](#TOP)
 
@@ -188,7 +188,7 @@ A **Text** artifact is any of the following:
 
 A **Name** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Name`.
+* Any value of the MDL type `::fdn::Name`.
 
 [RETURN](#TOP)
 
@@ -198,7 +198,7 @@ A **Name** artifact is any of the following:
 
 A **Nesting** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Nesting`.
+* Any value of the MDL type `::fdn::Nesting`.
 
 [RETURN](#TOP)
 
@@ -214,7 +214,7 @@ A **Nesting** artifact is any of the following:
 
 A **Pair** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Pair`.
+* Any value of the MDL type `::fdn::Pair`.
 
 [RETURN](#TOP)
 
@@ -224,7 +224,7 @@ A **Pair** artifact is any of the following:
 
 A **Lot** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Lot`.
+* Any value of the MDL type `::fdn::Lot`.
 
 [RETURN](#TOP)
 
@@ -234,7 +234,7 @@ A **Lot** artifact is any of the following:
 
 A **Kit** artifact is any of the following:
 
-* Any value of the MDL type `fdn::Kit`.
+* Any value of the MDL type `::fdn::Kit`.
 
 [RETURN](#TOP)
 

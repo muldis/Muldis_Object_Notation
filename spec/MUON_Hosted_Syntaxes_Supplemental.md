@@ -29,19 +29,19 @@ host language that may choose to provide a superset of its hosted syntax.
 
 A **Calendar Time** artifact is additionally any of the following:
 
-* Any value of the MDL type `fdn::Calendar_Time`.
+* Any value of the MDL type `::fdn::Calendar_Time`.
 
 A **Calendar Duration** artifact is additionally any of the following:
 
-* Any value of the MDL type `fdn::Calendar_Duration`.
+* Any value of the MDL type `::fdn::Calendar_Duration`.
 
 A **Calendar Instant** artifact is additionally any of the following:
 
-* Any value of the MDL type `fdn::Calendar_Instant`.
+* Any value of the MDL type `::fdn::Calendar_Instant`.
 
 A **Geographic Point** artifact is additionally any of the following:
 
-* Any value of the MDL type `fdn::Geographic_Point`.
+* Any value of the MDL type `::fdn::Geographic_Point`.
 
 [RETURN](#TOP)
 

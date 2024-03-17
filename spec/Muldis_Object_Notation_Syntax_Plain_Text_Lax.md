@@ -661,18 +661,7 @@ Grammar:
 ```
     token Nesting
     {
-        <nesting_unary> | <nesting_nary>
-    }
-
-    token nesting_unary
-    {
-        ['::' <sp>? <Name_nonqualified>]
-    }
-
-    token nesting_nary
-    {
-        ['::' <sp>?]?
-        [<Name_nonqualified> ** 2..* % [<sp>? '::' <sp>?]]
+        '::' <sp>? [<Name_nonqualified>+ % [<sp>? '::' <sp>?]]
     }
 ```
 
