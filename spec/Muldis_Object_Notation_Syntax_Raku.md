@@ -45,23 +45,25 @@ its part name is `Syntax_Raku`.
 # SYNOPSIS
 
 ```
-    (Muldis_Object_Notation_Syntax=>(("Raku", "https://muldis.com", "0.400.0")=>
-        (Muldis_Object_Notation_Model=>(("Muldis_Data_Language", "https://muldis.com", "0.400.0")=>
-            (Relation=>(
+    ((Name=>"Muldis_Object_Notation_Syntax")=>(
+        ("Raku", "https://muldis.com", "0.400.0")=>
+        ((Name=>"Muldis_Object_Notation_Model")=>(
+            ("Muldis_Data_Language", "https://muldis.com", "0.400.0")=>
+            ((Name=>"Relation")=>(
                 (Kit_na=>(
                     name => "Jane Ives",
-                    birth_date => (Calendar_Instant=>(Kit_na=>(y=>1971,m=>11,d=>6))),
-                    phone_numbers => (Set=>("+1.4045552995", "+1.7705557572")),
+                    birth_date => ((Name=>"Calendar_Instant")=>(Kit_na=>(y=>1971,m=>11,d=>6))),
+                    phone_numbers => ((Name=>"Set")=>("+1.4045552995", "+1.7705557572")),
                 )),
                 (Kit_na=>(
                     name => "Layla Miller",
-                    birth_date => (Calendar_Instant=>(Kit_na=>(y=>1995,m=>8,d=>27))),
-                    phone_numbers => (Set=>()),
+                    birth_date => ((Name=>"Calendar_Instant")=>(Kit_na=>(y=>1995,m=>8,d=>27))),
+                    phone_numbers => ((Name=>"Set")=>()),
                 )),
                 (Kit_na=>(
                     name => "岩倉 玲音",
-                    birth_date => (Calendar_Instant=>(Kit_na=>(y=>1984,m=>7,d=>6))),
-                    phone_numbers => (Set=>("+81.9072391679",)),
+                    birth_date => ((Name=>"Calendar_Instant")=>(Kit_na=>(y=>1984,m=>7,d=>6))),
+                    phone_numbers => ((Name=>"Set")=>("+81.9072391679",)),
                 )),
             ))
         ))

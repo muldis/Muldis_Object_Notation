@@ -45,33 +45,35 @@ its part name is `Syntax_DotNet`.
 # SYNOPSIS
 
 ```
-    new KeyValuePair<String, Object>("Muldis_Object_Notation_Syntax", new KeyValuePair<String[], Object>(
+    new KeyValuePair<Object, Object>(new KeyValuePair<String, String>("Name","Muldis_Object_Notation_Syntax"), new KeyValuePair<String[], Object>(
         new String[]{"DotNet", "https://muldis.com", "0.400.0"},
-        new KeyValuePair<String, Object>("Muldis_Object_Notation_Model", new KeyValuePair<String[], Object>(
+        new KeyValuePair<Object, Object>(new KeyValuePair<String, String>("Name","Muldis_Object_Notation_Model"), new KeyValuePair<String[], Object>(
             new String[]{"Muldis_Data_Language", "https://muldis.com", "0.400.0"},
-            new KeyValuePair<String, OrderedDictionary[]>("Relation", new OrderedDictionary[]{
+            new KeyValuePair<Object, OrderedDictionary[]>(new KeyValuePair<String, String>("Name","Relation"), new OrderedDictionary[]{
                 new OrderedDictionary{
                     ["name"] = "Jane Ives",
-                    ["birth_date"] = new KeyValuePair<String, OrderedDictionary>("Calendar_Instant",
+                    ["birth_date"] = new KeyValuePair<Object, OrderedDictionary>(new KeyValuePair<String, String>("Name","Calendar_Instant"),
                         new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}
                     ),
-                    ["phone_numbers"] = new KeyValuePair<String, String[]>("Set",
+                    ["phone_numbers"] = new KeyValuePair<Object, String[]>(new KeyValuePair<String, String>("Name","Set"),
                         new String[]{"+1.4045552995", "+1.7705557572"}
                     ),
                 },
                 new OrderedDictionary{
                     ["name"] = "Layla Miller",
-                    ["birth_date"] = new KeyValuePair<String, OrderedDictionary>("Calendar_Instant",
+                    ["birth_date"] = new KeyValuePair<Object, OrderedDictionary>(new KeyValuePair<String, String>("Name","Calendar_Instant"),
                         new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}
                     ),
-                    ["phone_numbers"] = new KeyValuePair<String, String[]>("Set", new String[]{}),
+                    ["phone_numbers"] = new KeyValuePair<Object, String[]>(new KeyValuePair<String, String>("Name","Set"),
+                        new String[]{}
+                    ),
                 },
                 new OrderedDictionary{
                     ["name"] = "岩倉 玲音",
-                    ["birth_date"] = new KeyValuePair<String, OrderedDictionary>("Calendar_Instant",
+                    ["birth_date"] = new KeyValuePair<Object, OrderedDictionary>(new KeyValuePair<String, String>("Name","Calendar_Instant"),
                         new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}
                     ),
-                    ["phone_numbers"] = new KeyValuePair<String, String[]>("Set",
+                    ["phone_numbers"] = new KeyValuePair<Object, String[]>(new KeyValuePair<String, String>("Name","Set"),
                         new String[]{"+81.9072391679"}
                     ),
                 },

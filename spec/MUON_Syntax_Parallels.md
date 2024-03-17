@@ -140,23 +140,25 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_Raku](Muldis_Object_Notation_Syntax_Raku.md)
 
 ```
-    (Muldis_Object_Notation_Syntax=>(("Raku", "https://muldis.com", "0.400.0")=>
-        (Muldis_Object_Notation_Model=>(("Muldis_Data_Language", "https://muldis.com", "0.400.0")=>
-            (Relation=>(
+    ((Name=>"Muldis_Object_Notation_Syntax")=>(
+        ("Raku", "https://muldis.com", "0.400.0")=>
+        ((Name=>"Muldis_Object_Notation_Model")=>(
+            ("Muldis_Data_Language", "https://muldis.com", "0.400.0")=>
+            ((Name=>"Relation")=>(
                 (Kit_na=>(
                     name => "Jane Ives",
-                    birth_date => (Calendar_Instant=>(Kit_na=>(y=>1971,m=>11,d=>6))),
-                    phone_numbers => (Set=>("+1.4045552995", "+1.7705557572")),
+                    birth_date => ((Name=>"Calendar_Instant")=>(Kit_na=>(y=>1971,m=>11,d=>6))),
+                    phone_numbers => ((Name=>"Set")=>("+1.4045552995", "+1.7705557572")),
                 )),
                 (Kit_na=>(
                     name => "Layla Miller",
-                    birth_date => (Calendar_Instant=>(Kit_na=>(y=>1995,m=>8,d=>27))),
-                    phone_numbers => (Set=>()),
+                    birth_date => ((Name=>"Calendar_Instant")=>(Kit_na=>(y=>1995,m=>8,d=>27))),
+                    phone_numbers => ((Name=>"Set")=>()),
                 )),
                 (Kit_na=>(
                     name => "岩倉 玲音",
-                    birth_date => (Calendar_Instant=>(Kit_na=>(y=>1984,m=>7,d=>6))),
-                    phone_numbers => (Set=>("+81.9072391679",)),
+                    birth_date => ((Name=>"Calendar_Instant")=>(Kit_na=>(y=>1984,m=>7,d=>6))),
+                    phone_numbers => ((Name=>"Set")=>("+81.9072391679",)),
                 )),
             ))
         ))
@@ -170,26 +172,28 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_Perl](Muldis_Object_Notation_Syntax_Perl.md)
 
 ```
-    [Muldis_Object_Notation_Syntax=>[[Lot_m=>["Perl", "https://muldis.com", "0.400.0"]]=>
-        [Muldis_Object_Notation_Model=>[[Lot_m=>["Muldis_Data_Language", "https://muldis.com", "0.400.0"]]=>
-            [Relation=>[Lot_m=>[
+    [[Name=>"Muldis_Object_Notation_Syntax"]=>[
+        [Lot_m=>["Perl", "https://muldis.com", "0.400.0"]]=>
+        [[Name=>"Muldis_Object_Notation_Model"]=>[
+            [Lot_m=>["Muldis_Data_Language", "https://muldis.com", "0.400.0"]]=>
+            [[Name=>"Relation"]=>[Lot_m=>[
                 [Kit_na=>[
                     [name => "Jane Ives"],
-                    [birth_date => [Calendar_Instant=>
+                    [birth_date => [[Name=>"Calendar_Instant"]=>
                         [Kit_na=>[[y=>1971],[m=>11],[d=>6]]]]],
-                    [phone_numbers => [Set=>[Lot_m=>["+1.4045552995", "+1.7705557572"]]]],
+                    [phone_numbers => [[Name=>"Set"]=>[Lot_m=>["+1.4045552995", "+1.7705557572"]]]],
                 ]],
                 [Kit_na=>[
                     [name => "Layla Miller"],
-                    [birth_date => [Calendar_Instant=>
+                    [birth_date => [[Name=>"Calendar_Instant"]=>
                         [Kit_na=>[[y=>1995],[m=>8],[d=>27]]]]],
-                    [phone_numbers => [Set=>[Lot_m=>[]]]],
+                    [phone_numbers => [[Name=>"Set"]=>[Lot_m=>[]]]],
                 ]],
                 [Kit_na=>[
                     [name => "岩倉 玲音"],
-                    [birth_date => [Calendar_Instant=>
+                    [birth_date => [[Name=>"Calendar_Instant"]=>
                         [Kit_na=>[[y=>1984],[m=>7],[d=>6]]]]],
-                    [phone_numbers => [Set=>[Lot_m=>["+81.9072391679"]]]],
+                    [phone_numbers => [[Name=>"Set"]=>[Lot_m=>["+81.9072391679"]]]],
                 ]],
             ]]]
         ]]
@@ -203,33 +207,35 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_DotNet](Muldis_Object_Notation_Syntax_DotNet.md)
 
 ```
-    new KeyValuePair<String, Object>("Muldis_Object_Notation_Syntax", new KeyValuePair<String[], Object>(
+    new KeyValuePair<Object, Object>(new KeyValuePair<String, String>("Name","Muldis_Object_Notation_Syntax"), new KeyValuePair<String[], Object>(
         new String[]{"DotNet", "https://muldis.com", "0.400.0"},
-        new KeyValuePair<String, Object>("Muldis_Object_Notation_Model", new KeyValuePair<String[], Object>(
+        new KeyValuePair<Object, Object>(new KeyValuePair<String, String>("Name","Muldis_Object_Notation_Model"), new KeyValuePair<String[], Object>(
             new String[]{"Muldis_Data_Language", "https://muldis.com", "0.400.0"},
-            new KeyValuePair<String, OrderedDictionary[]>("Relation", new OrderedDictionary[]{
+            new KeyValuePair<Object, OrderedDictionary[]>(new KeyValuePair<String, String>("Name","Relation"), new OrderedDictionary[]{
                 new OrderedDictionary{
                     ["name"] = "Jane Ives",
-                    ["birth_date"] = new KeyValuePair<String, OrderedDictionary>("Calendar_Instant",
+                    ["birth_date"] = new KeyValuePair<Object, OrderedDictionary>(new KeyValuePair<String, String>("Name","Calendar_Instant"),
                         new OrderedDictionary{["y"]=1971,["m"]=11,["d"]=6}
                     ),
-                    ["phone_numbers"] = new KeyValuePair<String, String[]>("Set",
+                    ["phone_numbers"] = new KeyValuePair<Object, String[]>(new KeyValuePair<String, String>("Name","Set"),
                         new String[]{"+1.4045552995", "+1.7705557572"}
                     ),
                 },
                 new OrderedDictionary{
                     ["name"] = "Layla Miller",
-                    ["birth_date"] = new KeyValuePair<String, OrderedDictionary>("Calendar_Instant",
+                    ["birth_date"] = new KeyValuePair<Object, OrderedDictionary>(new KeyValuePair<String, String>("Name","Calendar_Instant"),
                         new OrderedDictionary{["y"]=1995,["m"]=8,["d"]=27}
                     ),
-                    ["phone_numbers"] = new KeyValuePair<String, String[]>("Set", new String[]{}),
+                    ["phone_numbers"] = new KeyValuePair<Object, String[]>(new KeyValuePair<String, String>("Name","Set"),
+                        new String[]{}
+                    ),
                 },
                 new OrderedDictionary{
                     ["name"] = "岩倉 玲音",
-                    ["birth_date"] = new KeyValuePair<String, OrderedDictionary>("Calendar_Instant",
+                    ["birth_date"] = new KeyValuePair<Object, OrderedDictionary>(new KeyValuePair<String, String>("Name","Calendar_Instant"),
                         new OrderedDictionary{["y"]=1984,["m"]=7,["d"]=6}
                     ),
-                    ["phone_numbers"] = new KeyValuePair<String, String[]>("Set",
+                    ["phone_numbers"] = new KeyValuePair<Object, String[]>(new KeyValuePair<String, String>("Name","Set"),
                         new String[]{"+81.9072391679"}
                     ),
                 },
@@ -245,33 +251,35 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_Java](Muldis_Object_Notation_Syntax_Java.md)
 
 ```
-    new AbstractMap.SimpleEntry("Muldis_Object_Notation_Syntax", new AbstractMap.SimpleEntry(
+    new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Muldis_Object_Notation_Syntax"), new AbstractMap.SimpleEntry(
         new String[]{"Java", "https://muldis.com", "0.400.0"},
-        new AbstractMap.SimpleEntry("Muldis_Object_Notation_Model", new AbstractMap.SimpleEntry(
+        new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Muldis_Object_Notation_Model"), new AbstractMap.SimpleEntry(
             new String[]{"Muldis_Data_Language", "https://muldis.com", "0.400.0"},
-            new AbstractMap.SimpleEntry("Relation", new LinkedHashMap[]{
+            new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Relation"), new LinkedHashMap[]{
                 new LinkedHashMap(){{
                     put("name", "Jane Ives");
-                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                    put("birth_date", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Calendar_Instant"),
                         new LinkedHashMap(){{put("y",1971); put("m",11); put("d",6);}}
                     ));
-                    put("phone_numbers", new AbstractMap.SimpleEntry("Set",
+                    put("phone_numbers", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Set"),
                         new String[]{"+1.4045552995", "+1.7705557572"}
                     ));
                 }},
                 new LinkedHashMap(){{
                     put("name", "Layla Miller");
-                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                    put("birth_date", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Calendar_Instant"),
                         new LinkedHashMap(){{put("y",1995); put("m",8); put("d",27);}}
                     ));
-                    put("phone_numbers", new AbstractMap.SimpleEntry("Set", new String[]{}));
+                    put("phone_numbers", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Set"),
+                        new String[]{}
+                    ));
                 }},
                 new LinkedHashMap(){{
                     put("name", "岩倉 玲音");
-                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                    put("birth_date", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Calendar_Instant"),
                         new LinkedHashMap(){{put("y",1984); put("m",7); put("d",6);}}
                     ));
-                    put("phone_numbers", new AbstractMap.SimpleEntry("Set",
+                    put("phone_numbers", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Set"),
                         new String[]{"+81.9072391679"}
                     ));
                 }},
@@ -311,26 +319,28 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_ECMAScript](Muldis_Object_Notation_Syntax_ECMAScript.md)
 
 ```
-    ["Muldis_Object_Notation_Syntax",[["Lot_m",["ECMAScript", "https://muldis.com", "0.400.0"]],
-        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
-            ["Relation",["Lot_m",[
+    [["Name","Muldis_Object_Notation_Syntax"],[
+        ["Lot_m",["ECMAScript", "https://muldis.com", "0.400.0"]],
+        [["Name","Muldis_Object_Notation_Model"],[
+            ["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
+            [["Name","Relation"],["Lot_m",[
                 ["Kit_na",[
                     ["name", "Jane Ives"],
-                    ["birth_date", ["Calendar_Instant",
+                    ["birth_date", [["Name","Calendar_Instant"],
                         ["Kit_na",[["y",1971],["m",11],["d",6]]]]],
-                    ["phone_numbers", ["Set",["Lot_m",["+1.4045552995", "+1.7705557572"]]]]
+                    ["phone_numbers", [["Name","Set"],["Lot_m",["+1.4045552995", "+1.7705557572"]]]]
                 ]],
                 ["Kit_na",[
                     ["name", "Layla Miller"],
-                    ["birth_date", ["Calendar_Instant",
+                    ["birth_date", [["Name","Calendar_Instant"],
                         ["Kit_na",[["y",1995],["m",8],["d",27]]]]],
-                    ["phone_numbers", ["Set",["Lot_m",[]]]]
+                    ["phone_numbers", [["Name","Set"],["Lot_m",[]]]]
                 ]],
                 ["Kit_na",[
                     ["name", "岩倉 玲音"],
-                    ["birth_date", ["Calendar_Instant",
+                    ["birth_date", [["Name","Calendar_Instant"],
                         ["Kit_na",[["y",1984],["m",7],["d",6]]]]],
-                    ["phone_numbers", ["Set",["Lot_m",["+81.9072391679"]]]]
+                    ["phone_numbers", [["Name","Set"],["Lot_m",["+81.9072391679"]]]]
                 ]]
             ]]]
         ]]
@@ -365,15 +375,17 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_Python](Muldis_Object_Notation_Syntax_Python.md)
 
 ```
-    ("Muldis_Object_Notation_Syntax",(["Python", "https://muldis.com", "0.400.0"],
-        ("Muldis_Object_Notation_Model",(["Muldis_Data_Language", "https://muldis.com", "0.400.0"],
-            ("Relation",[
-                {"name" : "Jane Ives", "birth_date" : ("Calendar_Instant",{"y":1971,"m":11,"d":6}),
-                    "phone_numbers" : ("Set",["+1.4045552995", "+1.7705557572"])},
-                {"name" : "Layla Miller", "birth_date" : ("Calendar_Instant",{"y":1995,"m":8,"d":27}),
-                    "phone_numbers" : ("Set",[])},
-                {"name" : "岩倉 玲音", "birth_date" : ("Calendar_Instant",{"y":1984,"m":7,"d":6}),
-                    "phone_numbers" : ("Set",["+81.9072391679"])},
+    (("Name","Muldis_Object_Notation_Syntax"),(
+        ["Python", "https://muldis.com", "0.400.0"],
+        (("Name","Muldis_Object_Notation_Model"),(
+            ["Muldis_Data_Language", "https://muldis.com", "0.400.0"],
+            (("Name","Relation"),[
+                {"name" : "Jane Ives", "birth_date" : (("Name","Calendar_Instant"),{"y":1971,"m":11,"d":6}),
+                    "phone_numbers" : (("Name","Set"),["+1.4045552995", "+1.7705557572"])},
+                {"name" : "Layla Miller", "birth_date" : (("Name","Calendar_Instant"),{"y":1995,"m":8,"d":27}),
+                    "phone_numbers" : (("Name","Set"),[])},
+                {"name" : "岩倉 玲音", "birth_date" : (("Name","Calendar_Instant"),{"y":1984,"m":7,"d":6}),
+                    "phone_numbers" : (("Name","Set"),["+81.9072391679"])},
             ])
         ))
     ))
@@ -386,23 +398,25 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_PHP](Muldis_Object_Notation_Syntax_PHP.md)
 
 ```
-    ["Muldis_Object_Notation_Syntax",[["Lot_m",["PHP", "https://muldis.com", "0.400.0"]],
-        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
-            ["Relation",["Lot_m",[
+    [["Name","Muldis_Object_Notation_Syntax"],[
+        ["Lot_m",["PHP", "https://muldis.com", "0.400.0"]],
+        [["Name","Muldis_Object_Notation_Model"],[
+            ["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
+            [["Name","Relation"],["Lot_m",[
                 [
                     "name" => "Jane Ives",
-                    "birth_date" => ["Calendar_Instant",["y"=>1971,"m"=>11,"d"=>6]],
-                    "phone_numbers" => ["Set",["Lot_m",["+1.4045552995", "+1.7705557572"]]],
+                    "birth_date" => [["Name","Calendar_Instant"],["y"=>1971,"m"=>11,"d"=>6]],
+                    "phone_numbers" => [["Name","Set"],["Lot_m",["+1.4045552995", "+1.7705557572"]]],
                 ],
                 [
                     "name" => "Layla Miller",
-                    "birth_date" => ["Calendar_Instant",["y"=>1995,"m"=>8,"d"=>27]],
-                    "phone_numbers" => ["Set",["Lot_m",[]]],
+                    "birth_date" => [["Name","Calendar_Instant"],["y"=>1995,"m"=>8,"d"=>27]],
+                    "phone_numbers" => [["Name","Set"],["Lot_m",[]]],
                 ],
                 [
                     "name" => "岩倉 玲音",
-                    "birth_date" => ["Calendar_Instant",["y"=>1984,"m"=>7,"d"=>6]],
-                    "phone_numbers" => ["Set",["Lot_m",["+81.9072391679"]]],
+                    "birth_date" => [["Name","Calendar_Instant"],["y"=>1984,"m"=>7,"d"=>6]],
+                    "phone_numbers" => [["Name","Set"],["Lot_m",["+81.9072391679"]]],
                 ],
             ]]]
         ]]
@@ -416,26 +430,28 @@ except that the `Muldis_Object_Notation_Syntax` would say `Muldis_Data_Language`
 ## [Syntax_JSON](Muldis_Object_Notation_Syntax_JSON.md)
 
 ```
-    ["Muldis_Object_Notation_Syntax",[["Lot_m",["JSON", "https://muldis.com", "0.400.0"]],
-        ["Muldis_Object_Notation_Model",[["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
-            ["Relation",["Lot_m",[
+    [["Name","Muldis_Object_Notation_Syntax"],[
+        ["Lot_m",["JSON", "https://muldis.com", "0.400.0"]],
+        [["Name","Muldis_Object_Notation_Model"],[
+            ["Lot_m",["Muldis_Data_Language", "https://muldis.com", "0.400.0"]],
+            [["Name","Relation"],["Lot_m",[
                 ["Kit_na",[
                     ["name", "Jane Ives"],
-                    ["birth_date", ["Calendar_Instant",
+                    ["birth_date", [["Name","Calendar_Instant"],
                         ["Kit_na",[["y",1971],["m",11],["d",6]]]]],
-                    ["phone_numbers", ["Set",["Lot_m",["+1.4045552995", "+1.7705557572"]]]]
+                    ["phone_numbers", [["Name","Set"],["Lot_m",["+1.4045552995", "+1.7705557572"]]]]
                 ]],
                 ["Kit_na",[
                     ["name", "Layla Miller"],
-                    ["birth_date", ["Calendar_Instant",
+                    ["birth_date", [["Name","Calendar_Instant"],
                         ["Kit_na",[["y",1995],["m",8],["d",27]]]]],
-                    ["phone_numbers", ["Set",["Lot_m",[]]]]
+                    ["phone_numbers", [["Name","Set"],["Lot_m",[]]]]
                 ]],
                 ["Kit_na",[
                     ["name", "岩倉 玲音"],
-                    ["birth_date", ["Calendar_Instant",
+                    ["birth_date", [["Name","Calendar_Instant"],
                         ["Kit_na",[["y",1984],["m",7],["d",6]]]]],
-                    ["phone_numbers", ["Set",["Lot_m",["+81.9072391679"]]]]
+                    ["phone_numbers", [["Name","Set"],["Lot_m",["+81.9072391679"]]]]
                 ]]
             ]]]
         ]]

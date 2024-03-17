@@ -45,33 +45,35 @@ its part name is `Syntax_Java`.
 # SYNOPSIS
 
 ```
-    new AbstractMap.SimpleEntry("Muldis_Object_Notation_Syntax", new AbstractMap.SimpleEntry(
+    new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Muldis_Object_Notation_Syntax"), new AbstractMap.SimpleEntry(
         new String[]{"Java", "https://muldis.com", "0.400.0"},
-        new AbstractMap.SimpleEntry("Muldis_Object_Notation_Model", new AbstractMap.SimpleEntry(
+        new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Muldis_Object_Notation_Model"), new AbstractMap.SimpleEntry(
             new String[]{"Muldis_Data_Language", "https://muldis.com", "0.400.0"},
-            new AbstractMap.SimpleEntry("Relation", new LinkedHashMap[]{
+            new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Relation"), new LinkedHashMap[]{
                 new LinkedHashMap(){{
                     put("name", "Jane Ives");
-                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                    put("birth_date", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Calendar_Instant"),
                         new LinkedHashMap(){{put("y",1971); put("m",11); put("d",6);}}
                     ));
-                    put("phone_numbers", new AbstractMap.SimpleEntry("Set",
+                    put("phone_numbers", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Set"),
                         new String[]{"+1.4045552995", "+1.7705557572"}
                     ));
                 }},
                 new LinkedHashMap(){{
                     put("name", "Layla Miller");
-                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                    put("birth_date", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Calendar_Instant"),
                         new LinkedHashMap(){{put("y",1995); put("m",8); put("d",27);}}
                     ));
-                    put("phone_numbers", new AbstractMap.SimpleEntry("Set", new String[]{}));
+                    put("phone_numbers", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Set"),
+                        new String[]{}
+                    ));
                 }},
                 new LinkedHashMap(){{
                     put("name", "岩倉 玲音");
-                    put("birth_date", new AbstractMap.SimpleEntry("Calendar_Instant",
+                    put("birth_date", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Calendar_Instant"),
                         new LinkedHashMap(){{put("y",1984); put("m",7); put("d",6);}}
                     ));
-                    put("phone_numbers", new AbstractMap.SimpleEntry("Set",
+                    put("phone_numbers", new AbstractMap.SimpleEntry(new AbstractMap.SimpleEntry("Name", "Set"),
                         new String[]{"+81.9072391679"}
                     ));
                 }},
