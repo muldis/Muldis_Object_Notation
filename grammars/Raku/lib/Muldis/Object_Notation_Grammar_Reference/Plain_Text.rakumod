@@ -315,14 +315,14 @@ grammar Muldis::Object_Notation_Grammar_Reference::Plain_Text::Grammar
         ['[' <sp>?] ~ [<sp>? ']']
             [
                 [',' <sp>?]?
-                [<multiplied_member>+ % [<sp>? ',' <sp>?]]
+                [[<multiplied_member> | <member>]+ % [<sp>? ',' <sp>?]]
                 [<sp>? ',']?
             ]?
     }
 
     token multiplied_member
     {
-        [<member> <sp>? [':'|'->'] <sp>? <multiplicity>] | <member>
+        <member> <sp>? [':'|'->'] <sp>? <multiplicity>
     }
 
     token member

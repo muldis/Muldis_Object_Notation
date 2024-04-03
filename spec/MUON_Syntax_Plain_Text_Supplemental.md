@@ -64,14 +64,12 @@ Grammar:
     {
           [<member>       <sp>? [':'|'->'] <sp>? <multiplicity>]
         | [<multiplicity> <sp>?      '<-'  <sp>? <member>      ]
-        | <member>
     }
 
-    token kit_attr
+    token kit_attr_na
     {
           [<attr_name>  <sp>? [':'|'->'] <sp>? <attr_asset>]
         | [<attr_asset> <sp>?      '<-'  <sp>? <attr_name> ]
-        | <attr_asset>
     }
 ```
 
