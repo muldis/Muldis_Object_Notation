@@ -376,7 +376,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
     token quoted_octet_seq
     {
-          [['[' <sp>?] ~ [<sp>? ']'] <quoted_octet_seq_segment>+ % <sp>?]
+          [['[' <sp>?] ~ [<sp>? ']'] <quoted_octet_seq_segment>* % <sp>?]
         | <quoted_octet_seq_segment>
     }
 

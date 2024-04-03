@@ -1231,7 +1231,7 @@ Grammar:
 
     token quoted_octet_seq
     {
-          [['[' <sp>?] ~ [<sp>? ']'] <quoted_octet_seq_segment>+ % <sp>?]
+          [['[' <sp>?] ~ [<sp>? ']'] <quoted_octet_seq_segment>* % <sp>?]
         | <quoted_octet_seq_segment>
     }
 
@@ -1332,11 +1332,20 @@ Examples:
     `Same thing (3 octets).`
     B""
 
+    `Same thing (3 octets).`
+    B[]
+
+    `Same thing (5 octets).`
+    B[""]
+
     `One zero octet (2 octets); also known as 0xx0.`
     o\00
 
     `Same thing (4 octets).`
     B"\00"
+
+    `Same thing (6 octets).`
+    B["\00"]
 
     `One one octet (2 octets); also known as 0xx1.`
     o\01
@@ -1358,6 +1367,9 @@ Examples:
 
     `The 4-octet string 0xxA705_E416 (7 octets).`
     B"\A7\05\E4\16"
+
+    `Same thing (12 octets).`
+    B["\A7\05" "\E4\16"]
 
     `The 2-octet string 0xb00101110_10001011 (7 octets).`
     B"\2E\8B"
