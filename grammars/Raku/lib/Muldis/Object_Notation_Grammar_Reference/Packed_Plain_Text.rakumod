@@ -587,7 +587,7 @@ grammar Muldis::Object_Notation_Grammar_Reference::Packed_Plain_Text::Grammar
 
     token Kit_limited_1_attr
     {
-        a <kit_attr>
+        a <kit_attr_na>
     }
 
     token kit_attr_na

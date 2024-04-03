@@ -1770,6 +1770,8 @@ Grammar:
     }
 ```
 
+A **Lot** artifact ... *TODO.*
+
 Examples:
 
 *TODO.*
@@ -1811,7 +1813,7 @@ Grammar:
 
     token Kit_limited_1_attr
     {
-        a <kit_attr>
+        a <kit_attr_na>
     }
 
     token kit_attr_na
@@ -1834,6 +1836,8 @@ Grammar:
         <Any>
     }
 ```
+
+A **Kit** artifact ... *TODO.*
 
 Examples:
 
@@ -1907,12 +1911,12 @@ usually in the context of their being the first octet of an artifact.
     48  | H   |             | (unassigned)
     49  | I   |             | (unassigned)
     4A  | J   |             | Kit artifact prefix special case with N positional attributes
-    4B  | K   |             | Kit artifact prefix general case with N attributes
+    4B  | K   |             | Kit artifact prefix general case with N attributes (name-asset format)
     4C  | L   |             | Lot artifact prefix general case with N members
     4D  | M   |             | Lot artifact prefix special case with N non-multiplied members
     4E  | N   |             | Name artifact prefix general case quoted UTF-8 string with N octets / N characters
     4F  | O   |             | (unassigned)
-    50  | P   |             | Pair artifact prefix general case
+    50  | P   |             | Pair artifact prefix
     51  | Q   |             | (unassigned)
     52  | R   |             | (unassigned)
     53  | S   |             | Bits artifact prefix general case quoted string with N octets / N bits
@@ -1931,7 +1935,7 @@ usually in the context of their being the first octet of an artifact.
     5F  | _   | 0iIGNORANCE | Ignorance artifact singleton
     60  | `   |             | delimit dividing space for embedding arbitrary octet strings or ASCII comments
     ----+-----+-------------+----------------------------------------------
-    61  | a   |             | Kit artifact prefix special case with exactly 1 attribute
+    61  | a   |             | Kit artifact prefix special case with exactly 1 attribute (name-asset format)
     62  | b   | 0xx         | Blob artifact empty string
     ----+-----+-------------+----------------------------------------------
     63  | c   |             | Integer artifact prefix fixed width big-endian nonsigned 1 octet
@@ -1945,7 +1949,7 @@ usually in the context of their being the first octet of an artifact.
     ----+-----+-------------+----------------------------------------------
     6B  | k   | {}          | Kit artifact with zero attributes
     6C  | l   | []          | Lot artifact with zero members
-    6D  | m   |             | Lot artifact prefix special case with exactly 1 member (implicit multiplicity of 1)
+    6D  | m   |             | Lot artifact prefix special case with exactly 1 non-multiplied member
     6E  | n   | :""         | Name artifact empty string
     6F  | o   |             | Blob artifact prefix special case string with exactly 1 octet element
     70  | p   |             | Bits artifact prefix special case string with exactly 1..8 bit elements
