@@ -399,25 +399,25 @@
 {"サンプル": "https://example.com"}
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Rename one attribute.`
-(:Renaming : {fname->:first_name})
+(:Renaming : {:fname->:first_name})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Same thing.`
-(:Renaming : {fname : :first_name})
+(:Renaming : {:fname : :first_name})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Swap 2 named attributes.`
-(:Renaming : {foo->:bar,bar->:foo})
+(:Renaming : {:foo->:bar,:bar->:foo})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Convert positional names to nonpositional.`
 (:Renaming : {:foo,:bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Same thing.`
-(:Renaming : {0->:foo,1->:bar})
+(:Renaming : {:0->:foo,:1->:bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Convert nonpositional names to positional.`
-(:Renaming : {foo->:0,bar->:1})
+(:Renaming : {:foo->:0,:bar->:1})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Swap 2 positional attributes.`
-(:Renaming : {0->:1,1->:0})
+(:Renaming : {:0->:1,:1->:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Higher-level Renaming type: Same thing.`
 (:Renaming : {:1,:0})

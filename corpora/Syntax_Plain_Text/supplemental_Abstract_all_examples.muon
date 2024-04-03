@@ -268,16 +268,16 @@
 (:Heading : {})
 `Muldis_Object_Notation_Sync_Mark`
 `One named attribute.`
-(:Heading : {sales})
+(:Heading : {:sales})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(:Heading : {"sales"})
+(:Heading : {:"sales"})
 `Muldis_Object_Notation_Sync_Mark`
 `One positional attribute.`
 (:Heading : {:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(:Heading : {"\(0)"})
+(:Heading : {:"\(0)"})
 `Muldis_Object_Notation_Sync_Mark`
 `Three named attributes.`
 (:Heading : {:region,:revenue,:qty})
@@ -286,43 +286,43 @@
 (:Heading : {:0,:1,:2})
 `Muldis_Object_Notation_Sync_Mark`
 `One of each.`
-(:Heading : {:1,age})
+(:Heading : {:1,:age})
 `Muldis_Object_Notation_Sync_Mark`
 `Some attribute names can only appear quoted.`
-(:Heading : {"Street Address"})
+(:Heading : {:"Street Address"})
 `Muldis_Object_Notation_Sync_Mark`
 `A non-Latin name.`
-(:Heading : {"サンプル"})
+(:Heading : {:"サンプル"})
 `Muldis_Object_Notation_Sync_Mark`
 `Zero renamings, a no-op.`
 (:Renaming : {})
 `Muldis_Object_Notation_Sync_Mark`
 `Also a no-op.`
-(:Renaming : {age->age})
+(:Renaming : {:age->:age})
 `Muldis_Object_Notation_Sync_Mark`
 `Also a no-op.`
 (:Renaming : {:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Rename one attribute.`
-(:Renaming : {fname->:first_name})
+(:Renaming : {:fname->:first_name})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(:Renaming : {fname : :first_name})
+(:Renaming : {:fname : :first_name})
 `Muldis_Object_Notation_Sync_Mark`
 `Swap 2 named attributes.`
-(:Renaming : {foo->:bar,bar->:foo})
+(:Renaming : {:foo->:bar,:bar->:foo})
 `Muldis_Object_Notation_Sync_Mark`
 `Convert positional names to nonpositional.`
 (:Renaming : {:foo,:bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
-(:Renaming : {0->:foo,1->:bar})
+(:Renaming : {:0->:foo,:1->:bar})
 `Muldis_Object_Notation_Sync_Mark`
 `Convert nonpositional names to positional.`
-(:Renaming : {foo->:0,bar->:1})
+(:Renaming : {:foo->:0,:bar->:1})
 `Muldis_Object_Notation_Sync_Mark`
 `Swap 2 positional attributes.`
-(:Renaming : {0->:1,1->:0})
+(:Renaming : {:0->:1,:1->:0})
 `Muldis_Object_Notation_Sync_Mark`
 `Same thing.`
 (:Renaming : {:1,:0})

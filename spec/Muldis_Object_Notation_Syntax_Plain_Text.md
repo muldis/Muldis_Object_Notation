@@ -1511,25 +1511,25 @@ Examples:
     {"サンプル": "https://example.com"}
 
     `Higher-level Renaming type: Rename one attribute.`
-    (:Renaming : {fname->:first_name})
+    (:Renaming : {:fname->:first_name})
 
     `Higher-level Renaming type: Same thing.`
-    (:Renaming : {fname : :first_name})
+    (:Renaming : {:fname : :first_name})
 
     `Higher-level Renaming type: Swap 2 named attributes.`
-    (:Renaming : {foo->:bar,bar->:foo})
+    (:Renaming : {:foo->:bar,:bar->:foo})
 
     `Higher-level Renaming type: Convert positional names to nonpositional.`
     (:Renaming : {:foo,:bar})
 
     `Higher-level Renaming type: Same thing.`
-    (:Renaming : {0->:foo,1->:bar})
+    (:Renaming : {:0->:foo,:1->:bar})
 
     `Higher-level Renaming type: Convert nonpositional names to positional.`
-    (:Renaming : {foo->:0,bar->:1})
+    (:Renaming : {:foo->:0,:bar->:1})
 
     `Higher-level Renaming type: Swap 2 positional attributes.`
-    (:Renaming : {0->:1,1->:0})
+    (:Renaming : {:0->:1,:1->:0})
 
     `Higher-level Renaming type: Same thing.`
     (:Renaming : {:1,:0})
@@ -1542,7 +1542,7 @@ Examples:
 
     `Higher-level Tuple type: Same thing.`
     (:Tuple : (
-          {"name     , "age}
+          {:name     , :age}
         : {"Michelle", 17  }
     ))
 

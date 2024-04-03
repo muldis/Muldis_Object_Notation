@@ -653,16 +653,16 @@ Examples:
     (:Heading : {})
 
     `One named attribute.`
-    (:Heading : {sales})
+    (:Heading : {:sales})
 
     `Same thing.`
-    (:Heading : {"sales"})
+    (:Heading : {:"sales"})
 
     `One positional attribute.`
     (:Heading : {:0})
 
     `Same thing.`
-    (:Heading : {"\(0)"})
+    (:Heading : {:"\(0)"})
 
     `Three named attributes.`
     (:Heading : {:region,:revenue,:qty})
@@ -671,13 +671,13 @@ Examples:
     (:Heading : {:0,:1,:2})
 
     `One of each.`
-    (:Heading : {:1,age})
+    (:Heading : {:1,:age})
 
     `Some attribute names can only appear quoted.`
-    (:Heading : {"Street Address"})
+    (:Heading : {:"Street Address"})
 
     `A non-Latin name.`
-    (:Heading : {"サンプル"})
+    (:Heading : {:"サンプル"})
 ```
 
 [RETURN](#TOP)
@@ -703,31 +703,31 @@ Examples:
     (:Renaming : {})
 
     `Also a no-op.`
-    (:Renaming : {age->age})
+    (:Renaming : {:age->:age})
 
     `Also a no-op.`
     (:Renaming : {:0})
 
     `Rename one attribute.`
-    (:Renaming : {fname->:first_name})
+    (:Renaming : {:fname->:first_name})
 
     `Same thing.`
-    (:Renaming : {fname : :first_name})
+    (:Renaming : {:fname : :first_name})
 
     `Swap 2 named attributes.`
-    (:Renaming : {foo->:bar,bar->:foo})
+    (:Renaming : {:foo->:bar,:bar->:foo})
 
     `Convert positional names to nonpositional.`
     (:Renaming : {:foo,:bar})
 
     `Same thing.`
-    (:Renaming : {0->:foo,1->:bar})
+    (:Renaming : {:0->:foo,:1->:bar})
 
     `Convert nonpositional names to positional.`
-    (:Renaming : {foo->:0,bar->:1})
+    (:Renaming : {:foo->:0,:bar->:1})
 
     `Swap 2 positional attributes.`
-    (:Renaming : {0->:1,1->:0})
+    (:Renaming : {:0->:1,:1->:0})
 
     `Same thing.`
     (:Renaming : {:1,:0})
