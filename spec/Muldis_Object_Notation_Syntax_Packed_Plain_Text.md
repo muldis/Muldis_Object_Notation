@@ -511,12 +511,12 @@ Grammar:
 
     token Integer_unlimited_positive
     {
-        '+' <sp>? <quoted_octet_string>
+        '+' <sp>? <quoted_octet_seq>
     }
 
     token Integer_unlimited_negative
     {
-        '-' <sp>? <quoted_octet_string>
+        '-' <sp>? <quoted_octet_seq>
     }
 
     token Integer_limited_nonsigned_1_octet
@@ -1114,7 +1114,7 @@ Grammar:
 
     token Bits_unlimited
     {
-        S <sp>? <significant_final_octet_bits_count> <sp>? <quoted_octet_string>
+        S <sp>? <significant_final_octet_bits_count> <sp>? <quoted_octet_seq>
     }
 
     token Bits_limited_1_octet
@@ -1221,7 +1221,7 @@ Grammar:
 
     token Blob_unlimited
     {
-        B <sp>? <quoted_octet_string>
+        B <sp>? <quoted_octet_seq>
     }
 
     token Blob_limited_1_octet
@@ -1229,17 +1229,13 @@ Grammar:
         o <aescaped_octet>
     }
 
-    token quoted_octet_string
+    token quoted_octet_seq
     {
-        <single_segment_quoted_octet_string> | <multi_segment_quoted_octet_string>
+          [['[' <sp>?] ~ [<sp>? ']'] <quoted_octet_seq_segment>+ % <sp>?]
+        | <quoted_octet_seq_segment>
     }
 
-    token multi_segment_quoted_octet_string
-    {
-        ['[' <sp>?] ~ [<sp>? ']'] <single_segment_quoted_octet_string>+ % <sp>?
-    }
-
-    token single_segment_quoted_octet_string
+    token quoted_octet_seq_segment
     {
         '"' ~ '"' <aescaped_octet>*
     }
@@ -1391,7 +1387,7 @@ Grammar:
 
     token Text_unlimited
     {
-        T <sp>? <quoted_octet_string>
+        T <sp>? <quoted_octet_seq>
     }
 ```
 
@@ -1476,7 +1472,7 @@ Grammar:
 
     token Name_unlimited
     {
-        N <sp>? <quoted_octet_string>
+        N <sp>? <quoted_octet_seq>
     }
 
     token Name_limited_1_octet
@@ -1722,7 +1718,7 @@ Grammar:
     {
           <Lot_zero>
         | <Lot_unlimited>
-        | <Lot_unlimited_non_multiplied>
+        | <Lot_unlimited_nonmultiplied>
         | <Lot_limited_1_member>
     }
 
@@ -1736,7 +1732,7 @@ Grammar:
         L <sp>? [['[' <sp>?] ~ [<sp>? ']'] <multiplied_member>* % <sp>?]
     }
 
-    token Lot_unlimited_non_multiplied
+    token Lot_unlimited_nonmultiplied
     {
         M <sp>? [['[' <sp>?] ~ [<sp>? ']'] <member>* % <sp>?]
     }
