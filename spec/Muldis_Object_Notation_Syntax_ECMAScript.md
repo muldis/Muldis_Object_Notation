@@ -86,7 +86,7 @@ This part of the **Muldis Object Notation** document specifies the
 canonical concrete ECMAScript hosted syntax of MUON,
 which expresses a MUON artifact in terms of a native in-memory value or
 object of the ECMAScript programming language,
-version 14 (2023; or 11, 2020) or later,
+version 15 (2024; or 11, 2020) or later,
 as a non-cyclic data structure composed only using system-defined types.
 
 The MUON `Syntax_ECMAScript` is derived from and maps with the MUON

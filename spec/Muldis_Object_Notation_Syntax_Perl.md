@@ -86,7 +86,7 @@ This part of the **Muldis Object Notation** document specifies the
 canonical concrete Perl hosted syntax of MUON,
 which expresses a MUON artifact in terms of a native in-memory value or
 object of the Perl programming language,
-version 5.38 (2023; or 5.8, 2002) or later,
+version 5.40 (2024; or 5.8, 2002) or later,
 as a non-cyclic data structure composed only using system-defined types.
 
 The MUON `Syntax_Perl` is derived from and maps with the MUON

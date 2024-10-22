@@ -95,7 +95,7 @@ This part of the **Muldis Object Notation** document specifies the
 canonical concrete Java hosted syntax of MUON,
 which expresses a MUON artifact in terms of a native in-memory value or
 object of the Java programming language,
-version 22 (2024; or 8, 2014) or later,
+version 23 (2024; or 8, 2014) or later,
 as a non-cyclic data structure composed only using system-defined types.
 
 The MUON `Syntax_Java` is derived from and maps with the MUON
